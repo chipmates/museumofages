@@ -1694,6 +1694,11 @@ const HEARTH = (() => {
   const width = f?.size_m[1] ?? 2.8, depth = f?.size_m[0] ?? .65, height = f?.size_m[2] ?? 3
   return { v: c[1], width, depth, height }
 })()
+/** The segmental arch drawn on the hood's face over its courses: its spring
+ * a little over the shelf, its centre and radius, the voussoirs' depth and
+ * their angular pitch (heights from the floor, along the wall from the
+ * hearth's middle). */
+const HOOD_ARCH = { spring: 2.40, centre: 1.14, radius: 1.64, band: .15, step: .134 } as const
 function hearth(s: Sink, hero: boolean): void {
   const { v: vc, width, depth } = HEARTH
   // local frame: x along the wall (toward the back wall), y out into the room, z up
@@ -1706,15 +1711,18 @@ function hearth(s: Sink, hero: boolean): void {
   const clear = HALL.height_m - .004
   // the hearthstone, a hand proud of the tiles, reaching into the room
   box(-W2 - .05, W2 + .05, 0, depth + .42, -.004, .028, K.STONE, 51, '-z')
-  // jambs: plinth, shaft, a stepped capital
+  // jambs: a dressed pier with a round column engaged in its front, the
+  // column on a moulded base under a moulded capital, an abacus over both
   for (const side of [-1, 1]) {
-    const x0 = side < 0 ? -W2 : open, x1 = side < 0 ? -open : W2
-    box(x0 - .025, x1 + .025, 0, depth + .03, .028, .17, K.STONE, 52, '-z')
+    const x0 = side < 0 ? -W2 : open, x1 = side < 0 ? -open : W2, cx = (x0 + x1) / 2, R = .125, cy = depth - R + .015
+    box(x0 - .025, x1 + .025, 0, depth + .06, .028, .17, K.STONE, 52, '-z')
     s.soot = .06
-    // the face toward the fire is the brick cheek's, which lines the jamb
-    box(x0, x1, 0, depth, .17, jambTop - .16, K.STONE, 53, side < 0 ? '-z+z+x' : '-z+z-x')
+    // the face toward the fire is the cheek's, which lines the jamb
+    box(x0, x1, 0, cy, .17, jambTop - .07, K.STONE, 53, side < 0 ? '-z+z+x' : '-z+z-x')
+    const shaft = jambTop - .16 - .17, cap = jambTop - .07 - .17
+    s.lathe(L(cx, cy, .17), [[R + .03, 0], [R + .03, .028], [R + .012, .048], [R + .02, .068], [R, .095], [R, shaft - .02], [R + .014, shaft - .008], [R + .014, shaft], [R + .006, shaft + .012],
+      [R + .03, cap - .025], [R + .042, cap - .008], [R + .042, cap + .004], [0, cap + .004]], 32, K.STONE, 54)
     s.soot = 0
-    box(x0 - .02, x1 + .02, 0, depth + .035, jambTop - .16, jambTop - .07, K.STONE, 54, '-z')
     box(x0 - .04, x1 + .04, 0, depth + .06, jambTop - .07, jambTop, K.STONE, 55, '-z')
   }
   // the lintel, its lower front arris taken off in a broad chamfer
@@ -1735,7 +1743,8 @@ function hearth(s: Sink, hero: boolean): void {
   // the shelf over it
   box(-W2 - .06, W2 + .06, 0, depth + .09, lintelTop, shelfTop, K.STONE, 57)
   // the hood, leaning back to the ceiling in coursed tuffeau
-  const hb = depth - .04, ht = depth - .24, wb = W2 - .03, wt = W2 - .22
+  // straight up to the ceiling, as the room's own hood stands
+  const hb = depth - .04, ht = hb, wb = W2 - .03, wt = wb
   const z0 = shelfTop, z1 = clear
   const front = [L(-wb, hb, z0), L(wb, hb, z0), L(wt, ht, z1), L(-wt, ht, z1)]
   const fn = unit(cross(sub(front[1]!, front[0]!), sub(front[3]!, front[0]!)))
@@ -1750,17 +1759,25 @@ function hearth(s: Sink, hero: boolean): void {
     s.poly(quad, dot(n, out) > 0 ? n : scale(n, -1), p => { const q = toUV([p[0], p[1]]); return [HALL_W - q[0], p[2] - FLOOR_Z] }, K.STONE, 58)
   }
   s.soot = 0
-  // the firebox: sooted brick cheeks, fireback and a throat going up dark
+  // the firebox: sooted tuffeau cheeks and back, a plain cast-iron fireback
+  // standing on the hearth against it, and a throat going up dark
   const back = .02
   s.soot = .74
-  box(-open, open, 0, back, .028, jambTop, K.BRICK, 61, '-z')
+  box(-open, open, 0, back, .028, jambTop, K.STONE, 61, '-z')
   for (const side of [-1, 1]) {
     const x = side * open
     const p0 = L(x, back, .028), p1 = L(x, depth, .028), p2 = L(x, depth, jambTop), p3 = L(x, back, jambTop)
-    s.quad(p0, p1, p2, p3, [X[0] * -side, X[1] * -side, 0], [0, 0], [depth, 0], [depth, jambTop], [0, jambTop], K.BRICK, 62)
+    s.quad(p0, p1, p2, p3, [X[0] * -side, X[1] * -side, 0], [0, 0], [depth, 0], [depth, jambTop], [0, jambTop], K.STONE, 62)
   }
   s.soot = .95
-  s.quad(L(-open, back, jambTop), L(open, back, jambTop), L(open, depth - ch, jambTop), L(-open, depth - ch, jambTop), [0, 0, -1], [0, 0], [1, 0], [1, 1], [0, 1], K.BRICK, 63)
+  s.quad(L(-open, back, jambTop), L(open, back, jambTop), L(open, depth - ch, jambTop), L(-open, depth - ch, jambTop), [0, 0, -1], [0, 0], [1, 0], [1, 1], [0, 1], K.STONE, 63)
+  s.soot = .35
+  {
+    const half = .48, shoulder = .56, crown = .14, plate: V2[] = [[-half, 0], [half, 0], [half, shoulder]]
+    for (let k = 1; k < 10; k++) { const x = half - 2 * half * k / 10; plate.push([x, shoulder + crown * Math.sqrt(Math.max(0, 1 - (x / half) ** 2))]) }
+    plate.push([-half, shoulder])
+    s.extrude(L(0, back - .006, .024), L(0, back + .022, .024), [X[0], X[1], 0], [0, 0, 1], plate, K.IRON, 66)
+  }
   s.soot = 0
   // the banked fire: an ash bed, two charred ends on the andirons
   const ash: V2[] = []
@@ -2574,7 +2591,16 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const blockHue = fract(courseN.mul(12.9898).add(blockN.mul(78.233)).sin().mul(43758.5)).sub(.5)
   const bedJoint = float(1).sub(smoothstep(.003, .009, inCourse.min(float(1).sub(inCourse)).mul(.30)))
   const headJoint = float(1).sub(smoothstep(.003, .009, fract(alongWall.div(.46).add(courseN.mul(.5))).min(float(1).sub(fract(alongWall.div(.46).add(courseN.mul(.5))))).mul(.46)))
-  const stoneJoint = max(bedJoint, headJoint).mul(is(K.STONE))
+  // THE HOOD'S DRAWN ARCH: two arcs and the voussoirs' joints between them,
+  // drawn on the hood's face over the courses, which stop at its band
+  const onHood = smoothstep(HEARTH.depth - .06, HEARTH.depth - .045, hy).mul(float(1).sub(smoothstep(HEARTH.depth - .035, HEARTH.depth - .02, hy)))
+    .mul(smoothstep(FLOOR_Z + HOOD_ARCH.spring - .01, FLOOR_Z + HOOD_ARCH.spring, Wp.y))
+  const archR = vec2(hx, hz.sub(HOOD_ARCH.centre)).length()
+  const inBand = smoothstep(HOOD_ARCH.radius - .004, HOOD_ARCH.radius + .004, archR).mul(float(1).sub(smoothstep(HOOD_ARCH.radius + HOOD_ARCH.band - .004, HOOD_ARCH.radius + HOOD_ARCH.band + .004, archR)))
+  const archRing = max(band(archR.sub(HOOD_ARCH.radius).abs(), footprint(archR), .004), band(archR.sub(HOOD_ARCH.radius + HOOD_ARCH.band).abs(), footprint(archR), .004))
+  const archAt = hx.div(archR.max(.01)).asin().div(HOOD_ARCH.step)
+  const archJoint = band(fract(archAt).sub(.5).abs().mul(archR.mul(HOOD_ARCH.step)), footprint(archAt).mul(archR.mul(HOOD_ARCH.step)), .004).mul(inBand)
+  const stoneJoint = max(max(bedJoint, headJoint).mul(float(1).sub(inBand.mul(onHood))), max(archRing, archJoint).mul(onHood)).mul(is(K.STONE))
   const tuff = vec3(.52, .47, .37).mul(mx_noise_float(Wp.mul(6.5)).mul(.08).add(mx_noise_float(Wp.mul(33)).mul(.045)).add(mx_noise_float(Wp.mul(1.7)).mul(.05)).add(blockHue.mul(.07)).add(1))
     .mul(float(1).sub(float(1).sub(smoothstep(.8, 1.5, Wp.y)).mul(.12)))
   let tuffJ: N = mix(tuff, tuff.mul(vec3(.88, .86, .84)), stoneJoint)
