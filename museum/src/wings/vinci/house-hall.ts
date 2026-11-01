@@ -1764,14 +1764,15 @@ function hearth(s: Sink, hero: boolean): void {
   // the firebox: sooted tuffeau cheeks and back, a plain cast-iron fireback
   // standing on the hearth against it, and a throat going up dark
   const back = .02
-  s.soot = .93
+  // over 1 so the soot field's own noise still clamps black: PL 03's firebox
+  s.soot = 1.45
   box(-open, open, 0, back, .028, jambTop, K.STONE, 61, '-z')
   for (const side of [-1, 1]) {
     const x = side * open
     const p0 = L(x, back, .028), p1 = L(x, depth, .028), p2 = L(x, depth, jambTop), p3 = L(x, back, jambTop)
     s.quad(p0, p1, p2, p3, [X[0] * -side, X[1] * -side, 0], [0, 0], [depth, 0], [depth, jambTop], [0, jambTop], K.STONE, 62)
   }
-  s.soot = .95
+  s.soot = 1.3
   s.quad(L(-open, back, jambTop), L(open, back, jambTop), L(open, depth - ch, jambTop), L(-open, depth - ch, jambTop), [0, 0, -1], [0, 0], [1, 0], [1, 1], [0, 1], K.STONE, 63)
   s.soot = .35
   {
