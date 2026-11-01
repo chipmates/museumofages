@@ -62,7 +62,7 @@
       "prompt": "Museum camera poses and piecewise exterior circulation in the fixed dossier frame. All poses are exhibition choices. Latest target semantic navigation on measured gate/terrace/stair/apron routes. Bounded physical near-pyramid clearance; measured geometry identity at mount. CSS projection-derived drag with 0.1 second monotone response; explicit inspection entry and return. The active certified leg finishes before a direct certified route to the newest pending target. Static material inspection aliases have separate actual placement audits.",
       "model": "Deterministic TypeScript and TSL procedural geometry",
       "date": "2026-09-09",
-      "sha256": "7f4832cbcbb253cb679c619395a2628866c51ecdf40acabb03e646c164825912",
+      "sha256": "09561687d74903ea2a5e39da941b3af65cab393ce587987eba801d1331713d07",
       "note": "brief/CONCEPT.md; src/wings/vinci/data/closluce.json; recipe_file=src/wings/vinci/rail.ts; companion_file=src/wings/vinci/input.ts; companion_file=src/wings/vinci/rail-gallery-gaze.ts; companion_recipe_ids=vinci/rail-smoothing,vinci/rail-proof,vinci/rail-fingerprint,vinci/rail-projection,vinci/projection-drag,vinci/rail-clearance,vinci/rail-waypoints,vinci/rail-solids,vinci/gait"
     },
     {
@@ -3958,7 +3958,7 @@
       "prompt": "The dossier's great hall (A-LAYOUT room hall, 8.65 by 8.05 m, floor +0.80 m, clear height 3.20 m) and the inner service passage beside it. Terracotta tiles of 0.22 m with 8 mm joints laid at 45 degrees (read from Q144) inside a square border row, each tile its own firing, bed and fraction of tilt; limewash with its age; oak joists 0.18 by 0.23 m at 0.60 m on a 0.34 by 0.38 m main beam carried by two tuffeau corbels; window seats; the room's face of each stone cross; the chimneypiece in A-FURNITURE's envelope at its place as the Loire type of about 1500, with a brick fireback, a banked fire's ash, charred ends and andirons of a generic type. Types of the period after museum objects, none documented at Cloux: A-FURNITURE's trestle table and bench, a chest after V&A W.38-1938 with linenfold and a lock plate after V&A 1319-1901, a box chair after V&A 740-1895, two stools after V&A 968-1897, two brass candlesticks after V&A M.435-1926 (unlit), a jug after V&A C.185-1909. The leaded lights as the room sees them. The entrance's leaf drawn again in the certified leaf's volume (planked, strap hinges, clout nails, ring, lock plate) and its two reveals faced in coursed tuffeau. Light at the fixed hour: the sun through the two west windows by the key light; the windows' cross, bars and leads read analytically in the sun patches; the room's return and the shafts of lit dust computed per point; the ceiling's oak between the joists lifted for the room's later bounces, an exhibition choice; the cheeks and head of the entrance passage's door to the service passage take that passage's light through the door's far face, at a graze.",
       "model": "Deterministic TypeScript and TSL procedural geometry",
       "date": "2026-09-23",
-      "sha256": "33f782648a087f71219aef104884b9ccdfca7f1127be0d7a2516dabde48e6791",
+      "sha256": "5be9ceea31bd06e6c4de285079868b90297cc5bba49925cd51a0d116b6ee9359",
       "note": "recipe_file=src/wings/vinci/house-hall.ts; source=A-LAYOUT A-HEIGHT A-MASONRY A-FURNITURE Q144 MADE-THINGS; rail_collision=false; library_sets=stone-tuffeau (already loaded by the shell); engine_terms=engineBounce engineWindowShade engineVolume; hero_sun_shadow=a second 2048 map of the key fitted to the hall; print_terms=glass_view_pull 0.5"
     },
     {
