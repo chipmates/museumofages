@@ -15,6 +15,7 @@ import { AddEquation, AdditiveBlending, BufferGeometry, CustomBlending, Directio
 import * as TSL from 'three/tsl'
 import raw from './data/closluce.json?raw'
 import { hourKey } from './site'
+import { PRINT, STATION_EXPOSURE } from './print'
 import { SHADOW_ONLY_LAYER } from '../../stack/light'
 import type { TierName } from '../../stack/tier'
 import type { MaterialLibrary } from '../../stack/materials'
@@ -1764,9 +1765,12 @@ function hearth(s: Sink, hero: boolean): void {
   // the firebox: sooted tuffeau cheeks and back, a plain cast-iron fireback
   // standing on the hearth against it, and a throat going up dark
   const back = .02
-  // over 1 so the soot field's own noise still clamps black: PL 03's firebox
+  // over 1 so the soot field's own noise still clamps black: PL 03's firebox.
+  // The back (1.45) and the cheeks and throat (1.3) take their own soot in
+  // the material (`FIREBOX_SOOT`), the back the blacker, as the fire stood there
   s.soot = 1.45
   box(-open, open, 0, back, .028, jambTop, K.STONE, 61, '-z')
+  s.soot = 1.3
   for (const side of [-1, 1]) {
     const x = side * open
     const p0 = L(x, back, .028), p1 = L(x, depth, .028), p2 = L(x, depth, jambTop), p3 = L(x, back, jambTop)
@@ -2220,6 +2224,18 @@ export function hallPlateLight(at: V3, n: V3): V3 {
   const c = hallCaseWash(q[0], q[1], at[2] - FLOOR_Z, nq), C = HALL_CASE_LIGHT.colour
   const warm: V3 = [1, .73, .545], westC: V3 = [.19, .155, .115], northC: V3 = [.12, .13, .14]
   return [0, 1, 2].map(i => warm[i]! * bounce * BOUNCE_K + westC[i]! * west + northC[i]! * north + C[i]! * c) as V3
+}
+/** THE FIREBOX UNDER THE HALL'S PRINT. Its soot sends back under 0.4 % of the
+ * light, less than the print's cool lift (print.ts), which Neutral's toe then
+ * leaves as the only colour: the firebox printed navy, its planes one tone.
+ * `unlift` is the lift's cool excess sent back as a warm term inside the
+ * firebox alone, read through the hall's exposure, so the print's black
+ * stands neutral there and the soot, the iron and the planes' light read on it.
+ * Read from print.ts, so the two cannot drift; the print itself is untouched. */
+const HALL_EXPOSURE = STATION_EXPOSURE.hall ?? PRINT.exposure, LIFT_TOP = Math.max(...PRINT.lift)
+export const FIREBOX_SOOT = {
+  back: [.03, .03, .031] as V3, cheek: [.11, .11, .115] as V3,
+  unlift: PRINT.lift.map(l => (LIFT_TOP - l) / HALL_EXPOSURE) as V3,
 }
 /** INSIDE AN EMBRASURE the bake's window, which stands at the mouth, lies
  * behind a face: the cross's inner faces see the daylit cheeks, soffit and
@@ -2791,7 +2807,13 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   hearthStone = mix(hearthStone, vec3(.02, .018, .016), crumbs.mul(.85))
   // the first tiles before the hearth take the scorches and the crumbs too
   const tileHearth = is(K.TILE).mul(smoothstep(HEARTH.depth + .3, HEARTH.depth + .5, hy)).mul(float(1).sub(smoothstep(1.3, 1.5, hx.abs()))).mul(float(1).sub(smoothstep(.04, .06, hz)))
-  const colour = mix(mix(mix(clean, hearthStone, onSlab), vec3(.07, .045, .03), scorch.mul(tileHearth).mul(.55)).mul(float(1).sub(crumbs.mul(tileHearth).mul(.7))), vec3(.012, .011, .010), sootField)
+  // THE FIREBOX'S SOOT: near neutral as carbon is, the back the blacker, the
+  // cheeks a soot film over the stone, so the two read as planes
+  const firebox = step(1.2, soot), fireBack = step(1.4, soot)
+  // the firebox's volume: its soot, its iron plate and andirons, the char
+  const inBox = max(firebox, inFire.mul(float(1).sub(smoothstep(1.66, 1.72, hz))))
+  const sootC = mix(vec3(.012, .011, .010), mix(vec3(...FIREBOX_SOOT.cheek), vec3(...FIREBOX_SOOT.back), fireBack), firebox)
+  const colour = mix(mix(mix(clean, hearthStone, onSlab), vec3(.07, .045, .03), scorch.mul(tileHearth).mul(.55)).mul(float(1).sub(crumbs.mul(tileHearth).mul(.7))), sootC, sootField)
   m.colorNode = colour
   m.roughnessNode = float(.9).sub(is(K.CASE).add(is(K.FRAME)).mul(.4)).sub(is(K.READING).mul(.12)).sub(is(K.TILE).mul(float(.22).add(wear.mul(.28))).mul(float(1).sub(jointCover))).sub(is(K.OAK).mul(.12)).add(is(K.JOINT).mul(.05)).sub(is(K.IRON).mul(.08))
     .sub(is(K.WAX).mul(float(.2).sub(ring.mul(.08)))).sub(is(K.CANDLE).mul(.38)).sub(is(K.BRASS).mul(.55)).sub(is(K.GLAZE).add(is(K.EARTH)).mul(.72)).add(is(K.CLOTH).mul(.08)).add(is(K.WEATHERED).mul(.05)).sub(is(K.BRICK).mul(brickSoot).mul(.3))
@@ -2823,7 +2845,8 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
     .mul(float(1).sub(smoothstep(TABLE.size[1] / 2 - .02, TABLE.size[1] / 2, hv.sub(TABLE.v).abs())))
     .mul(float(1).sub(smoothstep(FLOOR_Z + TABLE.size[2] - .08, FLOOR_Z + TABLE.size[2] - .06, Wp.y)))
   const flatTop = smoothstep(.5, .9, normalWorldGeometry.y).mul(float(1).sub(underBoards))
-  m.emissiveNode = perPixel ? diffuseReturn.add(windowGloss().mul(is(K.WAX).mul(waxed).mul(flatTop).add(is(K.GLAZE).add(is(K.EARTH)).mul(1.4))).mul(inSunBox)).add(dustGlowNode()) : diffuseReturn
+  const returned = diffuseReturn.add(vec3(...FIREBOX_SOOT.unlift).mul(inBox))
+  m.emissiveNode = perPixel ? returned.add(windowGloss().mul(is(K.WAX).mul(waxed).mul(flatTop).add(is(K.GLAZE).add(is(K.EARTH)).mul(1.4))).mul(inSunBox)).add(dustGlowNode()) : returned
   m.userData['engineBounce'] = true
   m.name = 'vinci/house-hall/fabric'
   return m
