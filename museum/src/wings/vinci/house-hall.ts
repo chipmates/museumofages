@@ -1260,8 +1260,8 @@ export const HALL_PAINTINGS_EYE: V2 = [6.6, 3.9]
 const EASEL_LEAN = 10 * Math.PI / 180, PANEL_THICK = .022
 const EASELS: readonly { id: string; u: number; v: number; ledge: number }[] = [
   { id: 'mona-lisa', u: 2.95, v: 6.75, ledge: .8 },
-  { id: 'virgin-and-child-with-st-anne', u: 4.05, v: 7.05, ledge: .5 },
-  { id: 'saint-john-the-baptist', u: 5.1, v: 6.65, ledge: .82 },
+  { id: 'virgin-and-child-with-st-anne', u: 1, v: 5, ledge: .5 },
+  { id: 'saint-john-the-baptist', u: 3, v: 5.5, ledge: .82 },
 ]
 
 /** The old wing's grid read in this room: its north runs to the visitor's
