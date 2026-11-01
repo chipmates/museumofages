@@ -2719,7 +2719,7 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const boardLot = fract(seed.mul(17.31).sin().mul(4375.85)).sub(.5)
   const caseC = oakRatio.mul(boardLot.mul(.1).add(1)).mul(vec3(.075, .052, .036).mul(is(K.CASE)).add(vec3(.17, .108, .062).mul(is(K.FRAME))).add(vec3(.1, .07, .048).mul(is(K.READING))))
   const weaveRatio = library ? library.sync('linen').sample({ uv: T, metres: .271 }).albedo : vec3(1, 1, 1)
-  const linenC = weaveRatio.pow(vec3(2.6, 2.6, 2.6)).mul(vec3(.039, .04, .041)).mul(mx_noise_float(Wp.mul(1.6)).mul(.07).add(mx_noise_float(Wp.mul(.45)).mul(.05)).add(1))
+  const linenC = weaveRatio.pow(vec3(2.6, 2.6, 2.6)).mul(vec3(.083, .078, .07)).mul(mx_noise_float(Wp.mul(1.6)).mul(.07).add(mx_noise_float(Wp.mul(.45)).mul(.05)).add(1))
   const caseOut = (at: CasePlace): N => { const o = caseAxes(at).out; return vec3(U[0] * o[0] + V[0] * o[1], 0, -(U[1] * o[0] + V[1] * o[1])) }
   const matFace = smoothstep(.5, .9, max(Ng.dot(caseOut(HALL_CASE_AT)), Ng.dot(caseOut(HALL_PIER_AT))))
   const matC = mix(vec3(.78, .77, .74), vec3(.6, .585, .54).mul(mix(vec3(1, 1, 1), weaveRatio, .35)).mul(boardLot.mul(.06).add(1)), matFace)
