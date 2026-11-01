@@ -183,13 +183,14 @@ function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
   // turns onto the table, the lion facing it from the far end. THE PHONE
   // STANDS JUST INSIDE THE SAME DOOR on its axis, 0.56 m in from the wall's
   // face, so its wider lens's walks to the close looks leave the doorway
-  // clear of its reveals, and turns 19 degrees north of the axis: the three
-  // paintings whole in its right half, the table across its middle, the west
-  // windows behind. From inside the door no field at rest holds the lion and
-  // Saint Anne both whole (58 degrees apart), so the lion stands just outside
-  // the left edge, never cut by it. Level, the shift lens at 0.33 puts eye
-  // level at a third of the height, the paintings just under it.
-  if(id==='hall') return narrow?{...aimedFrom(HALL_PHONE_EYE,-104,0,96.81),shift:-.33}:aimedFrom(HALL_DOOR,-124,-8,58)
+  // clear of its reveals. ITS HERO IS THE THREE PAINTINGS, the visit's own:
+  // turned 29 degrees north of the axis onto their middle, a 42 degree field
+  // across holds them whole at about half its width, the table's far end and
+  // the west windows round them. From inside the door no field at rest holds
+  // the lion and Saint Anne both whole (58 degrees apart), so the lion stays
+  // out of the frame, never cut by its edge. Level, the shift lens at 0.36
+  // stands the paintings' middle at a third of the height.
+  if(id==='hall') return narrow?{...aimedFrom(HALL_PHONE_EYE,-94,0,79.4),shift:-.36}:aimedFrom(HALL_DOOR,-124,-8,58)
   // THE CHAPEL IS THE ONE HERO. Square on from the court it was a wall of
   // ashlar in the house's shadow with nothing behind it; from the foot of the
   // raised lawn the gable took the left half of the frame, the gable the study
