@@ -323,9 +323,11 @@ function lightsOf(o: Opening): [number, number, number, number][] {
   const rows: V2[] = [[z + .01, transom - TRANSOM_M / 2], [transom + TRANSOM_M / 2, z + h]]
   return cols.flatMap(c => rows.map(r => [c[0], c[1], r[0], r[1]] as [number, number, number, number]))
 }
-/** Diamond quarries of 155 mm sides on a 45 degree lattice centred on each
- * light, as the house's glazing lays them; 7 mm cames, 14 mm at the border. */
-const QUARRY_M = .155, QUARRY_STEP = QUARRY_M * Math.SQRT2, CAME_HALF = .0035, BORDER_HALF = .007
+/** Diamond quarries of 80 mm sides on a 45 degree lattice centred on each
+ * light, the small quarries of the type; 7 mm cames, 14 mm at the border,
+ * and a saddle bar across each light every 0.3 m from its sill. */
+const SADDLE_M = .3
+const QUARRY_M = .08, QUARRY_STEP = QUARRY_M * Math.SQRT2, CAME_HALF = .0035, BORDER_HALF = .007
 /** THE DAY THROUGH THE GLASS, AS THE PRINT HOLDS IT. The hall is printed more
  * than a stop over the court, so the day behind the glass would print past
  * white: the room's own view of it is taken down to about the court's print,
@@ -946,7 +948,7 @@ function buildHallShell(s: Sink, hero: boolean): void {
   s.cast = false
   // Window embrasures: a tuffeau seat at the sill of every window, and the
   // room's face of each stone cross.
-  for (const w of WINDOWS) { windowSeat(s, w.facade, w.o); crossFace(s, w.facade, w.o) }
+  for (const w of WINDOWS) { windowSeat(s, w.facade, w.o); crossFace(s, w.facade, w.o); shutters(s, w.facade, w.o) }
   // The chimneypiece A-FURNITURE proposes on the passage wall, and the few
   // things of the period that stand in the hall. Both cast in the sun.
   s.cast = true
@@ -1836,6 +1838,25 @@ function windowSeat(s: Sink, f: Facade, o: Opening): void {
   // the two ends against the reveal cheeks are hidden
 }
 
+/** THE INNER SHUTTERS of the lower lights, the type painted in Tours about
+ * 1505: two framed leaves to a light, folded together and stood open against
+ * the embrasure's cheek, their two raised panels to the room. */
+function shutters(s: Sink, f: Facade, o: Opening): void {
+  const fr = frame(f), mouth = thicknessOf(f) + LINING_GAP
+  const at = (along: number, inward: number, z: number): V3 => [f.from[0] + fr.dir[0] * along - fr.out[0] * inward, f.from[1] + fr.dir[1] * along - fr.out[1] * inward, z]
+  const transom = o.base_m + o.height_m * TRANSOM_AT, z0 = o.base_m + .056, z1 = transom - TRANSOM_M / 2 - .006, mid = (z0 + z1) / 2
+  const i0 = CASEMENT_IN + .02, i1 = Math.min(i0 + (o.width_m - MULLION_M) / 4, mouth - .01)
+  const D: V3 = [fr.dir[0], fr.dir[1], 0], IN: V3 = [-fr.out[0], -fr.out[1], 0]
+  const slab = (a0: number, a1: number, n0: number, n1: number, y0: number, y1: number, seed: number): void =>
+    s.box(at((a0 + a1) / 2, (n0 + n1) / 2, (y0 + y1) / 2), scale(D, (a1 - a0) / 2), scale(IN, (n1 - n0) / 2), [0, 0, (y1 - y0) / 2], K.WAX, seed)
+  for (const [k, [a0, a1]] of ([[o.from_m + .004, o.from_m + .05], [o.from_m + o.width_m - .05, o.from_m + o.width_m - .004]] as V2[]).entries()) {
+    slab(a0, a1, i0, i1, z0, z1, 91 + k)
+    // the panel sits 4 mm into the leaf, so no two faces share a plane
+    const [p0, p1] = k === 0 ? [a1 - .004, a1 + .007] : [a0 - .007, a0 + .004]
+    for (const [y0, y1] of [[z0 + .07, mid - .035], [mid + .035, z1 - .07]] as V2[]) slab(p0, p1, i0 + .055, i1 - .055, y0, y1, 93 + k)
+  }
+}
+
 /** The inner faces of a window's mullion and transom, as the room lights
  * them: the shell's own stone faces stand a few millimetres behind. */
 function crossFace(s: Sink, f: Facade, o: Opening): void {
@@ -1977,16 +1998,21 @@ function innerGlass(hero: boolean): Mesh {
   // into dots
   const width = (x: N, k: number): N => vec2(x.dFdx(), x.dFdy()).length().mul(k).max(1e-6)
   const line = (d: N, px: N, half: number): N => float(1).sub(smoothstep(float(half).sub(px), float(half).add(px), d))
-  const lead = max(max(line(da, width(a, QUARRY_M), CAME_HALF), line(db, width(b, QUARRY_M), CAME_HALF)), line(border, width(E.x, 1), BORDER_HALF))
+  const came = max(max(line(da, width(a, QUARRY_M), CAME_HALF), line(db, width(b, QUARRY_M), CAME_HALF)), line(border, width(E.x, 1), BORDER_HALF))
+  const barAt = abs(fract(L.y.div(SADDLE_M).add(.5)).sub(.5)).mul(SADDLE_M)
+  const lead = max(came, line(barAt, width(L.y, 1), .006).mul(smoothstep(.04, .07, L.y)).mul(smoothstep(.04, .07, E.w)))
   // each quarry is its own piece of blown glass: its own clarity and its own
   // share of the milk, so the lattice reads as panes against the bright day
   const qa = floor(a), qb = floor(b)
   const piece = fract(qa.mul(12.9898).add(qb.mul(78.233)).add(L.z.mul(4.1)).sin().mul(43758.5453))
   // old glass holds a little of the day it lets through: a warm milk where
   // the sun stands on it, a cool one on the north lights
-  const milk = mix(vec3(.030, .034, .036), vec3(.16, .135, .095), L.z).mul(MILK).mul(piece.mul(.6).add(.7))
+  // blown glass is never clear: a faint green-grey in the metal, and each
+  // quarry thicker and thinner across itself, so the day through it swims
+  const swim = mx_noise_float(vec3(L.x.mul(41), L.y.mul(41), piece.mul(17))).mul(.5).add(.5)
+  const milk = mix(vec3(.030, .034, .036), vec3(.16, .135, .095), L.z).mul(vec3(.93, 1.02, .95)).mul(MILK).mul(piece.mul(.6).add(.7)).mul(swim.mul(.5).add(.75))
   m.colorNode = mix(milk, vec3(.010, .0095, .009), lead)
-  m.opacityNode = float(1).sub(lead).mul(mix(float(.86), float(.80), L.z)).mul(WINDOW_PULL).mul(piece.mul(.24).add(.88))
+  m.opacityNode = float(1).sub(lead).mul(mix(float(.86), float(.80), L.z)).mul(WINDOW_PULL).mul(piece.mul(.24).add(.88)).mul(swim.mul(.14).add(.93))
   // the shafts' dust before the panes: a ray that ends on the glass crossed them too
   if (hero) m.colorNode = mix(milk, vec3(.010, .0095, .009), lead).add(dustGlowNode())
   m.blending = CustomBlending; m.blendEquation = AddEquation
@@ -2334,8 +2360,6 @@ function windowShade(): N {
     // however near the occluder stands (a joist's face under the boards)
     through = max(through, inside.mul(smoothstep(zb - .02, zb + .02, z)).mul(float(1).sub(smoothstep(zb + h - .02, zb + h + .02, z))))
     let m: N = max(band(abs(along.sub(mid)), MULLION_M / 2), band(abs(z.sub(transom)), TRANSOM_M / 2))
-    const bars = Math.max(2, Math.round(h / .44))
-    for (let i = 1; i < bars; i++) if (Math.abs(zb + i * h / bars - transom) > .08) m = max(m, band(abs(z.sub(zb + i * h / bars)), .0065).mul(.8))
     // the diamond lattice of each light, centred on it, rows from its sill
     const lower = z.lessThan(transom)
     const cu = along.lessThan(mid).select(float((x + mid - MULLION_M / 2) / 2), float((mid + MULLION_M / 2 + x + wd) / 2))
@@ -2343,7 +2367,7 @@ function windowShade(): N {
     const du = along.sub(cu), dv = z.sub(z0)
     const a = du.add(dv).div(QUARRY_STEP), b = dv.sub(du).div(QUARRY_STEP)
     const da = abs(fract(a.add(.5)).sub(.5)).mul(QUARRY_M), db = abs(fract(b.add(.5)).sub(.5)).mul(QUARRY_M)
-    m = max(m, max(band(da, CAME_HALF), band(db, CAME_HALF)).mul(.9))
+    m = max(m, max(band(da, CAME_HALF), band(db, CAME_HALF)).mul(.9), band(abs(fract(dv.div(SADDLE_M).add(.5)).sub(.5)).mul(SADDLE_M), .006).mul(.8).mul(smoothstep(.04, .07, dv)))
     shade = max(shade, m.mul(inside))
   }
   return float(1).sub(shade.clamp(0, 1)).mul(through)
