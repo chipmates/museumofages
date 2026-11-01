@@ -2597,7 +2597,12 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const warmth = smoothstep(FLOOR_Z + 2.2, FLOOR_Z + 3.2, Wp.y).mul(overHearth).mul(.06)
   // each of the hall's four linings carries its own seed, so no two walls
   // were laid alike; the doorways' cheeks keep their own field
-  const plaster = mix(keptLimePlaster(Tw, vec3(.70, .65, .55), 1.7).mul(mix(vec3(1, 1, 1), vec3(.97, .93, .86), warmth.mul(10))),
+  // THE OPEN PLASTER SCAN (ambientCG Plaster007, CC0, the library's
+  // plaster-lime-aged) gives the kept wall a real trowel's and wash's
+  // variety; only its lightness is taken and held to a few per cent, so none
+  // of its stains reach the wall
+  const plasterScan = library ? mix(float(1), library.sync('plaster-lime-aged').sample({ uv: Tw, metres: 1.6 }).albedo.dot(vec3(.2126, .7152, .0722)).clamp(.86, 1.12), .6) : float(1)
+  const plaster = mix(keptLimePlaster(Tw, vec3(.70, .65, .55), 1.7).mul(plasterScan).mul(mix(vec3(1, 1, 1), vec3(.97, .93, .86), warmth.mul(10))),
     vec3(.43, .19, .11).mul(mx_noise_float(vec3(Tw.x.mul(3.1), Tw.y.mul(9), 6.6)).mul(.08).add(1)), paintedBand(Tw, positionWorld.y).mul(is(K.PLASTER)))
   // oak: grain along the member
   const grain = mx_noise_float(vec3(T.x.mul(2.2), T.y.mul(38), seed.mul(13))).mul(.14).add(mx_noise_float(vec3(T.x.mul(9), T.y.mul(120), seed)).mul(.05))
