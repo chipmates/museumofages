@@ -22,6 +22,7 @@ import { HALL_LION } from './collection/stands'
 import { mountedSheets, plateOf, sheetFace, type MountedSheet } from './collection/body-wall-plan'
 import { BODY_WALL_CENTRE, type BodyMount } from './collection/body-wall'
 import { FLOOR as PAVILION_FLOOR } from './collection/layout'
+import { CASE, CASE_LIGHT, GRID_DROP, HALL_CASE_AT, HALL_PIER_AT, PIER, SHEET_D, caseAxes, caseLayout, caseToHall, caseWashLocal, gridA, hallToCase, pierLayout, pierWashLocal, type CaseKind, type CaseLayout, type CasePlace } from './collection/hall-case'
 import { getWork } from './pictures/register'
 import { trueScale } from './pictures/scale'
 import type { HallPlate, HallPlates } from './collection/body-wall-hall'
@@ -188,7 +189,7 @@ const DOOR_H = Math.max(KITCHEN_DOOR.height_m, LINK_DOOR.height_m)
 /* ---- the sink: one mesh, every surface a kind the material reads ---- */
 
 /** Surface kinds, read by the material. */
-export const K = { TILE: 0, JOINT: 1, PLASTER: 2, OAK: 3, STONE: 4, BRICK: 5, IRON: 6, BRASS: 7, GLAZE: 8, ASH: 9, CHAR: 10, WAX: 11, WEATHERED: 12, REVEAL: 13, CLOTH: 14, EARTH: 15, CANDLE: 16, LINEN: 17, MAT: 18, PANEL: 19 } as const
+export const K = { TILE: 0, JOINT: 1, PLASTER: 2, OAK: 3, STONE: 4, BRICK: 5, IRON: 6, BRASS: 7, GLAZE: 8, ASH: 9, CHAR: 10, WAX: 11, WEATHERED: 12, REVEAL: 13, CLOTH: 14, EARTH: 15, CANDLE: 16, LINEN: 17, MAT: 18, PANEL: 19, CASE: 20, FRAME: 21, READING: 22 } as const
 interface Vertex { p: V3; n: V3; t: V2; kind: number; seed: number; wear: number; soot: number; lit: number; cast: boolean; fixed?: [number, number] }
 class Sink {
   v: Vertex[] = []
@@ -1212,41 +1213,28 @@ function floorWear(q: V2): number {
 
 /* ---- the anatomy and the three paintings, for the 1517 visit ---- */
 
-/** THE ANATOMY'S CABINET, the museum's present-day display (in 1517 the
- * sheets were loose; single mounts date from the nineteenth century): the old
- * wing's 28 sheets in its standard mounts, at its own grid and spacing, on the
- * kitchen partition west of the door, the one run of this room that holds the
- * grid's 3.23 m. The first main beam lands on this wall at u 2.95 on a corbel
- * from 2.42 m up, so the grid stands half a metre lower than the old wing's,
- * its top course under the corbel, on a low plan chest. Hall frame, heights
- * from the floor. */
-export const HALL_GRID_DROP = .5
-export const HALL_CABINET = { u0: .25, u1: 3.85, centre: 2.1, deep: .52, ledge: .452, upper: .3, top: 2.405 } as const
-/** the linen ground and the sheets' face, off the partition's plaster */
-const LINEN_D = .031, SHEET_D = .034
-/** the mat over a sheet and the frame's lip over the mat, as the old wing's */
-const MAT_FACE = .0035, FRAME_LIP = .008, FRAME_FACE = .017
-/** THE SHEET APART stands round the corner on the west wall's south pier,
- * facing the room, its glass model on a stand under it: the old wing's niche
- * does not fit beside the hang on this wall. */
-export const HALL_VALVE = { v: .97, z: 1.7, board: [.74, 1.2, 1.43, 1.97] as const, stand: { u0: .05, u1: .45, v0: .74, v1: 1.2, top: 1.04 } } as const
-/** THE CASES' OWN LIGHT, present-day fittings like the cases: a warm strip
- * hidden under the cabinet's top board, its optic laying an even wash down the
- * linen, and one under the sheet apart's hood. Nothing hangs from the 1517
- * ceiling or walls. Strengths are the wash on a face turned to the strip;
- * `fall` is what the wash loses from the top of a case to its foot. */
-export const HALL_CASE_LIGHT = { colour: [1, .82, .62] as V3, cabinet: .42, valve: .555, fall: .06, hood: .16 } as const
-const smoothJS = (a: number, b: number, x: number): number => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t) }
-const insideJS = (x: number, lo: number, hi: number): number => smoothJS(lo - .004, lo + .004, x) * (1 - smoothJS(hi - .004, hi + .004, x))
+/** THE ANATOMY'S CASE and the sheet apart's pier are laid in their own
+ * module (`collection/hall-case.ts`), each at a place of this room's frame;
+ * these are their extents read back in the hall's u, v for the audit. */
+export const HALL_GRID_DROP = GRID_DROP
+const CASE_SPAN = [caseToHall(HALL_CASE_AT, CASE.a0, 0)[0], caseToHall(HALL_CASE_AT, CASE.a1, 0)[0]]
+export const HALL_CABINET = { u0: Math.min(...CASE_SPAN), u1: Math.max(...CASE_SPAN), centre: HALL_CASE_AT.u, deep: CASE.deep, ledge: CASE.ledge, upper: CASE.upper, top: CASE.top } as const
+export const HALL_VALVE = (() => {
+  const b0 = caseToHall(HALL_PIER_AT, PIER.board[1], 0)[1], b1 = caseToHall(HALL_PIER_AT, PIER.board[0], 0)[1]
+  const st = PIER.stand, c0 = caseToHall(HALL_PIER_AT, st.a1, st.d0), c1 = caseToHall(HALL_PIER_AT, st.a0, st.d1)
+  return { v: HALL_PIER_AT.v, z: PIER.z, board: [Math.min(b0, b1), Math.max(b0, b1), PIER.board[2], PIER.board[3]] as const,
+    stand: { u0: Math.min(c0[0], c1[0]), u1: Math.max(c0[0], c1[0]), v0: Math.min(c0[1], c1[1]), v1: Math.max(c0[1], c1[1]), top: st.top } }
+})()
+export const HALL_CASE_LIGHT = { ...CASE_LIGHT, hood: PIER.hood } as const
 /** What the cases' strips lay on a point: hall frame, height from the floor,
  * the normal in u, v, up. The shader's `caseWashNode` is the same sum. */
 export function hallCaseWash(u: number, v: number, z: number, n: V3): number {
-  const C = HALL_CABINET, L = HALL_CASE_LIGHT, [b0, b1, z0, z1] = HALL_VALVE.board, cTop = C.top - .03
-  const cab = insideJS(u, C.u0 + .045, C.u1 - .045) * insideJS(v, -.01, C.upper + .01) * insideJS(z, C.ledge - .006, cTop)
-    * (Math.min(1, Math.max(0, n[1] + n[2] * .5)) + Math.abs(n[0]) * .45) * (1 - (cTop - z) / (cTop - C.ledge) * L.fall) * L.cabinet
-  const valve = insideJS(u, -.01, L.hood + .01) * insideJS(v, b0, b1) * insideJS(z, z0 - .006, z1)
-    * (Math.min(1, Math.max(0, n[0] + n[2] * .5)) + Math.abs(n[1]) * .45) * (1 - (z1 - z) / (z1 - z0) * L.fall) * L.valve
-  return cab + valve
+  let sum = 0
+  for (const [at, wash] of [[HALL_CASE_AT, caseWashLocal], [HALL_PIER_AT, pierWashLocal]] as const) {
+    const [a, d] = hallToCase(at, u, v), { along, out } = caseAxes(at)
+    sum += wash(a, d, z, n[0] * along[0] + n[1] * along[1], n[0] * out[0] + n[1] * out[1], n[2])
+  }
+  return sum
 }
 /** A print is drawn unlit and outside the tone map (`pictures/stream.ts`): the
  * room's light at its place times this gain reads as the surfaces round it.
@@ -1264,23 +1252,19 @@ const EASELS: readonly { id: string; u: number; v: number; ledge: number }[] = [
   { id: 'saint-john-the-baptist', u: 1.25, v: 5.25, ledge: .82 },
 ]
 
-/** The old wing's grid read in this room: its north runs to the visitor's
- * right, which on this wall is -u; its heights from its own floor. */
-const gridU = (north: number): number => HALL_CABINET.centre - (north - BODY_WALL_CENTRE)
-const gridZ = (height: number): number => height - PAVILION_FLOOR - HALL_GRID_DROP
-/** A point of the old wing's cabinet (three's axes) carried onto the partition
- * here, the sheets' face at the same depth off its linen: the eyes that read
- * the sheets stand where they stood before the grid. */
+/** A point of the old wing's cabinet (three's axes) carried onto the case or
+ * the pier here, the sheets' face at the same depth off its linen: the eyes
+ * that read the sheets stand where they stood before the grid. */
 export function hallFromPavilion(p: Vector3, mount: BodyMount): Vector3 {
   const off = SHEET_D + (p.x - sheetFace(mount)), z = FLOOR_Z + p.y - PAVILION_FLOOR
-  // the sheet apart stands on the west pier: its wall's north is this room's +v
-  const q = mount.row === 'vortex' ? P(off, HALL_VALVE.v + (-p.z - mount.north), z) : P(gridU(-p.z), off, z)
+  const [u, v] = mount.row === 'vortex' ? caseToHall(HALL_PIER_AT, mount.north + p.z, off) : caseToHall(HALL_CASE_AT, gridA(-p.z), off)
+  const q = P(u, v, z)
   return new Vector3(q[0], q[2], -q[1])
 }
 /** Where a sheet's middle stands in this room, as a height of the old wing's
  * frame: its eye is solved there, a visitor's eye height kept. */
 export const hallSheetDatum = (mount: BodyMount): number =>
-  mount.row === 'vortex' ? PAVILION_FLOOR + HALL_VALVE.z : mount.datum - HALL_GRID_DROP
+  mount.row === 'vortex' ? PAVILION_FLOOR + PIER.z : mount.datum - GRID_DROP
 /** The sheet apart in this room: its middle on the pier, and the stand's top. */
 export const HALL_VALVE_SHEET = { face: SHEET_D, v: HALL_VALVE.v, z: HALL_VALVE.z, standTop: HALL_VALVE.stand.top }
 /** The hall's frame as world points, for the eyes the rail stands here. */
@@ -1296,6 +1280,10 @@ export function hallCabinetPlan(): { boxes: { centre: V3; axes: [V3, V3, V3]; ki
     lathe: (c: V3, profile: V2[], _n: number, kind: number) => {
       const r = Math.max(...profile.map(q => q[0])), h = Math.max(...profile.map(q => q[1]))
       boxes.push({ centre: [c[0], c[1], c[2] + h / 2], axes: [[U[0] * r, U[1] * r, 0], [V[0] * r, V[1] * r, 0], [0, 0, h / 2]], kind })
+    },
+    extrude: (a: V3, b: V3, side: V3, up: V3, section: V2[], kind: number) => {
+      const r = Math.max(...section.map(q => Math.hypot(q[0], q[1])))
+      boxes.push({ centre: scale(add(a, b), .5), axes: [scale(sub(b, a), .5), scale(unit(side), r), scale(unit(up), r)], kind })
     } } as unknown as Sink
   const kept = platesOut
   platesOut = []
@@ -1318,99 +1306,28 @@ let platesShown: HallPlates | null = null
 export const hallPlateHost = (): typeof plateHost => plateHost
 export const showHallPlates = (shown: HallPlates): void => { platesShown = shown }
 
-type WallSide = 'A' | 'D'
-/** A box on a wall: a along it, d off it, z from the floor. Faces hidden on
- * a neighbour are named by where they lie, so no two faces share a plane. */
-function wallBox(s: Sink, w: WallSide, a0: number, a1: number, d0: number, d1: number, z0: number, z1: number, kind: number, seed: number,
-  hide: { back?: boolean; a0?: boolean; a1?: boolean; z0?: boolean; z1?: boolean } = {}): void {
-  const along = w === 'A' ? 'x' : 'y', depth = w === 'A' ? 'y' : 'x'
-  const skip = `${hide.back ? `-${depth}` : ''}${hide.a0 ? `-${along}` : ''}${hide.a1 ? `+${along}` : ''}${hide.z0 ? '-z' : ''}${hide.z1 ? '+z' : ''}`
-  if (w === 'A') hbox(s, a0, a1, d0, d1, z0, z1, kind, seed, skip)
-  else hbox(s, d0, d1, a0, a1, z0, z1, kind, seed, skip)
-}
-type Rect = [number, number, number, number]
-/** A sheet in the old wing's standard mount: the oak frame's four members on
- * the linen, the mat round its window, the plate a mat's depth behind. */
-function mountedSheet(s: Sink, w: WallSide, frame: Rect, window: Rect, seed: number): void {
-  const [a0, a1, z0, z1] = frame, f = FRAME_FACE, dMat = SHEET_D + MAT_FACE, dLip = dMat + FRAME_LIP
-  wallBox(s, w, a0, a1, LINEN_D, dLip, z1 - f, z1, K.OAK, seed, { back: true })
-  wallBox(s, w, a0, a1, LINEN_D, dLip, z0, z0 + f, K.OAK, seed, { back: true })
-  wallBox(s, w, a0, a0 + f, LINEN_D, dLip, z0 + f, z1 - f, K.OAK, seed, { back: true, z0: true, z1: true })
-  wallBox(s, w, a1 - f, a1, LINEN_D, dLip, z0 + f, z1 - f, K.OAK, seed, { back: true, z0: true, z1: true })
-  const [b0, b1, y0, y1] = window, m0 = a0 + f, m1 = a1 - f, n0 = z0 + f, n1 = z1 - f
-  wallBox(s, w, m0, m1, LINEN_D, dMat, y1, n1, K.MAT, seed, { back: true, a0: true, a1: true, z1: true })
-  wallBox(s, w, m0, m1, LINEN_D, dMat, n0, y0, K.MAT, seed, { back: true, a0: true, a1: true, z0: true })
-  wallBox(s, w, m0, b0, LINEN_D, dMat, y0, y1, K.MAT, seed, { back: true, a0: true, z0: true, z1: true })
-  wallBox(s, w, b1, m1, LINEN_D, dMat, y0, y1, K.MAT, seed, { back: true, a1: true, z0: true, z1: true })
-}
-/** The old wing's frame and window of a sheet, along this room's wall. */
-function gridRects(m: MountedSheet, along: (north: number) => number, up: (height: number) => number): { frame: Rect; window: Rect } {
-  const r = (n0: number, n1: number, z0: number, z1: number): Rect => { const a = along(n0), b = along(n1); return [Math.min(a, b), Math.max(a, b), up(z0), up(z1)] }
-  return { frame: r(m.frame.south, m.frame.north, m.frame.bottom, m.frame.top), window: r(m.window.south, m.window.north, m.window.bottom, m.window.top) }
-}
-
-function cabinet(s: Sink): void {
-  const { u0, u1, deep, ledge, upper, top } = HALL_CABINET, toe = .08, stile = .035, joint = .006, board = .032
-  // THE PLAN CHEST: a toe set back, the carcass, the top board a finger over,
-  // four stacks of six drawers between oak stiles, a bronze pull on each
-  hbox(s, u0 + .05, u1 - .05, .005, deep - .07, 0, toe, K.OAK, 120, '+z')
-  hbox(s, u0, u1, .005, deep - .012, toe, ledge - board, K.OAK, 121, '+z')
-  hbox(s, u0 - .015, u1 + .015, .005, deep + .008, ledge - board, ledge, K.OAK, 122)
-  const stacks = 4, rows = 2, w = (u1 - u0 - (stacks + 1) * stile) / stacks, h = (ledge - board - toe - (rows + 1) * joint) / rows
-  for (let i = 0; i <= stacks; i++) hbox(s, u0 + i * (w + stile), u0 + i * (w + stile) + stile, deep - .012, deep, toe, ledge - board, K.OAK, 123, '-y-z+z')
-  for (let i = 0; i < stacks; i++) {
-    const a = u0 + stile + i * (w + stile)
-    hbox(s, a, a + w, deep - .012, deep - .004, toe, toe + joint, K.OAK, 124, '-y-x+x-z')
-    for (let j = 0; j < rows; j++) {
-      const z = toe + joint + j * (h + joint)
-      hbox(s, a + .002, a + w - .002, deep - .012, deep - .003, z, z + h, K.OAK, 130 + i * rows + j, '-y')
-      hbox(s, a + w / 2 - .045, a + w / 2 + .045, deep - .003, deep + .009, z + h * .58, z + h * .58 + .014, K.BRASS, 160 + j, '-y')
-    }
+/** A case's layout set at its place: boxes, turned parts, rods and the
+ * sheets' plates, from its own frame into the hall's. */
+const CASE_KIND: Record<CaseKind, number> = { case: K.CASE, frame: K.FRAME, reading: K.READING, linen: K.LINEN, mat: K.MAT, bronze: K.BRASS }
+function placeCase(s: Sink, at: CasePlace, layout: CaseLayout): void {
+  const { along, out } = caseAxes(at)
+  const A: V3 = [U[0] * along[0] + V[0] * along[1], U[1] * along[0] + V[1] * along[1], 0], O: V3 = [U[0] * out[0] + V[0] * out[1], U[1] * out[0] + V[1] * out[1], 0]
+  const at3 = (a: number, d: number, z: number): V3 => { const [u, v] = caseToHall(at, a, d); return P(u, v, FLOOR_Z + z) }
+  for (const b of layout.boxes)
+    s.box(at3((b.a0 + b.a1) / 2, (b.d0 + b.d1) / 2, (b.z0 + b.z1) / 2), scale(A, (b.a1 - b.a0) / 2), scale(O, (b.d1 - b.d0) / 2), [0, 0, (b.z1 - b.z0) / 2], CASE_KIND[b.kind], b.seed, b.skip)
+  for (const l of layout.lathes) s.lathe(at3(l.a, l.d, l.z), l.profile, 40, CASE_KIND[l.kind], l.seed)
+  for (const r of layout.rods) {
+    const ring: V2[] = Array.from({ length: 12 }, (_, k) => [Math.cos(k / 12 * Math.PI * 2) * r.radius, Math.sin(k / 12 * Math.PI * 2) * r.radius])
+    s.extrude(at3(...r.from), at3(...r.to), O, [0, 0, 1], ring, CASE_KIND[r.kind], r.seed)
   }
-  // THE UPPER CASE: the back, the linen ground the frames hang on, the sides
-  // and a top board a hand under the beam's corbel
-  hbox(s, u0, u1, .005, LINEN_D - .006, ledge, top - .03, K.OAK, 125, '-z+z')
-  hbox(s, u0 + .05, u1 - .05, LINEN_D - .006, LINEN_D, ledge, top - .03, K.LINEN, 126, '-y-x+x-z+z')
-  for (const [a, b] of [[u0, u0 + .05], [u1 - .05, u1]] as V2[]) hbox(s, a, b, LINEN_D - .006, upper, ledge, top - .03, K.OAK, 127, '-z+z-y')
-  hbox(s, u0 - .02, u1 + .02, .005, upper + .02, top - .03, top, K.OAK, 129)
-  // the sheets in the old wing's order: column 0 at the visitor's left
-  for (const [k, m] of mountedSheets().entries()) {
-    if (m.mount.row === 'vortex') continue
-    const { frame, window } = gridRects(m, gridU, gridZ)
-    mountedSheet(s, 'A', frame, window, 200 + k)
-    const plate = plateOf(m.mount)
-    const centre = P(gridU(m.mount.north), SHEET_D, FLOOR_Z + gridZ(m.mount.datum)), normal: V3 = [V[0], V[1], 0]
-    platesOut.push({ kind: 'sheet', id: m.mount.id, centre, right: [-U[0], -U[1], 0], up: [0, 0, 1], normal, width: plate.width, height: plate.height,
-      tone: scale(hallPlateLight(centre, normal), HALL_PLATE_GAIN.sheet) })
+  for (const sh of layout.sheets) {
+    const centre = at3(sh.a, SHEET_D, sh.z)
+    platesOut.push({ kind: 'sheet', id: sh.id, centre, right: scale(A, -1), up: [0, 0, 1], normal: O, width: sh.width, height: sh.height,
+      tone: scale(hallPlateLight(centre, O), HALL_PLATE_GAIN.sheet) })
   }
 }
-
-/** THE SHEET APART on the west wall's pier, and the museum's stand under it. */
-function valvePier(s: Sink): void {
-  const m = mountedSheets().find(x => x.mount.row === 'vortex')
-  if (!m) return
-  const [b0, b1, z0, z1] = HALL_VALVE.board
-  wallBox(s, 'D', b0, b1, .005, LINEN_D - .006, z0, z1, K.OAK, 140)
-  wallBox(s, 'D', b0 + .03, b1 - .03, LINEN_D - .006, LINEN_D, z0 + .03, z1 - .03, K.LINEN, 141, { back: true })
-  const along = (n: number): number => HALL_VALVE.v + (n - m.mount.north), up = (h: number): number => HALL_VALVE.z + (h - m.mount.datum)
-  const { frame, window } = gridRects(m, along, up)
-  mountedSheet(s, 'D', frame, window, 142)
-  const plate = plateOf(m.mount)
-  const centre = P(SHEET_D, HALL_VALVE.v, FLOOR_Z + HALL_VALVE.z), normal: V3 = [U[0], U[1], 0]
-  platesOut.push({ kind: 'sheet', id: m.mount.id, centre, right: [V[0], V[1], 0], up: [0, 0, 1], normal, width: plate.width, height: plate.height,
-    tone: scale(hallPlateLight(centre, normal), HALL_PLATE_GAIN.sheet) })
-  // the hood the strip hides under: a top board and two cheeks of the stand's oak
-  const hood = HALL_CASE_LIGHT.hood
-  wallBox(s, 'D', b0 - .02, b1 + .02, .005, hood, z1, z1 + .03, K.OAK, 147)
-  for (const [a, b] of [[b0 - .02, b0], [b1, b1 + .02]] as V2[]) wallBox(s, 'D', a, b, .005, hood - .01, z0 - .02, z1, K.OAK, 148, { z1: true })
-  const { u0, u1, v0, v1, top } = HALL_VALVE.stand, leg = .035, inset = .03
-  // the model's turned oak foot, the stand's own wood (the glass stands on it)
-  s.lathe(P((u0 + u1) / 2, (v0 + v1) / 2, FLOOR_Z + top), [[.1, 0], [.105, .0075], [.1, .0175], [.0825, .025], [.0775, .035], [0, .035]], 40, K.OAK, 146)
-  hbox(s, u0, u1, v0, v1, top - .025, top, K.OAK, 143)
-  hbox(s, u0 + inset, u1 - inset, v0 + inset, v1 - inset, top - .1, top - .025, K.OAK, 144, '+z')
-  for (const [a, b] of [[u0 + inset, v0 + inset], [u1 - inset - leg, v0 + inset], [u0 + inset, v1 - inset - leg], [u1 - inset - leg, v1 - inset - leg]] as V2[])
-    hbox(s, a, a + leg, b, b + leg, 0, top - .1, K.OAK, 145, '+z')
-}
+function cabinet(s: Sink): void { placeCase(s, HALL_CASE_AT, caseLayout()) }
+function valvePier(s: Sink): void { placeCase(s, HALL_PIER_AT, pierLayout()) }
 
 /** A PLAIN EASEL OF THE TIME (ours): two front legs leaning back, a back leg,
  * a ledge the panel stands on and a bar at the top; the panel on it. */
@@ -2477,11 +2394,15 @@ function caseWashNode(Wp: N, Nw: N): N {
   const ne = Nw.x, nn = Nw.z.negate(), nz = Nw.y
   const nu = ne.mul(U[0]).add(nn.mul(U[1])), nv = ne.mul(V[0]).add(nn.mul(V[1]))
   const inside = (x: N, lo: number, hi: number): N => smoothstep(lo - .004, lo + .004, x).mul(float(1).sub(smoothstep(hi - .004, hi + .004, x)))
-  const C = HALL_CABINET, L = HALL_CASE_LIGHT, [b0, b1, z0, z1] = HALL_VALVE.board, cTop = C.top - .03
-  const cab = inside(hu, C.u0 + .045, C.u1 - .045).mul(inside(hv, -.01, C.upper + .01)).mul(inside(hz, C.ledge - .006, cTop))
-    .mul(clamp(nv.add(nz.mul(.5)), 0, 1).add(nu.abs().mul(.45))).mul(float(1).sub(float(cTop).sub(hz).mul(L.fall / (cTop - C.ledge)))).mul(L.cabinet)
-  const valve = inside(hu, -.01, L.hood + .01).mul(inside(hv, b0, b1)).mul(inside(hz, z0 - .006, z1))
-    .mul(clamp(nu.add(nz.mul(.5)), 0, 1).add(nv.abs().mul(.45))).mul(float(1).sub(float(z1).sub(hz).mul(L.fall / (z1 - z0)))).mul(L.valve)
+  const local = (at: CasePlace): { a: N; d: N; na: N; no: N } => {
+    const { along, out } = caseAxes(at), du = hu.sub(at.u), dv = hv.sub(at.v)
+    return { a: du.mul(along[0]).add(dv.mul(along[1])), d: du.mul(out[0]).add(dv.mul(out[1])), na: nu.mul(along[0]).add(nv.mul(along[1])), no: nu.mul(out[0]).add(nv.mul(out[1])) }
+  }
+  const C = CASE, L = CASE_LIGHT, [b0, b1, z0, z1] = PIER.board, cTop = C.top - .03, c = local(HALL_CASE_AT), p = local(HALL_PIER_AT)
+  const cab = inside(c.a, C.a0 + .045, C.a1 - .045).mul(inside(c.d, -.01, C.upper + .01)).mul(inside(hz, C.ledge - .006, cTop))
+    .mul(clamp(c.no.add(nz.mul(.5)), 0, 1).add(c.na.abs().mul(.45))).mul(float(1).sub(float(cTop).sub(hz).mul(L.fall / (cTop - C.ledge)))).mul(L.cabinet)
+  const valve = inside(p.d, -.01, PIER.hood + .01).mul(inside(p.a, b0, b1)).mul(inside(hz, z0 - .006, z1))
+    .mul(clamp(p.no.add(nz.mul(.5)), 0, 1).add(p.na.abs().mul(.45))).mul(float(1).sub(float(z1).sub(hz).mul(L.fall / (z1 - z0)))).mul(L.valve)
   return cab.add(valve)
 }
 
@@ -2733,12 +2654,22 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
     .mul(is(K.STONE).add(is(K.TILE).mul(.45)))
   tuffJ = mix(tuffJ, ashC, spill.mul(.55))
   tileColour = mix(tileColour, ashC.mul(.8), spill.mul(.4))
-  // THE MUSEUM'S DISPLAY: the cabinet's dark linen ground, the mats' pale
-  // board, and the bare poplar of the painted panels' edges
-  const linenC = vec3(.10, .09, .075).mul(mx_noise_float(vec3(T.x.mul(140), T.y.mul(140), seed)).mul(.04).add(1))
-  const matC = vec3(.70, .66, .57).mul(mx_noise_float(Wp.mul(40)).mul(.025).add(1))
+  // THE MUSEUM'S DISPLAY in the old wing's materials: the case's fumed oak,
+  // its frames' oiled oak and the reading surface waxed dark, each board its
+  // own piece of the photographed oak, the grain along its longer side; the
+  // deep linen ground, the weave lifted so the dye still shows it; the mats'
+  // pale linen board, each mount its own lot, the bevel its white core
+  const oakAt = vec2(T.y.add(fract(seed.mul(.618)).mul(1.83)), T.x.add(fract(seed.mul(.381)).mul(2.9)))
+  const oakRatio = library ? library.sync('oak-veneer-light').sample({ uv: oakAt, metres: [1.83, 2.9] }).albedo : vec3(1, 1, 1).mul(grain.add(1))
+  const boardLot = fract(seed.mul(17.31).sin().mul(4375.85)).sub(.5)
+  const caseC = oakRatio.mul(boardLot.mul(.1).add(1)).mul(vec3(.075, .052, .036).mul(is(K.CASE)).add(vec3(.17, .108, .062).mul(is(K.FRAME))).add(vec3(.1, .07, .048).mul(is(K.READING))))
+  const weaveRatio = library ? library.sync('linen').sample({ uv: T, metres: .271 }).albedo : vec3(1, 1, 1)
+  const linenC = weaveRatio.pow(vec3(2.6, 2.6, 2.6)).mul(vec3(.039, .04, .041)).mul(mx_noise_float(Wp.mul(1.6)).mul(.07).add(mx_noise_float(Wp.mul(.45)).mul(.05)).add(1))
+  const caseOut = (at: CasePlace): N => { const o = caseAxes(at).out; return vec3(U[0] * o[0] + V[0] * o[1], 0, -(U[1] * o[0] + V[1] * o[1])) }
+  const matFace = smoothstep(.5, .9, max(Ng.dot(caseOut(HALL_CASE_AT)), Ng.dot(caseOut(HALL_PIER_AT))))
+  const matC = mix(vec3(.78, .77, .74), vec3(.6, .585, .54).mul(mix(vec3(1, 1, 1), weaveRatio, .35)).mul(boardLot.mul(.06).add(1)), matFace)
   const panelC = vec3(.36, .29, .19).mul(grain.mul(.6).add(1))
-  const clean = linenC.mul(is(K.LINEN)).add(matC.mul(is(K.MAT))).add(panelC.mul(is(K.PANEL))).add(silvered.mul(is(K.WEATHERED))).add(wax.mul(is(K.WAX))).add(candle.mul(is(K.CANDLE))).add(brass.mul(is(K.BRASS))).add(glaze.mul(is(K.GLAZE))).add(earth.mul(is(K.EARTH))).add(cloth.mul(is(K.CLOTH))).add(tileColour.mul(is(K.TILE))).add(joint.mul(is(K.JOINT))).add(plaster.mul(is(K.PLASTER).add(is(K.REVEAL)))).add(oak.mul(is(K.OAK)))
+  const clean = caseC.add(linenC.mul(is(K.LINEN))).add(matC.mul(is(K.MAT))).add(panelC.mul(is(K.PANEL))).add(silvered.mul(is(K.WEATHERED))).add(wax.mul(is(K.WAX))).add(candle.mul(is(K.CANDLE))).add(brass.mul(is(K.BRASS))).add(glaze.mul(is(K.GLAZE))).add(earth.mul(is(K.EARTH))).add(cloth.mul(is(K.CLOTH))).add(tileColour.mul(is(K.TILE))).add(joint.mul(is(K.JOINT))).add(plaster.mul(is(K.PLASTER).add(is(K.REVEAL)))).add(oak.mul(is(K.OAK)))
     .add(tuffJ.mul(is(K.STONE))).add(brickHot.mul(is(K.BRICK))).add(iron.mul(is(K.IRON))).add(ashC.mul(is(K.ASH))).add(charC.mul(is(K.CHAR)))
   // soot: carried by the surface, gathered in blotches and rising streaks
   // THE BREAST OVER THE OPENING. A fire that draws badly rolls its smoke out
@@ -2782,7 +2713,7 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const tileHearth = is(K.TILE).mul(smoothstep(HEARTH.depth + .3, HEARTH.depth + .5, hy)).mul(float(1).sub(smoothstep(1.3, 1.5, hx.abs()))).mul(float(1).sub(smoothstep(.04, .06, hz)))
   const colour = mix(mix(mix(clean, hearthStone, onSlab), vec3(.07, .045, .03), scorch.mul(tileHearth).mul(.55)).mul(float(1).sub(crumbs.mul(tileHearth).mul(.7))), vec3(.012, .011, .010), sootField)
   m.colorNode = colour
-  m.roughnessNode = float(.9).sub(is(K.TILE).mul(float(.22).add(wear.mul(.28))).mul(float(1).sub(jointCover))).sub(is(K.OAK).mul(.12)).add(is(K.JOINT).mul(.05)).sub(is(K.IRON).mul(.08))
+  m.roughnessNode = float(.9).sub(is(K.CASE).add(is(K.FRAME)).mul(.4)).sub(is(K.READING).mul(.12)).sub(is(K.TILE).mul(float(.22).add(wear.mul(.28))).mul(float(1).sub(jointCover))).sub(is(K.OAK).mul(.12)).add(is(K.JOINT).mul(.05)).sub(is(K.IRON).mul(.08))
     .sub(is(K.WAX).mul(float(.2).sub(ring.mul(.08)))).sub(is(K.CANDLE).mul(.38)).sub(is(K.BRASS).mul(.55)).sub(is(K.GLAZE).add(is(K.EARTH)).mul(.72)).add(is(K.CLOTH).mul(.08)).add(is(K.WEATHERED).mul(.05)).sub(is(K.BRICK).mul(brickSoot).mul(.3))
   m.metalnessNode = is(K.BRASS)
   m.aoNode = clamp(ambient, 0, 1)
