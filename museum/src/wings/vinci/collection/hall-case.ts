@@ -62,7 +62,7 @@ export const PIER = { board: [-.23, .23, 1.43, 1.97] as const, z: 1.7, hood: .16
  * `field` the loss over the pages; `lip`, `arc` and `decay` the scallops'
  * edge under each head and their fade; `foot` the fall's length under the
  * pages. */
-export const CASE_LIGHT = { colour: [1, .82, .62] as [number, number, number], cabinet: .6, valve: .555, fall: .06, heads: 7, field: .07, crown: 1.4, lip: .012, arc: .6, decay: .045, foot: .1 } as const
+export const CASE_LIGHT = { colour: [1, .82, .62] as [number, number, number], cabinet: .64, valve: .585, fall: .06, heads: 7, field: .095, crown: 2.4, lip: .012, arc: .8, decay: .06, foot: .1 } as const
 
 /** the old wing's grid read along this case: its north runs to the visitor's
  * right (-a), its heights from its own floor */
