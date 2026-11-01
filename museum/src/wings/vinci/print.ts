@@ -30,6 +30,9 @@ export const STATION_EXPOSURE:Partial<Record<VinciStationId,number>>={arrival:1.
   'picture-room':1.34,'picture-room-west':1.34,'reading-table':0.4,'line-early':1.3,flight:1.643,works:1.643,body:1.428,'supper-wall':1.85,
   // the grave court stands in its walls' shade: the eye opens on the shade
   grave:1.85}
+/** THE HALL IS PRINTED ON A SHOULDER: its spots are the hottest light in the
+ * wing, and a linear print clips a lit sail to one flat white. */
+export const STATION_SHOULDER:Partial<Record<VinciStationId,number>>={flight:1,works:1,hall:1,'supper-wall':1}
 /** THE TOE WHERE A ROOM IS ALL SHADE. The reading booth has one lamp and one
  * pool; under the wing's toe everything off the pool fell to black, and a
  * lighter toe lifted the black round the pool until it was no pool. Between

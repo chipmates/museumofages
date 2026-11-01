@@ -25,7 +25,7 @@ import { constructionRecords, evidenceWords } from './evidence-copy'
 import { lang, WING_TEXT } from '../content'
 import { createVinciSourcesWindow, type VinciSourcesTab, type VinciExhibitSources } from './sources'
 import { createVinciWelcome, vinciWelcomeSeen } from './welcome'
-import { KEY_RIG, PRINT, STATION_EXPOSURE, STATION_TOE } from './print'
+import { KEY_RIG, PRINT, STATION_EXPOSURE, STATION_SHOULDER, STATION_TOE } from './print'
 import { createShell } from './shell'
 import { createHouseHall, houseHallProvenance, type HouseHall } from './house-hall'
 import { createHallLion } from './hall-lion'
@@ -177,9 +177,6 @@ const entryInspectionAnchors:Record<string,Vector3>={
  * a stair nosing. The far cascade stays fixed over the site. */
 // The print, the station exposures and the light rig live in `print.ts`, one
 // source for the rooms and for the machine island the film opens.
-/** THE HALL IS PRINTED ON A SHOULDER: its spots are the hottest light in the
- * wing, and a linear print clips a lit sail to one flat white. */
-const STATION_SHOULDER:Partial<Record<VinciStationId,number>>={flight:1,works:1,hall:1,'supper-wall':1}
 /** A place of the walk prints as the station whose room it stands in: the
  * valve's niche is the body wall's, so the eye does not close on arrival. */
 const printStation=(id?:string):string|undefined=>id===VINCI_VALVE.place?VINCI_VALVE.station:id

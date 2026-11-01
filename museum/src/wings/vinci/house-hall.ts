@@ -1426,12 +1426,34 @@ function easel(s: Sink, e: { id: string; u: number; v: number; ledge: number }, 
   bar(top - .1, .04, .05, seed + 2)
   bar(e.ledge - .045, .085, .045, seed + 3)
   // THE PANEL, its back on the legs and its foot on the ledge
-  const N = uvDir(n[0] * c, n[1] * c, sn), Up = uvDir(-n[0] * sn, -n[1] * sn, c), R = uvDir(r[0], r[1])
-  const foot = P(...uvAt(at(0, .0225 + PANEL_THICK / 2, 0)), FLOOR_Z + e.ledge)
-  const centre = add(foot, scale(Up, H / 2))
+  const { centre, face, R, Up, N } = easelPanel(e, H)
   s.box(centre, scale(R, W / 2), scale(Up, H / 2), scale(N, PANEL_THICK / 2), K.PANEL, seed + 4)
-  const face = add(centre, scale(N, PANEL_THICK / 2 + .0008))
-  platesOut.push({ kind: 'painting', id: e.id, centre: face, right: R, up: Up, normal: N, tone: scale(hallPlateLight(face, N), HALL_PLATE_GAIN.painting) })
+  platesOut.push({ kind: 'painting', id: e.id, centre: face, right: R, up: Up, normal: N, value: hallPaintingValue() })
+}
+/** The panel on its easel: its centre, its face and its three axes. */
+function easelPanel(e: { u: number; v: number; ledge: number }, H: number): { centre: V3; face: V3; R: V3; Up: V3; N: V3 } {
+  const c = Math.cos(EASEL_LEAN), sn = Math.sin(EASEL_LEAN)
+  const d = Math.hypot(HALL_PAINTINGS_EYE[0] - e.u, HALL_PAINTINGS_EYE[1] - e.v)
+  const n: V2 = [(HALL_PAINTINGS_EYE[0] - e.u) / d, (HALL_PAINTINGS_EYE[1] - e.v) / d], r: V2 = [-n[1], n[0]]
+  const N = uvDir(n[0] * c, n[1] * c, sn), Up = uvDir(-n[0] * sn, -n[1] * sn, c), R = uvDir(r[0], r[1])
+  const foot = P(e.u + n[0] * (.0225 + PANEL_THICK / 2), e.v + n[1] * (.0225 + PANEL_THICK / 2), FLOOR_Z + e.ledge)
+  const centre = add(foot, scale(Up, H / 2))
+  return { centre, face: add(centre, scale(N, PANEL_THICK / 2 + .0008)), R, Up, N }
+}
+/** ONE VALUE FOR THE THREE PAINTINGS: the room's light at their three faces as one luminance, times the gain, read
+ * in the display's encoding. Each painting's encoded pixels are scaled by it, so the three keep their sources'
+ * colour and their sources' brightness one to another. */
+let paintingValue: number | null = null
+export function hallPaintingValue(): number {
+  if (paintingValue !== null) return paintingValue
+  const lums = EASELS.flatMap(e => {
+    const size = trueScale(getWork(e.id))
+    if (!size) return []
+    const { face, N } = easelPanel(e, size.heightM), l = hallPlateLight(face, N)
+    return [.2126 * l[0] + .7152 * l[1] + .0722 * l[2]]
+  })
+  paintingValue = Math.pow(HALL_PLATE_GAIN.painting * lums.reduce((a, b) => a + b, 0) / lums.length, 1 / 2.4)
+  return paintingValue
 }
 const uvAt = (p: V3): V2 => [p[0], p[1]]
 

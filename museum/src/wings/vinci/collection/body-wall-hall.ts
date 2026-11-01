@@ -5,12 +5,13 @@
  * Loaded by the hall on demand, so the hall's fabric never waits for it.
  */
 import { BufferGeometry, DoubleSide, Float32BufferAttribute, Group, Matrix4, Mesh, MeshBasicNodeMaterial, PlaneGeometry, SphereGeometry, Vector3 } from 'three/webgpu'
-import { float, mix, normalView, positionViewDirection, vec3 } from 'three/tsl'
+import { clamp, float, luminance, max, min, mix, normalView, positionViewDirection, sRGBTransferEOTF, sRGBTransferOETF, select, sqrt, vec3 } from 'three/tsl'
 import { loadManifest } from '../../../manifest'
 import { createPlateStream, type PlateStream } from '../pictures/stream'
 import { findPlateEntries, getWork, reproductionCardSize } from '../pictures/register'
 import { pictureDisplayUV, pictureDisplayWindow } from '../pictures/registration'
 import { bodySheetSources } from './body-wall'
+import { PRINT, STATION_EXPOSURE, STATION_SHOULDER } from '../print'
 
 type V3 = [number, number, number]
 /** One plate's place, east/north/up: its centre and its three axes. */
@@ -27,6 +28,31 @@ export interface HallPlate {
   height?: number
   /** the room's light at its place, times the prints' gain (`house-hall.ts`) */
   tone?: V3
+  /** a painting's display value: its source's encoded pixels times this one number, the hall's print undone */
+  value?: number
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- TSL's node types do not follow a chain of maths
+type N = any
+/** The hall's print (`stack/post.ts` step 5: exposure, the wing's lift, saturation, the full Neutral shoulder, whose
+ * own toe takes the darkest channel) run backwards, so a painting leaves the print as its source scaled by `value`
+ * in the display's encoding: the print's cool lift and the toe's offset would otherwise outweigh a dim painting's
+ * own colour. The print's darkest reach is about 0.0021 linear a channel; a darker aim stands there. */
+const HALL_PRINT = { exposure: STATION_EXPOSURE.hall ?? PRINT.exposure, lift: PRINT.lift, saturation: PRINT.saturation, shoulder: STATION_SHOULDER.hall ?? 0 }
+if (HALL_PRINT.shoulder !== 1) throw new Error('The hall paintings invert a print on the full Neutral shoulder')
+const PRINT_FLOOR = .0021
+function unprintNode(colour: N, value: number): N {
+  const encoded: N = (sRGBTransferOETF as N)(clamp(colour, 0, 1))
+  const aim: N = max((sRGBTransferEOTF as N)(encoded.mul(value)), vec3(PRINT_FLOOR))
+  // Neutral's toe: out = c - (x - 6.25 x^2), x the smallest channel, under x 0.08; so x = 0.4 sqrt(smallest out)
+  const m = min(aim.x, min(aim.y, aim.z)), x = sqrt(m).mul(.4)
+  const neutral = aim.add(select(m.lessThan(.04), x.sub(m), float(.04))) as N
+  const s = HALL_PRINT.saturation, grey = luminance(neutral)
+  const sat = neutral.sub(grey.mul(1 - s)).div(s) as N
+  const lift = vec3(...HALL_PRINT.lift), liftL = luminance(lift)
+  const before = luminance(sat).sub(liftL).div(float(1).sub(liftL))
+  const lifted = sat.sub(lift.mul(clamp(float(1).sub(before), 0, 1)))
+  return max(lifted, vec3(0)).div(HALL_PRINT.exposure) as N
 }
 
 /** The one full resolution at a time: the nearest plate within reach. */
@@ -159,6 +185,7 @@ export function mountHallPlates(host: Group, plates: readonly HallPlate[], hero:
         const window = registration ? pictureDisplayUV(registration) : null
         const size = reproductionCardSize(work, window ? { width: window.contentAspect, height: 1 } : entry.pixels)
         stream = createPlateStream(entry.preview, entry.plate, { previewMaxEdge: hero ? 1024 : 512, ...(plate.tone ? { tone: vec3(...plate.tone) } : {}) })
+        if (plate.value !== undefined) stream.material.colorNode = unprintNode(stream.material.colorNode as N, plate.value)
         geometry = new PlaneGeometry(size.widthM, size.heightM)
         if (window) {
           const uv = geometry.getAttribute('uv')
