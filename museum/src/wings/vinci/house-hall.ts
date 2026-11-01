@@ -386,7 +386,9 @@ export function hallView(id: 'great-hall' | 'great-hall-door', narrow: boolean):
     const v = (linkDoorV[0] + linkDoorV[1]) / 2, e = fromUV(HALL_W + (narrow ? 1.25 : .92), v), a = fromUV(0, v - .35)
     return { eye: [e[0], e[1], eyeZ], at: [a[0], a[1], FLOOR_Z + (narrow ? 1.15 : 1.3)], fov: narrow ? 74 : 52 }
   }
-  const u = (kitchenDoorU[0] + kitchenDoorU[1]) / 2, e = fromUV(u, -.26), a = fromUV(u + 1.1, HALL_D * .86)
+  // the wide eye stands in the doorway's hall face: from a stride back the cabinet's end, past the door's east
+  // jamb, stood in the frame's right edge
+  const u = (kitchenDoorU[0] + kitchenDoorU[1]) / 2, e = fromUV(u, narrow ? -.26 : 0), a = fromUV(u + 1.1, HALL_D * .86)
   return { eye: [e[0], e[1], eyeZ], at: [a[0], a[1], FLOOR_Z + (narrow ? .8 : 1.15)], fov: narrow ? 78 : 58 }
 }
 
