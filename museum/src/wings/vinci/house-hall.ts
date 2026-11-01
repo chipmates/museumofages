@@ -846,7 +846,8 @@ export function createHouseHall(tier: TierName, library?: MaterialLibrary): Hous
   const valveAt = P((st.u0 + st.u1) / 2, (st.v0 + st.v1) / 2, FLOOR_Z + st.top)
   // the model takes the room's light and a little of the hood's strip spilling down on to the stand
   const spill = scale(HALL_CASE_LIGHT.colour, HALL_CASE_LIGHT.valve * .3)
-  plateHost = { group, plates: platesOut, hero, valve: valveAt, valveLight: add(hallPlateLight(add(valveAt, [0, 0, .2]), [U[0], U[1], 0]), spill) }
+  const pierOut = caseAxes(HALL_PIER_AT).out
+  plateHost = { group, plates: platesOut, hero, valve: valveAt, valveLight: add(hallPlateLight(add(valveAt, [0, 0, .2]), uvDir(pierOut[0], pierOut[1])), spill) }
   platesShown = null
   const refreshSun = (eye: V3, changed: boolean): void => { sun?.refresh(eye, changed); platesShown?.tick(eye) }
   return { group, triangles, patches: PATCHES.length, refreshSun, pending: () => platesShown?.pending() ?? 0 }
@@ -1272,6 +1273,12 @@ export const hallSheetDatum = (mount: BodyMount): number =>
 export const HALL_VALVE_SHEET = { face: SHEET_D, v: HALL_VALVE.v, z: HALL_VALVE.z, standTop: HALL_VALVE.stand.top }
 /** The hall's frame as world points, for the eyes the rail stands here. */
 export const hallPoint = (u: number, v: number, z: number): Vector3 => { const q = P(u, v, FLOOR_Z + z); return new Vector3(q[0], q[2], -q[1]) }
+/** A point of a case's own frame (along, out of its wall, up from the floor)
+ * as a world point: the eyes that read the case and the pier stand in it. */
+export const hallCasePoint = (at: CasePlace, a: number, d: number, z: number): Vector3 => { const [u, v] = caseToHall(at, a, d); return hallPoint(u, v, z) }
+/** The two places and their frames, for the cabinet's audit. */
+export const hallCaseFrames = (): { case: CasePlace; pier: CasePlace; caseOut: V2; pierOut: V2; pierAlong: V2; stand: typeof PIER.stand } =>
+  ({ case: HALL_CASE_AT, pier: HALL_PIER_AT, caseOut: caseAxes(HALL_CASE_AT).out, pierOut: caseAxes(HALL_PIER_AT).out, pierAlong: caseAxes(HALL_PIER_AT).along, stand: PIER.stand })
 /** THE CABINET'S PLAN, for its audit (`collection/body-wall-check.mjs`):
  * every box the cabinet and the sheet apart's pier lay (east, north, up: a
  * centre and three half axes), the model's reach on its stand, the plates'

@@ -21,8 +21,12 @@ type V2 = [number, number]
  * the heading of the face's outward normal in the hall's plane (0 faces +v,
  * -90 degrees faces +u). */
 export interface CasePlace { readonly u: number; readonly v: number; readonly heading: number }
-export const HALL_CASE_AT: CasePlace = { u: 2.1, v: 0, heading: 0 }
-export const HALL_PIER_AT: CasePlace = { u: 0, v: .97, heading: -Math.PI / 2 }
+/** The case on the kitchen partition's second run, past the kitchen door and
+ * under the second main beam's corbel, in the room's darkest corner; the
+ * sheet apart round that corner on the east wall's south pier (the east wall
+ * stands square to u at 8.8097 m), so the two read as one corner. */
+export const HALL_CASE_AT: CasePlace = { u: 7.02, v: 0, heading: 0 }
+export const HALL_PIER_AT: CasePlace = { u: 8.8097, v: .97, heading: Math.PI / 2 }
 
 /** The frame's two directions in the hall's u, v plane. */
 export function caseAxes(at: CasePlace): { along: V2; out: V2 } {
@@ -41,8 +45,8 @@ export function hallToCase(at: CasePlace, u: number, v: number): V2 {
 
 /** The case in its own frame: its run along the wall, its depth, the reading
  * ledge's height, the upper case's depth and its top under the beam's corbel.
- * The grid stands half a metre under the old wing's: the first main beam's
- * corbel lands on this wall 2.42 m up. */
+ * The grid stands half a metre under the old wing's: the main beams'
+ * corbels land on this wall 2.42 m up. */
 export const CASE = { a0: -1.85, a1: 1.75, deep: .52, ledge: .452, upper: .3, top: 2.405 } as const
 export const GRID_DROP = .5
 /** the linen ground and the sheets' face off the wall; the mat over a sheet

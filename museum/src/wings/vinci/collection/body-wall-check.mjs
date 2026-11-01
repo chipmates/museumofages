@@ -179,6 +179,11 @@ const toHall = ([e, n, h]) => [(e - ox) * plan.u[0] + (n - oy) * plan.u[1], (e -
 const fromThree = ([x, y, z]) => [x, -z, y]
 const C = hall.HALL_CABINET, VAL = hall.HALL_VALVE, L = hall.HALL_CASE_LIGHT
 const placeFailures = []
+/* THE CASE'S AND THE PIER'S OWN FRAMES: a hall point as (along, out of the wall, up) */
+const F = hall.hallCaseFrames()
+const local = (place, [u, v, z]) => { const h = place.heading, al = [Math.cos(h), Math.sin(h)], out = [-Math.sin(h), Math.cos(h)], du = u - place.u, dv = v - place.v; return [du * al[0] + dv * al[1], du * out[0] + dv * out[1], z] }
+const pierUV = (a, d) => [F.pier.u + F.pierAlong[0] * a + F.pierOut[0] * d, F.pier.v + F.pierAlong[1] * a + F.pierOut[1] * d]
+const pierN = [plan.u[0] * F.pierOut[0] + plan.v[0] * F.pierOut[1], plan.u[1] * F.pierOut[0] + plan.v[1] * F.pierOut[1]]
 
 /* THE SHEETS' PLACES AND ORDER. The grid's sheets in the old wing's order;
  * on this wall the visitor faces -v, so the old wing's north runs to -u and
@@ -187,7 +192,7 @@ const sheets = plan.plates.filter(p => p.kind === 'sheet')
 const mounted = grid.mountedSheets()
 const gridMounts = mounted.filter(s => s.mount.row !== 'vortex'), apartMount = mounted.find(s => s.mount.row === 'vortex')
 const onWall = sheets.filter(p => Math.abs(p.normal[0] - plan.v[0]) < 1e-9 && Math.abs(p.normal[1] - plan.v[1]) < 1e-9)
-const onPier = sheets.filter(p => Math.abs(p.normal[0] - plan.u[0]) < 1e-9 && Math.abs(p.normal[1] - plan.u[1]) < 1e-9)
+const onPier = sheets.filter(p => Math.abs(p.normal[0] - pierN[0]) < 1e-9 && Math.abs(p.normal[1] - pierN[1]) < 1e-9)
 if (gridMounts.length !== 28) placeFailures.push(`The old wing's grid holds ${gridMounts.length} sheets, not 28`)
 if (onWall.length !== gridMounts.length) placeFailures.push(`${onWall.length} sheets stand in the hall's cabinet against the grid's ${gridMounts.length}`)
 if (onPier.length !== 1 || onPier[0]?.id !== apartMount?.mount.id) placeFailures.push('The sheet apart does not stand alone on the pier')
@@ -212,21 +217,21 @@ for (const p of onWall) {
 /* each sheet's certified viewing eyes look into its own frame */
 const eyesRead = []
 for (const p of sheets) {
-  const [u, v, z] = toHall(p.centre), apart = p.id === apartMount?.mount.id
+  const apart = p.id === apartMount?.mount.id, fr = apart ? F.pier : F.case, [ca, cd] = local(fr, toHall(p.centre))
   for (const approach of certificate.approaches.filter(a => a.exhibit === `sheet/${p.id}`)) {
-    const eye = toHall(fromThree(approach.toPose.eye)), aim = toHall(fromThree(approach.toPose.at))
-    // the face's own axis: off the wall (v) on the cabinet, off the pier (u) on the pier
-    const off = apart ? 0 : 1, along = apart ? 1 : 0
-    const d = aim.map((q, i) => q - eye[i]), front = eye[off] - (apart ? u : v)
-    const t = (apart ? u : v) - eye[off]
+    // the face's own axis: along its wall (0) and out of it (1), in the case's or the pier's frame
+    const eye = local(fr, toHall(fromThree(approach.toPose.eye))), aim = local(fr, toHall(fromThree(approach.toPose.at)))
+    const off = 1, along = 0
+    const d = aim.map((q, i) => q - eye[i]), front = eye[off] - cd
+    const t = cd - eye[off]
     const hit = d[off] === 0 ? null : [eye[along] + d[along] * t / d[off], eye[2] + d[2] * t / d[off]]
     // a lens shift composes the sheet off the aim, so the aim must land nearer
     // its own sheet than any other on the wall, and within a third of a metre
-    const gap = q => { const [qu, qv, qz] = toHall(q.centre), a = apart ? qv : qu; return Math.hypot(Math.max(0, Math.abs(hit[0] - a) - q.width / 2), Math.max(0, Math.abs(hit[1] - qz) - q.height / 2)) }
+    const gap = q => { const [a, , qz] = local(fr, toHall(q.centre)); return Math.hypot(Math.max(0, Math.abs(hit[0] - a) - q.width / 2), Math.max(0, Math.abs(hit[1] - qz) - q.height / 2)) }
     const mine = hit ? gap(p) : Infinity, nearest = hit ? Math.min(...(apart ? onPier : onWall).map(gap)) : 0
     // the phone's eye is the desktop's; its lens shift sets the sheet in the
     // frame, so its aim may fall between two sheets: it stands in the column
-    const column = Math.abs(eye[along] - (apart ? v : u))
+    const column = Math.abs(eye[along] - ca)
     const read = approach.viewport === 'phone' ? column <= .24 : mine <= nearest + 1e-9 && mine <= .33
     if (front <= 0 || !read) placeFailures.push(`${approach.viewport} ${approach.exhibit}: its viewing eye does not stand at its own sheet (aim ${mine.toFixed(3)} m off it, eye ${column.toFixed(3)} m off its column)`)
     eyesRead.push(approach.viewport)
@@ -236,7 +241,7 @@ if (eyesRead.length !== 2 * sheets.length) placeFailures.push(`${eyesRead.length
 
 /* THE CASES' OWN LIGHT, READ FROM ITS TABLE at every grid sheet's window
  * centre, top and foot, and at the sheet apart's */
-const facing = [0, 1, 0], facingPier = [1, 0, 0]
+const facing = [0, 1, 0], facingPier = [F.pierOut[0], F.pierOut[1], 0]
 const pages = []
 for (const s of gridMounts) {
   const [u, , z] = at.get(s.mount.id) ?? [0, 0, 0]
@@ -246,13 +251,14 @@ const pageMin = Math.min(...pages.map(p => p.e)), pageMax = Math.max(...pages.ma
 const rowMean = row => { const own = pages.filter(p => p.row === row); return own.reduce((a, p) => a + p.e, 0) / own.length }
 const top = byDatum[0], foot = byDatum.at(-1)
 const apartAt = onPier[0] ? toHall(onPier[0].centre) : [0, VAL.v, VAL.z]
-const apartWash = [-.1, 0, .1].flatMap(dv => [-.12, 0, .12].map(dz => hall.hallCaseWash(.034, apartAt[1] + dv, apartAt[2] + dz, facingPier)))
+const apartA = local(F.pier, apartAt)[0]
+const apartWash = [-.1, 0, .1].flatMap(da => [-.12, 0, .12].map(dz => hall.hallCaseWash(...pierUV(apartA + da, .034), apartAt[2] + dz, facingPier)))
 // beside and over the cases, on the partition's and the pier's plaster and on the room side: nothing
 const outside = [
   ...[.1, .5, 1, 1.5, 2].map(z => hall.hallCaseWash(C.u0 - .1, .001, z, facing)), ...[.1, .5, 1, 1.5, 2].map(z => hall.hallCaseWash(C.u1 + .1, .001, z, facing)),
-  ...[.5, 1.5, 2.5, 3.5].map(u => hall.hallCaseWash(u, .001, C.top + .1, facing)), ...[.5, 1.5, 2.5, 3.5].map(u => hall.hallCaseWash(u, C.upper + .1, 1.4, facing)),
-  hall.hallCaseWash(.001, VAL.board[0] - .1, VAL.z, facingPier), hall.hallCaseWash(.001, VAL.board[1] + .1, VAL.z, facingPier), hall.hallCaseWash(.001, VAL.v, VAL.board[3] + .1, facingPier),
-  hall.hallCaseWash(.4, VAL.v, VAL.z, facingPier),
+  ...[.25, 1.25, 2.25, 3.25].map(k => hall.hallCaseWash(C.u0 + k, .001, C.top + .1, facing)), ...[.25, 1.25, 2.25, 3.25].map(k => hall.hallCaseWash(C.u0 + k, C.upper + .1, 1.4, facing)),
+  hall.hallCaseWash(...pierUV(.33, .001), VAL.z, facingPier), hall.hallCaseWash(...pierUV(-.33, .001), VAL.z, facingPier), hall.hallCaseWash(...pierUV(0, .001), VAL.board[3] + .1, facingPier),
+  hall.hallCaseWash(...pierUV(0, .4), VAL.z, facingPier),
 ]
 const wash = { pages: { min: +pageMin.toFixed(3), max: +pageMax.toFixed(3), mean: +pageMean.toFixed(3) },
   courses: Object.fromEntries(courses.map(row => [row, +rowMean(row).toFixed(3)])),
@@ -266,7 +272,7 @@ if (Math.min(...apartWash) < .85 * Math.max(...apartWash)) lightFailures.push(`T
 if (wash.lead < 1.3 || wash.lead > 1.6) lightFailures.push(`The sheet apart takes ${wash.lead} of the cabinet's wash, outside 1.3 to 1.6`)
 if (wash.outside > .005) lightFailures.push(`The strips lay ${wash.outside} outside their cases`)
 // the strips are the cases' own: under the cabinet's top board, inside its sides' depth, and under the pier's hood
-if (C.top - .03 > C.top || C.upper > C.deep || L.hood > VAL.stand.u1) lightFailures.push('A strip stands outside its case')
+if (C.top - .03 > C.top || C.upper > C.deep || L.hood > F.stand.d1) lightFailures.push('A strip stands outside its case')
 
 // THE CONTROL: a post on the certified walk from the hall's door to the cabinet, at its middle, where a refusal is certain
 const walk = certificate.routes.find(r => r.viewport === 'desktop' && r.from === 'hall' && r.to === 'body')

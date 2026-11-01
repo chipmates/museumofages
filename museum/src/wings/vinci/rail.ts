@@ -16,7 +16,8 @@ import { COURT, FACE, FLOOR, OPENING, SUPPER_WALL } from './collection/layout'
 import { railAccessWaypoints, railCollectionStairWaypoints, railDoorTurns, railGateWaypoints, railDoorways, railGardenPorch, railPairTurns, railEyeHeightM, railPorchStands, railReadingPorch, railSide, type RailSide, type RailWaypoint } from './rail-waypoints'
 import { fittedRailFov, assertRailProjection, setRailShift } from './rail-projection'
 import type { RailGeometryAuthority } from './rail-proof'
-import { hallPoint, hallView } from './house-hall'
+import { hallCasePoint, hallView } from './house-hall'
+import { HALL_CASE_AT } from './collection/hall-case'
 import { uprightPose } from './upright'
 
 /** `shift` is the phone's shift lens (`rail-projection.ts`), absent where the
@@ -269,9 +270,9 @@ function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
   // corner and the sheet apart at its right; the phone stands 4.4 m off, the
   // hang four fifths of its width, ten degrees down: the grid's walk runs
   // from this eye, and a wall's run takes no shift its sheets do not.
-  if(id==='body'){const toWall=hallPoint(0,-1,0).sub(hallPoint(0,0,0)),heading=Math.atan2(toWall.x,-toWall.z)*180/Math.PI
-    if(narrow){const eye=hallPoint(2.1,4.43,1.6);return aimedFrom({eye,at:eye,fov:90.5},heading,-10,90.5)}
-    const eye=hallPoint(2.1,3.75,1.65);return aimedFrom({eye,at:eye,fov:58},heading,-6,58)}
+  if(id==='body'){const toWall=hallCasePoint(HALL_CASE_AT,0,0,0).sub(hallCasePoint(HALL_CASE_AT,0,1,0)),heading=Math.atan2(toWall.x,-toWall.z)*180/Math.PI
+    if(narrow){const eye=hallCasePoint(HALL_CASE_AT,0,4.43,1.6);return aimedFrom({eye,at:eye,fov:90.5},heading,-10,90.5)}
+    const eye=hallCasePoint(HALL_CASE_AT,0,3.75,1.65);return aimedFrom({eye,at:eye,fov:58},heading,-6,58)}
   const room=COLLECTION_STATION_ROOMS[id]
   // THE TIMELINE'S FIRST EYE stands north of its room's view: 0.6 m off the
   // gallery's end wall, every walk in turned round with that wall filling the frame.

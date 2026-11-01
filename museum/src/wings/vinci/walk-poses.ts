@@ -22,7 +22,8 @@ import { vinciApproachPose } from './collection/approaches'
 import { FRAME_FRONT, mountedSheets } from './collection/body-wall-plan'
 import { VINCI_VALVE, type VinciWalkPoseId } from './walk-places'
 import { railCollectionStairWaypoints } from './rail-waypoints'
-import { HALL_VALVE_SHEET, hallPoint } from './house-hall'
+import { HALL_VALVE_SHEET, hallCasePoint } from './house-hall'
+import { HALL_PIER_AT } from './collection/hall-case'
 import { uprightPose } from './upright'
 
 export { VINCI_HOUSE_DOOR, VINCI_STAIR_HEAD, VINCI_VALVE, VINCI_WALK_POSE_IDS, isVinciWalkPose, type VinciWalkPoseId } from './walk-places'
@@ -114,7 +115,7 @@ function stairHeadPose(narrow: boolean): WalkPose {
     at: world(eye[0] + Math.sin(bearing) * level, eye[1] + Math.cos(bearing) * level, eye[2] + Math.sin(pitch) * STAIR_HEAD_REACH_M) }
 }
 
-/** THE SHEET APART IN THE GREAT HALL, on the west pier with the glass model
+/** THE SHEET APART IN THE GREAT HALL, on its pier with the glass model
  * on the stand under it: the eye square to the pier, the sheet and the stand
  * one subject. The desktop stands 1.5 m off, the case's end and the window
  * beside. ONE KEY EACH, from the sheet's size and the old wing's close look
@@ -130,10 +131,10 @@ function hallValvePose(narrow: boolean): WalkPose {
   const s = HALL_VALVE_SHEET
   if (narrow) {
     const k = VALVE_KEY.phone
-    return { eye: hallPoint(s.face + k.off, s.v, 1.6), at: hallPoint(s.face, s.v, 1.6), fov: k.fov, shift: k.shift }
+    return { eye: hallCasePoint(HALL_PIER_AT, 0, s.face + k.off, 1.6), at: hallCasePoint(HALL_PIER_AT, 0, s.face, 1.6), fov: k.fov, shift: k.shift }
   }
   const k = VALVE_KEY.desktop
-  return { eye: hallPoint(s.face + k.off, s.v, 1.6), at: hallPoint(s.face, s.v, k.aim), fov: k.fov }
+  return { eye: hallCasePoint(HALL_PIER_AT, 0, s.face + k.off, 1.6), at: hallCasePoint(HALL_PIER_AT, 0, s.face, k.aim), fov: k.fov }
 }
 
 /** The pose one of the walk's own places stands at. */
