@@ -1258,7 +1258,8 @@ export const vinciOutdoorStationIds: readonly VinciStationId[] = ['arrival', 'co
 
 /** Sources follow the physical rooms, independently of the walking order. */
 const sourceRooms: readonly (readonly VinciStationId[])[] = [
-  ['line-early', 'reading-table', 'body'],
+  ['line-early', 'reading-table'],
+  ['hall', 'body'],
   ['flight', 'works'],
   ['supper-wall', 'grave'],
 ];
