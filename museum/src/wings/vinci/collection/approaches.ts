@@ -474,8 +474,8 @@ function otherKinds(): Placed[] {
     // the grid now stands in the great hall: the old wing's eye, carried there
     add(`sheet/${mount.id}`, 'sheet', BODY_STATION, narrow => {
       const pose = eastFacingApproach(field, narrow)
-      const eye = hallFromPavilion(pose.eye, mount)
-      return { ...pose, eye: mount.row === 'vortex' ? eye : hallEyeClearOfPier(eye), at: hallFromPavilion(pose.at, mount) }
+      const eye = hallFromPavilion(pose.eye, mount), at = hallFromPavilion(pose.at, mount)
+      return { ...pose, ...(mount.row === 'vortex' ? { eye, at } : hallEyeClearOfPier(eye, at)) }
     })
   }
   for (const slug of VINCI_MACHINE_ROW) {

@@ -1278,14 +1278,17 @@ export const hallPoint = (u: number, v: number, z: number): Vector3 => { const q
 export const hallCasePoint = (at: CasePlace, a: number, d: number, z: number): Vector3 => { const [u, v] = caseToHall(at, a, d); return hallPoint(u, v, z) }
 /** A grid sheet's reading eye stands clear of the sheet apart's pier round
  * the case's corner: an eye nearer the pier's wall than this steps out along
- * the pier's face, its aim kept, and reads its sheet a little from the side
- * (the pier's hood and the model's glass a near envelope and more away). */
+ * the pier's face and turns to the point of the sheet its square look
+ * crossed, so it reads its sheet a little from the side (the pier's hood and
+ * the model's glass a near envelope and more away). */
 const PIER_EYE_CLEAR = .62
-export function hallEyeClearOfPier(eye: Vector3): Vector3 {
+export function hallEyeClearOfPier(eye: Vector3, at: Vector3): { eye: Vector3; at: Vector3 } {
   const [u, v] = toUV([eye.x, -eye.z]), [a, d] = hallToCase(HALL_PIER_AT, u, v)
-  if (d >= PIER_EYE_CLEAR) return eye
-  const [u2, v2] = caseToHall(HALL_PIER_AT, a, PIER_EYE_CLEAR)
-  return hallPoint(u2, v2, eye.y - FLOOR_Z)
+  if (d >= PIER_EYE_CLEAR) return { eye, at }
+  const [u2, v2] = caseToHall(HALL_PIER_AT, a, PIER_EYE_CLEAR), moved = hallPoint(u2, v2, eye.y - FLOOR_Z)
+  const out = (p: Vector3): number => { const q = toUV([p.x, -p.z]); return hallToCase(HALL_CASE_AT, q[0], q[1])[1] }
+  const onFace = eye.clone().lerp(at, (SHEET_D - out(eye)) / (out(at) - out(eye)))
+  return { eye: moved, at: onFace.sub(moved).setLength(at.distanceTo(eye)).add(moved) }
 }
 /** The two places and their frames, for the cabinet's audit. */
 export const hallCaseFrames = (): { case: CasePlace; pier: CasePlace; caseOut: V2; pierOut: V2; pierAlong: V2; stand: typeof PIER.stand } =>
