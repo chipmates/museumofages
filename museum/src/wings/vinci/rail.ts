@@ -180,7 +180,9 @@ function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
   // passage's side door, the service passage and the hall's door stand on one
   // axis, and the eye stands forty centimetres inside the last of them, looking
   // down it at the west windows the hour's sun comes through; the wide frame
-  // turns onto the table, the lion facing it from the far end. THE PHONE
+  // turns onto the table, the lion facing it from the far end: a 46 degree
+  // lens 13.5 degrees north of the axis keeps the case past the kitchen door
+  // out of its left edge and the chimneypiece out of its right. THE PHONE
   // STANDS JUST INSIDE THE SAME DOOR on its axis, 0.56 m in from the wall's
   // face, so its wider lens's walks to the close looks leave the doorway
   // clear of its reveals. ITS HERO IS THE THREE PAINTINGS, the visit's own:
@@ -191,7 +193,7 @@ function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
   // the lion and Saint Anne both whole (58 degrees apart), so the lion stays
   // out of the frame, never cut by its edge. Level, the shift lens at 0.36
   // stands the paintings' middle at a third of the height.
-  if(id==='hall') return narrow?{...aimedFrom(HALL_PHONE_EYE,-91.5,0,79.4),shift:-.36}:aimedFrom(HALL_DOOR,-124,-8,58)
+  if(id==='hall') return narrow?{...aimedFrom(HALL_PHONE_EYE,-91.5,0,79.4),shift:-.36}:aimedFrom(HALL_DOOR,-109.5,-8,46)
   // THE CHAPEL IS THE ONE HERO. Square on from the court it was a wall of
   // ashlar in the house's shadow with nothing behind it; from the foot of the
   // raised lawn the gable took the left half of the frame, the gable the study
