@@ -1259,9 +1259,9 @@ export const HALL_PLATE_GAIN = { sheet: 1.45, painting: 1.7 } as const
 export const HALL_PAINTINGS_EYE: V2 = [6.6, 3.9]
 const EASEL_LEAN = 10 * Math.PI / 180, PANEL_THICK = .022
 const EASELS: readonly { id: string; u: number; v: number; ledge: number }[] = [
-  { id: 'mona-lisa', u: 2.95, v: 6.75, ledge: .8 },
-  { id: 'virgin-and-child-with-st-anne', u: 1, v: 5, ledge: .5 },
-  { id: 'saint-john-the-baptist', u: 3, v: 5.5, ledge: .82 },
+  { id: 'mona-lisa', u: 2.75, v: 5.5, ledge: .8 },
+  { id: 'virgin-and-child-with-st-anne', u: 1.75, v: 7.25, ledge: .5 },
+  { id: 'saint-john-the-baptist', u: 1.25, v: 5.25, ledge: .82 },
 ]
 
 /** The old wing's grid read in this room: its north runs to the visitor's
