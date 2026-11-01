@@ -271,7 +271,10 @@ function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
   // hang four fifths of its width, ten degrees down: the grid's walk runs
   // from this eye, and a wall's run takes no shift its sheets do not.
   if(id==='body'){const toWall=hallCasePoint(HALL_CASE_AT,0,0,0).sub(hallCasePoint(HALL_CASE_AT,0,1,0)),heading=Math.atan2(toWall.x,-toWall.z)*180/Math.PI
-    if(narrow){const eye=hallCasePoint(HALL_CASE_AT,0,4.43,1.6);return aimedFrom({eye,at:eye,fov:90.5},heading,-10,90.5)}
+    // the phone stands back to 4.78 m and turns 3.6 degrees onto the east pier, so
+    // the sheet apart stands whole inside its left edge, the hang whole; the lens
+    // stays, a wider one widens the grid walk's ball onto the glass model
+    if(narrow){const eye=hallCasePoint(HALL_CASE_AT,0,4.78,1.6);return aimedFrom({eye,at:eye,fov:90.5},heading-3.6,-10,90.5)}
     const eye=hallCasePoint(HALL_CASE_AT,0,3.75,1.65);return aimedFrom({eye,at:eye,fov:58},heading,-6,58)}
   const room=COLLECTION_STATION_ROOMS[id]
   // THE TIMELINE'S FIRST EYE stands north of its room's view: 0.6 m off the
