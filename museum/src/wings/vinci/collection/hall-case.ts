@@ -57,7 +57,7 @@ export const LINEN_D = .031, SHEET_D = .034
 const MAT_FACE = .0035, FRAME_LIP = .008, FRAME_FACE = .017
 /** The sheet apart's board, its middle's height, the hood its strip hides in
  * and the stand, in the pier's frame. */
-export const PIER = { board: [-.23, .23, 1.43, 1.97] as const, z: 1.7, hood: .16, stand: { a0: -.23, a1: .23, d0: .05, d1: .45, top: 1.04 } } as const
+export const PIER = { board: [-.23, .23, 1.43, 1.97] as const, z: 1.7, hood: .16, stand: { a0: -.23, a1: .23, d0: .035, d1: .435, top: 1.04 } } as const
 /** THE CASES' OWN LIGHT, present-day fittings like the cases. Under the case's
  * top board a row of warm heads, one over each column, throws its light down
  * the linen as the old wing's wallwashers do: a scalloped band under the
