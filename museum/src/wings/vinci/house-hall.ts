@@ -2524,6 +2524,21 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   let ambient: N = A.y, bounce: N = A.z, westSky: N = A.y.mul(.6)
   // the sky a point sees before the ceiling's bays close it, and that share
   let skyOpen: N = A.y, occluded: N = float(1)
+  // THE BAYS BETWEEN THE JOISTS. The windows and the floor's patches all lie
+  // below the joists' soffits, so a joist's side sees them only under its
+  // neighbour, less the higher up it: its light falls off from the arris to
+  // the boards, and the boards see the room through a slot. The analytic
+  // terms know no such occluder, nor does the vertex bake the lighter tiers read,
+  // whose joists lit as their boards read as one flat soffit
+  const hb = positionWorld.y.sub(CEIL_Z), sideways = float(1).sub(normalWorld.y.abs())
+  // A board sees the room only through the gap between its two joists: the
+  // view factor of that slot, about two thirds in the middle of a bay and
+  // under half beside a joist
+  const gap = (HALL_JOIST_STEP - JOIST_W) / 2
+  const off = fract(hallUVNode(positionWorld)[1].sub(HALL_JOIST_FIRST).div(HALL_JOIST_STEP)).sub(.5).abs().mul(HALL_JOIST_STEP).min(gap)
+  const near = float(gap).sub(off), far = float(gap).add(off)
+  const slot = near.div(near.mul(near).add(JOIST_D * JOIST_D).sqrt()).add(far.div(far.mul(far).add(JOIST_D * JOIST_D).sqrt())).mul(.5)
+  const bay = mix(float(1), mix(mix(float(1), slot, smoothstep(.02, .2, hb)), exp(hb.max(0).div(-.045)).mul(.8).add(.2), sideways), is(K.OAK).mul(smoothstep(-.004, .004, hb)))
   if (perPixel) {
     // the same light as the vertex bake, per point: the hall's windows and
     // sun patches, the passage's hall door, the entrance's court
@@ -2545,24 +2560,13 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
     const door = formFactorNode(linkDoorAp, linkCentre).mul(mix(float(1), float(REVEAL_GAIN), is(K.REVEAL)))
     const entrance = passageLightNode()
     const isLink = float(1).sub(lit), isEntrance = lit.mul(float(1).sub(inHallShade))
-    // THE BAYS BETWEEN THE JOISTS. The windows and the floor's patches all lie
-    // below the joists' soffits, so a joist's side sees them only under its
-    // neighbour, less the higher up it: its light falls off from the arris to
-    // the boards, and the boards see the room through a slot. The analytic
-    // terms know no such occluder
-    const hb = positionWorld.y.sub(CEIL_Z), sideways = float(1).sub(normalWorld.y.abs())
-    // A board sees the room only through the gap between its two joists: the
-    // view factor of that slot, about two thirds in the middle of a bay and
-    // under half beside a joist
-    const gap = (HALL_JOIST_STEP - JOIST_W) / 2
-    const off = fract(hallUVNode(positionWorld)[1].sub(HALL_JOIST_FIRST).div(HALL_JOIST_STEP)).sub(.5).abs().mul(HALL_JOIST_STEP).min(gap)
-    const near = float(gap).sub(off), far = float(gap).add(off)
-    const slot = near.div(near.mul(near).add(JOIST_D * JOIST_D).sqrt()).add(far.div(far.mul(far).add(JOIST_D * JOIST_D).sqrt())).mul(.5)
-    const bay = mix(float(1), mix(mix(float(1), slot, smoothstep(.02, .2, hb)), exp(hb.max(0).div(-.045)).mul(.8).add(.2), sideways), is(K.OAK).mul(smoothstep(-.004, .004, hb)))
     skyOpen = min(float(1), sky.mul(2.4).add(.02)).mul(inHallShade); occluded = bay
     ambient = skyOpen.mul(bay).add(door.mul(.3 * 2.4).add(side.mul(.2 * 2.4)).add(.07).mul(isLink)).add(entrance.x.mul(isEntrance))
     westSky = westSky.mul(2.4).mul(inHallShade).mul(bay)
     bounce = sun.mul(inHallShade).mul(bay).add(door.mul(LINK_DOOR_GAIN).add(side.mul(LINK_SIDE_GAIN)).add(LINK_FILL).mul(isLink)).add(entrance.y.mul(3.2).mul(isEntrance))
+  } else {
+    const inBay = mix(float(1), bay, inHallShade)
+    occluded = inBay; ambient = ambient.mul(inBay); westSky = westSky.mul(inBay); bounce = bounce.mul(inBay)
   }
   // THE ROOM'S LIGHT FALLS OFF into its corners and under its ceiling, and
   // the lion holds it off the floor under its body and round its paws
