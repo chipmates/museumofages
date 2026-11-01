@@ -1852,9 +1852,27 @@ function shutters(s: Sink, f: Facade, o: Opening): void {
     s.box(at((a0 + a1) / 2, (n0 + n1) / 2, (y0 + y1) / 2), scale(D, (a1 - a0) / 2), scale(IN, (n1 - n0) / 2), [0, 0, (y1 - y0) / 2], K.WAX, seed)
   for (const [k, [a0, a1]] of ([[o.from_m + .004, o.from_m + .05], [o.from_m + o.width_m - .05, o.from_m + o.width_m - .004]] as V2[]).entries()) {
     slab(a0, a1, i0, i1, z0, z1, 91 + k)
-    // the panel sits 4 mm into the leaf, so no two faces share a plane
-    const [p0, p1] = k === 0 ? [a1 - .004, a1 + .007] : [a0 - .007, a0 + .004]
-    for (const [y0, y1] of [[z0 + .07, mid - .035], [mid + .035, z1 - .07]] as V2[]) slab(p0, p1, i0 + .055, i1 - .055, y0, y1, 93 + k)
+    for (const [y0, y1] of [[z0 + .07, mid - .035], [mid + .035, z1 - .07]] as V2[]) fieldedPanel(k === 0 ? a1 : a0, k === 0 ? 1 : -1, i0 + .055, i1 - .055, y0, y1, 93 + k)
+  }
+  // A RAISED AND FIELDED PANEL: the field 7 mm proud, bevelled down to the
+  // leaf over 22 mm all round, its foot 1 mm inside the leaf so no seam opens.
+  // A square-edged panel's top was a flat ledge facing up, which the
+  // embrasure's daylit soffit lit to twice the leaf: a white hairline.
+  function fieldedPanel(face: number, sign: number, n0: number, n1: number, y0: number, y1: number, seed: number): void {
+    const bev = .022, foot = face - sign * .001, top = face + sign * .007
+    const P3 = (a: number, n: number, z: number): V3 => at(a, n, z)
+    const base: [number, number][] = [[n0, y0], [n1, y0], [n1, y1], [n0, y1]]
+    const field: [number, number][] = [[n0 + bev, y0 + bev], [n1 - bev, y0 + bev], [n1 - bev, y1 - bev], [n0 + bev, y1 - bev]]
+    const out = scale(D, sign)
+    s.quad(P3(top, field[0]![0], field[0]![1]), P3(top, field[1]![0], field[1]![1]), P3(top, field[2]![0], field[2]![1]), P3(top, field[3]![0], field[3]![1]), out,
+      field[0]!, field[1]!, field[2]!, field[3]!, K.WAX, seed)
+    for (let e = 0; e < 4; e++) {
+      const b0 = base[e]!, b1 = base[(e + 1) % 4]!, f1 = field[(e + 1) % 4]!, f0 = field[e]!
+      const q: V3[] = [P3(foot, b0[0], b0[1]), P3(foot, b1[0], b1[1]), P3(top, f1[0], f1[1]), P3(top, f0[0], f0[1])]
+      let nb = unit(cross(sub(q[1]!, q[0]!), sub(q[3]!, q[0]!)))
+      if (dot(nb, out) < 0) nb = scale(nb, -1)
+      s.quad(q[0]!, q[1]!, q[2]!, q[3]!, nb, b0, b1, f1, f0, K.WAX, seed)
+    }
   }
 }
 
