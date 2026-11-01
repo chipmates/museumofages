@@ -330,8 +330,8 @@
   },
   {
    "file": "src/wings/vinci/house-hall.ts",
-   "sha256": "d0dd094b622dd3be69409c6187abc6812cc5602c5dab6ca4e79488dd01e23e42",
-   "bytes": 202503,
+   "sha256": "4187c4b3320cd660dbf38d1e3b9d1df8f146efe56da8647d80f46d657f717d0b",
+   "bytes": 203863,
    "unchangedDuringAudit": true
   },
   {
@@ -762,8 +762,8 @@
   },
   {
    "file": "src/wings/vinci/walk-poses.ts",
-   "sha256": "ecf741d0d943445144a7679fa2db8c98da263ce490e2bcb5f044577263716dab",
-   "bytes": 8563,
+   "sha256": "4c6f0f7c9213725c4ca65a49e39554e37250910a5a257c8510b394addfb9507b",
+   "bytes": 8608,
    "unchangedDuringAudit": true
   },
   {
@@ -7361,10 +7361,10 @@
    "stations": [
     "body-valve"
    ],
-   "fov": 20.4,
-   "radius": 0.2663048980211701,
+   "fov": 23.56,
+   "radius": 0.2716784522392134,
    "fullBall": {
-    "distance": 0.31630489802117007,
+    "distance": 0.3216784522392134,
     "mesh": null,
     "triangle": null
    },
@@ -9081,10 +9081,10 @@
     ],
     "at": [
      -11.046427915597695,
-     2.2729,
+     2.2014,
      17.463756381630812
     ],
-    "fov": 20.4
+    "fov": 23.56
    },
    "points": [
     [
@@ -9114,10 +9114,10 @@
     ],
     "at": [
      -11.046427915597695,
-     2.2729,
+     2.2014,
      17.463756381630812
     ],
-    "fov": 20.4
+    "fov": 23.56
    },
    "toPose": {
     "eye": [
