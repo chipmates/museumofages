@@ -1090,7 +1090,14 @@ function tile(s: Sink, poly: V2[], z: number, seed: number, centre: V2, side: V2
   s.wear = floorWear(c)
   // one face per tile: an eased arris would stand under a pixel from the walk
   const facePts = poly.map(q => P3(q, h(q)))
-  s.poly(facePts, unit(cross(sub(facePts[1]!, facePts[0]!), sub(facePts[2]!, facePts[0]!))), uvOf, K.TILE, seed)
+  // the face's normal from its whole outline (Newell's sum): a tile clipped at
+  // a wall can open on three points in a line, whose cross is zero, and a zero
+  // normal turns the whole tile's light into NaN
+  const newell = facePts.reduce<V3>((a, p, i) => {
+    const q = facePts[(i + 1) % facePts.length]!
+    return [a[0] + (p[1] - q[1]) * (p[2] + q[2]), a[1] + (p[2] - q[2]) * (p[0] + q[0]), a[2] + (p[0] - q[0]) * (p[1] + q[1])]
+  }, [0, 0, 0])
+  s.poly(facePts, unit(newell), uvOf, K.TILE, seed)
   s.fixed = null; s.wear = 0
 }
 
