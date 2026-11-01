@@ -83,6 +83,12 @@
    "unchangedDuringAudit": true
   },
   {
+   "file": "src/wings/vinci/collection/hall-case.ts",
+   "sha256": "8f49bd43952632d1d10a9f9f1f56ebf9f653d068c507c48999fb6ff4ef509570",
+   "bytes": 13404,
+   "unchangedDuringAudit": true
+  },
+  {
    "file": "src/wings/vinci/collection/hang.ts",
    "sha256": "8286844fbc9fe5a3e2f1092979932aa032123b23cb4f0ea47130ff8807a5ae16",
    "bytes": 7828,
@@ -330,8 +336,8 @@
   },
   {
    "file": "src/wings/vinci/house-hall.ts",
-   "sha256": "9c7e28bdcaaa0813d100b20ae54a5c1dcdbda62a6ba509dd17af18d8a7839529",
-   "bytes": 204254,
+   "sha256": "af9ab672f473891458ce56244b32d8b66b8dbe60fc48263b636ea1e11d84f8a1",
+   "bytes": 204559,
    "unchangedDuringAudit": true
   },
   {
