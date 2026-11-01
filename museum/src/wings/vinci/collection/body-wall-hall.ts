@@ -4,8 +4,8 @@
  * draws the store's admitted plates on them, with the policy's own records.
  * Loaded by the hall on demand, so the hall's fabric never waits for it.
  */
-import { BufferGeometry, DoubleSide, Float32BufferAttribute, Group, LatheGeometry, Matrix4, Mesh, MeshStandardNodeMaterial, PlaneGeometry, SphereGeometry, Vector2, Vector3 } from 'three/webgpu'
-import { vec3 } from 'three/tsl'
+import { BufferGeometry, DoubleSide, Float32BufferAttribute, Group, Matrix4, Mesh, MeshBasicNodeMaterial, PlaneGeometry, SphereGeometry, Vector3 } from 'three/webgpu'
+import { float, mix, normalView, positionViewDirection, vec3 } from 'three/tsl'
 import { loadManifest } from '../../../manifest'
 import { createPlateStream, type PlateStream } from '../pictures/stream'
 import { findPlateEntries, getWork, reproductionCardSize } from '../pictures/register'
@@ -25,12 +25,10 @@ export interface HallPlate {
   /** the sheet's own plate size; a painting takes its card size from the register */
   width?: number
   height?: number
+  /** the room's light at its place, times the prints' gain (`house-hall.ts`) */
+  tone?: V3
 }
 
-/** The hall's return on a print, as the multiplier the stream applies: the
- * cabinet's sheets stand in the partition's shade, the easels nearer the
- * windows. Measured against the linen and the panels round them. */
-const TONE = { sheet: vec3(.74, .69, .61), painting: vec3(.86, .81, .73) } as const
 /** The one full resolution at a time: the nearest plate within reach. */
 const REACH = { sheet: 1.9, painting: 3.2 } as const
 
@@ -47,24 +45,35 @@ export interface HallPlates {
  * sure he built one. A glass root with its three sinuses on a turned oak
  * foot, three thin cusps opening and shutting once in a beat, and grass
  * seeds turning in the water behind them, as he planned to show the flow.
+ * Its oak foot is the hall's (`house-hall.ts`). Drawn in the room's light at
+ * the stand, `light`: the glass clear in the middle and catching the room at
+ * its edges, as glass does, never lit from outside the hall.
  * Local metres, y up, the foot's underside at 0. */
 const ROOT = { foot: .028, low: .1, sinus: .13, junction: .17, top: .27, tube: .034, bulge: .052 } as const
 const BEAT_S = 2.6
+/** a demonstration size, small enough to stand whole under its sheet in the valve's look */
+const MODEL_SCALE = 1.25
 function rootRadius(y: number, angle: number): number {
   const lobe = Math.max(0, Math.cos(3 * angle)) ** 1.5
   const swell = y < ROOT.low ? 0 : y > ROOT.junction ? 0 : Math.sin(Math.PI * (y - ROOT.low) / (ROOT.junction - ROOT.low))
   return ROOT.tube + (ROOT.bulge - ROOT.tube) * swell * (.55 + .45 * lobe)
 }
-function glassValve(): { group: Group; beat(t: number): void } {
+function glassValve(light: V3): { group: Group; beat(t: number): void } {
   const group = new Group()
   group.name = 'vinci/house-hall/glass-valve'
-  const oak = new MeshStandardNodeMaterial({ color: '#6a4a2c', roughness: .55, metalness: 0 })
-  const glass = new MeshStandardNodeMaterial({ color: '#e4efec', roughness: .04, metalness: 0, transparent: true, opacity: .2, depthWrite: false, side: DoubleSide })
-  const water = new MeshStandardNodeMaterial({ color: '#cfe0dc', roughness: .1, metalness: 0, transparent: true, opacity: .1, depthWrite: false })
-  const cusp = new MeshStandardNodeMaterial({ color: '#d9cdb4', roughness: .6, metalness: 0, transparent: true, opacity: .78, side: DoubleSide })
-  const seedMat = new MeshStandardNodeMaterial({ color: '#4a3a1c', roughness: .8, metalness: 0 })
-  const foot = new Mesh(new LatheGeometry([[0, 0], [.08, 0], [.084, .006], [.08, .014], [.066, .02], [.062, ROOT.foot], [0, ROOT.foot]].map(([x, y]) => new Vector2(x, y)), 40), oak)
-  group.add(foot)
+  const room = vec3(...light)
+  // a pane's share of the room it mirrors grows toward a grazing view
+  const edge = float(1).sub(normalView.dot(positionViewDirection.negate()).abs()).pow(2.5)
+  const glass = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false, side: DoubleSide })
+  glass.colorNode = mix(vec3(.62, .66, .64), vec3(.86, .9, .88), edge).mul(room)
+  glass.opacityNode = mix(float(.05), float(.6), edge)
+  const water = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false })
+  water.colorNode = vec3(.55, .62, .6).mul(room)
+  water.opacityNode = mix(float(.04), float(.16), edge)
+  const cusp = new MeshBasicNodeMaterial({ transparent: true, opacity: .85, side: DoubleSide })
+  cusp.colorNode = vec3(.62, .55, .42).mul(room)
+  const seedMat = new MeshBasicNodeMaterial()
+  seedMat.colorNode = vec3(.07, .045, .02).mul(room)
   // the root, its three sinuses swelling between the cusps' commissures
   const A = 60, Y = 30, pos: number[] = [], idx: number[] = []
   for (let j = 0; j <= Y; j++) for (let i = 0; i <= A; i++) {
@@ -125,12 +134,12 @@ function glassValve(): { group: Group; beat(t: number): void } {
   return { group, beat }
 }
 
-export function mountHallPlates(host: Group, plates: readonly HallPlate[], hero: boolean, valveAt?: V3): HallPlates {
+export function mountHallPlates(host: Group, plates: readonly HallPlate[], hero: boolean, valveAt?: V3, valveLight: V3 = [.3, .25, .2]): HallPlates {
   const group = new Group()
   group.name = 'vinci/house-hall/plates'
   host.add(group)
-  const model = valveAt ? glassValve() : null
-  if (model && valveAt) { model.group.position.copy(world(valveAt)); model.group.scale.setScalar(1.5); group.add(model.group) }
+  const model = valveAt ? glassValve(valveLight) : null
+  if (model && valveAt) { model.group.position.copy(world(valveAt)); model.group.scale.setScalar(MODEL_SCALE); group.add(model.group) }
   const placed: { plate: HallPlate; stream: PlateStream; at: Vector3 }[] = []
   let loading = true, raised: PlateStream | null = null, switching = false, last = performance.now()
   const ready = loadManifest().then(manifest => {
@@ -140,7 +149,7 @@ export function mountHallPlates(host: Group, plates: readonly HallPlate[], hero:
       if (plate.kind === 'sheet') {
         const source = sheets.get(plate.id)
         if (!source || plate.width === undefined || plate.height === undefined) continue
-        stream = createPlateStream(source.preview, source.page, { previewMaxEdge: hero ? 1024 : 512, tone: TONE.sheet, family: 'sheet' })
+        stream = createPlateStream(source.preview, source.page, { previewMaxEdge: hero ? 1024 : 512, ...(plate.tone ? { tone: vec3(...plate.tone) } : {}), family: 'sheet' })
         geometry = new PlaneGeometry(plate.width, plate.height)
       } else {
         const work = getWork(plate.id)
@@ -149,7 +158,7 @@ export function mountHallPlates(host: Group, plates: readonly HallPlate[], hero:
         const registration = pictureDisplayWindow(entry.plate)
         const window = registration ? pictureDisplayUV(registration) : null
         const size = reproductionCardSize(work, window ? { width: window.contentAspect, height: 1 } : entry.pixels)
-        stream = createPlateStream(entry.preview, entry.plate, { previewMaxEdge: hero ? 1024 : 512, tone: TONE.painting })
+        stream = createPlateStream(entry.preview, entry.plate, { previewMaxEdge: hero ? 1024 : 512, ...(plate.tone ? { tone: vec3(...plate.tone) } : {}) })
         geometry = new PlaneGeometry(size.widthM, size.heightM)
         if (window) {
           const uv = geometry.getAttribute('uv')

@@ -833,15 +833,16 @@ export function createHouseHall(tier: TierName, library?: MaterialLibrary): Hous
   for (const mesh of [fabric, things]) { mesh.userData['manifestId'] = houseHallProvenance.manifestId; mesh.userData['asset'] = houseHallProvenance.manifestId; group.add(mesh) }
   const glass = innerGlass()
   group.add(glass)
-  const dust = hero ? dustBeams() : null
-  if (dust) group.add(dust)
   group.userData['manifestId'] = houseHallProvenance.manifestId
   const triangles = s.v.length / 3
   group.userData['triangles'] = triangles
   // the anatomy's sheets and the three paintings: laid out here, fetched by
   // the anatomy's display module once the wing stands (`body-wall-hall.ts`)
   const st = HALL_VALVE.stand
-  plateHost = { group, plates: platesOut, hero, valve: P((st.u0 + st.u1) / 2, (st.v0 + st.v1) / 2, FLOOR_Z + st.top) }
+  const valveAt = P((st.u0 + st.u1) / 2, (st.v0 + st.v1) / 2, FLOOR_Z + st.top)
+  // the model takes the room's light and a little of the hood's strip spilling down on to the stand
+  const spill = scale(HALL_CASE_LIGHT.colour, HALL_CASE_LIGHT.valve * .3)
+  plateHost = { group, plates: platesOut, hero, valve: valveAt, valveLight: add(hallPlateLight(add(valveAt, [0, 0, .2]), [U[0], U[1], 0]), spill) }
   platesShown = null
   const refreshSun = (eye: V3, changed: boolean): void => { sun?.refresh(eye, changed); platesShown?.tick(eye) }
   return { group, triangles, patches: PATCHES.length, refreshSun, pending: () => platesShown?.pending() ?? 0 }
@@ -1221,7 +1222,31 @@ const MAT_FACE = .0035, FRAME_LIP = .008, FRAME_FACE = .017
 /** THE SHEET APART stands round the corner on the west wall's south pier,
  * facing the room, its glass model on a stand under it: the old wing's niche
  * does not fit beside the hang on this wall. */
-export const HALL_VALVE = { v: .97, z: 1.7, board: [.74, 1.2, 1.43, 1.97] as const, stand: { u0: .05, u1: .45, v0: .74, v1: 1.2, top: .95 } } as const
+export const HALL_VALVE = { v: .97, z: 1.7, board: [.74, 1.2, 1.43, 1.97] as const, stand: { u0: .05, u1: .45, v0: .74, v1: 1.2, top: 1.04 } } as const
+/** THE CASES' OWN LIGHT, present-day fittings like the cases: a warm strip
+ * hidden under the cabinet's top board, its optic laying an even wash down the
+ * linen, and one under the sheet apart's hood. Nothing hangs from the 1517
+ * ceiling or walls. Strengths are the wash on a face turned to the strip;
+ * `fall` is what the wash loses from the top of a case to its foot. */
+export const HALL_CASE_LIGHT = { colour: [1, .82, .62] as V3, cabinet: .42, valve: .555, fall: .06, hood: .16 } as const
+const smoothJS = (a: number, b: number, x: number): number => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t) }
+const insideJS = (x: number, lo: number, hi: number): number => smoothJS(lo - .004, lo + .004, x) * (1 - smoothJS(hi - .004, hi + .004, x))
+/** What the cases' strips lay on a point: hall frame, height from the floor,
+ * the normal in u, v, up. The shader's `caseWashNode` is the same sum. */
+export function hallCaseWash(u: number, v: number, z: number, n: V3): number {
+  const C = HALL_CABINET, L = HALL_CASE_LIGHT, [b0, b1, z0, z1] = HALL_VALVE.board, cTop = C.top - .03
+  const cab = insideJS(u, C.u0 + .045, C.u1 - .045) * insideJS(v, -.01, C.upper + .01) * insideJS(z, C.ledge - .006, cTop)
+    * (Math.min(1, Math.max(0, n[1] + n[2] * .5)) + Math.abs(n[0]) * .45) * (1 - (cTop - z) / (cTop - C.ledge) * L.fall) * L.cabinet
+  const valve = insideJS(u, -.01, L.hood + .01) * insideJS(v, b0, b1) * insideJS(z, z0 - .006, z1)
+    * (Math.min(1, Math.max(0, n[0] + n[2] * .5)) + Math.abs(n[1]) * .45) * (1 - (z1 - z) / (z1 - z0) * L.fall) * L.valve
+  return cab + valve
+}
+/** A print is drawn unlit and outside the tone map (`pictures/stream.ts`): the
+ * room's light at its place times this gain reads as the surfaces round it.
+ * The room renders a surface as its colour times its light times about 1.7
+ * where it is dim (the cycle's mats and walls, measured); the cabinet's
+ * paper sits in the tone map's shoulder, nearer 1.45. */
+export const HALL_PLATE_GAIN = { sheet: 1.45, painting: 1.7 } as const
 /** THE THREE PAINTINGS AS SHOWN, never hung: each on a plain easel between
  * the back windows, turned to the eye that reads them. */
 export const HALL_PAINTINGS_EYE: V2 = [6.6, 3.9]
@@ -1253,13 +1278,35 @@ export const hallSheetDatum = (mount: BodyMount): number =>
 export const HALL_VALVE_SHEET = { face: SHEET_D, v: HALL_VALVE.v, z: HALL_VALVE.z, standTop: HALL_VALVE.stand.top }
 /** The hall's frame as world points, for the eyes the rail stands here. */
 export const hallPoint = (u: number, v: number, z: number): Vector3 => { const q = P(u, v, FLOOR_Z + z); return new Vector3(q[0], q[2], -q[1]) }
+/** THE CABINET'S PLAN, for its audit (`collection/body-wall-check.mjs`):
+ * every box the cabinet and the sheet apart's pier lay (east, north, up: a
+ * centre and three half axes), the model's reach on its stand, the plates'
+ * places in the order laid, and the hall's frame. */
+export function hallCabinetPlan(): { boxes: { centre: V3; axes: [V3, V3, V3]; kind: number }[]; plates: HallPlate[]; model: { centre: V3; axes: [V3, V3, V3] };
+  origin: V3; u: V3; v: V3 } {
+  const boxes: { centre: V3; axes: [V3, V3, V3]; kind: number }[] = []
+  const record = { box: (c: V3, a: V3, b: V3, z: V3, kind: number) => { boxes.push({ centre: c, axes: [a, b, z], kind }) },
+    lathe: (c: V3, profile: V2[], _n: number, kind: number) => {
+      const r = Math.max(...profile.map(q => q[0])), h = Math.max(...profile.map(q => q[1]))
+      boxes.push({ centre: [c[0], c[1], c[2] + h / 2], axes: [[U[0] * r, U[1] * r, 0], [V[0] * r, V[1] * r, 0], [0, 0, h / 2]], kind })
+    } } as unknown as Sink
+  const kept = platesOut
+  platesOut = []
+  cabinet(record); valvePier(record)
+  const plates = platesOut
+  platesOut = kept
+  // the root's widest sinus and its top at the model's scale; the foot is the hall's own lathe
+  const st = HALL_VALVE.stand, reach = .07, tall = .34
+  const model = { centre: P((st.u0 + st.u1) / 2, (st.v0 + st.v1) / 2, FLOOR_Z + st.top + tall / 2), axes: [[U[0] * reach, U[1] * reach, 0], [V[0] * reach, V[1] * reach, 0], [0, 0, tall / 2]] as [V3, V3, V3] }
+  return { boxes, plates, model, origin: P(0, 0, FLOOR_Z), u: [U[0], U[1], 0], v: [V[0], V[1], 0] }
+}
 
 /** A direction of the hall's frame in east, north, up. */
 const uvDir = (du: number, dv: number, dz = 0): V3 => [U[0] * du + V[0] * dv, U[1] * du + V[1] * dv, dz]
 /** The plates the build lays out; the hall's group and tier they are drawn
  * in; and the drawn set, which the hall's frame tick drives. */
 let platesOut: HallPlate[] = []
-let plateHost: { group: Group; plates: readonly HallPlate[]; hero: boolean; valve: V3 } | null = null
+let plateHost: { group: Group; plates: readonly HallPlate[]; hero: boolean; valve: V3; valveLight: V3 } | null = null
 let platesShown: HallPlates | null = null
 export const hallPlateHost = (): typeof plateHost => plateHost
 export const showHallPlates = (shown: HallPlates): void => { platesShown = shown }
@@ -1325,8 +1372,9 @@ function cabinet(s: Sink): void {
     const { frame, window } = gridRects(m, gridU, gridZ)
     mountedSheet(s, 'A', frame, window, 200 + k)
     const plate = plateOf(m.mount)
-    platesOut.push({ kind: 'sheet', id: m.mount.id, centre: P(gridU(m.mount.north), SHEET_D, FLOOR_Z + gridZ(m.mount.datum)),
-      right: [-U[0], -U[1], 0], up: [0, 0, 1], normal: [V[0], V[1], 0], width: plate.width, height: plate.height })
+    const centre = P(gridU(m.mount.north), SHEET_D, FLOOR_Z + gridZ(m.mount.datum)), normal: V3 = [V[0], V[1], 0]
+    platesOut.push({ kind: 'sheet', id: m.mount.id, centre, right: [-U[0], -U[1], 0], up: [0, 0, 1], normal, width: plate.width, height: plate.height,
+      tone: scale(hallPlateLight(centre, normal), HALL_PLATE_GAIN.sheet) })
   }
 }
 
@@ -1341,9 +1389,16 @@ function valvePier(s: Sink): void {
   const { frame, window } = gridRects(m, along, up)
   mountedSheet(s, 'D', frame, window, 142)
   const plate = plateOf(m.mount)
-  platesOut.push({ kind: 'sheet', id: m.mount.id, centre: P(SHEET_D, HALL_VALVE.v, FLOOR_Z + HALL_VALVE.z),
-    right: [V[0], V[1], 0], up: [0, 0, 1], normal: [U[0], U[1], 0], width: plate.width, height: plate.height })
+  const centre = P(SHEET_D, HALL_VALVE.v, FLOOR_Z + HALL_VALVE.z), normal: V3 = [U[0], U[1], 0]
+  platesOut.push({ kind: 'sheet', id: m.mount.id, centre, right: [V[0], V[1], 0], up: [0, 0, 1], normal, width: plate.width, height: plate.height,
+    tone: scale(hallPlateLight(centre, normal), HALL_PLATE_GAIN.sheet) })
+  // the hood the strip hides under: a top board and two cheeks of the stand's oak
+  const hood = HALL_CASE_LIGHT.hood
+  wallBox(s, 'D', b0 - .02, b1 + .02, .005, hood, z1, z1 + .03, K.OAK, 147)
+  for (const [a, b] of [[b0 - .02, b0], [b1, b1 + .02]] as V2[]) wallBox(s, 'D', a, b, .005, hood - .01, z0 - .02, z1, K.OAK, 148, { z1: true })
   const { u0, u1, v0, v1, top } = HALL_VALVE.stand, leg = .035, inset = .03
+  // the model's turned oak foot, the stand's own wood (the glass stands on it)
+  s.lathe(P((u0 + u1) / 2, (v0 + v1) / 2, FLOOR_Z + top), [[.1, 0], [.105, .0075], [.1, .0175], [.0825, .025], [.0775, .035], [0, .035]], 40, K.OAK, 146)
   hbox(s, u0, u1, v0, v1, top - .025, top, K.OAK, 143)
   hbox(s, u0 + inset, u1 - inset, v0 + inset, v1 - inset, top - .1, top - .025, K.OAK, 144, '+z')
   for (const [a, b] of [[u0 + inset, v0 + inset], [u1 - inset - leg, v0 + inset], [u0 + inset, v1 - inset - leg], [u1 - inset - leg, v1 - inset - leg]] as V2[])
@@ -1375,7 +1430,8 @@ function easel(s: Sink, e: { id: string; u: number; v: number; ledge: number }, 
   const foot = P(...uvAt(at(0, .0225 + PANEL_THICK / 2, 0)), FLOOR_Z + e.ledge)
   const centre = add(foot, scale(Up, H / 2))
   s.box(centre, scale(R, W / 2), scale(Up, H / 2), scale(N, PANEL_THICK / 2), K.PANEL, seed + 4)
-  platesOut.push({ kind: 'painting', id: e.id, centre: add(centre, scale(N, PANEL_THICK / 2 + .0008)), right: R, up: Up, normal: N })
+  const face = add(centre, scale(N, PANEL_THICK / 2 + .0008))
+  platesOut.push({ kind: 'painting', id: e.id, centre: face, right: R, up: Up, normal: N, tone: scale(hallPlateLight(face, N), HALL_PLATE_GAIN.painting) })
 }
 const uvAt = (p: V3): V2 => [p[0], p[1]]
 
@@ -1984,16 +2040,16 @@ function innerGlass(): Mesh {
  * shaft of the hour's sun across the wall's depth to the floor, and the
  * dust of a lived-in room shows it. Each shaft is its own sheared prism:
  * corner R, edges along the light (A, B) and the sun's travel (D, to the
- * floor's plane at B's height); the shader follows the eye's ray through it
- * and glows by the length it crosses and the angle to the sun. An engine
- * term: the film's volume scatters for real, so `engineVolume` marks it. */
-function dustBeams(): Mesh | null {
+ * floor's plane at B's height). No geometry stands for it: the room's own
+ * surfaces add what the eye's ray crosses of it (`dustGlowNode`), so a walk
+ * through a shaft brushes nothing. An engine term with the room's return. */
+function dustShafts(): { o: V3; rows: [V3, V3, V3]; lo: number; hi: number }[] {
   const f = WEST, fr = frame(f), t = thicknessOf(f)
   const out: V3 = [fr.out[0], fr.out[1], 0], along: V3 = [fr.dir[0], fr.dir[1], 0]
   const facing = dot(TO_SUN, out)
-  if (facing < .05) return null
+  if (facing < .05) return []
   const travel: V3 = scale(TO_SUN, -1)
-  const positions: number[] = [], inv0: number[] = [], inv1: number[] = [], inv2: number[] = [], orig: number[] = []
+  const shafts: { o: V3; rows: [V3, V3, V3]; lo: number; hi: number }[] = []
   for (const w of WINDOWS.filter(x => x.west)) for (const [u0, u1, z0, z1] of lightsOf(w.o)) {
     // the part of the light the wall's depth leaves lit at its inner face
     const depth = t - GLASS_IN
@@ -2014,63 +2070,36 @@ function dustBeams(): Mesh | null {
       [(M[1]![2]! * M[2]![0]! - M[1]![0]! * M[2]![2]!) / det, (M[0]![0]! * M[2]![2]! - M[0]![2]! * M[2]![0]!) / det, (M[0]![2]! * M[1]![0]! - M[0]![0]! * M[1]![2]!) / det],
       [(M[1]![0]! * M[2]![1]! - M[1]![1]! * M[2]![0]!) / det, (M[0]![1]! * M[2]![0]! - M[0]![0]! * M[2]![1]!) / det, (M[0]![0]! * M[1]![1]! - M[0]![1]! * M[1]![0]!) / det],
     ]
-    // the prism's eight corners: the lit face and its footprint on the floor
-    const corner = (a: number, b: number, far: boolean): V3 => add(add(add(R, scale(A, a)), scale(B, b)), far ? scale(D, lo + (hi - lo) * b) : [0, 0, 0])
-    // the footprint on the floor is only ever left by, so it is not drawn
-    const faces: [number, number, boolean][][] = [
-      [[0, 0, false], [1, 0, false], [1, 1, false], [0, 1, false]],
-      [[0, 0, false], [0, 0, true], [1, 0, true], [1, 0, false]], [[0, 1, false], [1, 1, false], [1, 1, true], [0, 1, true]],
-      [[0, 0, false], [0, 1, false], [0, 1, true], [0, 0, true]], [[1, 0, false], [1, 0, true], [1, 1, true], [1, 1, false]],
-    ]
-    // the shader converts east/north/up to three's frame itself: store rows
-    // of the inverse map in the renderer's axes (x=e, y=up, z=-n)
-    const row = (r: number[]): number[] => [r[0]!, r[2]!, -r[1]!]
-    for (const face of faces) for (const k of [0, 1, 2, 0, 2, 3]) {
-      const [a, b, far] = face[k]!, p = corner(a, b, far)
-      positions.push(p[0], p[2], -p[1])
-      inv0.push(...row(inv[0]!)); inv1.push(...row(inv[1]!)); inv2.push(...row(inv[2]!))
-      orig.push(R[0], R[2], -R[1], lo, hi)
-    }
+    // the inverse map's rows and the corner in the renderer's axes (x=e, y=up, z=-n)
+    const row = (r: number[]): V3 => [r[0]!, r[2]!, -r[1]!]
+    shafts.push({ o: [R[0], R[2], -R[1]], rows: [row(inv[0]!), row(inv[1]!), row(inv[2]!)], lo, hi })
   }
-  if (!positions.length) return null
-  const g = new BufferGeometry()
-  g.setAttribute('position', new Float32BufferAttribute(positions, 3))
-  g.setAttribute('beamA', new Float32BufferAttribute(inv0, 3))
-  g.setAttribute('beamB', new Float32BufferAttribute(inv1, 3))
-  g.setAttribute('beamS', new Float32BufferAttribute(inv2, 3))
-  const o5: number[] = [], o2: number[] = []
-  for (let i = 0; i < orig.length; i += 5) { o5.push(orig[i]!, orig[i + 1]!, orig[i + 2]!); o2.push(orig[i + 3]!, orig[i + 4]!) }
-  g.setAttribute('beamO', new Float32BufferAttribute(o5, 3))
-  g.setAttribute('beamL', new Float32BufferAttribute(o2, 2))
-  g.computeBoundingSphere()
-  // Both sides are drawn: a face the eye's ray enters by carries the length
-  // to where the ray leaves; a face it leaves by carries none.
-  // no fog: an added layer that takes the fog adds the haze colour once per face
-  const m = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false, side: DoubleSide, blending: AdditiveBlending, fog: false })
-  const IA = attribute('beamA', 'vec3'), IB = attribute('beamB', 'vec3'), IS = attribute('beamS', 'vec3'), O = attribute('beamO', 'vec3'), Lh = attribute('beamL', 'vec2')
+  return shafts
+}
+/** The glow the shafts' dust lays over a point of the room: the length of the
+ * eye's ray inside each shaft up to the point, so an eye walking through a
+ * shaft keeps seeing it round itself. Forward scattering: a thin haze of dust
+ * is brightest looking into the sun. */
+function dustGlowNode(): N {
   const eye = cameraPosition, ray = positionWorld.sub(eye), here = ray.length(), dir = ray.div(here.max(1e-6))
-  const e0 = vec3(IA.dot(eye.sub(O)), IB.dot(eye.sub(O)), IS.dot(eye.sub(O)))
-  const dl = vec3(IA.dot(dir), IB.dot(dir), IS.dot(dir))
   const safe = (d: N): N => d.abs().max(1e-6).mul(d.greaterThanEqual(0).select(float(1), float(-1)))
-  // where the ray leaves each bound: 0 <= a <= 1, 0 <= b <= 1, s >= 0, s - (hi - lo) b <= lo
-  const leave = (o: N, d: N): N => d.greaterThanEqual(0).select(float(1).sub(o), o.negate()).div(safe(d))
-  const slope = Lh.y.sub(Lh.x), top = e0.z.sub(slope.mul(e0.y)), rate = dl.z.sub(slope.mul(dl.y))
-  const sOut = dl.z.lessThan(0).select(e0.z.negate().div(safe(dl.z)), float(1e6))
-  const topOut = rate.greaterThan(0).select(Lh.x.sub(top).div(safe(rate)), float(1e6))
-  const exit = min(min(leave(e0.x, dl.x), leave(e0.y, dl.y)), min(sOut, topOut))
-  const length = exit.sub(here).max(0)
-  // forward scattering: a thin haze of dust is brightest looking into the sun
+  let length: N = float(0)
+  for (const sh of dustShafts()) {
+    const O = vec3(...sh.o), IA = vec3(...sh.rows[0]), IB = vec3(...sh.rows[1]), IS = vec3(...sh.rows[2])
+    const e0 = vec3(IA.dot(eye.sub(O)), IB.dot(eye.sub(O)), IS.dot(eye.sub(O))), dl = vec3(IA.dot(dir), IB.dot(dir), IS.dot(dir))
+    // in and out of each bound: 0 <= a <= 1, 0 <= b <= 1, s >= 0, s - (hi - lo) b <= lo
+    const slab = (o: N, d: N): [N, N] => { const t0 = o.negate().div(safe(d)), t1 = float(1).sub(o).div(safe(d)); return [min(t0, t1), max(t0, t1)] }
+    const [aIn, aOut] = slab(e0.x, dl.x), [bIn, bOut] = slab(e0.y, dl.y)
+    const sCross = e0.z.negate().div(safe(dl.z))
+    const slope = sh.hi - sh.lo, top = e0.z.sub(e0.y.mul(slope)), rate = dl.z.sub(dl.y.mul(slope)), tCross = float(sh.lo).sub(top).div(safe(rate))
+    const enter = max(max(max(aIn, bIn), dl.z.greaterThan(0).select(sCross, float(-1e6))), max(rate.lessThan(0).select(tCross, float(-1e6)), float(0)))
+    const leave = min(min(min(aOut, bOut), dl.z.lessThan(0).select(sCross, float(1e6))), min(rate.greaterThan(0).select(tCross, float(1e6)), here))
+    length = length.add(leave.sub(enter).max(0))
+  }
   const cosT = dir.dot(vec3(TO_SUN[0], TO_SUN[2], -TO_SUN[1]))
   const g1 = .55, phase = float(1 - g1 * g1).div(float(1 + g1 * g1).sub(cosT.mul(2 * g1)).pow(1.5)).mul(1 / (4 * Math.PI))
   const drift = mx_noise_float(positionWorld.mul(1.3)).mul(.25).add(.9)
-  m.colorNode = vec3(1, .80, .58).mul(length.mul(phase).mul(drift).mul(.085))
-  m.name = 'vinci/house-hall/dust'
-  m.userData['engineVolume'] = true
-  const mesh = new Mesh(g, m)
-  mesh.name = 'vinci/house-hall/dust'
-  mesh.castShadow = false; mesh.receiveShadow = false; mesh.renderOrder = 2
-  mesh.userData['manifestId'] = houseHallProvenance.manifestId; mesh.userData['asset'] = houseHallProvenance.manifestId
-  return mesh
+  return vec3(1, .80, .58).mul(length.mul(phase).mul(drift).mul(.085))
 }
 
 /* ---- the service passage ---- */
@@ -2171,6 +2200,16 @@ function bakePoint(at: V3, n: V3, hall: boolean): [number, number] {
     sky += f * .3 + g * .2 + .02
   }
   return [Math.min(1, .02 + sky * 2.4), bounce]
+}
+/** THE LIGHT AT A PRINT'S OR A MODEL'S PLACE, as the hall's surfaces take it
+ * there (the vertex bake's sum, `hallMaterial`'s diffuse return) and the
+ * cases' strips: linear, a multiplier on its own colour. */
+export function hallPlateLight(at: V3, n: V3): V3 {
+  const [sky, bounce] = bakePoint(at, n, true), west = sky * .6, north = sky - west
+  const q = toUV([at[0], at[1]]), nq: V3 = [n[0] * U[0] + n[1] * U[1], n[0] * V[0] + n[1] * V[1], n[2]]
+  const c = hallCaseWash(q[0], q[1], at[2] - FLOOR_Z, nq), C = HALL_CASE_LIGHT.colour
+  const warm: V3 = [1, .73, .545], westC: V3 = [.19, .155, .115], northC: V3 = [.12, .13, .14]
+  return [0, 1, 2].map(i => warm[i]! * bounce * BOUNCE_K + westC[i]! * west + northC[i]! * north + C[i]! * c) as V3
 }
 /** INSIDE AN EMBRASURE the bake's window, which stands at the mouth, lies
  * behind a face: the cross's inner faces see the daylit cheeks, soffit and
@@ -2399,6 +2438,20 @@ export function doorWear(Wp: N): N {
   }
   const h = Wp.y.sub(FLOOR_Z)
   return w.mul(smoothstep(.4, .9, h)).mul(float(1).sub(smoothstep(1.7, 2.2, h)))
+}
+
+/** The cases' strips in the shader: `hallCaseWash`, per point. */
+function caseWashNode(Wp: N, Nw: N): N {
+  const [hu, hv] = hallUVNode(Wp), hz = Wp.y.sub(FLOOR_Z)
+  const ne = Nw.x, nn = Nw.z.negate(), nz = Nw.y
+  const nu = ne.mul(U[0]).add(nn.mul(U[1])), nv = ne.mul(V[0]).add(nn.mul(V[1]))
+  const inside = (x: N, lo: number, hi: number): N => smoothstep(lo - .004, lo + .004, x).mul(float(1).sub(smoothstep(hi - .004, hi + .004, x)))
+  const C = HALL_CABINET, L = HALL_CASE_LIGHT, [b0, b1, z0, z1] = HALL_VALVE.board, cTop = C.top - .03
+  const cab = inside(hu, C.u0 + .045, C.u1 - .045).mul(inside(hv, -.01, C.upper + .01)).mul(inside(hz, C.ledge - .006, cTop))
+    .mul(clamp(nv.add(nz.mul(.5)), 0, 1).add(nu.abs().mul(.45))).mul(float(1).sub(float(cTop).sub(hz).mul(L.fall / (cTop - C.ledge)))).mul(L.cabinet)
+  const valve = inside(hu, -.01, L.hood + .01).mul(inside(hv, b0, b1)).mul(inside(hz, z0 - .006, z1))
+    .mul(clamp(nu.add(nz.mul(.5)), 0, 1).add(nv.abs().mul(.45))).mul(float(1).sub(float(z1).sub(hz).mul(L.fall / (z1 - z0)))).mul(L.valve)
+  return cab.add(valve)
 }
 
 function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: N): MeshStandardNodeMaterial {
@@ -2715,7 +2768,8 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   // the west lights look onto a sunlit terrace and garden, the back ones onto
   // the north sky: their day reaches the walls warm and cool
   const northSky = ambient.sub(westSky).max(0)
-  const diffuseReturn = colour.mul(vec3(1, .73, .545).mul(bounce.mul(BOUNCE_K)).add(vec3(.19, .155, .115).mul(westSky)).add(vec3(.12, .13, .14).mul(northSky)))
+  const caseLit = vec3(...HALL_CASE_LIGHT.colour).mul(caseWashNode(Wp, Nw))
+  const diffuseReturn = colour.mul(vec3(1, .73, .545).mul(bounce.mul(BOUNCE_K)).add(vec3(.19, .155, .115).mul(westSky)).add(vec3(.12, .13, .14).mul(northSky)).add(caseLit))
   // waxed oak and glaze mirror the windows at a graze: the sheen a shaded
   // table top holds where the eye catches the day in it; the wax lies a
   // little unevenly, and the rings' open pores hold less of it
@@ -2727,7 +2781,7 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
     .mul(float(1).sub(smoothstep(TABLE.size[1] / 2 - .02, TABLE.size[1] / 2, hv.sub(TABLE.v).abs())))
     .mul(float(1).sub(smoothstep(FLOOR_Z + TABLE.size[2] - .08, FLOOR_Z + TABLE.size[2] - .06, Wp.y)))
   const flatTop = smoothstep(.5, .9, normalWorldGeometry.y).mul(float(1).sub(underBoards))
-  m.emissiveNode = perPixel ? diffuseReturn.add(windowGloss().mul(is(K.WAX).mul(waxed).mul(flatTop).add(is(K.GLAZE).add(is(K.EARTH)).mul(1.4))).mul(inSunBox)) : diffuseReturn
+  m.emissiveNode = perPixel ? diffuseReturn.add(windowGloss().mul(is(K.WAX).mul(waxed).mul(flatTop).add(is(K.GLAZE).add(is(K.EARTH)).mul(1.4))).mul(inSunBox)).add(dustGlowNode()) : diffuseReturn
   m.userData['engineBounce'] = true
   m.name = 'vinci/house-hall/fabric'
   return m
