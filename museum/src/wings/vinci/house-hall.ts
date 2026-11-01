@@ -22,7 +22,7 @@ import { HALL_LION } from './collection/stands'
 import { mountedSheets, plateOf, sheetFace, type MountedSheet } from './collection/body-wall-plan'
 import { BODY_WALL_CENTRE, type BodyMount } from './collection/body-wall'
 import { FLOOR as PAVILION_FLOOR } from './collection/layout'
-import { CASE, CASE_LIGHT, GRID_DROP, HALL_CASE_AT, HALL_PIER_AT, PIER, SHEET_D, caseAxes, caseLayout, caseToHall, caseWashLocal, gridA, hallToCase, pierLayout, pierWashLocal, type CaseKind, type CaseLayout, type CasePlace } from './collection/hall-case'
+import { CASE, CASE_LIGHT, GRID_DROP, HALL_CASE_AT, HALL_PIER_AT, PIER, SHEET_D, caseAxes, caseLayout, caseGrid, caseToHall, caseWashLocal, gridA, hallToCase, pierLayout, pierWashLocal, type CaseKind, type CaseLayout, type CasePlace } from './collection/hall-case'
 import { getWork } from './pictures/register'
 import { trueScale } from './pictures/scale'
 import type { HallPlate, HallPlates } from './collection/body-wall-hall'
@@ -2440,8 +2440,13 @@ function caseWashNode(Wp: N, Nw: N): N {
     return { a: du.mul(along[0]).add(dv.mul(along[1])), d: du.mul(out[0]).add(dv.mul(out[1])), na: nu.mul(along[0]).add(nv.mul(along[1])), no: nu.mul(out[0]).add(nv.mul(out[1])) }
   }
   const C = CASE, L = CASE_LIGHT, [b0, b1, z0, z1] = PIER.board, cTop = C.top - .03, c = local(HALL_CASE_AT), p = local(HALL_PIER_AT)
+  // the heads' scallops under the board, the even field, the fall to the ledge
+  const g = caseGrid(), sp = (C.a1 - C.a0 - .1) / L.heads, off = fract(c.a.sub(C.a0 + .05).div(sp)).sub(.5).mul(sp), h = float(cTop).sub(hz)
+  const edge = off.mul(off).mul(L.arc).add(L.lip), lit = smoothstep(edge.sub(.012), edge.add(.012), h)
+  const crown = lit.mul(exp(h.sub(edge).max(0).div(-L.decay))).mul(smoothstep(g.top - .01, g.top + .03, hz)).mul(L.crown)
+  const field = float(1).sub(clamp(float(g.top).sub(hz).div(g.top - g.foot), 0, 1).mul(L.field)), tail = exp(float(g.foot).sub(hz).max(0).div(-L.foot))
   const cab = inside(c.a, C.a0 + .045, C.a1 - .045).mul(inside(c.d, -.01, C.upper + .01)).mul(inside(hz, C.ledge - .006, cTop))
-    .mul(clamp(c.no.add(nz.mul(.5)), 0, 1).add(c.na.abs().mul(.45))).mul(float(1).sub(float(cTop).sub(hz).mul(L.fall / (cTop - C.ledge)))).mul(L.cabinet)
+    .mul(clamp(c.no.mul(.7).add(nz.mul(1.2)), 0, 1.2).add(c.na.abs().mul(.4))).mul(field.mul(tail).mul(lit.mul(.6).add(.4)).add(crown)).mul(L.cabinet)
   const valve = inside(p.d, -.01, PIER.hood + .01).mul(inside(p.a, b0, b1)).mul(inside(hz, z0 - .006, z1))
     .mul(clamp(p.no.add(nz.mul(.5)), 0, 1).add(p.na.abs().mul(.45))).mul(float(1).sub(float(z1).sub(hz).mul(L.fall / (z1 - z0)))).mul(L.valve)
   return cab.add(valve)
@@ -2720,7 +2725,7 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const boardLot = fract(seed.mul(17.31).sin().mul(4375.85)).sub(.5)
   const caseC = oakRatio.mul(boardLot.mul(.1).add(1)).mul(vec3(.075, .052, .036).mul(is(K.CASE)).add(vec3(.17, .108, .062).mul(is(K.FRAME))).add(vec3(.1, .07, .048).mul(is(K.READING))))
   const weaveRatio = library ? library.sync('linen').sample({ uv: T, metres: .271 }).albedo : vec3(1, 1, 1)
-  const linenC = weaveRatio.pow(vec3(2.6, 2.6, 2.6)).mul(vec3(.083, .078, .07)).mul(mx_noise_float(Wp.mul(1.6)).mul(.07).add(mx_noise_float(Wp.mul(.45)).mul(.05)).add(1))
+  const linenC = weaveRatio.pow(vec3(2.6, 2.6, 2.6)).mul(vec3(.056, .053, .048)).mul(mx_noise_float(Wp.mul(1.6)).mul(.07).add(mx_noise_float(Wp.mul(.45)).mul(.05)).add(1))
   const caseOut = (at: CasePlace): N => { const o = caseAxes(at).out; return vec3(U[0] * o[0] + V[0] * o[1], 0, -(U[1] * o[0] + V[1] * o[1])) }
   const matFace = smoothstep(.5, .9, max(Ng.dot(caseOut(HALL_CASE_AT)), Ng.dot(caseOut(HALL_PIER_AT))))
   const matC = mix(vec3(.78, .77, .74), vec3(.6, .585, .54).mul(mix(vec3(1, 1, 1), weaveRatio, .35)).mul(boardLot.mul(.06).add(1)), matFace)

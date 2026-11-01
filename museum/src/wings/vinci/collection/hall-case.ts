@@ -52,11 +52,17 @@ const MAT_FACE = .0035, FRAME_LIP = .008, FRAME_FACE = .017
 /** The sheet apart's board, its middle's height, the hood its strip hides in
  * and the stand, in the pier's frame. */
 export const PIER = { board: [-.23, .23, 1.43, 1.97] as const, z: 1.7, hood: .16, stand: { a0: -.23, a1: .23, d0: .05, d1: .45, top: 1.04 } } as const
-/** THE CASES' OWN LIGHT, present-day fittings like the cases: a warm strip
- * under the case's top board laying an even wash down the linen, and one
- * under the sheet apart's hood. Strengths are the wash on a face turned to
- * the strip; `fall` is what it loses from a case's top to its foot. */
-export const CASE_LIGHT = { colour: [1, .82, .62] as [number, number, number], cabinet: .42, valve: .555, fall: .06 } as const
+/** THE CASES' OWN LIGHT, present-day fittings like the cases. Under the case's
+ * top board a row of warm heads, one over each column, throws its light down
+ * the linen as the old wing's wallwashers do: a scalloped band under the
+ * board, an even field over the pages (the audit holds the courses within 8
+ * per cent), then a fall below the last course to the ledge. Faces turned up
+ * take most, faces turned down none. The sheet apart's strip under its hood
+ * stays even. `fall` is the hood's loss from the board's top to its foot;
+ * `field` the loss over the pages; `lip`, `arc` and `decay` the scallops'
+ * edge under each head and their fade; `foot` the fall's length under the
+ * pages. */
+export const CASE_LIGHT = { colour: [1, .82, .62] as [number, number, number], cabinet: .6, valve: .555, fall: .06, heads: 7, field: .07, crown: 1.4, lip: .012, arc: .6, decay: .045, foot: .1 } as const
 
 /** the old wing's grid read along this case: its north runs to the visitor's
  * right (-a), its heights from its own floor */
@@ -179,10 +185,20 @@ const smooth = (a: number, b: number, x: number): number => { const t = Math.min
 const inside = (x: number, lo: number, hi: number): number => smooth(lo - .004, lo + .004, x) * (1 - smooth(hi - .004, hi + .004, x))
 /** What the strips lay on a point in a frame: (a, d, z) and the normal's
  * share along, out and up. The shader's node is the same sum. */
+/** The grid's frames' foot and top in the case's frame. */
+let grid: { foot: number; top: number } | undefined
+export function caseGrid(): { foot: number; top: number } {
+  if (!grid) { const f = caseLayout().boxes.filter(b => b.kind === 'frame'); grid = { foot: Math.min(...f.map(b => b.z0)), top: Math.max(...f.map(b => b.z1)) } }
+  return grid
+}
 export function caseWashLocal(a: number, d: number, z: number, nAlong: number, nOut: number, nUp: number): number {
-  const C = CASE, L = CASE_LIGHT, cTop = C.top - .03
+  const C = CASE, L = CASE_LIGHT, cTop = C.top - .03, g = caseGrid(), clamp01 = (x: number): number => Math.min(1, Math.max(0, x))
+  const sp = (C.a1 - C.a0 - .1) / L.heads, t = (a - C.a0 - .05) / sp, off = (t - Math.floor(t) - .5) * sp, h = cTop - z
+  const edge = L.lip + L.arc * off * off, lit = smooth(edge - .012, edge + .012, h)
+  const crown = L.crown * lit * Math.exp(-Math.max(h - edge, 0) / L.decay) * smooth(g.top - .01, g.top + .03, z)
+  const field = 1 - L.field * clamp01((g.top - z) / (g.top - g.foot)), tail = Math.exp(-Math.max(g.foot - z, 0) / L.foot)
   return inside(a, C.a0 + .045, C.a1 - .045) * inside(d, -.01, C.upper + .01) * inside(z, C.ledge - .006, cTop)
-    * (Math.min(1, Math.max(0, nOut + nUp * .5)) + Math.abs(nAlong) * .45) * (1 - (cTop - z) / (cTop - C.ledge) * L.fall) * L.cabinet
+    * (Math.min(1.2, Math.max(0, nOut * .7 + nUp * 1.2)) + Math.abs(nAlong) * .4) * (field * tail * (.4 + .6 * lit) + crown) * L.cabinet
 }
 export function pierWashLocal(a: number, d: number, z: number, nAlong: number, nOut: number, nUp: number): number {
   const L = CASE_LIGHT, [b0, b1, z0, z1] = PIER.board
