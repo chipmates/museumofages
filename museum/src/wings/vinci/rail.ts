@@ -468,7 +468,7 @@ const RAIL_QUICK_NAMED=28*TURN_TIME_SCALE,RAIL_QUICK_NAMED_PHONE=20*TURN_TIME_SC
  * gallery held on the wall until it stood there, the wall filling the frame
  * while the stand began to turn. These walks look toward the view already
  * as they come. */
-const RAIL_TURNED_ARRIVALS=new Set(['garden>line-early','body>line-early','body-valve>line-early'])
+const RAIL_TURNED_ARRIVALS=new Set(['garden>line-early'])
 /** THE STANDS TURNED WHOLE. The timeline's walk to the display wall stops at
  * the apron's corner and turns there from the court's steps to the wall's
  * pavilion: the view begins the turn in the last steps in, makes most of it
@@ -495,9 +495,7 @@ const RAIL_WINDING_ROUND=new Set<string>()
  * changes where the walk stands or starts there, and the turns are made on
  * the wider lens. Elsewhere a wider lens walked past a machine brings it to
  * the frame's edge, so the rule is kept to the walks it was measured on. */
-const RAIL_LENS_WAITS=new Set(['body-valve>supper-wall','supper-wall>body-valve','body>supper-wall','supper-wall>body','body>line-early','line-early>body',
-  'body>body-valve','body-valve>body','body-valve>reading-table','reading-table>body-valve','body>reading-table','reading-table>body',
-  'body-valve>line-early','line-early>body-valve'])
+const RAIL_LENS_WAITS=new Set(['body>body-valve','body-valve>body'])
 /** THE COLLECTION STAIR IS WALKED DOWN LOOKING OUT, not back: at the
  * landing, the terrace's end, the view turns south-west to the court and the
  * pavilion below, standing, holds there down the treads, and gives way to the
@@ -572,10 +570,8 @@ const RAIL_QUICK_WIDE=35*TURN_TIME_SCALE,RAIL_QUICK_WIDE_PHONE=25*TURN_TIME_SCAL
 /** THE WALKS WHOSE TURNS MAY RUN PAST THE CALM CAPS, by this factor on each
  * screen: the film's pixel caps and the standing rates, walking and standing
  * alike, so the picture moves up to that much faster than the calm criteria
- * allow. From the heart valve to the timeline the desktop's two stands sit at
- * the pixel cap for most of the leg, so only faster turning shortens it; the
- * phone's leg waits on its lens instead, which a lift would not shorten. */
-export const RAIL_TURN_LIFTS:Readonly<Record<string,{desktop:number;phone:number}>>={'body-valve>line-early':{desktop:1.4,phone:1}}
+ * allow. None is walked now: a new walk over the caps is paced within them. */
+export const RAIL_TURN_LIFTS:Readonly<Record<string,{desktop:number;phone:number}>>={}
 /** FROM ONE WORK OF A WALL TO THE NEXT, where the caller asks for it, the
  * leg's clock runs this much faster than the walk's; a leg to or from the
  * wall's end stations keeps the walk's, and a caller that does not ask (the

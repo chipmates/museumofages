@@ -297,20 +297,22 @@ export function buildGraph(wing, { wall: wallRuns = 'both' } = {}) {
   // house it ends at the door's way in, out of it it begins at the way out
   const cut = (a, b) => life.cuts.some((c) => (c.from === a.walkId && c.to === b.walkId) || (c.from === b.walkId && c.to === a.walkId))
   const doorIn = door && byId.get(doorId(door.inward)), doorOut = door && byId.get(doorId(door.outward))
+  // the door's quiet dips: from the way in to the hall's stop the walk enters,
+  // and from the stop it leaves to the way out
+  const quiet = []
+  const dip = (from, to) => { if (!quiet.some((q) => q.from === from.id && q.to === to.id)) quiet.push({ from: from.id, to: to.id, quiet: true }) }
   for (let i = 1; i < stops.length; i++) {
     const a = stops[i - 1], b = stops[i]
     if (cut(a, b)) continue
     for (const [x, y] of [[a, b], [b, a]]) {
-      const through = door ? walk.vinciDoorBetween(x.station, y.station) : undefined
+      const through = door ? walk.vinciDoorBetween(x.railId ?? x.station, y.railId ?? y.station) : undefined
       if (!through) edge('LEG', x, y, motionBetween(x, y))
-      else if (through.way === 'in') edge('LEG', x, doorIn, motionBetween(x, doorIn))
-      else edge('LEG', doorOut, y, motionBetween(doorOut, y))
+      else if (through.way === 'in') { edge('LEG', x, doorIn, motionBetween(x, doorIn)); dip(doorIn, y) }
+      else { dip(x, doorOut); edge('LEG', doorOut, y, motionBetween(doorOut, y)) }
     }
   }
   const startNode = startPlace && byId.get(startId(startPlace))
   if (startNode && stops.length) edge('LEG', startNode, stops[0], motionBetween(startNode, stops[0]))
-  const room = door && stationStop(door.station)
-  const quiet = door ? [{ from: doorIn.id, to: room.id, quiet: true }, { from: room.id, to: doorOut.id, quiet: true }] : []
   // STEP: every span of every wall, both ways; the stop that holds a vertex is
   // its view, and the ends are the wall's own station stops
   for (const declared of wallModule.VINCI_WALLS) {

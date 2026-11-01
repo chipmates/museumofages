@@ -119,8 +119,8 @@ const { createRail, stationPose, RAIL_TURN_LIFTS = {} } = await load(path.join(w
 const { createRailGeometryAuthority, collectRailSolids } = await load(path.join(wing, 'rail-proof.ts'))
 const { gradeAt } = await load(path.join(wing, 'terrain-mesh.ts'))
 const { createCollectionStandSolids } = await load(path.join(wing, 'collection/stands.ts'))
-const { vinciWalk, vinciWalkPose } = await load(path.join(wing, 'walk.ts'))
-const { VINCI_HOUSE_DOOR: DOOR, VINCI_STAIR_HEAD } = await load(path.join(wing, 'walk-places.ts'))
+const { vinciWalk, vinciWalkPose, vinciDoorBetween } = await load(path.join(wing, 'walk.ts'))
+const { VINCI_STAIR_HEAD } = await load(path.join(wing, 'walk-places.ts'))
 const { vinciWalkPoseOf } = await load(path.join(wing, 'walk-poses.ts'))
 const { VINCI_WALLS, vinciWallById, vinciWallVertex, vinciWallLastVertex } = await load(path.join(wing, 'collection/wall.ts'))
 const { vinciExhibitRecords, vinciApproachPose, vinciApproachRunPairs, vinciApproachStation } = await load(path.join(wing, 'collection/approaches.ts'))
@@ -306,19 +306,23 @@ for (const phone of VIEWPORTS) {
       if (!walk('spine ' + order, VINCI_STAIR_HEAD, stops[0].id, () => rail.set(railOf(stops[0]), vinciWalkPose(stops[0], phone), false, phone), nav => nav.completed === railOf(stops[0])))
         place(railOf(stops[0]), vinciWalkPose(stops[0], phone))
     } else place(railOf(stops[0]), vinciWalkPose(stops[0], phone))
-    let standing = stops[0].id, standingStation = stops[0].station
+    let standing = stops[0].id, standingRail = railOf(stops[0])
     for (let n = 1; n < stops.length; n++) for (const move of movesTo(stops[n])) {
       if (move.id === standing) continue
-      if (cutPairs.has(`${standing}>${move.id}`)) { place(move.rail, move.pose); standing = move.id; standingStation = move.station; continue }
-      if (move.station === DOOR.station && standingStation !== DOOR.station) {
-        const door = vinciWalkPoseOf(DOOR.inward, phone)
-        walk('spine ' + order, standing, DOOR.inward, () => rail.set(DOOR.inward, door, false, phone), nav => nav.completed === DOOR.inward)
-        place(move.rail, move.pose); standing = move.id; standingStation = move.station; continue
+      if (cutPairs.has(`${standing}>${move.id}`)) { place(move.rail, move.pose); standing = move.id; standingRail = move.rail; continue }
+      // THE HOUSE'S DOOR BY THE WALK'S OWN RULE, read from rail id to rail id:
+      // in, the walk ends at the way in and dips to the hall's stop; out, it
+      // dips to the way out and walks on from there
+      const crossing = vinciDoorBetween(standingRail, move.rail)
+      if (crossing?.way === 'in') {
+        const inward = crossing.door.inward, door = vinciWalkPoseOf(inward, phone)
+        walk('spine ' + order, standing, inward, () => rail.set(inward, door, false, phone), nav => nav.completed === inward)
+        place(move.rail, move.pose); standing = move.id; standingRail = move.rail; continue
       }
-      if (standingStation === DOOR.station && move.station !== DOOR.station) place(DOOR.outward, vinciWalkPoseOf(DOOR.outward, phone))
-      const ok = walk('spine ' + order, standingStation === DOOR.station ? DOOR.outward : standing, move.id, () => rail.set(move.rail, move.pose, false, phone, move.vertex), nav => nav.completed === move.rail)
+      if (crossing) place(crossing.door.outward, vinciWalkPoseOf(crossing.door.outward, phone))
+      const ok = walk('spine ' + order, crossing ? crossing.door.outward : standing, move.id, () => rail.set(move.rail, move.pose, false, phone, move.vertex), nav => nav.completed === move.rail)
       if (!ok) place(move.rail, move.pose)
-      standing = move.id; standingStation = move.station
+      standing = move.id; standingRail = move.rail
     }
   }
   if (ONLY && ONLY.startsWith('spine')) continue
@@ -368,7 +372,7 @@ for (const phone of VIEWPORTS) {
  * factor, never past the one allowed here, so a table raised on its own reads
  * red. Acceleration and jerk stay: the rail's lift leaves the planner's own
  * caps on them untouched. */
-const CALM_ALLOWANCES = { 'body-valve>line-early': { desktop: 1.4 } }
+const CALM_ALLOWANCES = {}
 const allowedLift = (pair, viewport) => CALM_ALLOWANCES[pair]?.[viewport] ?? 1
 const railLift = (pair, viewport) => RAIL_TURN_LIFTS[pair]?.[viewport] ?? 1
 const liftOf = leg => leg.kind.startsWith('spine') ? Math.min(railLift(leg.pair, leg.viewport), allowedLift(leg.pair, leg.viewport)) : 1

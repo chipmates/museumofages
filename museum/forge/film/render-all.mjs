@@ -145,7 +145,8 @@ export function orderEntries(graph, machines, { framings = Object.keys(FRAMINGS)
     // into the house the leg ends at the door's way in, out of it it begins at
     // the way out: the door's still stands before the leg that touches it
     for (const [a, b] of [[prev, stop], [stop, prev]]) {
-      const inward = doors.find((d) => d.to === b), outward = doors.find((d) => d.from === a)
+      const direct = byPair.get(`${a}>${b}`)?.kinds.includes('LEG')
+      const inward = !direct && doors.find((d) => d.to === b), outward = !direct && doors.find((d) => d.from === a)
       const from = outward ? outward.to : a, to = inward ? inward.from : b
       if (from !== a) still(from, 'spine')
       if (to !== b) still(to, 'spine')

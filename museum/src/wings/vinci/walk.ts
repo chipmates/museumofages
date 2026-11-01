@@ -88,9 +88,15 @@ const withValve = (stops: VinciWalkStop[]): VinciWalkStop[] => {
   return at < 0 ? stops : [...stops.slice(0, at + 1), VALVE_STOP, ...stops.slice(at + 1)]
 }
 
-/** The order the rooms were built in, one stop per station. */
-const roomOrder = (): VinciWalkStop[] =>
-  withValve(vinciContent.map(station => ({ id: station.id, station: station.id })))
+/** The order the rooms were built in, one stop per station, except that the
+ * hall's stops are walked together where its first stands: the anatomy stands
+ * in the hall, and a station's number stays its place in `content.ts`. */
+const roomOrder = (): VinciWalkStop[] => {
+  const stops = withValve(vinciContent.map(station => ({ id: station.id, station: station.id })))
+  const inHall = (stop: VinciWalkStop): boolean => VINCI_HALL_STOPS.has(stop.place ?? stop.station)
+  const at = stops.findIndex(inHall), outside = stops.filter(stop => !inHall(stop))
+  return at < 0 ? stops : [...outside.slice(0, at), ...stops.filter(inHall), ...outside.slice(at)]
+}
 
 /** The life's own order, from the story layer. A story stop the wing does not
  * build is left out rather than breaking the walk: the story is re-imported

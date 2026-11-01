@@ -17,6 +17,10 @@ import sharp from 'sharp'
 
 const wing = await openWing()
 const graph = buildGraph(wing)
+
+/* the house's door by the walk's own rule, read from rail id to rail id */
+const nodeOf = new Map(graph.nodes.map((n) => [n.id, n])), railOf = (id) => nodeOf.get(id).railId ?? nodeOf.get(id).station
+const crossing = (x, y) => wing.walk.vinciDoorBetween(railOf(x), railOf(y))
 const dossier = (slug) => JSON.parse(readFileSync(new URL(`../../src/wings/vinci/machines/data/${slug}.json`, import.meta.url), 'utf8'))
 const machines = machinesOf(graph, dossier)
 const entries = orderEntries(graph, machines)
@@ -50,7 +54,8 @@ test('the spine comes first: a film rendered in part is walkable from the entran
   for (let i = 1; i < graph.story.length; i++) {
     const a = graph.story[i - 1], b = graph.story[i]
     // into the house the leg ends at the door's way in
-    const door = graph.cuts.find((c) => c.quiet && c.to === b), out = graph.cuts.find((c) => c.quiet && c.from === a)
+    const way = crossing(a, b)?.way
+    const door = way === 'in' && graph.cuts.find((c) => c.quiet && c.to === b), out = way === 'out' && graph.cuts.find((c) => c.quiet && c.from === a)
     const arrives = door ? door.from : b
     const leg = graph.edges.find((e) => e.from === (out ? out.to : a) && e.to === arrives)
     if (!leg) { assert.ok(graph.cuts.some((c) => c.from === a && c.to === b), `${a} to ${b} is a cut`); continue }

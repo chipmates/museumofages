@@ -193,14 +193,17 @@ test('the guided visit walks the LEGs, reads at every stop and dips at a cut', (
 const wing = await openWing()
 const graph = buildGraph(wing)
 
+/* the house's door by the walk's own rule, read from rail id to rail id */
+const nodeOf = new Map(graph.nodes.map((n) => [n.id, n])), railOf = (id) => nodeOf.get(id).railId ?? nodeOf.get(id).station
+const crossing = (x, y) => wing.walk.vinciDoorBetween(railOf(x), railOf(y))
+
 test('the wing: every walked leg of the life is one clip, both ways, and the cuts dip', () => {
-  const doors = graph.cuts.filter((c) => c.quiet)
   for (let i = 1; i < graph.story.length; i++) {
     const a = graph.story[i - 1], b = graph.story[i]
     const cut = graph.cuts.some((c) => !c.quiet && c.from === a && c.to === b)
     for (const [x, y] of [[a, b], [b, a]]) {
       const plan = route(graph, x, y)
-      const door = doors.some((d) => d.to === y || d.from === x)
+      const door = !!crossing(x, y)
       if (cut) assert.equal(plan.type, 'dip', `${x} to ${y}`)
       // into the house and out of it: one clip and the door's quiet dip
       else if (door) assert.deepEqual([plan.rule, plan.clips.length, plan.steps.filter((s) => s.quiet).length], [4, 1, 1], `${x} to ${y}`)
@@ -238,7 +241,8 @@ test('the wing: every plan over every pair of nodes is a walk the graph holds', 
     // the body stands where each clip begins: at the start, or where the one before it or the door's dip left it
     let at = a.id, k = 0
     for (const step of plan.steps) {
-      if (step.dip) { assert.ok(step.quiet && graph.cuts.some((c) => c.quiet && c.from === at && c.to === step.dip), `${a.id} to ${b.id}: a dip from ${at}`); at = step.dip }
+      // a stop and the view it opens stand at one place, so the door's dip leaves from either
+      if (step.dip) { assert.ok(step.quiet && graph.cuts.some((c) => c.quiet && (c.from === at || graph.opens.some(([x, y]) => (x === at && y === c.from) || (y === at && x === c.from))) && c.to === step.dip), `${a.id} to ${b.id}: a dip from ${at}`); at = step.dip }
       if (step.clip) { assert.equal(clips[k].from, at); at = clips[k++].to }
     }
     const landed = at
@@ -261,7 +265,8 @@ test('the wing: the guided visit is the fourteen LEGs forward, the two cuts and 
   const doors = graph.cuts.filter((c) => c.quiet)
   const forward = graph.story.slice(1).map((to, i) => {
     const from = graph.story[i]
-    const inward = doors.find((d) => d.to === to), outward = doors.find((d) => d.from === from)
+    const way = crossing(from, to)?.way
+    const inward = way === 'in' && doors.find((d) => d.to === to), outward = way === 'out' && doors.find((d) => d.from === from)
     return graph.edges.find((e) => e.from === (outward ? outward.to : from) && e.to === (inward ? inward.from : to))
   })
   const legs = forward.filter(Boolean).reduce((sum, e) => sum + e.framings.wide.seconds.walk, 0)
