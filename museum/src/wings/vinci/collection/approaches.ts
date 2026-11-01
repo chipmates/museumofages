@@ -344,7 +344,7 @@ const readingLens = (size: number, reach: number): number =>
  * desktop's wider field steps nearer and aims along the table toward the
  * compass, a little under the piece's middle; it turns 30 degrees, so the
  * lion at the room's far end stands whole behind the dome, inside the left
- * edge. The desktop's compass turns 25 degrees toward the north end: the
+ * edge. The desktop's compass turns 21 degrees toward the north end: the
  * lion stands whole inside the left edge, the paintings wholly past the
  * right (from the table every look that leaves the lion out sees Saint
  * Anne's top cut by the frame's top edge). The phone's inclinometer aims 11 cm
@@ -356,7 +356,7 @@ const readingLens = (size: number, reach: number): number =>
 const TABLE_READING_M = 1.85
 const PIECE_READ: Record<HallTablePiece, Record<'phone' | 'desktop', { turn: number; reach: number; aim: number; drop: number }>> = {
   'inclinometer': { phone: { turn: 30, reach: TABLE_READING_M, aim: -.11, drop: 0 }, desktop: { turn: 30, reach: 1.6, aim: .24, drop: .06 } },
-  'proportional-compass': { phone: { turn: 10, reach: TABLE_READING_M, aim: -.03, drop: 0 }, desktop: { turn: 25, reach: TABLE_READING_M, aim: 0, drop: 0 } },
+  'proportional-compass': { phone: { turn: 10, reach: TABLE_READING_M, aim: -.03, drop: 0 }, desktop: { turn: 21, reach: 1.9, aim: 0, drop: 0 } },
 }
 /** THE PHONE READS A PIECE ABOVE THE WORDS, as every close look: its foot at
  * half the height and its middle at a third (RULES 4, rules 1 and 2), by the
