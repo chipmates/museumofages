@@ -16,7 +16,7 @@ import { COURT, FACE, FLOOR, OPENING, SUPPER_WALL } from './collection/layout'
 import { railAccessWaypoints, railCollectionStairWaypoints, railDoorTurns, railGateWaypoints, railDoorways, railGardenPorch, railPairTurns, railEyeHeightM, railPorchStands, railReadingPorch, railSide, type RailSide, type RailWaypoint } from './rail-waypoints'
 import { fittedRailFov, assertRailProjection, setRailShift } from './rail-projection'
 import type { RailGeometryAuthority } from './rail-proof'
-import { hallCasePoint, hallView } from './house-hall'
+import { hallCasePoint, hallPoint, hallView } from './house-hall'
 import { HALL_CASE_AT } from './collection/hall-case'
 import { uprightPose } from './upright'
 
@@ -94,6 +94,8 @@ function aimedFrom(pose:Pose,heading:number,pitch:number,fov:number):Pose {
 const standing=(e:number,n:number):Pose=>{const h=groundHeight(e,n)+1.65;return p(e,n,h,e,n,h)}
 /** The eye in the great hall's door, on the axis of the three doors. */
 const HALL_DOOR=p(-4.2388,-11.0992,2.45,-4.2388,-11.0992,2.45)
+/** The phone's eye just inside it, on the same axis. */
+const HALL_PHONE_EYE=((e:Vector3):Pose=>({eye:e,at:e.clone(),fov:96.81}))(hallPoint(8.25,2.6,1.65))
 /** The body wall's phone eye, on the grid's axis 6.7 m off the frames: at a
  * 64 degree lens the grid takes four fifths of a 390 px stage and the sheet
  * apart is the next stop, not a speck at the frame's edge. The lens is the
@@ -179,14 +181,15 @@ function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
   // axis, and the eye stands forty centimetres inside the last of them, looking
   // down it at the west windows the hour's sun comes through; the wide frame
   // turns onto the table, the lion facing it from the far end. THE PHONE
-  // STANDS IN THE SAME DOOR and turns ten degrees north of the axis: the three
-  // paintings whole at its right, the table across its middle and the lion
-  // whole at its left, facing the eye; a 55 degree field (the widest at
-  // rest) holds the lion's far paw and Saint Anne's far edge each about four
-  // hundredths of the width inside the frame. Level, the shift lens at 0.33
-  // puts eye level at a third of the height, the paintings just under it and
-  // the lion's paws above the drawer's card (0.48 in German).
-  if(id==='hall') return narrow?{...aimedFrom(HALL_DOOR,-112.9,0,96.81),shift:-.33}:aimedFrom(HALL_DOOR,-124,-8,58)
+  // STANDS JUST INSIDE THE SAME DOOR on its axis, 0.56 m in from the wall's
+  // face, so its wider lens's walks to the close looks leave the doorway
+  // clear of its reveals, and turns 19 degrees north of the axis: the three
+  // paintings whole in its right half, the table across its middle, the west
+  // windows behind. From inside the door no field at rest holds the lion and
+  // Saint Anne both whole (58 degrees apart), so the lion stands just outside
+  // the left edge, never cut by it. Level, the shift lens at 0.33 puts eye
+  // level at a third of the height, the paintings just under it.
+  if(id==='hall') return narrow?{...aimedFrom(HALL_PHONE_EYE,-104,0,96.81),shift:-.33}:aimedFrom(HALL_DOOR,-124,-8,58)
   // THE CHAPEL IS THE ONE HERO. Square on from the court it was a wall of
   // ashlar in the house's shadow with nothing behind it; from the foot of the
   // raised lawn the gable took the left half of the frame, the gable the study
