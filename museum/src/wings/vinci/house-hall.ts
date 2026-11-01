@@ -1764,7 +1764,7 @@ function hearth(s: Sink, hero: boolean): void {
   // the firebox: sooted tuffeau cheeks and back, a plain cast-iron fireback
   // standing on the hearth against it, and a throat going up dark
   const back = .02
-  s.soot = .74
+  s.soot = .93
   box(-open, open, 0, back, .028, jambTop, K.STONE, 61, '-z')
   for (const side of [-1, 1]) {
     const x = side * open
@@ -2622,17 +2622,18 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const headJoint = float(1).sub(smoothstep(.003, .009, fract(alongWall.div(.46).add(courseN.mul(.5))).min(float(1).sub(fract(alongWall.div(.46).add(courseN.mul(.5))))).mul(.46)))
   // THE HOOD'S DRAWN ARCH: two arcs and the voussoirs' joints between them,
   // drawn on the hood's face over the courses, which stop at its band
-  const onHood = smoothstep(HEARTH.depth - .06, HEARTH.depth - .045, hy).mul(float(1).sub(smoothstep(HEARTH.depth - .035, HEARTH.depth - .02, hy)))
+  const onHood = smoothstep(HEARTH.depth - .05, HEARTH.depth - .04, hy).mul(float(1).sub(smoothstep(HEARTH.depth - .015, HEARTH.depth - .005, hy)))
     .mul(smoothstep(FLOOR_Z + HOOD_ARCH.spring - .01, FLOOR_Z + HOOD_ARCH.spring, Wp.y))
   const archR = vec2(hx, hz.sub(HOOD_ARCH.centre)).length()
   const inBand = smoothstep(HOOD_ARCH.radius - .004, HOOD_ARCH.radius + .004, archR).mul(float(1).sub(smoothstep(HOOD_ARCH.radius + HOOD_ARCH.band - .004, HOOD_ARCH.radius + HOOD_ARCH.band + .004, archR)))
   const archRing = max(band(archR.sub(HOOD_ARCH.radius).abs(), footprint(archR), .004), band(archR.sub(HOOD_ARCH.radius + HOOD_ARCH.band).abs(), footprint(archR), .004))
   const archAt = hx.div(archR.max(.01)).asin().div(HOOD_ARCH.step)
   const archJoint = band(fract(archAt).sub(.5).abs().mul(archR.mul(HOOD_ARCH.step)), footprint(archAt).mul(archR.mul(HOOD_ARCH.step)), .004).mul(inBand)
-  const stoneJoint = max(max(bedJoint, headJoint).mul(float(1).sub(inBand.mul(onHood))), max(archRing, archJoint).mul(onHood)).mul(is(K.STONE))
+  const stoneJoint = max(bedJoint, headJoint).mul(float(1).sub(inBand.mul(onHood))).mul(is(K.STONE))
+  const archLine = max(archRing, archJoint).mul(onHood).mul(is(K.STONE))
   const tuff = vec3(.52, .47, .37).mul(mx_noise_float(Wp.mul(6.5)).mul(.08).add(mx_noise_float(Wp.mul(33)).mul(.045)).add(mx_noise_float(Wp.mul(1.7)).mul(.05)).add(blockHue.mul(.07)).add(1))
     .mul(float(1).sub(float(1).sub(smoothstep(.8, 1.5, Wp.y)).mul(.12)))
-  let tuffJ: N = mix(tuff, tuff.mul(vec3(.88, .86, .84)), stoneJoint)
+  let tuffJ: N = mix(mix(tuff, tuff.mul(vec3(.88, .86, .84)), stoneJoint), tuff.mul(vec3(.62, .6, .58)), archLine)
   // a threshold (the only stone the sink marks worn): the dirt of every shoe
   // ground into the soft stone, the feet's hollow a little paler than its ends
   const trod = mix(vec3(.19, .165, .13), vec3(.26, .225, .18), mx_noise_float(Wp.mul(4.1)).mul(.5).add(.5)).mul(mx_noise_float(Wp.mul(37)).mul(.12).add(1))
