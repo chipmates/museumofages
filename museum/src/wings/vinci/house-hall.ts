@@ -831,7 +831,7 @@ export function createHouseHall(tier: TierName, library?: MaterialLibrary): Hous
   things.castShadow = true; things.receiveShadow = true
   const group = new Group(); group.name = 'vinci/house-hall'
   for (const mesh of [fabric, things]) { mesh.userData['manifestId'] = houseHallProvenance.manifestId; mesh.userData['asset'] = houseHallProvenance.manifestId; group.add(mesh) }
-  const glass = innerGlass()
+  const glass = innerGlass(hero)
   group.add(glass)
   group.userData['manifestId'] = houseHallProvenance.manifestId
   const triangles = s.v.length / 3
@@ -1296,7 +1296,7 @@ export function hallCabinetPlan(): { boxes: { centre: V3; axes: [V3, V3, V3]; ki
   const plates = platesOut
   platesOut = kept
   // the root's widest sinus and its top at the model's scale; the foot is the hall's own lathe
-  const st = HALL_VALVE.stand, reach = .07, tall = .34
+  const st = HALL_VALVE.stand, reach = .075, tall = .28
   const model = { centre: P((st.u0 + st.u1) / 2, (st.v0 + st.v1) / 2, FLOOR_Z + st.top + tall / 2), axes: [[U[0] * reach, U[1] * reach, 0], [V[0] * reach, V[1] * reach, 0], [0, 0, tall / 2]] as [V3, V3, V3] }
   return { boxes, plates, model, origin: P(0, 0, FLOOR_Z), u: [U[0], U[1], 0], v: [V[0], V[1], 0] }
 }
@@ -1981,7 +1981,7 @@ function doorLeaf(s: Sink, a: V2, b: V2, dir: V2, into: V2, back: number, z0: nu
 /** The leaded lights of the hall's four windows as the room sees them: the
  * house's glazing faces the court and the garden, so from inside only this
  * layer draws the lead and the glass's own faint milk against the day. */
-function innerGlass(): Mesh {
+function innerGlass(hero: boolean): Mesh {
   const positions: number[] = [], edge: number[] = [], lat: number[] = []
   for (const w of WINDOWS) {
     const f = w.facade, fr = frame(f)
@@ -2024,6 +2024,8 @@ function innerGlass(): Mesh {
   const milk = mix(vec3(.030, .034, .036), vec3(.16, .135, .095), L.z).mul(MILK).mul(piece.mul(.6).add(.7))
   m.colorNode = mix(milk, vec3(.010, .0095, .009), lead)
   m.opacityNode = float(1).sub(lead).mul(mix(float(.86), float(.80), L.z)).mul(WINDOW_PULL).mul(piece.mul(.24).add(.88))
+  // the shafts' dust before the panes: a ray that ends on the glass crossed them too
+  if (hero) m.colorNode = mix(milk, vec3(.010, .0095, .009), lead).add(dustGlowNode())
   m.blending = CustomBlending; m.blendEquation = AddEquation
   m.blendSrc = OneFactor; m.blendDst = SrcAlphaFactor; m.blendSrcAlpha = ZeroFactor; m.blendDstAlpha = OneFactor
   m.name = 'vinci/house-hall/glass'

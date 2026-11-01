@@ -49,7 +49,7 @@ export interface HallPlates {
  * the stand, `light`: the glass clear in the middle and catching the room at
  * its edges, as glass does, never lit from outside the hall.
  * Local metres, y up, the foot's underside at 0. */
-const ROOT = { foot: .028, low: .1, sinus: .13, junction: .17, top: .27, tube: .034, bulge: .052 } as const
+const ROOT = { foot: .028, low: .1, sinus: .13, junction: .17, top: .22, tube: .034, bulge: .058 } as const
 const BEAT_S = 2.6
 /** a demonstration size, small enough to stand whole under its sheet in the valve's look */
 const MODEL_SCALE = 1.25

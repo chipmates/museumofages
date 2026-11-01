@@ -117,13 +117,14 @@ function stairHeadPose(narrow: boolean): WalkPose {
 /** THE SHEET APART IN THE GREAT HALL, on the west pier with the glass model
  * on the stand under it: the eye square to the pier, the sheet and the stand
  * one subject. The desktop stands 1.5 m off, the case's end and the window
- * beside; the phone 1.0 m off, the gaze level, the pair lifted by the shift
- * lens over the words. ONE KEY EACH, from the sheet's size and the old wing's
- * close look (its paper a third of the desktop frame's height, two fifths of
- * the phone frame's width): the desktop frame runs from the model's foot to
- * just over the sheet, solved from the visitor's eye at 1.6 m; the phone's
- * lens holds the sheet at 41 per cent of the width. */
-const VALVE_KEY = { desktop: { off: .9955, aim: 1.4617, fov: 44 }, phone: { off: 1, fov: 56.6, shift: -.446 } } as const
+ * beside. ONE KEY EACH, from the sheet's size and the old wing's close look
+ * (its paper a third of the desktop frame's height, two fifths of the phone
+ * frame's width), solved with the model's depth before the pier: from the
+ * visitor's eye at 1.6 m the desktop frame runs from the valve's sinuses to
+ * just over the sheet, a long eye and a narrow lens so the nearer model does
+ * not fall out of the foot; the phone's lens holds the sheet at 42 per cent
+ * of the width, the pair lifted by the shift over the words. */
+const VALVE_KEY = { desktop: { off: 2.2, aim: 1.4729, fov: 20.4 }, phone: { off: 1.4, fov: 41.1, shift: -.4 } } as const
 function hallValvePose(narrow: boolean): WalkPose {
   const s = HALL_VALVE_SHEET
   if (narrow) {
