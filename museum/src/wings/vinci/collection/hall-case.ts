@@ -45,10 +45,12 @@ export function hallToCase(at: CasePlace, u: number, v: number): V2 {
 
 /** The case in its own frame: its run along the wall, its depth, the reading
  * ledge's height, the upper case's depth and its top under the beam's corbel.
- * The grid stands half a metre under the old wing's: the main beams'
- * corbels land on this wall 2.42 m up. */
-export const CASE = { a0: -1.85, a1: 1.75, deep: .52, ledge: .452, upper: .3, top: 2.405 } as const
-export const GRID_DROP = .5
+ * The grid stands 0.566 m under the old wing's, its lowest frames 5.5 mm
+ * over the ledge; the top board stops 5 mm under the main beam's corbel,
+ * which lands on this wall 2.42 m up, so the band under the board has the
+ * most head room the corbel leaves. */
+export const CASE = { a0: -1.85, a1: 1.75, deep: .52, ledge: .452, upper: .3, top: 2.415 } as const
+export const GRID_DROP = .566
 /** the linen ground and the sheets' face off the wall; the mat over a sheet
  * and the frame's lip over the mat, as the old wing's */
 export const LINEN_D = .031, SHEET_D = .034
