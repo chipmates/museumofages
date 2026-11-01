@@ -1276,6 +1276,17 @@ export const hallPoint = (u: number, v: number, z: number): Vector3 => { const q
 /** A point of a case's own frame (along, out of its wall, up from the floor)
  * as a world point: the eyes that read the case and the pier stand in it. */
 export const hallCasePoint = (at: CasePlace, a: number, d: number, z: number): Vector3 => { const [u, v] = caseToHall(at, a, d); return hallPoint(u, v, z) }
+/** A grid sheet's reading eye stands clear of the sheet apart's pier round
+ * the case's corner: an eye nearer the pier's wall than this steps out along
+ * the pier's face, its aim kept, and reads its sheet a little from the side
+ * (the pier's hood and the model's glass a near envelope and more away). */
+const PIER_EYE_CLEAR = .62
+export function hallEyeClearOfPier(eye: Vector3): Vector3 {
+  const [u, v] = toUV([eye.x, -eye.z]), [a, d] = hallToCase(HALL_PIER_AT, u, v)
+  if (d >= PIER_EYE_CLEAR) return eye
+  const [u2, v2] = caseToHall(HALL_PIER_AT, a, PIER_EYE_CLEAR)
+  return hallPoint(u2, v2, eye.y - FLOOR_Z)
+}
 /** The two places and their frames, for the cabinet's audit. */
 export const hallCaseFrames = (): { case: CasePlace; pier: CasePlace; caseOut: V2; pierOut: V2; pierAlong: V2; stand: typeof PIER.stand } =>
   ({ case: HALL_CASE_AT, pier: HALL_PIER_AT, caseOut: caseAxes(HALL_CASE_AT).out, pierOut: caseAxes(HALL_PIER_AT).out, pierAlong: caseAxes(HALL_PIER_AT).along, stand: PIER.stand })
