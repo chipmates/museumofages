@@ -2601,7 +2601,7 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   // plaster-lime-aged) gives the kept wall a real trowel's and wash's
   // variety; only its lightness is taken and held to a few per cent, so none
   // of its stains reach the wall
-  const plasterScan = library ? mix(float(1), library.sync('plaster-lime-aged').sample({ uv: Tw, metres: 1.6 }).albedo.dot(vec3(.2126, .7152, .0722)).clamp(.86, 1.12), .6) : float(1)
+  const plasterScan = library ? mix(float(1), library.sync('plaster-lime-aged').sample({ uv: Tw, metres: 1.6 }).albedo.dot(vec3(.2126, .7152, .0722)).clamp(.9, 1.08), .45) : float(1)
   const plaster = mix(keptLimePlaster(Tw, vec3(.70, .65, .55), 1.7).mul(plasterScan).mul(mix(vec3(1, 1, 1), vec3(.97, .93, .86), warmth.mul(10))),
     vec3(.43, .19, .11).mul(mx_noise_float(vec3(Tw.x.mul(3.1), Tw.y.mul(9), 6.6)).mul(.08).add(1)), paintedBand(Tw, positionWorld.y).mul(is(K.PLASTER)))
   // oak: grain along the member
