@@ -94,8 +94,6 @@ function aimedFrom(pose:Pose,heading:number,pitch:number,fov:number):Pose {
 const standing=(e:number,n:number):Pose=>{const h=groundHeight(e,n)+1.65;return p(e,n,h,e,n,h)}
 /** The eye in the great hall's door, on the axis of the three doors. */
 const HALL_DOOR=p(-4.2388,-11.0992,2.45,-4.2388,-11.0992,2.45)
-/** The phone's eye in the hall, in its south-east corner. */
-const HALL_PHONE_EYE=p(-4.0672,-13.2175,2.45,-4.0672,-13.2175,2.45)
 /** The body wall's phone eye, on the grid's axis 6.7 m off the frames: at a
  * 64 degree lens the grid takes four fifths of a 390 px stage and the sheet
  * apart is the next stop, not a speck at the frame's edge. The lens is the
@@ -180,19 +178,15 @@ function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
   // passage's side door, the service passage and the hall's door stand on one
   // axis, and the eye stands forty centimetres inside the last of them, looking
   // down it at the west windows the hour's sun comes through; the wide frame
-  // turns onto the table with the lion whole at its left. THE PHONE'S ONE
-  // HERO IS THE LION, with its room behind it: from the hall's south-east
-  // corner the lion turns its chest and open flank to the eye, the two west
-  // windows behind it and the table with both its pieces whole past its
-  // sunlit hindquarters, the lion two thirds of a 55 degree field, the eye
-  // six tenths of a metre off both walls. The drawer's card, opened in
-  // German, rises to 0.48 of the height, so the paws stand well above it: a
-  // 55 degree field, the eye 2.7 degrees down and the shift lens at 0.69 put
-  // the lion's middle at 0.32 and its feet at 0.45. Pitched further, the
-  // room's verticals leaned past a degree and a half. The wider field turns
-  // a degree and a half further south, so the table's jug stays out of its
-  // right edge.
-  if(id==='hall') return narrow?{...aimedFrom(HALL_PHONE_EYE,-111.8,-2.7,96.81),shift:-.69}:aimedFrom(HALL_DOOR,-124,-8,58)
+  // turns onto the table, the lion facing it from the far end. THE PHONE
+  // STANDS IN THE SAME DOOR and turns ten degrees north of the axis: the three
+  // paintings whole at its right, the table across its middle and the lion
+  // whole at its left, facing the eye; a 55 degree field (the widest at
+  // rest) holds the lion's far paw and Saint Anne's far edge each about four
+  // hundredths of the width inside the frame. Level, the shift lens at 0.33
+  // puts eye level at a third of the height, the paintings just under it and
+  // the lion's paws above the drawer's card (0.48 in German).
+  if(id==='hall') return narrow?{...aimedFrom(HALL_DOOR,-112.9,0,96.81),shift:-.33}:aimedFrom(HALL_DOOR,-124,-8,58)
   // THE CHAPEL IS THE ONE HERO. Square on from the court it was a wall of
   // ashlar in the house's shadow with nothing behind it; from the foot of the
   // raised lawn the gable took the left half of the frame, the gable the study
