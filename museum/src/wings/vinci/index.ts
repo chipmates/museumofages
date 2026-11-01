@@ -640,7 +640,7 @@ export function createWing():VinciWingModule {
   let authority:ReturnType<typeof createRailGeometryAuthority>|undefined
   let shadowCache:ReturnType<typeof createStaticShadowCache>|undefined
   /** the great hall's own sun shadow, redrawn when the cache's casters change */
-  let hallSun:HouseHall['refreshSun'], hallSunSeen=-1
+  let hallSun:HouseHall['refreshSun'], hallSunSeen=-1, hallPending:HouseHall['pending']|undefined
   let shadowBody:WingShadowBody|undefined
   /** The share of a leg after which the card names the station ahead. */
   const CARD_HANDOVER=.5
@@ -1103,7 +1103,7 @@ export function createWing():VinciWingModule {
     studySheet=createStudySheet(courtDressing)
     { const sheet=studySheet;releaseSheetMemory=stack.registerTextureMemory(()=>sheet.textureMB(),'study sheet') }
     if(assets)supplyStudySheet()
-    if(greatHall){scene.add(greatHall.group);hallSun=greatHall.refreshSun;hallSunSeen=-1}
+    if(greatHall){scene.add(greatHall.group);hallSun=greatHall.refreshSun;hallSunSeen=-1;hallPending=greatHall.pending}
     scene.add(ground,shell,entry,createGatePassage(stack.tierName()),courtDressing,createCourtObjects(groundHeight,stack.models),createRoadDressing(groundHeight,stack.tierName()),collection,createCollectionAccess(),wood.group,dressing.group)
     yield
     for(const step of wood.steps){step();yield}
@@ -3634,7 +3634,7 @@ export function createWing():VinciWingModule {
       return {completed:WALK.stops[onWay?markLeft:card]?.id??hereContent().id,target:onWay?stopAt(ahead).id:undefined,question:text(hereContent().door),door:hereContent().door.station}
     },
     // A MACHINE NOT YET WHOLE IS STILL IN FLIGHT, and one that cannot be is an error.
-    pending:()=>(exhibits?.pending()??0)+machinesStanding().outstanding+(studySheet?.pending()??0),
+    pending:()=>(exhibits?.pending()??0)+machinesStanding().outstanding+(studySheet?.pending()??0)+(hallPending?.()??0),
     errors:()=>[...(exhibits?.pictureErrors()??[]),...machinesStanding().errors,...(studySheet?.errors()??[])],
     manifest:()=>[...new Map((exhibits?.pictureSources()??[]).flatMap(({entry})=>[entry.preview,entry.plate]).map(entry=>[entry.id,entry])).values()],
     /* EVERY WORD OF THIS WING, READ AGAIN. The frame hands the language over
@@ -3786,7 +3786,7 @@ export function createWing():VinciWingModule {
       dots?.update(panels,undefined,name&&name.width>0?[{left:name.left,top:name.top,right:name.right,bottom:name.bottom}]:null)
       paintPictureWords()},
     // the evening's uniforms and the scene's light outlive a visit: the hour goes back before they are let go
-    stop(){if(hosts){delete hosts.stage.parentElement!.dataset['farewell'];delete hosts.stage.parentElement!.dataset['phoneForm'];delete hosts.labels.dataset['keepsFoot']}phone?.dispose();phone=undefined;phoneList?.dispose();phoneList=undefined;phoneStop?.abort();phoneStop=undefined;farewellRun=null;farewellHeld=null;if(farewellShare!==null)applyEvening(null);pictureWordsLayer?.dispose();pictureWordsLayer=undefined;wordsPrint=wordsDrawn="";studySheet?.dispose();studySheet=undefined;releaseSheetMemory?.();releaseSheetMemory=undefined;desk?.dispose();desk=undefined;visit?.close();visit=undefined;plan?.dispose();plan=undefined;planControl?.remove();planControl=undefined;life?.dispose();life=undefined;lifeControl?.remove();lifeControl=undefined;closeLook?.dispose();closeLook=undefined;if(scheduled)cancelAnimationFrame(scheduled);scheduled=0;house=undefined;houseUp=0;standing=false;warm?.abort();warm=undefined;announceBuilt();exhibits?.dispose();exhibits=undefined;roomFigures?.dispose();roomFigures=undefined;shadowBody?.dispose();shadowBody=undefined;shadowCache?.dispose();shadowCache=undefined;hallSun=undefined;restoreEnvironmentRotation?.();restoreEnvironmentRotation=null;clearSky?.dispose();clearSky=undefined;controller?.abort();strip?.dispose();strip=undefined;dots?.dispose();dots=undefined;picks=[];picksTier='';occluders=[];collectionRoot=undefined;welcome?.dispose();welcome=undefined;sources?.dispose();source?.remove();labels?.dispose();measurement?.dispose();water?.dispose();hosts?.world.scene.traverse(o=>{if(o instanceof DirectionalLight&&o!==key?.light)o.dispose()});key?.dispose();if(hosts){hosts.world.scene.traverse(o=>{if(o instanceof Mesh){o.geometry.dispose();for(const m of Array.isArray(o.material)?o.material:[o.material])m.dispose()}});hosts.world.scene.clear();delete hosts.stage.parentElement!.dataset['wing'];if(labelHostHidden===null)hosts.labels.removeAttribute('aria-hidden');else hosts.labels.setAttribute('aria-hidden',labelHostHidden)}hosts=undefined},
+    stop(){if(hosts){delete hosts.stage.parentElement!.dataset['farewell'];delete hosts.stage.parentElement!.dataset['phoneForm'];delete hosts.labels.dataset['keepsFoot']}phone?.dispose();phone=undefined;phoneList?.dispose();phoneList=undefined;phoneStop?.abort();phoneStop=undefined;farewellRun=null;farewellHeld=null;if(farewellShare!==null)applyEvening(null);pictureWordsLayer?.dispose();pictureWordsLayer=undefined;wordsPrint=wordsDrawn="";studySheet?.dispose();studySheet=undefined;releaseSheetMemory?.();releaseSheetMemory=undefined;desk?.dispose();desk=undefined;visit?.close();visit=undefined;plan?.dispose();plan=undefined;planControl?.remove();planControl=undefined;life?.dispose();life=undefined;lifeControl?.remove();lifeControl=undefined;closeLook?.dispose();closeLook=undefined;if(scheduled)cancelAnimationFrame(scheduled);scheduled=0;house=undefined;houseUp=0;standing=false;warm?.abort();warm=undefined;announceBuilt();exhibits?.dispose();exhibits=undefined;roomFigures?.dispose();roomFigures=undefined;shadowBody?.dispose();shadowBody=undefined;shadowCache?.dispose();shadowCache=undefined;hallSun=undefined;hallPending=undefined;restoreEnvironmentRotation?.();restoreEnvironmentRotation=null;clearSky?.dispose();clearSky=undefined;controller?.abort();strip?.dispose();strip=undefined;dots?.dispose();dots=undefined;picks=[];picksTier='';occluders=[];collectionRoot=undefined;welcome?.dispose();welcome=undefined;sources?.dispose();source?.remove();labels?.dispose();measurement?.dispose();water?.dispose();hosts?.world.scene.traverse(o=>{if(o instanceof DirectionalLight&&o!==key?.light)o.dispose()});key?.dispose();if(hosts){hosts.world.scene.traverse(o=>{if(o instanceof Mesh){o.geometry.dispose();for(const m of Array.isArray(o.material)?o.material:[o.material])m.dispose()}});hosts.world.scene.clear();delete hosts.stage.parentElement!.dataset['wing'];if(labelHostHidden===null)hosts.labels.removeAttribute('aria-hidden');else hosts.labels.setAttribute('aria-hidden',labelHostHidden)}hosts=undefined},
   }
   return wingModule
 }

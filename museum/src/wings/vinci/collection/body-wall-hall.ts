@@ -11,6 +11,7 @@ import { createPlateStream, type PlateStream } from '../pictures/stream'
 import { findPlateEntries, getWork, reproductionCardSize } from '../pictures/register'
 import { pictureDisplayUV, pictureDisplayWindow } from '../pictures/registration'
 import { bodySheetSources } from './body-wall'
+import { cardDistance, filmReachMetres, previewPitch } from './film-plates'
 import { PRINT, STATION_EXPOSURE, STATION_SHOULDER } from '../print'
 
 type V3 = [number, number, number]
@@ -160,18 +161,22 @@ function glassValve(light: V3): { group: Group; beat(t: number): void } {
   return { group, beat }
 }
 
-export function mountHallPlates(host: Group, plates: readonly HallPlate[], hero: boolean, valveAt?: V3, valveLight: V3 = [.3, .25, .2]): HallPlates {
+/** The film shows the hall's plates by the film's own rule (`film-plates.ts`), not the one live slot: the slot
+ * raised whichever plate stood nearest the eye, often a neighbour of the sheet a close look reads. */
+export interface HallFilm { stageHeight: () => number }
+
+export function mountHallPlates(host: Group, plates: readonly HallPlate[], hero: boolean, valveAt?: V3, valveLight: V3 = [.3, .25, .2], film: HallFilm | null = null): HallPlates {
   const group = new Group()
   group.name = 'vinci/house-hall/plates'
   host.add(group)
   const model = valveAt ? glassValve(valveLight) : null
   if (model && valveAt) { model.group.position.copy(world(valveAt)); model.group.scale.setScalar(MODEL_SCALE); group.add(model.group) }
-  const placed: { plate: HallPlate; stream: PlateStream; at: Vector3 }[] = []
+  const placed: { plate: HallPlate; stream: PlateStream; at: Vector3; mesh: Mesh; halfW: number; halfH: number; texels: [number, number] }[] = []
   let loading = true, raised: PlateStream | null = null, switching = false, last = performance.now()
   const ready = loadManifest().then(manifest => {
     const sheets = new Map(bodySheetSources(manifest).map(source => [source.sheet.id, source]))
     for (const plate of plates) {
-      let stream: PlateStream, geometry: PlaneGeometry
+      let stream: PlateStream, geometry: PlaneGeometry, texels: [number, number] = [1, 1]
       if (plate.kind === 'sheet') {
         const source = sheets.get(plate.id)
         if (!source || plate.width === undefined || plate.height === undefined) continue
@@ -191,6 +196,7 @@ export function mountHallPlates(host: Group, plates: readonly HallPlate[], hero:
           const uv = geometry.getAttribute('uv')
           for (let i = 0; i < uv.count; i++) uv.setXY(i, window.offsetU + uv.getX(i) * window.scaleU, window.offsetV + uv.getY(i) * window.scaleV)
           uv.needsUpdate = true
+          texels = [window.scaleU, window.scaleV]
         }
       }
       const mesh = new Mesh(geometry, stream.material)
@@ -202,11 +208,37 @@ export function mountHallPlates(host: Group, plates: readonly HallPlate[], hero:
       mesh.userData = { manifestId: plate.kind === 'sheet' ? `vinci/collection-body-wall` : 'vinci/collection-plates', asset: plate.id,
         light: 'the great hall at the fixed hour', display: plate.kind === 'sheet' ? 'present-day display' : 'shown on an easel' }
       group.add(mesh)
-      placed.push({ plate, stream, at: world(plate.centre) })
+      const size = geometry.parameters
+      placed.push({ plate, stream, at: world(plate.centre), mesh, halfW: size.width / 2, halfH: size.height / 2, texels })
     }
     group.updateMatrixWorld(true)
-    return Promise.all(placed.map(p => p.stream.ready)).then(() => undefined)
+    return Promise.all(placed.map(p => p.stream.ready)).then(() => { if (film) void holdForFilm() })
   }).catch(() => undefined).finally(() => { loading = false })
+  /** Four decodes at a time, counted in `pending` while they run. */
+  async function holdForFilm(): Promise<void> {
+    const queue = [...placed]
+    const worker = async (): Promise<void> => { for (let p = queue.shift(); p; p = queue.shift()) await p.stream.filmHold() }
+    await Promise.all([worker(), worker(), worker(), worker()])
+  }
+  const eyeAt = new Vector3(), faceAt = new Vector3(), rightAt = new Vector3(), upAt = new Vector3()
+  /** THE FILM'S RULE: a plate whose preview texel would take more than the cap of a pixel shows its full raster in
+   * this very frame, every other its preview; a pure function of where the eye stands. */
+  function filmNear(eye: V3, rule: HallFilm): void {
+    const stageHeight = rule.stageHeight()
+    const at = world(eye)
+    eyeAt.copy(at)
+    for (const p of placed) {
+      const upload = p.stream.residency().previewUpload
+      if (!upload) continue
+      const m = p.mesh.matrixWorld
+      faceAt.setFromMatrixPosition(m)
+      rightAt.setFromMatrixColumn(m, 0).normalize()
+      upAt.setFromMatrixColumn(m, 1).normalize()
+      const d = cardDistance([eyeAt.x, eyeAt.y, eyeAt.z], [faceAt.x, faceAt.y, faceAt.z], [rightAt.x, rightAt.y, rightAt.z], [upAt.x, upAt.y, upAt.z], p.halfW, p.halfH)
+      const pitch = previewPitch(2 * p.halfW, 2 * p.halfH, upload.width * p.texels[0], upload.height * p.texels[1])
+      p.stream.filmShow(d !== null && d < filmReachMetres(pitch, stageHeight))
+    }
+  }
   return {
     ready,
     tick(eye) {
@@ -214,6 +246,7 @@ export function mountHallPlates(host: Group, plates: readonly HallPlate[], hero:
       last = now
       model?.beat(now / 1000)
       for (const p of placed) p.stream.update(dt)
+      if (film) { if (!loading) filmNear(eye, film); return }
       if (switching) return
       const at = world(eye)
       let best: PlateStream | null = null, bestD = Infinity
