@@ -186,14 +186,13 @@ function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
   // STANDS JUST INSIDE THE SAME DOOR on its axis, 0.56 m in from the wall's
   // face, so its wider lens's walks to the close looks leave the doorway
   // clear of its reveals. ITS HERO IS THE THREE PAINTINGS, the visit's own:
-  // turned 31.5 degrees north of the axis, the compass on the table just past
-  // the left edge and the paintings left of the middle, a 42 degree field
-  // across holds them whole at about half its width, the table's far end and
-  // the west windows round them. From inside the door no field at rest holds
+  // turned 17 degrees north of the axis, a 53 degree field across holds them
+  // whole in its right half and the table's two pieces whole at its left, the
+  // pieces the card asks to open, their rings above the open card. From inside the door no field at rest holds
   // the lion and Saint Anne both whole (58 degrees apart), so the lion stays
   // out of the frame, never cut by its edge. Level, the shift lens at 0.36
   // stands the paintings' middle at a third of the height.
-  if(id==='hall') return narrow?{...aimedFrom(HALL_PHONE_EYE,-91.5,0,79.4),shift:-.36}:aimedFrom(HALL_DOOR,-109.5,-8,46)
+  if(id==='hall') return narrow?{...aimedFrom(HALL_PHONE_EYE,-105.8,0,94),shift:-.36}:aimedFrom(HALL_DOOR,-109.5,-8,46)
   // THE CHAPEL IS THE ONE HERO. Square on from the court it was a wall of
   // ashlar in the house's shadow with nothing behind it; from the foot of the
   // raised lawn the gable took the left half of the frame, the gable the study
