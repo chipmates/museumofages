@@ -11,6 +11,12 @@
    "unchangedDuringAudit": true
   },
   {
+   "file": "src/stack/grade.ts",
+   "sha256": "190accd9cce9433647cb7427c924d0c241b291259e1bfa025337ea6e76e9dba4",
+   "bytes": 7281,
+   "unchangedDuringAudit": true
+  },
+  {
    "file": "src/stack/light.ts",
    "sha256": "33e85e3ac5ec71197bf51f7e995e6af88d711c2bb7839514790654fc5af87aab",
    "bytes": 11919,
@@ -84,8 +90,8 @@
   },
   {
    "file": "src/wings/vinci/collection/hall-case.ts",
-   "sha256": "8f49bd43952632d1d10a9f9f1f56ebf9f653d068c507c48999fb6ff4ef509570",
-   "bytes": 13404,
+   "sha256": "a66db5b4467e735b452b0610c57798bd9c87ee4d3f5599a7dc5323be37f0ad4d",
+   "bytes": 14755,
    "unchangedDuringAudit": true
   },
   {
@@ -336,8 +342,8 @@
   },
   {
    "file": "src/wings/vinci/house-hall.ts",
-   "sha256": "af9ab672f473891458ce56244b32d8b66b8dbe60fc48263b636ea1e11d84f8a1",
-   "bytes": 204559,
+   "sha256": "33f782648a087f71219aef104884b9ccdfca7f1127be0d7a2516dabde48e6791",
+   "bytes": 208165,
    "unchangedDuringAudit": true
   },
   {
@@ -614,6 +620,12 @@
    "file": "src/wings/vinci/pictures/sheet-record.ts",
    "sha256": "386a3dffe861a7ecadcacab5ea394fac62b04dfab4a30c849f41402b2ec9c066",
    "bytes": 2778,
+   "unchangedDuringAudit": true
+  },
+  {
+   "file": "src/wings/vinci/print.ts",
+   "sha256": "87df5e84f4b0f80e5d98982571a68fe6296d240c073a33b9613a11343356159b",
+   "bytes": 3592,
    "unchangedDuringAudit": true
   },
   {
