@@ -1946,7 +1946,7 @@ function doorReveal(s: Sink, to: 'kitchen' | 'service-link'): void {
   const seed = 31 + (to === 'kitchen' ? 0 : 1)
   // the service passage's doorway takes the light the hall sends through it,
   // strongest at the hall's face and falling off into the passage
-  const lit = s.lit, cheek = to === 'service-link' ? K.REVEAL : K.STONE
+  const lit = s.lit, cheek = K.REVEAL
   if (to === 'service-link') s.lit = 0
   // cheeks face each other across the opening in dressed tuffeau, as the
   // way in shows them, their feet in the floor's bed
@@ -2011,8 +2011,8 @@ function cornerDoor(s: Sink): void {
   const along: V3 = [EAST_DIR[0], EAST_DIR[1], 0], room: V3 = [-EAST_DIR[1], EAST_DIR[0], 0]
   const face = D.back - .035
   // the cheeks run up past the springing, into the head's soffit
-  s.quad(eastAt(D.v0, 0, zf), eastAt(D.v0, face + .01, zf), eastAt(D.v0, face + .01, zs + .04), eastAt(D.v0, 0, zs + .04), along, [0, zf], [face, zf], [face, zs], [0, zs], K.STONE, 34)
-  s.quad(eastAt(D.v1, face + .01, zf), eastAt(D.v1, 0, zf), eastAt(D.v1, 0, zs + .04), eastAt(D.v1, face + .01, zs + .04), scale(along, -1), [face, zf], [0, zf], [0, zs], [face, zs], K.STONE, 34)
+  s.quad(eastAt(D.v0, 0, zf), eastAt(D.v0, face + .01, zf), eastAt(D.v0, face + .01, zs + .04), eastAt(D.v0, 0, zs + .04), along, [0, zf], [face, zf], [face, zs], [0, zs], K.REVEAL, 34)
+  s.quad(eastAt(D.v1, face + .01, zf), eastAt(D.v1, 0, zf), eastAt(D.v1, 0, zs + .04), eastAt(D.v1, face + .01, zs + .04), scale(along, -1), [face, zf], [0, zf], [0, zs], [face, zs], K.REVEAL, 34)
   s.quad(eastAt(D.v0, -.004, z0 + .004), eastAt(D.v1, -.004, z0 + .004), eastAt(D.v1, face + .01, z0 + .004), eastAt(D.v0, face + .01, z0 + .004), [0, 0, 1], [0, 0], [1, 0], [1, face], [0, face], K.STONE, 35)
   brickHead(s, eastAt, along, room, D.v0, D.v1, zs, zc, face + .01)
   const a = eastAt(D.v0, 0, 0), b = eastAt(D.v1, 0, 0)
@@ -2730,7 +2730,8 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const oak = vec3(.15, .094, .055).mul(grain.add(1)).mul(fract(seed.mul(7.31)).mul(.18).add(.91)).mul(hewn.add(1)).mul(float(1).sub(check.mul(.6)))
   // tuffeau in ashlar courses of about 0.30 m, each block its own cream
   const courseN = floor(Wp.y.div(.30)), inCourse = fract(Wp.y.div(.30))
-  // a door's reveal courses along its own depth (its uv), every other stone along the wall
+  // a reveal courses along its own depth (its uv), every other stone along the wall;
+  // its joints drawn as a mason's, so the dressed stone reads beside the limewash
   const alongStone = mix(alongWall, T.x, is(K.REVEAL))
   const blockN = floor(alongStone.div(.46).add(courseN.mul(.5)))
   const blockHue = fract(courseN.mul(12.9898).add(blockN.mul(78.233)).sin().mul(43758.5)).sub(.5)
@@ -2747,9 +2748,9 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const archJoint = band(fract(archAt).sub(.5).abs().mul(archR.mul(HOOD_ARCH.step)), footprint(archAt).mul(archR.mul(HOOD_ARCH.step)), .004).mul(inBand)
   const stoneJoint = max(bedJoint, headJoint).mul(float(1).sub(inBand.mul(onHood))).mul(is(K.STONE).add(is(K.REVEAL)))
   const archLine = max(archRing, archJoint).mul(onHood).mul(is(K.STONE))
-  const tuff = vec3(.52, .47, .37).mul(mx_noise_float(Wp.mul(6.5)).mul(.08).add(mx_noise_float(Wp.mul(33)).mul(.045)).add(mx_noise_float(Wp.mul(1.7)).mul(.05)).add(blockHue.mul(.07)).add(1))
+  const tuff = vec3(.52, .47, .37).mul(mx_noise_float(Wp.mul(6.5)).mul(.08).add(mx_noise_float(Wp.mul(33)).mul(.045)).add(mx_noise_float(Wp.mul(1.7)).mul(.05)).add(blockHue.mul(.07)).add(blockHue.mul(is(K.REVEAL)).mul(.09)).add(1))
     .mul(float(1).sub(float(1).sub(smoothstep(.8, 1.5, Wp.y)).mul(.12)))
-  let tuffJ: N = mix(mix(tuff, tuff.mul(vec3(.88, .86, .84)), stoneJoint), tuff.mul(vec3(.62, .6, .58)), archLine)
+  let tuffJ: N = mix(mix(tuff, tuff.mul(mix(vec3(.88, .86, .84), vec3(.6, .58, .56), is(K.REVEAL))), stoneJoint), tuff.mul(vec3(.62, .6, .58)), archLine)
   // a threshold (the only stone the sink marks worn): the dirt of every shoe
   // ground into the soft stone, the feet's hollow a little paler than its ends
   const trod = mix(vec3(.19, .165, .13), vec3(.26, .225, .18), mx_noise_float(Wp.mul(4.1)).mul(.5).add(.5)).mul(mx_noise_float(Wp.mul(37)).mul(.12).add(1))
