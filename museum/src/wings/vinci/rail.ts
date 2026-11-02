@@ -95,7 +95,7 @@ const standing=(e:number,n:number):Pose=>{const h=groundHeight(e,n)+1.65;return 
 /** The eye in the great hall's door, on the axis of the three doors. */
 const HALL_DOOR=p(-4.2388,-11.0992,2.45,-4.2388,-11.0992,2.45)
 /** The phone's eye just inside it, on the same axis. */
-const HALL_PHONE_EYE=((e:Vector3):Pose=>({eye:e,at:e.clone(),fov:96.81}))(hallPoint(8.25,2.6,1.65))
+const HALL_PHONE_EYE=((e:Vector3):Pose=>({eye:e,at:e.clone(),fov:96.81}))(hallPoint(8.45,2.6,1.65))
 /** The body wall's phone eye, on the grid's axis 6.7 m off the frames: at a
  * 64 degree lens the grid takes four fifths of a 390 px stage and the sheet
  * apart is the next stop, not a speck at the frame's edge. The lens is the
@@ -183,16 +183,14 @@ function authoredStationPose(id:VinciStationId, narrow:boolean):Pose {
   // turns onto the table, the lion facing it from the far end: a 46 degree
   // lens 13.5 degrees north of the axis keeps the case past the kitchen door
   // out of its left edge and the chimneypiece out of its right. THE PHONE
-  // STANDS JUST INSIDE THE SAME DOOR on its axis, 0.56 m in from the wall's
-  // face, so its wider lens's walks to the close looks leave the doorway
-  // clear of its reveals. ITS HERO IS THE THREE PAINTINGS, the visit's own:
-  // turned 17 degrees north of the axis, a 53 degree field across holds them
-  // whole in its right half and the table's two pieces whole at its left, the
-  // pieces the card asks to open, their rings above the open card. From inside the door no field at rest holds
-  // the lion and Saint Anne both whole (58 degrees apart), so the lion stays
-  // out of the frame, never cut by its edge. Level, the shift lens at 0.36
-  // stands the paintings' middle at a third of the height.
-  if(id==='hall') return narrow?{...aimedFrom(HALL_PHONE_EYE,-105.8,0,94),shift:-.36}:aimedFrom(HALL_DOOR,-109.5,-8,46)
+  // STANDS JUST INSIDE THE SAME DOOR on its axis, 0.36 m in from the wall's
+  // face, clear of its reveals on the walks to the close looks. ITS FRAME
+  // HOLDS WHAT ITS CARD OFFERS TO OPEN: turned 10.6 degrees north of the axis,
+  // a 59 degree field across holds the lion whole at its left edge, the
+  // table's two pieces left of the middle and the three paintings whole at
+  // its right, every ring above the open card. A wider lens fails the near
+  // ball's clearance. Level, the shift lens at 0.36.
+  if(id==='hall') return narrow?{...aimedFrom(HALL_PHONE_EYE,-112.4,0,102),shift:-.36}:aimedFrom(HALL_DOOR,-109.5,-8,46)
   // THE CHAPEL IS THE ONE HERO. Square on from the court it was a wall of
   // ashlar in the house's shadow with nothing behind it; from the foot of the
   // raised lawn the gable took the left half of the frame, the gable the study
