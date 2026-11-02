@@ -1925,7 +1925,8 @@ function embrasure(s: Sink, f: Facade, o: Opening): void {
   const fr = frame(f), mouth = thicknessOf(f) + LINING_GAP, back = CASEMENT_IN - .028
   const at = (along: number, deep: number, z: number): V3 => [f.from[0] + fr.dir[0] * along - fr.out[0] * (mouth - deep), f.from[1] + fr.dir[1] * along - fr.out[1] * (mouth - deep), z]
   const D: V3 = [fr.dir[0], fr.dir[1], 0], room: V3 = [-fr.out[0], -fr.out[1], 0]
-  const a0 = o.from_m + CHEEK_IN, a1 = o.from_m + o.width_m - CHEEK_IN, z0 = o.base_m, z1 = o.base_m + o.height_m, zs = z1 - (a1 - a0) / 8
+  // the crown stands 5 mm under the shell's head, so the soffit never lies in its plane
+  const a0 = o.from_m + CHEEK_IN, a1 = o.from_m + o.width_m - CHEEK_IN, z0 = o.base_m, z1 = o.base_m + o.height_m - .005, zs = z1 - (a1 - a0) / 8
   const deep = mouth - back
   for (const [a, n] of [[a0, D], [a1, scale(D, -1)]] as [number, V3][])
     s.quad(at(a, 0, z0), at(a, deep, z0), at(a, deep, zs + .04), at(a, 0, zs + .04), n, [0, z0], [deep, z0], [deep, zs], [0, zs], K.REVEAL, 36)
