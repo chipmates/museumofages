@@ -37121,6 +37121,85 @@
           "render": true
         },
         {
+          "id": "back-ground-5",
+          "type": "window",
+          "wall": "wall-F16",
+          "from_m": {
+            "value": 8.19,
+            "unit": "m",
+            "certainty": "assumed",
+            "source": [
+              "PL01",
+              "A-OPENING"
+            ],
+            "basis": "The hall back wall's third window, as today's photograph of the hall shows three on this wall (form, place and count; Ceridwen 2011, CC BY-SA 3.0); placed in the bay east of the second main beam and narrowed to fit it.",
+            "range": [
+              8.04,
+              8.34
+            ]
+          },
+          "width_m": {
+            "value": 1.0,
+            "unit": "m",
+            "certainty": "assumed",
+            "source": [
+              "PL01",
+              "A-OPENING"
+            ],
+            "basis": "The hall back wall's third window, as today's photograph of the hall shows three on this wall (form, place and count; Ceridwen 2011, CC BY-SA 3.0); placed in the bay east of the second main beam and narrowed to fit it.",
+            "range": [
+              0.9,
+              1.2
+            ]
+          },
+          "sill_m": {
+            "value": 0.65,
+            "unit": "m",
+            "certainty": "assumed",
+            "source": [
+              "PL01",
+              "A-OPENING",
+              "Q131"
+            ],
+            "basis": "Explicit build nominal within the stated scenario interval.",
+            "range": [
+              0.45,
+              0.8500000000000001
+            ]
+          },
+          "height_m": {
+            "value": 2.15,
+            "unit": "m",
+            "certainty": "assumed",
+            "source": [
+              "PL01",
+              "A-OPENING",
+              "Q131"
+            ],
+            "basis": "Explicit build nominal within the stated scenario interval.",
+            "range": [
+              1.827,
+              2.472
+            ]
+          },
+          "base_m": {
+            "value": 1.45,
+            "unit": "m",
+            "certainty": "inferred",
+            "source": [
+              "A-HEIGHT",
+              "Q131"
+            ],
+            "basis": "Nominal floor level plus nominal sill."
+          },
+          "floor_id": "ground",
+          "certainty": "assumed",
+          "source": [
+            "PL01"
+          ],
+          "render": true
+        },
+        {
           "id": "back-first-4",
           "type": "window",
           "wall": "wall-F16",

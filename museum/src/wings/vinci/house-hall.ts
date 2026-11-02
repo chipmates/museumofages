@@ -64,8 +64,8 @@ const JOINT_M = spec.interior_detail_parameters['tile_joint_m'] ?? .008
 const TILE_TURN = (spec.interior_detail_parameters['hall_tile_angle_deg'] ?? 45) * Math.PI / 180
 /** a tile and its joint: every tile runs to its joints' centre lines */
 const PITCH = TILE_M + JOINT_M
-/** the hall's four windows, which leave the shell's dark backs */
-export const HALL_WINDOWS = ['west-ground-1', 'west-ground-2', 'back-ground-3', 'back-ground-4'] as const
+/** the hall's five windows, which leave the shell's dark backs */
+export const HALL_WINDOWS = ['west-ground-1', 'west-ground-2', 'back-ground-3', 'back-ground-4', 'back-ground-5'] as const
 
 /** The sun of the hour, pointing to it, east/north/up. */
 const az = hourKey.sun_azimuth_deg.value * Math.PI / 180, el = hourKey.sun_elevation_deg.value * Math.PI / 180
@@ -186,11 +186,22 @@ const KITCHEN_DOOR = hallDoor('kitchen'), LINK_DOOR = hallDoor('service-link')
 const kitchenDoorU: V2 = (() => { const a = toUV([h0[0] + HALL_SOUTH.dir[0] * KITCHEN_DOOR.from_m, h0[1] + HALL_SOUTH.dir[1] * KITCHEN_DOOR.from_m])[0]; return [a, a + KITCHEN_DOOR.width_m] })()
 const linkDoorV: V2 = (() => { const a = toUV([h1[0] + HALL_EAST.dir[0] * LINK_DOOR.from_m, h1[1] + HALL_EAST.dir[1] * LINK_DOOR.from_m])[1]; return [a, a + LINK_DOOR.width_m] })()
 const DOOR_H = Math.max(KITCHEN_DOOR.height_m, LINK_DOOR.height_m)
+/** THE SMALL DOOR AT THE CORNER, on the chimneypiece's wall beside the back
+ * wall, where today's photographs of the hall put it: closed, a ledged oak
+ * leaf under a segmental brick head. Along the wall from SE; heights from the
+ * floor; the leaf's back this far into the wall. */
+const CORNER_DOOR = { v0: HALL_D - .9, v1: HALL_D - .15, spring: 1.72, crown: 1.85, back: .155 } as const
+const EAST_DIR: V2 = (() => { const l = Math.hypot(NE[0] - SE[0], NE[1] - SE[1]); return [(NE[0] - SE[0]) / l, (NE[1] - SE[1]) / l] })()
+/** a point on the chimneypiece's wall: along it from SE, `deep` into the wall
+ * behind the lining (negative into the room), at height z */
+const eastAt = (along: number, deep: number, z: number): V3 => [SE[0] + EAST_DIR[0] * along + EAST_DIR[1] * deep, SE[1] + EAST_DIR[1] * along - EAST_DIR[0] * deep, z]
+/** The brick heads' ring, radially: a brick's length. */
+const HEAD_RING = .22
 
 /* ---- the sink: one mesh, every surface a kind the material reads ---- */
 
 /** Surface kinds, read by the material. */
-export const K = { TILE: 0, JOINT: 1, PLASTER: 2, OAK: 3, STONE: 4, BRICK: 5, IRON: 6, BRASS: 7, GLAZE: 8, ASH: 9, CHAR: 10, WAX: 11, WEATHERED: 12, REVEAL: 13, CLOTH: 14, EARTH: 15, CANDLE: 16, LINEN: 17, MAT: 18, PANEL: 19, CASE: 20, FRAME: 21, READING: 22 } as const
+export const K = { TILE: 0, JOINT: 1, PLASTER: 2, OAK: 3, STONE: 4, BRICK: 5, IRON: 6, BRASS: 7, GLAZE: 8, ASH: 9, CHAR: 10, WAX: 11, WEATHERED: 12, REVEAL: 13, CLOTH: 14, EARTH: 15, CANDLE: 16, LINEN: 17, MAT: 18, PANEL: 19, CASE: 20, FRAME: 21, READING: 22, ARCH: 23 } as const
 interface Vertex { p: V3; n: V3; t: V2; kind: number; seed: number; wear: number; soot: number; lit: number; cast: boolean; fixed?: [number, number] }
 class Sink {
   v: Vertex[] = []
@@ -938,7 +949,7 @@ function buildHallShell(s: Sink, hero: boolean): void {
     return [Math.min(s0, s1), Math.max(s0, s1), o.base_m, o.base_m + o.height_m]
   }
   const south = { a: SW, b: SE, holes: [[kitchenDoorU[0], kitchenDoorU[1], FLOOR_Z - FOOT, FLOOR_Z + DOOR_H]] as [number, number, number, number][] }
-  const east = { a: SE, b: NE, holes: [[linkDoorV[0], linkDoorV[1], FLOOR_Z - FOOT, FLOOR_Z + DOOR_H]] as [number, number, number, number][] }
+  const east = { a: SE, b: NE, holes: [[linkDoorV[0], linkDoorV[1], FLOOR_Z - FOOT, FLOOR_Z + DOOR_H], [CORNER_DOOR.v0, CORNER_DOOR.v1, FLOOR_Z - FOOT, FLOOR_Z + CORNER_DOOR.crown]] as [number, number, number, number][] }
   const north = { a: NE, b: NW, holes: WINDOWS.filter(w => !w.west).map(w => hole(NE, NW, BACK, w.o)) }
   const west = { a: NW, b: SW, holes: WINDOWS.filter(w => w.west).map(w => hole(NW, SW, WEST, w.o)) }
   walls.push(south, east, north, west)
@@ -962,6 +973,7 @@ function buildHallShell(s: Sink, hero: boolean): void {
   // Door reveals through the partitions.
   doorReveal(s, 'kitchen')
   doorReveal(s, 'service-link')
+  cornerDoor(s)
 }
 
 /** One wall's lining, from a to b (the room on its left), cut at the holes,
@@ -1934,10 +1946,10 @@ function doorReveal(s: Sink, to: 'kitchen' | 'service-link'): void {
   const seed = 31 + (to === 'kitchen' ? 0 : 1)
   // the service passage's doorway takes the light the hall sends through it,
   // strongest at the hall's face and falling off into the passage
-  const lit = s.lit, cheek = to === 'service-link' ? K.REVEAL : K.PLASTER
+  const lit = s.lit, cheek = to === 'service-link' ? K.REVEAL : K.STONE
   if (to === 'service-link') s.lit = 0
-  // cheeks face each other across the opening, limewashed like the walls,
-  // their feet in the floor's bed
+  // cheeks face each other across the opening in dressed tuffeau, as the
+  // way in shows them, their feet in the floor's bed
   const zf = z0 - FOOT
   s.quad(P3(a, zf), P3(far(a), zf), P3(far(a), z1), P3(a, z1), n(dir), [0, zf], [depth, zf], [depth, z1], [0, z1], cheek, seed)
   s.quad(P3(far(b), zf), P3(b, zf), P3(b, z1), P3(far(b), z1), n([-dir[0], -dir[1]]), [0, zf], [depth, zf], [depth, z1], [0, z1], cheek, seed)
@@ -1972,6 +1984,41 @@ function doorReveal(s: Sink, to: 'kitchen' | 'service-link'): void {
   s.quad(P3(a, z0 + .004), P3(b, z0 + .004), P3(far(b), z0 + .004), P3(far(a), z0 + .004), [0, 0, 1], [0, 0], [1, 0], [1, depth], [0, depth], K.STONE, seed + .5)
   s.lit = lit; s.wear = 0
 }
+/** A SEGMENTAL BRICK HEAD over an opening, from a0 to a1 along its wall,
+ * springing at z0 and rising to z1: the ring of voussoirs on the room's face,
+ * 4 mm proud of the lining so it reads over the limewash's edge, and the soffit
+ * turning back through the wall to `deep`. `at` takes along, depth into the
+ * wall behind the lining and height; `along` and `room` are the wall's
+ * directions in the world. uv: along the intrados, and across the ring or
+ * back through the wall. */
+function brickHead(s: Sink, at: (along: number, deep: number, z: number) => V3, along: V3, room: V3, a0: number, a1: number, z0: number, z1: number, deep: number): void {
+  const half = (a1 - a0) / 2, mid = (a0 + a1) / 2, rise = z1 - z0
+  const R = (half * half + rise * rise) / (2 * rise), cz = z1 - R, open = Math.asin(half / R)
+  const n = Math.max(10, Math.ceil(2 * open * R / .05)), face = -.004
+  const pt = (a: number, r: number, d: number): V3 => at(mid + Math.sin(a) * r, d, cz + Math.cos(a) * r)
+  const toCentre = (a: number): V3 => unit(add(scale(along, -Math.sin(a)), [0, 0, -Math.cos(a)]))
+  for (let i = 0; i < n; i++) {
+    const t0 = -open + 2 * open * i / n, t1 = -open + 2 * open * (i + 1) / n, s0 = R * (t0 + open), s1 = R * (t1 + open)
+    s.quad(pt(t0, R, face), pt(t1, R, face), pt(t1, R + HEAD_RING, face), pt(t0, R + HEAD_RING, face), room, [s0, 0], [s1, 0], [s1, HEAD_RING], [s0, HEAD_RING], K.ARCH, 60)
+    s.quadN(pt(t0, R, face), pt(t1, R, face), pt(t1, R, deep), pt(t0, R, deep), toCentre(t0), toCentre(t1), toCentre(t1), toCentre(t0), [s0, 0], [s1, 0], [s1, deep - face], [s0, deep - face], K.ARCH, 61)
+  }
+}
+
+/** THE SMALL DOOR AT THE CORNER: dressed tuffeau cheeks and threshold from the
+ * lining back to a closed ledged leaf, under a brick head. */
+function cornerDoor(s: Sink): void {
+  const D = CORNER_DOOR, z0 = FLOOR_Z, zs = FLOOR_Z + D.spring, zc = FLOOR_Z + D.crown, zf = z0 - FOOT
+  const along: V3 = [EAST_DIR[0], EAST_DIR[1], 0], room: V3 = [-EAST_DIR[1], EAST_DIR[0], 0]
+  const face = D.back - .035
+  // the cheeks run up past the springing, into the head's soffit
+  s.quad(eastAt(D.v0, 0, zf), eastAt(D.v0, face + .01, zf), eastAt(D.v0, face + .01, zs + .04), eastAt(D.v0, 0, zs + .04), along, [0, zf], [face, zf], [face, zs], [0, zs], K.STONE, 34)
+  s.quad(eastAt(D.v1, face + .01, zf), eastAt(D.v1, 0, zf), eastAt(D.v1, 0, zs + .04), eastAt(D.v1, face + .01, zs + .04), scale(along, -1), [face, zf], [0, zf], [0, zs], [face, zs], K.STONE, 34)
+  s.quad(eastAt(D.v0, -.004, z0 + .004), eastAt(D.v1, -.004, z0 + .004), eastAt(D.v1, face + .01, z0 + .004), eastAt(D.v0, face + .01, z0 + .004), [0, 0, 1], [0, 0], [1, 0], [1, face], [0, face], K.STONE, 35)
+  brickHead(s, eastAt, along, room, D.v0, D.v1, zs, zc, face + .01)
+  const a = eastAt(D.v0, 0, 0), b = eastAt(D.v1, 0, 0)
+  doorLeaf(s, [a[0], a[1]], [b[0], b[1]], EAST_DIR, [room[0], room[1]], D.back, z0, zc + .02)
+}
+
 /** A LEDGED DOOR OF THE PERIOD: five oak boards on the
  * face the hall sees, the clout nails of the ledges behind them in three
  * rows, a ring on its plate and a latch. From a to b along the wall, its
@@ -2519,7 +2566,7 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   // carries its own seed, so no two walls were laid alike
   const T0 = uv(), Tw = vec2(T0.x.add(seed.lessThan(10).select(seed.mul(6.1), float(0))), T0.y)
   const Ng = normalWorldGeometry.normalize()
-  const Nw = mix(Ng, plasterRelief(Tw, Ng), is(K.PLASTER).add(is(K.REVEAL)).min(1).mul(float(1).sub(Ng.y.abs()))).normalize()
+  const Nw = mix(Ng, plasterRelief(Tw, Ng), is(K.PLASTER).mul(float(1).sub(Ng.y.abs()))).normalize()
   m.normalNode = Nw.transformDirection(cameraViewMatrix).normalize()
   let ambient: N = A.y, bounce: N = A.z, westSky: N = A.y.mul(.6)
   // the sky a point sees before the ceiling's bays close it, and that share
@@ -2683,10 +2730,12 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const oak = vec3(.15, .094, .055).mul(grain.add(1)).mul(fract(seed.mul(7.31)).mul(.18).add(.91)).mul(hewn.add(1)).mul(float(1).sub(check.mul(.6)))
   // tuffeau in ashlar courses of about 0.30 m, each block its own cream
   const courseN = floor(Wp.y.div(.30)), inCourse = fract(Wp.y.div(.30))
-  const blockN = floor(alongWall.div(.46).add(courseN.mul(.5)))
+  // a door's reveal courses along its own depth (its uv), every other stone along the wall
+  const alongStone = mix(alongWall, T.x, is(K.REVEAL))
+  const blockN = floor(alongStone.div(.46).add(courseN.mul(.5)))
   const blockHue = fract(courseN.mul(12.9898).add(blockN.mul(78.233)).sin().mul(43758.5)).sub(.5)
   const bedJoint = float(1).sub(smoothstep(.003, .009, inCourse.min(float(1).sub(inCourse)).mul(.30)))
-  const headJoint = float(1).sub(smoothstep(.003, .009, fract(alongWall.div(.46).add(courseN.mul(.5))).min(float(1).sub(fract(alongWall.div(.46).add(courseN.mul(.5))))).mul(.46)))
+  const headJoint = float(1).sub(smoothstep(.003, .009, fract(alongStone.div(.46).add(courseN.mul(.5))).min(float(1).sub(fract(alongStone.div(.46).add(courseN.mul(.5))))).mul(.46)))
   // THE HOOD'S DRAWN ARCH: two arcs and the voussoirs' joints between them,
   // drawn on the hood's face over the courses, which stop at its band
   const onHood = smoothstep(HEARTH.depth - .05, HEARTH.depth - .04, hy).mul(float(1).sub(smoothstep(HEARTH.depth - .015, HEARTH.depth - .005, hy)))
@@ -2696,7 +2745,7 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const archRing = max(band(archR.sub(HOOD_ARCH.radius).abs(), footprint(archR), .004), band(archR.sub(HOOD_ARCH.radius + HOOD_ARCH.band).abs(), footprint(archR), .004))
   const archAt = hx.div(archR.max(.01)).asin().div(HOOD_ARCH.step)
   const archJoint = band(fract(archAt).sub(.5).abs().mul(archR.mul(HOOD_ARCH.step)), footprint(archAt).mul(archR.mul(HOOD_ARCH.step)), .004).mul(inBand)
-  const stoneJoint = max(bedJoint, headJoint).mul(float(1).sub(inBand.mul(onHood))).mul(is(K.STONE))
+  const stoneJoint = max(bedJoint, headJoint).mul(float(1).sub(inBand.mul(onHood))).mul(is(K.STONE).add(is(K.REVEAL)))
   const archLine = max(archRing, archJoint).mul(onHood).mul(is(K.STONE))
   const tuff = vec3(.52, .47, .37).mul(mx_noise_float(Wp.mul(6.5)).mul(.08).add(mx_noise_float(Wp.mul(33)).mul(.045)).add(mx_noise_float(Wp.mul(1.7)).mul(.05)).add(blockHue.mul(.07)).add(1))
     .mul(float(1).sub(float(1).sub(smoothstep(.8, 1.5, Wp.y)).mul(.12)))
@@ -2710,6 +2759,16 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
     const maps = library.sync('stone-tuffeau').sample({ uv: T, metres: .19, turn: .37 })
     tuffJ = tuffJ.mul(mix(float(1), maps.albedo.clamp(.88, 1.12), .22))
   }
+  // THE BRICK HEADS: thin Loire bricks set as voussoirs, the ring on the face
+  // and the soffit back through the wall in a stretcher bond, under the walls'
+  // limewash, which runs thin over a brick's face and fills the joints
+  const vX = T.x.div(.066), vIdx = floor(vX), soffitF = step(60.5, seed)
+  const vY = T.y.add(soffitF.mul(fract(vIdx.mul(.5)).mul(.115))).div(.23)
+  const vJoint = max(band(fract(vX).sub(.5).abs().negate().add(.5).mul(.066), footprint(T.x), .0045), band(fract(vY).sub(.5).abs().negate().add(.5).mul(.23), footprint(T.y), .0045).mul(soffitF))
+  const vId = fract(vIdx.mul(12.9898).add(floor(vY).mul(78.233)).sin().mul(43758.5))
+  const vThin = smoothstep(.35, .9, mx_noise_float(vec3(T.x.mul(4.3), T.y.mul(4.3), seed.add(2.7))).mul(.5).add(.5)).mul(.5).add(vId.mul(.3))
+  const washed = vec3(.70, .65, .55).mul(vId.sub(.5).mul(.07).add(1))
+  const archC = mix(washed, washed.mul(vec3(.98, .80, .64)), vThin).mul(float(1).sub(vJoint.mul(.3)))
   // brick of the fireback: thin Loire bricks in courses
   // along each face's own horizontal metres, so a cheek square to the wall courses as the back does
   // FORTY-SIX YEARS OF FIRES: the courses have moved and no longer run
@@ -2792,8 +2851,8 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const matFace = smoothstep(.5, .9, max(Ng.dot(caseOut(HALL_CASE_AT)), Ng.dot(caseOut(HALL_PIER_AT))))
   const matC = mix(vec3(.78, .77, .74), vec3(.6, .585, .54).mul(mix(vec3(1, 1, 1), weaveRatio, .35)).mul(boardLot.mul(.06).add(1)), matFace)
   const panelC = vec3(.36, .29, .19).mul(grain.mul(.6).add(1))
-  const clean = caseC.add(linenC.mul(is(K.LINEN))).add(matC.mul(is(K.MAT))).add(panelC.mul(is(K.PANEL))).add(silvered.mul(is(K.WEATHERED))).add(wax.mul(is(K.WAX))).add(candle.mul(is(K.CANDLE))).add(brass.mul(is(K.BRASS))).add(glaze.mul(is(K.GLAZE))).add(earth.mul(is(K.EARTH))).add(cloth.mul(is(K.CLOTH))).add(tileColour.mul(is(K.TILE))).add(joint.mul(is(K.JOINT))).add(plaster.mul(is(K.PLASTER).add(is(K.REVEAL)))).add(oak.mul(is(K.OAK)))
-    .add(tuffJ.mul(is(K.STONE))).add(brickHot.mul(is(K.BRICK))).add(iron.mul(is(K.IRON))).add(ashC.mul(is(K.ASH))).add(charC.mul(is(K.CHAR)))
+  const clean = caseC.add(linenC.mul(is(K.LINEN))).add(matC.mul(is(K.MAT))).add(panelC.mul(is(K.PANEL))).add(silvered.mul(is(K.WEATHERED))).add(wax.mul(is(K.WAX))).add(candle.mul(is(K.CANDLE))).add(brass.mul(is(K.BRASS))).add(glaze.mul(is(K.GLAZE))).add(earth.mul(is(K.EARTH))).add(cloth.mul(is(K.CLOTH))).add(tileColour.mul(is(K.TILE))).add(joint.mul(is(K.JOINT))).add(plaster.mul(is(K.PLASTER))).add(archC.mul(is(K.ARCH))).add(oak.mul(is(K.OAK)))
+    .add(tuffJ.mul(is(K.STONE).add(is(K.REVEAL)))).add(brickHot.mul(is(K.BRICK))).add(iron.mul(is(K.IRON))).add(ashC.mul(is(K.ASH))).add(charC.mul(is(K.CHAR)))
   // soot: carried by the surface, gathered in blotches and rising streaks
   // THE BREAST OVER THE OPENING. A fire that draws badly rolls its smoke out
   // under the lintel, so the stone above the opening carries a plume of it:
