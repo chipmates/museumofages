@@ -197,6 +197,8 @@ const EAST_DIR: V2 = (() => { const l = Math.hypot(NE[0] - SE[0], NE[1] - SE[1])
 const eastAt = (along: number, deep: number, z: number): V3 => [SE[0] + EAST_DIR[0] * along + EAST_DIR[1] * deep, SE[1] + EAST_DIR[1] * along - EAST_DIR[0] * deep, z]
 /** The brick heads' ring, radially: a brick's length. */
 const HEAD_RING = .22
+/** A window's dressed cheeks stand this far inside the shell's opening. */
+const CHEEK_IN = .006
 
 /* ---- the sink: one mesh, every surface a kind the material reads ---- */
 
@@ -946,7 +948,7 @@ function buildHallShell(s: Sink, hero: boolean): void {
     const p0: V2 = [f.from[0] + fr.dir[0] * o.from_m, f.from[1] + fr.dir[1] * o.from_m]
     const p1: V2 = [f.from[0] + fr.dir[0] * (o.from_m + o.width_m), f.from[1] + fr.dir[1] * (o.from_m + o.width_m)]
     const s0 = alongWall(a, b, p0), s1 = alongWall(a, b, p1)
-    return [Math.min(s0, s1), Math.max(s0, s1), o.base_m, o.base_m + o.height_m]
+    return [Math.min(s0, s1) + CHEEK_IN, Math.max(s0, s1) - CHEEK_IN, o.base_m, o.base_m + o.height_m]
   }
   const south = { a: SW, b: SE, holes: [[kitchenDoorU[0], kitchenDoorU[1], FLOOR_Z - FOOT, FLOOR_Z + DOOR_H]] as [number, number, number, number][] }
   const east = { a: SE, b: NE, holes: [[linkDoorV[0], linkDoorV[1], FLOOR_Z - FOOT, FLOOR_Z + DOOR_H], [CORNER_DOOR.v0, CORNER_DOOR.v1, FLOOR_Z - FOOT, FLOOR_Z + CORNER_DOOR.crown]] as [number, number, number, number][] }
@@ -963,7 +965,7 @@ function buildHallShell(s: Sink, hero: boolean): void {
   s.cast = false
   // Window embrasures: a tuffeau seat at the sill of every window, and the
   // room's face of each stone cross.
-  for (const w of WINDOWS) { windowSeat(s, w.facade, w.o); crossFace(s, w.facade, w.o); shutters(s, w.facade, w.o) }
+  for (const w of WINDOWS) { windowSeat(s, w.facade, w.o); crossFace(s, w.facade, w.o); shutters(s, w.facade, w.o); embrasure(s, w.facade, w.o) }
   // The chimneypiece A-FURNITURE proposes on the passage wall, and the few
   // things of the period that stand in the hall. Both cast in the sun.
   s.cast = true
@@ -1889,7 +1891,7 @@ function shutters(s: Sink, f: Facade, o: Opening): void {
   const D: V3 = [fr.dir[0], fr.dir[1], 0], IN: V3 = [-fr.out[0], -fr.out[1], 0]
   const slab = (a0: number, a1: number, n0: number, n1: number, y0: number, y1: number, seed: number): void =>
     s.box(at((a0 + a1) / 2, (n0 + n1) / 2, (y0 + y1) / 2), scale(D, (a1 - a0) / 2), scale(IN, (n1 - n0) / 2), [0, 0, (y1 - y0) / 2], K.WAX, seed)
-  for (const [k, [a0, a1]] of ([[o.from_m + .004, o.from_m + .05], [o.from_m + o.width_m - .05, o.from_m + o.width_m - .004]] as V2[]).entries()) {
+  for (const [k, [a0, a1]] of ([[o.from_m + CHEEK_IN + .004, o.from_m + CHEEK_IN + .05], [o.from_m + o.width_m - CHEEK_IN - .05, o.from_m + o.width_m - CHEEK_IN - .004]] as V2[]).entries()) {
     slab(a0, a1, i0, i1, z0, z1, 91 + k)
     for (const [y0, y1] of [[z0 + .07, mid - .035], [mid + .035, z1 - .07]] as V2[]) fieldedPanel(k === 0 ? a1 : a0, k === 0 ? 1 : -1, i0 + .055, i1 - .055, y0, y1, 93 + k)
   }
@@ -1913,6 +1915,21 @@ function shutters(s: Sink, f: Facade, o: Opening): void {
       s.quad(q[0]!, q[1]!, q[2]!, q[3]!, nb, b0, b1, f1, f0, K.WAX, seed)
     }
   }
+}
+
+/** THE EMBRASURE AS THE ROOM SEES IT: dressed tuffeau cheeks from behind the
+ * casements to the lining, and a segmental brick head whose crown is the
+ * window's head (rise an eighth of the span), its soffit turning back to the
+ * casements. The shell's own stone surround stops behind the lining. */
+function embrasure(s: Sink, f: Facade, o: Opening): void {
+  const fr = frame(f), mouth = thicknessOf(f) + LINING_GAP, back = CASEMENT_IN - .028
+  const at = (along: number, deep: number, z: number): V3 => [f.from[0] + fr.dir[0] * along - fr.out[0] * (mouth - deep), f.from[1] + fr.dir[1] * along - fr.out[1] * (mouth - deep), z]
+  const D: V3 = [fr.dir[0], fr.dir[1], 0], room: V3 = [-fr.out[0], -fr.out[1], 0]
+  const a0 = o.from_m + CHEEK_IN, a1 = o.from_m + o.width_m - CHEEK_IN, z0 = o.base_m, z1 = o.base_m + o.height_m, zs = z1 - (a1 - a0) / 8
+  const deep = mouth - back
+  for (const [a, n] of [[a0, D], [a1, scale(D, -1)]] as [number, V3][])
+    s.quad(at(a, 0, z0), at(a, deep, z0), at(a, deep, zs + .04), at(a, 0, zs + .04), n, [0, z0], [deep, z0], [deep, zs], [0, zs], K.REVEAL, 36)
+  brickHead(s, at, D, room, a0, a1, zs, z1, deep)
 }
 
 /** The inner faces of a window's mullion and transom, as the room lights

@@ -379,6 +379,8 @@ function drawOpening(f:Facade,o:Opening,thickness:number,b:Batches):void {
   const x=o.from_m,w=o.width_m,z=o.base_m,h=o.height_m;const open=o.type==='gate'||o.type==='open-arcade';const wooden=o.type==='open-arcade'
   if(o.type==='blind-recess'){faceBox(b.stone,f,x+w/2,z+h/2,w,h,.05,-.015,.72);return}
   const surround=wooden?b.oak:b.stone;const jamb=wooden?.14:o.type==='gate'?.27:.16
+  // the great hall draws its own cheeks and brick heads: its surround stops behind the hall's lining
+  const hallSide=(HALL_WINDOWS as readonly string[]).includes(o.id)?.04:0
   // An arcade post over the gateway stands on its lintel; the certified one
   // runs down through the passage's ceiling.
   const gates=wooden&&house?.carve?surroundZones(f).filter(q=>q.o.type==='gate'):[]
@@ -386,11 +388,11 @@ function drawOpening(f:Facade,o:Opening,thickness:number,b:Batches):void {
     const foot=z-jamb/2,top=z+h+jamb/2,prior=surround.retire
     const head=Math.max(foot,...gates.filter(q=>q.u0<u+jamb/2&&q.u1>u-jamb/2&&q.z0<top&&q.z1>foot).map(q=>q.z1))
     surround.retire=prior||head>foot
-    faceBox(surround,f,u,z+h/2,jamb,h+jamb,thickness+.11,.09)
+    faceBox(surround,f,u,z+h/2,jamb,h+jamb,thickness+.11-hallSide,.09)
     surround.retire=prior
     if(head>foot&&head<top){faceBox(house!.posts,f,u,(head+top)/2,jamb,top-head,thickness+.11,.09);house!.dressings.push({facade:f.id,u0:u-jamb/2,u1:u+jamb/2,z0:head,z1:top,front:.09})}
   }
-  faceBox(surround,f,x+w/2,z+h+jamb/2,w+jamb*2,jamb,thickness+.11,.09)
+  faceBox(surround,f,x+w/2,z+h+jamb/2,w+jamb*2,jamb,thickness+.11-hallSide,.09)
   if(!open) {
     // A window's slab sill gives way to a weathered one cut with a drip;
     // a door's stays: it is the threshold a foot crosses.
