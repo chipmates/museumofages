@@ -1154,7 +1154,9 @@ function ceiling(s: Sink): void {
   for (const [i, v] of vs.entries()) {
     const seed = 3 + rand(i, 4.4), sag = rand(i, 5.5) * .008
     const u1 = cut(v) ? trimU - TRIM_W / 2 + .01 : HALL_W + .02
-    member(s, P(westU(v) - .02, v, CEIL_Z + sag), P(u1, v, CEIL_Z + sag), acrossV, [0, 0, 1], JOIST_W, JOIST_D, .022 + rand(i, 6.6) * .008, K.OAK, seed)
+    // each hewn to its own section: up to 12 mm off the width, up to 18 mm deeper, its top under the boards as before
+    const jw = JOIST_W + (rand(i, 7.3) - .5) * .024, jd = rand(i, 8.1) * .018
+    member(s, P(westU(v) - .02, v, CEIL_Z + sag - jd), P(u1, v, CEIL_Z + sag - jd), acrossV, [0, 0, 1], jw, JOIST_D + jd, .022 + rand(i, 6.6) * .008, K.OAK, seed)
   }
   // the trimmer, from the last whole joist below the hood to the first above
   const below = vs.filter(v => !cut(v) && v < HEARTH.v).pop(), above = vs.find(v => !cut(v) && v > HEARTH.v)
@@ -2013,12 +2015,14 @@ function brickHead(s: Sink, at: (along: number, deep: number, z: number) => V3, 
   const half = (a1 - a0) / 2, mid = (a0 + a1) / 2, rise = z1 - z0
   const R = (half * half + rise * rise) / (2 * rise), cz = z1 - R, open = Math.asin(half / R)
   const n = Math.max(10, Math.ceil(2 * open * R / .05)), face = -.004
+  // each head its own seed (face under 60.5, soffit from 61), so no two arches lay their bricks alike
+  const hs = rand(a0, z0, 9.7) * .45
   const pt = (a: number, r: number, d: number): V3 => at(mid + Math.sin(a) * r, d, cz + Math.cos(a) * r)
   const toCentre = (a: number): V3 => unit(add(scale(along, -Math.sin(a)), [0, 0, -Math.cos(a)]))
   for (let i = 0; i < n; i++) {
     const t0 = -open + 2 * open * i / n, t1 = -open + 2 * open * (i + 1) / n, s0 = R * (t0 + open), s1 = R * (t1 + open)
-    s.quad(pt(t0, R, face), pt(t1, R, face), pt(t1, R + HEAD_RING, face), pt(t0, R + HEAD_RING, face), room, [s0, 0], [s1, 0], [s1, HEAD_RING], [s0, HEAD_RING], K.ARCH, 60)
-    s.quadN(pt(t0, R, face), pt(t1, R, face), pt(t1, R, deep), pt(t0, R, deep), toCentre(t0), toCentre(t1), toCentre(t1), toCentre(t0), [s0, 0], [s1, 0], [s1, deep - face], [s0, deep - face], K.ARCH, 61)
+    s.quad(pt(t0, R, face), pt(t1, R, face), pt(t1, R + HEAD_RING, face), pt(t0, R + HEAD_RING, face), room, [s0, 0], [s1, 0], [s1, HEAD_RING], [s0, HEAD_RING], K.ARCH, 60 + hs)
+    s.quadN(pt(t0, R, face), pt(t1, R, face), pt(t1, R, deep), pt(t0, R, deep), toCentre(t0), toCentre(t1), toCentre(t1), toCentre(t0), [s0, 0], [s1, 0], [s1, deep - face], [s0, deep - face], K.ARCH, 61 + hs)
   }
 }
 
@@ -2737,7 +2741,12 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const plaster = mix(keptLimePlaster(Tw, vec3(.70, .65, .55), 1.7).mul(plasterScan).mul(mix(vec3(1, 1, 1), vec3(.97, .93, .86), warmth.mul(10))),
     vec3(.43, .19, .11).mul(mx_noise_float(vec3(Tw.x.mul(3.1), Tw.y.mul(9), 6.6)).mul(.08).add(1)), paintedBand(Tw, positionWorld.y).mul(is(K.PLASTER)))
   // oak: grain along the member
-  const grain = mx_noise_float(vec3(T.x.mul(2.2), T.y.mul(38), seed.mul(13))).mul(.14).add(mx_noise_float(vec3(T.x.mul(9), T.y.mul(120), seed)).mul(.05))
+  // (the fine grain fades where a pixel spans its stripes, so it never
+  // aliases into a pinstripe; a broad figure carries the grain at a distance)
+  const gfx = footprint(T.y)
+  const grain = mx_noise_float(vec3(T.x.mul(2.2), T.y.mul(38), seed.mul(13))).mul(.16).mul(float(1).sub(smoothstep(.008, .02, gfx)).mul(.55).add(.45))
+    .add(mx_noise_float(vec3(T.x.mul(9), T.y.mul(120), seed)).mul(.05).mul(float(1).sub(smoothstep(.002, .006, gfx))))
+    .add(mx_noise_float(vec3(T.x.mul(.8), T.y.mul(11), seed.mul(5.7))).mul(.17))
   // the timbers' history along their length: the adze's long waves, grime
   // and dust unevenly laid, and drying checks opening along the grain, one
   // to a member and only along part of it
@@ -2745,7 +2754,9 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const checkAt = T.y.sub(fract(seed.mul(13.7)).mul(.45).add(.06)).add(mx_noise_float(vec3(T.x.mul(.9), seed, 3.3)).mul(.012))
   const checkHalf = mx_noise_float(vec3(T.x.mul(1.7), seed.mul(2.9), 8.8)).mul(.0014).add(.0011).max(.0002)
   const check = band(checkAt.abs(), footprint(checkAt), checkHalf).mul(smoothstep(.05, .3, mx_noise_float(vec3(T.x.mul(.55), seed.mul(4.4), 1.9))))
-  const oak = vec3(.15, .094, .055).mul(grain.add(1)).mul(fract(seed.mul(7.31)).mul(.18).add(.91)).mul(hewn.add(1)).mul(float(1).sub(check.mul(.6)))
+  // each member its own tone (about a fifth either way) and hue, greyer or warmer as its tree and its years left it
+  const oakTone = fract(seed.mul(7.31)).mul(.44).add(.78), oakHue = mix(vec3(1.06, .98, .9), vec3(.92, .97, 1.08), fract(seed.mul(3.17)))
+  const oak = vec3(.15, .094, .055).mul(grain.add(1)).mul(oakTone).mul(oakHue).mul(hewn.add(1)).mul(float(1).sub(check.mul(.6)))
   // tuffeau in ashlar courses of about 0.30 m, each block its own cream
   const courseN = floor(Wp.y.div(.30)), inCourse = fract(Wp.y.div(.30))
   // a reveal courses along its own depth (its uv), every other stone along the wall;
@@ -2781,12 +2792,14 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   // THE BRICK HEADS: thin Loire bricks set as voussoirs, the ring on the face
   // and the soffit back through the wall in a stretcher bond, under the walls'
   // limewash, which runs thin over a brick's face and fills the joints
-  const vX = T.x.div(.066), vIdx = floor(vX), soffitF = step(60.5, seed)
+  // (each brick a little wider or narrower, as a hand sets them)
+  const vX = T.x.add(mx_noise_float(vec3(T.x.mul(2.3), seed.mul(5.1), 1.7)).mul(.014)).div(.066), vIdx = floor(vX), soffitF = step(60.5, seed)
+  const vId2 = fract(vIdx.mul(4.898).add(seed.mul(11.13)).sin().mul(24634.6))
   const vY = T.y.add(soffitF.mul(fract(vIdx.mul(.5)).mul(.115))).div(.23)
-  const vJoint = max(band(fract(vX).sub(.5).abs().negate().add(.5).mul(.066), footprint(T.x), .0045), band(fract(vY).sub(.5).abs().negate().add(.5).mul(.23), footprint(T.y), .0045).mul(soffitF))
-  const vId = fract(vIdx.mul(12.9898).add(floor(vY).mul(78.233)).sin().mul(43758.5))
-  const vThin = smoothstep(.35, .9, mx_noise_float(vec3(T.x.mul(4.3), T.y.mul(4.3), seed.add(2.7))).mul(.5).add(.5)).mul(.5).add(vId.mul(.3))
-  const washed = vec3(.70, .65, .55).mul(vId.sub(.5).mul(.07).add(1))
+  const vJoint = max(band(fract(vX).sub(.5).abs().negate().add(.5).mul(.066), footprint(T.x), mix(float(.003), float(.0065), vId2)), band(fract(vY).sub(.5).abs().negate().add(.5).mul(.23), footprint(T.y), .0045).mul(soffitF))
+  const vId = fract(vIdx.mul(12.9898).add(floor(vY).mul(78.233)).add(seed.mul(37.719)).sin().mul(43758.5))
+  const vThin = smoothstep(.35, .9, mx_noise_float(vec3(T.x.mul(4.3), T.y.mul(4.3), seed.add(2.7))).mul(.5).add(.5)).mul(.5).add(vId.mul(.42))
+  const washed = vec3(.70, .65, .55).mul(vId.sub(.5).mul(.2).add(1))
   const archC = mix(washed, washed.mul(vec3(.98, .80, .64)), vThin).mul(float(1).sub(vJoint.mul(.3)))
   // brick of the fireback: thin Loire bricks in courses
   // along each face's own horizontal metres, so a cheek square to the wall courses as the back does
