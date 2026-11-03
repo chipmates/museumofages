@@ -222,13 +222,13 @@ export function paintedMaterial(chest: ChestLight, look: LionLook = LION_LOOK, l
   // THE MANE: dark umber, near black at the roots and in the hollows, a warm
   // brown only on each crest's top third; the cheek ruff round the face a step
   // lighter, fading out over 3 cm behind its row
-  const maneBase = mix(lin('#3b2a1d'), lin('#4f3827'), n2).mul(mix(0.88, 1.08, stroke))
+  const maneBase = mix(lin('#4a3424'), lin('#5e4330'), n2).mul(mix(0.88, 1.08, stroke))
   const maneRoot = mix(lin('#1b130c'), lin('#271c13'), n2)
-  const maneHi = mix(lin('#6a4a2f'), lin('#79573a'), n1)
+  const maneHi = mix(lin('#8a643f'), lin('#9a7449'), n1)
   const hollow = smoothstep(0.7, 0.3, aoH).max(recess.mul(0.8))
   // (the mane's convexity: median about 0.01, the top tenth over 0.15)
   const top3 = smoothstep(0.03, 0.13, cv.add(n1.sub(0.5).mul(0.06)))
-  const maneDark = mix(mix(maneBase, maneRoot, hollow.mul(0.85)), maneHi, top3.mul(0.5))
+  const maneDark = mix(mix(maneBase, maneRoot, hollow.mul(0.85)), maneHi, top3.mul(0.7))
   const ruffTone = mix(mix(maneHi, hide0, 0.3), maneRoot, hollow.mul(0.7))
   const zone = ruffZone(P)
   const mane = mix(maneDark, ruffTone, smoothstep(0.085, 0.05, zone).mul(0.7))

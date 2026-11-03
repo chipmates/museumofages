@@ -197,7 +197,7 @@ float face(vec3 p) {
   d = smin(d, bw.x - mix(0.0135, 0.010, bw.y), 0.03);
   // the frown: two creases up the forehead from between the brows
   vec2 fw = sdBezier(q, vec3(0.016, 0.046, 0.112), vec3(0.02, 0.07, 0.088), vec3(0.03, 0.094, 0.06)).xy;
-  d = smax(d, -(fw.x - mix(0.0045, 0.0025, fw.y)), 0.004);
+  d = smax(d, -(fw.x - mix(0.0035, 0.002, fw.y)), 0.004);
   // THE NOSE: the leather, wide at its top and drawn in to the groove,
   // tipped forward and down, its nostrils curling up at the lower corners
   vec3 n0 = q - ${u3(FACE.leather.at)};
@@ -928,7 +928,7 @@ function faceFeatures(P: N): { q: N; eye: N; pupil: N; nose: N; rim: N; under: N
     .mul(smoothstep(L.front - 0.009, L.front - 0.004, nz))
   // a lion's markings round the eye: a dark rim on the lids' edge, cream fur under it
   const rim = smoothstep(1.0, 1.12, almond).mul(smoothstep(1.75, 1.4, almond)).mul(smoothstep(-0.026, -0.012, ez))
-  const ux = exx.div(FACE.eyeW * 1.45), uy = eyy.add(FACE.eyeH * 2.0).div(FACE.eyeH * 1.25)
+  const ux = exx.div(FACE.eyeW * 1.3), uy = eyy.add(FACE.eyeH * 2.9).div(FACE.eyeH * 1.1)
   const under = smoothstep(1.0, 0.35, ux.mul(ux).add(uy.mul(uy))).mul(smoothstep(-0.045, -0.02, ez))
   return { q, eye: clamp(eye, 0, 1), pupil: clamp(pupil, 0, 1), nose: clamp(nose, 0, 1), rim: clamp(rim, 0, 1), under: clamp(under, 0, 1) }
 }
@@ -1005,7 +1005,7 @@ export function faceColour(P: N, col: N, paint: N, n1: N, n2: N, calmPaint = fal
   c = mix(c, calmPaint ? c.mul(1.18) : lin('#e4d0aa').mul(mix(0.94, 1.04, n2)), chin.mul(paint).mul(0.95))
   c = mix(c, calmPaint ? lin('#4a3020').mul(mix(0.9, 1.1, n1)) : lin('#34160f').mul(mix(1.3, 2.4, smoothstep(-0.01, -0.035, dy))).mul(mix(0.9, 1.1, n1)), lower.mul(paint).mul(calmPaint ? 0.7 : 0.85))
   c = mix(c, lin('#34160f').mul(mix(0.9, 1.1, n1)), lip.max(stem).mul(paint).mul(0.88))
-  c = mix(c, lin('#d6c19a').mul(mix(0.94, 1.04, n2)), f.under.mul(paint).mul(0.75))
+  c = mix(c, lin('#d6c19a').mul(mix(0.94, 1.04, n2)), f.under.mul(paint).mul(0.4))
   c = mix(c, lin('#1e130b'), f.rim.mul(paint).mul(0.85))
   c = mix(c, lin('#c08a2c').mul(mix(0.9, 1.08, n1)), f.eye.mul(paint))
   c = mix(c, lin('#120b07'), f.pupil.mul(paint))
