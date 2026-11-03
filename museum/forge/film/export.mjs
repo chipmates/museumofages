@@ -583,7 +583,7 @@ export function assertBuildFresh() {
 }
 
 /** One framing's session: a stage, the wing standing, the export and the clock armed. */
-export async function openSession(browser, framing, { base, scale, sink, warmNodes, log, view = null }) {
+export async function openSession(browser, framing, { base, scale, sink, warmNodes, log, view = null, still = false }) {
   const at = view?.[framing]
   if (at && scale !== 1) throw new Error('the stills\' stage is drawn one to one: --scale must be 1')
   const stage = at ? { width: at.css.width * at.dsf, height: at.css.height * at.dsf } : STAGES[framing]
@@ -608,7 +608,7 @@ export async function openSession(browser, framing, { base, scale, sink, warmNod
   })
   const first = warmNodes[0]
   // the stills' own address: the desktop's band is chrome, and the film's frame is the whole canvas
-  await page.goto(`${base}/w/vinci?probe=1&tier=max&export=1&order=life&pr=${ratio}&desk=${STILL_DESK}#s=${first.station}`, { waitUntil: 'load' })
+  await page.goto(`${base}/w/vinci?probe=1&tier=max&export=1&order=life&pr=${ratio}&desk=${STILL_DESK}${still ? '&still=1' : ''}#s=${first.station}`, { waitUntil: 'load' })
   if (!(await wingStanding(page))) throw new Error('the wing never stood')
   const said = await page.evaluate(() => ({ backend: document.body.dataset.backend, tier: document.body.dataset.tier }))
   if (said.backend !== 'webgpu' || said.tier !== 'max') throw new Error(`backend ${said.backend}, tier ${said.tier}: the film wants webgpu at max`)
@@ -1181,7 +1181,8 @@ async function main() {
       let evenings = null
       try {
         for (const framing of framings) {
-          const session = await openSession(browser, framing, { base: BASE, scale, sink, warmNodes, log, view })
+          // (a stills-only run tells the page so: a held still shows its moving models at their rest)
+          const session = await openSession(browser, framing, { base: BASE, scale, sink, warmNodes, log, view, still: Boolean(stillsOnly) })
           const opts = { grain, keep, frameDir, force: flags.has('force'), mount, held: null, draws }
           const before = await session.page.evaluate(() => window.__naExport.mounted().meshes)
           const walked = []

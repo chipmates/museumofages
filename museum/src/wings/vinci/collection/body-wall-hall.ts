@@ -80,6 +80,10 @@ export interface HallPlates {
 const ROOT = { foot: .028, low: .1, sinus: .13, junction: .17, top: .22, tube: .034, bulge: .058 } as const
 const BEAT_S = 2.6
 const SEED_COUNT = 0
+/** A held still (`?still=1`, the stills-only export) shows the valve shut, this
+ * far into its beat; the film and the live page keep the clock's beat. */
+const STILL_SHUT_S = BEAT_S * .7
+const HELD_STILL = typeof location !== 'undefined' && new URLSearchParams(location.search).get('still') === '1'
 /** the cusps' grid and the half thickness of a leaf, local metres */
 const CUSP_I = 24, CUSP_J = 12, CUSP_HALF = .0011
 /** a demonstration size, small enough to stand whole under its sheet in the valve's look */
@@ -287,7 +291,7 @@ export function mountHallPlates(host: Group, plates: readonly HallPlate[], hero:
     tick(eye) {
       const now = performance.now(), dt = Math.min(.1, (now - last) / 1000)
       last = now
-      model?.beat(now / 1000)
+      model?.beat(HELD_STILL ? STILL_SHUT_S : now / 1000)
       for (const p of placed) p.stream.update(dt)
       if (film) { if (!loading) filmNear(eye, film); return }
       if (switching) return
