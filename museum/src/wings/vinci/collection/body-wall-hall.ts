@@ -99,13 +99,15 @@ function glassValve(light: V3): { group: Group; beat(t: number): void } {
   // a pane's share of the room it mirrors grows toward a grazing view
   const edge = float(1).sub(normalView.dot(positionViewDirection.negate()).abs()).pow(2.5)
   const glass = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false, side: DoubleSide })
-  // the room's window as a narrow streak down the near wall's curve and a
-  // fainter one on the far wall seen through it, fixed to the eye as a held
-  // look's highlight is (a basic material: the room's light, never a lamp)
+  // the room's window as one narrow streak along the jar's axis on its near
+  // curve: read from the normal's turn about the axis only, so a bulb draws a
+  // line and never a round spot; faded where the wall turns toward the axis
+  // (a basic material: the room's light, never a lamp)
   const nv = normalView.mul(faceDirection)
-  const streak = smoothstep(.975, .995, nv.dot(vec3(.42, .3, .86).normalize())).add(smoothstep(.985, .998, nv.dot(vec3(-.5, .22, .84).normalize())).mul(.3))
-  glass.colorNode = mix(mix(vec3(.62, .66, .64), vec3(.86, .9, .88), edge).mul(room), vec3(1, .98, .95).mul(room.mul(3.2)), streak.clamp(0, 1))
-  glass.opacityNode = mix(float(.05), float(.6), edge).max(streak.clamp(0, 1).mul(.75))
+  const around = vec3(nv.x, 0, nv.z).normalize().dot(vec3(.45, 0, .89).normalize())
+  const streak = smoothstep(.992, .999, around).mul(smoothstep(.6, .25, nv.y.abs())).mul(.8)
+  glass.colorNode = mix(mix(vec3(.62, .66, .64), vec3(.86, .9, .88), edge).mul(room), vec3(1, .98, .95).mul(room.mul(2.6)), streak.clamp(0, 1))
+  glass.opacityNode = mix(float(.05), float(.6), edge).max(streak.clamp(0, 1).mul(.55))
   const water = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false })
   water.colorNode = vec3(.55, .62, .6).mul(room)
   water.opacityNode = mix(float(.04), float(.16), edge)
@@ -167,7 +169,9 @@ function glassValve(light: V3): { group: Group; beat(t: number): void } {
         // the attachment rises toward the commissures; the free edge reaches the
         // middle when shut and lies back along the wall when open; the leaf's
         // belly sags between them while it is shut
-        const reach = .97 - .78 * open
+        // (shut, the free edges stop 2 % of the radius short of the middle, so the
+        // three thick leaves meet edge to edge and never pass through each other)
+        const reach = .95 - .76 * open
         const r = wall * (1 - t2 * reach * (1 - .25 * Math.abs(s) * 2))
         const y = ROOT.low + .028 * (2 * Math.abs(s)) ** 2 * (1 - t2) + t2 * (.008 + .03 * open) - .009 * Math.sin(Math.PI * t2) * Math.cos(Math.PI * s) * (1 - .6 * open)
         mids.set([Math.cos(a) * r, y, Math.sin(a) * r], 3 * (j * (I + 1) + i))
@@ -175,13 +179,14 @@ function glassValve(light: V3): { group: Group; beat(t: number): void } {
       // each face offset by the leaf's half thickness along the mid surface's normal
       for (let j = 0; j <= J; j++) for (let i = 0; i <= I; i++) {
         const du = sub3(P(Math.min(i + 1, I), j), P(Math.max(i - 1, 0), j)), dv = sub3(P(i, Math.min(j + 1, J)), P(i, Math.max(j - 1, 0)))
-        const n = norm3(cross3(dv, du)), p = P(i, j), q = j * (I + 1) + i
-        at.setXYZ(q, p[0] + n[0] * CUSP_HALF, p[1] + n[1] * CUSP_HALF, p[2] + n[2] * CUSP_HALF); nm.setXYZ(q, n[0], n[1], n[2])
-        at.setXYZ(NV + q, p[0] - n[0] * CUSP_HALF, p[1] - n[1] * CUSP_HALF, p[2] - n[2] * CUSP_HALF); nm.setXYZ(NV + q, -n[0], -n[1], -n[2])
+        // (the leaf thins toward its free edge, as a cusp does)
+        const n = norm3(cross3(dv, du)), p = P(i, j), q = j * (I + 1) + i, half = CUSP_HALF * (1 - .55 * j / J)
+        at.setXYZ(q, p[0] + n[0] * half, p[1] + n[1] * half, p[2] + n[2] * half); nm.setXYZ(q, n[0], n[1], n[2])
+        at.setXYZ(NV + q, p[0] - n[0] * half, p[1] - n[1] * half, p[2] - n[2] * half); nm.setXYZ(NV + q, -n[0], -n[1], -n[2])
         if (j === J) {
           const o = norm3(sub3(P(i, J), P(i, J - 1)))
-          at.setXYZ(2 * NV + i, p[0] + n[0] * CUSP_HALF, p[1] + n[1] * CUSP_HALF, p[2] + n[2] * CUSP_HALF); nm.setXYZ(2 * NV + i, o[0], o[1], o[2])
-          at.setXYZ(2 * NV + I + 1 + i, p[0] - n[0] * CUSP_HALF, p[1] - n[1] * CUSP_HALF, p[2] - n[2] * CUSP_HALF); nm.setXYZ(2 * NV + I + 1 + i, o[0], o[1], o[2])
+          at.setXYZ(2 * NV + i, p[0] + n[0] * half, p[1] + n[1] * half, p[2] + n[2] * half); nm.setXYZ(2 * NV + i, o[0], o[1], o[2])
+          at.setXYZ(2 * NV + I + 1 + i, p[0] - n[0] * half, p[1] - n[1] * half, p[2] - n[2] * half); nm.setXYZ(2 * NV + I + 1 + i, o[0], o[1], o[2])
         }
       }
       at.needsUpdate = true; nm.needsUpdate = true
