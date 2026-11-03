@@ -103,8 +103,8 @@ function glassValve(light: V3): { group: Group; beat(t: number): void } {
   // fainter one on the far wall seen through it, fixed to the eye as a held
   // look's highlight is (a basic material: the room's light, never a lamp)
   const nv = normalView.mul(faceDirection)
-  const streak = smoothstep(.955, .99, nv.dot(vec3(.42, .3, .86).normalize())).add(smoothstep(.97, .995, nv.dot(vec3(-.5, .22, .84).normalize())).mul(.45))
-  glass.colorNode = mix(mix(vec3(.62, .66, .64), vec3(.86, .9, .88), edge).mul(room), vec3(1, .98, .95).mul(room.mul(4.2)), streak.clamp(0, 1))
+  const streak = smoothstep(.975, .995, nv.dot(vec3(.42, .3, .86).normalize())).add(smoothstep(.985, .998, nv.dot(vec3(-.5, .22, .84).normalize())).mul(.3))
+  glass.colorNode = mix(mix(vec3(.62, .66, .64), vec3(.86, .9, .88), edge).mul(room), vec3(1, .98, .95).mul(room.mul(3.2)), streak.clamp(0, 1))
   glass.opacityNode = mix(float(.05), float(.6), edge).max(streak.clamp(0, 1).mul(.75))
   const water = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false })
   water.colorNode = vec3(.55, .62, .6).mul(room)
