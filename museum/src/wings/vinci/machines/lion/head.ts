@@ -195,9 +195,11 @@ float face(vec3 p) {
   // below cuts it flat underneath
   vec2 bw = sdBezier(q, vec3(0.05, 0.043, 0.117), vec3(0.088, 0.068, 0.122), vec3(0.128, 0.04, 0.072)).xy;
   d = smin(d, bw.x - mix(0.0135, 0.010, bw.y), 0.03);
-  // the frown: two creases up the forehead from between the brows
-  vec2 fw = sdBezier(q, vec3(0.016, 0.046, 0.112), vec3(0.02, 0.07, 0.088), vec3(0.03, 0.094, 0.06)).xy;
-  d = smax(d, -(fw.x - mix(0.0035, 0.002, fw.y)), 0.004);
+  // the frown: two shallow creases up the forehead from between the brows
+  // (a wide tube whose axis stands 2.5 mm off the forehead, so the cut is
+  // about 1.5 mm deep and soft-shouldered, a crease and never a slot)
+  vec2 fw = sdBezier(q, vec3(0.016, 0.0479, 0.1137), vec3(0.02, 0.0719, 0.0897), vec3(0.03, 0.0959, 0.0617)).xy;
+  d = smax(d, -(fw.x - mix(0.004, 0.003, fw.y)), 0.006);
   // THE NOSE: the leather, wide at its top and drawn in to the groove,
   // tipped forward and down, its nostrils curling up at the lower corners
   vec3 n0 = q - ${u3(FACE.leather.at)};
@@ -901,7 +903,7 @@ const lin = (hex: string): N => { const c = new Color(hex); return vec3(c.r, c.g
  * the head reaches this far forward: the eyeball in ochre with its pupil in
  * black, the nose's leather in umber. Weights in [0, 1]; q is the face's frame
  * in metres (the carving's scale included). */
-function faceFeatures(P: N): { q: N; eye: N; pupil: N; nose: N; rim: N; under: N } {
+function faceFeatures(P: N): { q: N; eye: N; pupil: N; nose: N; rim: N } {
   const q0 = vec3(P.x.abs(), P.y, P.z).sub(v(FACE.at))
   // the face's own frame, carried nose down as the carving carries it
   const cp = Math.cos(FACE.pitch), sp = Math.sin(FACE.pitch)
@@ -926,11 +928,9 @@ function faceFeatures(P: N): { q: N; eye: N; pupil: N; nose: N; rim: N; under: N
   const half = mix(float(L.bottom), float(L.top), clamp(ny.add(L.half).div(2 * L.half), 0, 1))
   const nose = smoothstep(0.003, -0.002, q.x.sub(half)).mul(smoothstep(L.half + 0.004, L.half - 0.001, ny.abs()))
     .mul(smoothstep(L.front - 0.009, L.front - 0.004, nz))
-  // a lion's markings round the eye: a dark rim on the lids' edge, cream fur under it
+  // a lion's dark rim on the lids' edge (no pale patch under the eye: at the phone's size it read as a tear)
   const rim = smoothstep(1.0, 1.12, almond).mul(smoothstep(1.75, 1.4, almond)).mul(smoothstep(-0.026, -0.012, ez))
-  const ux = exx.div(FACE.eyeW * 1.3), uy = eyy.add(FACE.eyeH * 2.9).div(FACE.eyeH * 1.1)
-  const under = smoothstep(1.0, 0.35, ux.mul(ux).add(uy.mul(uy))).mul(smoothstep(-0.045, -0.02, ez))
-  return { q, eye: clamp(eye, 0, 1), pupil: clamp(pupil, 0, 1), nose: clamp(nose, 0, 1), rim: clamp(rim, 0, 1), under: clamp(under, 0, 1) }
+  return { q, eye: clamp(eye, 0, 1), pupil: clamp(pupil, 0, 1), nose: clamp(nose, 0, 1), rim: clamp(rim, 0, 1) }
 }
 
 /** Where the face's own planes carry the shading: the muzzle, the cheeks and
@@ -1005,7 +1005,6 @@ export function faceColour(P: N, col: N, paint: N, n1: N, n2: N, calmPaint = fal
   c = mix(c, calmPaint ? c.mul(1.18) : lin('#e4d0aa').mul(mix(0.94, 1.04, n2)), chin.mul(paint).mul(0.95))
   c = mix(c, calmPaint ? lin('#4a3020').mul(mix(0.9, 1.1, n1)) : lin('#34160f').mul(mix(1.3, 2.4, smoothstep(-0.01, -0.035, dy))).mul(mix(0.9, 1.1, n1)), lower.mul(paint).mul(calmPaint ? 0.7 : 0.85))
   c = mix(c, lin('#34160f').mul(mix(0.9, 1.1, n1)), lip.max(stem).mul(paint).mul(0.88))
-  c = mix(c, lin('#d6c19a').mul(mix(0.94, 1.04, n2)), f.under.mul(paint).mul(0.4))
   c = mix(c, lin('#1e130b'), f.rim.mul(paint).mul(0.85))
   c = mix(c, lin('#c08a2c').mul(mix(0.9, 1.08, n1)), f.eye.mul(paint))
   c = mix(c, lin('#120b07'), f.pupil.mul(paint))
