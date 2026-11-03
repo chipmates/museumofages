@@ -5,7 +5,7 @@
  * Loaded by the hall on demand, so the hall's fabric never waits for it.
  */
 import { BufferGeometry, DoubleSide, Float32BufferAttribute, Group, Matrix4, Mesh, MeshBasicNodeMaterial, PlaneGeometry, SphereGeometry, Vector3 } from 'three/webgpu'
-import { clamp, float, luminance, max, min, mix, normalView, positionViewDirection, sRGBTransferEOTF, sRGBTransferOETF, select, sqrt, vec3 } from 'three/tsl'
+import { clamp, faceDirection, float, luminance, max, min, mix, normalView, normalWorld, positionViewDirection, smoothstep, sRGBTransferEOTF, sRGBTransferOETF, select, sqrt, vec3 } from 'three/tsl'
 import { loadManifest } from '../../../manifest'
 import { createPlateStream, type PlateStream } from '../pictures/stream'
 import { findPlateEntries, getWork, reproductionCardSize } from '../pictures/register'
@@ -70,14 +70,18 @@ export interface HallPlates {
 
 /** THE GLASS MODEL OF THE VALVE, ours: nothing of his survives and nobody is
  * sure he built one. A glass root with its three sinuses on a turned oak
- * foot, three thin cusps opening and shutting once in a beat, and grass
- * seeds turning in the water behind them, as he planned to show the flow.
+ * foot, three thin cusps opening and shutting once in a beat. (The grass
+ * seeds he planned for the flow read as specks at the look's distance, so
+ * none are drawn: SEED_COUNT.)
  * Its oak foot is the hall's (`house-hall.ts`). Drawn in the room's light at
  * the stand, `light`: the glass clear in the middle and catching the room at
  * its edges, as glass does, never lit from outside the hall.
  * Local metres, y up, the foot's underside at 0. */
 const ROOT = { foot: .028, low: .1, sinus: .13, junction: .17, top: .22, tube: .034, bulge: .058 } as const
 const BEAT_S = 2.6
+const SEED_COUNT = 0
+/** the cusps' grid and the half thickness of a leaf, local metres */
+const CUSP_I = 24, CUSP_J = 12, CUSP_HALF = .0011
 /** a demonstration size, small enough to stand whole under its sheet in the valve's look */
 const MODEL_SCALE = 1.25
 function rootRadius(y: number, angle: number): number {
@@ -85,6 +89,9 @@ function rootRadius(y: number, angle: number): number {
   const swell = y < ROOT.low ? 0 : y > ROOT.junction ? 0 : Math.sin(Math.PI * (y - ROOT.low) / (ROOT.junction - ROOT.low))
   return ROOT.tube + (ROOT.bulge - ROOT.tube) * swell * (.55 + .45 * lobe)
 }
+const sub3 = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]]
+const cross3 = (a: V3, b: V3): V3 => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]
+const norm3 = (a: V3): V3 => { const l = Math.hypot(a[0], a[1], a[2]) || 1; return [a[0] / l, a[1] / l, a[2] / l] }
 function glassValve(light: V3): { group: Group; beat(t: number): void } {
   const group = new Group()
   group.name = 'vinci/house-hall/glass-valve'
@@ -92,13 +99,21 @@ function glassValve(light: V3): { group: Group; beat(t: number): void } {
   // a pane's share of the room it mirrors grows toward a grazing view
   const edge = float(1).sub(normalView.dot(positionViewDirection.negate()).abs()).pow(2.5)
   const glass = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false, side: DoubleSide })
-  glass.colorNode = mix(vec3(.62, .66, .64), vec3(.86, .9, .88), edge).mul(room)
-  glass.opacityNode = mix(float(.05), float(.6), edge)
+  // the room's window as a narrow streak down the near wall's curve and a
+  // fainter one on the far wall seen through it, fixed to the eye as a held
+  // look's highlight is (a basic material: the room's light, never a lamp)
+  const nv = normalView.mul(faceDirection)
+  const streak = smoothstep(.955, .99, nv.dot(vec3(.42, .3, .86).normalize())).add(smoothstep(.97, .995, nv.dot(vec3(-.5, .22, .84).normalize())).mul(.45))
+  glass.colorNode = mix(mix(vec3(.62, .66, .64), vec3(.86, .9, .88), edge).mul(room), vec3(1, .98, .95).mul(room.mul(4.2)), streak.clamp(0, 1))
+  glass.opacityNode = mix(float(.05), float(.6), edge).max(streak.clamp(0, 1).mul(.75))
   const water = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false })
   water.colorNode = vec3(.55, .62, .6).mul(room)
   water.opacityNode = mix(float(.04), float(.16), edge)
-  const cusp = new MeshBasicNodeMaterial({ transparent: true, opacity: .85, side: DoubleSide })
-  cusp.colorNode = vec3(.62, .55, .42).mul(room)
+  const cusp = new MeshBasicNodeMaterial({ transparent: true, opacity: .9, side: DoubleSide })
+  // shaded by hand in the room's light, so each leaf's belly and curl read: a
+  // wrapped fall-off from above the eye's side, the underside a step darker
+  const lam = normalWorld.mul(faceDirection).dot(vec3(-.3, .82, .48).normalize()).mul(.5).add(.5)
+  cusp.colorNode = vec3(.62, .55, .42).mul(room).mul(lam.mul(lam).mul(.95).add(.42))
   const seedMat = new MeshBasicNodeMaterial()
   seedMat.colorNode = vec3(.07, .045, .02).mul(room)
   // the root, its three sinuses swelling between the cusps' commissures
@@ -113,12 +128,19 @@ function glassValve(light: V3): { group: Group; beat(t: number): void } {
   const root = new Mesh(shell, glass); root.renderOrder = 2
   const fill = new Mesh(shell.clone().scale(.96, .97, .96).translate(0, .002, 0), water); fill.renderOrder = 1
   group.add(fill, root)
-  // the three cusps, hung from the root's wall along their arcs
-  const I = 10, J = 7, cusps: BufferGeometry[] = []
+  // the three cusps, hung from the root's wall along their arcs: each a leaf
+  // with a thickness, its two faces and its free edge's strip
+  const I = CUSP_I, J = CUSP_J, NV = (I + 1) * (J + 1), cusps: BufferGeometry[] = []
   for (let k = 0; k < 3; k++) {
     const g = new BufferGeometry(), ci: number[] = []
-    g.setAttribute('position', new Float32BufferAttribute(new Float32Array((I + 1) * (J + 1) * 3), 3))
-    for (let j = 0; j < J; j++) for (let i = 0; i < I; i++) { const q = j * (I + 1) + i; ci.push(q, q + I + 1, q + 1, q + 1, q + I + 1, q + I + 2) }
+    g.setAttribute('position', new Float32BufferAttribute(new Float32Array((2 * NV + 2 * (I + 1)) * 3), 3))
+    g.setAttribute('normal', new Float32BufferAttribute(new Float32Array((2 * NV + 2 * (I + 1)) * 3), 3))
+    for (const off of [0, NV]) for (let j = 0; j < J; j++) for (let i = 0; i < I; i++) {
+      const q = off + j * (I + 1) + i
+      if (off) ci.push(q, q + 1, q + I + 1, q + 1, q + I + 2, q + I + 1); else ci.push(q, q + I + 1, q + 1, q + 1, q + I + 1, q + I + 2)
+    }
+    const e0 = 2 * NV
+    for (let i = 0; i < I; i++) ci.push(e0 + i, e0 + I + 1 + i, e0 + i + 1, e0 + i + 1, e0 + I + 1 + i, e0 + I + 2 + i)
     g.setIndex(ci)
     cusps.push(g)
     group.add(new Mesh(g, cusp))
@@ -126,7 +148,7 @@ function glassValve(light: V3): { group: Group; beat(t: number): void } {
   // the seeds, turning in the sinuses behind the cusps
   const seeds: { mesh: Mesh; lobe: number; phase: number; r: number; y: number }[] = []
   const seedGeo = new SphereGeometry(.0022, 6, 4).scale(1, .45, .45)
-  for (let n = 0; n < 15; n++) {
+  for (let n = 0; n < SEED_COUNT; n++) {
     const mesh = new Mesh(seedGeo, seedMat)
     seeds.push({ mesh, lobe: n % 3, phase: (n * 2.399) % (Math.PI * 2), r: .006 + (n % 4) * .002, y: ROOT.low + .02 + (n % 5) * .007 })
     group.add(mesh)
@@ -134,20 +156,36 @@ function glassValve(light: V3): { group: Group; beat(t: number): void } {
   const beat = (t: number): void => {
     // shut through most of the beat, a quick opening as the flow passes
     const phase = (t / BEAT_S) % 1, open = phase < .38 ? Math.sin(Math.PI * phase / .38) : 0
+    const mids = new Float32Array(NV * 3)
+    const P = (i: number, j: number): [number, number, number] => { const q = 3 * (j * (I + 1) + i); return [mids[q]!, mids[q + 1]!, mids[q + 2]!] }
     for (let k = 0; k < 3; k++) {
-      const at = cusps[k]!.getAttribute('position') as Float32BufferAttribute
+      const at = cusps[k]!.getAttribute('position') as Float32BufferAttribute, nm = cusps[k]!.getAttribute('normal') as Float32BufferAttribute
       const mid = Math.PI / 3 + k * 2 * Math.PI / 3
       for (let j = 0; j <= J; j++) for (let i = 0; i <= I; i++) {
         const s = i / I - .5, t2 = j / J, a = mid + s * 2 * Math.PI / 3 * .97
         const wall = rootRadius(ROOT.low, a) * .985
         // the attachment rises toward the commissures; the free edge reaches the
-        // middle when shut and lies back along the wall when open
+        // middle when shut and lies back along the wall when open; the leaf's
+        // belly sags between them while it is shut
         const reach = .97 - .78 * open
-        const r = wall * (1 - t2 * reach * (1 - .25 * Math.abs(s) * 2)), y = ROOT.low + .028 * (2 * Math.abs(s)) ** 2 * (1 - t2) + t2 * (.008 + .03 * open)
-        at.setXYZ(j * (I + 1) + i, Math.cos(a) * r, y, Math.sin(a) * r)
+        const r = wall * (1 - t2 * reach * (1 - .25 * Math.abs(s) * 2))
+        const y = ROOT.low + .028 * (2 * Math.abs(s)) ** 2 * (1 - t2) + t2 * (.008 + .03 * open) - .009 * Math.sin(Math.PI * t2) * Math.cos(Math.PI * s) * (1 - .6 * open)
+        mids.set([Math.cos(a) * r, y, Math.sin(a) * r], 3 * (j * (I + 1) + i))
       }
-      at.needsUpdate = true
-      cusps[k]!.computeVertexNormals()
+      // each face offset by the leaf's half thickness along the mid surface's normal
+      for (let j = 0; j <= J; j++) for (let i = 0; i <= I; i++) {
+        const du = sub3(P(Math.min(i + 1, I), j), P(Math.max(i - 1, 0), j)), dv = sub3(P(i, Math.min(j + 1, J)), P(i, Math.max(j - 1, 0)))
+        const n = norm3(cross3(dv, du)), p = P(i, j), q = j * (I + 1) + i
+        at.setXYZ(q, p[0] + n[0] * CUSP_HALF, p[1] + n[1] * CUSP_HALF, p[2] + n[2] * CUSP_HALF); nm.setXYZ(q, n[0], n[1], n[2])
+        at.setXYZ(NV + q, p[0] - n[0] * CUSP_HALF, p[1] - n[1] * CUSP_HALF, p[2] - n[2] * CUSP_HALF); nm.setXYZ(NV + q, -n[0], -n[1], -n[2])
+        if (j === J) {
+          const o = norm3(sub3(P(i, J), P(i, J - 1)))
+          at.setXYZ(2 * NV + i, p[0] + n[0] * CUSP_HALF, p[1] + n[1] * CUSP_HALF, p[2] + n[2] * CUSP_HALF); nm.setXYZ(2 * NV + i, o[0], o[1], o[2])
+          at.setXYZ(2 * NV + I + 1 + i, p[0] - n[0] * CUSP_HALF, p[1] - n[1] * CUSP_HALF, p[2] - n[2] * CUSP_HALF); nm.setXYZ(2 * NV + I + 1 + i, o[0], o[1], o[2])
+        }
+      }
+      at.needsUpdate = true; nm.needsUpdate = true
+      cusps[k]!.computeBoundingSphere()
     }
     for (const sd of seeds) {
       // the swirl behind each cusp turns faster as the cusps begin to shut
