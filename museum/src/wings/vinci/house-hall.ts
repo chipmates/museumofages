@@ -2669,13 +2669,14 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   // have polished it and the wax has been rubbed in
   const fire = fract(seed.mul(43758.5453).sin().mul(17.3)).sub(.5)
   const mottle = mx_noise_float(vec3(Wp.x.mul(7.3), Wp.z.mul(7.3), seed.mul(3.1))).mul(.08).add(mx_noise_float(vec3(Wp.x.mul(31), Wp.z.mul(31), seed)).mul(.035))
-  const tileRGB = vec3(.315, .108, .058).mul(fire.mul(.38).add(1)).mul(mottle.add(1))
+  const fireHue = mix(vec3(1.08, .94, .86), vec3(.9, 1.06, 1.14), fract(seed.mul(5.37).sin().mul(911.7)))
+  const tileRGB = vec3(.315, .108, .058).mul(fire.mul(.56).add(1)).mul(fireHue).mul(mottle.add(1))
   // the path feet take has worn the fired skin off, the body under it paler
   // and dusty; off the path the wax and the dirt have built up
   const fired = mix(tileRGB, tileRGB.mul(vec3(.92, 1.05, 1.1)), smoothstep(.2, .5, fire.abs()))
   // worn down to the body, the tiles of a path lose most of their firings'
   // difference and read as one paler band
-  const body = vec3(.315, .108, .058).mul(fire.mul(.1).add(1)).mul(mottle.mul(.6).add(1)).mul(vec3(1.42, 1.36, 1.3))
+  const body = vec3(.315, .108, .058).mul(fire.mul(.24).add(1)).mul(mottle.mul(.6).add(1)).mul(vec3(1.42, 1.36, 1.3))
   const trodden = mix(body, vec3(.33, .21, .155), .2)
   let tileColour: N = mix(fired.mul(.9), trodden, smoothstep(.15, .8, wear))
   // THE TILE'S OWN EDGE (its uv runs from its centre along its sides): the
@@ -2686,15 +2687,16 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   const ax = abs(T.x), ay = abs(T.y), toEdge = float(TILE_M / 2).sub(max(ax, ay)).max(0)
   const onX = ax.greaterThan(ay), along = onX.select(T.y, T.x), side = onX.select(T.x.sign(), T.y.sign().mul(2))
   // a corner is the likeliest to go, but only some corners of some tiles have
-  const cornerness = smoothstep(TILE_M * .3, TILE_M * .48, min(ax, ay)).mul(smoothstep(.1, .4, mx_noise_float(vec3(T.x.sign().mul(1.7).add(T.y.sign().mul(.6)), seed.mul(9.1), 4.4))))
-  const chipDepth = mx_noise_float(vec3(along.mul(31), side.mul(3.7).add(seed.mul(17.3)), 2.3)).sub(.3).max(0).mul(.045).add(cornerness.mul(.016)).mul(float(1).sub(wear.mul(.4)))
+  // (rare and small: four chipped corners at one crossing drew a dark blot at the phone's distance)
+  const cornerness = smoothstep(TILE_M * .3, TILE_M * .48, min(ax, ay)).mul(smoothstep(.5, .75, mx_noise_float(vec3(T.x.sign().mul(1.7).add(T.y.sign().mul(.6)), seed.mul(9.1), 4.4))))
+  const chipDepth = mx_noise_float(vec3(along.mul(31), side.mul(3.7).add(seed.mul(17.3)), 2.3)).sub(.38).max(0).mul(.04).add(cornerness.mul(.008)).mul(float(1).sub(wear.mul(.4)))
   const chip = float(1).sub(smoothstep(chipDepth.sub(.0025), chipDepth, toEdge)).mul(smoothstep(.002, .004, chipDepth)).mul(faced)
   const arris = float(1).sub(smoothstep(.0015, .011, toEdge)).mul(faced)
   // the room's edges hold the dirt the brooms leave, the hearth its ash
   const wallDist = min(min(hu0, float(HALL_W).sub(hu0)), min(hv0, float(HALL_D).sub(hv0)))
   const edgeDirt = float(1).sub(smoothstep(.04, .5, wallDist))
   tileColour = tileColour.mul(float(1).sub(arris.mul(.2))).mul(float(1).sub(edgeDirt.mul(.22)))
-  tileColour = mix(tileColour, vec3(.075, .058, .045).mul(mx_noise_float(Wp.mul(41)).mul(.2).add(1)), chip.mul(.85))
+  tileColour = mix(tileColour, vec3(.15, .1, .072).mul(mx_noise_float(Wp.mul(41)).mul(.2).add(1)), chip.mul(.7))
   // one tile in fourteen has cracked under a dropped load, the line dark with the
   // dirt worked into it; one in twenty is a later replacement, brighter, its
   // arrises still sharp
@@ -2723,7 +2725,7 @@ function hallMaterial(perPixel: boolean, library?: MaterialLibrary, sunShadow?: 
   fieldEdge = min(fieldEdge, fieldEdge.greaterThan(0).select(bandEdge, float(1e3)))
   const jx = band(float(PITCH / 2).sub(ax), footprint(T.x)), jy = band(float(PITCH / 2).sub(ay), footprint(T.y)), jf = band(fieldEdge.abs(), footprint(fieldEdge))
   const jointCover = float(1).sub(float(1).sub(jx).mul(float(1).sub(jy)).mul(float(1).sub(jf))).mul(faced)
-  tileColour = mix(tileColour, joint.mul(mix(float(.62), float(.5), wear)), jointCover)
+  tileColour = mix(tileColour, joint.mul(mix(float(1.1), float(.9), wear)), jointCover)
   // lime plaster under a limewash, kept whole (`keptLimePlaster`)
   const [hu, hv] = hallUVNode(Wp)
   // the chimneypiece's own frame: along its wall, out into the room, up
