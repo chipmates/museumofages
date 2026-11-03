@@ -70,16 +70,18 @@ export interface HallPlates {
 
 /** THE GLASS MODEL OF THE VALVE, ours: nothing of his survives and nobody is
  * sure he built one. A glass root with its three sinuses on a turned oak
- * foot, three thin cusps opening and shutting once in a beat. (The grass
- * seeds he planned for the flow read as specks at the look's distance, so
- * none are drawn: SEED_COUNT.)
+ * foot, three thin cusps opening and shutting once in a beat, and grass
+ * seeds turning in the water behind them, as he planned to show the flow,
+ * each kept inside the glass's inner wall.
  * Its oak foot is the hall's (`house-hall.ts`). Drawn in the room's light at
  * the stand, `light`: the glass clear in the middle and catching the room at
  * its edges, as glass does, never lit from outside the hall.
  * Local metres, y up, the foot's underside at 0. */
 const ROOT = { foot: .028, low: .1, sinus: .13, junction: .17, top: .22, tube: .034, bulge: .058 } as const
 const BEAT_S = 2.6
-const SEED_COUNT = 0
+const SEED_COUNT = 15
+/** the seeds' swirl about a point this far off the axis, and their least gap to the inner wall (a seed's half length and more) */
+const SEED_ORBIT = .028, SEED_CLEAR = .0035
 /** A held still (`?still=1`, the stills-only export) shows the valve shut, this
  * far into its beat; the film and the live page keep the clock's beat. */
 const STILL_SHUT_S = BEAT_S * .7
@@ -199,8 +201,13 @@ function glassValve(light: V3): { group: Group; beat(t: number): void } {
     for (const sd of seeds) {
       // the swirl behind each cusp turns faster as the cusps begin to shut
       const a = sd.phase + t * (1.2 + 1.6 * (1 - open)), lobe = Math.PI / 3 + sd.lobe * 2 * Math.PI / 3
-      const cx = Math.cos(lobe) * .04, cz = Math.sin(lobe) * .04
-      sd.mesh.position.set(cx + Math.cos(a) * sd.r * Math.cos(lobe), sd.y + Math.sin(a) * sd.r, cz + Math.cos(a) * sd.r * Math.sin(lobe))
+      const cx = Math.cos(lobe) * SEED_ORBIT, cz = Math.sin(lobe) * SEED_ORBIT
+      let x = cx + Math.cos(a) * sd.r * Math.cos(lobe), z = cz + Math.cos(a) * sd.r * Math.sin(lobe)
+      const y = sd.y + Math.sin(a) * sd.r
+      // (inside the water: never nearer the glass's inner wall than SEED_CLEAR)
+      const rho = Math.hypot(x, z), most = rootRadius(y, Math.atan2(z, x)) * .96 - SEED_CLEAR
+      if (rho > most) { x *= most / rho; z *= most / rho }
+      sd.mesh.position.set(x, y, z)
       sd.mesh.rotation.set(0, -lobe, a)
     }
   }
