@@ -28,11 +28,11 @@ const v4 = (a: readonly number[]): string => `vec4(${a.map(f).join(', ')})`
 export const FACE = {
   at: [0.0, 1.11, 0.835],
   scale: 1.08,
-  eye: [0.0799, 0.0194, 0.095],
+  eye: [0.0845, 0.0212, 0.093],
   pitch: 0.2,
-  eyeYaw: 0.5, eyeTilt: -0.24, eyeW: 0.0238, eyeH: 0.0113,
+  eyeYaw: 0.5, eyeTilt: -0.24, eyeW: 0.0215, eyeH: 0.0135,
   iris: { at: [-0.0015, 0.0005], r: 0.0092 },
-  pupilR: 0.0034,
+  pupilR: 0.0044,
   leather: { at: [0.0, -0.0432, 0.2894], tilt: 0.3, top: 0.0537, bottom: 0.0245, half: 0.0238, front: 0.0216 },
 } as const
 
@@ -142,7 +142,8 @@ float face(vec3 p) {
   const vec3 AXB = ${n3([0, -0.068, 0.168])};
   const vec3 UPB = ${n3([0, 0.168, 0.068])};
   float bt = dot(bq, AXB), yb = dot(bq, UPB);
-  float bhw = mix(0.031, 0.025, clamp(bt / 0.1812, 0.0, 1.0));
+  // (broad and flat, about 0.6 of the eyes' spacing at the stop, as a lion's)
+  float bhw = mix(0.047, 0.037, clamp(bt / 0.1812, 0.0, 1.0));
   float br = smax(yb, 0.883 * (q.x - bhw) + 0.469 * yb, 0.012);
   br = smax(br, max(-0.03 - bt, bt - 0.186), 0.012);
   br = smax(br, -0.1 - yb, 0.02);
@@ -189,13 +190,14 @@ float face(vec3 p) {
   // (blended wide into the cheeks, so the muzzle grows from the face, and
   // tight under the lip, so the mouth's overhang keeps its shadow)
   d = smin(d, mz, mix(0.024, 0.012, smoothstep(-0.13, -0.15, q.y) * smoothstep(0.16, 0.21, q.z)));
-  // THE BROWS: a heavy ridge over each eye, merging into the forehead above;
-  // the socket below cuts it flat underneath
-  // (apart at the stop and barely proud of the forehead there, so the
-  // profile runs on from the bridge without a hook; their inner ends high
-  // and wide apart, so the face reads calm and watchful, not a frown)
-  vec2 bw = sdBezier(q, vec3(0.047, 0.049, 0.11), vec3(0.082, 0.063, 0.123), vec3(0.124, 0.034, 0.07)).xy;
-  d = smin(d, bw.x - mix(0.011, 0.0095, bw.y), 0.03);
+  // THE BROWS: a heavy boss over each eye, its inner end low beside the
+  // bridge and its outer end high, so the eye sits deep under it; the socket
+  // below cuts it flat underneath
+  vec2 bw = sdBezier(q, vec3(0.05, 0.043, 0.117), vec3(0.088, 0.068, 0.122), vec3(0.128, 0.04, 0.072)).xy;
+  d = smin(d, bw.x - mix(0.0135, 0.010, bw.y), 0.03);
+  // the frown: two creases up the forehead from between the brows
+  vec2 fw = sdBezier(q, vec3(0.016, 0.046, 0.112), vec3(0.02, 0.07, 0.088), vec3(0.03, 0.094, 0.06)).xy;
+  d = smax(d, -(fw.x - mix(0.0045, 0.0025, fw.y)), 0.004);
   // THE NOSE: the leather, wide at its top and drawn in to the groove,
   // tipped forward and down, its nostrils curling up at the lower corners
   vec3 n0 = q - ${u3(FACE.leather.at)};
@@ -312,7 +314,9 @@ float lockShapeT(vec3 l, float len, float hw, float th, float curl, float lift, 
   // (a tip never thinner than five cells of the film's grid, four on the thin
   // locks that lie flat on the crown)
   ridge = max(ridge, max(0.5 * th, min(0.012, 1.2 * th)) * smoothstep(0.3, 0.6, t));
-  float top = ridge * (0.55 + 0.45 * (1.0 - ac * ac)) + lf;
+  // (the mane's lock a leaf with a keel, its sides falling to thin edges, so
+  // one facet takes the light and the other holds shade; the doors' domed)
+  float top = ridge * (tip > 0.5 ? 0.3 + 0.7 * (1.0 - pow(abs(ac), 1.3)) : 0.55 + 0.45 * (1.0 - ac * ac)) + lf;
   // (a tip either lies on the ground or stands a clear 8 mm off it: no thin
   // wedge of air under it; on the mane a tip whose end would stand under 8 mm
   // lies down with its underside sunk, so its rounded edge meets the ground
@@ -334,14 +338,14 @@ float lockShapeT(vec3 l, float len, float hw, float th, float curl, float lift, 
   float gr = mix(clamp(0.24 * w, 0.006, 0.014), 0.005, tip);
   // (shallower on the thin locks that lie flat on the crown, so the crown
   // reads as hair lying back, not a comb)
-  float gd = mix(0.22 * ridge, 0.003 * clamp(th / 0.012, 0.35, 1.0), tip) * smoothstep(0.25, 0.42, t) * (1.0 - smoothstep(0.72, 0.9, t)) * smoothstep(mix(0.022, 0.014, tip), mix(0.034, 0.022, tip), w);
+  float gd = mix(0.22 * ridge, 0.0045 * clamp(th / 0.012, 0.35, 1.0), tip) * smoothstep(0.25, 0.42, t) * (1.0 - smoothstep(0.72, 0.9, t)) * smoothstep(mix(0.022, 0.014, tip), mix(0.034, 0.022, tip), w);
   // (the blend shrinks with the depth, so a gouge runs out without a step)
   float gk = mix(0.01, 0.004, tip) * smoothstep(0.0, mix(0.003, 0.0015, tip), gd);
   bool three = kind > 1.5 || (tip > 0.5 && hw > 0.04);
   for (int j = 0; j < 3; j++) {
     if (!three && j == 2) break;
     float u = three ? 0.46 * (float(j) - 1.0) : (j == 0 ? -0.36 : 0.32);
-    float gz = ridge * (0.55 + 0.45 * (1.0 - u * u)) + lf;
+    float gz = ridge * (tip > 0.5 ? 0.3 + 0.7 * (1.0 - pow(abs(u), 1.3)) : 0.55 + 0.45 * (1.0 - u * u)) + lf;
     d = smax(d, -(length(vec2(across - u * w, l.z - (gz + gr - gd))) - gr), gk);
   }
   return d;
@@ -594,9 +598,9 @@ export interface ManeLock { tier: number; side: number; deg: number; root: V3; f
  * roots, within the row's bounds */
 const TIERS = [
   { mu: 0.0, degs: [6, 19, 58, 82, 106, 130], hw: [0.022, 0.034], len: [0.08, 0.11], lift: [0.006, 0.009], kinds: [0.5, 0.35] },
-  { mu: 0.2, degs: [8, 46, 66, 87, 108, 129], hw: [0.032, 0.05], len: [0.12, 0.16], lift: [0.007, 0.011], kinds: [0.4, 0.35] },
-  { mu: 0.42, degs: [0, 27, 54, 81, 108, 136], hw: [0.042, 0.062], len: [0.16, 0.21], lift: [0.008, 0.012], kinds: [0.35, 0.3] },
-  { mu: 0.62, degs: [10, 32, 54, 76, 98, 120], hw: [0.045, 0.07], len: [0.18, 0.24], lift: [0.009, 0.013], kinds: [0.35, 0.2] },
+  { mu: 0.2, degs: [8, 46, 66, 87, 108, 129], hw: [0.032, 0.05], len: [0.12, 0.16], lift: [0.01, 0.015], kinds: [0.4, 0.35] },
+  { mu: 0.42, degs: [0, 27, 54, 81, 108, 136], hw: [0.042, 0.062], len: [0.16, 0.21], lift: [0.011, 0.017], kinds: [0.35, 0.3] },
+  { mu: 0.62, degs: [10, 32, 54, 76, 98, 120], hw: [0.045, 0.07], len: [0.18, 0.24], lift: [0.012, 0.018], kinds: [0.35, 0.2] },
 ] as const
 const between = (r: () => number, lo: number, hi: number): number => lo + (hi - lo) * r()
 
@@ -897,7 +901,7 @@ const lin = (hex: string): N => { const c = new Color(hex); return vec3(c.r, c.g
  * the head reaches this far forward: the eyeball in ochre with its pupil in
  * black, the nose's leather in umber. Weights in [0, 1]; q is the face's frame
  * in metres (the carving's scale included). */
-function faceFeatures(P: N): { q: N; eye: N; pupil: N; nose: N } {
+function faceFeatures(P: N): { q: N; eye: N; pupil: N; nose: N; rim: N; under: N } {
   const q0 = vec3(P.x.abs(), P.y, P.z).sub(v(FACE.at))
   // the face's own frame, carried nose down as the carving carries it
   const cp = Math.cos(FACE.pitch), sp = Math.sin(FACE.pitch)
@@ -922,7 +926,11 @@ function faceFeatures(P: N): { q: N; eye: N; pupil: N; nose: N } {
   const half = mix(float(L.bottom), float(L.top), clamp(ny.add(L.half).div(2 * L.half), 0, 1))
   const nose = smoothstep(0.003, -0.002, q.x.sub(half)).mul(smoothstep(L.half + 0.004, L.half - 0.001, ny.abs()))
     .mul(smoothstep(L.front - 0.009, L.front - 0.004, nz))
-  return { q, eye: clamp(eye, 0, 1), pupil: clamp(pupil, 0, 1), nose: clamp(nose, 0, 1) }
+  // a lion's markings round the eye: a dark rim on the lids' edge, cream fur under it
+  const rim = smoothstep(1.0, 1.12, almond).mul(smoothstep(1.75, 1.4, almond)).mul(smoothstep(-0.026, -0.012, ez))
+  const ux = exx.div(FACE.eyeW * 1.45), uy = eyy.add(FACE.eyeH * 2.0).div(FACE.eyeH * 1.25)
+  const under = smoothstep(1.0, 0.35, ux.mul(ux).add(uy.mul(uy))).mul(smoothstep(-0.045, -0.02, ez))
+  return { q, eye: clamp(eye, 0, 1), pupil: clamp(pupil, 0, 1), nose: clamp(nose, 0, 1), rim: clamp(rim, 0, 1), under: clamp(under, 0, 1) }
 }
 
 /** Where the face's own planes carry the shading: the muzzle, the cheeks and
@@ -953,7 +961,8 @@ export function faceColour(P: N, col: N, paint: N, n1: N, n2: N, calmPaint = fal
   const block: N = smoothstep(0.095, 0.125, qs.z).mul(smoothstep(0.1, 0.086, qs.x)).mul(smoothstep(-0.045, -0.07, qs.y)).mul(float(1).sub(f.nose))
   const pad: N = block.mul(smoothstep(-0.003, 0.004, dy))
   // pale only along the pads' lowest third, fading up over 2 cm
-  const low: N = pad.mul(smoothstep(0.03, 0.008, dy)).mul(0.55)
+  // (the whole pad pale, as a lion's muzzle is, fading toward the nose)
+  const low: N = pad.mul(smoothstep(0.07, 0.035, dy)).mul(0.7)
   // the whisker spots: four rows curving down and out over each pad's upper half, a seeded jitter so no grid reads
   const u: N = qs.x, vr = qs.y.add(u.div(0.075).pow(2).mul(0.01))
   const row: N = vr.sub(-0.077).div(-0.0102).floor().clamp(0, 3)
@@ -996,7 +1005,9 @@ export function faceColour(P: N, col: N, paint: N, n1: N, n2: N, calmPaint = fal
   c = mix(c, calmPaint ? c.mul(1.18) : lin('#e4d0aa').mul(mix(0.94, 1.04, n2)), chin.mul(paint).mul(0.95))
   c = mix(c, calmPaint ? lin('#4a3020').mul(mix(0.9, 1.1, n1)) : lin('#34160f').mul(mix(1.3, 2.4, smoothstep(-0.01, -0.035, dy))).mul(mix(0.9, 1.1, n1)), lower.mul(paint).mul(calmPaint ? 0.7 : 0.85))
   c = mix(c, lin('#34160f').mul(mix(0.9, 1.1, n1)), lip.max(stem).mul(paint).mul(0.88))
-  c = mix(c, lin('#a5712a').mul(mix(0.9, 1.08, n1)), f.eye.mul(paint))
+  c = mix(c, lin('#d6c19a').mul(mix(0.94, 1.04, n2)), f.under.mul(paint).mul(0.75))
+  c = mix(c, lin('#1e130b'), f.rim.mul(paint).mul(0.85))
+  c = mix(c, lin('#c08a2c').mul(mix(0.9, 1.08, n1)), f.eye.mul(paint))
   c = mix(c, lin('#120b07'), f.pupil.mul(paint))
   c = mix(c, lin('#3a2415').mul(mix(0.85, 1.1, n1)), f.nose.mul(paint).mul(0.9))
   // (eye: where no gilt, wear or crackle of the body's paint may cross: the

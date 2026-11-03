@@ -115,7 +115,7 @@ function clawTips(P0: N, fore: N, hind: N): N {
  * or a dark mane, gilt rims on the doors, the doors lined inside, carved hair
  * strokes (their depth), a calm mouth. LION_LOOK is the one shown. */
 export interface LionLook { palette: 'base' | 'sienna'; giltMane: boolean; doorRim: boolean; lined: boolean; hair: number; calmFace: boolean; straps: boolean }
-export const LION_LOOK: LionLook = { palette: 'sienna', giltMane: true, doorRim: false, lined: true, hair: 1.3, calmFace: true, straps: false }
+export const LION_LOOK: LionLook = { palette: 'sienna', giltMane: false, doorRim: false, lined: true, hair: 1.3, calmFace: true, straps: false }
 
 /** A heraldic lily, white on black, for the painted ground the doors are lined
  * with: drawn once on a canvas at load (no image file), its edges soft. */
