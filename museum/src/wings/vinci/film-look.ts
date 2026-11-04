@@ -285,6 +285,8 @@ export function createFilmLook(h: FilmLookHost) {
         if (catalogPage()) sayRecord(full)
         // the record speaks the page's language, as the label does
         for (const column of full.querySelectorAll<HTMLElement>('.picture-label-language, .picture-fact[lang]')) if (column.lang !== langTag(lang())) column.remove()
+        // the old register's rows and the files' keys and hashes stay in the repository's data, off the visitor's page
+        for (const row of full.querySelectorAll('.picture-historical-register, .picture-source-hash, .picture-machine-chain')) row.remove()
         host.append(full)
         for (const slot of ['limit', 'visual_note']) { const empty = make('p', 'vinci-statement'); empty.dataset['slot'] = slot; empty.hidden = true; full.append(empty) }
         fillVinciLimitSlots(id, full)
