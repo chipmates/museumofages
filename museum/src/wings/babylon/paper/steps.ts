@@ -4,7 +4,13 @@
    notch to notch, a drag scrubs between them and settles on the nearest,
    play walks the rest of the way and stops at the end. Nothing starts by
    itself and nothing closes on a timer; under reduced motion every move is a
-   cut from still to still. Every word is the caller's. */
+   cut from still to still. Every word is the caller's.
+
+   EACH NAME STANDS UNDER ITS OWN TICK at every width: as near centred on it as
+   its neighbours let it, wrapped at its spaces only where the row needs the
+   room, kept inside the rail. Where the row still cannot hold them, every
+   second name steps to a second row with a hairline up to its tick, so a name
+   is never read as another step's. */
 
 import { paintSlider } from '../../vitrine/slider'
 
@@ -23,9 +29,15 @@ export interface PaperStepsOptions {
   hold?: number
 }
 
+/** a step's tick and its name, in the page's pixels, for a check that reads the row back */
+export interface PaperStepSeat { id: string; name: string; tick: number; box: { l: number; t: number; r: number; b: number }; row: number; px: number }
+
 export interface PaperSteps {
   readonly element: HTMLElement
   at(): number
+  /** the names laid under their ticks again: the row changed width or a face arrived */
+  layout(): void
+  seats(): PaperStepSeat[]
   /** to a position: a cut, or a travel at the play pace */
   go(t: number, how?: 'cut' | 'travel'): void
   playing(): boolean
@@ -37,6 +49,12 @@ export interface PaperSteps {
 
 /** the track's resolution: a notch every hundred */
 const PER = 100
+/** the thumb's width (paper.css): its centre runs from half of it to the track's end less half of it */
+const THUMB = 8
+/** the least air between two names on one row, and a second row's drop under the first */
+const NAME_AIR = 8, ROW_DROP = 6
+/** a tick stands at least this far inside its name's box: over the name's words, not its padding */
+const TICK_IN = 8
 const ease = (x: number): number => (x < 0.5 ? 2 * x * x : 1 - (-2 * x + 2) ** 2 / 2)
 
 export function createPaperSteps(o: PaperStepsOptions): PaperSteps {
@@ -89,6 +107,90 @@ export function createPaperSteps(o: PaperStepsOptions): PaperSteps {
   const rail = make('div', 'paper-rail')
   rail.append(track, names)
   element.append(play, rail)
+
+  /* THE NAMES UNDER THEIR TICKS, measured in the page */
+  let laidRows = 1
+  function tickAt(i: number): number {
+    const w = track.clientWidth
+    // a right-to-left range runs from the right: step 0's tick is the rightmost
+    const k = element.dir === 'rtl' ? last - i : i
+    return track.offsetLeft + THUMB / 2 + (k / Math.max(1, last)) * (w - THUMB)
+  }
+  /* one row's names, in the order of their ticks: each as near centred on its tick as the one before lets it, then
+     pulled back inside its room and clear of the one after. Built so, no two meet; the row holds them when each
+     still covers its own tick and stays in its room (the rail, or on the first of two rows the span between the ticks
+     whose hairlines rise past it). */
+  function place(row: number[], xs: number[], ws: number[], ls: number[], lo: number[], hi: number[]): boolean {
+    const order = [...row].sort((a, b) => xs[a]! - xs[b]!)
+    let edge = -Infinity
+    for (const i of order) {
+      ls[i] = Math.max(Math.min(hi[i]! - ws[i]!, Math.max(lo[i]!, xs[i]! - ws[i]! / 2)), edge + NAME_AIR)
+      edge = ls[i]! + ws[i]!
+    }
+    let wall = Infinity
+    for (const i of [...order].reverse()) {
+      ls[i] = Math.min(ls[i]!, wall - NAME_AIR - ws[i]!, hi[i]! - ws[i]!)
+      wall = ls[i]!
+    }
+    return order.every(i => ls[i]! >= lo[i]! - 0.5 && ls[i]! + TICK_IN <= xs[i]! && xs[i]! <= ls[i]! + ws[i]! - TICK_IN)
+  }
+  /* each name stands on one line where its row holds it so; where it does not, the widest name still on one line
+     wraps at its spaces, and so on until the row holds them all or every name is wrapped. Then every second name
+     steps to a second row, where the room between ticks doubles. */
+  function lay(rows: number): boolean {
+    const w = rail.clientWidth
+    const xs = presses.map((_, i) => tickAt(i))
+    const rowOf = (i: number): number => (rows > 1 ? i % 2 : 0)
+    const one: number[] = [], least: number[] = []
+    for (const b of presses) {
+      b.style.maxWidth = ''
+      b.style.left = '0px'
+      // measured in the pressed name's weight, so a name never wraps anew when it is pressed
+      b.style.fontWeight = '700'
+      b.style.width = 'max-content'; one.push(Math.ceil(b.getBoundingClientRect().width) + 1)
+      b.style.width = 'min-content'; least.push(Math.ceil(b.getBoundingClientRect().width) + 1)
+      b.style.fontWeight = ''
+    }
+    // a name on the first of two rows keeps clear of the next ticks, whose names' hairlines rise past it
+    const lo = presses.map((_, i) => rows > 1 && rowOf(i) === 0 ? Math.max(0, ...xs.filter((x, j) => rowOf(j) !== 0 && x < xs[i]!).map(x => x + 4)) : 0)
+    const hi = presses.map((_, i) => rows > 1 && rowOf(i) === 0 ? Math.min(w, ...xs.filter((x, j) => rowOf(j) !== 0 && x > xs[i]!).map(x => x - 4)) : w)
+    const ws = [...one], ls = presses.map(() => 0)
+    let fits = false
+    for (;;) {
+      fits = true
+      for (let r = 0; r < rows; r++) if (!place(presses.map((_, i) => i).filter(i => rowOf(i) === r), xs, ws, ls, lo, hi)) fits = false
+      if (fits) break
+      let pick = -1
+      ws.forEach((bw, i) => { if (bw > least[i]! && (pick < 0 || bw > ws[pick]!)) pick = i })
+      if (pick < 0) break
+      ws[pick] = least[pick]!
+    }
+    const boxes = presses.map((b, i) => {
+      b.style.width = `${ws[i]}px`
+      b.style.left = `${Math.round(ls[i]!)}px`
+      b.dataset['row'] = String(rowOf(i))
+      // the hairline of a name on the second row runs up to its own tick
+      b.style.setProperty('--paper-tick', `${Math.round(xs[i]! - Math.round(ls[i]!))}px`)
+      return { row: rowOf(i), h: b.offsetHeight }
+    })
+    const rowH = [0, 1].map(r => Math.max(0, ...boxes.filter(b => b.row === r).map(b => b.h)))
+    presses.forEach((b, i) => {
+      b.style.top = rowOf(i) ? `${rowH[0]! + ROW_DROP}px` : '0px'
+      b.style.setProperty('--paper-lift', `${rowH[0]! + ROW_DROP}px`)
+    })
+    names.style.height = `${rowH[0]! + (rows > 1 ? ROW_DROP + rowH[1]! : 0)}px`
+    return fits
+  }
+  function layout(): void {
+    if (!rail.isConnected || rail.clientWidth < 1) return
+    laidRows = lay(1) ? 1 : 2
+    if (laidRows === 2) lay(2)
+    element.dataset['rows'] = String(laidRows)
+  }
+  const resized = new ResizeObserver(() => layout())
+  resized.observe(rail)
+  signal.addEventListener('abort', () => resized.disconnect())
+  void doc.fonts?.ready.then(() => { if (!signal.aborted) layout() })
 
   let t = 0, from = 0, to = 0, moving = 0, moveFor = 0, playing = false, holding = 0, dragging = false
 
@@ -171,6 +273,15 @@ export function createPaperSteps(o: PaperStepsOptions): PaperSteps {
   return {
     element,
     at: () => t,
+    layout,
+    seats: () => {
+      const r = rail.getBoundingClientRect()
+      return presses.map((b, i) => {
+        const box = b.getBoundingClientRect()
+        return { id: steps[i]!.id, name: b.textContent ?? '', tick: r.left + tickAt(i), box: { l: box.left, t: box.top, r: box.right, b: box.bottom },
+          row: Number(b.dataset['row'] ?? 0), px: parseFloat(getComputedStyle(b).fontSize) }
+      })
+    },
     go,
     playing: () => playing,
     toggle,

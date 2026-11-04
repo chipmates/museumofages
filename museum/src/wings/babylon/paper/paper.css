@@ -61,8 +61,9 @@
   color: inherit; background: transparent;
   border: 1.5px solid currentColor; border-radius: 3px; cursor: pointer;
 }
-.paper-rail { min-width: 0; }
-.paper-track { position: relative; height: 44px; margin: 0 calc(50% / var(--paper-steps)); }
+.paper-rail { position: relative; min-width: 0; }
+/* the track runs the rail's width less a little air: a name at either end is kept inside the rail, still under its tick */
+.paper-track { position: relative; height: 44px; margin: 0 12px; }
 .paper-slider {
   position: absolute; inset: 0; width: 100%; height: 44px; margin: 0;
   appearance: none; -webkit-appearance: none; background: transparent; cursor: pointer; color: inherit;
@@ -83,21 +84,23 @@
 .paper-slider::-moz-range-thumb { width: 8px; height: 26px; background: currentColor; border: 0; border-radius: 1px; }
 .paper-slider:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
 .paper-notch {
-  position: absolute; left: calc(var(--at) * 100%); top: 50%; width: 2px; height: 16px;
+  /* on the thumb's own centre at each step: the thumb's centre runs 4 px in from either end */
+  position: absolute; left: calc(4px + var(--at) * (100% - 8px)); top: 50%; width: 2px; height: 16px;
   transform: translate(-50%, -50%); background: currentColor; pointer-events: none;
 }
-.paper-names { display: grid; grid-template-columns: repeat(var(--paper-steps), minmax(0, 1fr)); }
+/* each name is laid under its own tick by steps.ts: centred on it, wrapped at its spaces, a second row where two would touch */
+.paper-names { position: relative; min-height: 44px; }
 .paper-name {
-  min-height: 44px; padding: 4px 2px; margin: 0;
-  font: 400 0.875rem/1.15 var(--sans, system-ui, sans-serif);
+  position: absolute; left: 0; top: 0; box-sizing: border-box; width: max-content;
+  min-width: 44px; min-height: 44px; padding: 4px 4px; margin: 0;
+  /* the frozen designs' word size for a control: 15 px on both surfaces, nothing under 14 */
+  font: 400 0.9375rem/1.2 var(--sans, system-ui, sans-serif);
   color: inherit; background: transparent; border: 0; cursor: pointer;
   text-align: center; overflow-wrap: normal; hyphens: manual;
 }
-/* a narrow row cannot hold every name under its notch: the names stand in a grid of their own, as many columns as hold
-   a long word whole, the notches keep the track */
-@container (max-width: 470px) {
-  .paper-track { margin: 0 8px; }
-  .paper-names { grid-template-columns: repeat(auto-fill, minmax(min(100%, 5.6rem), 1fr)); }
+.paper-name[data-row='1']::before {
+  content: ''; position: absolute; left: var(--paper-tick, 50%); top: calc(-1 * var(--paper-lift, 0px) + 2px); width: 1px;
+  height: calc(var(--paper-lift, 0px) - 2px); background: currentColor; opacity: 0.45; pointer-events: none;
 }
 .paper-name[aria-pressed='true'] { font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
 .paper-name:focus-visible, .paper-play:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }

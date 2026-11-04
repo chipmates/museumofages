@@ -33,5 +33,10 @@ export const BRICKS = {
   walls: [12, 15] as const,
 } as const
 
+/** THE CLASS EACH STEP'S CLAIM CARRIES, in the walk's four marks, for the band's name row: the height not known,
+    a reading guessed, the base as dug and nothing above it, a count one model's inference (a proposal for the
+    record round; the plate itself never says it in words) */
+export const STEP_CLASS = ['unknown', 'conjectural', 'conjectural', 'unknown', 'reconstructed', 'reconstructed'] as const
+
 /** the tower's height in the tablet's set: the stages summed */
 export const tabletHeight = (): number => TOWER.stages.reduce((s, x) => s + x.h, 0)

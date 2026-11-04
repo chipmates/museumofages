@@ -13,7 +13,7 @@ import {
   type PaperFraming, type PaperPlate, type PaperSteps, type Placed, type LabelAsk,
 } from '../paper/index'
 import { measureScene, type Anchor, type LabelKey, type MeasureScene } from './measure-scene'
-import { BRICKS } from './measure-data'
+import { BRICKS, STEP_CLASS } from './measure-data'
 import { MEASURE_WORDS, STEP_IDS, type MeasureLang } from './measure-words'
 
 export interface MeasureOptions {
@@ -39,6 +39,11 @@ export interface MeasureReadout {
   overlaps: string[]
   line: string
   list: string[]
+  /** the stack is drawn (a figure can show at this scale), and how strongly the open top stands */
+  stack: boolean
+  open: number
+  /** each step's tick and its name under it, in the page's pixels */
+  seats: ReturnType<PaperSteps['seats']>
 }
 
 export interface MeasurePayload extends VitrinePayload {
@@ -48,6 +53,12 @@ export interface MeasurePayload extends VitrinePayload {
   readout(): MeasureReadout
   /** true once the paper stands and the tower is drawn */
   open(): boolean
+  /** where the slider stands, 0 to the last step, fractional while it moves */
+  at(): number
+  /** the step names in their order, as the slider shows them: the host's way on names the next one */
+  names(): readonly string[]
+  /** the steps' row laid under its ticks again, where the host moved or resized it */
+  relayStepNames(): void
 }
 
 type Phase = 'ink' | 'paper' | 'open' | 'leaving' | 'gone'
@@ -70,12 +81,10 @@ export function createMeasurePayload(o: MeasureOptions): MeasurePayload {
     const L = W.labels
     switch (id) {
       case 'base': return L.base
-      case 'notKnown': return L.notKnown
       case 'about66': return L.about66
       case 'about90': return L.about90
       case 'figure': return L.figure
       case 'count': return new Intl.NumberFormat(o.lang).format(scene?.figures ?? 0)
-      case 'oneModel': return L.oneModel
       case 'mudPair': return `${L.million(millions(BRICKS.mud, o.lang))} ${L.mud}`
       case 'bakedPair': return `${L.million(millions(BRICKS.baked, o.lang))} ${L.baked}`
       case 'tower': return L.tower
@@ -95,9 +104,11 @@ export function createMeasurePayload(o: MeasureOptions): MeasurePayload {
   function listFor(step: number, sc: MeasureScene): string[] {
     const L = W.list
     const out = [L.base, L.core]
-    if (step === 1) out.push(L.height(W.labels.about66), L.figures(sc.figures))
-    else if (step === 2) out.push(L.stages, L.height(W.labels.about90), L.figures(sc.figures))
-    else out.push(L.notKnown, L.figures(1))
+    // the figures are named only where the plate can draw them
+    const figures = (n: number): string[] => (sc.stack ? [L.figures(n)] : [])
+    if (step === 1) out.push(L.height(W.labels.about66), ...figures(sc.figures))
+    else if (step === 2) out.push(L.stages, L.height(W.labels.about90), ...figures(sc.figures))
+    else out.push(L.notKnown, ...figures(1))
     if (step === 4) out.push(L.bricks(W.labels.million(millions(BRICKS.mud, o.lang)), W.labels.million(millions(BRICKS.baked, o.lang))))
     if (step === 5) out.push(L.walls(BRICKS.walls[0], BRICKS.walls[1]))
     return out
@@ -122,7 +133,7 @@ export function createMeasurePayload(o: MeasureOptions): MeasurePayload {
     }
     drawnAt = t
     const { w, h } = plate.size()
-    const sc = measureScene(t, framing, w, h)
+    const sc = measureScene(t, framing, w, h, host.element.ownerDocument.defaultView?.devicePixelRatio ?? 1)
     scene = sc
     const doc = host.element.ownerDocument
     const g = plate.layer('drawing')
@@ -161,6 +172,8 @@ export function createMeasurePayload(o: MeasureOptions): MeasurePayload {
       host.caption.lang = o.lang
       plate.list.replaceChildren(...listFor(step, sc).map(text => { const li = doc.createElement('li'); li.textContent = text; return li }))
       host.step?.(step, STEP_IDS.length)
+      // the band's mark says the step's class: the plate never says it in words
+      host.rename?.(W.ui.title, undefined, STEP_CLASS[step])
     }
   }
 
@@ -197,6 +210,7 @@ export function createMeasurePayload(o: MeasureOptions): MeasurePayload {
   return {
     kind: 'paper',
     fill: true,
+    raiseWords: { up: W.ui.raise, down: W.ui.lower },
     mount(next) {
       host = next
       listening = new AbortController()
@@ -267,6 +281,9 @@ export function createMeasurePayload(o: MeasureOptions): MeasurePayload {
     },
     go(step, how = 'cut') { steps?.go(step, how) },
     open: () => phase === 'open',
+    at: () => steps?.at() ?? 0,
+    names: () => STEP_IDS.map(id => W.steps[id]),
+    relayStepNames: () => steps?.layout(),
     readout(): MeasureReadout {
       const size = plate?.size() ?? { w: 0, h: 0 }
       const labels = placed.map(p => ({ id: p.id, text: label(p.id as LabelKey), box: p.box, side: p.side }))
@@ -277,6 +294,8 @@ export function createMeasurePayload(o: MeasureOptions): MeasurePayload {
           dir === 'rtl' ? scene.walls.map(s => ({ ax: size.w - s.ax, ay: s.ay, bx: size.w - s.bx, by: s.by })) : scene.walls, asked) : [],
         line: host?.caption.textContent ?? '',
         list: Array.from(plate?.list.children ?? []).map(li => li.textContent ?? ''),
+        stack: scene?.stack ?? false, open: scene?.open ?? 0,
+        seats: steps?.seats() ?? [],
       }
     },
   }
