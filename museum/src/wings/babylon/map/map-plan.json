@@ -362,7 +362,7 @@
   "plan": "R",
   "height": "R",
   "skirt": true,
-  "src": "line: C6.2 and E2.2, with P2021's UTM points; levels: +7.5 north of the North Gate, +12.5 at survey point 2 north of the gate and +15.4 in the gate (about 3 percent between them), +13 at the palace, +7.5 to +8 at Nabu, +3.0 at Gate 5, +2.1 to +2.5 on the turn, +2.3 and +3.1 at the bridge (P2021 p. 205, 208, 213, 215, 228; K1918 p. 8)",
+  "src": "line: C6.2 and E2.2, with P2021's UTM points; levels: +7.5 north of the North Gate, +12.5 at survey point 2 north of the gate and +15.4 in the gate (about 3 percent near the gate), +13 at the palace, +7.5 to +8 at Nabu, +3.0 at Gate 5, +2.1 to +2.5 on the turn, +2.3 and +3.1 at the bridge (P2021 p. 205, 208, 213, 215, 228; K1918 p. 8)",
   "points": [
    {
     "at": [
@@ -396,18 +396,18 @@
    },
    {
     "at": [
-     445754.0,
-     3600938.7
+     445754.1,
+     3600940.87
     ],
     "level": 12.5,
     "w": 20,
     "cls": "M",
-    "note": "+12.5 at survey point 2 north of the gate (P2021 p. 228 note 29); its place guessed 97 m out, where the about 3 percent from the gate puts it"
+    "note": "+12.5 at survey point 2 north of the gate (P2021 p. 228 note 29), at 445750, 3600940 (P2021 Fig. 5.31): a = 98.7 along the axis, the point itself 3.8 m west of the street's centre"
    },
    {
     "at": [
-     445772.7,
-     3600843.9
+     445773.0,
+     3600844.0
     ],
     "level": 15.4,
     "w": 20,
@@ -486,13 +486,13 @@
    },
    {
     "at": [
-     445976,
+     445971.5,
      3600125
     ],
     "level": 3.0,
     "w": 8.6,
     "cls": "M",
-    "note": "Gate 5, breccia at +3.0 (P2021 Fig. 5.12)"
+    "note": "Gate 5, the street at the main entrance, breccia at +3.0 (P2021 Fig. 5.12: 445970, 3600125, 1.5 m west of the street's centre, S9-07)"
    },
    {
     "at": [
@@ -585,8 +585,8 @@
     445772.7,
     3600843.9
    ],
-   "bearing": 163,
-   "says": "a along the gate's axis from its north face (axis 343 true, GR 1.1), c across toward 253"
+   "bearing": 163.1,
+   "says": "a along the gate's axis from its north face (343.1 grid, 342.8 true, read off sheet 2.28 for the gate), c across toward 253; 50 m long in all (K1918 p. 37, P2021 p. 71 to 72)"
   },
   "tower": {
    "origin": [
@@ -598,11 +598,11 @@
   },
   "lion": {
    "origin": [
-    445772.7,
-    3600843.9
+    445773.0,
+    3600844.0
    ],
-   "bearing": 348.4,
-   "says": "the lion street from the gate's north face toward the North Gate"
+   "bearing": 348.96,
+   "says": "the lion street's axis on C6.2 (the paving's centre, rms 0.03 m), from the gate's north face toward the North Gate (walls sheet 8.1)"
   }
  },
  "blocks": [
@@ -719,35 +719,89 @@
   {
    "id": "bastion-w",
    "name": "forecourt bastion west",
-   "in": "gate",
-   "local": [
-    -29,
-    0,
-    16,
-    37
+   "poly": [
+    [
+     445757.4,
+     3600841.47
+    ],
+    [
+     445753.91,
+     3600859.33
+    ],
+    [
+     445760.29,
+     3600860.57
+    ],
+    [
+     445754.97,
+     3600887.86
+    ],
+    [
+     445734.65,
+     3600883.89
+    ],
+    [
+     445739.97,
+     3600856.61
+    ],
+    [
+     445748.02,
+     3600858.18
+    ],
+    [
+     445751.51,
+     3600840.32
+    ]
    ],
    "base": 0,
    "top": 27.4,
    "plan": "M",
    "height": "G",
-   "src": "forecourt about 32 x 20 m, bastions about 21 x 29 m (GR part 8, read off sheet 2.28)",
+   "src": "sheet 2.28 (read off on its 20 m grid fit): the bastion about 21 x 29 m, its 29 m side along the street, standing north of a forecourt about 32 m wide and 20 m deep (GR part 8); the block carries the forecourt's side wall along the court",
    "hsrc": "12 m over the street, ours"
   },
   {
    "id": "bastion-e",
    "name": "forecourt bastion east",
-   "in": "gate",
-   "local": [
-    -29,
-    0,
-    -37,
-    -16
+   "poly": [
+    [
+     445789.59,
+     3600847.75
+    ],
+    [
+     445785.62,
+     3600868.09
+    ],
+    [
+     445780.42,
+     3600866.54
+    ],
+    [
+     445774.93,
+     3600894.71
+    ],
+    [
+     445793.7,
+     3600899.8
+    ],
+    [
+     445799.1,
+     3600872.12
+    ],
+    [
+     445791.01,
+     3600869.7
+    ],
+    [
+     445795.09,
+     3600848.82
+    ]
    ],
    "base": 0,
    "top": 27.4,
    "plan": "M",
    "height": "G",
-   "src": "GR part 8",
+   "src": "sheet 2.28 (read off on its 20 m grid fit): the bastion about 21 x 29 m, its 29 m side along the street, standing north of a forecourt about 32 m wide and 20 m deep (GR part 8); the block carries the forecourt's side wall along the court",
    "hsrc": "ours"
   },
   {
@@ -1917,27 +1971,27 @@
    "in": "lion",
    "line": [
     [
-     29,
-     -13.5
+     44,
+     -13.356
     ],
     [
      180,
-     -13.5
+     -14.58
     ]
    ],
    "thick": 7,
    "rel": "street",
    "top": 10.0,
    "towers": {
-    "w": 4.5,
-    "proj": 0.6,
-    "pitch": 9.0,
+    "w": 7,
+    "proj": 1.4,
+    "pitch": 13.6,
     "side": "right",
     "top": 11.5
    },
    "plan": "M",
    "height": "G",
-   "src": "walls 7 m thick about 20 m apart, 180 m long, towers at their own width (K1914 ch. V, P2021 p. 80)",
+   "src": "C6.2 (walls sheet 1.1, 8.1): walls 7 m thick (K1914 ch. V) with their street faces at c -10.0 (a 60) to -10.9 (a 160) and +11.4 to +11.5, 21.4 to 22.4 m apart, widening north (K1918 p. 5); towers about 7 m long, 1.4 m into the street, at a 13.6 m pitch; from the forecourt bastions to the North Gate",
    "hsrc": "10 m over the street, ours"
   },
   {
@@ -1946,27 +2000,27 @@
    "in": "lion",
    "line": [
     [
-     29,
-     13.5
+     44,
+     14.884
     ],
     [
      180,
-     13.5
+     15.02
     ]
    ],
    "thick": 7,
    "rel": "street",
    "top": 10.0,
    "towers": {
-    "w": 4.5,
-    "proj": 0.6,
-    "pitch": 9.0,
+    "w": 7,
+    "proj": 1.4,
+    "pitch": 13.6,
     "side": "left",
     "top": 11.5
    },
    "plan": "M",
    "height": "G",
-   "src": "as above",
+   "src": "as the west wall",
    "hsrc": "as above"
   },
   {
@@ -2185,15 +2239,15 @@
    "gaps": [
     {
      "at": [
-      445972,
-      3600117
+      445964.5,
+      3600121.5
      ],
      "w": 30
     }
    ],
    "plan": "M",
    "height": "G",
-   "src": "C6.2; Gate 5 an opening about 30 m wide (P2021 p. 211, at 445970 3600125)",
+   "src": "C6.2; Gate 5, an opening about 30 m wide (P2021 p. 211), centred on the opening read off C6.2 at about 445964.5, 3600121.5 (S9-07); Pedersén's 445970, 3600125 is the street before it",
    "hsrc": "ours"
   },
   {

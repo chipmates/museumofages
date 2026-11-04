@@ -209,8 +209,10 @@ export function measure(plan, cams, { buildPlan, makeFrame }) {
     row('C5', 'west bastion: across the street', span(north(W).map((q) => q[1])), 21, 2.0, 'abs', 'GR 8; 2.28 re-read: c -30.0 to -9.3')
     row('C5', 'east bastion: along the street', span(outer(E).map((q) => q[0])), 29, 2.0, 'abs', 'GR 8; 2.28 re-read: a 20.7 to 50')
     row('C5', 'east bastion: across the street', span(north(E).map((q) => q[1])), 20, 2.0, 'abs', 'GR 8; 2.28 re-read: c +11.6 to +31 (turned about 6 degrees)')
-    row('C5', "forecourt depth: the gate's face to the west bastion's south face", Math.min(...outer(W).map((q) => q[0])), 18.7, 1.5, 'abs', '2.28 re-read (GEOREF, 2.28 fit): a 18.7')
-    row('C5', "forecourt depth: the gate's face to the east bastion's south face", Math.min(...outer(E).map((q) => q[0])), 20.7, 1.5, 'abs', '2.28 re-read: a 20.7; GR 8 "about 20 m deep"')
+    // the depth on the bastion's street side: where a line 12 m off the axis first meets it, going north from the gate's face
+    const enters = (pa, c) => { const xs = crossings(pa, (q) => q[1], c, (q) => q[0]).filter((a) => a > 0); return xs.length ? Math.min(...xs) : NaN }
+    row('C5', "forecourt depth: the gate's face to the west bastion (c = -12)", enters(W, -12), 18.7, 1.5, 'abs', '2.28 re-read (GEOREF, 2.28 fit): the south-east corner at a 18.7')
+    row('C5', "forecourt depth: the gate's face to the east bastion (c = +12)", enters(E, 12), 20.7, 1.5, 'abs', '2.28 re-read: the south-west corner at a 20.7; GR 8 "about 20 m deep"')
     const face = (pa, a, pick) => { const xs = crossings(pa, (q) => q[0], a, (q) => q[1]); return xs.length ? pick(...xs) : NaN }
     row('C5', "west bastion's street face, c at a = 30", face(W, 30, Math.max), -9.3, 1.0, 'abs', '2.28 re-read: c -9.3 (the lion wall\'s line)')
     row('C5', "east bastion's street face, c at a = 30", face(E, 30, Math.min), 11.6, 1.0, 'abs', '2.28 re-read: c +10.4 to +12.9')
