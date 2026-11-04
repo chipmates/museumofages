@@ -28,6 +28,7 @@ import { toneMapBodies, type Painted } from '../record-tones'
 import { hourOf, sunAt, sunVector } from './sun'
 import { makePath, type PathSample, type V3 } from './path'
 import { mountCourt } from '../court/court'
+import { mountHouse } from '../house/house'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -44,12 +45,13 @@ const say = (s: string): void => {
 const D2R = Math.PI / 180
 
 say('reading the plan')
-const [plan, cams, pieces, recordClasses, courtPlan]: [J, J, Pieces, ClassFile, J] = await Promise.all([
+const [plan, cams, pieces, recordClasses, courtPlan, housePlan]: [J, J, Pieces, ClassFile, J, J] = await Promise.all([
   fetch(new URL('./map-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('./map-cams.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../pieces.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../record-classes.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../court/court-plan.json', import.meta.url)).then((r) => r.json()),
+  fetch(new URL('../house/house-plan.json', import.meta.url)).then((r) => r.json()),
 ])
 if (q.get('tower') === 'base') plan.tower.stages = plan.tower.stages.slice(0, 1)
 const F = makeFrame(plan)
@@ -57,7 +59,9 @@ const t0 = performance.now()
 const tones = tonesFrom(plan)
 // stop 6's court and throne room draw themselves; the city's bodies are built without the prisms they replace
 const court = mountCourt(buildPlan(plan), plan, courtPlan, tones)
-const built = court.built
+// stop 7's houses likewise
+const house = mountHouse(court.built, plan, housePlan, tones)
+const built = house.built
 const planMs = Math.round(performance.now() - t0)
 
 /* the canal's banks get their own ground lines, so its cut stays 2.8 m wide on a 6 m grid */
@@ -115,7 +119,7 @@ say('building the city')
 const gateFrame = plan.frames.gate
 const bodies = buildBodies(built, tones, sky, uSun, canalZ, { o: F.s(gateFrame.origin[0], gateFrame.origin[1]), a: F.dir(gateFrame.bearing), c: F.dir(gateFrame.bearing + 90), len: 50, half: 2.6 })
 scene.add(bodies.group)
-scene.add(court.mesh)
+scene.add(court.mesh, house.mesh)
 uView.value = q.get('view') === 'classes' ? 1 : 0
 /* the class view from the record at the camera's stop: some rows hold at certain stops only (the street's) */
 let tonedAt = '', painted: Painted = { bodies: 0, byLetters: [] }
@@ -123,8 +127,8 @@ function toneAt(stop: number): void {
   if (String(stop) === tonedAt) return
   tonedAt = String(stop)
   const name = recordNamer(pieces, recordClasses, tonedAt)
-  const city = toneMapBodies(bodies.group, built, name), own = court.tone(name)
-  painted = { bodies: city.bodies + own.bodies, byLetters: [...city.byLetters, ...own.byLetters] }
+  const city = toneMapBodies(bodies.group, built, name), own = court.tone(name), six = house.tone(name)
+  painted = { bodies: city.bodies + own.bodies + six.bodies, byLetters: [...city.byLetters, ...own.byLetters, ...six.byLetters] }
 }
 
 /* the person for size, at each stop's place for one */
@@ -237,6 +241,7 @@ function aim(pos: V3, look: V3, hfov: number, w: number, h: number, shift = 0): 
   shiftNow = shift
   camera.updateProjectionMatrix()
   court.setPixel(camera.fov, h)
+  house.setPixel(camera.fov, h)
   camera.updateMatrixWorld(true)
   skyDome.position.copy(camera.position)
   skyDome.updateMatrixWorld(true)
@@ -332,7 +337,7 @@ const rig = {
     duration: path.duration,
   }),
   /** what the scene holds, from the bodies the page built */
-  facts: () => ({ ...built.facts, court: court.court.facts, streetLevelAtS: undefined, sunAt: Object.fromEntries(cams.stops.map((s: J) => [s.n, sunAt(hourOf(s.hour))])) }),
+  facts: () => ({ ...built.facts, court: court.court.facts, house: house.house.facts, streetLevelAtS: undefined, sunAt: Object.fromEntries(cams.stops.map((s: J) => [s.n, sunAt(hourOf(s.hour))])) }),
   stand: (E: number, N: number) => {
     const [x, z] = F.s(E, N)
     return { stand: stand(x, z), ground: built.ground(x, z), street: built.streetAt(x, z) }

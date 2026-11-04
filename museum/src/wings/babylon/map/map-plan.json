@@ -148,7 +148,32 @@
    }
   ],
   "bed": -4.0,
-  "bedBlend": 7.0
+  "bedBlend": 7.0,
+  "flats": [
+   {
+    "poly": [
+     [
+      445998,
+      3600515
+     ],
+     [
+      446135,
+      3600515
+     ],
+     [
+      446135,
+      3600345
+     ],
+     [
+      445998,
+      3600345
+     ]
+    ],
+    "level": 4.95,
+    "blend": 35,
+    "why": "the quarter round House VI on its own level (house/house-plan.json flat): the streets round House VI about +4.95, a little under its floor at +5.2 (P2021 p. 250: the house stood on the quarter's northern slope, not on a terrace); the level and the area ours"
+   }
+  ]
  },
  "water": [
   {
@@ -1805,6 +1830,43 @@
    "height": "G",
    "src": "C6.2: the Merkes area, dug (green on X1.4; 13 house plans, P2021 p. 246); the block is a type laid into it, not a dug plan, its court about 12 percent (walls sheet 8.7)",
    "hsrc": "as above"
+  },
+  {
+   "id": "house6-floor",
+   "name": "House VI's floor (stop 7 draws the house)",
+   "poly": [
+    [
+     446060.13,
+     3600437.94
+    ],
+    [
+     446082.08,
+     3600440.37
+    ],
+    [
+     446086.11,
+     3600426.08
+    ],
+    [
+     446066.71,
+     3600420.61
+    ],
+    [
+     446066.14,
+     3600423.45
+    ],
+    [
+     446063.2,
+     3600422.85
+    ]
+   ],
+   "base": 0,
+   "top": 5.2,
+   "plan": "G",
+   "height": "G",
+   "src": "House VI's outline (P2021 Fig. 6.15, house/house-plan.json); the house's own bodies are drawn by stop 7, this prism only carries the floor a visitor stands on",
+   "hsrc": "the lower paving at +5.2 (P2021 p. 250)",
+   "walk": true
   },
   {
    "id": "precinct-west-rooms",

@@ -1,0 +1,96 @@
+{
+ "about": "Stop 7 on the map page (the new walk's stop 6): House VI in Merkes and the quarter round it, in UTM metres (E, N) and German-zero levels like map-plan.json. The house's plan is P2021 Fig. 6.15 (after Reuther 1926 fig. 73) placed on sheet C6.2 (Uppsala, CC BY 4.0), with the printed sizes of P2021 p. 250; its rooms are read in its own frame (u along the house's east-west walls, v along its north-south walls, from the court's centre). Every height, the roof and the neighbours' layouts are ours and say so.",
+ "frame": {
+  "origin": [446069.6, 3600431.5],
+  "bearing": 78.5,
+  "src": "the court's centre and the inner walls' bearing read off C6.2 (the house at P2021 p. 249's UTM 446070 E, 3600430 N, 1.6 m from this point); the inner walls run 11.5 degrees off the grid, as P2021 p. 241 gives for the dug houses (up to 10 degrees west), and on Fig. 6.15"
+ },
+ "levels": {
+  "street": 4.95,
+  "base": 4.0,
+  "floor": 5.2,
+  "doorHead": 7.2,
+  "ceiling": 7.85,
+  "deck": 8.25,
+  "top": 8.6,
+  "src": "floor: the court's baked-brick paving of 40 cm bricks at +5.2 (P2021 p. 250, the lower paving's top; the raising to +6.4 is taken as later, a reading); the archive N10 lay at +5.0 between two floors, under this one. The street outside about +4.95, ours. Doors about 2 m, one storey of about 3 m (REC bab.houses.type; C15 S7-15); the ceiling, the roof's earth over it and the parapet are ours"
+ },
+ "outline": {
+  "north": [[-8.0, -8.2], [14.0, -6.2]],
+  "east": [[14.0, -6.2], [15.1, 8.6]],
+  "south": [[15.1, 8.6], [-5.0, 10.1]],
+  "west": -8.0,
+  "notch": [-5.0, 7.2],
+  "tooth": 2.4,
+  "parapet": 0.45,
+  "src": "the north face along the Lower Temple Street, the east face along Ostweg, the south face along Winkelgasse, read off C6.2 (NW corner 446060.5 E, 3600438.0 N; NE 446082.1, 3600440.4; SE 446086.1, 3600426.1); the street faces step in a zigzag because the walls keep the house's own bearing while the streets do not (P2021 p. 241, Figs. 6.3, 6.4); the teeth's length is ours; the south-west corner cut as Fig. 6.15 shows it; about 350 m2 over all against the printed 330 m2"
+ },
+ "courts": [
+  { "id": "court-2", "u": [-3.25, 3.25], "v": [-3.25, 3.25], "src": "Courtyard 2, about 6.5 x 6.5 m (P2021 p. 250)" },
+  { "id": "court-12", "u": [8.4, 12.9], "v": [-5.2, 7.0], "src": "Court 12 along Ostweg (Fig. 6.15); its size read off C6.2, ours to 0.5 m" }
+ ],
+ "rooms": [
+  { "id": "room-4", "u": [-3.05, 4.95], "v": [4.85, 8.15], "src": "the principal Room 4 south of the court, 8.0 x 3.3 m (P2021 p. 250); its place a metre east of the court's axis (Fig. 6.15, C6.2)" },
+  { "id": "room-3", "u": [-3.25, 2.4], "v": [-6.0, -4.25], "src": "Fig. 6.15" },
+  { "id": "room-1", "u": [4.25, 7.4], "v": [-5.7, -1.2], "src": "Fig. 6.15; the room behind the street door, ours" },
+  { "id": "room-10", "u": [4.25, 7.4], "v": [-0.2, 3.85], "src": "Fig. 6.15" },
+  { "id": "room-11", "u": [5.95, 7.4], "v": [4.85, 8.15], "src": "Room 11 with a fireplace's remains, 'seems to have been used as a kitchen' (P2021 p. 250); its size ours" },
+  { "id": "room-9", "u": [-6.8, -4.25], "v": [-6.6, -3.9], "src": "Fig. 6.15" },
+  { "id": "room-8", "u": [-6.8, -4.25], "v": [-2.9, 0.6], "src": "Fig. 6.15" },
+  { "id": "room-6", "u": [-6.8, -4.25], "v": [1.6, 3.6], "src": "Fig. 6.15" },
+  { "id": "room-7", "u": [-6.8, -4.85], "v": [4.6, 6.2], "floor": "asphalt", "src": "Room 7, a bathroom with a sewer and asphalt on the floor (P2021 p. 250); its size ours" }
+ ],
+ "doors": [
+  { "id": "street", "u": [5.0, 6.2], "v": [-8.4, -5.7], "src": "the entrance on the north side, on the Lower Temple Street (P2021 p. 249 to 250); its place in the wall read off Fig. 6.15" },
+  { "id": "room-1-court", "u": [3.25, 4.25], "v": [-2.85, -1.65], "src": "ours" },
+  { "id": "room-10-court", "u": [3.25, 4.25], "v": [0.9, 2.1], "src": "ours" },
+  { "id": "room-4", "u": [-0.75, 0.75], "v": [3.25, 4.85], "src": "the principal room's door on the court, facing north into shade (P2021 p. 241); its width ours" },
+  { "id": "room-3", "u": [-0.6, 0.6], "v": [-4.25, -3.25], "src": "ours" },
+  { "id": "room-8", "u": [-4.25, -3.25], "v": [-1.75, -0.55], "src": "ours" },
+  { "id": "room-9-8", "u": [-6.2, -5.2], "v": [-3.9, -2.9], "src": "ours" },
+  { "id": "room-8-6", "u": [-6.2, -5.2], "v": [0.6, 1.6], "src": "ours" },
+  { "id": "room-6-7", "u": [-6.2, -5.2], "v": [3.6, 4.6], "src": "ours" },
+  { "id": "room-1-12", "u": [7.4, 8.4], "v": [-4.6, -3.4], "src": "ours" },
+  { "id": "room-11-12", "u": [7.4, 8.4], "v": [5.6, 6.8], "src": "ours" },
+  { "id": "room-4-11", "u": [4.95, 5.95], "v": [6.0, 7.2], "src": "ours" }
+ ],
+ "house3": {
+  "frame": { "origin": [446078.0, 3600395.0], "bearing": 78.5 },
+  "outline": { "u": [-20.0, 20.0], "v": [-18.5, 18.5], "tooth": 2.4, "skewN": 0.09, "skewE": 0.07 },
+  "courts": [
+   { "id": "court-4", "u": [-3.0, 13.0], "v": [-9.0, 4.8], "src": "the main Courtyard 4, 16.0 x 13.8 m (P2021 p. 249)" },
+   { "id": "court-a", "u": [-16.5, -8.5], "v": [-13.0, -5.0], "src": "the house had three courtyards (P2021 p. 249); this one's place and size ours" },
+   { "id": "court-b", "u": [-16.0, -9.5], "v": [3.0, 9.5], "src": "as above" }
+  ],
+  "levels": { "terrace": 7.0, "deck": 10.25, "top": 10.6 },
+  "src": "House III across Winkelgasse, about 1,500 m2, on a terrace with its lowest floor at +7.0 (P2021 p. 248, UTM 446080 E, 3600400 N); its outline placed on C6.2, its courts but the main one and every height ours; drawn at the frame's distance, its rooms not modelled"
+ },
+ "quarter": {
+  "bearing": 84.0,
+  "lot": [15.0, 23.0],
+  "depth": [14.0, 20.0],
+  "court": 0.13,
+  "walls": [3.0, 3.6],
+  "seed": 5706,
+  "blocks": ["merkes-1", "merkes-2", "merkes-3", "merkes-4", "merkes-5", "merkes-6"],
+  "split": [[[446038.0, 3600440.0], [446058.0, 3600440.0], [446058.0, 3600422.0], [446038.0, 3600422.0]]],
+  "keep": [
+   { "id": "house-6", "poly": [[446058.0, 3600443.0], [446090.0, 3600443.0], [446090.0, 3600418.0], [446058.0, 3600418.0]] },
+   { "id": "house-3", "poly": [[446049.0, 3600420.0], [446108.0, 3600420.0], [446108.0, 3600370.0], [446049.0, 3600370.0]] },
+   { "id": "ostweg", "poly": [[446086.0, 3600447.0], [446096.0, 3600447.0], [446108.0, 3600364.0], [446098.0, 3600364.0]] }
+  ],
+  "src": "the Merkes blocks refined to read as courts behind toothed walls at the frame's distance, never a dug plan: lots along the streets' bearing (about 84 degrees on C6.2), each a house round one court of about 13 percent (REC bab.houses.type), walls about 3 m, its own height; the streets between them as C6.2 draws them near House VI; every lot ours"
+ },
+ "flat": {
+  "poly": [[445998, 3600515], [446135, 3600515], [446135, 3600345], [445998, 3600345]],
+  "level": 4.95,
+  "blend": 35,
+  "src": "the streets round House VI about +4.95, a little under its floor at +5.2 (P2021 p. 250: the house stood on the quarter's northern slope, not on a terrace); the level and the area ours"
+ },
+ "colours": {
+  "src": "linear albedo, ours: the white gypsum wash over mud plaster (K1914 ch. XLVI; REC bab.houses.type), the mud plaster where the wash has worn off, the street's dust",
+  "wash": [0.6, 0.58, 0.53],
+  "mud": [0.36, 0.3, 0.23],
+  "lane": [0.42, 0.37, 0.3]
+ }
+}

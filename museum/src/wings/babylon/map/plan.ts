@@ -504,6 +504,8 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
     }
     return sv / sw
   }
+  // a quarter laid at one level (a dug house's street), flat inside its outline and easing back over `blend` metres
+  const flats: Array<{ poly: P2[]; level: number; blend: number }> = (G.flats ?? []).map((f: J) => ({ poly: f.poly.map((p: number[]) => F.s(p[0]!, p[1]!)), level: f.level, blend: f.blend }))
   const ground = (x: number, z: number): number => {
     let h = field(x, z)
     const st = streetAt(x, z)
@@ -512,6 +514,10 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
       const k = edge <= 8 ? 1 : edge >= 40 ? 0 : 1 - (edge - 8) / 32
       const want = st.level - 0.25
       h = h + (want - h) * (k * k * (3 - 2 * k))
+    }
+    for (const f of flats) {
+      const k = pointInPoly([x, z], f.poly) ? 1 : Math.max(0, 1 - polyEdgeDist([x, z], f.poly) / f.blend)
+      if (k > 0) h = h + (f.level - h) * (k * k * (3 - 2 * k))
     }
     for (const wb of waterBoxes) {
       if (x < wb.x0 || x > wb.x1 || z < wb.z0 || z > wb.z1) continue
