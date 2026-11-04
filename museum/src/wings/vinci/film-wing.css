@@ -594,8 +594,18 @@ html:has(#wing[data-film='upright']) :is(#wing .vinci-sources-toolbar .vinci-sou
 /* THE LOOK UP OWNS THE SCREEN, as the live wing's: every piece of chrome steps
    back while the evening plays and nothing of it takes a press; the picture,
    which here stands inside the stage, stays */
-#wing[data-film][data-evening] > :not(.wing-stage),
+#wing[data-film][data-evening] > :not(.wing-stage, .film-evening-gold),
 #wing[data-film][data-evening] .wing-stage > :not(.na-film) { opacity: 0; pointer-events: none; transition: opacity .9s ease; }
+/* but the one gold control: it stays where gold stood and names the ending, and nothing leaves on a timer
+   (film-wing.ts measures gold's own box into it; these are the places where it could not) */
+#wing[data-film][data-evening] .film-evening-gold {
+  position: fixed; z-index: 40; top: auto; left: auto; right: 12px; bottom: calc(16px + env(safe-area-inset-bottom));
+  box-sizing: border-box; margin: 0; min-width: 0; max-width: none; translate: none;
+}
+#wing[data-film][data-evening] .desk-on.film-evening-gold { right: var(--desk-g, 64px); bottom: 18px; width: 292px; height: 64px; }
+#wing[data-film][data-evening] .film-gold.film-evening-gold { height: 48px; padding: 0 12px 0 14px; }
+#wing[data-film][data-evening] .film-gold.film-evening-gold .film-gold-name { white-space: nowrap; }
+#wing[data-film][data-evening] .film-evening-gold:focus-visible { outline: 2px solid var(--na-gold); outline-offset: 3px; }
 body:has(#wing[data-film][data-evening]) :is(#rail-instruments, #rail-sound) { opacity: 0; visibility: hidden; }
 body:has(#wing[data-film][data-evening]) .brand { opacity: 0; transition: opacity .9s ease; }
 /* no wordmark on the picture inside a wing, upright: the masthead stood under the picture at 10 px, unseen and still read */

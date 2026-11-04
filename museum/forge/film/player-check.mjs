@@ -304,10 +304,19 @@ async function run(engine, width, lang) {
           await at(9, '04-evening-9s')
           await at(15, '05-evening-15s')
           await at(19, '06-evening-stars')
+          /* NO TIMER IN THE VISIT: the evening's end holds its last frame, the one gold
+             that stayed names the ending, and the way home is its press */
+          lk.ended = await page.waitForFunction(() => document.querySelector('.na-film-evening')?.ended === true, null, { timeout: 40000, polling: 100 }).then(() => true).catch(() => false)
+          await page.waitForTimeout(3000)
+          lk.heldAfterEnd = await page.evaluate(() => Boolean(document.querySelector('#wing[data-film]')))
+          lk.endGold = await page.evaluate(() => document.querySelector('.film-evening-gold')?.textContent?.trim() ?? null)
+          shots.push(await shot(page, dir, '06b-evening-held'))
+          lk.goldPressedAt = Date.now()
+          lk.goldPressed = await press(page, '.film-evening-gold')
         }
       }
       lk.home = await page.waitForFunction(() => !document.querySelector('#wing[data-film]'), null, { timeout: 60000, polling: 50 }).then(() => true).catch(() => false)
-      lk.msToLobby = Date.now() - t
+      lk.msToLobby = Date.now() - (lk.goldPressedAt ?? t)
       lk.url = page.url().replace(BASE, '')
       await page.waitForTimeout(1500)
       shots.push(await shot(page, dir, '07-lobby'))
@@ -502,7 +511,7 @@ for (const engine of ENGINES) for (const width of WIDTHS) for (const lang of LAN
   const s = r.shots.map((x) => `${x.name.slice(3)} ${x.pictureShare ?? '?'}%`).join(' · ')
   console.log(`${engine} ${width} ${lang}: first picture ${r.firstPicture?.toFixed?.(2)} s, ${Math.round((r.bytesToFirstPicture ?? 0) / 1024)} kB · ${s}${r.failed ? ` · FAILED ${r.failed}` : ''} · errors ${r.errors.length}`)
   if (r.afterLook) console.log(`   after the look at ${r.afterLook.work}: up to ${r.afterLook.up}, on ${r.afterLook.steps.map((x) => x.to).join(' > ') || '(no press)'}; reached ${r.afterLook.reached} (the stop after ${r.afterLook.opener}: ${r.afterLook.target})`)
-  if (r.lookup) console.log(`   look up: gold ${JSON.stringify(r.lookup.gold)}, ahead ${r.lookup.fetchedAhead.length}, played ${r.lookup.played} after ${r.lookup.msToPlay} ms, fade step ${r.lookup.fade?.largestStep}, lobby ${r.lookup.home} at ${r.lookup.msToLobby} ms${CUT ? `, cut to lobby ${r.lookup.cutHome} in ${r.lookup.msCutToLobby} ms` : ''}`)
+  if (r.lookup) console.log(`   look up: gold ${JSON.stringify(r.lookup.gold)}, ahead ${r.lookup.fetchedAhead.length}, played ${r.lookup.played} after ${r.lookup.msToPlay} ms, fade step ${r.lookup.fade?.largestStep}, lobby ${r.lookup.home} at ${r.lookup.msToLobby} ms${CUT ? `, cut to lobby ${r.lookup.cutHome} in ${r.lookup.msCutToLobby} ms` : `, held after its end ${r.lookup.heldAfterEnd} with gold ${JSON.stringify(r.lookup.endGold)}, lobby timed from the gold's press ${r.lookup.goldPressed}`}`)
   if (r.joins) for (const j of r.joins) console.log(`   join ${j.clip}: start mean ${j.start?.mean} max ${j.start?.max} · end mean ${j.end?.mean} max ${j.end?.max}${j.error ? ` ${j.error}` : ''}`)
   writeFileSync(join(OUT, 'report.json'), JSON.stringify(report, null, 1))
 }

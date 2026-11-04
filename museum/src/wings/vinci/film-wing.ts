@@ -1602,6 +1602,7 @@ export function createWing(): WingModule {
       evening?.stop()
       leaveWingFinished()
     }
+    standEveningGold(wing, home)
     // a press anywhere, Escape, Enter or Space goes on at once; every other key is held, so nothing moves behind the evening
     addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); home() }, { capture: true, signal })
     addEventListener('keydown', e => {
@@ -1609,8 +1610,46 @@ export function createWing(): WingModule {
       if (!e.repeat && (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ')) home()
     }, { capture: true, signal })
     const widen = wide && box().height < innerHeight - 0.5 ? () => { eveningFull = true } : undefined
-    void evening.play({ widen }).then(home, home)
+    // NO TIMER IN THE VISIT: an evening played to its end holds its last frame and waits for the gold; one that cannot play goes home
+    void evening.play({ widen }).then(how => { if (how !== 'ended') home() }, home)
     return true
+  }
+  /** THE ENDING'S GOLD: while the evening plays and after it, one gold control
+      stands where gold stood and names the ending; its press is the way home */
+  let eveningGold: HTMLButtonElement | undefined
+  function standEveningGold(wing: HTMLElement, home: () => void): void {
+    eveningGold?.remove()
+    const real = form === 'desk' ? hosts?.stage.querySelector<HTMLElement>('.desk-on') : phone?.gold
+    const said = text(lobbyWord())
+    const gold = make('button', form === 'desk' ? 'desk-on film-evening-gold' : 'film-gold film-evening-gold')
+    gold.type = 'button'
+    gold.setAttribute('aria-label', said)
+    if (form === 'desk') {
+      const words = make('span', 'desk-on-words')
+      words.append(make('span', 'desk-on-title', said))
+      const arrow = make('span', 'desk-on-arrow')
+      arrow.append(icon(ARROW_ON, 'desk-ic'))
+      gold.append(words, arrow)
+    } else {
+      // the phone's gold paints from its box's own colours, which this one, standing outside the box, takes along
+      const own = phone ? getComputedStyle(phone.root) : null
+      for (const name of ['--gold', '--gold-ink']) gold.style.setProperty(name, own?.getPropertyValue(name) ?? '')
+      // the words alone, as the last stop's gold stands them upright
+      gold.append(make('span', 'film-gold-name', said))
+    }
+    gold.addEventListener('click', home)
+    // at the corner gold stood in, read from gold itself, which stays laid out under the evening
+    const place = (): void => {
+      const r = real?.getBoundingClientRect()
+      if (!r || r.width < 1 || r.height < 1 || r.right > innerWidth + 0.5 || r.bottom > innerHeight + 0.5) return
+      Object.assign(gold.style, { right: `${Math.round(innerWidth - r.right)}px`, bottom: `${Math.round(innerHeight - r.bottom)}px`,
+        width: `${Math.round(r.width)}px`, height: `${Math.round(r.height)}px` })
+    }
+    place()
+    wing.append(gold)
+    addEventListener('resize', () => requestAnimationFrame(place), { signal })
+    gold.focus({ preventScroll: true })
+    eveningGold = gold
   }
   /** THE DESCENT: the walk's start to the first stop, after the opening and the door */
   async function descend(): Promise<void> {
@@ -2078,6 +2117,7 @@ export function createWing(): WingModule {
       delete hosts?.stage.parentElement?.dataset['walk']
       cutCard?.remove()
       evening = undefined; eveningOn = eveningFull = eveningAsked = false
+      eveningGold?.remove(); eveningGold = undefined
       welcome?.dispose(); welcome = undefined
       if (doorStanding) delete document.documentElement.dataset['naDoor']
       doorStanding = false
