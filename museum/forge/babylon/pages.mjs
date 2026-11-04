@@ -11,12 +11,12 @@ import { fileURLToPath } from 'node:url'
 
 export const APP = resolve(dirname(fileURLToPath(import.meta.url)), '../..')
 /** the kit's ports; 5199 (the sweep) and 5400 (the walk server) are never a kit tool's. A seat given its own ten ports
-    names them in BABYLON_PORTS ("5220-5229"), inside the Babylon band 5210 to 5299 */
+    names them in BABYLON_PORTS ("5220-5229"), inside the Babylon band 5210 to 5399 */
 export function portRange(text) {
   if (!text) return [5210, 5219]
   const m = /^(\d+)-(\d+)$/.exec(String(text).trim())
   const r = m ? [Number(m[1]), Number(m[2])] : null
-  if (!r || r[0] > r[1] || r[0] < 5210 || r[1] > 5299) throw new Error(`BABYLON_PORTS "${text}": write <first>-<last> inside 5210-5299`)
+  if (!r || r[0] > r[1] || r[0] < 5210 || r[1] > 5399) throw new Error(`BABYLON_PORTS "${text}": write <first>-<last> inside 5210-5399`)
   return r
 }
 export const PORTS = portRange(process.env.BABYLON_PORTS)
