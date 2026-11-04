@@ -4,7 +4,7 @@
   "unit": [[445733.7, 3600786.0], [445766.0, 3600793.5], [445776.0, 3600751.0], [445733.7, 3600750.0]],
   "core": [[445744.3, 3600785.9], [445761.4, 3600790.4], [445767.3, 3600762.4], [445744.3, 3600760.9]],
   "src": "S3.45 read off (plus or minus 2 m): the cells' block either side of the central passage, a slightly irregular quadrangle at 445744 to 445767 E, 3600761 to 3600790 N, the corridor round it, the outer wall, the west range and the south range with the stair room; about 1,500 m2 drawn (P2021 p. 101: a half-basement of about 1,600 m2); turned with the palace's north and east walls",
-  "foot": 11.0,
+  "foot": 10.9,
   "deck": 12.4,
   "coreTop": 13.0,
   "cells": 7,
