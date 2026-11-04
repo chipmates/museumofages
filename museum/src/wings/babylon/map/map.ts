@@ -33,6 +33,7 @@ import { mountTower } from '../tower/tower'
 import { mountGardens, type GardenState } from '../gardens/gardens'
 import { palmGeometry } from '../gate/gate-life'
 import { mountNabu } from '../nabu/nabu'
+import { mountHouse } from '../house/house'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -49,7 +50,7 @@ const say = (s: string): void => {
 const D2R = Math.PI / 180
 
 say('reading the plan')
-const [plan, cams, pieces, recordClasses, courtPlan, towerPlan, gardensPlan, nabuPlan]: [J, J, Pieces, ClassFile, J, J, J, J] = await Promise.all([
+const [plan, cams, pieces, recordClasses, courtPlan, towerPlan, gardensPlan, nabuPlan, housePlan]: [J, J, Pieces, ClassFile, J, J, J, J, J] = await Promise.all([
   fetch(new URL('./map-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('./map-cams.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../pieces.json', import.meta.url)).then((r) => r.json()),
@@ -58,12 +59,13 @@ const [plan, cams, pieces, recordClasses, courtPlan, towerPlan, gardensPlan, nab
   fetch(new URL('../tower/tower-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../gardens/gardens-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../nabu/nabu-plan.json', import.meta.url)).then((r) => r.json()),
+  fetch(new URL('../house/house-plan.json', import.meta.url)).then((r) => r.json()),
 ])
 if (q.get('tower') === 'base') plan.tower.stages = plan.tower.stages.slice(0, 1)
 const F = makeFrame(plan)
 const t0 = performance.now()
 const tones = tonesFrom(plan)
-// stop 5's candidates, stop 6's court and throne room, stop 8's temple and stop 9's precinct wall, Gate 5's recess, the street before
+// stop 5's candidates, stop 6's court and throne room, stop 7's houses, stop 8's temple and stop 9's precinct wall, Gate 5's recess, the street before
 // it and the tower draw themselves; the city's bodies are built without the prisms they replace (the gardens open the
 // palace's rooms over the vaulted building before the court draws them)
 /** the palms of the garden: between the gate's near palm and the plain's far one, for 150 to 400 m */
@@ -73,7 +75,9 @@ const court = mountCourt(gardens.built, plan, courtPlan, tones)
 const tower = mountTower(court.built, plan, towerPlan, tones)
 // stop 8's Nabu temple the same way, and a visitor stands on its floor
 const nabu = mountNabu(tower.built, plan, nabuPlan, tones)
-const built = nabu.built
+// stop 7's houses likewise
+const house = mountHouse(nabu.built, plan, housePlan, tones)
+const built = house.built
 const gardenState = (q.get('garden') ?? 'planted') as GardenState
 gardens.setGarden(gardenState)
 const planMs = Math.round(performance.now() - t0)
@@ -147,6 +151,7 @@ scene.add(court.mesh)
 scene.add(tower.mesh)
 scene.add(...gardens.meshes)
 scene.add(nabu.mesh)
+scene.add(house.mesh)
 uView.value = q.get('view') === 'classes' ? 1 : 0
 /* the class view from the record at the camera's stop: some rows hold at certain stops only (the street's) */
 let tonedAt = '', painted: Painted = { bodies: 0, byLetters: [] }
@@ -154,8 +159,8 @@ function toneAt(stop: number): void {
   if (String(stop) === tonedAt) return
   tonedAt = String(stop)
   const name = recordNamer(pieces, recordClasses, tonedAt)
-  const city = toneMapBodies(bodies.group, built, name), own = court.tone(name), five = gardens.tone(name), nine = tower.tone(name), temple = nabu.tone(name)
-  painted = { bodies: city.bodies + own.bodies + five.bodies + nine.bodies + temple.bodies, byLetters: [...city.byLetters, ...own.byLetters, ...five.byLetters, ...nine.byLetters, ...temple.byLetters] }
+  const city = toneMapBodies(bodies.group, built, name), own = court.tone(name), five = gardens.tone(name), six = house.tone(name), nine = tower.tone(name), temple = nabu.tone(name)
+  painted = { bodies: city.bodies + own.bodies + five.bodies + six.bodies + nine.bodies + temple.bodies, byLetters: [...city.byLetters, ...own.byLetters, ...five.byLetters, ...six.byLetters, ...nine.byLetters, ...temple.byLetters] }
 }
 
 /* the person for size, at each stop's place for one */
@@ -271,6 +276,7 @@ function aim(pos: V3, look: V3, hfov: number, w: number, h: number, shift = 0): 
   tower.setPixel(camera.fov, h)
   gardens.setPixel(camera.fov, h)
   nabu.setPixel(camera.fov, h)
+  house.setPixel(camera.fov, h)
   camera.updateMatrixWorld(true)
   skyDome.position.copy(camera.position)
   skyDome.updateMatrixWorld(true)
@@ -374,7 +380,7 @@ const rig = {
     duration: path.duration,
   }),
   /** what the scene holds, from the bodies the page built */
-  facts: () => ({ ...built.facts, court: court.court.facts, etemenanki: tower.tower.facts, gardens: gardens.facts, nabu: nabu.nabu.facts, streetLevelAtS: undefined, sunAt: Object.fromEntries(cams.stops.map((s: J) => [s.n, sunAt(hourOf(s.hour))])) }),
+  facts: () => ({ ...built.facts, court: court.court.facts, etemenanki: tower.tower.facts, gardens: gardens.facts, nabu: nabu.nabu.facts, house: house.house.facts, streetLevelAtS: undefined, sunAt: Object.fromEntries(cams.stops.map((s: J) => [s.n, sunAt(hourOf(s.hour))])) }),
   stand: (E: number, N: number) => {
     const [x, z] = F.s(E, N)
     return { stand: stand(x, z), ground: built.ground(x, z), street: built.streetAt(x, z) }

@@ -11,7 +11,7 @@ import * as TSL from 'three/tsl'
 import { APP } from './pages.mjs'
 import { cameraFrom, facesFrom, fittedFov } from './geometry.mjs'
 
-const COURT = join(APP, 'src/wings/babylon/court'), TOWER = join(APP, 'src/wings/babylon/tower'), GARDENS = join(APP, 'src/wings/babylon/gardens'), NABU = join(APP, 'src/wings/babylon/nabu')
+const COURT = join(APP, 'src/wings/babylon/court'), TOWER = join(APP, 'src/wings/babylon/tower'), GARDENS = join(APP, 'src/wings/babylon/gardens'), NABU = join(APP, 'src/wings/babylon/nabu'), HOUSE = join(APP, 'src/wings/babylon/house')
 /** the garden's palms as the map page builds them (map.ts PALM_MID) */
 const PALM_MID = { seg: 4, sides: 5, fronds: 16, steps: 4 }
 const MAP = join(APP, 'src/wings/babylon/map'), GATE = join(APP, 'src/wings/babylon/gate'), OPEN = join(APP, 'src/wings/babylon/open')
@@ -79,7 +79,12 @@ export async function mountMap(stop, { reach = 400 } = {}) {
   // and stop 8's temple in place of the map's block
   const { buildNabu } = await import(join(NABU, 'nabu-geom.ts'))
   const nabu = buildNabu(tower.built, plan, json(join(NABU, 'nabu-plan.json')))
-  const built = nabu.built
+  // stop 7's houses likewise
+  const { buildHouse, lanesBody } = await import(join(HOUSE, 'house-geom.ts'))
+  const hp = json(join(HOUSE, 'house-plan.json'))
+  const house = buildHouse(nabu.built, plan, hp)
+  const houseBodies = [...house.bodies, lanesBody(house.lanes, hp.flat.level)]
+  const built = house.built
   const F = makeFrame(plan)
   const stand = (x, z) => built.stand(x, z)
   const path = makePath(cams, F.s, stand)
@@ -101,16 +106,18 @@ export async function mountMap(stop, { reach = 400 } = {}) {
   const [ex, , ez] = p.pos
   const keep = (v) => { const cx = (v[0].x + v[1].x + v[2].x) / 3, cz = (v[0].z + v[1].z + v[2].z) / 3; return Math.hypot(cx - ex, cz - ez) <= reach }
   const faces = mapFaces([], bodies.group, built, new THREE.Matrix4(), keep)
-  for (const b of court.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
+  for (const b of [...court.bodies, ...houseBodies]) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
   for (const b of tower.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
   // stop 5's bodies whole (an edge terrace's top is a few long triangles whose middles lie past the reach), and each
   // plant whole where its foot lies within the reach
   for (const b of gardens.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`)
   for (const p of planting.plants) if (Math.hypot(p.x - ex, p.z - ez) <= reach) facesFrom(faces, p.geometry, null, () => `map:${p.id}`)
   for (const b of nabu.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
-  const surface = (b) => /^map:(street|ground|water-|gate5-street-)/.test(b)
+  const surface = (b) => /^map:(street|ground|water-|gate5-street-|merkes-lanes$)/.test(b)
   return {
     court, tower, gardens, planting, nabu,
+    house,
+    houseBodies,
     page: 'map', stop: String(stop), frame: "the map's scene metres (x east, z south, y up)", faces, cameras, eyes, reach,
     ground: (x, z) => built.ground(x, z),
     track: (dt = 0.25) => pathTrack(path, n, dt, (q) => ({ kind: q.kind, desktop: view(q.pos, q.look, q.hfov, q.shift), phone: view(q.pos, q.phone.look, q.phone.hfov, q.phone.shift) })),

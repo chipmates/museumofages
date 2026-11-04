@@ -17,7 +17,9 @@ import { MeshStandardNodeMaterial, Vector3, type Material } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import { BR, C, PAL, band, bond, footprint, hash2, lines } from '../gate/gate-mat'
 import { classColour, greyNode, uView, type ClassTones } from '../map/mass'
-import { TONES } from '../open/earth'
+import { PRESETS as PAVING, pavingBrickCourt } from '../parts/paving-brick-court-babylon'
+import { plasterWash } from '../parts/plaster-wash-babylon'
+import { PRESETS as ROOF, roofEarth } from '../parts/roof-earth-throneroom-babylon'
 import type { CourtFrame } from './court-geom'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -393,87 +395,23 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   const brick = mix(V(PAL.buff as RGB), V(PAL.redBrown as RGB), bW.brick.mul(0.45).add(fine.mul(0.08))).mul(float(1).add(varyW.mul(0.12)))
   const wallCol = mix(brick, V(PAL.asphalt as RGB), bW.bed.add(bW.head).min(1))
 
-  /* ── the paving: square baked bricks laid in bitumen, each row half a brick on. The bricks of one firing alike,
-     so the tone drifts over metres rather than jumping brick by brick; grain and pits inside each brick; the joints
-     opened and chipped, half filled with dust; the edges worn round. People walked from the main door out along its
-     axis, through the three doors, and across from the court's east side (its gate's place there is not known): there
-     the bricks are cleaner and the edges rounder; dust lies where nobody walked and along the walls' feet ── */
-  const fpX = footprint(U, vec3(1, 0, 0), vec3(0, 1, 0)), fpZ = footprint(U, vec3(0, 0, 1), vec3(0, 1, 0))
-  const fpw = max(fpX, fpZ)
-  const kz = floor(P.z.div(BR))
-  const px = P.x.add(kz.sub(floor(kz.div(2)).mul(2)).mul(BR / 2))
-  const kx = floor(px.div(BR))
-  const pNear = float(1).sub(smoothstep(0.012, 0.05, fpw))
-  const pSeen = float(1).sub(smoothstep(0.06, 0.25, fpw))
-  const main = [...F.doors].sort((a, b) => b.r - a.r)[0]!
-  const axis = exp(P.x.sub(main.c).div(3.0).mul(P.x.sub(main.c).div(3.0)).negate()).mul(float(1).sub(clamp(float(F.zF).sub(P.z).div(F.zF - c.z0), 0, 1).mul(0.65)))
-  let thresh: N = float(0)
-  for (const d of F.doors) {
-    const dd = length(vec2(P.x.sub(d.c), max(float(F.zF).sub(P.z), 0)))
-    thresh = max(thresh, exp(dd.div(3.2).mul(dd.div(3.2)).negate()))
-  }
-  // the way from the east side's middle to the main door, a segment in plan
-  const ax = c.x1, az = (c.z0 + c.z1) / 2, bxW = main.c, bzW = F.zF
-  const sx = bxW - ax, sz = bzW - az
-  const sh = clamp(P.x.sub(ax).mul(sx).add(P.z.sub(az).mul(sz)).div(sx * sx + sz * sz), 0, 1)
-  const segD = length(vec2(P.x.sub(ax).sub(sh.mul(sx)), P.z.sub(az).sub(sh.mul(sz))))
-  const way = exp(segD.div(2.6).mul(segD.div(2.6)).negate()).mul(0.65)
-  const wearRaw = max(axis, max(thresh, way)).add(mx_noise_float(vec3(P.x.mul(0.5), 6.1, P.z.mul(0.5))).mul(0.18))
-  const wear = clamp(wearRaw, 0, 1)
-  const hp = hash2(kx, kz), hp2 = hash2(kx.add(7.7), kz.add(3.1))
-  const batch = mx_noise_float(vec3(P.x.mul(0.33), 1.3, P.z.mul(0.33)))
-  const fire = clamp(float(0.36).add(batch.mul(0.18)).add(hp.sub(0.5).mul(0.16).mul(pSeen)), 0, 1)
-  let pTone: N = mix(V(PAL.buff as RGB), V(PAL.redBrown as RGB), fire).mul(float(0.96).add(hp2.sub(0.5).mul(0.09).mul(pSeen))).mul(vec3(1.07, 1.0, 0.84))
-  const grain = mx_noise_float(P.mul(vec3(26, 3, 26))).mul(0.11).mul(pNear)
-  const pits = smoothstep(0.32, 0.5, mx_noise_float(P.mul(vec3(70, 5, 70)))).mul(0.22).mul(pNear)
-  pTone = pTone.mul(float(1).add(grain).sub(pits))
-  // where in its brick a point lies: the distance to the brick's nearest edge, metres
-  const fxB = fract(px.div(BR)).mul(BR), fzB = fract(P.z.div(BR)).mul(BR)
-  const edgeD = min(min(fxB, float(BR).sub(fxB)), min(fzB, float(BR).sub(fzB)))
-  const chip = mx_noise_float(P.mul(vec3(14, 2, 14))).add(0.5)
-  const jh = float(0.0035).add(chip.mul(0.004)).add(mx_noise_float(P.mul(vec3(5, 1, 5))).add(0.5).mul(0.005)).add(wear.mul(0.004))
-  const jFar = max(lines(P.z, BR, 0.0045, fpZ), lines(px, BR, 0.0045, fpX))
-  // a corner broken off here and there, the gap filled like a joint
-  const cornerD = length(vec2(min(fxB, float(BR).sub(fxB)), min(fzB, float(BR).sub(fzB))))
-  const hc = hash2(kx.add(19.3), kz.add(2.9))
-  const broken = step(0.62, hc).mul(float(1).sub(smoothstep(hc.mul(0.05).sub(0.012), hc.mul(0.05).sub(0.008).add(fpw.mul(0.5)), cornerD)))
-  const jNear = max(float(1).sub(smoothstep(jh.sub(0.0015), jh.add(0.0015).add(fpw.mul(0.5)), edgeD)), broken)
-  const jointP = mix(jFar, jNear, pNear)
-  const arris = float(1).sub(smoothstep(jh, jh.add(0.014).add(wear.mul(0.012)), edgeD)).mul(pNear)
-  pTone = pTone.mul(float(1).sub(arris.mul(0.16)))
-  // dust: drifts where nobody walked and along the walls' feet; the walked ways swept cleaner and a shade darker
-  const dWall = min(min(P.z.sub(c.z0), float(F.zF).sub(P.z)), min(P.x.sub(c.x0), float(c.x1).sub(P.x)))
-  const inCourt = step(P.z, F.zF)
-  const foot = float(1).sub(smoothstep(0.1, 2.2, dWall)).mul(inCourt).mul(float(1).sub(min(inDoorX, 1).mul(step(float(F.zF).sub(P.z), 2.0))))
-  const drift = smoothstep(0.1, 0.8, mx_noise_float(vec3(P.x.mul(0.23), 2.7, P.z.mul(0.23))).add(0.5))
-  const dust = clamp(drift.mul(0.4).add(foot.mul(0.4)).add(float(0.2).mul(float(1).sub(inCourt))).add(0.1), 0, 1).mul(float(1).sub(wear.mul(0.9)))
-  const dustCol = vec3(0.52, 0.47, 0.39)
-  pTone = mix(pTone.mul(mix(vec3(1), vec3(0.97, 0.91, 0.86), wear)), dustCol, dust.mul(0.62))
-  // the joints: bitumen, half filled with the court's dust; swept emptier and darker on the walked ways
-  const jointPCol = mix(mix(V(PAL.asphalt as RGB).mul(2), dustCol.mul(0.78), float(0.55).add(chip.mul(0.35))), V(PAL.asphalt as RGB).mul(2.5), wear.mul(0.35))
-  const pavingCol = mix(pTone, jointPCol, jointP.mul(0.72))
+  /* ── the paving (part paving-brick-court-babylon): worn where people walked from the main door along its axis,
+     through the three doors, and across from the court's east side (its gate's place there is not known) ── */
+  const pv = pavingBrickCourt({
+    p: P, U, ax: vec3(1, 0, 0), az: vec3(0, 0, 1), brick: PAVING.court.brick, court: c, front: F.zF, doors: F.doors,
+    way: { x: c.x1, z: (c.z0 + c.z1) / 2 }, inDoorX,
+  })
+  const { dWall, inCourt } = pv
+  const pavingCol = pv.colour
 
-  /* ── inside the room: a white wash, warmed by the light the brick floors throw in ── */
-  // the ceiling takes the page's warm ground light only; the room's own bounce off white walls is not carried, so
-  // the ceiling's plaster is cooled by what that bounce would give back
-  const plaster = V(col.plaster).mul(select(n.y.lessThan(-0.5), vec3(0.9, 1.0, 1.16), vec3(1.06, 1.0, 0.9))).mul(mx_noise_float(P.mul(0.9)).mul(0.04).add(1))
+  /* ── inside the room: the white wash (part plaster-wash-babylon) ── */
+  const plaster = plasterWash(P, n, col.plaster)
 
-  /* ── the roof: an earth deck in broad patches of older and newer plaster, fine cracks, damp along the parapet's foot;
-     the parapet's top a course of baked brick laid flat ── */
-  const fR = max(footprint(U, vec3(1, 0, 0), vec3(0, 1, 0)), footprint(U, vec3(0, 0, 1), vec3(0, 1, 0)))
+  /* ── the roof: an earth deck behind its parapet (part roof-earth-throneroom-babylon) ── */
   const dPar = min(min(P.x.sub(o.x0 + pt), float(o.x1 - pt).sub(P.x)), min(P.z.sub(o.z0 + pt), float(o.z1 - pt).sub(P.z)))
-  // newer plaster paler, older weathered darker and greyer, each fading into the next over metres: a hard patch edge
-  // reads as camouflage from the fly
-  const fresh = smoothstep(0.15, 0.4, mx_noise_float(vec3(P.x.mul(0.21), 8.3, P.z.mul(0.21))))
-  const crackCell = mx_worley_noise_vec2(vec2(P.x, P.z).mul(1.6))
-  const cracks = smoothstep(0.06, 0.0, crackCell.y.sub(crackCell.x)).mul(float(1).sub(smoothstep(0.01, 0.05, fR)))
-  const old = smoothstep(0.1, 0.45, mx_noise_float(vec3(P.x.mul(0.11), 1.9, P.z.mul(0.11))).negate())
-  const deckTone = V(TONES.roof).mul(float(1).add(mx_noise_float(vec3(P.x.mul(0.05), 4.1, P.z.mul(0.05))).mul(0.16)).add(mx_noise_float(vec3(P.x.mul(0.45), 2.2, P.z.mul(0.45))).mul(0.08)))
-  // a darker damp margin along the parapet's foot
-  const deckCol = mix(deckTone.mul(mix(float(1), float(1.12), fresh.mul(0.8))), deckTone.mul(vec3(0.8, 0.8, 0.82)), old.mul(0.7))
-    .mul(float(1).sub(float(1).sub(smoothstep(0.0, 1.2, dPar)).mul(0.2))).mul(float(1).sub(cracks.mul(0.35)))
   const copeU = select(abs(P.x.sub((o.x0 + o.x1) / 2)).greaterThan((o.x1 - o.x0) / 2 - pt), P.z, P.x)
-  const copeCol = mix(V(PAL.buff as RGB).mul(0.86), V(PAL.asphalt as RGB), lines(copeU, BR, 0.006, fR).mul(0.8))
+  const rf = roofEarth({ p: P, U, ax: vec3(1, 0, 0), az: vec3(0, 0, 1), dPar, copeU, tone: ROOF.court.tone })
+  const deckCol = rf.deck, copeCol = rf.cope
 
   /* ── one colour per point, the class view over it ── */
   let stateCol: N = greyNode(0.42)
