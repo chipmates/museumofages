@@ -1159,27 +1159,27 @@
    "name": "the North Palace terrace",
    "poly": [
     [
-     445522.8,
-     3600809.46
+     445522.3,
+     3600809.32
     ],
     [
      445714,
      3600862
     ],
     [
-     445719.59,
-     3600965.5
+     445719.62,
+     3600966.0
     ],
     [
-     445522.8,
-     3600965.5
+     445522.3,
+     3600966.0
     ]
    ],
    "base": 0,
    "top": 15.0,
    "plan": "R",
    "height": "R",
-   "src": "C6.2, S3.45: from the inner walls north to the building's north face; terrace sections run on 22 m north and 48 m west of the building (P2021 p. 117), drawn as the gardens candidate's steps; the borders not fully dug (P2021 p. 114)",
+   "src": "C6.2, S3.45: from the inner walls north to the building's north face; terrace sections run on 22 m north and 48 m west of the building (P2021 p. 117), drawn as the gardens candidate's steps; the borders not fully dug (P2021 p. 114); laps 0.5 m past the building's north and west faces",
    "hsrc": "main terrace +15 (P2021 p. 118)"
   },
   {
@@ -2075,10 +2075,10 @@
   },
   "abutments": {
    "east": {
-    "from": 0,
+    "from": -0.3,
     "to": 40.64,
     "across": 15,
-    "src": "the east land pier from its inner face (126 m from the west one's, P2021 p. 204) to the Arahtu quay at about 445569.5 E (S13-08, Wetzel pl. 51 labels); no gate: the gate there is later (K1914 ch. XXXII)"
+    "src": "the east land pier from its inner face (126 m from the west one's, P2021 p. 204) to the Arahtu quay at about 445569.5 E (S13-08, Wetzel pl. 51 labels); no gate: the gate there is later (K1914 ch. XXXII); laps 0.3 m east under the quay street so its end face does not share the deck's"
    },
    "west": {
     "from": 166.64,
@@ -2775,11 +2775,11 @@
    ]
   ],
   "w": 2.8,
-  "level": -1.0,
+  "level": -1.006,
   "wall": 0.8,
   "plan": "R",
   "height": "G",
-  "src": "2.6 to 2.9 m wide, established from the river to the middle of the South Palace; its further line not known (P2021 p. 218); about 570 BC it reaches the river at the West Fortification's south-east (river sheet 1.4, inferred); the later outflow through the tower of the Nabonidus wall (K1914 ch. XXXIII) is not shown"
+  "src": "2.6 to 2.9 m wide, established from the river to the middle of the South Palace; its further line not known (P2021 p. 218); about 570 BC it reaches the river at the West Fortification's south-east (river sheet 1.4, inferred); the later outflow through the tower of the Nabonidus wall (K1914 ch. XXXIII) is not shown; drawn 6 mm under the river's face so the two waters do not share a plane in the mouth"
  },
  "houses": {
   "says": "the filled city as a type: courtyard houses of one storey in blocks between streets, never a dug plan",
