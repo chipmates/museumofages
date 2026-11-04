@@ -11,8 +11,8 @@
      ?put=<url>      where the rig hands its files (the shooter's own server) */
 
 import {
-  BackSide, Color, DirectionalLight, Float32BufferAttribute, Group, InstancedBufferAttribute, InstancedMesh, Matrix3, Matrix4, Mesh,
-  MeshBasicNodeMaterial, MeshStandardNodeMaterial, Object3D, OrthographicCamera, PerspectiveCamera, PMREMGenerator, Scene, SphereGeometry, Vector3,
+  BackSide, BoxGeometry, Color, DirectionalLight, Float32BufferAttribute, Group, InstancedBufferAttribute, InstancedMesh, Matrix3, Matrix4, Mesh,
+  MeshBasicNodeMaterial, MeshStandardNodeMaterial, Object3D, OrthographicCamera, PerspectiveCamera, PlaneGeometry, PMREMGenerator, Quaternion, Scene, SphereGeometry, Vector3,
 } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import { createStack } from '../../../stack'
@@ -23,13 +23,19 @@ import type { Print } from '../../animals/cave/site'
 import { PERSON_FORMS, signPerson } from '../../place/person'
 import { buildPlan, makeFrame } from '../map/plan'
 import { buildBodies, tonesFrom, uView, type Sky } from '../map/mass'
-import { buildGate, gateFrame, hourOf, sunAt, sunVector, type V3 } from '../gate/gate-geom'
+import { buildGate, gateFrame, hourOf, type V3 } from '../gate/gate-geom'
+import { sunAt as mapSunAt, sunVector as mapSunVector } from '../map/sun'
 import { animalField } from '../gate/gate-relief'
 import { assemble, panelGrid } from '../gate/gate-mesh'
 import { birdsGeometry, palmsGeometry } from '../gate/gate-life'
 import { bakePanel, lifeMaterial, makeUniforms, panelMaterial, pavingMaterial, wallMaterial, C as COURSE, type Rooms } from '../gate/gate-mat'
 import { airColour, createOpenLinear, makeAirUniforms, skyColour } from './air'
-import { blockMaterial, boxMaterial, groundMaterial, houseMaterial, streetMaterial, toneTexture, uTracts, waterMaterial } from './earth'
+import { blockMaterial, boxMaterial, groundMaterial, houseMaterial, northMaterial, palmMaterial, streetMaterial, toneTexture, uTracts, waterMaterial } from './earth'
+import { northEntry } from './north'
+import { merlonMesh, northMeshes } from './north-mesh'
+import { rebuildHouses } from './houses'
+import { buildPlain } from './plain'
+import { paintPlain, palmMesh } from './green'
 import { makeFlight, resolveFlight, type FlightSample } from './flight'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -64,6 +70,15 @@ const dropB = new Set<string>(plan.frame.mapBlocksReplaced), dropW = new Set<str
 const cityPlan = structuredClone(mapPlan)
 cityPlan.blocks = cityPlan.blocks.filter((b: J) => !dropB.has(b.id))
 cityPlan.walls = cityPlan.walls.filter((w: J) => !dropW.has(w.id))
+/* the north entry (north.ts) replaces the map's North Gate, dam walls and north wall and trims the North Fortification; the
+   North Palace's two sunken courts, 34 x 37 and 33 x 35 m, on their places in S3.45 (REC bab.northpalace.main.plan) */
+const levelProbe = buildPlan(cityPlan, { houses: false })
+const NORTH = northEntry(cityPlan, (x, z) => levelProbe.streetAt(x, z).level, Number(cityPlan.classes.band))
+cityPlan.blocks = cityPlan.blocks.filter((b: J) => !NORTH.drop.includes(b.id))
+for (const b of cityPlan.blocks) {
+  if (NORTH.trim[b.id]) b.poly = NORTH.trim[b.id]
+  if (b.id === 'north-palace-main') b.holes = [{ id: 'court-west', rect: [445546, 445580, 3600903, 3600940] }, { id: 'court-east', rect: [445598, 445632, 3600900, 3600935] }]
+}
 const city = buildPlan(cityPlan)
 const canalZ: number[] = []
 {
@@ -117,22 +132,47 @@ const skyDome = (() => {
 scene.add(skyDome)
 
 say('building the city and the gate')
+const PLAIN = buildPlain(cityPlan, { reach: Number(q.get('palmReach') ?? 3600) })
+const PLAIN_MAP = paintPlain(PLAIN)
 const tones = tonesFrom(cityPlan)
 const bodies = buildBodies(city, tones, sky, AIR.uSun, canalZ)
 scene.add(bodies.group)
 
 /* the city's own materials (earth.ts), and per-instance tones for the boxes */
 const uTime = uniform(0)
+const HOUSES = { count: 0, open: 0 }
 {
   const blocks = bodies.group.getObjectByName('blocks') as Mesh
   blocks.material = blockMaterial(tones, toneTexture(city.prisms.map((p) => p.id)), Math.max(1, city.prisms.length), U.uPix)
-  const houses = bodies.group.getObjectByName('houses') as InstancedMesh | undefined
-  if (houses) {
-    const list = city.boxes.filter((b) => b.group === 'house')
-    const nums = new Float32Array(list.length)
-    list.forEach((b, i) => { nums[i] = Number(/^house-(\d+)/.exec(b.id)?.[1] ?? i) })
-    houses.geometry.setAttribute('house', new InstancedBufferAttribute(nums, 1))
-    houses.material = houseMaterial(tones)
+  // the map's houses give way to the arrival's own (houses.ts): the same lots, each house its own court, heights and turn
+  const mapHouses = bodies.group.getObjectByName('houses') as InstancedMesh | undefined
+  if (mapHouses) {
+    bodies.group.remove(mapHouses)
+    const H = rebuildHouses(city.boxes.filter((b) => b.group === 'house'), city.ground)
+    const geo = new BoxGeometry(1, 1, 1)
+    geo.deleteAttribute('uv')
+    const im = new InstancedMesh(geo, houseMaterial(tones), H.boxes.length)
+    const n = H.boxes.length
+    // packed so the instanced mesh stays inside eight vertex buffers: (house, range, ground, class band), size, class letters
+    const info = new Float32Array(n * 4), size = new Float32Array(n * 3), cls = new Float32Array(n * 2)
+    const m4 = new Matrix4(), qq = new Quaternion(), upY = new Vector3(0, 1, 0)
+    H.boxes.forEach((b, i) => {
+      qq.setFromAxisAngle(upY, b.yaw)
+      m4.compose(new Vector3(b.x, (b.y0 + b.y1) / 2, b.z), qq, new Vector3(b.sx, b.y1 - b.y0, b.sz))
+      im.setMatrixAt(i, m4)
+      info.set([b.house, b.part, b.gy, b.gy + Number(cityPlan.classes.band)], i * 4)
+      size.set([b.sx, b.y1 - b.y0, b.sz], i * 3)
+      cls.set([2, 2], i * 2)
+    })
+    for (const [k, v, w] of [['hinfo', info, 4], ['size', size, 3], ['cls', cls, 2]] as Array<[string, Float32Array, number]>) geo.setAttribute(k, new InstancedBufferAttribute(v, w))
+    im.instanceMatrix.needsUpdate = true
+    im.castShadow = true
+    im.receiveShadow = true
+    im.frustumCulled = false
+    im.name = 'houses'
+    bodies.group.add(im)
+    HOUSES.count = H.houses
+    HOUSES.open = H.open
   }
   const rest = bodies.group.getObjectByName('towers-and-piers') as InstancedMesh | undefined
   if (rest) {
@@ -142,11 +182,33 @@ const uTime = uniform(0)
     rest.geometry.setAttribute('tone', new InstancedBufferAttribute(k, 1))
     rest.material = boxMaterial(tones)
   }
-  ;(bodies.group.getObjectByName('street') as Mesh).material = streetMaterial(tones)
-  ;(bodies.group.getObjectByName('ground') as Mesh).material = groundMaterial(-1)
-  const wm = waterMaterial(AIR, sky.colour, uTime)
-  bodies.group.traverse((o) => { if (o.name.startsWith('water-')) (o as Mesh).material = wm })
+  ;(bodies.group.getObjectByName('street') as Mesh).material = streetMaterial(tones, { o: NORTH.frame.o, a: NORTH.frame.a, c: NORTH.frame.c }, U.uPix)
+  ;(bodies.group.getObjectByName('ground') as Mesh).material = groundMaterial(-1, { ...PLAIN_MAP, x0: PLAIN.domain.x0, z0: PLAIN.domain.z0, size: PLAIN.domain.size }, sky.colour)
+  // the river and the moats mirror the scene at their level (-1.0), the canal behind the palace the sky only
+  const plane = new Mesh(new PlaneGeometry(1, 1))
+  plane.rotation.x = -Math.PI / 2
+  plane.position.y = -1.0
+  plane.updateMatrixWorld(true)
+  const mirror = q.get('mirror') === '0' ? null : stack.reflector(plane, { resolutionScale: Number(q.get('mirrorScale') ?? 0.5) })
+  const wm = waterMaterial(AIR, sky.colour, uTime, mirror?.node)
+  const wSky = waterMaterial(AIR, sky.colour, uTime)
+  bodies.group.traverse((o) => { if (o.name.startsWith('water-')) (o as Mesh).material = o.name === 'water-canal-north' ? wSky : wm })
 }
+
+/* the north entry's bodies and battlements (north.ts), in one material keyed by kind */
+{
+  const NM = northMeshes(NORTH)
+  const mat = northMaterial(tones, { o: NORTH.frame.o, a: NORTH.frame.a, culvert: NORTH.culvert, split: 8.6, stoneTop: 0.5 }, U.uPix)
+  const mesh = new Mesh(NM.geometry, mat)
+  mesh.castShadow = true
+  mesh.receiveShadow = true
+  mesh.frustumCulled = false
+  mesh.name = 'north-entry'
+  scene.add(mesh, merlonMesh(NM.merlons, mat))
+}
+
+/* the plain's palms (plain.ts, green.ts) */
+scene.add(palmMesh(PLAIN.palms, city.ground, palmMaterial(tones)))
 
 /* the map's street and ground give way to the gate's paving inside its area (the gate page's mask) */
 const uW2G = uniform(new Matrix4().copy(W2G))
@@ -276,9 +338,12 @@ let hourNow = -1
 function setHour(hour: number): void {
   if (Math.abs(hour - hourNow) < 1e-4) return
   hourNow = hour
-  const sG = sunVector(plan, hour)
+  // the walk's one clock: map/sun.ts, in the map's frame (x east, y up, z south); the gate's materials take it in their frame
+  const sW = new Vector3(...mapSunVector(hour))
+  const sGv = sW.clone().applyMatrix3(ROT.clone().transpose())
+  const sG: V3 = [sGv.x, sGv.y, sGv.z]
   ;(U.uSunG.value as Vector3).set(...sG)
-  ;(AIR.uSun.value as Vector3).copy(dirWorld(sG))
+  ;(AIR.uSun.value as Vector3).copy(sW)
   const el = Math.asin(sG[1]) / D2R
   const k = Math.min(1, Math.max(0, (el + 0.5) / 6))
   sunLight.intensity = SUN.i * k
@@ -396,7 +461,9 @@ const streetAt = (s: number, t = 0): { x: number; z: number; level: number } => 
   const [sx, sz] = g2s(x, z)
   return { x: sx, z: sz, level: B.level(z) + L0 }
 }
-const endEye = B.level(sFirst * B.street.dir[1]) + cams.eye
+// the landing: the camera file's `land` (street s), else the gate sketch's first key
+const sLand = Number(cams.land?.street ?? sFirst), tLand = Number(cams.land?.across ?? 0)
+const endEye = streetAt(sLand, tLand).level - L0 + cams.eye
 const [wlx, wlz] = g2s(0, -20)
 const walkLook: [number, number, number] = [wlx, endEye + L0, wlz]
 const flight = makeFlight(resolveFlight(cams.flight, { scene: MF.s, street: streetAt, eye: cams.eye, walkLook }))
@@ -473,8 +540,8 @@ const camFacts = (p: FlightSample, framing: string) => {
 
 const rig = {
   ready: true,
-  state: () => ({ planMs, cityTriangles: bodies.counts.triangles, gate: A.counts, backend: stack.backend, architecture: stack.architecture, hour: HOUR, flight: { duration: flight.duration, length: +flight.length.toFixed(1) } }),
-  views: () => ({ hour: HOUR, sun: sunAt(plan, HOUR), duration: flight.duration, end: flight.end, walkLook }),
+  state: () => ({ planMs, cityTriangles: bodies.counts.triangles, houses: HOUSES, palms: PLAIN.palms.length, fields: PLAIN.fields.length, gate: A.counts, backend: stack.backend, architecture: stack.architecture, hour: HOUR, flight: { duration: flight.duration, length: +flight.length.toFixed(1) } }),
+  views: () => ({ hour: HOUR, sun: mapSunAt(HOUR), duration: flight.duration, end: flight.end, walkLook }),
   /** a still of the flight's frame at a second (0: the first frame), full size, grey or the class view */
   async still(o: { framing: 'desktop' | 'phone'; view: 'grey' | 'classes'; w: number; h: number; css: [number, number]; samples: number; out: string; name: string; t?: number }) {
     setView(o.view)
@@ -484,7 +551,7 @@ const rig = {
     const { bytes, ms } = await render(o.w, o.h, o.samples, stops)
     const file = `${o.out}/${o.name}.png`
     await upload(file, await toPNG(bytes, o.w, o.h))
-    const s = sunAt(plan, HOUR)
+    const s = mapSunAt(HOUR)
     const side = {
       file, framing: o.framing, view: o.view, flightSecond: t, cssSize: o.css, devicePixels: [o.w, o.h], subFrames: o.samples, backend: stack.backend, adapter: stack.architecture,
       hour: `${Math.floor(HOUR)}:${String(Math.round((HOUR % 1) * 60)).padStart(2, '0')}`, sun: { azimuth: +s.azimuth.toFixed(1), elevation: +s.elevation.toFixed(1) }, camera: camFacts(p, o.framing), shadowTexel: +texel.toFixed(3),

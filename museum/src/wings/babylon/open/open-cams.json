@@ -1,76 +1,366 @@
 {
-  "about": "The opening's cameras. A point is {utm: [E, N], y: level} (German excavation zero) or {street: s, y: level | 'eye'}: s metres out on the lion street's line from the gate's face (gate-geom's street direction), the eye 1.65 m over the gate's street profile. The first frame is the flight's second 0; the flight ends on the gate sketch's first key (gate-cams.json stop 2, street:150, a level look at the gate's axis) at the walker's pace.",
-  "hour": "17:32",
-  "hourSays": "one hour for the whole flight (30 s of real time): the map walk's hour on the lion street (map-cams.json stop 2, 17:32); the sun from gate-geom (20 days after the spring equinox, 32.54 N, local apparent solar time)",
-  "eye": 1.65,
-  "first": {
-    "says": "the first grey sketch's last view (window 1, stop 14): from over the west bank at +420, north-east over the tower to the whole city; the look raised about 1.6 degrees so the horizon stands just inside the frame",
-    "desktop": {"at": [445150, 3599450], "y": 420, "look": [446000, 3600500, 40], "hfov": 58},
-    "phone": {"at": [445150, 3599450], "y": 420, "look": [445641, 3600034, 0], "hfov": 34}
+ "about": "The opening's cameras. A point is {utm: [E, N], y: level} (German excavation zero) or {street: s, across: t, y: level | 'eye'}: s metres out on the lion street's line from the gate's face (gate-geom's street direction), t across it (+ west), the eye 1.65 m over the gate's street profile. The first frame is the flight's second 0 (the entry `first`, one camera per framing); the flight comes through the North Gate on the map's street axis (the lion frame) and ends still on the street 28 m inside its south door (`land`: the gate sketch's first key, street 150), looking level down the street at the double gate. Between the two the gate sketch's street line runs about 2.7 degrees west of the lion frame's (6 m at the North Gate), so the last 30 m drift that far west.",
+ "hour": "16:40",
+ "hourSays": "the walk's one clock (map/sun.ts: 20 days after the spring equinox, 32.54 N, local apparent solar time): the landing at 16:40, five minutes before the gate's stop 2 (16:45); the sun at azimuth 265.8, 21.0 degrees high, on the right of a look down the street at heading 168",
+ "eye": 1.65,
+ "first": {
+  "says": "reading B2, the working start: from over the outer city north-west of the moat at +330, south-east over the North entry, the palaces and the river to the tower and the whole inner city; at 16:40 the sun from the right (west), about 101 degrees off the view. Readings A and B1 stay in `readings`; a swap of the start also moves the flight's first three points",
+  "desktop": {
+   "at": [
+    445380,
+    3601950
+   ],
+   "y": 330,
+   "look": [
+    445790,
+    3600450,
+    20
+   ],
+   "hfov": 58
   },
-  "flight": {
-    "duration": 30,
-    "points": [
-      {"utm": [445150, 3599450], "y": 420, "says": "the first frame"},
-      {"street": -910.3, "across": 792.8, "y": 383.9},
-      {"street": -548.0, "across": 638.5, "y": 327.9, "says": "over the west city's riverside, the river and the precinct ahead right"},
-      {"street": 54.9, "across": 491.0, "y": 229.5, "says": "over the river west of the palaces, the look on the gate"},
-      {"street": 250.2, "across": 358.9, "y": 180.9},
-      {"street": 343.9, "across": 213.8, "y": 121.3},
-      {"street": 386.8, "across": 118.7, "y": 109.2, "says": "round over the north moat, the turn onto the street spread over about six seconds"},
-      {"street": 383.6, "across": 50.1, "y": 77.5},
-      {"street": 353.6, "across": 13.0, "y": 53.1},
-      {"street": 315.5, "across": -7.2, "y": 45.9, "says": "onto the lion street's line over the North Fortification (+21)"},
-      {"street": 268.0, "across": -13.3, "y": 34.0},
-      {"street": 230.1, "across": -7.3, "y": 35.2},
-      {"street": 197, "y": 30.0, "says": "over the North Gate (+19.5)"},
-      {"street": 178, "y": 27.1},
-      {"street": 166, "y": 18.7, "says": "down between the lion walls"},
-      {"street": 157, "y": 13.1},
-      {"street": 150, "y": "eye", "says": "the walk's first key"}
-    ],
-    "speed": [
-      {"t": 0, "v": 0},
-      {"t": 0.4, "v": 0},
-      {"t": 9.18, "v": 1},
-      {"t": 9.43, "v": 1},
-      {"t": 14.21, "v": 0.515},
-      {"t": 16.5, "v": 0.262},
-      {"t": 19.5, "v": 0.183},
-      {"t": 22, "v": 0.173},
-      {"t": 25, "v": 0.051},
-      {"t": 27.5, "v": 0.025},
-      {"t": 30, "v": 0}
-    ],
-    "walk": 1.31,
-    "walkSays": "the gate sketch's first leg: 84 m in 64 s",
-    "walkFrom": 25,
-    "look": [
-      {"t": 0, "utm": [446000, 3600500], "y": 40},
-      {"t": 1.5, "utm": [446000, 3600500], "y": 40},
-      {"t": 11, "utm": [445770, 3600830], "y": 24, "says": "the gate"},
-      {"t": 23, "utm": [445770, 3600830], "y": 22},
-      {"t": 28.5, "walk": true, "says": "the walk's look: level at the gate's axis 20 m behind its face"},
-      {"t": 30, "walk": true}
-    ],
-    "phoneLook": [
-      {"t": 0, "utm": [445641, 3600034], "y": 0},
-      {"t": 1.5, "utm": [445641, 3600034], "y": 0},
-      {"t": 11, "utm": [445770, 3600830], "y": 24},
-      {"t": 15, "utm": [445770, 3600830], "y": 40, "says": "the phone's look raised in the descent, so the tall frame keeps the gate and the street, not the roof below"},
-      {"t": 22, "utm": [445770, 3600830], "y": 34},
-      {"t": 28.5, "walk": true},
-      {"t": 30, "walk": true}
-    ],
-    "hfov": [
-      {"t": 0, "v": 58}
-    ],
-    "phoneHfov": [
-      {"t": 0, "v": 34},
-      {"t": 2, "v": 34},
-      {"t": 12, "v": 40},
-      {"t": 24, "v": 42},
-      {"t": 28, "v": 46}
-    ]
+  "phone": {
+   "at": [
+    445380,
+    3601950
+   ],
+   "y": 330,
+   "look": [
+    445680,
+    3600950,
+    0
+   ],
+   "hfov": 34
   }
+ },
+ "flight": {
+  "duration": 26,
+  "points": [
+   {
+    "utm": [
+     445380,
+     3601950
+    ],
+    "y": 330,
+    "says": "the first frame (reading B2)"
+   },
+   {
+    "street": 906.62,
+    "across": 110.11,
+    "y": 262,
+    "says": "over the outer city, the North entry and the palaces ahead"
+   },
+   {
+    "street": 654.59,
+    "across": 71.66,
+    "y": 170
+   },
+   {
+    "street": 482.24,
+    "across": 24.54,
+    "y": 100
+   },
+   {
+    "street": 380.83,
+    "across": -3.82,
+    "y": 55,
+    "says": "onto the street line over the moat north bank"
+   },
+   {
+    "street": 320.43,
+    "across": -11.05,
+    "y": 30,
+    "says": "low over the moat beside the dam, the palace north wall and its limestone foot at the waterline on the right"
+   },
+   {
+    "street": 280.38,
+    "across": -11.21,
+    "y": 17
+   },
+   {
+    "street": 250.41,
+    "across": -9.83,
+    "y": 11.5,
+    "says": "onto the dam street between the bastions"
+   },
+   {
+    "street": 225.44,
+    "across": -8.68,
+    "y": 9.4
+   },
+   {
+    "street": 205.46,
+    "across": -7.76,
+    "y": 9.3,
+    "says": "through the North Gate north door, its court and its south door"
+   },
+   {
+    "street": 185.48,
+    "across": -6.84,
+    "y": 9.75
+   },
+   {
+    "street": 168.56,
+    "across": -4.66,
+    "y": "eye"
+   },
+   {
+    "street": 150,
+    "y": "eye",
+    "says": "the landing, still: the gate sketch first key"
+   }
+  ],
+  "speed": [
+   {
+    "t": 0,
+    "v": 0
+   },
+   {
+    "t": 0.4,
+    "v": 0
+   },
+   {
+    "t": 2.5,
+    "v": 0.4
+   },
+   {
+    "t": 5.5,
+    "v": 1
+   },
+   {
+    "t": 8.5,
+    "v": 1
+   },
+   {
+    "t": 12,
+    "v": 0.55
+   },
+   {
+    "t": 15,
+    "v": 0.28
+   },
+   {
+    "t": 18,
+    "v": 0.14
+   },
+   {
+    "t": 21,
+    "v": 0.07
+   },
+   {
+    "t": 24,
+    "v": 0.025
+   },
+   {
+    "t": 26,
+    "v": 0
+   }
+  ],
+  "walk": 0,
+  "walkSays": "no walk at the end: the flight comes to rest at the landing",
+  "walkFrom": 24,
+  "look": [
+   {
+    "t": 0,
+    "utm": [
+     445790,
+     3600450
+    ],
+    "y": 20
+   },
+   {
+    "t": 1.5,
+    "utm": [
+     445790,
+     3600450
+    ],
+    "y": 20
+   },
+   {
+    "t": 8,
+    "utm": [
+     445680.2,
+     3601121.3
+    ],
+    "y": 4,
+    "says": "the moat and the palace north wall"
+   },
+   {
+    "t": 12,
+    "utm": [
+     445702.1,
+     3601081.8
+    ],
+    "y": 2,
+    "says": "the limestone foot at the waterline"
+   },
+   {
+    "t": 20,
+    "walk": true
+   },
+   {
+    "t": 26,
+    "walk": true
+   }
+  ],
+  "phoneLook": [
+   {
+    "t": 0,
+    "utm": [
+     445680,
+     3600950
+    ],
+    "y": 0
+   },
+   {
+    "t": 1.5,
+    "utm": [
+     445680,
+     3600950
+    ],
+    "y": 0
+   },
+   {
+    "t": 8,
+    "utm": [
+     445680.2,
+     3601121.3
+    ],
+    "y": 0
+   },
+   {
+    "t": 12,
+    "utm": [
+     445702.1,
+     3601081.8
+    ],
+    "y": 0
+   },
+   {
+    "t": 20,
+    "walk": true
+   },
+   {
+    "t": 26,
+    "walk": true
+   }
+  ],
+  "hfov": [
+   {
+    "t": 0,
+    "v": 58
+   }
+  ],
+  "phoneHfov": [
+   {
+    "t": 0,
+    "v": 34
+   },
+   {
+    "t": 12,
+    "v": 38
+   },
+   {
+    "t": 20,
+    "v": 35
+   },
+   {
+    "t": 26,
+    "v": 31,
+    "says": "narrower at the landing than the desktop so the double gate stands bigger in the tall frame"
+   }
+  ]
+ },
+ "land": {
+  "street": 150,
+  "says": "the gate sketch's first key (street 150, on its street line between the lion walls), 28 m inside the North Gate's south door and 150 m short of the double gate: the eye 1.65 m over the gate sketch's street profile, the look level at the gate's axis 20 m behind its face"
+ },
+ "readings": {
+  "A": {
+   "says": "the ARM-A direction: from over the west bank at +420 north-east over the tower to the whole city; the sun behind the camera on the left",
+   "desktop": {
+    "at": [
+     445150,
+     3599450
+    ],
+    "y": 420,
+    "look": [
+     446000,
+     3600500,
+     40
+    ],
+    "hfov": 58
+   },
+   "phone": {
+    "at": [
+     445150,
+     3599450
+    ],
+    "y": 420,
+    "look": [
+     445641,
+     3600034,
+     0
+    ],
+    "hfov": 34
+   }
+  },
+  "B1": {
+   "says": "from over the south city at +380 north up the river, over the tower to the palaces and the North entry; the sun from the left",
+   "desktop": {
+    "at": [
+     445600,
+     3599050
+    ],
+    "y": 380,
+    "look": [
+     445720,
+     3600800,
+     20
+    ],
+    "hfov": 58
+   },
+   "phone": {
+    "at": [
+     445600,
+     3599050
+    ],
+    "y": 380,
+    "look": [
+     445680,
+     3600000,
+     0
+    ],
+    "hfov": 34
+   }
+  },
+  "B2": {
+   "says": "the working start (see first)",
+   "desktop": {
+    "at": [
+     445380,
+     3601950
+    ],
+    "y": 330,
+    "look": [
+     445790,
+     3600450,
+     20
+    ],
+    "hfov": 58
+   },
+   "phone": {
+    "at": [
+     445380,
+     3601950
+    ],
+    "y": 330,
+    "look": [
+     445680,
+     3600950,
+     0
+    ],
+    "hfov": 34
+   }
+  }
+ }
 }
