@@ -3,6 +3,8 @@
  "rules": [
   {"match": "^open:northgate-", "part": "the North Gate (open page)", "piece": "bab.northgate.body", "plan": "bab.northgate.plan", "stops": ["open"]},
   {"match": "^open:stretch-", "part": "the walled street north of the North Gate", "piece": "bab.street.north-stretch", "stops": ["open"]},
+  {"match": "^open:outwork-embankment$", "part": "the West Fortification's embankment on the river", "piece": "bab.westoutwork", "note": "its top and its batter ours", "stops": ["open"]},
+  {"match": "^open:outwork-", "part": "the West Fortification's walls and the space they close", "piece": "bab.westoutwork.body", "plan": "bab.westoutwork", "stops": ["open"]},
   {"match": "^open:bastion-", "part": "the bastions at the dam's south end", "piece": "bab.street.north-bastions", "stops": ["open"]},
   {"match": "^open:dam$", "part": "the dam over the north moat", "piece": "bab.dam.crest", "plan": "bab.dam.plan", "stops": ["open"]},
   {"match": "^open:northwall$", "part": "the North Palace's north wall on its limestone foot", "piece": "bab.northpalace.northwall.brick", "plan": "bab.northpalace.limestone", "note": "its foot to about +0.5 m is the limestone row", "stops": ["open"]},
