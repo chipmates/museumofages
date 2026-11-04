@@ -124,9 +124,14 @@ export async function mountMap(stop, { reach = 400 } = {}) {
     checks: (b) => !surface(b),
     floats: (b) => !surface(b) && b !== 'map:ramps',
     allowPair: [],
-    // the gate's own palm (palm-date-babylon, reused as it is): its frond tips stay 16 cm wide for 86 m, and the garden's
-    // stand 300 to 430 m from stop 5's hold; a far preset of the part is the fix
-    allowThin: [{ prefix: 'map:garden-palm-', why: "the reused gate palm's frond tips, 6 to 8 cm faces at 330 to 390 m (0.06 to 0.07 px of the 1600 px desktop, measured 4 Nov); a far preset of palm-date-babylon is open" }],
+    // a curtain's sheet is foliage in faces of about 0.2 by 1 m, and at 300 to 400 m from stop 5's hold a few of them
+    // fall under a device pixel wherever the planting's sequence puts them
+    // the palm's mid preset (palm-date-babylon): a frond's leaflets drawn as teeth along its rib, their tips narrow
+    allowThin: [
+      { prefix: 'map:garden-palm-', why: "the mid preset's leaflet teeth, their tips 3 to 4 cm at 320 to 390 m (0.09 to 0.2 px, measured 4 Nov); a frond's fine edge, which the sub-frames average as foliage does" },
+      { prefix: 'map:garden-caper-', why: "a curtain's sheet faces, about 0.2 m by 1 m at 315 to 390 m (0.5 to 1 px of the 1600 px desktop, measured 4 Nov); foliage at that range, as the clumps beside them" },
+      { prefix: 'map:garden-vine-', why: "a curtain's sheet faces, about 0.2 m by 1 m at 315 to 390 m (0.5 to 1 px of the 1600 px desktop, measured 4 Nov); foliage at that range, as the clumps beside them" },
+    ],
     // a curtain hangs on a terrace's face from its lip on the terrace's top: held by the face, which the plan-view
     // support rule cannot see (as the gate's facing skins)
     allowFloat: [{ prefix: 'map:garden-vine-', why: "a curtain hung on a terrace's face from its lip on the top: held by the face behind it" }, { prefix: 'map:garden-caper-', why: "a caper curtain hung on a terrace's face from its lip on the top: held by the face behind it" }],

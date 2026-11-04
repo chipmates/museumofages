@@ -206,7 +206,7 @@ function palm(m: Mesh, p: PalmSpec, base: number, seed: number, d: PalmDetail = 
       for (let i = 0; i <= S; i++) {
         const t = i / S
         const c = R.at(t), sd = R.side(t)
-        const w = 0.55 * Math.pow(Math.sin(Math.PI * Math.min(1, t * 1.05 + 0.08)), 0.6) + 0.1
+        const w = 0.72 * Math.pow(Math.sin(Math.PI * Math.min(1, t * 1.05 + 0.08)), 0.6) + 0.12
         const l = add(add(c, sd, w), R.up(t), -w * 0.3), rr = add(add(c, sd, -w), R.up(t), -w * 0.3)
         if (prev) {
           for (const [a, b, cc] of [[prev.c, c, l], [prev.c, l, prev.l], [prev.rr, rr, c], [prev.rr, c, prev.c]] as Array<[V3, V3, V3]>) {
@@ -272,7 +272,8 @@ function palm(m: Mesh, p: PalmSpec, base: number, seed: number, d: PalmDetail = 
           }
         } else {
           // a tooth: the leaflets of a stretch of rib as one blade, its foot along the rib so the teeth make the rib
-          const half = (0.81 * L) / n * 0.68
+          // the teeth meet along the rib: with gaps between them a frond reads as a string of beads from 300 m
+          const half = (0.81 * L) / n * 1.02
           const f0 = add(c, T, -half), f1 = add(c, T, half)
           const tip = add(add(c, D, len), [0, -1, 0], len * (0.08 + 0.12 * age))
           const q = outward(f0, f1, tip, crown, 0.4)

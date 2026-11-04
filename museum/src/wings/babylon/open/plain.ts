@@ -355,7 +355,7 @@ export function buildPlain(mapPlan: J, opts: { palms?: boolean; reach?: number }
       const L = Math.hypot(b[0] - a[0], b[1] - a[1])
       if (L < 1) return
       const d: P2 = [(b[0] - a[0]) / L, (b[1] - a[1]) / L], n: P2 = [-d[1] * side, d[0] * side]
-      for (let t = BK() * 4; t < L; t += 3 + BK() * 3) {
+      for (let t = BK() * 3; t < L; t += 2 + BK() * 2) {
         const x = a[0] + d[0] * t, z = a[1] + d[1] * t
         // reed in beds along about half the bank, a clump a metre or two from the water
         if (patch(x, z) > -0.1) {
@@ -363,7 +363,7 @@ export function buildPlain(mapPlan: J, opts: { palms?: boolean; reach?: number }
           const rx = x + n[0] * off, rz = z + n[1] * off
           if (ok(rx, rz) && polyD(rx, rz, innerE) > reedFrom && polyD(rx, rz, innerW) > reedFrom) palms.push({ x: rx, z: rz, s: 0.75 + BK() * 0.5, yaw: BK() * Math.PI * 2, lean: 0, row: 'reed' })
         }
-        if (BK() < 6 / treeEvery) {
+        if (BK() < 4 / treeEvery) {
           const off = edge + 6 + BK() * 9
           const tx = x + n[0] * off, tz = z + n[1] * off
           const u = BK()

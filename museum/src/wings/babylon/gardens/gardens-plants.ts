@@ -83,10 +83,17 @@ const T = (1 + Math.sqrt(5)) / 2
 const ICO_V: V3[] = [[-1, T, 0], [1, T, 0], [-1, -T, 0], [1, -T, 0], [0, -1, T], [0, 1, T], [0, -1, -T], [0, 1, -T], [T, 0, -1], [T, 0, 1], [-T, 0, -1], [-T, 0, 1]].map((v) => norm(v as V3))
 const ICO_F = [[0, 11, 5], [0, 5, 1], [0, 1, 7], [0, 7, 10], [0, 10, 11], [1, 5, 9], [5, 11, 4], [11, 10, 2], [10, 7, 6], [7, 1, 8], [3, 9, 4], [3, 4, 2], [3, 2, 6], [3, 6, 8], [3, 8, 9], [4, 9, 5], [2, 4, 11], [6, 2, 10], [8, 6, 7], [9, 8, 1]]
 
-/** a lobe: an icosahedron scaled to `r`, for the hanging curtains' clumps */
-function lobe(m: Mesh, c: V3, r: [number, number, number], crown: V3, col: V3): void {
-  const P = ICO_V.map((v): V3 => [c[0] + v[0] * r[0], c[1] + v[1] * r[1], c[2] + v[2] * r[2]])
-  for (const f of ICO_F) m.tri(P[f[0]!]!, P[f[1]!]!, P[f[2]!]!, [ICO_V[f[0]!]!, ICO_V[f[1]!]!, ICO_V[f[2]!]!], col, 1, crown)
+/** a lobe for the hanging curtains' clumps: an icosahedron scaled to `r`, each corner a little in or out, its normals
+    bent toward the curtain's middle */
+function lobe(m: Mesh, c: V3, r: [number, number, number], crown: V3, col: V3, r01: () => number, bend = 0.5): void {
+  const k = ICO_V.map(() => 0.86 + r01() * 0.24)
+  const P = ICO_V.map((v, i): V3 => [c[0] + v[0] * r[0] * k[i]!, c[1] + v[1] * r[1] * k[i]!, c[2] + v[2] * r[2] * k[i]!])
+  const N = P.map((p, i): V3 => {
+    const own = ICO_V[i]!
+    const out = norm([p[0] - crown[0], (p[1] - crown[1]) * 1.4, p[2] - crown[2]])
+    return norm([own[0] * (1 - bend) + out[0] * bend, own[1] * (1 - bend) + out[1] * bend, own[2] * (1 - bend) + out[2] * bend])
+  })
+  for (const f of ICO_F) m.tri(P[f[0]!]!, P[f[1]!]!, P[f[2]!]!, [N[f[0]!]!, N[f[1]!]!, N[f[2]!]!], col, 1, crown)
 }
 
 /** a grown tree's stand-in for node: one closed body over the crown's bounds (an icosahedron stretched to them, its
@@ -153,7 +160,7 @@ function curtain(m: Mesh, at: { x: number; z: number; nx: number; nz: number }, 
     const u = (R() - 0.5) * w * 0.8, d = drop * (0.15 + R() * 0.5)
     const c: V3 = [at.x + at.nx * 0.3 + tx * u, top - d, at.z + at.nz * 0.3 + tz * u]
     const r = 0.35 + R() * 0.3
-    lobe(m, c, [r, r * 0.9, r], centre, col(1))
+    lobe(m, c, [r, r * 0.9, r], centre, col(1), R)
   }
 }
 
