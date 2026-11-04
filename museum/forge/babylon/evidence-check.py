@@ -66,7 +66,7 @@ def resolve(key, keys, seen=()):
         return None, f'no key "{key}" in the key table'
     t = keys[key].strip()
     if t.startswith('via '):
-        nxt = t[4:].split()[0]
+        nxt = key_of(t[4:].strip(), keys)
         if nxt in seen:
             return None, f'a loop of "via" at {key}'
         return resolve(nxt, keys, seen + (key,))
@@ -81,7 +81,11 @@ def source_items(text):
     return [s.strip() for s in text.split(';') if s.strip()]
 
 
-def key_of(item):
+def key_of(item, keys=()):
+    # Keys may hold spaces ("CAD G", "RIBo 002"): the longest key the item starts with, else its first word.
+    for k in sorted(keys, key=len, reverse=True):
+        if item == k or (item.startswith(k) and item[len(k)] in ' ,:;('):
+            return k
     return item.split()[0].rstrip(',:')
 
 
@@ -136,7 +140,7 @@ def check(record, keys, switch=None):
             if not any(SHEET.match(key_of(i)) or (len(i.split()) > 1 and LOCATOR.search(i.split(None, 1)[1])) for i in items):
                 errors.append(f'{at}: a rung on here, trace or rec and no source names a page, part or sheet ({r["sources"]})')
         for i in items:
-            k = key_of(i)
+            k = key_of(i, keys)
             _, why = resolve(k, keys)
             if why:
                 unresolved.setdefault(k, []).append(pid)

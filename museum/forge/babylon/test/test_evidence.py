@@ -57,8 +57,16 @@ with tempfile.TemporaryDirectory() as T:
     print('ok 2 - a guess shown as known is refused (stored, by strength, by the switch); a drawn later piece and an unknown piece are refused')
     print('ok 3 - a weaker stored class, a rec without a page, a rung off its ladder, an unknown id and key are errors')
 
+    open(keys, 'a').write(f'BK II\t{src}\ta second volume\nBK II note\tvia BK II\tan alias with spaces\n')
+    spaced = good + [row('bab.k', 'rec', 'rec', '-', 'known', 'BK II p. 4'), row('bab.l', 'type', 'ours', 'ours', 'guessed', 'BK II note')]
+    open(rec, 'w').write('\t'.join(HEAD) + '\n' + '\n'.join(spaced) + '\n')
+    rep = ec.check(rec, ec.read_keys(keys))
+    assert not rep['errors'] and not rep['refused'], rep
+    assert ec.key_of('BK II p. 4', ec.read_keys(keys)) == 'BK II' and ec.key_of('BK p. 4', ec.read_keys(keys)) == 'BK'
+    print('ok 4 - a key with a space resolves by the longest key the source starts with, also through via')
+
     open(rec, 'w').write('piece\tplace\n' + 'bab.a\there\n')
     rep = ec.check(rec, ec.read_keys(keys))
     assert rep['errors'] and rep['errors'][0].startswith('schema'), rep
-    print('ok 4 - a record off the standard\'s columns is refused at the schema')
-print('4 passed')
+    print('ok 5 - a record off the standard\'s columns is refused at the schema')
+print('5 passed')
