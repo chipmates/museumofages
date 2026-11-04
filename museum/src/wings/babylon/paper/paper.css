@@ -1,0 +1,104 @@
+/* THE PAPER KIT'S LOOK. No colour value here: every shade is a token mixed by
+   tokens.ts into --paper-* on the plate. Nothing displayed under 14 px. */
+
+.paper-plate {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--paper);
+  background-image: var(--paper-grain);
+  background-size: 240px 240px;
+  color: var(--paper-ink);
+}
+.paper-drawing { position: absolute; inset: 0; display: block; overflow: visible; }
+
+/* the four marks and the pencil */
+.paper-mark { stroke: var(--paper-ink); fill: none; stroke-linejoin: miter; stroke-linecap: butt; }
+.paper-mark[data-mark='place'] { fill: var(--paper-solid); }
+.paper-mark[data-mark='place'].paper-deep { fill: var(--paper-solidDeep); }
+.paper-mark[data-mark='measure'] { stroke: var(--paper-pencil); fill: var(--paper-unit); }
+.paper-mark[data-mark='measure'].paper-open { fill: none; }
+.paper-mark[data-mark='measure'].paper-full { fill: var(--paper-unitFull); }
+.paper-mark[data-mark='guessed'].paper-edge { fill: none; }
+.paper-hatch-only { stroke: none; }
+.paper-line { fill: none; }
+.paper-hatch-line { stroke: var(--paper-ink); }
+.paper-pencil { fill: var(--paper-pencil); stroke: none; }
+.paper-pencil-line { stroke: var(--paper-pencil); fill: none; }
+
+/* names and numbers: page text over the drawing, placed so that nothing touches */
+.paper-labels { position: absolute; inset: 0; pointer-events: none; }
+.paper-label {
+  position: absolute;
+  white-space: nowrap;
+  font: 500 0.9375rem/1.15 var(--sans, system-ui, sans-serif);
+  letter-spacing: 0.01em;
+  color: var(--paper-ink);
+  padding: 1px 3px;
+  font-variant-numeric: lining-nums;
+}
+.paper-label[hidden] { display: none; }
+.paper-label-pencil { color: var(--paper-pencil); }
+.paper-label-count { font-size: 1.375rem; font-weight: 600; color: var(--paper-pencil); }
+.paper-label-quiet { font-weight: 400; letter-spacing: 0.04em; }
+.paper-label-big { font-size: 1.125rem; font-weight: 600; }
+.paper-label-pair { display: flex; flex-direction: column; align-items: center; line-height: 1.12; }
+.paper-pair-count { font-size: 1.25rem; font-weight: 600; color: var(--paper-pencil); }
+.paper-pair-name { font-weight: 400; }
+.paper-plate[data-framing='upright'] .paper-pair-count { font-size: 1.0625rem; }
+.paper-plate[data-framing='upright'] .paper-label { font-size: 0.875rem; }
+.paper-plate[data-framing='upright'] .paper-label-count { font-size: 1.125rem; }
+
+/* the list beside the drawing: what a reader hears, and what a reader without the drawing reads */
+.paper-list { margin: 0; padding: 0; list-style: none; }
+.paper-list li { margin: 0 0 0.25em; }
+
+/* NOTCHES AND NAMED STEPS: the row adopts its band's own colour */
+.paper-steps { display: grid; grid-template-columns: 44px 1fr; column-gap: 14px; align-items: start; color: inherit; container-type: inline-size; }
+.paper-play {
+  width: 44px; height: 44px; padding: 0; display: flex; align-items: center; justify-content: center;
+  color: inherit; background: transparent;
+  border: 1.5px solid currentColor; border-radius: 3px; cursor: pointer;
+}
+.paper-rail { min-width: 0; }
+.paper-track { position: relative; height: 44px; margin: 0 calc(50% / var(--paper-steps)); }
+.paper-slider {
+  position: absolute; inset: 0; width: 100%; height: 44px; margin: 0;
+  appearance: none; -webkit-appearance: none; background: transparent; cursor: pointer; color: inherit;
+}
+.paper-slider::-webkit-slider-runnable-track {
+  height: 3px; border-radius: 0;
+  background: linear-gradient(to right, currentColor var(--fill, 0%), color-mix(in srgb, currentColor 32%, transparent) var(--fill, 0%));
+}
+.paper-slider[dir='rtl']::-webkit-slider-runnable-track {
+  background: linear-gradient(to left, currentColor var(--fill, 0%), color-mix(in srgb, currentColor 32%, transparent) var(--fill, 0%));
+}
+.paper-slider::-moz-range-track { height: 3px; background: color-mix(in srgb, currentColor 32%, transparent); }
+.paper-slider::-moz-range-progress { height: 3px; background: currentColor; }
+.paper-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none; width: 8px; height: 26px; margin-top: -11.5px;
+  background: currentColor; border: 0; border-radius: 1px;
+}
+.paper-slider::-moz-range-thumb { width: 8px; height: 26px; background: currentColor; border: 0; border-radius: 1px; }
+.paper-slider:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+.paper-notch {
+  position: absolute; left: calc(var(--at) * 100%); top: 50%; width: 2px; height: 16px;
+  transform: translate(-50%, -50%); background: currentColor; pointer-events: none;
+}
+.paper-names { display: grid; grid-template-columns: repeat(var(--paper-steps), minmax(0, 1fr)); }
+.paper-name {
+  min-height: 44px; padding: 4px 2px; margin: 0;
+  font: 400 0.875rem/1.15 var(--sans, system-ui, sans-serif);
+  color: inherit; background: transparent; border: 0; cursor: pointer;
+  text-align: center; overflow-wrap: normal; hyphens: manual;
+}
+/* a narrow row cannot hold every name under its notch: the names stand in a grid of their own, the notches keep the track */
+@container (max-width: 470px) {
+  .paper-track { margin: 0 8px; }
+  .paper-names { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.paper-name[aria-pressed='true'] { font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.paper-name:focus-visible, .paper-play:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .paper-plate *, .paper-steps * { transition: none !important; animation: none !important; }
+}

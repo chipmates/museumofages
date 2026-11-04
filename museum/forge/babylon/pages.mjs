@@ -48,6 +48,19 @@ export const PAGES = {
     // the flight's frame at a second, 0 being the first frame
     still: (r) => ({ fn: 'still', arg: { framing: r.framing, view: r.view ?? 'grey', w: r.w, h: r.h, css: r.css, samples: r.samples, out: r.out, name: r.name, t: r.t ?? 0 } }),
   },
+  // the paper pages draw no 3D: their frames come from paper-shoot.mjs, the smoke opens them like the rest
+  paper: {
+    html: 'src/wings/babylon/paper/sheet.html',
+    rig: '__paper',
+    readyMs: 60000,
+    still: () => { throw new Error('the paper kit sheet: shoot it with forge/babylon/paper-shoot.mjs --page sheet') },
+  },
+  measure: {
+    html: 'src/wings/babylon/measure/measure.html',
+    rig: '__measure',
+    readyMs: 60000,
+    still: () => { throw new Error('feature 7: shoot it with forge/babylon/paper-shoot.mjs --page measure') },
+  },
 }
 
 /** the walk's fourteen stops (map-cams.json) and the page that shows each today; stop 1 folds into the opening flight */
