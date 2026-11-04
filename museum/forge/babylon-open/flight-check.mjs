@@ -14,6 +14,11 @@ const W = join(APP, 'src/wings/babylon')
 const { buildPlan, makeFrame } = await import(join(W, 'map/plan.ts'))
 const G = await import(join(W, 'gate/gate-geom.ts'))
 const { makeFlight, resolveFlight } = await import(join(W, 'open/flight.ts'))
+const { northEntry } = await import(join(W, 'open/north.ts'))
+const { westOutwork } = await import(join(W, 'open/outwork.ts'))
+const { editCity } = await import(join(W, 'open/city.ts'))
+const { rebuildHouses } = await import(join(W, 'open/houses.ts'))
+const { buildPlain } = await import(join(W, 'open/plain.ts'))
 const argv = process.argv.slice(2)
 const opt = {}
 for (let i = 0; i < argv.length; i++) if (argv[i].startsWith('--')) opt[argv[i].slice(2)] = argv[i + 1]
@@ -26,6 +31,8 @@ const dropB = new Set(gatePlan.frame.mapBlocksReplaced), dropW = new Set(gatePla
 const city = structuredClone(mapPlan)
 city.blocks = city.blocks.filter((b) => !dropB.has(b.id))
 city.walls = city.walls.filter((w) => !dropW.has(w.id))
+// as the open page (open/city.ts): the north entry, the North Palace's courts, the West Fortification, the quay, the way north
+const NORTH = editCity(city, { buildPlan, northEntry, westOutwork }).north
 const b = buildPlan(city, { houses: true })
 const F = makeFrame(city)
 const B = G.buildGate(gatePlan)
@@ -34,7 +41,8 @@ const L0 = gatePlan.frame.level0
 const g2s = (x, z) => { const [E, N] = GF.utm(x, z); return F.s(E, N) }
 const sFirst = Number(String(gateCams.stops[0].keys[0].at).slice(7))
 const streetAt = (s, t = 0) => { const x = s * B.street.dir[0] + t * B.street.dir[1], z = s * B.street.dir[1] - t * B.street.dir[0]; const [sx, sz] = g2s(x, z); return { x: sx, z: sz, level: B.level(z) + L0, gz: z } }
-const endStreet = streetAt(sFirst)
+const sLand = Number(cams.land?.street ?? sFirst), tLand = Number(cams.land?.across ?? 0)
+const endStreet = streetAt(sLand, tLand)
 const eyeG = B.level(endStreet.gz) + cams.eye
 const [wlx, wlz] = g2s(0, -20)
 const walkLook = [wlx, eyeG + L0, wlz]
@@ -48,7 +56,8 @@ const add = (id, poly, y0, y1) => {
   solids.push({ id, poly, y0, y1, bb: [Math.min(...xs), Math.max(...xs), Math.min(...zs), Math.max(...zs)] })
 }
 for (const p of b.prisms) { add(p.id, p.poly, p.y0, p.y1); for (const h of p.holes) void h }
-for (const r of b.boxes) {
+const HB = rebuildHouses(b.boxes.filter((x) => x.group === 'house'), b.ground)
+for (const r of [...b.boxes.filter((x) => x.group !== 'house'), ...HB.boxes]) {
   const c = Math.cos(r.yaw), s = Math.sin(r.yaw), hx = r.sx / 2, hz = r.sz / 2
   const corner = (u, v) => [r.x + u * c + v * s, r.z - u * s + v * c]
   add(r.id, [corner(-hx, -hz), corner(hx, -hz), corner(hx, hz), corner(-hx, hz)], r.y0, r.y1)
@@ -58,6 +67,24 @@ for (const x of B.boxes) gbox(x.id, x.x0, x.x1, x.z0, x.z1, x.y0, x.y1)
 for (const x of B.beams) gbox(x.id, x.x0, x.x1, x.z0, x.z1, x.y0, x.y1)
 for (const a of B.arches) gbox(a.id, a.x0, a.x1, a.z0, a.z1, a.springing, a.top)
 for (const p of B.prisms) add(`gate:${p.id}`, p.poly.map(([x, z]) => g2s(x, z)), p.y0 + L0, p.y1 + L0)
+// the north entry's bodies: each prism over its foot (the wider outline), its battlements as 1.5 m more on top; each
+// arched cross wall as its two piers and a lintel from the door's springing up
+{
+  const { o, a: A, c: C } = NORTH.frame
+  const at = (a, c) => [o[0] + a * A[0] + c * C[0], o[1] + a * A[1] + c * C[1]]
+  for (const p of NORTH.prisms) add(`open:${p.id}`, p.foot, p.y0, p.y1 + (p.id === 'dam' || p.id === 'northwall' ? 0 : 1.5))
+  for (const w of NORTH.arched) {
+    const box = (id, c0, c1, y0, y1) => add(`open:${w.id}-${id}`, [at(w.a0, c0), at(w.a1, c0), at(w.a1, c1), at(w.a0, c1)], y0, y1)
+    box('w', w.c0, -w.door.half, w.y0, w.y1 + 1.5)
+    box('e', w.door.half, w.c1, w.y0, w.y1 + 1.5)
+    box('lintel', -w.door.half, w.door.half, w.door.spring, w.y1 + 1.5)
+  }
+  // the palms as 4 m columns to their crowns
+  for (const q of buildPlain(city).palms) {
+    const y0 = b.stand(q.x, q.z), r = 2
+    add(`palm:${q.row}`, [[q.x - r, q.z - r], [q.x + r, q.z - r], [q.x + r, q.z + r], [q.x - r, q.z + r]], y0, y0 + 13.5 * q.s)
+  }
+}
 const holesOf = new Map(b.prisms.map((p) => [p.id, p.holes]))
 
 const inPoly = (x, z, poly) => {
@@ -102,8 +129,11 @@ for (let i = 0; i <= n; i++) {
   const p = flight.sample(t)
   const [x, y, z] = p.pos
   let near = Infinity, nearId = null, inside = null
+  const under = b.stand(x, z)
   for (const s of solids) {
     if (x < s.bb[0] - 60 || x > s.bb[1] + 60 || z < s.bb[2] - 60 || z > s.bb[3] + 60) continue
+    // a body whose top lies within 0.5 m of the ground under the camera is the ground there (the dam's crest under the street)
+    if (y > s.y1 && s.y1 <= under + 0.5 && s.y1 >= under - 0.5 && inPoly(x, z, s.poly)) continue
     const d = dist(s, x, y, z)
     if (d < near) { near = d; nearId = s.id }
     if (d === 0) inside = s.id
@@ -167,7 +197,8 @@ if (yawAccMax > 12) red.push(`the look's turn changes by ${yawAccMax.toFixed(1)}
 if (tiltAccMax > 8) red.push(`the look's tilt changes by ${tiltAccMax.toFixed(1)} deg/s2`)
 const last = rows[rows.length - 1]
 const endGap = Math.hypot(last.x - endStreet.x, last.y - (eyeG + L0), last.z - endStreet.z)
-if (endGap > 0.02) red.push(`lands ${endGap.toFixed(3)} m from the walk's first key`)
+if (last.speed > 0.05) red.push(`ends moving at ${last.speed.toFixed(2)} m/s`)
+if (endGap > 0.02) red.push(`lands ${endGap.toFixed(3)} m from the landing (street ${sLand})`)
 const lookGap = (() => {
   const a = [walkLook[0] - last.x, walkLook[1] - last.y, walkLook[2] - last.z]
   const s = flight.sample(flight.duration)

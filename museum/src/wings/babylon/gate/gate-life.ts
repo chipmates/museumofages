@@ -37,10 +37,15 @@ const rnd = (seed: number): (() => number) => {
 const TRUNK: V3 = [0.16, 0.12, 0.085], SCAR: V3 = [0.1, 0.075, 0.055]
 const FROND: V3 = [0.06, 0.095, 0.035], FROND_PALE: V3 = [0.13, 0.15, 0.06], DEAD: V3 = [0.3, 0.22, 0.11]
 
+/** how finely a palm is built: the gate's own near the street, a far preset for the plain's groves seen from the air */
+export interface PalmDetail { seg: number; sides: number; fronds: number; steps: number }
+const NEAR: PalmDetail = { seg: 14, sides: 7, fronds: 24, steps: 9 }
+export const PALM_FAR: PalmDetail = { seg: 2, sides: 5, fronds: 10, steps: 2 }
+
 /** one date palm: a slightly bent trunk ringed with old leaf bases, a crown of arching fronds folded along the rib */
-function palm(m: Mesh, p: PalmSpec, base: number, seed: number): void {
+function palm(m: Mesh, p: PalmSpec, base: number, seed: number, detail: PalmDetail = NEAR): void {
   const r = rnd(seed)
-  const SEG = 14, SIDES = 7
+  const SEG = detail.seg, SIDES = detail.sides
   const spine: V3[] = []
   for (let i = 0; i <= SEG; i++) {
     const t = i / SEG
@@ -57,7 +62,7 @@ function palm(m: Mesh, p: PalmSpec, base: number, seed: number): void {
     }
   }
   const top = spine[SEG]!
-  const N = 24
+  const N = detail.fronds
   for (let f = 0; f < N; f++) {
     const az = p.turn + f * 2.39996 + (r() - 0.5) * 0.3
     // young fronds stand up, old ones droop; the lowest few are dead and hang
@@ -67,7 +72,7 @@ function palm(m: Mesh, p: PalmSpec, base: number, seed: number): void {
     const dir: V3 = [Math.cos(az) * Math.cos(el), Math.sin(el), Math.sin(az) * Math.cos(el)]
     const side = norm(cross(dir, [0, 1, 0]))
     const colour = age > 0.88 ? DEAD : age > 0.6 ? FROND_PALE : FROND
-    const S = 9
+    const S = detail.steps
     let prev: { c: V3; l: V3; rr: V3 } | null = null
     for (let i = 0; i <= S; i++) {
       const t = i / S
@@ -85,6 +90,13 @@ function palm(m: Mesh, p: PalmSpec, base: number, seed: number): void {
       prev = { c, l, rr }
     }
   }
+}
+
+/** one palm at the origin, its foot at 0, built at a detail (the plain's instanced groves take PALM_FAR, 12 m to the crown) */
+export function palmGeometry(h: number, detail: PalmDetail, seed = 17): BufferGeometry {
+  const m = new Mesh()
+  palm(m, { x: 0, z: 0, h, lean: [0, 0], turn: 0 }, -0.3, seed, detail)
+  return m.geometry()
 }
 
 export function palmsGeometry(list: PalmSpec[], level: (z: number) => number): BufferGeometry {

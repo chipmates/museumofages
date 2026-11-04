@@ -11,8 +11,8 @@
      ?put=<url>      where the rig hands its files (the shooter's own server) */
 
 import {
-  BackSide, Color, DirectionalLight, Float32BufferAttribute, Group, InstancedBufferAttribute, InstancedMesh, Matrix3, Matrix4, Mesh,
-  MeshBasicNodeMaterial, MeshStandardNodeMaterial, Object3D, OrthographicCamera, PerspectiveCamera, PMREMGenerator, Scene, SphereGeometry, Vector3,
+  BackSide, BoxGeometry, Color, DirectionalLight, Float32BufferAttribute, Group, InstancedBufferAttribute, InstancedMesh, Matrix3, Matrix4, Mesh,
+  MeshBasicNodeMaterial, MeshStandardNodeMaterial, Object3D, OrthographicCamera, PerspectiveCamera, PlaneGeometry, PMREMGenerator, Quaternion, Scene, SphereGeometry, Vector3,
 } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import { createStack } from '../../../stack'
@@ -23,13 +23,22 @@ import type { Print } from '../../animals/cave/site'
 import { PERSON_FORMS, signPerson } from '../../place/person'
 import { buildPlan, makeFrame } from '../map/plan'
 import { buildBodies, tonesFrom, uView, type Sky } from '../map/mass'
-import { buildGate, gateFrame, hourOf, sunAt, sunVector, type V3 } from '../gate/gate-geom'
+import { buildGate, gateFrame, hourOf, type V3 } from '../gate/gate-geom'
+import { sunAt as mapSunAt, sunVector as mapSunVector } from '../map/sun'
 import { animalField } from '../gate/gate-relief'
 import { assemble, panelGrid } from '../gate/gate-mesh'
 import { birdsGeometry, palmsGeometry } from '../gate/gate-life'
 import { bakePanel, lifeMaterial, makeUniforms, panelMaterial, pavingMaterial, wallMaterial, C as COURSE, type Rooms } from '../gate/gate-mat'
 import { airColour, createOpenLinear, makeAirUniforms, skyColour } from './air'
-import { blockMaterial, boxMaterial, groundMaterial, houseMaterial, streetMaterial, toneTexture, uTracts, waterMaterial } from './earth'
+import { blockMaterial, boxMaterial, groundMaterial, houseMaterial, northMaterial, palmMaterial, streetMaterial, toneTexture, uTracts, waterMaterial } from './earth'
+import { northEntry } from './north'
+import { westOutwork } from './outwork'
+import { editCity, groundRows, OUTER_TRACK } from './city'
+import { refineBanks } from './bank'
+import { merlonMesh, northMeshes } from './north-mesh'
+import { rebuildHouses } from './houses'
+import { buildPlain } from './plain'
+import { paintPlain, palmMesh } from './green'
 import { makeFlight, resolveFlight, type FlightSample } from './flight'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -64,6 +73,9 @@ const dropB = new Set<string>(plan.frame.mapBlocksReplaced), dropW = new Set<str
 const cityPlan = structuredClone(mapPlan)
 cityPlan.blocks = cityPlan.blocks.filter((b: J) => !dropB.has(b.id))
 cityPlan.walls = cityPlan.walls.filter((w: J) => !dropW.has(w.id))
+/* the arrival's edits of the plan (city.ts): the north entry, the North Palace's courts, the West Fortification, the quay
+   south of the bridge, the way north of the dam */
+const NORTH = editCity(cityPlan, { buildPlan, northEntry, westOutwork }).north
 const city = buildPlan(cityPlan)
 const canalZ: number[] = []
 {
@@ -86,7 +98,9 @@ const canvas = document.getElementById('stage') as HTMLCanvasElement
 const stack = await createStack({ canvas })
 const renderer = stack.renderer
 const scene = new Scene()
-const camera = new PerspectiveCamera(40, 16 / 9, 0.3, 30000)
+// the far plane past the ground's farthest corner (its grid reaches 30 km each way): ground within about 40 m of a 30 km far
+// plane read as sky in the haze's depth test and stayed unhazed, a row of dark dashes on the horizon
+const camera = new PerspectiveCamera(40, 16 / 9, 0.3, Number(q.get('far') ?? 60000))
 stack.setScene(scene, camera, { ...IDENTITY, name: 'babylon-open' })
 
 const U = makeUniforms({ M: mapPlan.classes.M.colour, R: mapPlan.classes.R.colour, G: mapPlan.classes.G.colour })
@@ -117,22 +131,47 @@ const skyDome = (() => {
 scene.add(skyDome)
 
 say('building the city and the gate')
+const PLAIN = buildPlain(cityPlan, { reach: Number(q.get('palmReach') ?? 3600) })
+const PLAIN_MAP = paintPlain(PLAIN)
 const tones = tonesFrom(cityPlan)
-const bodies = buildBodies(city, tones, sky, AIR.uSun, canalZ)
+const bodies = buildBodies(city, tones, sky, AIR.uSun, groundRows(canalZ))
 scene.add(bodies.group)
 
 /* the city's own materials (earth.ts), and per-instance tones for the boxes */
 const uTime = uniform(0)
+const HOUSES = { count: 0, open: 0 }
 {
   const blocks = bodies.group.getObjectByName('blocks') as Mesh
   blocks.material = blockMaterial(tones, toneTexture(city.prisms.map((p) => p.id)), Math.max(1, city.prisms.length), U.uPix)
-  const houses = bodies.group.getObjectByName('houses') as InstancedMesh | undefined
-  if (houses) {
-    const list = city.boxes.filter((b) => b.group === 'house')
-    const nums = new Float32Array(list.length)
-    list.forEach((b, i) => { nums[i] = Number(/^house-(\d+)/.exec(b.id)?.[1] ?? i) })
-    houses.geometry.setAttribute('house', new InstancedBufferAttribute(nums, 1))
-    houses.material = houseMaterial(tones)
+  // the map's houses give way to the arrival's own (houses.ts): the same lots, each house its own court, heights and turn
+  const mapHouses = bodies.group.getObjectByName('houses') as InstancedMesh | undefined
+  if (mapHouses) {
+    bodies.group.remove(mapHouses)
+    const H = rebuildHouses(city.boxes.filter((b) => b.group === 'house'), city.ground)
+    const geo = new BoxGeometry(1, 1, 1)
+    geo.deleteAttribute('uv')
+    const im = new InstancedMesh(geo, houseMaterial(tones, Number(cityPlan.classes.band)), H.boxes.length)
+    const n = H.boxes.length
+    // packed so the instanced mesh stays inside eight vertex buffers: (house, range + 8 x butted sides, ground, block), size, class letters
+    const info = new Float32Array(n * 4), size = new Float32Array(n * 3), cls = new Float32Array(n * 2)
+    const m4 = new Matrix4(), qq = new Quaternion(), upY = new Vector3(0, 1, 0)
+    H.boxes.forEach((b, i) => {
+      qq.setFromAxisAngle(upY, b.yaw)
+      m4.compose(new Vector3(b.x, (b.y0 + b.y1) / 2, b.z), qq, new Vector3(b.sx, b.y1 - b.y0, b.sz))
+      im.setMatrixAt(i, m4)
+      info.set([b.house, b.part + 8 * b.butt, b.gy, b.block], i * 4)
+      size.set([b.sx, b.y1 - b.y0, b.sz], i * 3)
+      cls.set([2, 2], i * 2)
+    })
+    for (const [k, v, w] of [['hinfo', info, 4], ['size', size, 3], ['cls', cls, 2]] as Array<[string, Float32Array, number]>) geo.setAttribute(k, new InstancedBufferAttribute(v, w))
+    im.instanceMatrix.needsUpdate = true
+    im.castShadow = true
+    im.receiveShadow = true
+    im.frustumCulled = false
+    im.name = 'houses'
+    bodies.group.add(im)
+    HOUSES.count = H.houses
+    HOUSES.open = H.open
   }
   const rest = bodies.group.getObjectByName('towers-and-piers') as InstancedMesh | undefined
   if (rest) {
@@ -142,11 +181,47 @@ const uTime = uniform(0)
     rest.geometry.setAttribute('tone', new InstancedBufferAttribute(k, 1))
     rest.material = boxMaterial(tones)
   }
-  ;(bodies.group.getObjectByName('street') as Mesh).material = streetMaterial(tones)
-  ;(bodies.group.getObjectByName('ground') as Mesh).material = groundMaterial(-1)
-  const wm = waterMaterial(AIR, sky.colour, uTime)
-  bodies.group.traverse((o) => { if (o.name.startsWith('water-')) (o as Mesh).material = wm })
+  // the paving ends where the record's street surface ends: the walled stretch north of the North Gate (REC
+  // bab.street.north.surface, +7.5 north of the gate; bab.street.north-stretch to a = 233); the dam's crest and the way on are earth
+  ;(bodies.group.getObjectByName('street') as Mesh).material = streetMaterial(tones, { o: NORTH.frame.o, a: NORTH.frame.a, c: NORTH.frame.c, pavedTo: 233 }, U.uPix)
+  const ground = bodies.group.getObjectByName('ground') as Mesh
+  // the banks the first frame and the flight see, from the moat's north bank to just south of the bridge, refined to about a
+  // metre (?banks=0 keeps the coarse grid); about 1.2 s more at load on the laptop
+  if (q.get('banks') !== '0') {
+    const fine = refineBanks(ground.geometry, city.ground, { x0: -450, x1: 450, z0: -1700, z1: 1000 }, { soft: Number(q.get('bankSoft') ?? 1.5) })
+    ground.geometry.dispose()
+    ground.geometry = fine.geometry
+    say(`banks: ${fine.cells} cells refined, ${fine.triangles} triangles`)
+  }
+  ground.material = groundMaterial(-1, { ...PLAIN_MAP, x0: PLAIN.domain.x0, z0: PLAIN.domain.z0, size: PLAIN.domain.size }, sky.colour, OUTER_TRACK.map(([E, N]) => MF.s(E, N)))
+  // the banks fall across one cell of the 20 m grid: cast by the ground itself, their shadow drew the cells' teeth along the
+  // shore under the low sun; the bank's own shading (its leaned normal) stays
+  ground.castShadow = q.get('groundShadow') === '1'
+  // the river and the moats mirror the scene at their level (-1.0), the canal behind the palace the sky only
+  const plane = new Mesh(new PlaneGeometry(1, 1))
+  plane.rotation.x = -Math.PI / 2
+  plane.position.y = -1.0
+  plane.updateMatrixWorld(true)
+  const mirror = q.get('mirror') === '0' ? null : stack.reflector(plane, { resolutionScale: Number(q.get('mirrorScale') ?? 0.5) })
+  const wm = waterMaterial(AIR, sky.colour, uTime, mirror?.node)
+  const wSky = waterMaterial(AIR, sky.colour, uTime)
+  bodies.group.traverse((o) => { if (o.name.startsWith('water-')) (o as Mesh).material = o.name === 'water-canal-north' ? wSky : wm })
 }
+
+/* the north entry's bodies and battlements (north.ts), in one material keyed by kind */
+{
+  const NM = northMeshes(NORTH)
+  const mat = northMaterial(tones, { o: NORTH.frame.o, a: NORTH.frame.a, culvert: NORTH.culvert, split: 8.6, stoneTop: 0.5 }, U.uPix)
+  const mesh = new Mesh(NM.geometry, mat)
+  mesh.castShadow = true
+  mesh.receiveShadow = true
+  mesh.frustumCulled = false
+  mesh.name = 'north-entry'
+  scene.add(mesh, merlonMesh(NM.merlons, mat))
+}
+
+/* the plain's palms (plain.ts, green.ts) */
+scene.add(palmMesh(PLAIN.palms, city.ground, palmMaterial(tones)))
 
 /* the map's street and ground give way to the gate's paving inside its area (the gate page's mask) */
 const uW2G = uniform(new Matrix4().copy(W2G))
@@ -194,7 +269,9 @@ const addGate = <T extends Mesh>(m: T, name: string, cast = true): T => {
   return m
 }
 addGate(new Mesh(A.walls, wallMaterial(U, rooms)), 'gate-walls')
-addGate(new Mesh(A.paving, pavingMaterial(U, { ...plan.street.paving, sd: B.street.dir, st: [B.street.dir[1], -B.street.dir[0]], turnZ: 21.3 }, rooms)), 'gate-paving')
+// the plan's paving letters ('R', 'G') stay out of the spec: pavingMaterial reads a spec `cls` as three class tones
+const { cls: _paveCls, restCls: _paveRest, ...paveSpec } = plan.street.paving
+addGate(new Mesh(A.paving, pavingMaterial(U, { ...paveSpec, sd: B.street.dir, st: [B.street.dir[1], -B.street.dir[0]], turnZ: 21.3 }, rooms)), 'gate-paving')
 const schemesOf: Record<string, Array<[string, number]>> = { bull: [['yellow', 0]], dragon: [['white', 1]], lion: [['lionWhite', 2], ['lionYellow', 3]] }
 for (const set of A.panels) {
   if (!set.count) continue
@@ -276,9 +353,12 @@ let hourNow = -1
 function setHour(hour: number): void {
   if (Math.abs(hour - hourNow) < 1e-4) return
   hourNow = hour
-  const sG = sunVector(plan, hour)
+  // the walk's one clock: map/sun.ts, in the map's frame (x east, y up, z south); the gate's materials take it in their frame
+  const sW = new Vector3(...mapSunVector(hour))
+  const sGv = sW.clone().applyMatrix3(ROT.clone().transpose())
+  const sG: V3 = [sGv.x, sGv.y, sGv.z]
   ;(U.uSunG.value as Vector3).set(...sG)
-  ;(AIR.uSun.value as Vector3).copy(dirWorld(sG))
+  ;(AIR.uSun.value as Vector3).copy(sW)
   const el = Math.asin(sG[1]) / D2R
   const k = Math.min(1, Math.max(0, (el + 0.5) / 6))
   sunLight.intensity = SUN.i * k
@@ -396,7 +476,9 @@ const streetAt = (s: number, t = 0): { x: number; z: number; level: number } => 
   const [sx, sz] = g2s(x, z)
   return { x: sx, z: sz, level: B.level(z) + L0 }
 }
-const endEye = B.level(sFirst * B.street.dir[1]) + cams.eye
+// the landing: the camera file's `land` (street s), else the gate sketch's first key
+const sLand = Number(cams.land?.street ?? sFirst), tLand = Number(cams.land?.across ?? 0)
+const endEye = streetAt(sLand, tLand).level - L0 + cams.eye
 const [wlx, wlz] = g2s(0, -20)
 const walkLook: [number, number, number] = [wlx, endEye + L0, wlz]
 const flight = makeFlight(resolveFlight(cams.flight, { scene: MF.s, street: streetAt, eye: cams.eye, walkLook }))
@@ -473,8 +555,8 @@ const camFacts = (p: FlightSample, framing: string) => {
 
 const rig = {
   ready: true,
-  state: () => ({ planMs, cityTriangles: bodies.counts.triangles, gate: A.counts, backend: stack.backend, architecture: stack.architecture, hour: HOUR, flight: { duration: flight.duration, length: +flight.length.toFixed(1) } }),
-  views: () => ({ hour: HOUR, sun: sunAt(plan, HOUR), duration: flight.duration, end: flight.end, walkLook }),
+  state: () => ({ planMs, cityTriangles: bodies.counts.triangles, houses: HOUSES, palms: PLAIN.palms.length, fields: PLAIN.fields.length, gate: A.counts, backend: stack.backend, architecture: stack.architecture, hour: HOUR, flight: { duration: flight.duration, length: +flight.length.toFixed(1) } }),
+  views: () => ({ hour: HOUR, sun: mapSunAt(HOUR), duration: flight.duration, end: flight.end, walkLook }),
   /** a still of the flight's frame at a second (0: the first frame), full size, grey or the class view */
   async still(o: { framing: 'desktop' | 'phone'; view: 'grey' | 'classes'; w: number; h: number; css: [number, number]; samples: number; out: string; name: string; t?: number }) {
     setView(o.view)
@@ -484,7 +566,7 @@ const rig = {
     const { bytes, ms } = await render(o.w, o.h, o.samples, stops)
     const file = `${o.out}/${o.name}.png`
     await upload(file, await toPNG(bytes, o.w, o.h))
-    const s = sunAt(plan, HOUR)
+    const s = mapSunAt(HOUR)
     const side = {
       file, framing: o.framing, view: o.view, flightSecond: t, cssSize: o.css, devicePixels: [o.w, o.h], subFrames: o.samples, backend: stack.backend, adapter: stack.architecture,
       hour: `${Math.floor(HOUR)}:${String(Math.round((HOUR % 1) * 60)).padStart(2, '0')}`, sun: { azimuth: +s.azimuth.toFixed(1), elevation: +s.elevation.toFixed(1) }, camera: camFacts(p, o.framing), shadowTexel: +texel.toFixed(3),

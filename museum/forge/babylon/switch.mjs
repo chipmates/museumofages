@@ -3,7 +3,7 @@
 // module the pages paint from (src/wings/babylon/record.ts), written as the JSON the evidence check's --switch reads
 // (row -> the strongest class any body shows for it) and one line per body.
 //
-//   node --experimental-strip-types --no-warnings forge/babylon/switch.mjs --page gate --out <shown.json> [--bodies <tsv>]
+//   node --experimental-strip-types --no-warnings forge/babylon/switch.mjs --page gate|open --out <shown.json> [--bodies <tsv>]
 //
 // A body shows its plan row in its foot band and its body row above it; a rule without a plan row shows its body row
 // to the foot; the paving shows one row per strip. The plans' letters count only for a row the class file lacks, at
@@ -20,21 +20,21 @@ import { buildPlan } from '../../src/wings/babylon/map/plan.ts'
 const args = process.argv.slice(2)
 const opt = (k, d) => (args.includes(k) ? args[args.indexOf(k) + 1] : d)
 const PAGE = opt('--page', 'gate')
-if (PAGE !== 'gate') { console.error('--page gate (the one page with a switch today)'); process.exit(2) }
+if (PAGE !== 'gate' && PAGE !== 'open') { console.error('--page gate|open'); process.exit(2) }
 const OUT = opt('--out', null)
 if (!OUT) { console.error('--out <shown.json>'); process.exit(2) }
 
 const RANK = { blank: 0, guessed: 1, known: 2, 'in place': 3 }
 const json = (p) => JSON.parse(readFileSync(p, 'utf8'))
-// the gate page takes its rows at stop 3, as gate.ts does (RECORD_STOP)
-const STOP = '3'
+// the gate page takes its rows at stop 3, as gate.ts does (RECORD_STOP); the open page at 'open', where its rules hold
+const STOP = PAGE === 'open' ? 'open' : '3'
 const name = recordNamer(json(join(APP, 'src/wings/babylon/pieces.json')), json(join(APP, 'src/wings/babylon/record-classes.json')), STOP)
 const mapPlan = json(join(APP, 'src/wings/babylon/map/map-plan.json'))
 
-const M = await MOUNTS.gate(STOP, { cityReach: 'all' })
+const M = PAGE === 'open' ? await MOUNTS.open(STOP) : await MOUNTS.gate(STOP, { cityReach: 'all' })
 const { B, plan } = M
 const bodies = [...new Set(M.faces.map((f) => f.body))].map((b) => b.replace(/#\d+$/, ''))
-const names = [...new Set(bodies)]
+const names = [...new Set([...bodies, ...(M.extraBodies ?? []).map(([n]) => n)])]
 
 /** the page's letters for a body: [plan, height], or null when the plans do not give them */
 const gateLetters = new Map()
@@ -47,6 +47,7 @@ for (const q of B.panels) gateLetters.set(`panel:${q.id}`, [q.cls, q.cls])
 B.doors.forEach((d, i) => gateLetters.set(`gate:leaf-${i}`, [plan.doors.cls, plan.doors.cls]))
 const lifeCls = plan.life.cls ?? 'G'
 function letters(name) {
+  if (M.openLetters?.has(name)) return M.openLetters.get(name)
   if (gateLetters.has(name)) return gateLetters.get(name)
   if (/^gate:bronze-/.test(name)) return [plan.bronze.cls, plan.bronze.cls]
   if (/^life:/.test(name)) return [lifeCls, lifeCls]

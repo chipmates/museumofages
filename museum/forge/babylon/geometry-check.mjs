@@ -6,7 +6,7 @@
 //        [--all] [--json <out>]
 // Exit 0 when nothing outside the allowances is found, 1 otherwise. Not covered, said plainly: anything a material
 // draws (relief, displacement), occlusion (a thin face behind a wall still counts), the sign person, the opening's
-// flight cameras (the opening is mounted as the gate page: its bodies are the gate page's).
+// flight cameras (the opening's stills are its first frame only).
 import { writeFileSync } from 'node:fs'
 import { resolveStop } from './pages.mjs'
 import { MOUNTS } from './mounts.mjs'
@@ -16,7 +16,7 @@ const args = process.argv.slice(2)
 const opt = (k, d) => (args.includes(k) ? args[args.indexOf(k) + 1] : d)
 if (!args.includes('--stop')) { console.error('--stop <id> (a stop number or id, map:<stop>, or a page name)'); process.exit(2) }
 const st = resolveStop(opt('--stop'))
-const page = st.page === 'open' ? 'gate' : st.page
+const page = st.page
 const ALL = args.includes('--all')
 const NEAR = Number(opt('--near', 0))
 const BED = NEAR > 0 ? NEAR / 1000 : 0.002
