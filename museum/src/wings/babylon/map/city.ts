@@ -94,6 +94,17 @@ export function cityBlockMaterial(t: ClassTones, tones: DataTexture, count: numb
   return m
 }
 
+/** the street's look: pale slabs, the walked middle lighter, dust gathering toward its edges (ours: the paving's
+    pattern is drawn where it was dug, by the stops that stand on it) */
+export function streetLook(): N {
+  const p = positionWorld
+  const v = mx_noise_float(p.mul(0.05)).mul(0.07).add(mx_noise_float(p.mul(0.6)).mul(0.04)).add(1)
+  const slab = vec3(...TONES.slab).mul(0.94).mul(v)
+  const dust = troddenEarth(p)
+  const patchy = smoothstep(-0.1, 0.5, mx_noise_float(vec3(p.x.mul(0.08), 7.7, p.z.mul(0.08))))
+  return mix(slab, dust, patchy.mul(0.35))
+}
+
 /** each instanced box's tone (0 mud, 1 baked) by the body it stands on: wall towers take their wall's */
 function boxTone(id: string): number {
   const k = mapTone(id.replace(/-t\d+-\d+$/, ''))
@@ -114,6 +125,17 @@ export function paintCity(group: Object3D, built: Built, tones: ClassTones, o: {
     list.forEach((b, i) => { k[i] = b.group === 'tower' ? boxTone(b.id) : 1 })
     rest.geometry.setAttribute('tone', new InstancedBufferAttribute(k, 1))
     rest.material = boxMaterial(tones)
+  }
+  const ground = group.getObjectByName('ground') as Mesh | undefined
+  if (ground) {
+    const g = groundMaterial(-1) as MeshStandardNodeMaterial
+    if (o.ground) g.colorNode = o.ground(g.colorNode)
+    ground.material = g
+  }
+  const street = group.getObjectByName('street') as Mesh | undefined
+  if (street) {
+    const s = street.material as MeshStandardNodeMaterial
+    s.colorNode = mix(streetLook(), classColour(tones, attribute('cls', 'vec2'), attribute('band', 'float')), uView)
   }
 }
 

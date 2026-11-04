@@ -134,10 +134,10 @@ function setBounce(y: number): void {
 say('building the city')
 // the Ishtar Gate's passage through both gates, along its axis from the north face
 const gateFrame = plan.frames.gate
-const bodies = buildBodies(built, tones, sky, L.AIR.uSun, canalZ, { o: F.s(gateFrame.origin[0], gateFrame.origin[1]), a: F.dir(gateFrame.bearing), c: F.dir(gateFrame.bearing + 90), len: 50, half: 2.6 }, { ground: tower.ground, houses: { rebuild: rebuildHouses, band: Number(plan.classes.band) } })
+const bodies = buildBodies(built, tones, sky, L.AIR.uSun, canalZ, { o: F.s(gateFrame.origin[0], gateFrame.origin[1]), a: F.dir(gateFrame.bearing), c: F.dir(gateFrame.bearing + 90), len: 50, half: 2.6 }, { houses: { rebuild: rebuildHouses, band: Number(plan.classes.band) } })
 /* the city in the arrival's materials (city.ts), the precinct's ground painted over it; the South Palace's rooms, drawn
    by the court to cut its court into them, take the city's look outside the court's own fronts */
-paintCity(bodies.group, built, tones, { band: Number(plan.classes.band) })
+paintCity(bodies.group, built, tones, { band: Number(plan.classes.band), ground: tower.ground })
 cityOnCourtRooms(court.mesh as Mesh, court.court.F.court, uCityPix)
 scene.add(bodies.group)
 scene.add(court.mesh)
