@@ -235,14 +235,17 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   const vary = bF.brick.sub(0.5).mul(float(1).sub(smoothstep(0.08, 0.3, fu)))
   // pooling darkens by a share, never by an amount: a fixed amount would eat the dark blue's red and green first
   const pool = lines(y, C, 0.012, fy).add(lines(u, BR / 2, 0.012, fu)).min(1).mul(0.12)
-  const glazeCol = g.mul(float(1).add(vary.mul(0.07))).mul(float(1).sub(pool))
+  // each glazed brick fired a little differently, and whole patches of them (the original fragments vary from navy to
+  // mid blue brick by brick)
+  const patch = mx_noise_float(P.mul(0.7)).mul(float(1).sub(smoothstep(0.3, 1.2, fu)))
+  const glazeCol = g.mul(float(1).add(vary.mul(0.32)).add(patch.mul(0.12))).mul(float(1).sub(pool))
   const facadeCol = mix(glazeCol, V(col.jointGlaze), jointF.mul(0.85))
 
   /* ── the reveals and soffits: the ground in its bond, along the wall's depth ── */
   const rU = select(abs(n.x).greaterThan(0.5), P.z, P.x)
   const fr = footprint(U, select(abs(n.x).greaterThan(0.5), vec3(0, 0, 1), vec3(1, 0, 0)), n), fry = footprint(U, vec3(0, 1, 0), n)
   const bR = bond(rU, y, float(0), fr, fry, 0.0025)
-  const revealCol = mix(G.mul(float(1).add(bR.brick.sub(0.5).mul(0.07))), V(col.jointGlaze), bR.bed.add(bR.head).min(1).mul(0.85))
+  const revealCol = mix(G.mul(float(1).add(bR.brick.sub(0.5).mul(0.32))), V(col.jointGlaze), bR.bed.add(bR.head).min(1).mul(0.85))
 
   /* ── the court's other fronts: bare baked brick, thick bitumen joints ── */
   const wU = select(abs(n.x).greaterThan(0.5), P.z, P.x)
