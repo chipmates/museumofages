@@ -5,7 +5,7 @@
  "copy": {"name": "Koldewey 1901, Pl. 4 n (his restoration: kept signs solid, restored ones in outline)", "page": "Pl. 4", "file": "p0014.jpg", "origin": [395.0, 1305.0], "mmPerPx": 0.2128},
  "area": {"u": [28.0, 632.0], "v": [20.0, 160.0]},
  "depth": 0.45,
- "soften": 0.35,
+ "soften": 0.28,
  "lines": [
   { "n": 1, "translit": "{d}AG-ku-dur₂-ri-u₂-ṣu-ur LUGAL KA₂.DINGIR.RA{KI}", "edition": ["AN", "AK", "KU", "DUR2", "RI", "U2", "ZU", "UR", "LUGAL", "KA2", "AN", "RA", "KI"],
    "signs": [

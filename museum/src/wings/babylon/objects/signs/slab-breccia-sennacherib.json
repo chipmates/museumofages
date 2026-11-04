@@ -5,7 +5,7 @@
  "copy": {"name": "Koldewey 1901, Pl. 4 v (the Amran block; the only copy)", "page": "Pl. 4", "file": "p0014.jpg", "origin": [2164.2, 1844.2], "mmPerPx": 0.2128},
  "area": {"u": [135, 525], "v": [282, 380]},
  "depth": 0.42,
- "soften": 0.5,
+ "soften": 0.35,
  "lines": [
   { "n": 1, "translit": "⸢d⸣30-PAP.MEŠ-⸢SU⸣", "edition": ["AN", "30", "PAP", "MEŠ", "SU"],
    "signs": [

@@ -95,11 +95,11 @@ export function placeWedges(ins: Inscription): FaceWedge[] {
  *  facets meet at, as a share along the bearing, and the depth there as a share of the head's depth. */
 export const WEDGE = Object.freeze({
   /** the head's length as a share of its width; the tail's width at the head as a share of the head's */
-  head: 0.95, tail: 0.3,
+  head: 0.95, tail: 0.42,
   /** where the deep point stands along the head and along the tail, shares of each one's length */
-  headDeep: 0.24, tailDeep: 0.12,
+  headDeep: 0.24, tailDeep: 0.2,
   /** the tail's depth against the head's */
-  tailDepth: 0.5,
+  tailDepth: 0.65,
   /** a Winkelhaken: its deep point along its length, its depth against a head of its width */
   hookDeep: 0.36, hookDepth: 0.85,
 })

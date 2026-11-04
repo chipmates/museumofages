@@ -4,8 +4,8 @@
  "credit": "Text: RIBo Nebuchadnezzar II B5, F. Weiershäuser and J. Novotny (Oracc), CC BY-SA 3.0. Signs after R. Koldewey, Das wieder erstehende Babylon (1913), fig. 48.",
  "copy": {"name": "Koldewey 1914, fig. 48 A (ruled, a pottery stamp)", "page": "p. 76", "file": "k1914-p76-fig48-1575.png", "origin": [9.4, 289.4], "mmPerPx": 0.3024},
  "area": {"u": [90, 240], "v": [120.5, 209.5]},
- "depth": 0.48,
- "soften": 0.22,
+ "depth": 0.6,
+ "soften": 0.12,
  "field": {"rect": [307, 688, 803, 982], "corner": 9, "sink": 0.9, "wall": 0.9, "rules": [737.5, 788, 838, 887.5, 931.5], "span": [312, 798], "rule": 4, "ruleDepth": 0.45, "rim": 3.5},
  "lines": [
   { "n": 1, "translit": "{d}AG-ku-dur₂-ri-URU₃", "edition": ["AN", "AK", "KU", "DUR2", "RI", "URI3"],
