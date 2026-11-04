@@ -1,11 +1,12 @@
-/* THE SUN OVER BABYLON on the walk's day: twenty days after the spring
-   equinox about 570 BC (obliquity 23.76 degrees), latitude 32.54 N, local
-   apparent solar time. Pure, for the page and for node. */
+/* THE SUN OVER BABYLON on the walk's day: nineteen days after the spring
+   equinox, 15 April 570 BC, the old year's last day (obliquity 23.76
+   degrees), latitude 32.54 N, local apparent solar time. Pure, for the page
+   and for node. */
 
 const D2R = Math.PI / 180
 export const LATITUDE = 32.54
 export const OBLIQUITY = 23.76
-export const DAYS_AFTER_EQUINOX = 20
+export const DAYS_AFTER_EQUINOX = 19
 
 export function declination(days = DAYS_AFTER_EQUINOX): number {
   return Math.asin(Math.sin(OBLIQUITY * D2R) * Math.sin(days * 0.9856 * D2R)) / D2R

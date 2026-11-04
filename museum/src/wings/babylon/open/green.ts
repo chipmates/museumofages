@@ -55,7 +55,7 @@ export function paintPlain(P: Plain, px = 4096): { colour: CanvasTexture; masks:
   c2.fillRect(0, 0, px, px)
   m2.fillStyle = 'rgb(0,0,0)'
   m2.fillRect(0, 0, px, px)
-  // crops about twenty days after the spring equinox: barley green to yellow-green, wheat green, fallow silt, a field just watered
+  // crops about nineteen days after the spring equinox: barley green to yellow-green, wheat green, fallow silt, a field just watered
   const crop = ['rgb(104,118,62)', 'rgb(132,132,70)', 'rgb(150,132,100)', 'rgb(88,84,66)']
   let seed = 7
   const rnd = (): number => ((seed = (seed * 16807) % 2147483647) / 2147483647)
