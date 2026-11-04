@@ -11,12 +11,12 @@ import { fileURLToPath } from 'node:url'
 
 export const APP = resolve(dirname(fileURLToPath(import.meta.url)), '../..')
 /** the kit's ports; 5199 (the sweep) and 5400 (the walk server) are never a kit tool's. A seat given its own ten ports
-    names them in BABYLON_PORTS ("5220-5229"), inside the Babylon band 5210 to 5299 */
+    names them in BABYLON_PORTS ("5220-5229"), inside the Babylon band 5210 to 5399 (5400 is the walk server's) */
 export function portRange(text) {
   if (!text) return [5210, 5219]
   const m = /^(\d+)-(\d+)$/.exec(String(text).trim())
   const r = m ? [Number(m[1]), Number(m[2])] : null
-  if (!r || r[0] > r[1] || r[0] < 5210 || r[1] > 5299) throw new Error(`BABYLON_PORTS "${text}": write <first>-<last> inside 5210-5299`)
+  if (!r || r[0] > r[1] || r[0] < 5210 || r[1] > 5399) throw new Error(`BABYLON_PORTS "${text}": write <first>-<last> inside 5210-5399`)
   return r
 }
 export const PORTS = portRange(process.env.BABYLON_PORTS)
@@ -47,6 +47,19 @@ export const PAGES = {
     readyMs: 240000,
     // the flight's frame at a second, 0 being the first frame
     still: (r) => ({ fn: 'still', arg: { framing: r.framing, view: r.view ?? 'grey', w: r.w, h: r.h, css: r.css, samples: r.samples, out: r.out, name: r.name, t: r.t ?? 0 } }),
+  },
+  // the paper pages draw no 3D: their frames come from paper-shoot.mjs, the smoke opens them like the rest
+  paper: {
+    html: 'src/wings/babylon/paper/sheet.html',
+    rig: '__paper',
+    readyMs: 60000,
+    still: () => { throw new Error('the paper kit sheet: shoot it with forge/babylon/paper-shoot.mjs --page sheet') },
+  },
+  measure: {
+    html: 'src/wings/babylon/measure/measure.html',
+    rig: '__measure',
+    readyMs: 60000,
+    still: () => { throw new Error('feature 7: shoot it with forge/babylon/paper-shoot.mjs --page measure') },
   },
 }
 

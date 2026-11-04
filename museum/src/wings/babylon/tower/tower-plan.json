@@ -90,5 +90,18 @@
    0.39,
    0.28
   ]
+ },
+ "door": {
+  "feature": "measure",
+  "opens": "the tower you can measure (feature 7), a close look on paper: src/wings/babylon/measure/",
+  "wide": {
+   "right": 0.03,
+   "bottom": 0.05
+  },
+  "upright": {
+   "middle": true,
+   "bottom": 0.04
+  },
+  "src": "the stop's one press, named by what it shows and never 'Learn more' (the words are the writer's); it stands clear of the tower in both framings, on the court at the lower right of the wide frame and on the cross street under the tower in the upright one, so the frame at rest keeps far more than two thirds picture"
  }
 }

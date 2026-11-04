@@ -38,6 +38,7 @@ test('the kit keeps to its ports', () => {
   const own = portRange('5220-5229')
   assert.equal(checkPort(5221, own), 5221)
   for (const p of [5214, 5230]) assert.throws(() => checkPort(p, own))
+  assert.deepEqual(portRange('5300-5309'), [5300, 5309])
   for (const bad of ['5190-5199', '5390-5400', '5229-5220', 'x']) assert.throws(() => portRange(bad))
 })
 

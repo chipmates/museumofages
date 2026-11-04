@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Babylon feature 7 bench</title>
+  </head>
+  <body>
+    <div id="stage"><img id="held" alt="" hidden /></div>
+    <button id="door" type="button" hidden></button>
+    <div id="look" hidden>
+      <div id="view" role="img"></div>
+      <button id="shut" type="button"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+      <section id="band" aria-labelledby="name">
+        <div class="band-words">
+          <button id="back" type="button"></button>
+          <h2 id="name" tabindex="-1"></h2>
+          <p id="line" aria-live="polite"></p>
+          <div id="aside" class="unseen"></div>
+        </div>
+        <div class="band-tools" id="controls"></div>
+      </section>
+    </div>
+    <p id="says">building</p>
+    <script type="module" src="./measure-bench.ts"></script>
+  </body>
+</html>
