@@ -24,6 +24,11 @@ export interface GrowSpec {
   lod?: 1 | 2 | 3
   /** wood thinner than this radius (m) is dropped */
   minTwig?: number
+  /** the share of the kit's leaf cards kept (a tree seen only from far off), each kept spray drawn larger to keep the
+      crown's mass */
+  keep?: number
+  /** how much larger than its card a spray is drawn (1.32: the gardens' trees from 100 m and more) */
+  fill?: number
 }
 export interface Crown { y0: number; y1: number; rx: number; rz: number }
 export interface Grown { geometry: BufferGeometry; crown: Crown; triangles: number; shoots: string }
@@ -136,8 +141,10 @@ export function grow(spec: GrowSpec): Grown {
   for (const im of cards) {
     const cg = im.geometry
     const half = Math.abs(cg.getAttribute('position').getX(0))
-    const size = half * 2
+    const keep = Math.min(1, Math.max(0.05, spec.keep ?? 1))
+    const size = half * 2 / Math.sqrt(keep)
     for (let i = 0; i < im.count; i++) {
+      if (keep < 1 && r() > keep) continue
       im.getMatrixAt(i, M)
       M.premultiply(S)
       n0.set(0, 0, 1).transformDirection(M)
@@ -156,7 +163,7 @@ export function grow(spec: GrowSpec): Grown {
         for (let j = 0; j < 3; j++) {
           const a = (j / 3) * Math.PI * 2 + r()
           const top = centre.clone().add(new Vector3(Math.cos(a) * size * 0.22, size * 0.1, Math.sin(a) * size * 0.22))
-          const len = size * (0.8 + r() * 0.5)
+          const len = size * (0.8 + r() * 0.5) * (spec.fill ?? 1.32) / 1.32
           const bot = top.clone().add(new Vector3(out3.x * size * 0.15, -len, out3.z * size * 0.15))
           const side = new Vector3(-Math.sin(a), 0, Math.cos(a)).multiplyScalar(size * 0.2)
           out.tri(top.clone().add(side), top.clone().sub(side), bot, nn, col, 1)
@@ -166,7 +173,7 @@ export function grow(spec: GrowSpec): Grown {
       } else {
         // a spray drawn a third larger than its card: seen from 150 m and more the crown keeps its mass, as the kit's
         // alpha-tested cards keep theirs through their mips
-        for (const leafPts of sprayShape(spec.spray, size * 1.32, r)) {
+        for (const leafPts of sprayShape(spec.spray, size * (spec.fill ?? 1.32), r)) {
           const W = leafPts.map(([x, y]) => q.set(x, y, 0).applyMatrix4(M).clone())
           for (let j = 1; j + 1 < W.length; j++) {
             // wound so the face looks out of the crown

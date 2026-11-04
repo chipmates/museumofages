@@ -15,7 +15,7 @@ type J = any
 type V3 = [number, number, number]
 
 export type Kind = 'palm' | 'cypress' | 'broad' | 'tamarisk' | 'pomegranate' | 'fig' | 'shrub' | 'vine' | 'caper'
-export interface Plant { id: string; kind: Kind; row: string; x: number; z: number; y: number; h: number; geometry: BufferGeometry; crown?: { y0: number; y1: number; rx: number; rz: number }; grown?: boolean }
+export interface Plant { id: string; kind: Kind; row: string; x: number; z: number; y: number; h: number; geometry: BufferGeometry; crown?: { y0: number; y1: number; rx: number; rz: number }; grown?: boolean; r?: number }
 /** the gate's palm builder (gate-life.ts palmGeometry): one palm at the origin, its foot at 0 */
 export type PalmBuilder = (h: number, detail: { seg: number; sides: number; fronds: number; steps: number }, seed: number) => BufferGeometry
 
@@ -29,22 +29,24 @@ const rnd = (seed: number): (() => number) => {
 const norm = (a: V3): V3 => { const l = Math.hypot(...a) || 1; return [a[0] / l, a[1] / l, a[2] / l] }
 
 /** each tree kind as the kit grows it: its species row, how it carries its leaves, its April leaf and its bark (linear
-    albedos, ours, from the photo sheet's kinds); `base` is the share of the height the kit starts the crown at */
-interface TreeKind { species: Species; spray: Spray; leaf: V3; wood: V3; base: number; lod: 1 | 2 }
+    albedos, ours, from the photo sheet's kinds); `base` is the share of the height the kit starts the crown at, `hang`
+    how far its lowest sprays reach below that (m, measured on the grown gardens) */
+interface TreeKind { species: Species; spray: Spray; leaf: V3; wood: V3; base: number; hang: number; lod: 1 | 2 }
 const TREES: Partial<Record<Kind, TreeKind>> = {
-  broad: { species: 'terebinth', spray: 'broad', leaf: [0.076, 0.108, 0.038], wood: [0.12, 0.1, 0.08], base: 0.28, lod: 1 },
-  tamarisk: { species: 'tamarisk', spray: 'thread', leaf: [0.08, 0.098, 0.07], wood: [0.13, 0.085, 0.062], base: 0.18, lod: 1 },
-  pomegranate: { species: 'pomegranate', spray: 'narrow', leaf: [0.07, 0.1, 0.03], wood: [0.12, 0.11, 0.09], base: 0.12, lod: 1 },
-  fig: { species: 'fig', spray: 'broad', leaf: [0.1, 0.14, 0.045], wood: [0.24, 0.22, 0.19], base: 0.2, lod: 1 },
-  cypress: { species: 'cypress', spray: 'scale', leaf: [0.03, 0.048, 0.024], wood: [0.11, 0.085, 0.062], base: 0.06, lod: 1 },
-  shrub: { species: 'shrub', spray: 'broad', leaf: [0.065, 0.088, 0.038], wood: [0.11, 0.085, 0.062], base: 0.06, lod: 1 },
+  broad: { species: 'terebinth', spray: 'broad', leaf: [0.076, 0.108, 0.038], wood: [0.12, 0.1, 0.08], base: 0.28, hang: 0.4, lod: 1 },
+  tamarisk: { species: 'tamarisk', spray: 'thread', leaf: [0.08, 0.098, 0.07], wood: [0.13, 0.085, 0.062], base: 0.18, hang: 0.6, lod: 1 },
+  pomegranate: { species: 'pomegranate', spray: 'narrow', leaf: [0.07, 0.1, 0.03], wood: [0.12, 0.11, 0.09], base: 0.12, hang: 0.15, lod: 1 },
+  fig: { species: 'fig', spray: 'broad', leaf: [0.1, 0.14, 0.045], wood: [0.24, 0.22, 0.19], base: 0.2, hang: 0, lod: 1 },
+  cypress: { species: 'cypress', spray: 'scale', leaf: [0.03, 0.048, 0.024], wood: [0.11, 0.085, 0.062], base: 0.06, hang: 0, lod: 1 },
+  shrub: { species: 'shrub', spray: 'broad', leaf: [0.065, 0.088, 0.038], wood: [0.11, 0.085, 0.062], base: 0.06, hang: 0.5, lod: 1 },
 }
 /** the leaves reach this far past the kit's crown (a spray's card), and the stand-in keeps that margin */
-const MARGIN = 0.6
-/** the stand-in's bounds of a grown tree: the crown from its base share to the top, its radius, and the margin */
+const MARGIN = 0.65
+/** the stand-in's bounds of a grown tree: the crown from its base share (less its hanging sprays) to the top, its radius,
+    and the margin; a shrub's lowest sprays touch the ground, so its stand-in's foot may lie a little under it */
 export function standInCrown(kind: Kind, h: number, r: number): { y0: number; y1: number; rx: number; rz: number } {
   const t = TREES[kind]!
-  return { y0: Math.max(0.2, h * t.base - MARGIN), y1: h + MARGIN, rx: r + MARGIN, rz: r + MARGIN }
+  return { y0: Math.max(-0.3, h * t.base - MARGIN - t.hang), y1: h + MARGIN, rx: r + MARGIN, rz: r + MARGIN }
 }
 const WOOD: V3 = [0.11, 0.085, 0.062]
 /** linear albedos of the hanging green, April; ours, from the photo sheet's kinds */
@@ -229,12 +231,12 @@ export function buildPlanting(F: GardensFrame, gp: J, palm: PalmBuilder, palmDet
         at.setXYZ(i, at.getX(i) + x, at.getY(i) + y, at.getZ(i) + z)
         cen.setXYZ(i, cen.getX(i) + x, cen.getY(i) + y, cen.getZ(i) + z)
       }
-      plants.push({ id, kind: k, row, x, z, y, h, geometry: g.geometry, crown: g.crown, grown: true })
+      plants.push({ id, kind: k, row, x, z, y, h, geometry: g.geometry, crown: g.crown, grown: true, r })
     } else {
       R()
       const b = standInCrown(k, h, r)
       standIn(m, x, y, z, b, t.leaf)
-      plants.push({ id, kind: k, row, x, z, y, h, geometry: m.geometry(), crown: b, grown: false })
+      plants.push({ id, kind: k, row, x, z, y, h, geometry: m.geometry(), crown: b, grown: false, r })
     }
   }
 

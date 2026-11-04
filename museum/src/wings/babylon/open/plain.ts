@@ -14,7 +14,16 @@ export type P2 = [number, number]
 
 export interface Canal { id: string; pts: P2[]; w: number }
 export interface Field { pts: P2[]; tone: number }
-export interface Palm { x: number; z: number; s: number; yaw: number; lean: number; row: string }
+/** a plant of the plain: a date palm by its row (canal, river, outer, city; `detail` the palm's preset where the
+    flight passes it closer than the far preset holds) or a bank plant by its kind (reed, tamarisk, poplar, willow) */
+export interface Palm { x: number; z: number; s: number; yaw: number; lean: number; row: string; detail?: 'near' | 'mid' }
+
+/** the flight's way down (open-cams.json as flight.ts resolves it, every 2 s, UTM and level): the palm presets' bands */
+const DESCENT: Array<[number, number, number]> = [
+  [445380, 3601950, 330], [445386, 3601930, 325], [445415, 3601830, 297], [445473, 3601657, 243], [445549, 3601475, 173],
+  [445633, 3601314, 103], [445695, 3601195, 46], [445720, 3601115, 17], [445729, 3601069, 10], [445734, 3601041, 9],
+  [445737, 3601021, 10], [445739, 3600991, 11],
+]
 export interface Plain {
   /** the area the plain's map covers (scene metres): x0, z0 and its side */
   domain: { x0: number; z0: number; size: number }
@@ -330,6 +339,70 @@ export function buildPlain(mapPlan: J, opts: { palms?: boolean; reach?: number }
           else if (R() < Math.max(0, g.dens - 0.55) * 0.42) put(g.x, g.z, 'outer', 0)
         }
       }
+    }
+    /* the banks outside the walls where the bank is earth, as the record places each kind (every place ours): reed beds
+       at the canals' edges and in the low ground by the river away from the city's quays (bab.green.reed); tamarisk on
+       the canal banks (bab.green.tamarisk); Euphrates poplar and willow on the river and canal banks (bab.green.poplar).
+       Mid-April: the reed's new shoots among last year's stems (it flowers July to October), the poplar and the willow
+       in new leaf, the tamarisk not in bloom (June to October) */
+    const BK = rng(5702)
+    const nearCity = (x: number, z: number): boolean => inPoly(x, z, innerE) || inPoly(x, z, innerW) || polyD(x, z, innerE) < 70 || polyD(x, z, innerW) < 70
+    const inWater = (x: number, z: number): boolean => water.some((w) => inPoly(x, z, w))
+    const ok = (x: number, z: number): boolean => Math.hypot(x - centre[0], z - centre[1]) < reach * 0.8 && !inWater(x, z) && !nearCity(x, z) &&
+      !keepOut.some((k) => (k.poly && inPoly(x, z, k.poly)) || (k.line && lineD(x, z, k.line) < 10))
+    const patch = (x: number, z: number): number => Math.sin(x * 0.021 + 1.7) * Math.sin(z * 0.017 + 0.3) + 0.5 * Math.sin((x + z) * 0.043)
+    const bank = (a: P2, b: P2, side: number, edge: number, treeEvery: number, kind: (u: number) => string, reedFrom: number): void => {
+      const L = Math.hypot(b[0] - a[0], b[1] - a[1])
+      if (L < 1) return
+      const d: P2 = [(b[0] - a[0]) / L, (b[1] - a[1]) / L], n: P2 = [-d[1] * side, d[0] * side]
+      for (let t = BK() * 4; t < L; t += 3 + BK() * 3) {
+        const x = a[0] + d[0] * t, z = a[1] + d[1] * t
+        // reed in beds along about half the bank, a clump a metre or two from the water
+        if (patch(x, z) > -0.1) {
+          const off = edge + 0.8 + BK() * 2.2
+          const rx = x + n[0] * off, rz = z + n[1] * off
+          if (ok(rx, rz) && polyD(rx, rz, innerE) > reedFrom && polyD(rx, rz, innerW) > reedFrom) palms.push({ x: rx, z: rz, s: 0.75 + BK() * 0.5, yaw: BK() * Math.PI * 2, lean: 0, row: 'reed' })
+        }
+        if (BK() < 6 / treeEvery) {
+          const off = edge + 6 + BK() * 9
+          const tx = x + n[0] * off, tz = z + n[1] * off
+          const u = BK()
+          if (ok(tx, tz)) palms.push({ x: tx, z: tz, s: 0.8 + BK() * 0.4, yaw: BK() * Math.PI * 2, lean: 0, row: kind(u) })
+        }
+      }
+    }
+    // the river: its outline's edges, the land side of each
+    for (let i = 0; i < river.length; i++) {
+      const a = river[i]!, b = river[(i + 1) % river.length]!
+      const m: P2 = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]
+      const L = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1
+      const nn: P2 = [-(b[1] - a[1]) / L, (b[0] - a[0]) / L]
+      const side = inPoly(m[0] + nn[0] * 6, m[1] + nn[1] * 6, river) ? -1 : 1
+      bank(a, b, side, 0, 70, (u) => (u < 0.62 ? 'poplar' : 'willow'), 250)
+    }
+    // the plain's canals: both banks, the reed at the cut's edge, fewer trees than the river (the palms line them)
+    for (const c of CANALS) {
+      const pts = c.utm.map(([E, N]) => s(E, N))
+      for (let i = 0; i + 1 < pts.length; i++) for (const side of [1, -1]) bank(pts[i]!, pts[i + 1]!, side, c.w / 2, 160, (u) => (u < 0.5 ? 'tamarisk' : u < 0.8 ? 'poplar' : 'willow'), 0)
+    }
+    /* the presets by the eye's distance to a palm's crown along the flight: the near preset within 110 m (a palm within
+       about 60 m of an eye is near, and the mid's teeth read as teeth to about 120 m), the mid within 400 m */
+    const way = DESCENT.map(([E, N, y]) => { const [x, z] = s(E, N); return [x, y, z] as [number, number, number] })
+    const eyeD = (x: number, y: number, z: number): number => {
+      let d = Infinity
+      for (let i = 0; i + 1 < way.length; i++) {
+        const a = way[i]!, b = way[i + 1]!
+        const ab = [b[0] - a[0], b[1] - a[1], b[2] - a[2]], ap = [x - a[0], y - a[1], z - a[2]]
+        const t = Math.max(0, Math.min(1, (ab[0]! * ap[0]! + ab[1]! * ap[1]! + ab[2]! * ap[2]!) / (ab[0]! ** 2 + ab[1]! ** 2 + ab[2]! ** 2 || 1)))
+        d = Math.min(d, Math.hypot(ap[0]! - ab[0]! * t, ap[1]! - ab[1]! * t, ap[2]! - ab[2]! * t))
+      }
+      return d
+    }
+    for (const p of palms) {
+      if (['reed', 'tamarisk', 'poplar', 'willow'].includes(p.row)) continue
+      const d = eyeD(p.x, 3 + 10 * p.s, p.z)
+      if (d < 110) p.detail = 'near'
+      else if (d < 400) p.detail = 'mid'
     }
     // inside the walls: a sparse row by the Libil-hegalla canal (guessed)
     const cl: P2[] = mapPlan.canal.line.map((q: number[]) => s(q[0]!, q[1]!))
