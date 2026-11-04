@@ -61,6 +61,13 @@ export const PAGES = {
     readyMs: 60000,
     still: () => { throw new Error('feature 7: shoot it with forge/babylon/paper-shoot.mjs --page measure') },
   },
+  // feature 1's three things on the turntable: their beats come from objects-shoot.mjs, the smoke opens them like the rest
+  objects: {
+    html: 'src/wings/babylon/objects/bench.html',
+    rig: '__objects',
+    readyMs: 120000,
+    still: () => { throw new Error('feature 1, hidden words: shoot it with forge/babylon/objects-shoot.mjs') },
+  },
 }
 
 /** the walk's fourteen stops (map-cams.json) and the page that shows each today; stop 1 folds into the opening flight */

@@ -1,0 +1,34 @@
+{
+ "id": "slab-breccia-sennacherib",
+ "text": "RINAP 3 Sennacherib 232",
+ "credit": "Text: RINAP 3 Sennacherib 232, A. K. Grayson and J. Novotny (Oracc), CC BY-SA 3.0. Signs after R. Koldewey (1901), Pl. 4 v.",
+ "copy": {"name": "Koldewey 1901, Pl. 4 v (the Amran block; the only copy)", "page": "Pl. 4", "file": "p0014.jpg", "origin": [2164.2, 1844.2], "mmPerPx": 0.2128},
+ "area": {"u": [135, 525], "v": [282, 380]},
+ "depth": 0.42,
+ "soften": 0.35,
+ "lines": [
+  { "n": 1, "translit": "⸢d⸣30-PAP.MEŠ-⸢SU⸣", "edition": ["AN", "30", "PAP", "MEŠ", "SU"],
+   "signs": [
+    { "sign": "AN", "code": "U+1202D", "reading": "⸢d⸣", "from": "Pl. 4 v l. 1 s. 1",
+     "w": [[2836, 3307, -2, 155, 48], [2915, 3203, 87, 197, 85]] },
+    { "sign": "30", "code": "U+1230D", "reading": "30", "from": "Pl. 4 v l. 1 s. 2",
+     "w": [[3055, 3305, 0, 68, 125, "w"], [3147, 3300, 0, 68, 125, "w"], [3240, 3300, 0, 78, 145, "w"]] },
+    { "sign": "PAP", "code": "U+1227D", "reading": "PAP", "from": "Pl. 4 v l. 1 s. 3",
+     "w": [[3402, 3325, -9, 256, 115], [3480, 3212, 48, 200, 85]] },
+    { "sign": "MEŠ", "code": "U+1238C", "reading": "MEŠ", "from": "Pl. 4 v l. 1 s. 4 (ME, then the three of EŠ)",
+     "w": [[3792, 3220, 92, 190, 105], [3852, 3315, 0, 72, 90], [3937, 3318, 0, 72, 105, "w"], [4042, 3312, 0, 45, 85, "w"], [4125, 3305, 0, 65, 120, "w"]] },
+    { "sign": "SU", "code": "U+122E2", "reading": "⸢SU⸣", "from": "Pl. 4 v l. 1 s. 5, damaged as the copy draws it (the edition's half brackets); its wedges the copy's own, none restored",
+     "w": [[4275, 3283, 5, 110, 85], [4385, 3325, -35, 85, 80, "w"], [4485, 3215, 75, 70, 85], [4472, 3292, -8, 95, 22], [4590, 3205, 80, 50, 80],
+      [4315, 3350, 85, 75, 110, "w"]] }
+   ] },
+  { "n": 2, "translit": "MAN KUR AŠ", "edition": ["MAN", "KUR", "AŠ"],
+   "signs": [
+    { "sign": "MAN", "code": "U+12399", "reading": "MAN", "from": "Pl. 4 v l. 2 s. 1",
+     "w": [[3355, 3525, 0, 80, 150, "w"], [3462, 3525, 0, 85, 145, "w"]] },
+    { "sign": "KUR", "code": "U+121B3", "reading": "KUR", "from": "Pl. 4 v l. 2 s. 2",
+     "w": [[3642, 3485, 0, 55, 85, "w"], [3683, 3522, 95, 68, 85, "w"], [3748, 3482, 10, 66, 80]] },
+    { "sign": "AŠ", "code": "U+12038", "reading": "AŠ", "from": "Pl. 4 v l. 2 s. 3",
+     "w": [[3963, 3506, 1, 217, 105]] }
+   ] }
+ ]
+}

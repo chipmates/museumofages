@@ -149,6 +149,13 @@
   {"match": "^panel:(tower|door)-.*-r[1-4]-", "part": "the front gate's relief rows 1 to 4", "piece": "bab.gate.rows.1-4"},
   {"match": "^panel:(tower|door)-.*-r[56]-", "part": "the front gate's relief rows 5 and 6", "piece": "bab.gate.rows.5-6"},
   {"match": "^life:palm-", "part": "the palms by the forecourt", "piece": "bab.palms"},
-  {"match": "^life:bird-", "part": "the birds", "piece": "bab.life.birds"}
+  {"match": "^life:bird-", "part": "the birds", "piece": "bab.life.birds"},
+  {"match": "^obj:brick-(stamp|signs)$", "part": "the brick's stamp (RIBo Nebuchadnezzar II B5, fig. 48 A)", "piece": "bab.brickstamp", "note": "a type: one brick stands for the king's stamped bricks. Text: RIBo Nebuchadnezzar II B5, F. Weiershäuser and J. Novotny (Oracc), CC BY-SA 3.0. Signs after R. Koldewey, Das wieder erstehende Babylon (1913), fig. 48."},
+  {"match": "^obj:brick", "part": "the king's common baked brick (a type)", "piece": "", "needs": "the king's common baked brick (P2021 p. 20)", "note": "a type: about 33 cm square, 8 cm high"},
+  {"match": "^obj:limestone-(edge-text|signs)$", "part": "the white slab's edge text (RIBo Nebuchadnezzar II 005, K1901 Pl. 1 a)", "piece": "bab.paving.inscription", "note": "Text: RIBo Nebuchadnezzar II 005, F. Weiershäuser and J. Novotny (Oracc), CC BY-SA 3.0. Signs after R. Koldewey, Die Pflastersteine von Aiburschabu in Babylon (1901), Pl. 1."},
+  {"match": "^obj:limestone-", "part": "a white paving slab of the street (a type)", "piece": "bab.paving.limestone", "note": "a type: slab a's edge, 1.07 by 0.35 m"},
+  {"match": "^obj:breccia-edge-text$", "part": "the red slab's edge text (RIBo Nebuchadnezzar II 007, K1901 Pl. 4 n)", "piece": "bab.paving.inscription", "note": "Text: RIBo Nebuchadnezzar II 007, F. Weiershäuser and J. Novotny (Oracc), CC BY-SA 3.0. Signs after R. Koldewey (1901), Pl. 4 n."},
+  {"match": "^obj:breccia-(underside-text|signs)$", "part": "Sennacherib's name under the red slab (K1901 Pl. 4 v)", "piece": "", "needs": "Sennacherib's name under the breccia slabs (RINAP 3 Sennacherib 232; K1914)", "note": "Text: RINAP 3 Sennacherib 232, A. K. Grayson and J. Novotny (Oracc), CC BY-SA 3.0. Signs after R. Koldewey (1901), Pl. 4 v."},
+  {"match": "^obj:breccia-", "part": "a red paving slab of the street (a type)", "piece": "bab.paving.breccia", "note": "a type: 66 cm square, 20 cm thick"}
  ]
 }
