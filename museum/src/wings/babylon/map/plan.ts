@@ -341,6 +341,11 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
     footprints.push({ id: b.id, poly })
     const holes: P2[][] = []
     if (b.holes) for (const h of b.holes) {
+      // an outline of UTM points, or a rect [E0, E1, N0, N1]
+      if (h.poly) {
+        holes.push(h.poly.map((p: number[]) => F.s(p[0]!, p[1]!)))
+        continue
+      }
       const [e0, e1, n0, n1] = h.rect as number[]
       holes.push([F.s(e0!, n0!), F.s(e1!, n0!), F.s(e1!, n1!), F.s(e0!, n1!)])
     }

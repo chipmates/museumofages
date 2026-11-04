@@ -1,0 +1,56 @@
+{
+ "about": "Stop 6 on the map page: the South Palace's Main Courtyard and the throne room's glazed facade, in UTM metres (E, N) and German-zero levels like map-plan.json. The plan is read off sheet S3.45 (Uppsala, CC BY 4.0) and printed sizes; every height and the facade's zones are guessed, and say so.",
+ "floor": 12.0,
+ "paving": { "top": 0.03, "sunk": 0.3, "brick": 0.33, "src": "the court's paving is not in our files: plain baked brick 33 cm square, guessed" },
+ "court": {
+  "e": [445628.9, 445684.5],
+  "n": [3600664.9, 3600725.3],
+  "src": "Main Courtyard 55.6 x 60.4 m read off S3.45 (P2021 p. 103: 55 x 61 m; K1914 ch. XV: 55 x 60 m)"
+ },
+ "room": {
+  "outer": { "e": [445630.9, 445688.4], "n": [3600635.3, 3600664.9] },
+  "inner": { "e": [445633.7, 445685.5], "n": [3600641.2, 3600658.9] },
+  "wallTop": 22.0,
+  "top": 23.0,
+  "src": "S3.45: outer block 57.5 x 29.6 m, room 51.8 x 17.6 m inside, long walls 6.0 m, end walls 2.8 to 2.9 m (P2021 p. 105 to 106: 51.9 x 17.5 m)",
+  "hsrc": "the top at about +23: walls about 10 m over the highest floor (P2021 p. 67), guessed; the roof flat, its form not known (P2021 p. 106); the ceiling at +22, guessed"
+ },
+ "doors": [
+  { "e": 445637.55, "w": 3.8, "crown": 7.1 },
+  { "e": 445658.8, "w": 5.8, "crown": 9.4 },
+  { "e": 445680.15, "w": 3.8, "crown": 7.1 }
+ ],
+ "doorsSrc": "places on S3.45, widths 3.8, 5.8, 3.8 m (P2021 p. 103 to 104); the round arch and the crowns over the floor are guessed",
+ "niche": { "e0": 445656.45, "e1": 445664.5, "step0": 445657.55, "step1": 445663.4, "d1": 1.3, "d2": 1.2, "src": "a doubly recessed niche opposite the main door, opening 8.0 m, inner step 5.85 m, first step about 1.3 m deep (S3.45; K1914 ch. XV); the second step's depth and its full height are guessed; no throne" },
+ "facade": {
+  "course": 0.086,
+  "brick": 0.33,
+  "src": "K1914 ch. XV: on a dark blue ground yellow columns set close together, bright blue capitals with double volutes (two rows of seven courses each, from the fitters' marks), joined by palmettes; above, a frieze of white double palmettes over a band of squares alternately yellow, black and white; white borders; every colour outlined in black",
+  "guessed": "the zones' heights, one tier of columns, the column pitch (four bricks), the rings' colours, the palmettes' drawing and the frieze's pitch (a brick and a half; after the Berlin panel's design, whose middle and upper parts are modern) and where the zones stop at the doors",
+  "zones": {
+   "plinth": [0, 6],
+   "borderLow": [6, 7],
+   "baseRing": [7, 10],
+   "shaft": [10, 62],
+   "neckRing": [62, 65],
+   "voluteLow": [65, 72],
+   "voluteHigh": [72, 79],
+   "crown": [79, 83],
+   "borderMid": [83, 84],
+   "squares": [84, 86],
+   "palmettes": [86, 98],
+   "borderTop": [98, 99],
+   "edge": [125, 126]
+  },
+  "pitch": 1.32,
+  "frieze": 0.495,
+  "margin": 0.5
+ },
+ "colours": {
+  "src": "linear albedo; white, yellow and black are the gate's (COLOURS 9 at the saturated end); the dark blue ground is ours inside the cobalt range (hue 276, chroma 22, 0.12 of the white, so it stays blue, not blue-black, in the court's shade), read against the original fragments of the Berlin lion panel (hue 286 to 295 as shot); the light blue is ours at the blue end of the turquoise range (hue 230, chroma 24, 0.48 of the white); no red, since where it sat is not found",
+  "ground": [0.0455, 0.0808, 0.169],
+  "light": [0.1119, 0.3633, 0.4853],
+  "plaster": [0.62, 0.6, 0.55],
+  "jointGlaze": [0.035, 0.036, 0.04]
+ }
+}

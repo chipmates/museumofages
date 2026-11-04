@@ -27,6 +27,7 @@ import { recordNamer, type ClassFile, type Pieces } from '../record'
 import { toneMapBodies, type Painted } from '../record-tones'
 import { hourOf, sunAt, sunVector } from './sun'
 import { makePath, type PathSample, type V3 } from './path'
+import { mountCourt } from '../court/court'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -43,16 +44,20 @@ const say = (s: string): void => {
 const D2R = Math.PI / 180
 
 say('reading the plan')
-const [plan, cams, pieces, recordClasses]: [J, J, Pieces, ClassFile] = await Promise.all([
+const [plan, cams, pieces, recordClasses, courtPlan]: [J, J, Pieces, ClassFile, J] = await Promise.all([
   fetch(new URL('./map-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('./map-cams.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../pieces.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../record-classes.json', import.meta.url)).then((r) => r.json()),
+  fetch(new URL('../court/court-plan.json', import.meta.url)).then((r) => r.json()),
 ])
 if (q.get('tower') === 'base') plan.tower.stages = plan.tower.stages.slice(0, 1)
 const F = makeFrame(plan)
 const t0 = performance.now()
-const built = buildPlan(plan)
+const tones = tonesFrom(plan)
+// stop 6's court and throne room draw themselves; the city's bodies are built without the prisms they replace
+const court = mountCourt(buildPlan(plan), plan, courtPlan, tones)
+const built = court.built
 const planMs = Math.round(performance.now() - t0)
 
 /* the canal's banks get their own ground lines, so its cut stays 2.8 m wide on a 6 m grid */
@@ -106,18 +111,20 @@ const uDensity = uniform(Number(q.get('haze') ?? 0.0002))
 scene.fogNode = fog(uHaze, densityFogFactor(uDensity))
 
 say('building the city')
-const tones = tonesFrom(plan)
 // the Ishtar Gate's passage through both gates, along its axis from the north face
 const gateFrame = plan.frames.gate
 const bodies = buildBodies(built, tones, sky, uSun, canalZ, { o: F.s(gateFrame.origin[0], gateFrame.origin[1]), a: F.dir(gateFrame.bearing), c: F.dir(gateFrame.bearing + 90), len: 50, half: 2.6 })
 scene.add(bodies.group)
+scene.add(court.mesh)
 uView.value = q.get('view') === 'classes' ? 1 : 0
 /* the class view from the record at the camera's stop: some rows hold at certain stops only (the street's) */
 let tonedAt = '', painted: Painted = { bodies: 0, byLetters: [] }
 function toneAt(stop: number): void {
   if (String(stop) === tonedAt) return
   tonedAt = String(stop)
-  painted = toneMapBodies(bodies.group, built, recordNamer(pieces, recordClasses, tonedAt))
+  const name = recordNamer(pieces, recordClasses, tonedAt)
+  const city = toneMapBodies(bodies.group, built, name), own = court.tone(name)
+  painted = { bodies: city.bodies + own.bodies, byLetters: [...city.byLetters, ...own.byLetters] }
 }
 
 /* the person for size, at each stop's place for one */
@@ -229,6 +236,7 @@ function aim(pos: V3, look: V3, hfov: number, w: number, h: number, shift = 0): 
   camera.aspect = w / h
   shiftNow = shift
   camera.updateProjectionMatrix()
+  court.setPixel(camera.fov, h)
   camera.updateMatrixWorld(true)
   skyDome.position.copy(camera.position)
   skyDome.updateMatrixWorld(true)
@@ -324,7 +332,7 @@ const rig = {
     duration: path.duration,
   }),
   /** what the scene holds, from the bodies the page built */
-  facts: () => ({ ...built.facts, streetLevelAtS: undefined, sunAt: Object.fromEntries(cams.stops.map((s: J) => [s.n, sunAt(hourOf(s.hour))])) }),
+  facts: () => ({ ...built.facts, court: court.court.facts, streetLevelAtS: undefined, sunAt: Object.fromEntries(cams.stops.map((s: J) => [s.n, sunAt(hourOf(s.hour))])) }),
   stand: (E: number, N: number) => {
     const [x, z] = F.s(E, N)
     return { stand: stand(x, z), ground: built.ground(x, z), street: built.streetAt(x, z) }
@@ -356,8 +364,12 @@ const rig = {
     return side
   },
   /** a still from any camera: UTM place, a height (a level or 'eye'), a look point (E, N, level), an hour */
-  async probe(o: { at: [number, number]; y: number | 'eye'; look: [number, number, number]; hour: string; hfov?: number; shift?: number; stops?: number; w: number; h: number; samples: number; out: string; name: string; view?: 'grey' | 'classes' }) {
+  async probe(o: { at: [number, number]; y: number | 'eye'; look: [number, number, number]; hour: string; hfov?: number; shift?: number; stops?: number; w: number; h: number; samples: number; out: string; name: string; view?: 'grey' | 'classes'; figure?: number }) {
     const [x, z] = F.s(o.at[0], o.at[1])
+    if (o.figure) {
+      toneAt(o.figure)
+      showFigure(o.figure)
+    }
     const y = o.y === 'eye' ? stand(x, z) + cams.eye : o.y
     const [lx, lz] = F.s(o.look[0], o.look[1])
     uView.value = o.view === 'classes' ? 1 : 0

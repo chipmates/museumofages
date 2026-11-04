@@ -70,11 +70,11 @@ export const lines = (x: N, P: number, h: number, w: N): N => {
   return clamp(lineInt(x.add(ww.mul(0.5)), P, h).sub(lineInt(x.sub(ww.mul(0.5)), P, h)).div(ww), 0, 1)
 }
 /** a band [a, b) of x with soft edges as wide as the footprint */
-const band = (x: N, a: N | number, b: N | number, w: N): N => smoothstep(float(a).sub(w.mul(0.5)), float(a).add(w.mul(0.5)), x).mul(float(1).sub(smoothstep(float(b).sub(w.mul(0.5)), float(b).add(w.mul(0.5)), x)))
-const hash2 = (a: N, b: N): N => fract(sin(a.mul(12.9898).add(b.mul(78.233))).mul(43758.5453))
+export const band = (x: N, a: N | number, b: N | number, w: N): N => smoothstep(float(a).sub(w.mul(0.5)), float(a).add(w.mul(0.5)), x).mul(float(1).sub(smoothstep(float(b).sub(w.mul(0.5)), float(b).add(w.mul(0.5)), x)))
+export const hash2 = (a: N, b: N): N => fract(sin(a.mul(12.9898).add(b.mul(78.233))).mul(43758.5453))
 
 /** the footprint of one device pixel along a direction t in a surface of normal n, seen along v */
-const footprint = (U: GateUniforms, t: N, n: N): N => {
+export const footprint = (U: Pick<GateUniforms, 'uPix'>, t: N, n: N): N => {
   const v = normalize(cameraPosition.sub(positionWorld))
   const d = positionWorld.distance(cameraPosition)
   const nv = max(dot(n, v).mul(dot(n, v)), 0.01)
@@ -93,9 +93,9 @@ export const classColour = (U: GateUniforms, idx: N, hu: N, hy: N, fw: N): N => 
 }
 
 /* ── the bond ── */
-interface Bond { bed: N; head: N; brick: N; kk: N }
+export interface Bond { bed: N; head: N; brick: N; kk: N }
 /** joints of a running bond of half bricks: courses of 8.6 cm, whole-ended courses where k minus the shift is odd */
-const bond = (u: N, y: N, shift: N, fu: N, fy: N, half: number): Bond => {
+export const bond = (u: N, y: N, shift: N, fu: N, fy: N, half: number): Bond => {
   const k = floor(y.div(C))
   const kk = k.sub(shift)
   const odd = kk.sub(floor(kk.div(2)).mul(2))

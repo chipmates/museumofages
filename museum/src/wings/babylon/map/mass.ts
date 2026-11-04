@@ -39,7 +39,7 @@ export function classColour(t: ClassTones, cls: N, band: N): N {
 }
 
 /** grey that still tells faces apart: a little lighter on top, a slow mottle so a big face is never one flat value */
-function greyNode(base: number): N {
+export function greyNode(base: number): N {
   const up = max(normalWorld.y, 0)
   const mottle = mx_noise_float(positionWorld.mul(0.07)).mul(0.05).add(1)
   return vec3(base).mul(float(1).add(up.mul(0.08))).mul(mottle)
