@@ -358,10 +358,21 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   const gloss = float(0.15).add(h3.mul(1.7).mul(each)).add(float(0.85).mul(float(1).sub(each)))
   const sheen = met.mul(fres).mul(gloss).mul(front).mul(float(1).sub(jointF)).mul(float(1).sub(uView))
 
-  /* ── the reveals and soffits: the ground in its bond, along the wall's depth ── */
-  const rU = select(abs(n.x).greaterThan(0.5), P.z, P.x)
-  const fr = footprint(U, select(abs(n.x).greaterThan(0.5), vec3(0, 0, 1), vec3(1, 0, 0)), n), fry = footprint(U, vec3(0, 1, 0), n)
-  const bR = bond(rU, y, float(0), fr, fry, 0.0025)
+  /* ── the reveals and soffits: the ground in its bond, along the wall's depth. Round each arch's head the courses
+     follow the curve, their height the arc length from the spring, so no brick stretches where the soffit turns flat ── */
+  let rY: N = y, onHead: N = float(0), tR: N = vec3(0, 1, 0)
+  for (const d of F.doors) {
+    const dx = P.x.sub(d.c), dy = max(P.y.sub(d.spring), 0)
+    const head = inX(d.x0, d.x1, 0.01).mul(step(d.spring, P.y))
+    const th = atan(dy, dx)
+    rY = mix(rY, min(th, float(Math.PI).sub(th)).mul(d.r).add(d.spring - F.pave), head)
+    tR = mix(tR, vec3(dy.negate(), dx, 0).div(d.r), head)
+    onHead = max(onHead, head)
+  }
+  const alongZ = max(step(0.5, abs(n.x)), onHead).greaterThan(0.5)
+  const rU = select(alongZ, P.z, P.x)
+  const fr = footprint(U, select(alongZ, vec3(0, 0, 1), vec3(1, 0, 0)), n), fry = footprint(U, tR, n)
+  const bR = bond(rU, rY, float(0), fr, fry, 0.0025)
   const hR = hash2(bR.brick.mul(91.3), bR.kk.add(3.3))
   const eachR = float(1).sub(smoothstep(0.08, 0.3, fr))
   const varyR = bR.brick.sub(0.5).mul(0.9).sub(step(0.7, hR).mul(0.45)).mul(eachR)
