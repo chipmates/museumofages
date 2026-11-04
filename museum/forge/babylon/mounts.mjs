@@ -11,7 +11,9 @@ import * as TSL from 'three/tsl'
 import { APP } from './pages.mjs'
 import { cameraFrom, facesFrom, fittedFov } from './geometry.mjs'
 
-const COURT = join(APP, 'src/wings/babylon/court'), TOWER = join(APP, 'src/wings/babylon/tower')
+const COURT = join(APP, 'src/wings/babylon/court'), TOWER = join(APP, 'src/wings/babylon/tower'), GARDENS = join(APP, 'src/wings/babylon/gardens')
+/** the garden's palms as the map page builds them (map.ts PALM_MID) */
+const PALM_MID = { seg: 4, sides: 5, fronds: 16, steps: 4 }
 const MAP = join(APP, 'src/wings/babylon/map'), GATE = join(APP, 'src/wings/babylon/gate'), OPEN = join(APP, 'src/wings/babylon/open')
 const json = (p) => JSON.parse(readFileSync(p, 'utf8'))
 /** the kit's still sizes, device pixels: both framings at the shooter's defaults, and the smaller desktop */
@@ -64,9 +66,14 @@ export async function mountMap(stop, { reach = 400 } = {}) {
   const { makePath } = await import(join(MAP, 'path.ts'))
   const { buildCourt } = await import(join(COURT, 'court-geom.ts'))
   const { buildTower } = await import(join(TOWER, 'tower-geom.ts'))
-  const plan = json(join(MAP, 'map-plan.json')), cams = json(join(MAP, 'map-cams.json'))
-  // stop 6's court draws its own bodies in place of the map's prisms it replaces, as map.ts does
-  const court = buildCourt(buildPlan(plan), plan, json(join(COURT, 'court-plan.json')))
+  const { buildGardens } = await import(join(GARDENS, 'gardens-geom.ts'))
+  const { buildPlanting } = await import(join(GARDENS, 'gardens-plants.ts'))
+  const { palmGeometry } = await import(join(GATE, 'gate-life.ts'))
+  const plan = json(join(MAP, 'map-plan.json')), cams = json(join(MAP, 'map-cams.json')), gp = json(join(GARDENS, 'gardens-plan.json'))
+  // stop 5's candidates and stop 6's court draw their own bodies in place of the map's prisms they replace, as map.ts does
+  const gardens = buildGardens(buildPlan(plan), plan, gp)
+  const planting = buildPlanting(gardens.F, gp, palmGeometry, PALM_MID)
+  const court = buildCourt(gardens.built, plan, json(join(COURT, 'court-plan.json')))
   // stop 9's precinct, street and tower draw their own bodies too, as map.ts does
   const tower = buildTower(court.built, plan, json(join(TOWER, 'tower-plan.json')))
   const built = tower.built
@@ -93,9 +100,13 @@ export async function mountMap(stop, { reach = 400 } = {}) {
   const faces = mapFaces([], bodies.group, built, new THREE.Matrix4(), keep)
   for (const b of court.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
   for (const b of tower.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
+  // stop 5's bodies whole (an edge terrace's top is a few long triangles whose middles lie past the reach), and each
+  // plant whole where its foot lies within the reach
+  for (const b of gardens.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`)
+  for (const p of planting.plants) if (Math.hypot(p.x - ex, p.z - ez) <= reach) facesFrom(faces, p.geometry, null, () => `map:${p.id}`)
   const surface = (b) => /^map:(street|ground|water-|gate5-street-)/.test(b)
   return {
-    court, tower,
+    court, tower, gardens, planting,
     page: 'map', stop: String(stop), frame: "the map's scene metres (x east, z south, y up)", faces, cameras, eyes, reach,
     ground: (x, z) => built.ground(x, z),
     track: (dt = 0.25) => pathTrack(path, n, dt, (q) => ({ kind: q.kind, desktop: view(q.pos, q.look, q.hfov, q.shift), phone: view(q.pos, q.phone.look, q.phone.hfov, q.phone.shift) })),
@@ -103,8 +114,12 @@ export async function mountMap(stop, { reach = 400 } = {}) {
     checks: (b) => !surface(b),
     floats: (b) => !surface(b) && b !== 'map:ramps',
     allowPair: [],
-    allowThin: [],
-    allowFloat: [],
+    // the gate's own palm (palm-date-babylon, reused as it is): its frond tips stay 16 cm wide for 86 m, and the garden's
+    // stand 300 to 430 m from stop 5's hold; a far preset of the part is the fix
+    allowThin: [{ prefix: 'map:garden-palm-', why: "the reused gate palm's frond tips, 6 to 8 cm faces at 330 to 390 m (0.06 to 0.07 px of the 1600 px desktop, measured 4 Nov); a far preset of palm-date-babylon is open" }],
+    // a curtain hangs on a terrace's face from its lip on the terrace's top: held by the face, which the plan-view
+    // support rule cannot see (as the gate's facing skins)
+    allowFloat: [{ prefix: 'map:garden-vine-', why: "a curtain hung on a terrace's face from its lip on the top: held by the face behind it" }, { prefix: 'map:garden-caper-', why: "a caper curtain hung on a terrace's face from its lip on the top: held by the face behind it" }],
   }
 }
 
