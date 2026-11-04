@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /** THE FILM'S PLAN AND LIFE, proved without a browser.
  *   node src/wings/vinci/film-ways-check.mjs [--release=<folder holding film.json>]
- * The life the film composes is the wing's whole record; the plan's stations
- * are the film's own stops that are stations, numbered as the band counts
- * them, at the eyes the film was printed from; the line's works are its
+ * The life the film composes is the wing's whole record; the plan's marks
+ * are every stop of the film, numbered as the band counts them, at the eyes
+ * the film was printed from; the line's works are its
  * twelve cut dates and its floor; the floor's id is the live registry's.
  * With a release, the plan is read against it; without one, that part is
  * skipped and says so.
@@ -52,7 +52,7 @@ try {
   check(line.slice(0, 12).map(h => h.id).join() === LINE_STUDS.filter(s => cutWant.includes(s.id)).map(s => `stud/${s.id}`).join(), 'the dates stand in the record\'s own order')
   check(line.at(-1).title.de === vinciContent.find(s => s.id === 'line-early').name.de, 'the floor is named by its station')
 
-  // THE PLAN against a release: the film's stops that are stations, at their printed eyes
+  // THE PLAN against a release: every stop the band counts, at its printed eye
   const file = RELEASE ? [join(RELEASE, 'film.json'), RELEASE].find(p => existsSync(p) && p.endsWith('.json')) : null
   if (!file) console.log('skip the plan: no --release given')
   else {
@@ -61,10 +61,10 @@ try {
     // the walk the release was rendered along, as the film wing reads it
     const stops = release.story.map(node => { const id = node.slice('stop:'.length), station = release.nodes[node].station; return { id, station, name: vinciContent.find(s => s.id === station)?.name ?? { en: id, de: id } } })
     const site = plan.filmPlanSite(release, stops, () => true, [])
-    const want = stops.flatMap((s, i) => s.id === s.station && vinciContent.some(c => c.id === s.id) ? [i + 1] : [])
-    check(site.stations.map(s => s.number).join() === want.join(), `the plan's stations are the stops that are stations, numbered as the band counts (${want.join(' ')})`)
+    const want = stops.flatMap((s, i) => vinciContent.some(c => c.id === s.station) ? [i + 1] : [])
+    check(want.length === stops.length && site.stations.map(s => s.number).join() === want.join(), `the plan numbers every stop as the band counts (${want.join(' ')})`)
     check(site.stations.every(s => { const p = release.nodes[`stop:${s.id}`].print.wide.split(',').map(Number); return s.east === p[0] && s.north === -p[2] }), 'every mark stands at the eye its stop was printed from')
-    check(!site.stations.some(s => s.id === 'picture-room-lisa' || s.id === 'body-valve'), 'a place of the walk inside a room is no mark of its own')
+    check(['picture-room-lisa', 'body-valve'].every(id => site.stations.find(s => s.id === id)?.number === stops.findIndex(s => s.id === id) + 1), 'a place of the walk inside a room is a mark of its own, under its own number')
     check(site.rooms.length === 6 && site.shapes.length === 5 && site.shapes[0].points.length > 10, 'the rooms and the house\'s outline are the live plan\'s')
     const cells = async ids => ids.map(id => ({ id, title: id, kind: id.split('/')[0], openable: true, certainty: 'documented', preview: null }))
     const table = Array.from({ length: 17 }, (_, i) => `topic/t${i}`)

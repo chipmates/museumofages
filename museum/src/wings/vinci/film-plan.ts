@@ -14,8 +14,8 @@ import type { DeskOverviewCell } from '../overview'
 
 export interface FilmPlanStop { id: string; station: string; name: VinciText }
 
-/** A STOP THAT IS A STATION is a mark on the plan, as in the live plan: a
-    place of the walk inside a station's room (the Lisa, the valve) is not. */
+/** THE STOPS THAT HOLD THE PLAN'S WORKS: a stop that is a station. A place of
+    the walk inside a station's room (the Lisa, the valve) holds none of its own. */
 function stations(release: FilmRelease, stops: readonly FilmPlanStop[], carried: (index: number) => boolean) {
   return stops.flatMap((stop, index) => {
     const content = vinciContent.find(station => station.id === stop.id)
@@ -27,7 +27,20 @@ function stations(release: FilmRelease, stops: readonly FilmPlanStop[], carried:
   })
 }
 
-/** THE WING AS A PLAN, its stations in the walk's own order. */
+/** EVERY STOP THE BAND COUNTS is a mark and a row of the plan, under the number
+    the band gives it: a station at its own eye, and a place of the walk inside a
+    station's room (the Lisa, the valve) at its own eye, named as the walk names it. */
+function stopsOnPlan(release: FilmRelease, stops: readonly FilmPlanStop[], carried: (index: number) => boolean) {
+  return stops.flatMap((stop, index) => {
+    const station = vinciContent.find(content => content.id === stop.station)
+    const node = release.nodes[`stop:${stop.id}`]
+    const print = parsePrint(node?.print.wide ?? node?.print.upright ?? '')
+    if (!station || !print || !carried(index)) return []
+    return [{ id: stop.id, name: stop.id === stop.station ? station.name : stop.name, group: station.group, number: index + 1, east: print[0], north: -print[2] }]
+  })
+}
+
+/** THE WING AS A PLAN, its stops in the walk's own order. */
 export function filmPlanSite(release: FilmRelease, stops: readonly FilmPlanStop[], carried: (index: number) => boolean,
   highlights: readonly PlanHighlight[]): PlanSite {
   const box = (west: number, east: number, south: number, north: number): PlanPoint[] =>
@@ -50,11 +63,11 @@ export function filmPlanSite(release: FilmRelease, stops: readonly FilmPlanStop[
     { id: 'parapet-west', points: box(COURT.west, COURT.west + COURT.parapetThickness, COURT.south, COURT.north), closed: true, fill: true, built: true },
     { id: 'parapet-east', points: box(COURT.east - COURT.parapetThickness, COURT.east, COURT.south, COURT.north), closed: true, fill: true, built: true },
   ]
-  const placed = stations(release, stops, carried)
+  const placed = stopsOnPlan(release, stops, carried)
   const marks: PlanStation[] = placed.map((here, index) => ({
-    id: here.content.id, number: here.number, name: here.content.name, group: here.content.group, east: here.east, north: here.north,
-    // stations seen from one standing place are one mark
-    sharesPoseWith: placed.flatMap((other, at) => at === index || other.east !== here.east || other.north !== here.north ? [] : [other.content.id]),
+    id: here.id, number: here.number, name: here.name, group: here.group, east: here.east, north: here.north,
+    // stops seen from one standing place are one mark
+    sharesPoseWith: placed.flatMap((other, at) => at === index || other.east !== here.east || other.north !== here.north ? [] : [other.id]),
   }))
   return { rooms, shapes, stations: marks, highlights }
 }

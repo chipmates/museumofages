@@ -87,8 +87,9 @@ export function mountFilmWays(host: FilmWaysHost): void {
           const release = host.release()!
           return m.filmPlanSite(release, host.stops, host.carried, works?.language === lang() ? works.list : [])
         },
-        standing: () => host.stops[host.standing()]?.station ?? '',
-        stood: () => host.stood().map(id => host.stops.find(stop => stop.id === id)?.station ?? id),
+        // the plan names every stop by its own id, so the band's number and the plan's stand together
+        standing: () => host.stops[host.standing()]?.id ?? '',
+        stood: () => host.stood(),
         // THE QUICK SELECT IS THE PRESS THE BAR ALREADY MAKES
         station: id => { const index = host.stops.findIndex(stop => stop.id === id); if (index >= 0) hosts.navigate(index) },
         highlight: id => openWork(id),
