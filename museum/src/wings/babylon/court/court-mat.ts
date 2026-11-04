@@ -25,7 +25,7 @@ type N = any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
 const T = TSL as unknown as Record<string, N>
-const { abs, atan, attribute, cameraPosition, clamp, dot, exp, float, floor, fract, length, max, min, mix, mx_noise_float, mx_worley_noise_vec2, normalize, positionWorld, pow, reflect, select, sin, smoothstep, step, uniform, vec2, vec3 } = T
+const { abs, atan, attribute, cameraPosition, clamp, dot, exp, float, floor, fract, length, max, min, mix, mx_noise_float, mx_worley_noise_vec2, normalize, positionWorld, pow, reflect, select, sin, smoothstep, sqrt, step, uniform, vec2, vec3 } = T
 
 type RGB = [number, number, number]
 const V = (c: RGB): N => vec3(...c)
@@ -406,7 +406,7 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   const hp = hash2(kx, kz), hp2 = hash2(kx.add(7.7), kz.add(3.1))
   const batch = mx_noise_float(vec3(P.x.mul(0.33), 1.3, P.z.mul(0.33)))
   const fire = clamp(float(0.36).add(batch.mul(0.18)).add(hp.sub(0.5).mul(0.16).mul(pSeen)), 0, 1)
-  let pTone: N = mix(V(PAL.buff as RGB), V(PAL.redBrown as RGB), fire).mul(float(0.96).add(hp2.sub(0.5).mul(0.09).mul(pSeen))).mul(vec3(1.04, 1.0, 0.88))
+  let pTone: N = mix(V(PAL.buff as RGB), V(PAL.redBrown as RGB), fire).mul(float(0.96).add(hp2.sub(0.5).mul(0.09).mul(pSeen))).mul(vec3(1.07, 1.0, 0.84))
   const grain = mx_noise_float(P.mul(vec3(26, 3, 26))).mul(0.11).mul(pNear)
   const pits = smoothstep(0.32, 0.5, mx_noise_float(P.mul(vec3(70, 5, 70)))).mul(0.22).mul(pNear)
   pTone = pTone.mul(float(1).add(grain).sub(pits))
@@ -414,9 +414,13 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   const fxB = fract(px.div(BR)).mul(BR), fzB = fract(P.z.div(BR)).mul(BR)
   const edgeD = min(min(fxB, float(BR).sub(fxB)), min(fzB, float(BR).sub(fzB)))
   const chip = mx_noise_float(P.mul(vec3(14, 2, 14))).add(0.5)
-  const jh = float(0.0045).add(chip.mul(0.005)).add(wear.mul(0.003))
+  const jh = float(0.0035).add(chip.mul(0.004)).add(mx_noise_float(P.mul(vec3(5, 1, 5))).add(0.5).mul(0.005)).add(wear.mul(0.004))
   const jFar = max(lines(P.z, BR, 0.0045, fpZ), lines(px, BR, 0.0045, fpX))
-  const jNear = float(1).sub(smoothstep(jh.sub(0.0015), jh.add(0.0015).add(fpw.mul(0.5)), edgeD))
+  // a corner broken off here and there, the gap filled like a joint
+  const cornerD = length(vec2(min(fxB, float(BR).sub(fxB)), min(fzB, float(BR).sub(fzB))))
+  const hc = hash2(kx.add(19.3), kz.add(2.9))
+  const broken = step(0.62, hc).mul(float(1).sub(smoothstep(hc.mul(0.05).sub(0.012), hc.mul(0.05).sub(0.008).add(fpw.mul(0.5)), cornerD)))
+  const jNear = max(float(1).sub(smoothstep(jh.sub(0.0015), jh.add(0.0015).add(fpw.mul(0.5)), edgeD)), broken)
   const jointP = mix(jFar, jNear, pNear)
   const arris = float(1).sub(smoothstep(jh, jh.add(0.014).add(wear.mul(0.012)), edgeD)).mul(pNear)
   pTone = pTone.mul(float(1).sub(arris.mul(0.16)))
@@ -424,10 +428,10 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   const dWall = min(min(P.z.sub(c.z0), float(F.zF).sub(P.z)), min(P.x.sub(c.x0), float(c.x1).sub(P.x)))
   const inCourt = step(P.z, F.zF)
   const foot = float(1).sub(smoothstep(0.1, 2.2, dWall)).mul(inCourt).mul(float(1).sub(min(inDoorX, 1).mul(step(float(F.zF).sub(P.z), 2.0))))
-  const drift = smoothstep(0.15, 0.8, mx_noise_float(vec3(P.x.mul(0.23), 2.7, P.z.mul(0.23))).add(0.5))
-  const dust = clamp(drift.mul(0.24).add(foot.mul(0.36)).add(float(0.18).mul(float(1).sub(inCourt))), 0, 1).mul(float(1).sub(wear.mul(0.85)))
-  const dustCol = vec3(0.5, 0.45, 0.37)
-  pTone = mix(pTone.mul(float(1).sub(wear.mul(0.07))), dustCol, dust.mul(0.5))
+  const drift = smoothstep(0.1, 0.8, mx_noise_float(vec3(P.x.mul(0.23), 2.7, P.z.mul(0.23))).add(0.5))
+  const dust = clamp(drift.mul(0.4).add(foot.mul(0.4)).add(float(0.2).mul(float(1).sub(inCourt))).add(0.1), 0, 1).mul(float(1).sub(wear.mul(0.9)))
+  const dustCol = vec3(0.52, 0.47, 0.39)
+  pTone = mix(pTone.mul(mix(vec3(1), vec3(0.97, 0.91, 0.86), wear)), dustCol, dust.mul(0.62))
   // the joints: bitumen, half filled with the court's dust; swept emptier and darker on the walked ways
   const jointPCol = mix(mix(V(PAL.asphalt as RGB).mul(2), dustCol.mul(0.78), float(0.55).add(chip.mul(0.35))), V(PAL.asphalt as RGB).mul(2.5), wear.mul(0.35))
   const pavingCol = mix(pTone, jointPCol, jointP.mul(0.72))
@@ -439,12 +443,13 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
      the parapet's top a course of baked brick laid flat ── */
   const fR = max(footprint(U, vec3(1, 0, 0), vec3(0, 1, 0)), footprint(U, vec3(0, 0, 1), vec3(0, 1, 0)))
   const dPar = min(min(P.x.sub(o.x0 + pt), float(o.x1 - pt).sub(P.x)), min(P.z.sub(o.z0 + pt), float(o.z1 - pt).sub(P.z)))
-  const fresh = smoothstep(0.15, 0.4, mx_noise_float(vec3(P.x.mul(0.21), 8.3, P.z.mul(0.21))))
+  // patches laid at one time end at an edge: newer ones paler, older ones weathered darker and greyer
+  const fresh = smoothstep(0.17, 0.23, mx_noise_float(vec3(P.x.mul(0.21), 8.3, P.z.mul(0.21))).add(mx_noise_float(vec3(P.x.mul(1.3), 3.7, P.z.mul(1.3))).mul(0.06)))
   const crackCell = mx_worley_noise_vec2(vec2(P.x, P.z).mul(1.6))
   const cracks = smoothstep(0.06, 0.0, crackCell.y.sub(crackCell.x)).mul(float(1).sub(smoothstep(0.01, 0.05, fR)))
-  const old = smoothstep(0.1, 0.45, mx_noise_float(vec3(P.x.mul(0.11), 1.9, P.z.mul(0.11))).negate())
+  const old = smoothstep(0.16, 0.24, mx_noise_float(vec3(P.x.mul(0.13), 1.9, P.z.mul(0.13))).negate().add(mx_noise_float(vec3(P.x.mul(1.1), 6.1, P.z.mul(1.1))).mul(0.06)))
   const deckTone = V(TONES.roof).mul(float(1).add(mx_noise_float(vec3(P.x.mul(0.05), 4.1, P.z.mul(0.05))).mul(0.16)).add(mx_noise_float(vec3(P.x.mul(0.45), 2.2, P.z.mul(0.45))).mul(0.08)))
-  // newer plaster paler, older patches weathered darker and greyer, a darker damp margin along the parapet's foot
+  // a darker damp margin along the parapet's foot
   const deckCol = mix(deckTone.mul(mix(float(1), float(1.12), fresh.mul(0.8))), deckTone.mul(vec3(0.8, 0.8, 0.82)), old.mul(0.7))
     .mul(float(1).sub(float(1).sub(smoothstep(0.0, 1.2, dPar)).mul(0.2))).mul(float(1).sub(cracks.mul(0.35)))
   const copeU = select(abs(P.x.sub((o.x0 + o.x1) / 2)).greaterThan((o.x1 - o.x0) / 2 - pt), P.z, P.x)
@@ -477,16 +482,29 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   const nicheIn = clamp(P.z.sub(F.niche.z).div(F.niche.d1 + F.niche.d2), 0, 1)
   // the doors' light comes in low: a wall takes less of it toward the ceiling
   const high = select(n.y.lessThan(-0.5), float(0), smoothstep(2.5, 10, y).mul(0.32))
-  const roomAO = clamp(float(0.44).add(min(through, 1).mul(0.32)), 0.3, 0.78).mul(facing).mul(float(1).sub(high)).mul(float(1).sub(nicheIn.mul(0.3)))
+  // the niche's inside corners: each step's back darker toward its sides, each side darker toward its back
+  const Nn = F.niche
+  const step2 = step(Nn.z + Nn.d1 + 0.01, P.z), inNiche = step(Nn.z + 0.01, P.z)
+  const sideD = select(step2.greaterThan(0.5), min(abs(P.x.sub(Nn.s0)), abs(P.x.sub(Nn.s1))), min(abs(P.x.sub(Nn.x0)), abs(P.x.sub(Nn.x1))))
+  const backD = select(step2.greaterThan(0.5), float(Nn.z + Nn.d1 + Nn.d2), float(Nn.z + Nn.d1)).sub(P.z)
+  const nicheD = select(abs(n.x).greaterThan(0.5), backD, sideD)
+  const cornerAO = float(1).sub(float(1).sub(smoothstep(0.0, 0.8, nicheD)).mul(0.42).mul(inNiche))
+  const roomAO = clamp(float(0.44).add(min(through, 1).mul(0.32)), 0.3, 0.78).mul(facing).mul(float(1).sub(high)).mul(float(1).sub(nicheIn.mul(0.34))).mul(cornerAO)
   const passAO = mix(float(0.92), float(0.55), clamp(P.z.sub(F.zF).div(F.zB - F.zF), 0, 1))
   const dFloorWall = select(min(inDoorX, 1).greaterThan(0.5), min(min(P.z.sub(c.z0), P.x.sub(c.x0)), float(c.x1).sub(P.x)), dWall)
   const floorAO = float(1).sub(float(1).sub(smoothstep(0.0, 1.1, dFloorWall)).mul(0.42).mul(inCourt))
+  // the court's fronts hide part of the sky from its floor: the view factor of a long wall H high at a distance d is
+  // (1 - d / sqrt(d^2 + H^2)) / 2; a shaded front gives back a little of it, the sunlit east front more than it hides
+  const HW = F.top - F.pave
+  const wallView = (d: N): N => float(0.5).mul(float(1).sub(d.div(sqrt(d.mul(d).add(HW * HW)))))
+  const hidden = wallView(max(P.z.sub(c.z0), 0.05)).add(wallView(max(float(F.zF).sub(P.z), 0.05))).add(wallView(max(P.x.sub(c.x0), 0.05)))
+  const skyAO = float(1).sub(hidden.mul(0.6))
   const footAO = float(1).sub(float(1).sub(smoothstep(0.0, 0.7, y)).mul(0.3))
   const deckAO = float(1).sub(float(1).sub(smoothstep(0.0, 0.7, dPar)).mul(0.35))
   let ao: N = float(1)
   ao = mix(ao, footAO, max(courtFace, front).mul(float(1).sub(room)))
   ao = mix(ao, passAO, reveal)
-  ao = mix(ao, floorAO, paving.mul(inCourt))
+  ao = mix(ao, floorAO.mul(skyAO), paving.mul(inCourt))
   ao = mix(ao, deckAO, deck)
   ao = mix(ao, roomAO, room.mul(float(1).sub(reveal)))
   m.aoNode = mix(ao, float(1), uView)
