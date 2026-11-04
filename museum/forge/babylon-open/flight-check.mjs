@@ -15,6 +15,8 @@ const { buildPlan, makeFrame } = await import(join(W, 'map/plan.ts'))
 const G = await import(join(W, 'gate/gate-geom.ts'))
 const { makeFlight, resolveFlight } = await import(join(W, 'open/flight.ts'))
 const { northEntry } = await import(join(W, 'open/north.ts'))
+const { westOutwork } = await import(join(W, 'open/outwork.ts'))
+const { editCity } = await import(join(W, 'open/city.ts'))
 const { rebuildHouses } = await import(join(W, 'open/houses.ts'))
 const { buildPlain } = await import(join(W, 'open/plain.ts'))
 const argv = process.argv.slice(2)
@@ -29,11 +31,8 @@ const dropB = new Set(gatePlan.frame.mapBlocksReplaced), dropW = new Set(gatePla
 const city = structuredClone(mapPlan)
 city.blocks = city.blocks.filter((b) => !dropB.has(b.id))
 city.walls = city.walls.filter((w) => !dropW.has(w.id))
-// as the open page: the north entry replaces the map's North Gate, dam walls and north wall and trims the North Fortification
-const levelProbe = buildPlan(city, { houses: false })
-const NORTH = northEntry(city, (x, z) => levelProbe.streetAt(x, z).level, Number(city.classes.band))
-city.blocks = city.blocks.filter((x) => !NORTH.drop.includes(x.id))
-for (const x of city.blocks) if (NORTH.trim[x.id]) x.poly = NORTH.trim[x.id]
+// as the open page (open/city.ts): the north entry, the North Palace's courts, the West Fortification, the quay, the way north
+const NORTH = editCity(city, { buildPlan, northEntry, westOutwork }).north
 const b = buildPlan(city, { houses: true })
 const F = makeFrame(city)
 const B = G.buildGate(gatePlan)

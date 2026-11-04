@@ -62,6 +62,11 @@ export function toneTexture(ids: string[]): DataTexture {
 
 const hash = (x: N): N => fract(sin(x.mul(12.9898)).mul(43758.5453))
 
+/** trodden earth: the dam's crest, the street past its paving, the way on over the plain (ours) */
+export function troddenEarth(p: N): N {
+  return vec3(...TONES.silt).mul(1.08).mul(float(1).add(mx_noise_float(p.mul(0.4)).mul(0.1)).add(mx_noise_float(p.mul(2.3)).mul(0.05))).mul(float(1).sub(smoothstep(0.05, 0.4, mx_noise_float(vec3(p.x.mul(0.6), 0.5, p.z.mul(0.06)))).mul(0.12)))
+}
+
 /** a wall's face, a little uneven at every scale, its crown and any top that takes the sky a shade lighter */
 function brickFace(base: N): N {
   const p = positionWorld
@@ -106,6 +111,29 @@ function bond(base: N, uPix: N): N {
   return brickBond(base, uPix, base.mul(0.62))
 }
 
+/** the room roofs' factor on a top (1 is the plain plaster): rooms in a jittered grid, parapet lines box-filtered over the
+    pixel's footprint `w`, a court in about one room in eight */
+function roomRoofs(p: N, w: N): N {
+  const S = 11.0
+  const row = floor(p.z.div(S))
+  const x = p.x.add(hash(row.mul(3.7).add(1.3)).mul(0.6 * S))
+  const col = floor(x.div(S))
+  const id = hash(col.mul(17.1).add(row.mul(31.7)).add(0.5))
+  const fx = fract(x.div(S)), fz = fract(p.z.div(S))
+  // the parapet between rooms, 0.6 m, box-filtered over the pixel
+  const line = max(lines(x, S, 0.3, w), lines(p.z, S, 0.3, w))
+  const tone = id.sub(0.5).mul(0.16).add(1)
+  // a court in about one room in eight: a square about a third of the room across, in shade
+  const court = step(0.875, id).mul(smoothstep(0.19, 0.16, max(abs(fx.sub(0.5)), abs(fz.sub(0.5)))))
+  return tone.mul(float(1).sub(line.mul(0.18))).mul(float(1).sub(court.mul(0.4)))
+}
+
+/** a wall's foot in the river or a moat (the water at -1.0): darker and wetter toward the water, about 1.5 m of it */
+function waterFoot(p: N, up: N): N {
+  const damp = smoothstep(0.6, -0.9, p.y).mul(float(1).sub(up))
+  return mix(vec3(1), vec3(0.66, 0.67, 0.62), damp)
+}
+
 /** the prisms (walls and buildings): their own tone from the table, the class view over it */
 export function blockMaterial(t: ClassTones, tones: DataTexture, count: number, uPix: N): Material {
   const m = new MeshStandardNodeMaterial({ roughness: 0.93, metalness: 0 })
@@ -124,8 +152,12 @@ export function blockMaterial(t: ClassTones, tones: DataTexture, count: number, 
   const seam = smoothstep(0.07, 0.02, cell.y.sub(cell.x))
   const shade = mx_noise_float(vec3(floor(p.x.mul(0.19).add(cell.x.mul(0.6))), 1.3, floor(p.z.mul(0.19).add(cell.x.mul(0.6))))).mul(0.12)
   const patch = mx_noise_float(p.mul(0.3)).mul(0.07).add(mx_noise_float(p.mul(1.2)).mul(0.04))
-  const roofK = float(1).add(shade).add(patch).sub(seam.mul(0.14))
-  const walls = mix(face, bond(face, uPix), baked)
+  // and at the scale of whole rooms, seen from the air: a jittered grid of room roofs 8 to 14 m, each its own shade, a parapet's
+  // dark line between them, now and then a small court or light well in shade (ours, a type: no room plan is claimed)
+  const R = roomRoofs(p, footprint(uPix, vec3(0, 1, 0)))
+  const roofK = float(1).add(shade).add(patch).sub(seam.mul(0.14)).mul(R)
+  const wet = waterFoot(p, up)
+  const walls = mix(face, bond(face, uPix), baked).mul(wet)
   // roofs are plastered earth over timber whatever the walls are laid in; a third of the wall's own tone kept
   const top = mix(vec3(...TONES.roof).mul(0.94), walls, 0.35).mul(roofK)
   m.colorNode = mix(mix(walls, top, up), classColour(t, attribute('cls', 'vec2'), attribute('band', 'float')), uView)
@@ -152,12 +184,14 @@ export function houseMaterial(t: ClassTones): Material {
   const g = positionGeometry, p = positionWorld
   const a = hash(h.add(0.37)), b = hash(h.mul(1.71).add(5.3)), r = hash(h.mul(3.1).add(part.mul(7.3)).add(1.9))
   const lean = mix(vec3(0.97, 0.99, 1.03), vec3(1.03, 1.0, 0.95), b)
-  const wash = vec3(...TONES.plaster).mul(a.sub(0.5).mul(0.16).add(1)).mul(lean)
+  const wash = vec3(...TONES.plaster).mul(a.sub(0.5).mul(0.24).add(1)).mul(lean)
   const above = p.y.sub(gy)
   const wall = wash.mul(mix(float(0.8), float(1), smoothstep(0.15, 0.9, above))).mul(float(1).add(mx_noise_float(p.mul(vec3(0.5, 0.12, 0.5))).mul(0.06)))
   const ex = float(0.5).sub(abs(g.x)).mul(size.x), ez = float(0.5).sub(abs(g.z)).mul(size.z)
   const e = min(ex, ez)
-  const roofTone = vec3(...TONES.roof).mul(r.sub(0.5).mul(0.2).add(1)).mul(lean)
+  // a roof is trodden mud plaster: about a third of them bare of any wash, darker and browner; each range its own shade
+  const bare = step(0.64, hash(h.mul(2.3).add(8.1)))
+  const roofTone = mix(vec3(...TONES.roof), vec3(...TONES.mud).mul(1.06), bare.mul(0.75)).mul(r.sub(0.5).mul(0.2).add(1)).mul(lean)
   const patch = mx_noise_float(p.mul(0.35)).mul(0.08).add(mx_noise_float(p.mul(1.4)).mul(0.04))
   const lip = smoothstep(0.34, 0.22, e)
   const inner = smoothstep(0.3, 0.42, e).mul(smoothstep(0.9, 0.6, e))
@@ -186,12 +220,18 @@ export function northMaterial(t: ClassTones, L: NorthLook, uPix: N): Material {
   const face = brickFace(baked).mul(float(1).add(mx_noise_float(p.mul(vec3(0.05, 0.2, 0.05))).mul(0.07)))
   const bitumen = vec3(0.03, 0.027, 0.024), limeGyp = vec3(...srgb(196, 188, 166)), mortar = vec3(...srgb(120, 106, 86))
   const joint = mix(mortar, mix(bitumen, limeGyp, step(L.split, p.y)), isGate)
-  const brick = brickBond(face, uPix, joint)
+  // brick faces in patches of a few metres (repairs, weathering, a course or two of another firing) and the courses' own shades,
+  // so a face in shade still shows its making; ours
+  const tx0 = normalize(vec2(n.z.negate(), n.x).add(vec2(1e-5, 0)))
+  const u0 = p.x.mul(tx0.x).add(p.z.mul(tx0.y))
+  const patchB = smoothstep(-0.25, 0.35, mx_noise_float(vec3(u0.mul(0.32), p.y.mul(0.55), 1.7))).sub(0.5).mul(0.18)
+  const courseB = hash(floor(p.y.div(0.105)).add(floor(u0.div(7.0)).mul(13.1))).sub(0.5).mul(0.06)
+  const brick = brickBond(face.mul(float(1).add(patchB).add(courseB)), uPix, joint)
   // tops: square bricks laid flat, the dam's crest trodden earth
   const w = footprint(uPix, n)
   const pave = max(lines(p.x, 0.345, 0.009, w), lines(p.z, 0.345, 0.009, w))
   const topBrick = mix(face.mul(1.04), face.mul(0.66), pave)
-  const crest = vec3(...TONES.silt).mul(1.08).mul(float(1).add(mx_noise_float(p.mul(0.4)).mul(0.1)).add(mx_noise_float(p.mul(2.3)).mul(0.05))).mul(float(1).sub(smoothstep(0.05, 0.4, mx_noise_float(vec3(p.x.mul(0.6), 0.5, p.z.mul(0.06)))).mul(0.12)))
+  const crest = troddenEarth(p)
   let c: N = mix(brick, mix(topBrick, crest, isDam), up)
   // the limestone foot: courses down from its top, blocks about 2 m with a course's own offset, fine joints
   const tx = normalize(vec2(n.z.negate(), n.x).add(vec2(1e-5, 0)))
@@ -215,9 +255,10 @@ export function northMaterial(t: ClassTones, L: NorthLook, uPix: N): Material {
   const ring = step(da, half.add(0.2)).mul(step(p.y, L.culvert.crown + 0.2)).mul(side).sub(mouth).max(0)
   c = mix(c, c.mul(1.12), ring.mul(0.7))
   c = mix(c, vec3(0.012, 0.011, 0.01), mouth)
-  // the wet band at the waterline (the water at -1.0 on the map)
+  // the wet band at the waterline (the water at -1.0 on the map), on brick a damp foot above it
   const wet = smoothstep(-0.25, -0.85, p.y).mul(float(1).sub(up))
   c = mix(c, c.mul(vec3(0.62, 0.64, 0.58)), wet)
+  c = c.mul(mix(vec3(1), waterFoot(p, up), float(1).sub(isStone)))
   m.colorNode = mix(c, classColour(t, attribute('cls', 'vec2'), attribute('band', 'float')), uView)
   // rough-faced stone: each block's face uneven, its edges falling back to the joint
   const vv = fract(depth.div(0.75)), uu = fract(u.add(off).div(2.0))
@@ -232,23 +273,20 @@ export function northMaterial(t: ClassTones, L: NorthLook, uPix: N): Material {
   return m
 }
 
-/** the date palms: trunks grey-brown, fronds the date palm's grey-green, the oldest hanging dry; each palm its own shade */
+/** the date palms: the palm's own vertex colours (trunk, green and pale fronds, the dead ones hanging), each palm its own shade */
 export function palmMaterial(t: ClassTones): Material {
   const m = new MeshStandardNodeMaterial({ roughness: 0.85, metalness: 0, side: DoubleSide })
-  const pk = attribute('pk', 'float')
   const v = hash(float(instanceIndex).add(0.7)), v2 = hash(float(instanceIndex).mul(1.9).add(4.1))
-  const trunk = vec3(...srgb(112, 96, 76)).mul(v.mul(0.2).add(0.9)).mul(float(1).add(sin(positionGeometry.y.mul(9)).mul(0.06)))
-  const green = mix(vec3(...srgb(74, 88, 58)), vec3(...srgb(98, 108, 74)), v2)
-  const dry = vec3(...srgb(136, 112, 78))
-  const c = mix(mix(trunk, green, step(0.5, pk)), dry, step(1.5, pk))
+  const c = attribute('color', 'vec3').mul(v.mul(0.2).add(0.9)).mul(mix(vec3(1.0, 0.97, 1.03), vec3(1.0, 1.04, 0.94), v2))
   m.colorNode = mix(c, classColour(t, attribute('cls', 'vec2'), attribute('band', 'float')), uView)
   return m
 }
 
 /** the processional street north of the gate, in the gate's own paving (gate plan, street.paving): limestone slabs of 1.05 m
     five across on the axis, red breccia slabs of 0.66 m four each side, brick of 0.33 m with asphalt joints out to the walls;
-    walked lighter along the middle. Measured in the lion frame (`o`, `a` along, `c` across); the rest of the ribbon plain slab */
-export interface StreetLook { o: [number, number]; a: [number, number]; c: [number, number] }
+    walked lighter along the middle. Measured in the lion frame (`o`, `a` along, `c` across); the paving ends at `pavedTo` (a), its
+    edge a little uneven, and the street beyond is trodden earth; south of the gate's face the ribbon is plain slab */
+export interface StreetLook { o: [number, number]; a: [number, number]; c: [number, number]; pavedTo: number }
 export function streetMaterial(t: ClassTones, F: StreetLook, uPix: N): Material {
   const m = new MeshStandardNodeMaterial({ roughness: 0.8, metalness: 0 })
   const p = positionWorld
@@ -272,7 +310,8 @@ export function streetMaterial(t: ClassTones, F: StreetLook, uPix: N): Material 
   const dark = vec3(...PAL.asphalt)
   const paved = mix(mix(mix(brk, dark, jr.mul(0.7)), mix(brec, brec.mul(0.6), jb), inBrec), mix(lime, lime.mul(0.66), jl), inLime)
   const north = step(-4, s)
-  const col = mix(vec3(...TONES.slab).mul(v), paved, north)
+  const beyond = step(F.pavedTo, s.add(mx_noise_float(vec3(c.mul(0.9), 2.7, 0)).mul(0.5)))
+  const col = mix(mix(vec3(...TONES.slab).mul(v), paved, north), troddenEarth(p), beyond)
   m.colorNode = mix(col, classColour(t, attribute('cls', 'vec2'), attribute('band', 'float')), uView)
   return m
 }
@@ -281,7 +320,7 @@ export function streetMaterial(t: ClassTones, F: StreetLook, uPix: N): Material 
 export const uTracts = uniform(1)
 /* the inner city on both banks as two convex outlines (UTM; the plan's circuits closed along the river), where no tract is drawn */
 const INNER: Array<Array<[number, number]>> = [
-  [[445380, 3600900], [446737, 3601360], [447230, 3599740], [445934, 3599110], [445380, 3599100]],
+  [[445340, 3600900], [445440, 3601090], [446737, 3601360], [447230, 3599740], [445934, 3599110], [445380, 3599100]],
   [[445275, 3600470], [444290, 3600190], [444690, 3598780], [445560, 3599020]],
 ]
 /** 1 inside the outline, 0 outside, feathered over the given metres; scene x = E - 445700, z = 3600400 - N */
@@ -305,7 +344,7 @@ export interface PlainLook { colour: Texture; masks: Texture; x0: number; z0: nu
 /** the ground: inside the inner city beaten earth, dusty and trodden, never one flat value (L5); outside, the plain's fields,
     canals and grove floors from the plain's map, and beyond it dry silt in tracts; damp and darker near the water's level;
     grey in the class view as on the map */
-export function groundMaterial(waterLevel: number, plain?: PlainLook, sky?: (d: N) => N): Material {
+export function groundMaterial(waterLevel: number, plain?: PlainLook, sky?: (d: N) => N, track?: Array<[number, number]>): Material {
   const m = new MeshStandardNodeMaterial({ roughness: 1, metalness: 0 })
   const p = positionWorld
   const broad = mx_noise_float(vec3(p.x.mul(0.0022), 0, p.z.mul(0.0022)))
@@ -347,13 +386,36 @@ export function groundMaterial(waterLevel: number, plain?: PlainLook, sky?: (d: 
       g = mix(g, waterC, wat)
     }
   }
+  if (track && track.length > 1) {
+    // the way on from the street's end (scene points), 9 m of trodden earth that fades out along it
+    let total = 0
+    const lens: number[] = []
+    for (let i = 0; i + 1 < track.length; i++) { const L = Math.hypot(track[i + 1]![0] - track[i]![0], track[i + 1]![1] - track[i]![1]); lens.push(L); total += L }
+    let d: N = float(1e6), along: N = float(0), acc = 0
+    for (let i = 0; i + 1 < track.length; i++) {
+      const [ax, az] = track[i]!, [bx, bz] = track[i + 1]!
+      const ex = bx - ax, ez = bz - az, L2 = ex * ex + ez * ez
+      const u = clamp(p.x.sub(ax).mul(ex).add(p.z.sub(az).mul(ez)).div(L2), 0, 1)
+      const di = vec2(p.x.sub(ax).sub(u.mul(ex)), p.z.sub(az).sub(u.mul(ez))).length()
+      const closer = step(di, d)
+      along = mix(along, u.mul(lens[i]!).add(acc), closer)
+      d = min(d, di)
+      acc += lens[i]!
+    }
+    const edge = d.add(mx_noise_float(vec3(p.x.mul(0.15), 4.1, p.z.mul(0.15))).mul(1.2))
+    const k = smoothstep(5.5, 3.2, edge).mul(float(1).sub(smoothstep(total * 0.45, total, along)))
+    g = mix(g, troddenEarth(p), k)
+  }
   const wet = smoothstep(waterLevel + 2.6, waterLevel + 0.15, p.y)
   g = mix(g, vec3(...TONES.damp), wet)
   m.colorNode = mix(g, vec3(0.5, 0.48, 0.44), uView)
   // the banks fall from the plain to the bed across a single cell of the 20 m grid, so their faces tilt by the triangle
   // and light up in a zig-zag along the shore; near the water's level the shading normal leans back toward up
   const lean2 = smoothstep(waterLevel + 4.5, waterLevel + 0.5, p.y)
-  const n = normalize(mix(normalWorld, vec3(0, 1, 0), lean2.mul(0.85)))
+  // a gentle slope (the ground drawn up to a street, a mound) leans its shading toward up: under the low sun the flank of the
+  // way down from the dam read as a dark streak beside it; the banks, steeper, keep their own
+  const gentle = smoothstep(0.94, 0.985, normalWorld.y).mul(0.6)
+  const n = normalize(mix(normalWorld, vec3(0, 1, 0), max(lean2.mul(0.85), gentle)))
   m.normalNode = normalize(cameraViewMatrix.mul(vec4(n, 0)).xyz)
   return m
 }

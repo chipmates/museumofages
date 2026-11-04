@@ -26,6 +26,8 @@ export interface NorthPrism {
   kind: number
   foot: P2[]
   top?: P2[]
+  /** openings through the body, top to foot (a ring of walls); not with a leaning `top` */
+  holes?: P2[][]
   y0: number
   y1: number
 }

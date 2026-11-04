@@ -6,60 +6,14 @@
    relief BM 124920 the date palms have scaled trunks and a crown of long fronds,
    GREEN.settled bab.green.palm.plain). Sizes ours: trunk 9 to 15 m, fronds 4 m. */
 
-import { BufferGeometry, CanvasTexture, Float32BufferAttribute, InstancedBufferAttribute, InstancedMesh, LinearFilter, LinearMipmapLinearFilter, Matrix4, Quaternion, SRGBColorSpace, Vector3, type Material } from 'three/webgpu'
+import { CanvasTexture, InstancedBufferAttribute, InstancedMesh, LinearFilter, LinearMipmapLinearFilter, Matrix4, Quaternion, SRGBColorSpace, Vector3, type Material } from 'three/webgpu'
 import type { Plain, Palm } from './plain'
-
-/** one palm, 12 m to the crown, its parts tagged: 0 trunk, 1 green frond, 2 dry frond */
-export function palmGeometry(): BufferGeometry {
-  const pos: number[] = [], part: number[] = []
-  const H = 12, sides = 5
-  const ring = (y: number, r: number): number[][] => Array.from({ length: sides }, (_, i) => {
-    const a = (i / sides) * Math.PI * 2
-    return [Math.cos(a) * r, y, Math.sin(a) * r]
-  })
-  const r0 = ring(-0.6, 0.34), r1 = ring(H, 0.22)
-  for (let i = 0; i < sides; i++) {
-    const j = (i + 1) % sides
-    pos.push(...r0[i]!, ...r1[i]!, ...r0[j]!, ...r0[j]!, ...r1[i]!, ...r1[j]!)
-    for (let k = 0; k < 6; k++) part.push(0)
-  }
-  // fronds: a rise, then the droop; each a strip of two quads, widest a third along, every face both sides
-  const frond = (az: number, rise: number, len: number, kind: number): void => {
-    const d = [Math.cos(az), Math.sin(az)], n = [-d[1]!, d[0]!]
-    const at = (t: number): number[] => {
-      const r = len * t
-      const y = H + rise * len * t - (1.0 + (kind === 2 ? 0.9 : 0)) * len * t * t
-      return [d[0]! * r, y, d[1]! * r]
-    }
-    const width = [0.12, 0.55, 0.12]
-    const ts = [0.0, 0.38, 1.0]
-    const L: number[][] = [], R: number[][] = []
-    ts.forEach((t, k) => {
-      const c = at(t)
-      L.push([c[0]! + n[0]! * width[k]!, c[1]! + (k === 1 ? 0.12 : 0), c[2]! + n[1]! * width[k]!])
-      R.push([c[0]! - n[0]! * width[k]!, c[1]! + (k === 1 ? 0.12 : 0), c[2]! - n[1]! * width[k]!])
-    })
-    for (let k = 0; k < 2; k++) {
-      pos.push(...L[k]!, ...R[k]!, ...L[k + 1]!, ...L[k + 1]!, ...R[k]!, ...R[k + 1]!)
-      for (let q = 0; q < 6; q++) part.push(kind)
-    }
-  }
-  const N = 11
-  for (let i = 0; i < N; i++) {
-    const az = (i / N) * Math.PI * 2 + (i % 2) * 0.21
-    frond(az, i % 3 === 0 ? 1.1 : 0.75, 3.6 + (i % 4) * 0.25, 1)
-  }
-  for (let i = 0; i < 4; i++) frond((i / 4) * Math.PI * 2 + 0.4, 0.1, 2.4, 2)
-  const g = new BufferGeometry()
-  g.setAttribute('position', new Float32BufferAttribute(pos, 3))
-  g.setAttribute('pk', new Float32BufferAttribute(part, 1))
-  g.computeVertexNormals()
-  return g
-}
+import { PALM_FAR, palmGeometry } from '../gate/gate-life'
 
 /** the palms as one instanced mesh: each its own size, turn and lean, its row's class letters per instance */
 export function palmMesh(palms: Palm[], ground: (x: number, z: number) => number, mat: Material): InstancedMesh {
-  const geo = palmGeometry()
+  // palm-date-babylon's own palm at its far preset (gate-life.ts), 12 m to the crown, in its vertex colours
+  const geo = palmGeometry(12, PALM_FAR)
   const im = new InstancedMesh(geo, mat, Math.max(1, palms.length))
   const cls = new Float32Array(palms.length * 2), band = new Float32Array(palms.length)
   const m = new Matrix4(), q = new Quaternion(), e = new Vector3()

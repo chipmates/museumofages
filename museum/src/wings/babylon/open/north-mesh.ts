@@ -31,8 +31,23 @@ function loft(p: NorthPrism): BufferGeometry {
     tri(p0, p1, q0)
     tri(q0, p1, q1)
   }
-  for (const [ring, y, up] of [[top, p.y1, 1], [foot, p.y0, -1]] as Array<[P2[], number, number]>) {
-    for (const [i, j, k] of ShapeUtils.triangulateShape(ring.map(([x, z]) => new Vector2(x, z)), [])) {
+  // each opening's sides face into it: its ring wound against the outline's
+  const holes = (p.holes ?? []).map((h) => {
+    let a = 0
+    for (let i = 0; i < h.length; i++) { const u = h[i]!, v = h[(i + 1) % h.length]!; a += u[0] * v[1] - v[0] * u[1] }
+    return a > 0 ? [...h].reverse() : h
+  })
+  for (const h of holes) {
+    for (let i = 0; i < h.length; i++) {
+      const j = (i + 1) % h.length
+      const p0 = [h[i]![0], p.y0, h[i]![1]], q0 = [h[j]![0], p.y0, h[j]![1]], p1 = [h[i]![0], p.y1, h[i]![1]], q1 = [h[j]![0], p.y1, h[j]![1]]
+      tri(p0, p1, q0)
+      tri(q0, p1, q1)
+    }
+  }
+  for (const [ring0, y, up] of [[top, p.y1, 1], [foot, p.y0, -1]] as Array<[P2[], number, number]>) {
+    const ring = [...ring0, ...holes.flat()]
+    for (const [i, j, k] of ShapeUtils.triangulateShape(ring0.map(([x, z]) => new Vector2(x, z)), holes.map((h) => h.map(([x, z]) => new Vector2(x, z))))) {
       const A = [ring[i!]![0], y, ring[i!]![1]], B = [ring[j!]![0], y, ring[j!]![1]], C = [ring[k!]![0], y, ring[k!]![1]]
       const ny = (B[2]! - A[2]!) * (C[0]! - A[0]!) - (B[0]! - A[0]!) * (C[2]! - A[2]!)
       if (ny * up > 0) tri(A, B, C)

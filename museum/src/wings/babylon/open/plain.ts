@@ -93,6 +93,8 @@ export function buildPlain(mapPlan: J, opts: { palms?: boolean; reach?: number }
     { line: outer, d: 105 },
     // the lion street's line north of the moat, the North Palace's outworks, the Summer Palace (Babil)
     { line: [s(445697, 3601320), s(445703, 3601200), s(445735, 3601035)], d: 40 },
+    // the way north of the dam and its painted continuation (city.ts OUTER_STREET, OUTER_TRACK)
+    { line: [s(445708.8, 3601172.8), s(445650.4, 3601472.1), s(445700, 3601700), s(445790, 3601920)], d: 14 },
     { poly: [s(445340, 3600590), s(445720, 3600590), s(445730, 3601170), s(445340, 3601170)], d: 20 },
     { poly: [s(445900, 3603230), s(446080, 3603230), s(446080, 3603390), s(445900, 3603390)], d: 40 },
   ]

@@ -32,6 +32,9 @@ import { bakePanel, lifeMaterial, makeUniforms, panelMaterial, pavingMaterial, w
 import { airColour, createOpenLinear, makeAirUniforms, skyColour } from './air'
 import { blockMaterial, boxMaterial, groundMaterial, houseMaterial, northMaterial, palmMaterial, streetMaterial, toneTexture, uTracts, waterMaterial } from './earth'
 import { northEntry } from './north'
+import { westOutwork } from './outwork'
+import { editCity, groundRows, OUTER_TRACK } from './city'
+import { refineBanks } from './bank'
 import { merlonMesh, northMeshes } from './north-mesh'
 import { rebuildHouses } from './houses'
 import { buildPlain } from './plain'
@@ -70,15 +73,9 @@ const dropB = new Set<string>(plan.frame.mapBlocksReplaced), dropW = new Set<str
 const cityPlan = structuredClone(mapPlan)
 cityPlan.blocks = cityPlan.blocks.filter((b: J) => !dropB.has(b.id))
 cityPlan.walls = cityPlan.walls.filter((w: J) => !dropW.has(w.id))
-/* the north entry (north.ts) replaces the map's North Gate, dam walls and north wall and trims the North Fortification; the
-   North Palace's two sunken courts, 34 x 37 and 33 x 35 m, on their places in S3.45 (REC bab.northpalace.main.plan) */
-const levelProbe = buildPlan(cityPlan, { houses: false })
-const NORTH = northEntry(cityPlan, (x, z) => levelProbe.streetAt(x, z).level, Number(cityPlan.classes.band))
-cityPlan.blocks = cityPlan.blocks.filter((b: J) => !NORTH.drop.includes(b.id))
-for (const b of cityPlan.blocks) {
-  if (NORTH.trim[b.id]) b.poly = NORTH.trim[b.id]
-  if (b.id === 'north-palace-main') b.holes = [{ id: 'court-west', rect: [445546, 445580, 3600903, 3600940] }, { id: 'court-east', rect: [445598, 445632, 3600900, 3600935] }]
-}
+/* the arrival's edits of the plan (city.ts): the north entry, the North Palace's courts, the West Fortification, the quay
+   south of the bridge, the way north of the dam */
+const NORTH = editCity(cityPlan, { buildPlan, northEntry, westOutwork }).north
 const city = buildPlan(cityPlan)
 const canalZ: number[] = []
 {
@@ -101,7 +98,9 @@ const canvas = document.getElementById('stage') as HTMLCanvasElement
 const stack = await createStack({ canvas })
 const renderer = stack.renderer
 const scene = new Scene()
-const camera = new PerspectiveCamera(40, 16 / 9, 0.3, 30000)
+// the far plane past the ground's farthest corner (its grid reaches 30 km each way): ground within about 40 m of a 30 km far
+// plane read as sky in the haze's depth test and stayed unhazed, a row of dark dashes on the horizon
+const camera = new PerspectiveCamera(40, 16 / 9, 0.3, Number(q.get('far') ?? 60000))
 stack.setScene(scene, camera, { ...IDENTITY, name: 'babylon-open' })
 
 const U = makeUniforms({ M: mapPlan.classes.M.colour, R: mapPlan.classes.R.colour, G: mapPlan.classes.G.colour })
@@ -135,7 +134,7 @@ say('building the city and the gate')
 const PLAIN = buildPlain(cityPlan, { reach: Number(q.get('palmReach') ?? 3600) })
 const PLAIN_MAP = paintPlain(PLAIN)
 const tones = tonesFrom(cityPlan)
-const bodies = buildBodies(city, tones, sky, AIR.uSun, canalZ)
+const bodies = buildBodies(city, tones, sky, AIR.uSun, groundRows(canalZ))
 scene.add(bodies.group)
 
 /* the city's own materials (earth.ts), and per-instance tones for the boxes */
@@ -182,8 +181,21 @@ const HOUSES = { count: 0, open: 0 }
     rest.geometry.setAttribute('tone', new InstancedBufferAttribute(k, 1))
     rest.material = boxMaterial(tones)
   }
-  ;(bodies.group.getObjectByName('street') as Mesh).material = streetMaterial(tones, { o: NORTH.frame.o, a: NORTH.frame.a, c: NORTH.frame.c }, U.uPix)
-  ;(bodies.group.getObjectByName('ground') as Mesh).material = groundMaterial(-1, { ...PLAIN_MAP, x0: PLAIN.domain.x0, z0: PLAIN.domain.z0, size: PLAIN.domain.size }, sky.colour)
+  // the paving ends where the record's street surface ends: the walled stretch north of the North Gate (REC
+  // bab.street.north.surface, +7.5 north of the gate; bab.street.north-stretch to a = 233); the dam's crest and the way on are earth
+  ;(bodies.group.getObjectByName('street') as Mesh).material = streetMaterial(tones, { o: NORTH.frame.o, a: NORTH.frame.a, c: NORTH.frame.c, pavedTo: 233 }, U.uPix)
+  const ground = bodies.group.getObjectByName('ground') as Mesh
+  // opt-in (?banks=1) until a render has read it
+  if (q.get('banks') === '1') {
+    const fine = refineBanks(ground.geometry, city.ground, { x0: -450, x1: 450, z0: -700, z1: 1750 })
+    ground.geometry.dispose()
+    ground.geometry = fine.geometry
+    say(`banks: ${fine.cells} cells refined, ${fine.triangles} triangles`)
+  }
+  ground.material = groundMaterial(-1, { ...PLAIN_MAP, x0: PLAIN.domain.x0, z0: PLAIN.domain.z0, size: PLAIN.domain.size }, sky.colour, OUTER_TRACK.map(([E, N]) => MF.s(E, N)))
+  // the banks fall across one cell of the 20 m grid: cast by the ground itself, their shadow drew the cells' teeth along the
+  // shore under the low sun; the bank's own shading (its leaned normal) stays
+  ground.castShadow = q.get('groundShadow') === '1'
   // the river and the moats mirror the scene at their level (-1.0), the canal behind the palace the sky only
   const plane = new Mesh(new PlaneGeometry(1, 1))
   plane.rotation.x = -Math.PI / 2

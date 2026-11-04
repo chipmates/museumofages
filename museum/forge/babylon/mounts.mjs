@@ -211,14 +211,10 @@ export async function mountOpen(stop = '1', opts = {}) {
   // as open.ts: the north entry replaces the map's North Gate, dam walls and north wall, trims the North Fortification
   // and opens the North Palace's two courts; the houses are rebuilt per lot
   let NORTH = null, edited = null
+  const { westOutwork } = await import(join(OPEN, 'outwork.ts'))
+  const { editCity } = await import(join(OPEN, 'city.ts'))
   const cityEdit = (cp) => {
-    const probe = buildPlan(cp, { houses: false })
-    NORTH = northEntry(cp, (x, z) => probe.streetAt(x, z).level, Number(cp.classes.band))
-    cp.blocks = cp.blocks.filter((b) => !NORTH.drop.includes(b.id))
-    for (const b of cp.blocks) {
-      if (NORTH.trim[b.id]) b.poly = NORTH.trim[b.id]
-      if (b.id === 'north-palace-main') b.holes = [{ id: 'court-west', rect: [445546, 445580, 3600903, 3600940] }, { id: 'court-east', rect: [445598, 445632, 3600900, 3600935] }]
-    }
+    NORTH = editCity(cp, { buildPlan, northEntry, westOutwork }).north
     edited = cp
   }
   const G = await mountGate('2', { ...opts, cityReach: 'all', cityEdit })
