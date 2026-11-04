@@ -7,6 +7,7 @@
      3 the street             the dug 6.4 m: seven breccia slabs across on the west, brick in asphalt on the east; the
                               map street's wider shoulders as trodden dust
      4 the threshold          brick, where the destroyed gate stood
+     5 the stairs             brick, the treads drawn on the ramp's slope, the cheeks in the bond
    Every line is box-filtered over one device pixel's footprint on the surface, so the jittered sub-frames agree.
    `groundPaint` tints the map's ground inside the precinct and on the open ground before Gate 5. */
 
@@ -176,6 +177,21 @@ export function towerMaterial(F: GateFrame, tp: J, tones: ClassTones): Material 
   /* ── 4 the threshold: brick laid flat on its top, its edges brick ── */
   const thCol = mix(mix(V(PAL.buff as RGB), V(PAL.redBrown as RGB), 0.35).mul(0.9), V(PAL.asphalt as RGB).mul(2), flatB.mul(0.7))
 
+  /* ── 5 the stairs: the treads as bands on the slope (a step's run in phase 0 to 1), the cheeks in the bond ── */
+  const sDir = normalize(vec3(fa.z, 0, fa.w).add(vec3(1e-6, 0, 0)))
+  const kStep = vec2(fa.z, fa.w).length()
+  const phase = P.x.sub(fa.x).mul(fa.z).add(P.z.sub(fa.y).mul(fa.w))
+  const fStep = footprint(U, sDir, n).mul(kStep)
+  // the riser's face fills about four tenths of each step as the slope is seen from its foot
+  const rise = float(1).sub(smoothstep(float(0.19).sub(fStep.mul(0.5)), float(0.19).add(fStep.mul(0.5)), abs(fract(phase.sub(0.31)).sub(0.5))))
+  const sBatch = mx_noise_float(vec3(P.x.mul(0.05), P.y.mul(0.8), P.z.mul(0.05)))
+  const stairBrick = mix(V(col.brick), V(PAL.redBrown as RGB), 0.2).mul(float(1).add(sBatch.mul(0.05)))
+  const tread = mix(stairBrick, V(PAL.dust as RGB), 0.4), riserC = stairBrick.mul(0.78)
+  const stepCol = mix(mix(tread, riserC, 0.38), mix(tread, riserC, rise), seen(fStep, 0.6))
+  const sb = bond(uFace, P.y, float(0), fu, fy, 0.008)
+  const cheek = mix(stairBrick, V(PAL.asphalt as RGB).mul(2.2), clamp(sb.bed.add(sb.head), 0, 1).mul(0.85))
+  const stairCol = mix(cheek, stepCol, step(0.2, n.y))
+
   /* ── one colour per point, the class view over it ── */
   let stateCol: N = greyNode(0.42)
   stateCol = mix(stateCol, wallCol, is(0))
@@ -183,6 +199,7 @@ export function towerMaterial(F: GateFrame, tp: J, tones: ClassTones): Material 
   stateCol = mix(stateCol, glazeCol, is(2))
   stateCol = mix(stateCol, streetCol, is(3))
   stateCol = mix(stateCol, thCol, is(4))
+  stateCol = mix(stateCol, stairCol, is(5))
   m.colorNode = mix(stateCol, classColour(tones, attribute('cls', 'vec2'), attribute('band', 'float')), uView)
   const glazed = is(2).mul(float(1).sub(upward))
   m.roughnessNode = mix(mix(mix(float(0.92), float(0.35), glazed), float(0.75), is(3).mul(inBrec)), float(0.92), uView)

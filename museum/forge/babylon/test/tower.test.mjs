@@ -31,7 +31,7 @@ const flats = (g) => {
   }
   return { up, down }
 }
-console.log(JSON.stringify({ facts: t.facts, ids: t.bodies.map((b) => b.id), prisms: t.built.prisms.map((p) => p.id),
+console.log(JSON.stringify({ facts: t.facts, ids: t.bodies.map((b) => b.id), prisms: t.built.prisms.map((p) => p.id), ramps: t.built.ramps.map((r) => r.id),
   boxes: t.built.boxes.map((b) => b.id), heights: Object.fromEntries(t.bodies.map((b) => [b.id, box(b.geometry)])),
   street: ['gate5-street-dug', 'gate5-street-south'].map((id) => flats(t.bodies.find((b) => b.id === id).geometry)) }))`
 const r = spawnSync(process.execPath, ['--experimental-strip-types', '--no-warnings', '--input-type=module', '-e', code], { encoding: 'utf8' })
@@ -73,4 +73,13 @@ test('the stop replaces the map bodies it stands for and keeps the precinct ids'
 test('the street overlay faces up, its lips stand upright', () => {
   for (const f of out.street) { assert.ok(f.up > 0, 'no top'); assert.equal(f.down, 0, 'a face looks down') }
   near(out.facts.gateToTower, 333.7, 1.0, 'gate to the tower centre')
+})
+
+test('the three stairs climb to the top of the first stage and leave the map', () => {
+  const st = out.facts.stairs
+  assert.deepEqual(st.map((x) => x.id).sort(), ['tower-stair-east', 'tower-stair-middle', 'tower-stair-west'])
+  for (const x of st) near(x.rise, 33, 0.01, `${x.id} rise`)
+  near(st.find((x) => x.id === 'tower-stair-middle').w, 10.2, 0.01, 'middle stair width')
+  assert.ok(!out.ramps.some((id) => id.startsWith('tower-stair-')), 'a stair left on the map')
+  for (const x of st) near(out.heights[x.id][1], 35.5, 1e-3, `${x.id} head`)
 })

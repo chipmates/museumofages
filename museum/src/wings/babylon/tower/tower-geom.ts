@@ -2,17 +2,18 @@
    precinct's east wall with Gate 5's recess and the store blocks either side, their slight towers, the threshold at the
    recess's inner end, the street's paving before the gate, and Etemenanki's stages drawn with their faces' own data.
    Scene frame as plan.ts (x east, y up, z south). Every body carries one attribute set, so the page merges them into one
-   mesh: `kind` (0 plaster wall, 1 tower brick, 2 the glazed temple, 3 the street, 4 the threshold) and `fa` (per kind:
-   the tower's face centre in plan, its half width and panel pitch; the street's along and across metres).
+   mesh: `kind` (0 plaster wall, 1 tower brick, 2 the glazed temple, 3 the street, 4 the threshold, 5 a stair) and `fa`
+   (per kind: the tower's face centre in plan, its half width and panel pitch; the street's along and across metres; a
+   stair's foot and its run direction scaled to steps per metre).
    Only type imports from the wing: node resolves no relative module without its extension. */
 
 import { BufferGeometry, ExtrudeGeometry, Float32BufferAttribute, Shape } from 'three/webgpu'
-import type { BoxRec, Built, Cls, P2 } from '../map/plan'
+import type { BoxRec, Built, Cls, P2, Ramp } from '../map/plan'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
 
-export const KIND = { wall: 0, brick: 1, glaze: 2, street: 3, threshold: 4 } as const
+export const KIND = { wall: 0, brick: 1, glaze: 2, street: 3, threshold: 4, stair: 5 } as const
 
 export interface TowerBody { id: string; geometry: BufferGeometry; band: number; letters: [Cls, Cls] }
 
@@ -160,9 +161,32 @@ function slightTower(F: GateFrame, s: number, t: number, along: P2, out: P2, w: 
   return towerBox({ id: '', group: '', x: c[0], z: c[1], y0, y1, sx: w, sz: dep, yaw, plan: 'M', height: 'G', band: 0 }, KIND.wall, 0)
 }
 
+/** a stair as the map's ramp (a sloped solid from its foot `a` to its head `b`, down to its floor), each vertex carrying
+    the foot and the run direction in steps per metre, so the material draws the treads */
+function stairBody(r: Ramp, riser: number): BufferGeometry {
+  const d = norm(sub(r.b, r.a)), run = Math.hypot(r.b[0] - r.a[0], r.b[1] - r.a[1])
+  const k = Math.max(1, Math.round((r.y1 - r.y0) / riser)) / run
+  const nx = -d[1] * r.w / 2, nz = d[0] * r.w / 2
+  const A0 = [r.a[0] + nx, r.y0, r.a[1] + nz], A1 = [r.a[0] - nx, r.y0, r.a[1] - nz]
+  const B0 = [r.b[0] + nx, r.y1, r.b[1] + nz], B1 = [r.b[0] - nx, r.y1, r.b[1] - nz]
+  const fl = (p: number[]): number[] => [p[0]!, r.floor, p[2]!]
+  const fa = Array(4).fill([r.a[0], r.a[1], d[0] * k, d[1] * k])
+  const q = new Soup()
+  q.quad([A1, A0, B0, B1], KIND.stair, fa)
+  q.quad([A0, fl(A0), fl(B0), B0], KIND.stair, fa)
+  q.quad([B1, fl(B1), fl(A1), A1], KIND.stair, fa)
+  q.quad([B0, fl(B0), fl(B1), B1], KIND.stair, fa)
+  q.quad([A1, fl(A1), fl(A0), A0], KIND.stair, fa)
+  q.quad([fl(A0), fl(A1), fl(B1), fl(B0)], KIND.stair, fa)
+  const g = q.geometry()
+  fixWinding(g)
+  return g
+}
+
 /** the map prisms and boxes this module draws on the map page instead of the map */
 export const TAKEN_PRISM = (id: string): boolean => id.startsWith('precinct-')
 export const TAKEN_BOX = (id: string): boolean => id.startsWith('tower-stage-')
+export const TAKEN_RAMP = (id: string): boolean => id.startsWith('tower-stair-')
 
 export interface Tower { F: GateFrame; bodies: TowerBody[]; built: Built; facts: Record<string, unknown> }
 
@@ -282,6 +306,9 @@ export function buildTower(built: Built, mapPlan: J, tp: J): Tower {
     const geo = towerBox(b, glazed ? KIND.glaze : KIND.brick, PN.pitch1)
     bodies.push({ id: b.id, geometry: geo, band: k === 1 ? towerGround + BAND : -1, letters: [b.plan, b.height] })
   }
+  // the three stairs up to the first stage's top, on the map's ramps
+  const stairs = built.ramps.filter((r) => TAKEN_RAMP(r.id))
+  for (const r of stairs) bodies.push({ id: r.id, geometry: stairBody(r, tp.tower.stairs.riser), band: r.band, letters: [r.plan, r.height] })
 
   const facts = {
     opening: +(2 * half).toFixed(2),
@@ -291,9 +318,10 @@ export function buildTower(built: Built, mapPlan: J, tp: J): Tower {
     street: { dugTo: +sSplit.toFixed(1), width: pts.map((p) => p.w) },
     stages: stages.map((b) => ({ id: b.id, side: b.sx, across: b.sz, y0: b.y0, y1: b.y1 })),
     gateToTower: +Math.hypot(stages[0]!.x - axisAt[0], stages[0]!.z - axisAt[1]).toFixed(1),
+    stairs: stairs.map((r) => ({ id: r.id, w: r.w, rise: +(r.y1 - r.y0).toFixed(2), run: +Math.hypot(r.b[0] - r.a[0], r.b[1] - r.a[1]).toFixed(2) })),
   }
   return {
     F, bodies, facts,
-    built: { ...built, prisms: built.prisms.filter((p) => !TAKEN_PRISM(p.id)), boxes: built.boxes.filter((b) => !TAKEN_BOX(b.id)) },
+    built: { ...built, prisms: built.prisms.filter((p) => !TAKEN_PRISM(p.id)), boxes: built.boxes.filter((b) => !TAKEN_BOX(b.id)), ramps: built.ramps.filter((r) => !TAKEN_RAMP(r.id)) },
   }
 }
