@@ -242,6 +242,12 @@ figure.position.set(plan.figure.x, B.level(plan.figure.z), plan.figure.z)
 figure.rotation.y = plan.figure.turn ?? -Math.PI / 2
 figure.name = 'figure'
 gate.add(figure)
+// a probe only, never in the film (?figure=s,t): the figure on the street s metres out on its line, t across (+ west)
+if (q.get('figure')) {
+  const [fs, ft] = q.get('figure')!.split(',').map(Number) as [number, number]
+  const fx = fs * B.street.dir[0] + (ft ?? 0) * B.street.dir[1], fz = fs * B.street.dir[1] - (ft ?? 0) * B.street.dir[0]
+  figure.position.set(fx, B.level(fz), fz)
+}
 
 /* light: the sun's key and its shadow, the sky and the modelled bounce as an environment (open/light.ts) */
 const setHour = (hour: number): void => L.setHour(hour)

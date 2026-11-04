@@ -185,7 +185,7 @@ const HOUSES = { count: 0, open: 0 }
     ground.geometry = fine.geometry
     say(`banks: ${fine.cells} cells refined, ${fine.triangles} triangles`)
   }
-  ground.material = groundMaterial(-1, { ...PLAIN_MAP, x0: PLAIN.domain.x0, z0: PLAIN.domain.z0, size: PLAIN.domain.size }, sky.colour, OUTER_TRACK.map(([E, N]) => MF.s(E, N)))
+  ground.material = groundMaterial(-1, { ...PLAIN_MAP, x0: PLAIN.domain.x0, z0: PLAIN.domain.z0, size: PLAIN.domain.size, uPix: U.uPix }, sky.colour, OUTER_TRACK.map(([E, N]) => MF.s(E, N)))
   // the banks fall across one cell of the 20 m grid: cast by the ground itself, their shadow drew the cells' teeth along the
   // shore under the low sun; the bank's own shading (its leaned normal) stays
   ground.castShadow = q.get('groundShadow') === '1'
@@ -317,6 +317,12 @@ figure.position.set(plan.figure.x, B.level(plan.figure.z), plan.figure.z)
 figure.rotation.y = plan.figure.turn ?? -Math.PI / 2
 figure.name = 'figure'
 gate.add(figure)
+// a probe only, never in the film (?figure=s,t): the figure on the street s metres out on its line, t across (+ west)
+if (q.get('figure')) {
+  const [fs, ft] = q.get('figure')!.split(',').map(Number) as [number, number]
+  const fx = fs * B.street.dir[0] + (ft ?? 0) * B.street.dir[1], fz = fs * B.street.dir[1] - (ft ?? 0) * B.street.dir[0]
+  figure.position.set(fx, B.level(fz), fz)
+}
 
 /* the camera: a level horizon, the frame slid up or down (a shift lens) where a view asks */
 let shiftNow = 0

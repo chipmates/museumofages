@@ -17,7 +17,7 @@ import type { AirUniforms } from './air'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
 const { mx_worley_noise_vec2 } = TSL as unknown as Record<string, N>
-const { abs, attribute, cameraPosition, cameraViewMatrix, clamp, dot, float, floor, fract, instanceIndex, max, min, mix, mod, mx_noise_float, normalWorld, normalize, positionGeometry, positionWorld, pow, reflect, sin, smoothstep, step, texture, uniform, vec2, vec3, vec4 } = TSL as unknown as Record<string, N>
+const { abs, atan, attribute, cameraPosition, cameraViewMatrix, clamp, cos, dot, float, floor, fract, instanceIndex, max, min, mix, mod, mx_noise_float, normalWorld, normalize, positionGeometry, positionWorld, pow, reflect, sin, smoothstep, step, texture, uniform, vec2, vec3, vec4 } = TSL as unknown as Record<string, N>
 
 const lin = (v: number): number => (v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)
 const srgb = (r: number, g: number, b: number): [number, number, number] => [lin(r / 255), lin(g / 255), lin(b / 255)]
@@ -377,7 +377,7 @@ function insideConvex(poly: Array<[number, number]>, p: N, feather: number): N {
   return smoothstep(-feather, feather, d)
 }
 /** the plain's map (green.ts paintPlain) over its square: colour and masks (r canal, g field, b grove floor) */
-export interface PlainLook { colour: Texture; masks: Texture; x0: number; z0: number; size: number }
+export interface PlainLook { colour: Texture; masks: Texture; rows?: Texture; x0: number; z0: number; size: number; uPix?: N }
 
 /** the ground: inside the inner city beaten earth, dusty and trodden, never one flat value (L5); outside, the plain's fields,
     canals and grove floors from the plain's map, and beyond it dry silt in tracts; damp and darker near the water's level;
@@ -410,8 +410,35 @@ export function groundMaterial(waterLevel: number, plain?: PlainLook, sky?: (d: 
     const msk = texture(plain.masks, uv)
     const out = float(1).sub(city).mul(inDom)
     // a field is one crop: only a little uneven inside it (a broad blotch read as patches from the air), finer rows near
-    const crop = col.mul(float(1).add(mx_noise_float(p.mul(0.25)).mul(0.035)).add(mx_noise_float(vec3(p.x.mul(1.2), 0, p.z.mul(1.2))).mul(0.05)))
-    const drawn = max(smoothstep(0.3, 0.75, msk.g), smoothstep(0.3, 0.75, msk.b))
+    let crop: N = col.mul(float(1).add(mx_noise_float(p.mul(0.25)).mul(0.035)).add(mx_noise_float(vec3(p.x.mul(1.2), 0, p.z.mul(1.2))).mul(0.05)))
+    const isField = smoothstep(0.3, 0.75, msk.g)
+    if (plain.rows && plain.uPix) {
+      // each plot sown in strips along its long side (a strip 5 to 11 m, its own shade of the crop: sown or watered a few
+      // days apart), furrows 1.4 m apart, and the crop's tone drifting across the plot; each faded where a pixel spans it,
+      // across the strips by the view's slant, so nothing shimmers from the air
+      const rw = texture(plain.rows, uv)
+      const ang = atan(rw.g.mul(2).sub(1), rw.r.mul(2).sub(1)).mul(0.5)
+      const nx = sin(ang).negate(), nz = cos(ang)
+      const seed = rw.b
+      const v = p.x.mul(nx).add(p.z.mul(nz))
+      const view = normalize(p.sub(cameraPosition))
+      const flatLen = max(vec2(view.x, view.z).length(), 1e-4)
+      const c = view.x.mul(nx).add(view.z.mul(nz)).div(flatLen)
+      const fp = p.distance(cameraPosition).mul(plain.uPix).mul(c.mul(c).div(max(view.y.mul(view.y), 0.012)).add(float(1).sub(c.mul(c))).sqrt())
+      const ws = float(5).add(seed.mul(6))
+      const si = floor(v.div(ws))
+      const h = fract(sin(si.mul(12.9898).add(seed.mul(78.233))).mul(43758.5453))
+      const e = fract(v.div(ws))
+      const bund = smoothstep(0.0, 0.06, e).mul(smoothstep(1.0, 0.94, e))
+      const stripK = smoothstep(ws.mul(0.75), ws.mul(0.25), fp)
+      const strip = mix(vec3(1), mix(vec3(0.82, 0.88, 0.84), vec3(1.14, 1.1, 0.88), h).mul(mix(0.84, 1, bund)), stripK)
+      const fu = fract(v.div(1.4))
+      const furrow = float(1).sub(smoothstep(0.32, 0.5, abs(fu.sub(0.5))).mul(0.16).mul(smoothstep(0.7, 0.3, fp)))
+      const drift = mx_noise_float(vec3(p.x.mul(0.03), seed.mul(17), p.z.mul(0.03)))
+      const tone = mix(vec3(0.9, 0.94, 0.95), vec3(1.1, 1.07, 0.88), smoothstep(-0.35, 0.35, drift))
+      crop = mix(crop, crop.mul(strip).mul(furrow).mul(tone), isField)
+    }
+    const drawn = max(isField, smoothstep(0.3, 0.75, msk.b))
     g = mix(g, crop, drawn.mul(out))
     // the canals: damp levees, then water that takes the sky
     const levee = smoothstep(0.02, 0.25, msk.r).mul(out)
