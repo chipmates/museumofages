@@ -382,10 +382,9 @@ function settleHouses(list: HouseBoxLike[], ground: (x: number, z: number) => nu
     const ca: [number, number] = [Math.cos(b.yaw), -Math.sin(b.yaw)], cb: [number, number] = [Math.sin(b.yaw), Math.cos(b.yaw)]
     return { u: b.x * ca[0] + b.z * ca[1], v: b.x * cb[0] + b.z * cb[1], ca, cb }
   }
-  const nth = new Map<number, number>()
+  // one foot level per house (its lowest), each box a centimetre under the one before
+  const foot = new Map<number, number>()
   for (const b of list) {
-    const k = nth.get(b.house) ?? 0
-    nth.set(b.house, k + 1)
     const { ca, cb } = local(b)
     let lo = Infinity, hi = -Infinity, x0 = Infinity, x1 = -Infinity, z0 = Infinity, z1 = -Infinity
     for (const [su, sv] of [[-1, -1], [1, -1], [1, 1], [-1, 1]] as const) {
@@ -397,8 +396,14 @@ function settleHouses(list: HouseBoxLike[], ground: (x: number, z: number) => nu
       lo = Math.min(lo, g)
       hi = Math.max(hi, g)
     }
-    b.y0 = Math.min(b.y0, lo - 0.1) - 0.01 * k
+    foot.set(b.house, Math.min(foot.get(b.house) ?? Infinity, b.y0, lo - 0.1))
     if (b.part === 4) b.y1 = Math.max(b.y1, hi + 0.03)
+  }
+  const nth = new Map<number, number>()
+  for (const b of list) {
+    const k = nth.get(b.house) ?? 0
+    nth.set(b.house, k + 1)
+    b.y0 = foot.get(b.house)! - 0.01 * k
   }
   const byHouse = new Map<number, HouseBoxLike[]>()
   for (const b of list) (byHouse.get(b.house) ?? byHouse.set(b.house, []).get(b.house)!).push(b)
@@ -418,6 +423,21 @@ function settleHouses(list: HouseBoxLike[], ground: (x: number, z: number) => nu
       B.z += b.ca[1] * du + b.cb[1] * dv
       B.sx = u1 - u0
       B.sz = v1 - v0
+    }
+  }
+  // two houses of neighbouring lots whose roofs or buried feet meet within the bed: the later's roof a few millimetres up,
+  // its foot down
+  const cell = 24, near = new Map<string, HouseBoxLike[]>()
+  for (const b of list) {
+    const r = Math.hypot(b.sx, b.sz) / 2
+    for (let i = Math.floor((b.x - r) / cell); i <= Math.floor((b.x + r) / cell); i++) for (let j = Math.floor((b.z - r) / cell); j <= Math.floor((b.z + r) / cell); j++) {
+      const k = `${i},${j}`
+      for (const o of near.get(k) ?? []) {
+        if (o.house === b.house || Math.hypot(o.x - b.x, o.z - b.z) >= (Math.hypot(o.sx, o.sz) + Math.hypot(b.sx, b.sz)) / 2) continue
+        if (Math.abs(o.y1 - b.y1) <= 0.004) b.y1 = o.y1 + 0.008
+        if (Math.abs(o.y0 - b.y0) <= 0.004) b.y0 = o.y0 - 0.008
+      }
+      ;(near.get(k) ?? near.set(k, []).get(k)!).push(b)
     }
   }
   return list
