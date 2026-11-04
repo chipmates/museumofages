@@ -1,10 +1,10 @@
 {
- "about": "The opening's cameras. A point is {utm: [E, N], y: level} (German excavation zero) or {street: s, across: t, y: level | 'eye'}: s metres out on the lion street's line from the gate's face (gate-geom's street direction), t across it (+ west), the eye 1.65 m over the gate's street profile. The first frame is the flight's second 0 (the entry `first`, one camera per framing); the flight comes through the North Gate on the map's street axis (the lion frame) and ends still on the street 28 m inside its south door (`land`: the gate sketch's first key, street 150), looking level down the street at the double gate. Between the two the gate sketch's street line runs about 2.7 degrees west of the lion frame's (6 m at the North Gate), so the last 30 m drift that far west.",
+ "about": "The opening's cameras. A point is {utm: [E, N], y: level} (German excavation zero) or {street: s, across: t, y: level | 'eye'}: s metres out on the lion street's line from the gate's face (gate-geom's street direction), t across it (+ west), the eye 1.65 m over the gate's street profile. The first frame is the flight's second 0 (the entry `first`, one camera per framing); the flight comes through the North Gate's two doors on the map's street axis (the lion frame) and ends still on the street 28 m inside its south door (`land`: the gate sketch's first key, street 150), looking level down the street at the double gate, in the walk's own lens (58 desktop, 46 phone). The gate sketch's street line runs about 2.7 degrees west of the lion frame's (6.6 m at the south door, whose west jamb stands 4.3 m east of the sketch's line): the flight leaves the south door in its west half and turns straight onto the sketch's line, on it 14 m past the door, then holds it to rest. A look key {walk: true, dy} is the walk's look raised dy metres.",
  "hour": "16:40",
  "hourSays": "the walk's one clock (map/sun.ts: 20 days after the spring equinox, 32.54 N, local apparent solar time): the landing at 16:40, five minutes before the gate's stop 2 (16:45); the sun at azimuth 265.8, 21.0 degrees high, on the right of a look down the street at heading 168",
  "eye": 1.65,
  "first": {
-  "says": "reading B2, the working start: from over the outer city north-west of the moat at +330, south-east over the North entry, the palaces and the river to the tower and the whole inner city; at 16:40 the sun from the right (west), about 101 degrees off the view. Readings A and B1 stay in `readings`; a swap of the start also moves the flight's first three points",
+  "says": "reading B2, the start (the blind look's pick): from over the outer city north-west of the moat at +330, south-east over the North entry, the palaces and the river to the tower and the whole inner city; at 16:40 the sun from the right (west), about 101 degrees off the view. Readings A and B1 stay in `readings`; a swap of the start also moves the flight's first three points",
   "desktop": {
    "at": [
     445380,
@@ -25,15 +25,16 @@
    ],
    "y": 330,
    "look": [
-    445680,
-    3600950,
+    445689,
+    3600611,
     0
    ],
-   "hfov": 34
-  }
+   "hfov": 20
+  },
+  "phoneSays": "the phone's own framing of B2 (the same camera and heading): a long lens (20 degrees across) aimed at the middle of the city, so the city fills the middle of the tall frame (sky about a fifth, the plain below the moat about a third), the river leading from the bottom edge to the tower"
  },
  "flight": {
-  "duration": 28,
+  "duration": 25.0,
   "points": [
    {
     "utm": [
@@ -88,36 +89,51 @@
     "y": 9.4
    },
    {
-    "street": 205.46,
-    "across": -7.76,
+    "street": 205.0,
+    "across": -7.6,
     "y": 9.3,
-    "says": "through the North Gate north door, its court and its south door, on the gate's axis"
+    "says": "through the North Gate's north door and its court on the door's middle"
    },
    {
-    "street": 185.48,
-    "across": -6.84,
-    "y": 9.75
+    "street": 191.0,
+    "across": -6.95,
+    "y": 9.6
    },
    {
-    "street": 178.49,
-    "across": -6.52,
+    "street": 183.5,
+    "across": -6.0,
+    "y": "eye",
+    "says": "through the south door in its west half, 1 m or more clear of the jamb"
+   },
+   {
+    "street": 177.5,
+    "across": -5.1,
     "y": "eye"
    },
    {
-    "street": 171.5,
-    "across": -6.19,
+    "street": 172.5,
+    "across": -2.85,
     "y": "eye",
-    "says": "out of the south door still on the axis"
+    "says": "out of the door straight onto the gate sketch's street line, the line the walk stands on"
    },
    {
-    "street": 164.17,
-    "across": -4.46,
-    "y": "eye",
-    "says": "easing onto the gate sketch's street line"
+    "street": 168.0,
+    "across": -1.0,
+    "y": "eye"
    },
    {
-    "street": 156.69,
-    "across": -1.61,
+    "street": 163.5,
+    "across": -0.2,
+    "y": "eye"
+   },
+   {
+    "street": 158.5,
+    "across": 0,
+    "y": "eye"
+   },
+   {
+    "street": 154.0,
+    "across": 0,
     "y": "eye"
    },
    {
@@ -132,53 +148,77 @@
     "v": 0
    },
    {
-    "t": 0.4,
-    "v": 0
+    "t": 0.5,
+    "v": 0.115
    },
    {
-    "t": 2.5,
-    "v": 0.4
+    "t": 1,
+    "v": 0.255
    },
    {
-    "t": 5.5,
+    "t": 2,
+    "v": 0.53
+   },
+   {
+    "t": 3,
+    "v": 0.79
+   },
+   {
+    "t": 3.8,
+    "v": 0.95
+   },
+   {
+    "t": 4.5,
     "v": 1
    },
    {
-    "t": 8.5,
+    "t": 8,
     "v": 1
    },
    {
-    "t": 12,
-    "v": 0.55
+    "t": 11,
+    "v": 0.7
+   },
+   {
+    "t": 13,
+    "v": 0.42
    },
    {
     "t": 15,
-    "v": 0.26
+    "v": 0.22
    },
    {
-    "t": 18,
-    "v": 0.12
+    "t": 16.5,
+    "v": 0.15
    },
    {
-    "t": 21,
-    "v": 0.07
+    "t": 18.5,
+    "v": 0.105
    },
    {
-    "t": 24,
-    "v": 0.035
+    "t": 20.5,
+    "v": 0.085
    },
    {
-    "t": 26,
-    "v": 0.012
+    "t": 22.5,
+    "v": 0.068
    },
    {
-    "t": 28,
+    "t": 23.6,
+    "v": 0.055
+   },
+   {
+    "t": 24.3,
+    "v": 0.025
+   },
+   {
+    "t": 25,
     "v": 0
    }
   ],
   "walk": 0,
   "walkSays": "no walk at the end: the flight comes to rest at the landing",
-  "walkFrom": 26,
+  "walkFrom": 23,
   "look": [
    {
     "t": 0,
@@ -189,7 +229,7 @@
     "y": 20
    },
    {
-    "t": 1.5,
+    "t": 1.0,
     "utm": [
      445790,
      3600450
@@ -197,7 +237,7 @@
     "y": 20
    },
    {
-    "t": 8,
+    "t": 7,
     "utm": [
      445680.2,
      3601121.3
@@ -206,7 +246,7 @@
     "says": "the moat and the palace north wall"
    },
    {
-    "t": 11,
+    "t": 9.5,
     "utm": [
      445702.1,
      3601081.8
@@ -215,11 +255,17 @@
     "says": "the limestone foot at the waterline"
    },
    {
-    "t": 20.5,
+    "t": 17,
+    "walk": true,
+    "dy": 44,
+    "says": "down the street's axis through the North Gate's doors, raised so its battlements keep some sky"
+   },
+   {
+    "t": 20,
     "walk": true
    },
    {
-    "t": 28,
+    "t": 25,
     "walk": true
    }
   ],
@@ -227,41 +273,46 @@
    {
     "t": 0,
     "utm": [
-     445680,
-     3600950
+     445689,
+     3600611
     ],
     "y": 0
    },
    {
-    "t": 1.5,
+    "t": 1.0,
     "utm": [
-     445680,
-     3600950
+     445689,
+     3600611
     ],
     "y": 0
    },
    {
-    "t": 8,
+    "t": 7,
     "utm": [
      445680.2,
      3601121.3
     ],
-    "y": 4
+    "y": 0
    },
    {
-    "t": 11,
+    "t": 9.5,
     "utm": [
      445702.1,
      3601081.8
     ],
-    "y": 6
+    "y": 2
    },
    {
-    "t": 20.5,
+    "t": 16.5,
+    "walk": true,
+    "dy": 8
+   },
+   {
+    "t": 19.5,
     "walk": true
    },
    {
-    "t": 28,
+    "t": 25,
     "walk": true
    }
   ],
@@ -274,21 +325,39 @@
   "phoneHfov": [
    {
     "t": 0,
-    "v": 34
+    "v": 20
+   },
+   {
+    "t": 4,
+    "v": 21
+   },
+   {
+    "t": 8,
+    "v": 24
+   },
+   {
+    "t": 10,
+    "v": 26.6
    },
    {
     "t": 12,
-    "v": 38
+    "v": 30.4
    },
    {
-    "t": 20,
-    "v": 34
+    "t": 14,
+    "v": 35.8
    },
    {
-    "t": 28,
-    "v": 28
+    "t": 16.5,
+    "v": 46
+   },
+   {
+    "t": 25,
+    "v": 46
    }
-  ]
+  ],
+  "speedSays": "relative speed, scaled so the way is covered in time: moving from the first second (about 24 m/s at 1 s, 50 at 2), cruise from 4.5 s, slower through the two doors, the walker's glide down the street and to rest in about 1.5 s",
+  "phoneHfovSays": "the phone's lens opens from the first frame's 20 degrees to the walk's 46 (gate.ts clip, phone) by the North Gate's north door, in step with the approach: its rate stays under a quarter of the rate at which the camera's own motion enlarges the North Gate, so nothing ever shrinks on screen; at rest the look is the walk's first"
  },
  "land": {
   "street": 150,
