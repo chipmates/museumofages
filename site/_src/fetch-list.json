@@ -1133,26 +1133,26 @@
   {
    "path": "_src/img/v-supper-1600.avif",
    "url": "/static/img/v-supper-1600.avif",
-   "bytes": 68691,
-   "sha256": "cdfb28587394b792bf8ba7610f8228c71644f0c1adf7caf0daf7d7e465ac37b4"
+   "bytes": 83454,
+   "sha256": "b6571811df368e93e17c9ea917983e3632fd7c3a59c1e000e3481c584ff700b1"
   },
   {
    "path": "_src/img/v-supper-1600.webp",
    "url": "/static/img/v-supper-1600.webp",
-   "bytes": 82088,
-   "sha256": "a7b4baf11059c35f839f59f4bfe9a3edb53e142121a2ed2e1ef461b5fa7ac63f"
+   "bytes": 100586,
+   "sha256": "8951c105d6d6c80ac167322792414c87196428a955486d217b560b1ce477e1ac"
   },
   {
    "path": "_src/img/v-supper-800.avif",
    "url": "/static/img/v-supper-800.avif",
-   "bytes": 21779,
-   "sha256": "1b86e4e5edab8f901b5369b122f8bf25b95b73df0b87371e1a9ce1694d08591f"
+   "bytes": 22869,
+   "sha256": "4cae412dd3b542e48bed1769e63461d8c0b4d52410ac524bad250ec2cd9e8f5b"
   },
   {
    "path": "_src/img/v-supper-800.webp",
    "url": "/static/img/v-supper-800.webp",
-   "bytes": 29112,
-   "sha256": "0fe82c20c39242cba975f6a9d4c6c83beca81c2162c4d8d06e7ddc4621ec8d88"
+   "bytes": 29998,
+   "sha256": "6b49e14b1c11db6ff21eb3864bfe0f323f8d396262eb5f99cf1924d84e87d1c0"
   },
   {
    "path": "_src/img/v-table-1600.avif",
