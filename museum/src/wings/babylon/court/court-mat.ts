@@ -446,11 +446,12 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
      the parapet's top a course of baked brick laid flat ── */
   const fR = max(footprint(U, vec3(1, 0, 0), vec3(0, 1, 0)), footprint(U, vec3(0, 0, 1), vec3(0, 1, 0)))
   const dPar = min(min(P.x.sub(o.x0 + pt), float(o.x1 - pt).sub(P.x)), min(P.z.sub(o.z0 + pt), float(o.z1 - pt).sub(P.z)))
-  // patches laid at one time end at an edge: newer ones paler, older ones weathered darker and greyer
-  const fresh = smoothstep(0.17, 0.23, mx_noise_float(vec3(P.x.mul(0.21), 8.3, P.z.mul(0.21))).add(mx_noise_float(vec3(P.x.mul(1.3), 3.7, P.z.mul(1.3))).mul(0.06)))
+  // newer plaster paler, older weathered darker and greyer, each fading into the next over metres: a hard patch edge
+  // reads as camouflage from the fly
+  const fresh = smoothstep(0.15, 0.4, mx_noise_float(vec3(P.x.mul(0.21), 8.3, P.z.mul(0.21))))
   const crackCell = mx_worley_noise_vec2(vec2(P.x, P.z).mul(1.6))
   const cracks = smoothstep(0.06, 0.0, crackCell.y.sub(crackCell.x)).mul(float(1).sub(smoothstep(0.01, 0.05, fR)))
-  const old = smoothstep(0.16, 0.24, mx_noise_float(vec3(P.x.mul(0.13), 1.9, P.z.mul(0.13))).negate().add(mx_noise_float(vec3(P.x.mul(1.1), 6.1, P.z.mul(1.1))).mul(0.06)))
+  const old = smoothstep(0.1, 0.45, mx_noise_float(vec3(P.x.mul(0.11), 1.9, P.z.mul(0.11))).negate())
   const deckTone = V(TONES.roof).mul(float(1).add(mx_noise_float(vec3(P.x.mul(0.05), 4.1, P.z.mul(0.05))).mul(0.16)).add(mx_noise_float(vec3(P.x.mul(0.45), 2.2, P.z.mul(0.45))).mul(0.08)))
   // a darker damp margin along the parapet's foot
   const deckCol = mix(deckTone.mul(mix(float(1), float(1.12), fresh.mul(0.8))), deckTone.mul(vec3(0.8, 0.8, 0.82)), old.mul(0.7))
