@@ -323,14 +323,15 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   // how much of a point is the plain ground: the design's light glazes take a gentler firing
   const onGround = float(1).sub(smoothstep(0.02, 0.12, length(g.sub(G))))
   // bricks laid from one firing's batch sit in small clusters, a couple of bricks along and a few courses up
-  const lot = hash2(floor(bi.div(2)).add(0.37), floor(k.div(3)).add(5.1)).sub(0.5).mul(0.6)
-  const vary = h1.sub(0.5).mul(1.0).add(lot).sub(step(0.7, h4).mul(0.5)).mul(each).mul(mix(float(0.4), float(1), onGround))
+  const lot = hash2(floor(bi.div(2)).add(0.37), floor(k.div(3)).add(5.1)).sub(0.5).mul(0.85)
+  const vary = h1.sub(0.5).mul(1.3).add(lot).sub(step(0.7, h4).mul(0.5)).mul(each).mul(mix(float(0.4), float(1), onGround))
   const pale = step(h4, 0.18).mul(each).mul(onGround)
   const lean = h5.sub(0.5).mul(2).mul(each)
   const tint = vec3(1).add(vec3(-0.03, 0.05, -0.01).mul(lean))
   const pool = lines(y, C, 0.012, fy).add(lines(u, BR / 2, 0.012, fu)).min(1).mul(0.12)
   const patch = mx_noise_float(P.mul(0.7)).mul(0.2).add(mx_noise_float(P.mul(2.6)).mul(0.16)).mul(float(1).sub(smoothstep(0.3, 1.2, fu)))
-  const glazeCol = g.mul(float(1).add(vary).add(patch)).mul(tint).add(vec3(0.11, 0.12, 0.13).mul(pale)).mul(float(1).sub(pool))
+  // a dark brick stays a dark glaze, never a hole: the firing takes at most seven tenths of the ground's value
+  const glazeCol = g.mul(max(float(1).add(vary).add(patch), 0.3)).mul(tint).add(vec3(0.11, 0.12, 0.13).mul(pale)).mul(float(1).sub(pool))
   const facadeCol = mix(glazeCol, V(col.jointGlaze), jointF.mul(0.85))
 
   /* ── the glass takes the court: Fresnel over what a ray reflected from the face meets (the court's floor, the court's
@@ -437,7 +438,9 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   const pavingCol = mix(pTone, jointPCol, jointP.mul(0.72))
 
   /* ── inside the room: a white wash, warmed by the light the brick floors throw in ── */
-  const plaster = V(col.plaster).mul(vec3(1.14, 1.0, 0.8)).mul(mx_noise_float(P.mul(0.9)).mul(0.04).add(1))
+  // the ceiling takes the page's warm ground light only; the room's own bounce off white walls is not carried, so
+  // the ceiling's plaster is cooled by what that bounce would give back
+  const plaster = V(col.plaster).mul(select(n.y.lessThan(-0.5), vec3(0.9, 1.0, 1.16), vec3(1.06, 1.0, 0.9))).mul(mx_noise_float(P.mul(0.9)).mul(0.04).add(1))
 
   /* ── the roof: an earth deck in broad patches of older and newer plaster, fine cracks, damp along the parapet's foot;
      the parapet's top a course of baked brick laid flat ── */
