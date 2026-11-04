@@ -1,0 +1,183 @@
+{
+ "about": "Stop 12 of the walk (the bridge at sunset): what the map's grey bridge, quay and river become. Positions come from map-plan.json (the bridge's axis, piers and land piers; the quay's lines; the water); this file holds the stop's own sizes, each with where it comes from. t is metres along the bridge's axis from its east end at the quay, c metres across it toward the north.",
+ "deck": {
+  "w": 9.0,
+  "boards": 0.08,
+  "board": 0.3,
+  "beams": {
+   "n": 9,
+   "w": 0.4,
+   "h": 0.45,
+   "gap": 0.02
+  },
+  "lap": 0.3,
+  "src": "not found (P2021 p. 206): the least form that carries a walk, timber over the gaps on a stone capping (Herodotus 1.186, Diodorus 2.8.3: tradition; stone 'very probable', K1914 ch. XXXI); 9 m wide (Diodorus' thirty feet, the narrower reading; Pedersén's sheet draws 13.6 m); plain boards on beams, no parapet, no rail, no night timbers; its sizes ours"
+ },
+ "capping": {
+  "thick": 0.35,
+  "over": 0.06,
+  "slab": [
+   1.3,
+   0.9
+  ],
+  "src": "the piers 'roofed over with stone, on which the rafters for the roadway were laid' (K1914 ch. XXXI, 'very probable'); one course of slabs, its thickness and slab sizes ours; the piers' tops at +1.5 to +2.5 under the deck (P2021 p. 206), Guessed"
+ },
+ "brick": {
+  "size": 0.31,
+  "course": 0.086,
+  "src": "baked brick 31 x 31 cm, unstamped, in bitumen (P2021 p. 204 to 205; K1914 ch. XXXI); the course height ours (as the gate's, 8.6 cm)"
+ },
+ "landPiers": {
+  "src": "as map-plan.json bridge.abutments; their river faces lean with the piers' batter, their tops paved in brick at the street's level, the deck's boards lapping 0.3 m over the edge"
+ },
+ "quay": {
+  "walkway": 1.65,
+  "walkwayFront": -0.4,
+  "banquette": 0.0,
+  "thick": 5.25,
+  "top": 4.0,
+  "base": -5.0,
+  "stairs": [
+   {
+    "s": 286,
+    "w": 1.6,
+    "run": 6.5
+   },
+   {
+    "s": 312,
+    "w": 1.6,
+    "run": 6.5
+   }
+  ],
+  "src": "Nebuchadnezzar's facing wall in front of Nabopolassar's: 5.25 m from -5, a walkway 1.65 m wide at -0.4 (P2021 p. 66) whose back meets the wall's foot at the banquette's +-0 (K1914 ch. XXXIV: the two readings of one ledge, drawn as a ledge falling 0.4 m to the water), the upper wall 3.6 m thick to about +4.0, a smooth face, no towers but at the corners (P2021 p. 66); two stairways in Nabopolassar's wall 'somewhat farther to the north' of the precinct's corner, walled up later (K1914 ch. XXXIV), drawn as outlines only, their places along the quay (s, metres from its north end) ours"
+ },
+ "water": {
+  "body": [
+   0.24,
+   0.18,
+   0.11
+  ],
+  "flow": 0.9,
+  "bearing": 175,
+  "fine": 0.05,
+  "wake": 34,
+  "glint": 14,
+  "swell": 0.35,
+  "reflect": {
+   "west": {
+    "bank": 4.0,
+    "grove": 15.0,
+    "cover": 0.6,
+    "bankTone": [
+     0.05,
+     0.04,
+     0.028
+    ],
+    "groveTone": [
+     0.03,
+     0.035,
+     0.022
+    ]
+   },
+   "east": {
+    "wall": 5.0,
+    "city": 13.0,
+    "cover": 0.75,
+    "wallTone": [
+     0.42,
+     0.33,
+     0.22
+    ],
+    "cityTone": [
+     0.3,
+     0.25,
+     0.18
+    ]
+   },
+   "src": "what the water mirrors before the sky: the west bank 4 m over the water in shadow and its groves to about 15 m, the quay's lit face 5 m high and the city above it to about 13 m; tones ours, matched to the frames"
+  },
+  "src": "a turbid silt brown, our guess (bab.river.water); the current north to south (the piers' points face it, K1914 ch. XXXI), 'large and deep and swift' (Hdt. 1.180), its speed ours; its course here a little east of south (the map's outline); the near ripple, the piers' wakes and the low sun's glint ours"
+ },
+ "westBank": {
+  "from": 3599380,
+  "to": 3600380,
+  "src": "never dug, the line drawn (P2021 p. 28); a low earth bank on it, Guessed"
+ },
+ "green": {
+  "seed": 1104,
+  "palms": {
+   "near": 9,
+   "far": 52,
+   "step": 8.5,
+   "keep": 0.72,
+   "h": [
+    9,
+    15
+   ]
+  },
+  "trees": {
+   "near": 6.5,
+   "far": 12.0,
+   "step": 15,
+   "h": [
+    8,
+    13
+   ]
+  },
+  "tamarisks": {
+   "near": 5.2,
+   "far": 9.5,
+   "step": 4.2,
+   "h": [
+    2.6,
+    4.6
+   ]
+  },
+  "streetClear": 9,
+  "houseClear": 3,
+  "reeds": {
+   "near": 2.6,
+   "far": 4.6,
+   "step": 1.4,
+   "keep": 0.7,
+   "h": [
+    1.8,
+    3.0
+   ]
+  },
+  "src": "date-palm groves on the west bank, Known as a mass, each tree's place ours (bab.green.palm.plain); poplar and willow along the bank, Guessed (bab.green.poplar); tamarisk on the bank as a type, Guessed (bab.green.tamarisk); reeds in clumps at the earth bank's foot, Guessed, none against the brick quay (bab.green.reed); the tamarisks along the bank's top"
+ },
+ "colours": {
+  "src": "linear albedo, ours: the piers' and the quay's baked brick the yellow-buff of Babylon's unglazed brick (as Esagila's casing), a little warmer where it is new; the river's silt film as the plain's silt (open/earth.ts TONES); the capping a pale stone (no colour source); the timber weathered cedar and palm wood, the boards greyer from sun and feet",
+  "brick": [
+   0.47,
+   0.37,
+   0.25
+  ],
+  "quay": [
+   0.46,
+   0.37,
+   0.26
+  ],
+  "silt": [
+   0.254,
+   0.195,
+   0.117
+  ],
+  "stone": [
+   0.39,
+   0.355,
+   0.29
+  ],
+  "timber": [
+   0.25,
+   0.19,
+   0.13
+  ],
+  "boards": [
+   0.3,
+   0.25,
+   0.19
+  ]
+ }
+}

@@ -35,6 +35,7 @@ import { palmGeometry } from '../gate/gate-life'
 import { mountNabu } from '../nabu/nabu'
 import { mountHouse } from '../house/house'
 import { mountEsagila } from '../esagila/esagila'
+import { mountBridge } from '../bridge/bridge'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -51,7 +52,7 @@ const say = (s: string): void => {
 const D2R = Math.PI / 180
 
 say('reading the plan')
-const [plan, cams, pieces, recordClasses, courtPlan, towerPlan, gardensPlan, nabuPlan, housePlan, esagilaPlan]: [J, J, Pieces, ClassFile, J, J, J, J, J, J] = await Promise.all([
+const [plan, cams, pieces, recordClasses, courtPlan, towerPlan, gardensPlan, nabuPlan, housePlan, esagilaPlan, bridgePlan]: [J, J, Pieces, ClassFile, J, J, J, J, J, J, J] = await Promise.all([
   fetch(new URL('./map-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('./map-cams.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../pieces.json', import.meta.url)).then((r) => r.json()),
@@ -62,6 +63,7 @@ const [plan, cams, pieces, recordClasses, courtPlan, towerPlan, gardensPlan, nab
   fetch(new URL('../nabu/nabu-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../house/house-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../esagila/esagila-plan.json', import.meta.url)).then((r) => r.json()),
+  fetch(new URL('../bridge/bridge-plan.json', import.meta.url)).then((r) => r.json()),
 ])
 if (q.get('tower') === 'base') plan.tower.stages = plan.tower.stages.slice(0, 1)
 const F = makeFrame(plan)
@@ -81,7 +83,9 @@ const nabu = mountNabu(tower.built, plan, nabuPlan, tones)
 const house = mountHouse(nabu.built, plan, housePlan, tones)
 // stop 9's Esagila, its ground, the wall before Gate 8 and the street round the precinct's corner (the old stops 10, 11)
 const esagila = mountEsagila(house.built, plan, esagilaPlan, tones)
-const built = esagila.built
+// stop 12's bridge, its quay, the river and the west bank's green (the old stop 13)
+const bridge = mountBridge(esagila.built, plan, bridgePlan, tones)
+const built = bridge.built
 const gardenState = (q.get('garden') ?? 'planted') as GardenState
 gardens.setGarden(gardenState)
 const planMs = Math.round(performance.now() - t0)
@@ -149,7 +153,7 @@ scene.fogNode = airFog
 say('building the city')
 // the Ishtar Gate's passage through both gates, along its axis from the north face
 const gateFrame = plan.frames.gate
-const bodies = buildBodies(built, tones, sky, uSun, canalZ, { o: F.s(gateFrame.origin[0], gateFrame.origin[1]), a: F.dir(gateFrame.bearing), c: F.dir(gateFrame.bearing + 90), len: 50, half: 2.6 }, { ground: (b: N) => esagila.ground(tower.ground(b)) })
+const bodies = buildBodies(built, tones, sky, uSun, canalZ, { o: F.s(gateFrame.origin[0], gateFrame.origin[1]), a: F.dir(gateFrame.bearing), c: F.dir(gateFrame.bearing + 90), len: 50, half: 2.6 }, { ground: (b: N) => bridge.ground(esagila.ground(tower.ground(b))) })
 scene.add(bodies.group)
 scene.add(court.mesh)
 scene.add(tower.mesh)
@@ -157,6 +161,7 @@ scene.add(...gardens.meshes)
 scene.add(nabu.mesh)
 scene.add(house.mesh)
 scene.add(esagila.mesh)
+scene.add(...bridge.meshes, bridge.river(skyColour, uSun, uDay))
 uView.value = q.get('view') === 'classes' ? 1 : 0
 /* the class view from the record at the camera's stop: some rows hold at certain stops only (the street's) */
 let tonedAt = '', painted: Painted = { bodies: 0, byLetters: [] }
@@ -164,8 +169,8 @@ function toneAt(stop: number): void {
   if (String(stop) === tonedAt) return
   tonedAt = String(stop)
   const name = recordNamer(pieces, recordClasses, tonedAt)
-  const city = toneMapBodies(bodies.group, built, name), own = court.tone(name), five = gardens.tone(name), six = house.tone(name), nine = tower.tone(name), temple = nabu.tone(name), marduk = esagila.tone(name)
-  painted = { bodies: city.bodies + own.bodies + five.bodies + six.bodies + nine.bodies + temple.bodies + marduk.bodies, byLetters: [...city.byLetters, ...own.byLetters, ...five.byLetters, ...six.byLetters, ...nine.byLetters, ...temple.byLetters, ...marduk.byLetters] }
+  const city = toneMapBodies(bodies.group, built, name), own = court.tone(name), five = gardens.tone(name), six = house.tone(name), nine = tower.tone(name), temple = nabu.tone(name), marduk = esagila.tone(name), river = bridge.tone(name)
+  painted = { bodies: city.bodies + own.bodies + five.bodies + six.bodies + nine.bodies + temple.bodies + marduk.bodies + river.bodies, byLetters: [...city.byLetters, ...own.byLetters, ...five.byLetters, ...six.byLetters, ...nine.byLetters, ...temple.byLetters, ...marduk.byLetters, ...river.byLetters] }
 }
 
 /* the person for size, at each stop's place for one */
@@ -283,6 +288,7 @@ function aim(pos: V3, look: V3, hfov: number, w: number, h: number, shift = 0): 
   nabu.setPixel(camera.fov, h)
   house.setPixel(camera.fov, h)
   esagila.setPixel(camera.fov, h)
+  bridge.setPixel(camera.fov, h)
   camera.updateMatrixWorld(true)
   skyDome.position.copy(camera.position)
   skyDome.updateMatrixWorld(true)
@@ -361,6 +367,7 @@ function aimFilm(time: number, framing: 'desktop' | 'phone', w: number, h: numbe
   const p = path.sample(time)
   toneAt(p.stop)
   setHour(p.hour)
+  bridge.setTime(time)
   const ph = framing === 'phone'
   uAir.value = airAt(time)
   aim(p.pos, ph ? p.phone.look : p.look, ph ? p.phone.hfov : p.hfov, w, h, ph ? p.phone.shift : p.shift)
@@ -386,7 +393,7 @@ const rig = {
     duration: path.duration,
   }),
   /** what the scene holds, from the bodies the page built */
-  facts: () => ({ ...built.facts, court: court.court.facts, etemenanki: tower.tower.facts, gardens: gardens.facts, nabu: nabu.nabu.facts, house: house.house.facts, esagila: esagila.esagila.facts, streetLevelAtS: undefined, sunAt: Object.fromEntries(cams.stops.map((s: J) => [s.n, sunAt(hourOf(s.hour))])) }),
+  facts: () => ({ ...built.facts, court: court.court.facts, etemenanki: tower.tower.facts, gardens: gardens.facts, nabu: nabu.nabu.facts, house: house.house.facts, esagila: esagila.esagila.facts, bridge: bridge.bridge.facts, streetLevelAtS: undefined, sunAt: Object.fromEntries(cams.stops.map((s: J) => [s.n, sunAt(hourOf(s.hour))])) }),
   stand: (E: number, N: number) => {
     const [x, z] = F.s(E, N)
     return { stand: stand(x, z), ground: built.ground(x, z), street: built.streetAt(x, z) }
