@@ -37,6 +37,8 @@
   font-variant-numeric: lining-nums;
 }
 .paper-label[hidden] { display: none; }
+/* each name takes its direction from its own words, so a number and its unit keep their order on a mirrored plate */
+.paper-label, .paper-label > span { unicode-bidi: plaintext; }
 .paper-label-pencil { color: var(--paper-pencil); }
 .paper-label-count { font-size: 1.375rem; font-weight: 600; color: var(--paper-pencil); }
 .paper-label-quiet { font-weight: 400; letter-spacing: 0.04em; }
