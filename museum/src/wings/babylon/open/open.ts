@@ -11,25 +11,25 @@
      ?put=<url>      where the rig hands its files (the shooter's own server) */
 
 import {
-  BackSide, BoxGeometry, Color, DirectionalLight, Float32BufferAttribute, Group, InstancedBufferAttribute, InstancedMesh, Matrix3, Matrix4, Mesh,
-  MeshBasicNodeMaterial, MeshStandardNodeMaterial, Object3D, OrthographicCamera, PerspectiveCamera, PlaneGeometry, PMREMGenerator, Quaternion, Scene, SphereGeometry, Vector3,
+  BoxGeometry, Float32BufferAttribute, Group, InstancedBufferAttribute, InstancedMesh, Matrix3, Matrix4, Mesh,
+  MeshStandardNodeMaterial, Object3D, PerspectiveCamera, PlaneGeometry, Quaternion, Scene, Vector3,
 } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import { createStack } from '../../../stack'
 import { IDENTITY } from '../../../stack/grade'
 import { accumulate, toPNG } from '../../animals/cave/render'
 import { printFrame } from '../../animals/cave/print'
-import type { Print } from '../../animals/cave/site'
 import { PERSON_FORMS, signPerson } from '../../place/person'
 import { buildPlan, makeFrame } from '../map/plan'
 import { buildBodies, tonesFrom, uView, type Sky } from '../map/mass'
 import { buildGate, gateFrame, hourOf, type V3 } from '../gate/gate-geom'
-import { sunAt as mapSunAt, sunVector as mapSunVector } from '../map/sun'
+import { sunAt as mapSunAt } from '../map/sun'
 import { animalField } from '../gate/gate-relief'
 import { assemble, panelGrid } from '../gate/gate-mesh'
 import { birdsGeometry, palmsGeometry } from '../gate/gate-life'
 import { bakePanel, lifeMaterial, makeUniforms, panelMaterial, pavingMaterial, wallMaterial, C as COURSE, type Rooms } from '../gate/gate-mat'
-import { airColour, createOpenLinear, makeAirUniforms, skyColour } from './air'
+import { airColour, createOpenLinear } from './air'
+import { walkLight } from './light'
 import { blockMaterial, boxMaterial, groundMaterial, houseMaterial, northMaterial, palmMaterial, streetMaterial, toneTexture, uTracts, waterMaterial } from './earth'
 import { northEntry } from './north'
 import { westOutwork } from './outwork'
@@ -46,7 +46,7 @@ import { NORTH_PAVED, northPaving } from './north-paving'
 type N = any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
-const { abs, asin, atan, clamp, max, mix, normalize, positionLocal, positionWorld, smoothstep, step, uniform, vec3, vec4 } = TSL as unknown as Record<string, N>
+const { abs, max, positionWorld, step, uniform, vec3, vec4 } = TSL as unknown as Record<string, N>
 
 const q = new URLSearchParams(location.search)
 const says = document.getElementById('says') as HTMLElement
@@ -115,21 +115,12 @@ function setView(view: 'grey' | 'classes'): void {
 }
 setView(q.get('view') === 'classes' ? 'classes' : 'grey')
 
-/* the air and the sky: one set of uniforms */
-const AIR = makeAirUniforms({ sigma: Number(q.get('sigma') ?? 0.00018), scale: Number(q.get('scale') ?? 300), floor: 3 })
-AIR.uOn.value = Number(q.get('air') ?? 1)
-const sky: Sky = { colour: (d: N) => skyColour(AIR, d) }
-const skyDome = (() => {
-  const m = new MeshBasicNodeMaterial({ side: BackSide, depthWrite: false })
-  m.colorNode = skyColour(AIR, normalize(positionLocal))
-  m.fog = false
-  const mesh = new Mesh(new SphereGeometry(1, 96, 48), m)
-  mesh.scale.setScalar(20000)
-  mesh.frustumCulled = false
-  mesh.name = 'sky'
-  return mesh
-})()
-scene.add(skyDome)
+/* the walk's light (light.ts, the gate page's too): the sun, the air and the sky, the environment, the shadow and the print */
+const uW2G = uniform(new Matrix4().copy(W2G))
+const L = walkLight({ renderer, scene, light: plan.light, rot: ROT, uW2G, uSunG: U.uSunG, gateAt: toWorld([0, 10, 0]), q })
+const AIR = L.AIR
+const sky: Sky = { colour: L.sky }
+const skyDome = L.dome
 
 say('building the city and the gate')
 const PLAIN = buildPlain(cityPlan, { reach: Number(q.get('palmReach') ?? 3600) })
@@ -226,7 +217,6 @@ scene.add(palmMesh(PLAIN.palms, city.ground, palmMaterial(tones)))
 
 /* the map's street and ground give way to the gate's paving inside its area (the gate page's mask), and north of the
    North Gate's south door to the street's paving laid on the lion axis (north-paving.ts) */
-const uW2G = uniform(new Matrix4().copy(W2G))
 const sdx = B.street.dir[0], sdz = B.street.dir[1]
 const { a0: NPa0, a1: NPa1, half: NPhalf } = NORTH_PAVED
 const paved = (): N => {
@@ -328,126 +318,6 @@ figure.rotation.y = plan.figure.turn ?? -Math.PI / 2
 figure.name = 'figure'
 gate.add(figure)
 
-/* light: the gate's stated sun and environment (gate-plan.json `light`), the shadow fitted to what the frame sees */
-const LIGHT = plan.light
-const SUN = { i: Number(q.get('sun') ?? LIGHT.sun.intensity) }
-const sunLight = new DirectionalLight(new Color(1.0, 0.86, 0.7), SUN.i)
-sunLight.castShadow = true
-sunLight.shadow.mapSize.set(8192, 8192)
-sunLight.shadow.bias = -0.0002
-sunLight.shadow.normalBias = 0.03
-scene.add(sunLight, sunLight.target)
-/* the environment: the sky above, the plain's warm bounce below, and near the gate the sunlit east walls' band (the gate page's) */
-const uBounce = uniform(Number(LIGHT.bounce.paving.value))
-const WALLS = LIGHT.bounce.eastWalls
-const uWalls = uniform(new Color(0, 0, 0))
-const uWallsNear = uniform(0)
-const envScene = new Scene()
-{
-  const m = new MeshBasicNodeMaterial({ side: BackSide, depthWrite: false })
-  const d = normalize(positionLocal)
-  const ground = vec3(...(LIGHT.bounce.paving.colour as [number, number, number])).mul(uBounce).mul(AIR.uDay)
-  const dg = uW2G.mul(vec4(d, 0)).xyz
-  const az = atan(dg.x.negate(), dg.z).mul(180 / Math.PI)
-  const el = asin(clamp(dg.y, -1, 1)).mul(180 / Math.PI)
-  const [a0, a1] = WALLS.azimuth as [number, number], [e0, e1] = WALLS.elevation as [number, number]
-  const band = smoothstep(a0 - 6, a0, az).mul(smoothstep(a1 + 6, a1, az)).mul(smoothstep(e0 - 3, e0, el)).mul(smoothstep(e1 + 3, e1, el)).mul(uWallsNear)
-  m.colorNode = mix(ground, skyColour(AIR, d), smoothstep(-0.05, 0.02, d.y)).mul(band.oneMinus()).add(vec3(uWalls).mul(band))
-  envScene.add(new Mesh(new SphereGeometry(100, 64, 32), m))
-}
-const pmrem = new PMREMGenerator(renderer)
-let envTarget: N = null
-function bakeEnv(): void {
-  envTarget?.dispose?.()
-  envTarget = pmrem.fromScene(envScene, 0.02, 1, 1000)
-  scene.environment = envTarget.texture
-}
-/* the environment's strength: the gate's stated value at the street; over the open plain from the air a weaker fill, so the
-   shade under the low sun keeps its depth (ours, G for the method) */
-const ENV = { street: Number(LIGHT.env), aloft: Number(q.get('envAloft') ?? 0.42) }
-scene.environmentIntensity = ENV.street
-
-let hourNow = -1
-function setHour(hour: number): void {
-  if (Math.abs(hour - hourNow) < 1e-4) return
-  hourNow = hour
-  // the walk's one clock: map/sun.ts, in the map's frame (x east, y up, z south); the gate's materials take it in their frame
-  const sW = new Vector3(...mapSunVector(hour))
-  const sGv = sW.clone().applyMatrix3(ROT.clone().transpose())
-  const sG: V3 = [sGv.x, sGv.y, sGv.z]
-  ;(U.uSunG.value as Vector3).set(...sG)
-  ;(AIR.uSun.value as Vector3).copy(sW)
-  const el = Math.asin(sG[1]) / D2R
-  const k = Math.min(1, Math.max(0, (el + 0.5) / 6))
-  sunLight.intensity = SUN.i * k
-  sunLight.color.setRGB(1.0, 0.72 + 0.14 * Math.min(1, el / 20), 0.5 + 0.2 * Math.min(1, el / 20))
-  const onWest = Math.max(0, sG[0]) * sunLight.intensity * WALLS.albedo / Math.PI
-  ;(uWalls.value as Color).setRGB(sunLight.color.r * WALLS.colour[0] * onWest, sunLight.color.g * WALLS.colour[1] * onWest, sunLight.color.b * WALLS.colour[2] * onWest)
-  AIR.uDay.value = Math.min(1, Math.max(0.18, (el + 6) / 14))
-  bakeEnv()
-}
-/** the east walls' band belongs to the forecourt: it fades in over the last 400 m to the gate */
-let wallsNow = -1
-function setNear(distance: number): void {
-  const w = Math.min(1, Math.max(0, (400 - distance) / 250))
-  if (Math.abs(w - wallsNow) < 0.02) return
-  wallsNow = w
-  uWallsNear.value = w
-  // the forecourt's paving bounce near the gate; aloft the plain's, weaker and greyer
-  uBounce.value = 0.18 + (Number(LIGHT.bounce.paving.value) - 0.18) * w
-  bakeEnv()
-}
-
-/* the shadow: an orthographic box in the sun's frame round the ground the frame sees, out to a reach that grows with height */
-const lightCam = new OrthographicCamera()
-const tmp = new Vector3()
-function fitShadow(cam: PerspectiveCamera): number {
-  const sun = (AIR.uSun.value as Vector3).clone().normalize()
-  const h = Math.max(2, cam.position.y - 5)
-  const reach = Math.min(4200, 260 + h * 9)
-  cam.updateMatrixWorld(true)
-  const inv = cam.projectionMatrixInverse, world = cam.matrixWorld
-  const pts: Vector3[] = []
-  const corners = [[-1, -1], [1, -1], [1, 1], [-1, 1], [0, -1], [0, 1], [-1, 0], [1, 0], [0, 0]]
-  const origin = cam.position.clone()
-  for (const [x, y] of corners) {
-    const dir = tmp.set(x!, y!, 0.5).applyMatrix4(inv).applyMatrix4(world).sub(origin).normalize().clone()
-    // the ray to the plain (or to the reach, for a ray above the horizon)
-    let t = dir.y < -1e-3 ? (5 - origin.y) / dir.y : reach
-    const flat = Math.hypot(dir.x, dir.z) * t
-    if (flat > reach) t *= reach / flat
-    const p = origin.clone().addScaledVector(dir, t)
-    for (const y0 of [0, 40, 95]) pts.push(new Vector3(p.x, y0, p.z))
-  }
-  for (const y0 of [0, 40]) pts.push(new Vector3(origin.x, y0, origin.z))
-  const centre = pts.reduce((a, p) => a.add(p), new Vector3()).multiplyScalar(1 / pts.length)
-  lightCam.position.copy(centre).addScaledVector(sun, 6000)
-  lightCam.lookAt(centre)
-  lightCam.updateMatrixWorld(true)
-  const view = lightCam.matrixWorldInverse
-  let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity
-  for (const p of pts) {
-    const v = p.clone().applyMatrix4(view)
-    x0 = Math.min(x0, v.x); x1 = Math.max(x1, v.x); y0 = Math.min(y0, v.y); y1 = Math.max(y1, v.y)
-  }
-  const mx = (x1 - x0) * 0.03 + 2, my = (y1 - y0) * 0.03 + 2
-  sunLight.position.copy(lightCam.position)
-  sunLight.target.position.copy(centre)
-  sunLight.target.updateMatrixWorld()
-  sunLight.updateMatrixWorld()
-  const sc = sunLight.shadow.camera
-  sc.left = x0 - mx
-  sc.right = x1 + mx
-  sc.bottom = y0 - my
-  sc.top = y1 + my
-  sc.near = 1000
-  sc.far = 12000
-  sc.updateProjectionMatrix()
-  const texel = Math.max(sc.right - sc.left, sc.top - sc.bottom) / 8192
-  sunLight.shadow.normalBias = Math.max(0.03, texel * 0.9)
-  return texel
-}
-
 /* the camera: a level horizon, the frame slid up or down (a shift lens) where a view asks */
 let shiftNow = 0
 const ownUpdate = camera.updateProjectionMatrix.bind(camera)
@@ -458,7 +328,6 @@ camera.updateProjectionMatrix = function () {
     this.projectionMatrixInverse.copy(this.projectionMatrix).invert()
   }
 }
-const uAoNear = uniform(250), uAoFar = uniform(900), uAoOn = uniform(Number(q.get('ao') ?? 0.75))
 function aim(pos: Vector3, look: Vector3, hfov: number, w: number, h: number, shift = 0): number {
   camera.position.copy(pos)
   camera.up.set(0, 1, 0)
@@ -474,12 +343,10 @@ function aim(pos: Vector3, look: Vector3, hfov: number, w: number, h: number, sh
   skyDome.position.copy(camera.position)
   skyDome.updateMatrixWorld(true)
   U.uPix.value = (2 * Math.tan((vfov / 2) * D2R)) / h
-  // the contact occlusion reaches and fades further out as the camera climbs
-  scene.environmentIntensity = ENV.street + (ENV.aloft - ENV.street) * Math.min(1, Math.max(0, pos.y - 15) / 120)
-  uAoNear.value = 250 + over * 1.2
-  uAoFar.value = 900 + over * 3.5
-  setNear(pos.distanceTo(toWorld([0, 10, 0])))
-  return fitShadow(camera)
+  // the environment, the occlusion's fade and reach, the band near the gate and the shadow follow the camera (light.ts)
+  const f = L.frame(camera)
+  linear?.setRadius(f.aoRadius)
+  return f.texel
 }
 
 /* the flight, from the camera file into the scene's frame */
@@ -502,25 +369,14 @@ const walkLook: [number, number, number] = [wlx, endEye + L0, wlz]
 const flight = makeFlight(resolveFlight(cams.flight, { scene: MF.s, street: streetAt, eye: cams.eye, walkLook }))
 
 /* one pipeline: the scene pass, the occlusion, the air; output linear; the print on the CPU */
-setHour(HOUR)
+L.setHour(HOUR)
+let linear: ReturnType<typeof createOpenLinear> | null = null
 const first = flight.sample(0)
 aim(new Vector3(...first.pos), new Vector3(...first.look), first.hfov, 1600, 900)
 renderer.render(scene, camera)
-const linear = createOpenLinear(renderer, scene, camera, AIR, { ao: { on: q.get('ao') !== '0', intensity: uAoOn, radius: 1.2, fadeNear: uAoNear, fadeFar: uAoFar } })
-const P0 = LIGHT.print
-const PRINT: Print = {
-  exposure: Number(q.get('exp') ?? LIGHT.exposure), toe: P0.toe, shoulder: 1, lift: [0, 0, 0], gamma: [1, 1, 1], gain: P0.gain, warm: [1.02, 1, 0.97], cool: [0.97, 1, 1.03],
-  split: 0.3, saturation: Number(q.get('sat') ?? P0.saturation), vignette: 0.12, grain: 0.003, glow: { threshold: 1.2, strength: P0.glow, radii: [0.012, 0.06] },
-}
-/** the exposure's stops over the gate's own, by the camera's height: the air from above is brighter than the street */
-const aloft = (y: number): number => Math.min(1, Math.max(0, y - 15) / 120)
-const stopsAt = (y: number): number => Number(q.get('stops') ?? 0) + -0.35 * aloft(y)
-/** the print's saturation: the gate's own at the street, a little less over the city */
-const SAT = { street: PRINT.saturation, aloft: Number(q.get('satAloft') ?? 1.0) }
-const satAt = (y: number): number => SAT.street + (SAT.aloft - SAT.street) * aloft(y)
-/** the print's toe: the gate's own at the street; over the city a little deeper, so the hazed shade keeps its weight */
-const TOE = { street: Number(P0.toe), aloft: Number(q.get('toeAloft') ?? 0.035) }
-const toeAt = (y: number): number => TOE.street + (TOE.aloft - TOE.street) * aloft(y)
+linear = createOpenLinear(renderer, scene, camera, AIR, { ao: { on: q.get('ao') !== '0', intensity: L.uAoOn, radius: 1.2, fadeNear: L.uAoNear, fadeFar: L.uAoFar } })
+const { PRINT, SAT, TOE, ENV, SUN } = L
+const stopsAt = L.stopsAt
 
 const putBase = q.get('put') ?? ''
 async function upload(file: string, bytes: Uint8Array | string): Promise<void> {
@@ -548,8 +404,8 @@ function brightness(bytes: Uint8ClampedArray): { median: number; p1: number; p99
 }
 async function render(w: number, h: number, samples: number, stops: number): Promise<{ bytes: Uint8ClampedArray; ms: number }> {
   const t = performance.now()
-  const rgb = await accumulate(renderer, camera, linear.post, w, h, samples)
-  const bytes = printFrame(rgb, w, h, { ...PRINT, exposure: PRINT.exposure * Math.pow(2, stops), saturation: satAt(camera.position.y), toe: toeAt(camera.position.y) }, 0)
+  const rgb = await accumulate(renderer, camera, linear!.post, w, h, samples)
+  const bytes = printFrame(rgb, w, h, L.printFor(camera.position.y, stops), 0)
   return { bytes, ms: Math.round(performance.now() - t) }
 }
 
@@ -558,7 +414,6 @@ function aimFlight(t: number, framing: 'desktop' | 'phone', w: number, h: number
   const p = flight.sample(t)
   const ph = framing === 'phone'
   uTime.value = t
-  linear.setRadius(Math.min(6, 1.2 + Math.max(0, p.pos[1] - 15) * 0.012))
   const texel = aim(new Vector3(...p.pos), new Vector3(...(ph ? p.phoneLook : p.look)), ph ? p.phoneHfov : p.hfov, w, h, ph ? p.phoneShift : p.shift)
   return { p, texel }
 }
@@ -588,7 +443,7 @@ const rig = {
     const side = {
       file, framing: o.framing, view: o.view, flightSecond: t, cssSize: o.css, devicePixels: [o.w, o.h], subFrames: o.samples, backend: stack.backend, adapter: stack.architecture,
       hour: `${Math.floor(HOUR)}:${String(Math.round((HOUR % 1) * 60)).padStart(2, '0')}`, sun: { azimuth: +s.azimuth.toFixed(1), elevation: +s.elevation.toFixed(1) }, camera: camFacts(p, o.framing), shadowTexel: +texel.toFixed(3),
-      air: { sigma: AIR.uSigma.value, scale: AIR.uScale.value, on: AIR.uOn.value }, print: { ...PRINT, exposure: PRINT.exposure * Math.pow(2, stops), saturation: satAt(p.pos[1]), toe: toeAt(p.pos[1]) }, brightness: brightness(bytes), ms,
+      air: { sigma: AIR.uSigma.value, scale: AIR.uScale.value, on: AIR.uOn.value }, print: L.printFor(p.pos[1], stops), brightness: brightness(bytes), ms,
     }
     await upload(file.replace(/\.png$/, '.json'), JSON.stringify(side, null, 1))
     setView(q.get('view') === 'classes' ? 'classes' : 'grey')
@@ -617,7 +472,7 @@ const rig = {
   /** a still from any camera (scene metres or UTM), for probes */
   async probe(o: { at: [number, number]; y: number; look: [number, number, number]; hour?: string; hfov?: number; shift?: number; stops?: number; w: number; h: number; samples: number; out: string; name: string; view?: 'grey' | 'classes'; t?: number }) {
     setView(o.view ?? 'grey')
-    if (o.hour) setHour(hourOf(o.hour))
+    if (o.hour) L.setHour(hourOf(o.hour))
     uTime.value = o.t ?? 0
     const [x, z] = MF.s(o.at[0], o.at[1])
     const [lx, lz] = MF.s(o.look[0], o.look[1])
@@ -625,7 +480,7 @@ const rig = {
     const { bytes, ms } = await render(o.w, o.h, o.samples, o.stops ?? stopsAt(o.y))
     const file = `${o.out}/${o.name}.${o.w > 1000 ? 'png' : 'jpg'}`
     await upload(file, o.w > 1000 ? await toPNG(bytes, o.w, o.h) : await jpeg(bytes, o.w, o.h, 0.9))
-    setHour(HOUR)
+    L.setHour(HOUR)
     return { file, ms, brightness: brightness(bytes) }
   },
   /** test values without a reload: the haze, the exposure's base, the print's saturation, the environment, the sun */
@@ -643,8 +498,8 @@ const rig = {
     if (o.exposure !== undefined) PRINT.exposure = o.exposure
     if (o.saturation !== undefined) SAT.aloft = o.saturation
     if (o.env !== undefined) ENV.aloft = o.env
-    if (o.sun !== undefined) { SUN.i = o.sun; hourNow = -1; setHour(HOUR) }
-    if (o.hour !== undefined) { HOUR = hourOf(o.hour); setHour(HOUR) }
+    if (o.sun !== undefined) { SUN.i = o.sun; L.setHour(HOUR, true) }
+    if (o.hour !== undefined) { HOUR = hourOf(o.hour); L.setHour(HOUR) }
     return { tracts: uTracts.value, split: PRINT.split, cool: PRINT.cool, warm: PRINT.warm, away: (AIR.uAway.value as Vector3).toArray(), near: (AIR.uNear.value as Vector3).toArray(), reach: AIR.uReach.value, toe: TOE.aloft, sigma: AIR.uSigma.value, scale: AIR.uScale.value, exposure: PRINT.exposure, saturation: SAT.aloft, env: ENV.aloft, sun: SUN.i, hour: HOUR }
   },
   /** the flight sampled, no rendering */
