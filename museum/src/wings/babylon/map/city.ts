@@ -30,6 +30,11 @@ export function setCityPixel(vfovDeg: number, heightPx: number): void {
 export function mapTone(id: string): MapTone {
   // the Ishtar Gate's two massings: glazed brick on every face (the gate page draws the gate itself)
   if (/^gate-(front|main)/.test(id)) return 'glaze'
+  // baked brick: the lion walls and their towers, the forecourt's bastions, the dam's walls, the palace's north wall
+  if (/^(lion-wall-|bastion-|dam-wall-|north-wall)/.test(id)) return 'baked'
+  // the circuits' embankments and moat walls are baked brick, their main and front walls mud brick
+  if (/^(inner-east|outer-east|west-city)-(karu|walk)-/.test(id)) return 'baked'
+  if (/^(inner-east|outer-east|west-city)-(main|front)-/.test(id)) return 'mud'
   return toneOf(id)
 }
 
@@ -89,6 +94,12 @@ export function cityBlockMaterial(t: ClassTones, tones: DataTexture, count: numb
   return m
 }
 
+/** each instanced box's tone (0 mud, 1 baked) by the body it stands on: wall towers take their wall's */
+function boxTone(id: string): number {
+  const k = mapTone(id.replace(/-t\d+-\d+$/, ''))
+  return k === 'baked' || k === 'glaze' ? 1 : 0
+}
+
 /** the map's bodies (mass.ts buildBodies) given the city's materials; `ground` a stop's paint over the ground (the
     precinct's), `band` the class band's height over the ground */
 export function paintCity(group: Object3D, built: Built, tones: ClassTones, o: { band: number; ground?: (base: N) => N }): void {
@@ -96,6 +107,14 @@ export function paintCity(group: Object3D, built: Built, tones: ClassTones, o: {
   if (blocks) blocks.material = cityBlockMaterial(tones, cityTones(built.prisms), Math.max(1, built.prisms.length), uCityPix)
   const houses = group.getObjectByName('houses') as InstancedMesh | undefined
   if (houses && houses.geometry.getAttribute('hinfo')) houses.material = houseMaterial(tones, o.band)
+  const rest = group.getObjectByName('towers-and-piers') as InstancedMesh | undefined
+  if (rest) {
+    const list = built.boxes.filter((b) => b.group !== 'house' && !b.hidden)
+    const k = new Float32Array(list.length)
+    list.forEach((b, i) => { k[i] = b.group === 'tower' ? boxTone(b.id) : 1 })
+    rest.geometry.setAttribute('tone', new InstancedBufferAttribute(k, 1))
+    rest.material = boxMaterial(tones)
+  }
 }
 
 /** the court's body of the South Palace's rooms (the court draws it, to cut its court and room into it) in the city's
