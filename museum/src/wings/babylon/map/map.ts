@@ -28,12 +28,13 @@ import { toneMapBodies, type Painted } from '../record-tones'
 import { hourOf, sunAt, sunVector } from './sun'
 import { makePath, type PathSample, type V3 } from './path'
 import { mountCourt } from '../court/court'
+import { mountTower } from '../tower/tower'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
-const { clamp, dot, max, mix, normalize, positionLocal, pow, smoothstep, uniform, vec3, fog, densityFogFactor } = TSL as unknown as Record<string, N>
+const { cameraPosition, clamp, dot, exp, float, max, mix, normalize, positionLocal, positionWorld, pow, smoothstep, step, uniform, vec3, fog, densityFogFactor } = TSL as unknown as Record<string, N>
 
 const q = new URLSearchParams(location.search)
 const says = document.getElementById('says') as HTMLElement
@@ -44,12 +45,13 @@ const say = (s: string): void => {
 const D2R = Math.PI / 180
 
 say('reading the plan')
-const [plan, cams, pieces, recordClasses, courtPlan]: [J, J, Pieces, ClassFile, J] = await Promise.all([
+const [plan, cams, pieces, recordClasses, courtPlan, towerPlan]: [J, J, Pieces, ClassFile, J, J] = await Promise.all([
   fetch(new URL('./map-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('./map-cams.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../pieces.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../record-classes.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../court/court-plan.json', import.meta.url)).then((r) => r.json()),
+  fetch(new URL('../tower/tower-plan.json', import.meta.url)).then((r) => r.json()),
 ])
 if (q.get('tower') === 'base') plan.tower.stages = plan.tower.stages.slice(0, 1)
 const F = makeFrame(plan)
@@ -57,7 +59,9 @@ const t0 = performance.now()
 const tones = tonesFrom(plan)
 // stop 6's court and throne room draw themselves; the city's bodies are built without the prisms they replace
 const court = mountCourt(buildPlan(plan), plan, courtPlan, tones)
-const built = court.built
+// stop 9's precinct wall, Gate 5's recess, the street before it and the tower draw themselves too
+const tower = mountTower(court.built, plan, towerPlan, tones)
+const built = tower.built
 const planMs = Math.round(performance.now() - t0)
 
 /* the canal's banks get their own ground lines, so its cut stays 2.8 m wide on a 6 m grid */
@@ -108,14 +112,25 @@ const skyDome = (() => {
 })()
 scene.add(skyDome)
 const uDensity = uniform(Number(q.get('haze') ?? 0.0002))
-scene.fogNode = fog(uHaze, densityFogFactor(uDensity))
+/* a stop may set its own air (`air`, extinction a metre): the light between the eye and a far face is then partly the
+   sunlit haze's, in the horizon sky's colour toward the view, the sun's glow included; 0 leaves the page's fog */
+const uAir = uniform(0)
+const airFog = (() => {
+  const v = positionWorld.sub(cameraPosition)
+  const dist = v.length()
+  const toward = skyColour(normalize(vec3(v.x, dist.mul(0.03), v.z)))
+  const airF = float(1).sub(exp(dist.mul(uAir).negate()))
+  return fog(mix(uHaze, toward, step(1e-7, uAir)), max(densityFogFactor(uDensity), airF))
+})()
+scene.fogNode = airFog
 
 say('building the city')
 // the Ishtar Gate's passage through both gates, along its axis from the north face
 const gateFrame = plan.frames.gate
-const bodies = buildBodies(built, tones, sky, uSun, canalZ, { o: F.s(gateFrame.origin[0], gateFrame.origin[1]), a: F.dir(gateFrame.bearing), c: F.dir(gateFrame.bearing + 90), len: 50, half: 2.6 })
+const bodies = buildBodies(built, tones, sky, uSun, canalZ, { o: F.s(gateFrame.origin[0], gateFrame.origin[1]), a: F.dir(gateFrame.bearing), c: F.dir(gateFrame.bearing + 90), len: 50, half: 2.6 }, { ground: tower.ground })
 scene.add(bodies.group)
 scene.add(court.mesh)
+scene.add(tower.mesh)
 uView.value = q.get('view') === 'classes' ? 1 : 0
 /* the class view from the record at the camera's stop: some rows hold at certain stops only (the street's) */
 let tonedAt = '', painted: Painted = { bodies: 0, byLetters: [] }
@@ -123,8 +138,8 @@ function toneAt(stop: number): void {
   if (String(stop) === tonedAt) return
   tonedAt = String(stop)
   const name = recordNamer(pieces, recordClasses, tonedAt)
-  const city = toneMapBodies(bodies.group, built, name), own = court.tone(name)
-  painted = { bodies: city.bodies + own.bodies, byLetters: [...city.byLetters, ...own.byLetters] }
+  const city = toneMapBodies(bodies.group, built, name), own = court.tone(name), nine = tower.tone(name)
+  painted = { bodies: city.bodies + own.bodies + nine.bodies, byLetters: [...city.byLetters, ...own.byLetters, ...nine.byLetters] }
 }
 
 /* the person for size, at each stop's place for one */
@@ -237,6 +252,7 @@ function aim(pos: V3, look: V3, hfov: number, w: number, h: number, shift = 0): 
   shiftNow = shift
   camera.updateProjectionMatrix()
   court.setPixel(camera.fov, h)
+  tower.setPixel(camera.fov, h)
   camera.updateMatrixWorld(true)
   skyDome.position.copy(camera.position)
   skyDome.updateMatrixWorld(true)
@@ -304,11 +320,19 @@ const expAt = (time: number): number => {
   for (let k = -6; k <= 6; k++) acc += stopsOf(path.sample(time + k * 0.5).stop)
   return acc / 13
 }
+/** a stop's own air, eased over the same six seconds as its exposure */
+const airOf = (n: number): number => cams.stops.find((x: J) => x.n === n)?.air ?? 0
+const airAt = (time: number): number => {
+  let acc = 0
+  for (let k = -6; k <= 6; k++) acc += airOf(path.sample(time + k * 0.5).stop)
+  return acc / 13
+}
 function aimFilm(time: number, framing: 'desktop' | 'phone', w: number, h: number): PathSample {
   const p = path.sample(time)
   toneAt(p.stop)
   setHour(p.hour)
   const ph = framing === 'phone'
+  uAir.value = airAt(time)
   aim(p.pos, ph ? p.phone.look : p.look, ph ? p.phone.hfov : p.hfov, w, h, ph ? p.phone.shift : p.shift)
   showFigure(p.stop)
   return p
@@ -332,7 +356,7 @@ const rig = {
     duration: path.duration,
   }),
   /** what the scene holds, from the bodies the page built */
-  facts: () => ({ ...built.facts, court: court.court.facts, streetLevelAtS: undefined, sunAt: Object.fromEntries(cams.stops.map((s: J) => [s.n, sunAt(hourOf(s.hour))])) }),
+  facts: () => ({ ...built.facts, court: court.court.facts, etemenanki: tower.tower.facts, streetLevelAtS: undefined, sunAt: Object.fromEntries(cams.stops.map((s: J) => [s.n, sunAt(hourOf(s.hour))])) }),
   stand: (E: number, N: number) => {
     const [x, z] = F.s(E, N)
     return { stand: stand(x, z), ground: built.ground(x, z), street: built.streetAt(x, z) }
@@ -364,8 +388,9 @@ const rig = {
     return side
   },
   /** a still from any camera: UTM place, a height (a level or 'eye'), a look point (E, N, level), an hour */
-  async probe(o: { at: [number, number]; y: number | 'eye'; look: [number, number, number]; hour: string; hfov?: number; shift?: number; stops?: number; w: number; h: number; samples: number; out: string; name: string; view?: 'grey' | 'classes'; figure?: number }) {
+  async probe(o: { at: [number, number]; y: number | 'eye'; look: [number, number, number]; hour: string; hfov?: number; shift?: number; stops?: number; w: number; h: number; samples: number; out: string; name: string; view?: 'grey' | 'classes'; figure?: number; air?: number }) {
     const [x, z] = F.s(o.at[0], o.at[1])
+    uAir.value = o.air ?? (o.figure ? airOf(o.figure) : 0)
     if (o.figure) {
       toneAt(o.figure)
       showFigure(o.figure)
