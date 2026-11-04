@@ -2,7 +2,7 @@
   "kind": "picture-policy-store-audit",
   "source": "forge/vite-na-assets.mjs mergeManifests()",
   "rightsPolicy": "brief/RIGHTS-POLICY.md v1, 2026-09-09",
-  "recordSha256": "b36e90a96af3b32a217f7064c0bee51ff8e6035c91d5621af40dde7dd47d10b0",
+  "recordSha256": "0daebc73bcfe1bcd4df0626c2806cb64328a09bab81d89a8b976adc69ebee556",
   "counts": {
     "records": 78,
     "plates": 39,
