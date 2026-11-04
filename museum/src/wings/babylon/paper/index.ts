@@ -11,4 +11,4 @@ export { FIGURE_FORM, FIGURE_M, figureOutlines, figurePath, figuresFor, rulerPat
 export { crosses, grown, meets, overlaps, placeElements, placeLabels, type Box, type LabelAsk, type Placed, type Seg, type Side, type Taken } from './placer'
 export { createPaperSteps, type PaperStep, type PaperSteps, type PaperStepsOptions } from './steps'
 export { gridBox, millions, poured, rangeRow, unitGrid, type UnitBox, type UnitGridOptions } from './counter'
-export { createPaperPlate, framingOf, paperSheet, type PaperFraming, type PaperPlate } from './plate'
+export { createPaperPlate, framingOf, paperSheet, WIDE_LEAST, type PaperFraming, type PaperPlate } from './plate'

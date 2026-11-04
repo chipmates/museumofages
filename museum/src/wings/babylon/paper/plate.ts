@@ -9,7 +9,8 @@ import css from './paper.css?inline'
 import { markDefs, svg, grainTile, type MarkIds } from './marks'
 import { paperStyle } from './tokens'
 
-export type PaperFraming = 'wide' | 'upright'
+import type { PaperFraming } from './framing'
+export { framingOf, WIDE_LEAST, type PaperFraming } from './framing'
 
 export interface PaperPlate {
   readonly root: HTMLDivElement
@@ -41,8 +42,6 @@ export function paperSheet(doc: Document): void {
   doc.head.append(style)
 }
 
-/** the framing a box of this shape takes: upright where it is taller than it is wide */
-export const framingOf = (w: number, h: number): PaperFraming => (h > w * 1.05 ? 'upright' : 'wide')
 
 export function createPaperPlate(doc: Document, o: { lang: string; dir?: 'ltr' | 'rtl'; name?: string }): PaperPlate {
   paperSheet(doc)

@@ -28,6 +28,7 @@ const counter = await load('babylon/paper/counter.ts')
 const data = await load('babylon/measure/measure-data.ts')
 const scene = await load('babylon/measure/measure-scene.ts')
 const words = await load('babylon/measure/measure-words.ts')
+const framing = await load('babylon/paper/framing.ts')
 
 test('every meaning stroke keeps 3:1 on the paper, the main stroke 7:1, every text 4.5:1', () => {
   const S = tokens.shades()
@@ -145,6 +146,37 @@ test('every step\'s labels stand clear of the drawing and of each other (EN and 
   // the readings and the counts must stand at the sizes the visitor sees; a phone of 330 px of plate may drop the key's own label
   const essential = left.filter((x) => !/: figure$/.test(x) && !/390x330/.test(x))
   assert.deepEqual(essential, [], 'labels left off')
+})
+
+/* the drawing's own box per part: rects and lines exactly, paths by their absolute points */
+function partBox(p) {
+  if (p.type === 'rect') return { l: p.x, t: p.y, r: p.x + p.w, b: p.y + p.h }
+  if (p.type === 'line') return { l: Math.min(p.ax, p.bx), t: Math.min(p.ay, p.by), r: Math.max(p.ax, p.bx), b: Math.max(p.ay, p.by) }
+  const pts = [...p.d.matchAll(/[ML]\s*(-?\d+(?:\.\d+)?)[ ,](-?\d+(?:\.\d+)?)/g)].map((m) => [Number(m[1]), Number(m[2])])
+  return pts.length ? { l: Math.min(...pts.map((q) => q[0])), t: Math.min(...pts.map((q) => q[1])), r: Math.max(...pts.map((q) => q[0])), b: Math.max(...pts.map((q) => q[1])) } : null
+}
+
+test('a narrow or tall plate draws upright, a wide one side by side', () => {
+  assert.equal(framing.framingOf(1600, 711), 'wide')
+  assert.equal(framing.framingOf(640, 300), 'wide')
+  assert.equal(framing.framingOf(390, 473), 'upright')
+  // a short phone's plate is wider than tall, and still too narrow to lay out side by side
+  assert.equal(framing.framingOf(390, 265), 'upright')
+  assert.equal(framing.framingOf(360, 241), 'upright')
+})
+
+test('every step\'s drawing stays on the plate, from a short phone to the desktop', () => {
+  const off = []
+  for (const [w, h] of [[1600, 711], [1440, 690], [1024, 560], [640, 300], [560, 300], [390, 473], [390, 445], [390, 293], [390, 265], [360, 241]]) {
+    for (let t = 0; t <= 5; t += 0.25) {
+      const sc = scene.measureScene(t, framing.framingOf(w, h), w, h)
+      for (const p of sc.prims) {
+        const b = partBox(p)
+        if (b && (p.alpha ?? 1) > 0.05 && (b.l < -1 || b.t < -1 || b.r > w + 1 || b.b > h + 1)) off.push(`${w}x${h} t ${t}: ${p.id}`)
+      }
+    }
+  }
+  assert.deepEqual(off, [])
 })
 
 test('the browser\'s own read-back: no label on anything, at every step shot', { skip: !process.env.PAPER_READOUTS }, () => {

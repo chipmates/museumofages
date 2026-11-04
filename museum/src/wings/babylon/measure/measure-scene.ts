@@ -16,7 +16,7 @@
 import { figurePath, figuresFor, stackPath, FIGURE_M } from '../paper/figure'
 import { unitGrid, gridBox } from '../paper/counter'
 import type { Box, Seg, Side, Taken } from '../paper/placer'
-import type { PaperFraming } from '../paper/plate'
+import type { PaperFraming } from '../paper/framing'
 import { BRICKS, READINGS, TOWER, tabletHeight } from './measure-data'
 
 export type PrimMark = 'place' | 'known' | 'guessed' | 'measure' | 'pencil'
@@ -145,15 +145,19 @@ export function measureScene(t: number, framing: PaperFraming, w: number, h: num
   const figures = t <= 1 ? lerp(1, n66, ease(t)) : t <= 2 ? lerp(n66, n90, ease(t - 1)) : t <= 3 ? lerp(n90, 1, ease(t - 2)) : 1
   const shown = Math.max(1, Math.floor(figures + 1e-6))
   const sx = X(HALF + STACK_OFF)
-  prims.push({ type: 'path', id: 'stack', mark: 'pencil', d: stackPath(sx, gy, s, shown) })
+  // upright, the counting scale leaves the one figure under two pixels: it leaves with the key
+  const stackA = wide ? 1 : 1 - ease(count * 2.5)
   const stackTop = Y(shown * FIGURE_M)
-  taken.push({ l: sx - 3, t: stackTop - 2, r: sx + 3, b: gy, id: 'stack' })
+  if (stackA > 0.01) {
+    prims.push({ type: 'path', id: 'stack', mark: 'pencil', d: stackPath(sx, gy, s, shown), alpha: stackA })
+    taken.push({ l: sx - 3, t: stackTop - 2, r: sx + 3, b: gy, id: 'stack' })
+  }
 
   // THE KEY: one figure drawn large in a pencil frame, its height measured beside it, while the plate measures
   const keyA = 1 - ease(count * 2.5)
   if (keyA > 0.01) {
     const kb = wide
-      ? { l: Math.min(w - 196, sx + Math.max(56, w * 0.05)), t: gy - 236, r: Math.min(w - 196, sx + Math.max(56, w * 0.05)) + 176, b: gy }
+      ? { l: Math.min(w - 196, sx + Math.max(56, w * 0.05)), t: Math.max(6, gy - 236), r: Math.min(w - 196, sx + Math.max(56, w * 0.05)) + 176, b: gy }
       : { l: 12, t: 12, r: 98, b: 12 + Math.min(118, Math.max(96, Y(74) - 12)) }
     // upright, the height's label stands under the figure, inside the frame
     const inner = (kb.b - kb.t) - (wide ? 44 : 44)
@@ -234,16 +238,25 @@ export function measureScene(t: number, framing: PaperFraming, w: number, h: num
   let marks = 0
   if (t > 3) {
     const c = z.counter
-    const per = 5
-    const size = wide ? Math.max(14, Math.min(40, (c.r - c.l) / 16)) : Math.max(10, Math.min(17, (c.r - c.l) / 22))
+    // wide, the piles stand on the tower's own ground beside it; upright, on a ground of their own under the elevation
+    const base = wide ? gy : c.b - 52
+    let per = 5
+    let size = wide ? Math.max(14, Math.min(40, (c.r - c.l) / 16)) : Math.max(10, Math.min(17, (c.r - c.l) / 22))
+    const pitchOf = (sz: number): number => sz + Math.max(3, sz * 0.22)
+    if (!wide) {
+      // the taller pile and its name above keep inside the counter's room: rows of more units, each unit smaller, until it fits
+      for (const n of [5, 6, 8, 10]) {
+        per = n
+        size = Math.min(size, Math.max(7, ((c.r - c.l - 16 - 44) / (2 * n)) / 1.22))
+        if (base - Math.ceil(BRICKS.baked / n) * pitchOf(size) - 22 >= c.t) break
+      }
+    }
     const gap = Math.max(3, size * 0.22), pitch = size + gap
     const pileW = per * pitch - gap
     const pour = span(t, 3, 4)
     const gather = span(t, 4, 4.45), row = span(t, 4.4, 5)
     units.mud = Math.round(Math.min(BRICKS.mud, BRICKS.mud * clamp01(pour / 0.32)) * 10) / 10
     units.baked = Math.round(Math.min(BRICKS.baked, BRICKS.baked * clamp01((pour - 0.32) / 0.68)) * 10) / 10
-    // wide, the piles stand on the tower's own ground beside it; upright, on a ground of their own under the elevation
-    const base = wide ? gy : c.b - (wide ? 0 : 52)
     const x0 = wide ? Math.max(c.l, sx + 70) : c.l + 8
     const between = wide ? Math.max(70, pileW * 0.4) : Math.max(44, (c.r - c.l - 2 * pileW - 16) * 0.6)
     const mudX = x0, bakedX = x0 + pileW + between

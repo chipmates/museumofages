@@ -91,10 +91,11 @@
   color: inherit; background: transparent; border: 0; cursor: pointer;
   text-align: center; overflow-wrap: normal; hyphens: manual;
 }
-/* a narrow row cannot hold every name under its notch: the names stand in a grid of their own, the notches keep the track */
+/* a narrow row cannot hold every name under its notch: the names stand in a grid of their own, as many columns as hold
+   a long word whole, the notches keep the track */
 @container (max-width: 470px) {
   .paper-track { margin: 0 8px; }
-  .paper-names { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .paper-names { grid-template-columns: repeat(auto-fill, minmax(min(100%, 5.6rem), 1fr)); }
 }
 .paper-name[aria-pressed='true'] { font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
 .paper-name:focus-visible, .paper-play:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }

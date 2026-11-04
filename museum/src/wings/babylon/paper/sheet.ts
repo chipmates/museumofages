@@ -50,7 +50,7 @@ function draw(): void {
   const head = (i: number, title: string, sub: string, extra = ''): void => {
     const at = tile(i)
     const t = plate.label(`h${i}`, title, 'big')
-    const s = plate.label(`s${i}`, `${sub}${extra}`, 'quiet')
+    const s = plate.label(`s${i}`, `${sub}${extra}`.replace(/ (px|m|%)(?!\w)/g, '\u00a0$1'), 'quiet')
     s.style.whiteSpace = 'normal'; s.style.width = `${tw}px`
     for (const [node, y] of [[t, at.y + 4], [s, at.y + (framing === 'wide' ? 30 : 26)]] as const) {
       node.style.left = dir === 'rtl' ? '' : `${at.x}px`
@@ -139,7 +139,7 @@ function draw(): void {
     lines.push({ ax: b.l, ay: foot, bx: b.r, by: foot })
     asks.push({ id: 'a', x: cx + wide / 2, y: foot - 10, sides: ['right', 'above-right'], gap: 8, node: plate.label('pa', lang === 'de' ? 'etwa 90 m' : 'about 90 m') })
     asks.push({ id: 'b', x: cx, y, sides: ['above', 'right', 'left'], gap: 8, node: plate.label('pb', lang === 'de' ? 'nicht bekannt' : 'not known', 'quiet') })
-    asks.push({ id: 'c', x: cx + wide * 0.3, y: y + 20, sides: ['right', 'above-right', 'below-right'], gap: 10, node: plate.label('pc', 'Esagila') })
+    asks.push({ id: 'c', x: cx + wide * 0.3, y: y + 20, sides: ['right', 'above-right', 'below-right'], gap: 10, node: plate.label('pc', lang === 'de' ? 'Stufe' : 'stage') })
     head(i, 'labels by the placer', 'page text; nothing touches')
   }
 
@@ -163,12 +163,15 @@ function draw(): void {
   {
     const i = framing === 'wide' ? 8 : 8, b = body(i)
     const row = document.createElement('div')
-    row.style.cssText = `position:absolute; left:${b.l}px; top:${b.t}px; width:${Math.min(b.r - b.l, 560)}px; color: var(--paper-ink)`
+    // upright, the row takes the page's width, as a feature's band gives it
+    const rowW = framing === 'wide' ? Math.min(b.r - b.l, 560) : W - 2 * pad - 8
+    row.style.cssText = `position:absolute; left:${b.l}px; top:${b.t}px; width:${rowW}px; color: var(--paper-ink)`
     steps?.dispose()
     steps = createPaperSteps({
       doc: document, reducedMotion: matchMedia('(prefers-reduced-motion: reduce)').matches, dir,
-      steps: [{ id: 'a', name: lang === 'de' ? 'nicht bekannt' : 'not known' }, { id: 'b', name: lang === 'de' ? 'etwa 66 m' : 'about 66 m' },
-        { id: 'c', name: lang === 'de' ? 'etwa 90 m' : 'about 90 m' }, { id: 'd', name: lang === 'de' ? 'nicht bekannt' : 'not known' }],
+      // upright, three steps: one row of names fits the sheet's last tile
+      steps: [{ id: 'a', name: lang === 'de' ? 'nicht bekannt' : 'not known' }, { id: 'b', name: lang === 'de' ? 'etwa 66\u00a0m' : 'about 66\u00a0m' },
+        { id: 'c', name: lang === 'de' ? 'etwa 90\u00a0m' : 'about 90\u00a0m' }, { id: 'd', name: lang === 'de' ? 'nicht bekannt' : 'not known' }].slice(0, framing === 'wide' ? 4 : 3),
       words: { play: lang === 'de' ? 'Abspielen' : 'Play', pause: 'Pause', track: 'steps', between: (a, c) => `${a} / ${c}` },
       onMove: () => undefined,
     })
