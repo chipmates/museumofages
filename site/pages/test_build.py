@@ -4295,12 +4295,21 @@ class LastYears(unittest.TestCase):
                 checked.append(lang)
         self.assertTrue({"en", "de"} <= set(checked) and len(checked) == len(table["BUILT"]), checked)
 
-    def test_the_wing_pages_supper_still_credits_the_photograph_with_both_links_in_every_language(self):
-        # the court's still shows the Last Supper photograph on its wall: its credit is given as parts (a room's plate,
-        # written through render.credit), so it names the photographer, links the licence and the photograph's file
-        # page of the still's plate record, and ends on the Italian code's line filled in, in every built language
+    def test_the_wing_pages_supper_still_credits_the_scan_with_its_one_link_in_every_language(self):
+        # the court's still shows the public domain scan of the Last Supper on its wall, as the wing's record names it:
+        # its credit (a room's plate, written through render.credit) links the scan's file page of the still's plate
+        # record and nothing else, and is the second tier's line with the Italian code's line, in every built language
+        scan = "https://commons.wikimedia.org/wiki/File:Last_Supper_by_Leonardo_da_Vinci.jpg"
         plate = next(p for p in json.loads((HERE / "pictures.json").read_text(encoding="utf-8"))["plates"]
                      if p["name"] == "v-supper")
+        self.assertEqual((plate["record"], plate["source"], plate["licence_url"], plate["tier"], plate["it108"]),
+                         ("vinci/painting-plate/last-supper", scan, None, "TIER2", True))
+        audit = HERE.parent.parent / "museum/src/wings/vinci/pictures/data/store-audit.json"
+        if audit.is_file():
+            record = next(r for r in json.loads(audit.read_text(encoding="utf-8"))["records"] if r["id"] == plate["record"])
+            self.assertEqual((record["source_url"], "wing-vinci/" + record["path"], record["sha256"], record["licence"]),
+                             (scan, plate["file"], plate["sha256"], "Public domain"))
+        tier2 = _pages_build().TIER_LINE["TIER2"]
         table = json.loads((SITE_SRC / "languages.json").read_text(encoding="utf-8"))
         texts = json.loads((SITE_SRC / "museum-texts.json").read_text(encoding="utf-8"))
         lib = _buildlib()
@@ -4313,13 +4322,15 @@ class LastYears(unittest.TestCase):
                 figure = text[text.index("/v-supper-"):]
                 body = re.search(r'<span class="label__src">(.*?)</span></figcaption>', figure[:figure.index("</figure>")],
                                  flags=re.S).group(1)
-                self.assertEqual(re.findall(r'<a href="([^"]+)"><span>[^<]+</span></a>', body), [plate["licence_url"], plate["source"]])
-                self.assertEqual(len(re.findall(r"<a\b", body)), 2)
+                self.assertEqual(re.findall(r'<a href="([^"]+)"><span>[^<]+</span></a>', body), [scan])
+                self.assertEqual(len(re.findall(r"<a\b", body)), 1)
                 self.assertNotIn("{museum:", body)
                 line = plain(html.unescape(re.sub(r"<[^>]+>", "", body)))
-                self.assertIn("Mariordo (Mario Roberto Duran Ortiz), 2024, CC BY-SA 4.0. ", line)
                 museum = texts[lang] if lang in texts else json.loads((SITE_SRC / f"museum-texts.{lang}.json").read_text(encoding="utf-8"))
-                self.assertTrue(line.endswith(plain(lib.space(museum["it108"], lang))), line)
+                said, source, label, use = tier2[lang]
+                self.assertEqual(line, plain(lib.space(f"{said} {source}Wikimedia Commons. {label} {use} {museum['it108']}", lang)))
+                self.assertNotIn("Mariordo", line)
+                self.assertNotIn("CC BY-SA", line)
                 checked.append(lang)
         self.assertTrue({"en", "de"} <= set(checked) and len(checked) == len(table["BUILT"]), checked)
 
