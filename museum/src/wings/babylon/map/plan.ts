@@ -291,10 +291,18 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
         const d = norm(sub(kl[1]!, kl[0]!))
         const e: P2[] = [sub(kl[0]!, mul(d, i > 0 ? c.karu.thick / 2 + 30 : 0)), add(kl[1]!, mul(d, i + 2 < line.length ? c.karu.thick / 2 + 30 : 0))]
         pushWall(`${c.id}-karu-${i}`, `${c.name}, embankment`, e, c.karu.thick, -5, c.karu.top + lift, { plan: cls.plan, height: 'R' })
+        if (c.karu.walk) {
+          // the moat wall at the embankment's foot, its top the walkway; it laps 0.3 m into the embankment
+          const W = c.karu.walk
+          const wl = offsetLine(seg, out * (c.karu.offset + c.karu.thick / 2 + W.thick / 2 - 0.3))
+          const dw = norm(sub(wl[1]!, wl[0]!))
+          const ew: P2[] = [sub(wl[0]!, mul(dw, i > 0 ? W.thick / 2 + 30 : 0)), add(wl[1]!, mul(dw, i + 2 < line.length ? W.thick / 2 + 30 : 0))]
+          pushWall(`${c.id}-walk-${i}`, `${c.name}, moat wall and walkway`, ew, W.thick, -5, W.top + lift, { plan: cls.plan, height: 'R' })
+        }
       }
     }
     // the moat: from just outside the embankment to 80 m beyond it, the whole run in one strip
-    const m0 = (c.karu ? c.karu.offset + c.karu.thick / 2 : (c.front ? c.front.offset + c.front.thick / 2 : c.main.thick / 2)) + plan.moat.gap
+    const m0 = (c.karu ? c.karu.offset + c.karu.thick / 2 + (c.karu.walk ? c.karu.walk.thick - 0.3 : 0) : (c.front ? c.front.offset + c.front.thick / 2 : c.main.thick / 2)) + plan.moat.gap
     let run = line
     if (c.moatSkip) {
       const d = norm(sub(line[1]!, line[0]!))

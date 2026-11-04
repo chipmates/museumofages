@@ -329,23 +329,79 @@
    "level": -1.0,
    "plan": "R",
    "height": "G",
-   "src": "C6.2 and E2.2: the band between the palace's north wall (N 3601086) and the wall at N 3601157; the street crossed it on a dam (K1918 p. 5); the north wall stood next to the water-filled moat (P2021 Fig. 3.23)",
+   "src": "E2.2 and C6.2: 76 m from the North Palace's face (N 3601080) to the counter wall (N 3601156.1), almost east to west; the street crossed it on a dam (K1918 p. 5); the north wall stood next to the water-filled moat (P2021 Fig. 3.23)",
    "poly": [
     [
      445458,
-     3601088
+     3601080
     ],
     [
-     445700,
-     3601088
+     445709.84,
+     3601080.0
     ],
     [
-     445708,
-     3601155
+     445694.99,
+     3601156.1
     ],
     [
      445458,
-     3601155
+     3601156.1
+    ]
+   ]
+  },
+  {
+   "id": "canal-north",
+   "name": "the North Palace's inner canal",
+   "level": -3.0,
+   "plan": "R",
+   "height": "G",
+   "src": "S3.45: 13.0 m between N 3600991.1 and 3601004.1, dug in its east part, the west and middle never excavated (P2021 p. 118, K1914 ch. XXVI); led from the Euphrates; the water about -3 (P2021 p. 115; Koldewey about 0)",
+   "poly": [
+    [
+     445452,
+     3600991.1
+    ],
+    [
+     445715,
+     3600991.1
+    ],
+    [
+     445715,
+     3601004.1
+    ],
+    [
+     445452,
+     3601004.1
+    ]
+   ]
+  },
+  {
+   "id": "moat-east",
+   "name": "the moat east of the dam",
+   "level": -1.0,
+   "plan": "G",
+   "height": "G",
+   "src": "E2.2: a band about 72 m wide beyond the East Fortification's outer wall, its outer edge the thin line from 445729, 3601152 to 445992, 3601306, read as the moat's edge (walls sheet 1.3, edge guessed); the moat 'we have also to surmise in front of the eastern wall' (K1914 ch. XXVIII)",
+   "poly": [
+    [
+     445741.16,
+     3601086.41
+    ],
+    [
+     445952.16,
+     3601192.41
+    ],
+    [
+     446040.2,
+     3601205
+    ],
+    [
+     445992,
+     3601306
+    ],
+    [
+     445729,
+     3601152
     ]
    ]
   }
@@ -376,13 +432,13 @@
    },
    {
     "at": [
-     445710,
+     445703.1,
      3601200
     ],
     "level": 7.5,
     "w": 20,
     "cls": "R",
-    "note": "the dam over the moat (K1918 p. 5)"
+    "note": "the dam over the moat (K1918 p. 5); its axis on E2.2"
    },
    {
     "at": [
@@ -426,20 +482,48 @@
    },
    {
     "at": [
-     445806,
+     445813.9,
+     3600730
+    ],
+    "level": 14.4,
+    "w": 10,
+    "cls": "R",
+    "note": "along the palace's east front, 10 m wide (K1918 p. 8); its centre line on S3.45"
+   },
+   {
+    "at": [
+     445817.4,
      3600720
     ],
     "level": 14.2,
     "w": 10,
-    "cls": "R",
-    "note": "along the palace's east front, 10 m wide (K1918 p. 8)"
+    "cls": "R"
    },
    {
     "at": [
-     445833,
-     3600620
+     445825.7,
+     3600690
     ],
-    "level": 13.0,
+    "level": 13.84,
+    "w": 10,
+    "cls": "R",
+    "note": "bent away from the palace's main door (P2021 p. 222; S3.45)"
+   },
+   {
+    "at": [
+     445832.9,
+     3600650
+    ],
+    "level": 13.36,
+    "w": 10,
+    "cls": "R"
+   },
+   {
+    "at": [
+     445837.3,
+     3600625
+    ],
+    "level": 13.06,
     "w": 10,
     "cls": "R",
     "note": "palace south-east corner, about +13 (P2021 Fig. 5.13)"
@@ -806,26 +890,79 @@
   },
   {
    "id": "north-gate",
-   "name": "the North Gate",
-   "rect": {
-    "c": [
-     445735,
-     3601035
-    ],
-    "along": 30,
-    "across": 36,
-    "bearing": 348.4
-   },
+   "name": "the North Gate, south cross wall",
+   "in": "lion",
+   "local": [
+    178.5,
+    181.8,
+    -21.9,
+    22.3
+   ],
    "base": 0,
+   "plan": "M",
+   "height": "G",
    "top": 19.5,
    "door": {
     "w": 4.6,
     "h": 9
    },
+   "src": "C6.2 (walls sheet 8.2): a gate court with two cross walls at a 178.5 to 181.8 and 208.2 to 212.0, 33.5 m over all and 44.2 m across, the court 30.2 m clear; found 1981, about 30 m long (P2021 p. 230 to 231); door ours (4.6 m in Pedersén's model)",
+   "hsrc": "12 m over its +7.5 street, ours"
+  },
+  {
+   "id": "north-gate-north",
+   "name": "the North Gate, north cross wall",
+   "in": "lion",
+   "local": [
+    208.2,
+    212.0,
+    -21.9,
+    22.3
+   ],
+   "base": 0,
    "plan": "M",
    "height": "G",
-   "src": "about 30 m long, 4.6 m door, found 1981 (P2021 p. 80, 230 to 231)",
-   "hsrc": "12 m over its +7.5 street, ours"
+   "top": 19.5,
+   "door": {
+    "w": 4.6,
+    "h": 9
+   },
+   "src": "as the south cross wall",
+   "hsrc": "as above"
+  },
+  {
+   "id": "north-gate-side-w",
+   "name": "the North Gate court's west wall",
+   "in": "lion",
+   "local": [
+    181.3,
+    208.7,
+    -21.85,
+    -14.9
+   ],
+   "base": 0,
+   "plan": "M",
+   "height": "G",
+   "top": 18.5,
+   "src": "C6.2: 7 m side walls, street faces at c -14.9 and +15.3 (walls sheet 1.2)",
+   "hsrc": "11 m over the street, ours"
+  },
+  {
+   "id": "north-gate-side-e",
+   "name": "the North Gate court's east wall",
+   "in": "lion",
+   "local": [
+    181.3,
+    208.7,
+    15.3,
+    22.25
+   ],
+   "base": 0,
+   "plan": "M",
+   "height": "G",
+   "top": 18.5,
+   "src": "as the west wall",
+   "hsrc": "as above"
   },
   {
    "id": "south-palace",
@@ -962,19 +1099,19 @@
    "name": "the throne room",
    "poly": [
     [
-     445627.6,
+     445630.9,
      3600635.5
     ],
     [
-     445691.5,
+     445688.4,
      3600635.5
     ],
     [
-     445691.5,
+     445688.4,
      3600665
     ],
     [
-     445627.6,
+     445630.9,
      3600665
     ]
    ],
@@ -984,15 +1121,15 @@
     "side": "north",
     "doors": [
      [
-      -17,
+      -22.05,
       3.8
      ],
      [
-      0,
-      5.8
+      -0.8,
+      5.75
      ],
      [
-      17,
+      20.55,
       3.8
      ]
     ],
@@ -1000,39 +1137,35 @@
    },
    "plan": "M",
    "height": "G",
-   "src": "room 51.9 x 17.5 m, long walls 6 m, three doors 3.8, 5.8, 3.8 m (P2021 p. 103 to 105); on its place in C6.2",
-   "hsrc": "the facade's height and roof are guessed (P2021 p. 106); door places along the wall ours"
+   "src": "S3.45: the outer block 57.5 m long (29.6 m deep on the sheet, 29.5 m by P2021's room and walls, kept), end walls 2.8 m (P2021 p. 106); room 51.9 x 17.5 m, long walls 6 m, three doors 3.8, 5.8, 3.8 m (P2021 p. 103 to 105), their places on S3.45",
+   "hsrc": "the facade's height and roof are guessed (P2021 p. 106)"
   },
   {
    "id": "north-palace-terrace",
    "name": "the North Palace terrace",
    "poly": [
     [
-     445452,
-     3600790
+     445522.8,
+     3600809.46
     ],
     [
      445714,
      3600862
     ],
     [
-     445722,
-     3601010
+     445719.59,
+     3600965.5
     ],
     [
-     445718,
-     3601086
-    ],
-    [
-     445452,
-     3601086
+     445522.8,
+     3600965.5
     ]
    ],
    "base": 0,
    "top": 15.0,
    "plan": "R",
    "height": "R",
-   "src": "C6.2: between the inner walls and the north wall; the borders not fully dug (P2021 p. 114)",
+   "src": "C6.2, S3.45: from the inner walls north to the building's north face; terrace sections run on 22 m north and 48 m west of the building (P2021 p. 117), drawn as the gardens candidate's steps; the borders not fully dug (P2021 p. 114)",
    "hsrc": "main terrace +15 (P2021 p. 118)"
   },
   {
@@ -1040,141 +1173,232 @@
    "name": "the North Palace's main building",
    "poly": [
     [
-     445505,
-     3600870
+     445522.8,
+     3600838.7
     ],
     [
-     445635,
-     3600870
+     445657.5,
+     3600838.7
     ],
     [
-     445635,
-     3600965
+     445657.5,
+     3600965.5
     ],
     [
-     445505,
-     3600965
+     445522.8,
+     3600965.5
     ]
    ],
    "base": 15.0,
    "top": 20.0,
    "plan": "M",
    "height": "G",
-   "src": "C6.2 (green with orange cores on X1.4)",
-   "hsrc": "its first step, 5 m over the main terrace, ours; the steps above it are the gardens question's guessed terraces"
+   "src": "S3.45: 134.7 x 126.8 m (P2021 p. 114: some 134 x 130 m, centre 445590, 3600900); green with orange cores on X1.4",
+   "hsrc": "the main floor at +15 (P2021 p. 118); its walls 5 m over it, ours"
   },
   {
-   "id": "gardens-step-2",
-   "name": "the gardens question, terrace step 2",
+   "id": "gardens-edge-1",
+   "name": "the gardens question, edge terrace at +13",
    "poly": [
     [
-     445517,
-     3600882
+     445510.8,
+     3600806.16
     ],
     [
-     445623,
-     3600882
+     445523.3,
+     3600809.59
     ],
     [
-     445623,
-     3600953
+     445523.3,
+     3600965.0
     ],
     [
-     445517,
-     3600953
+     445719.57,
+     3600965.0
+    ],
+    [
+     445719.89,
+     3600971.0
+    ],
+    [
+     445510.8,
+     3600971.0
     ]
    ],
-   "base": 20.0,
-   "top": 25.0,
+   "base": 0,
+   "top": 13.0,
    "plan": "G",
    "height": "G",
-   "src": "the gardens question as one candidate: the North Palace's terraces (gigunatu) and its large top building in the king's texts (P2021 p. 122), the palace Berossus names for the terraces (P2021 p. 123 to 124); stepped here as a guess, about 20 m over the main terrace in four steps (Diodorus' 50 cubits, about 23 m, P2021 p. 124); no plants (grey sketch)",
-   "hsrc": "ours, inside Diodorus' height"
+   "src": "the gardens question as one candidate: Pedersén's tentative terraces stepping down from +15 on the North Palace's north and west edges toward the canal (P2021 p. 126, Fig. 3.23, 3.32: 'only preliminary attempts'), on the terrace sections 22 m north and 48 m west of the building (P2021 p. 117); the texts' terraces (gigunatu, P2021 p. 122) and Berossus' palace (P2021 p. 123 to 124); no plants (grey sketch)",
+   "hsrc": "Pedersén's model levels +15, +13, +11, +8, +4 (P2021 p. 118); the steps' widths ours"
   },
   {
-   "id": "gardens-step-3",
-   "name": "the gardens question, terrace step 3",
+   "id": "gardens-edge-2",
+   "name": "the gardens question, edge terrace at +11",
    "poly": [
     [
-     445529,
-     3600894
+     445498.8,
+     3600802.86
     ],
     [
-     445611,
-     3600894
+     445511.3,
+     3600806.3
     ],
     [
-     445611,
-     3600941
+     445511.3,
+     3600970.5
     ],
     [
-     445529,
-     3600941
+     445719.86,
+     3600970.5
+    ],
+    [
+     445720.19,
+     3600976.5
+    ],
+    [
+     445498.8,
+     3600976.5
     ]
    ],
-   "base": 25.0,
-   "top": 30.0,
+   "base": 0,
+   "top": 11.0,
    "plan": "G",
    "height": "G",
-   "src": "the gardens question as one candidate: the North Palace's terraces (gigunatu) and its large top building in the king's texts (P2021 p. 122), the palace Berossus names for the terraces (P2021 p. 123 to 124); stepped here as a guess, about 20 m over the main terrace in four steps (Diodorus' 50 cubits, about 23 m, P2021 p. 124); no plants (grey sketch)",
-   "hsrc": "ours, inside Diodorus' height"
+   "src": "the gardens question as one candidate: Pedersén's tentative terraces stepping down from +15 on the North Palace's north and west edges toward the canal (P2021 p. 126, Fig. 3.23, 3.32: 'only preliminary attempts'), on the terrace sections 22 m north and 48 m west of the building (P2021 p. 117); the texts' terraces (gigunatu, P2021 p. 122) and Berossus' palace (P2021 p. 123 to 124); no plants (grey sketch)",
+   "hsrc": "Pedersén's model levels +15, +13, +11, +8, +4 (P2021 p. 118); the steps' widths ours"
   },
   {
-   "id": "gardens-step-4",
-   "name": "the gardens question, terrace step 4",
+   "id": "gardens-edge-3",
+   "name": "the gardens question, edge terrace at +8",
    "poly": [
     [
-     445541,
-     3600906
+     445486.8,
+     3600799.56
     ],
     [
-     445599,
-     3600906
+     445499.3,
+     3600803.0
     ],
     [
-     445599,
-     3600929
+     445499.3,
+     3600976.0
     ],
     [
-     445541,
-     3600929
+     445720.16,
+     3600976.0
+    ],
+    [
+     445720.49,
+     3600982.0
+    ],
+    [
+     445486.8,
+     3600982.0
     ]
    ],
-   "base": 30.0,
-   "top": 35.0,
+   "base": 0,
+   "top": 8.0,
    "plan": "G",
    "height": "G",
-   "src": "the gardens question as one candidate: the North Palace's terraces (gigunatu) and its large top building in the king's texts (P2021 p. 122), the palace Berossus names for the terraces (P2021 p. 123 to 124); stepped here as a guess, about 20 m over the main terrace in four steps (Diodorus' 50 cubits, about 23 m, P2021 p. 124); no plants (grey sketch)",
-   "hsrc": "ours, inside Diodorus' height"
+   "src": "the gardens question as one candidate: Pedersén's tentative terraces stepping down from +15 on the North Palace's north and west edges toward the canal (P2021 p. 126, Fig. 3.23, 3.32: 'only preliminary attempts'), on the terrace sections 22 m north and 48 m west of the building (P2021 p. 117); the texts' terraces (gigunatu, P2021 p. 122) and Berossus' palace (P2021 p. 123 to 124); no plants (grey sketch)",
+   "hsrc": "Pedersén's model levels +15, +13, +11, +8, +4 (P2021 p. 118); the steps' widths ours"
+  },
+  {
+   "id": "gardens-edge-4",
+   "name": "the gardens question, edge terrace at +4",
+   "poly": [
+    [
+     445474.8,
+     3600796.27
+    ],
+    [
+     445487.3,
+     3600799.7
+    ],
+    [
+     445487.3,
+     3600981.5
+    ],
+    [
+     445720.46,
+     3600981.5
+    ],
+    [
+     445720.78,
+     3600987.5
+    ],
+    [
+     445474.8,
+     3600987.5
+    ]
+   ],
+   "base": 0,
+   "top": 4.0,
+   "plan": "G",
+   "height": "G",
+   "src": "the gardens question as one candidate: Pedersén's tentative terraces stepping down from +15 on the North Palace's north and west edges toward the canal (P2021 p. 126, Fig. 3.23, 3.32: 'only preliminary attempts'), on the terrace sections 22 m north and 48 m west of the building (P2021 p. 117); the texts' terraces (gigunatu, P2021 p. 122) and Berossus' palace (P2021 p. 123 to 124); no plants (grey sketch)",
+   "hsrc": "Pedersén's model levels +15, +13, +11, +8, +4 (P2021 p. 118); the steps' widths ours"
   },
   {
    "id": "north-fortification",
-   "name": "the North Palace's north part on the moat",
+   "name": "the North Fortification behind the north wall",
    "poly": [
     [
      445452,
-     3601012
+     3601016
     ],
     [
      445718,
-     3601012
+     3601016
     ],
     [
      445718,
-     3601086
+     3601064
     ],
     [
      445452,
-     3601086
+     3601064
     ]
    ],
    "base": 15.0,
    "top": 21.0,
-   "limestone": true,
    "plan": "M",
    "height": "G",
-   "src": "C6.2 and E2.2; its north wall faced the moat with a limestone foot and water inlets (P2021 p. 47, 114, 119)",
-   "hsrc": "ours"
+   "src": "S3.45: between the wall at about N 3601016 to 3601020 and the north wall; no building remains found (P2021 p. 130)",
+   "hsrc": "its level not found (P2021 p. 130); +15 to +21 ours"
+  },
+  {
+   "id": "north-wall",
+   "name": "the North Palace's north wall on the moat",
+   "poly": [
+    [
+     445451.5,
+     3601063
+    ],
+    [
+     445718.5,
+     3601063
+    ],
+    [
+     445718.5,
+     3601080.6
+    ],
+    [
+     445451.5,
+     3601080.6
+    ]
+   ],
+   "base": -5.0,
+   "top": 18.0,
+   "stone": {
+    "to": 0.5,
+    "says": "limestone blocks only to about +0.5, baked brick above (P2021 p. 116)"
+   },
+   "plan": "M",
+   "height": "G",
+   "src": "S3.45, C6.2, E2.2: its face at N 3601080.6; 17.5 m of baked brick, later strengthened (P2021 p. 70); the limestone face with water inlets (P2021 p. 47, 116 to 119)",
+   "hsrc": "from about -5.0 to +18, reconstructed (P2021 p. 70, 116)"
   },
   {
    "id": "west-outwork",
@@ -1210,27 +1434,61 @@
    "poly": [
     [
      445458,
-     3601155
+     3601156.1
     ],
     [
-     445704,
-     3601155
+     445694.48,
+     3601156.1
     ],
     [
-     445705,
-     3601163
+     445693.92,
+     3601159.0
     ],
     [
      445458,
-     3601163
+     3601159.0
     ]
    ],
    "base": -2.0,
    "top": 6.0,
    "plan": "R",
    "height": "G",
-   "src": "E2.2, drawn",
+   "src": "E2.2: lines at N 3601156.1 and 3601159.0, about 3 m (walls sheet 1.3)",
    "hsrc": "ours"
+  },
+  {
+   "id": "dam-wall-w",
+   "name": "the dam's west flank and its sloping wall",
+   "in": "lion",
+   "local": [
+    242,
+    325,
+    -17.8,
+    -9.8
+   ],
+   "base": -5.0,
+   "top": 7.4,
+   "plan": "M",
+   "height": "G",
+   "src": "E2.2 and C6.2: the dam over the moat, its walls' outer faces at c -17.8 and +18.6 (about 36 m over all); the west wall dug, biting into the earth with short buttresses (K1914 ch. XXVIII; K1918 p. 5); the fill to the street's edge drawn with it",
+   "hsrc": "the crest at the +7.5 street (P2021 p. 228); the walls' tops ours"
+  },
+  {
+   "id": "dam-wall-e",
+   "name": "the dam's east flank and its sloping wall",
+   "in": "lion",
+   "local": [
+    236.5,
+    319,
+    9.8,
+    18.6
+   ],
+   "base": -5.0,
+   "top": 7.4,
+   "plan": "R",
+   "height": "G",
+   "src": "as the west flank; the east wall drawn, not dug",
+   "hsrc": "as above"
   },
   {
    "id": "ninmah",
@@ -2025,46 +2283,46 @@
   },
   {
    "id": "east-fortification",
-   "name": "the East Fortification's north wall",
+   "name": "the East Fortification's inner wall",
    "line": [
     [
      445760,
-     3601017
+     3601013.95
     ],
     [
      445985,
-     3601144
+     3601140.95
     ],
     [
      446083,
      3601112
     ]
    ],
-   "thick": 6,
+   "thick": 10.7,
    "top": 14.0,
    "plan": "R",
    "height": "G",
-   "src": "C6.2 and E2.2, drawn",
+   "src": "E2.2 (walls sheet 1.3): faces at N 3601058.6 and 3601070.9 at E 445850, about 10 m thick, at about 61 degrees; drawn",
    "hsrc": "ours"
   },
   {
-   "id": "east-fortification-2",
-   "name": "the wall north of the East Fortification",
+   "id": "east-fortification-outer",
+   "name": "the East Fortification's outer wall",
    "line": [
     [
-     445741,
-     3601175
+     445743,
+     3601082.75
     ],
     [
-     445953,
-     3601283
+     445954,
+     3601188.75
     ]
    ],
-   "thick": 5,
-   "top": 12.0,
+   "thick": 10.2,
+   "top": 14.0,
    "plan": "R",
    "height": "G",
-   "src": "E2.2, drawn",
+   "src": "E2.2 (walls sheet 1.3, 8.3): faces at N 3601130.8 and 3601142.2 at E 445850, about 10 m, from about 445743, 3601088 to 445954, 3601194; towered on the sheet, its towers not drawn here",
    "hsrc": "ours"
   },
   {
@@ -2392,9 +2650,13 @@
     }
    },
    "karu": {
-    "offset": 22,
-    "thick": 8,
-    "top": 4.0
+    "offset": 19.4,
+    "thick": 7.8,
+    "top": 8.0,
+    "walk": {
+     "thick": 3.3,
+     "top": 2.0
+    }
    },
    "segments": [
     {
@@ -2423,7 +2685,7 @@
     }
    ],
    "height": "R",
-   "hsrc": "13 m plus 2 m of battlements (P2021 p. 60); towers 8.37 m wide about 52.5 m apart (K1914 ch. I)"
+   "hsrc": "13 m plus 2 m of battlements (P2021 p. 60); towers 8.37 m wide about 52.5 m apart (K1914 ch. I); the embankment a 7.8 m brick wall about 12 m in front with a 3.3 m moat wall at its foot, the walkway at about +2.0, the top reconstructed at +8.0 (P2021 p. 63; K1914 ch. I)"
   },
   {
    "id": "west-city",

@@ -264,7 +264,9 @@ export function measure(plan, cams, { buildPlan, makeFrame }) {
     row('D2', 'the inner canal: width', cn ? atE(cn.utm, 445600, Math.max) - atE(cn.utm, 445600, Math.min) : NaN, 13.0, 0.5, 'abs', 'P2021 p. 118, K1914 ch. XXVI: 13 m')
     row('D2', 'the inner canal: water level', cn ? cn.level : NaN, -3, 0.01, 'ge', 'P2021 p. 115: about -3 (Koldewey about 0); range -3 to 0')
     const gd = prisms(/^gardens/)
-    row('D2', 'gardens bodies standing on the dug main building', m ? gd.filter((g) => inPoly(g.utm.reduce((s, p) => [s[0] + p[0] / g.utm.length, s[1] + p[1] / g.utm.length], [0, 0]), m.utm)).length : NaN, 0, 0, 'abs', 'PALACE 4.3: the steps over the building fill dug courts', 'count')
+    // a 6 x 6 grid over the building, 1 m inside its edges: a body over any of it stands on the building (a lap does not)
+    const grid = m ? Array.from({ length: 36 }, (_, k) => [ex[0] + 1 + ((ex[1] - ex[0] - 2) * (k % 6)) / 5, ex[2] + 1 + ((ex[3] - ex[2] - 2) * Math.floor(k / 6)) / 5]) : []
+    row('D2', 'gardens bodies standing on the dug main building', m ? gd.filter((g) => grid.some((q) => inPoly(q, g.utm))).length : NaN, 0, 0, 'abs', 'PALACE 4.3: the steps over the building fill dug courts', 'count')
     row('D2', "gardens bodies on the building's north or west edge", gd.filter((g) => g.utm.every((p) => p[1] >= 3600965 - 0.5 || p[0] <= 445523 + 0.5)).length, 1, 0, 'ge', 'PALACE 4.3 option 1, 8.5: Pedersén\'s edge terraces (G(T))', 'count')
     row('D2', 'gardens bodies not classed guessed', gd.filter((g) => g.plan !== 'G' || g.height !== 'G').length, 0, 0, 'abs', 'PALACE 8.5', 'count')
   }
