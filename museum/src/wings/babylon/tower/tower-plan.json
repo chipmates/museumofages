@@ -141,5 +141,51 @@
    "bottom": 0.04
   },
   "src": "the stop's one press, named by what it shows and never 'Learn more' (the words are the writer's); it stands clear of the tower in both framings, on the court at the lower right of the wide frame and on the cross street under the tower in the upright one, so the frame at rest keeps far more than two thirds picture"
+ },
+ "dug": {
+  "about": "the switch's second state: the tower as excavated, not the state of 570 BC (bab.tower.ruin, In place, not of the date); the precinct round it stays as it was about 570 BC",
+  "region": [
+   -140,
+   22,
+   286,
+   478
+  ],
+  "lattice": 6,
+  "step": 0.75,
+  "core": {
+   "half": 30,
+   "top": [
+    2.0,
+    2.5
+   ],
+   "slope": 3.5,
+   "src": "a core of unbaked mud brick about 60 by 60 m, its top today about +2.0 to +2.5 (P2021 p. 155); its eroded sides' slope ours"
+  },
+  "trench": {
+   "floor": -4.0,
+   "debris": 0.8,
+   "bankFoot": 43,
+   "bankTop": 47.0,
+   "src": "the mantle about 15 m thick, founded at -4.0 (P2021 p. 155), robbed for its bricks from 1886, leaving a deep cut round the core (P2021 p. 153; K1914 ch. XXX): the floor at the mantle's foundation, the banks' slope and the debris on the floor ours"
+  },
+  "water": {
+   "level": -1.2,
+   "src": "the cut is often water-filled (P2021 p. 153, fig. 4.14 caption): its level and its look ours"
+  },
+  "stairs": {
+   "proud": 0.04,
+   "band": [
+    48.0,
+    53.4
+   ],
+   "halfSpan": 47.65,
+   "middle": {
+    "w": 10.2,
+    "clear": 6.2,
+    "foot": 105.3
+   },
+   "src": "the three stairs' foundations as dug: the middle stair's two walls to its foot 105.3 m from the centre, the side stairs' band 45.6 to 53.4 m from the centre, the west foot 1.9 m beyond the tower (P2021 p. 156); drawn as their walls' tops just proud of the ground, the band's part over the robbers' bank left out; their level as dug is not given, ours"
+  },
+  "look": "the photograph of the ruin today (Verburg 2012, CC0) for the look only, never as a texture"
  }
 }

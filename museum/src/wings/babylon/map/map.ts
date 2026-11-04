@@ -5,7 +5,8 @@
 
      ?view=classes   each body's record classes (in place, known, guessed) in three tones: its plan row in a
                      band at its foot, its body row above (record.ts), at the stop the camera is at
-     ?tower=base     Etemenanki's excavated base only
+     ?tower=built|dug|bruegel   the tower switch: Etemenanki as the record reads it, as excavated, or Bruegel's painted
+                     tower, at one camera and one light; the rest of the scene unchanged (apart from ?view)
      ?ao=0           no contact occlusion; ?aofade=250,900 where it fades out (m)
      ?garden=bare    stop 5's terraces without their planting; ?garden=dug without the guessed terraces too
      ?put=<url>      where the rig hands its files (the shooter's own server) */
@@ -29,7 +30,7 @@ import { toneMapBodies, type Painted } from '../record-tones'
 import { hourOf, sunAt, sunVector } from './sun'
 import { makePath, type PathSample, type V3 } from './path'
 import { mountCourt } from '../court/court'
-import { mountTower } from '../tower/tower'
+import { mountTower, towerState, type TowerState } from '../tower/tower'
 import { mountGardens, type GardenState } from '../gardens/gardens'
 import { palmGeometry } from '../gate/gate-life'
 import { mountNabu } from '../nabu/nabu'
@@ -61,7 +62,6 @@ const [plan, cams, pieces, recordClasses, courtPlan, towerPlan, gardensPlan, nab
   fetch(new URL('../nabu/nabu-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../house/house-plan.json', import.meta.url)).then((r) => r.json()),
 ])
-if (q.get('tower') === 'base') plan.tower.stages = plan.tower.stages.slice(0, 1)
 const F = makeFrame(plan)
 const t0 = performance.now()
 const tones = tonesFrom(plan)
@@ -118,7 +118,7 @@ const skyColour = (d: N): N => {
   return mix(uHaze, above, smoothstep(0.0, 0.12, d.y)).add(sun)
 }
 const sky: Sky = { colour: skyColour }
-tower.sky(sky)
+tower.sky(sky, uSun)
 const skyDome = (() => {
   const m = new MeshBasicNodeMaterial({ side: BackSide, depthWrite: false })
   m.colorNode = skyColour(normalize(positionLocal))
@@ -149,7 +149,9 @@ const gateFrame = plan.frames.gate
 const bodies = buildBodies(built, tones, sky, uSun, canalZ, { o: F.s(gateFrame.origin[0], gateFrame.origin[1]), a: F.dir(gateFrame.bearing), c: F.dir(gateFrame.bearing + 90), len: 50, half: 2.6 }, { ground: tower.ground })
 scene.add(bodies.group)
 scene.add(court.mesh)
-scene.add(tower.mesh, tower.towerMesh)
+scene.add(tower.mesh, tower.towerMesh, ...tower.dugMeshes)
+tower.attachGround(bodies.group.getObjectByName('ground') as Mesh)
+tower.state(towerState(q.get('tower')))
 scene.add(...gardens.meshes)
 scene.add(nabu.mesh)
 scene.add(house.mesh)
@@ -373,7 +375,7 @@ function stillTime(stop: number): number {
 
 const rig = {
   ready: true,
-  state: () => ({ planMs, counts: bodies.counts, backend: stack.backend, architecture: stack.architecture, view: uView.value, tower: q.get('tower') ?? 'full', duration: path.duration, record: { stop: tonedAt, ms: recordMs, ...painted } }),
+  state: () => ({ planMs, counts: bodies.counts, backend: stack.backend, architecture: stack.architecture, view: uView.value, tower: tower.current(), duration: path.duration, record: { stop: tonedAt, ms: recordMs, ...painted } }),
   views: () => ({
     frame: plan.frame,
     stops: cams.stops.map((s: J) => ({ n: s.n, id: s.id, hour: s.hour, still: stillTime(s.n) })),
@@ -388,6 +390,8 @@ const rig = {
   },
   /** stop 5's garden: planted, its terraces bare, or the dug plans only */
   garden: (state: GardenState) => gardens.setGarden(state),
+  /** the tower switch: built, dug or bruegel */
+  tower: (s: TowerState) => tower.state(towerState(s)),
   /** a still of one stop: the film's own frame at the stop's still second, full size, either framing */
   async shoot(o: { stop: number; framing: 'desktop' | 'phone'; view: 'grey' | 'classes'; w: number; h: number; samples: number; out: string; name?: string; css?: [number, number]; t?: number; garden?: GardenState }) {
     const s = cams.stops.find((x: J) => x.n === o.stop)
@@ -403,7 +407,7 @@ const rig = {
     await upload(file, await toPNG(bytes, o.w, o.h))
     const sun = sunAt(p.hour)
     const side = {
-      file, stop: s.n, id: s.id, framing: o.framing, view: o.view, filmSecond: +time.toFixed(3), filmFrameAt8fps: Math.round(time * 8),
+      file, stop: s.n, id: s.id, framing: o.framing, view: o.view, tower: tower.current(), filmSecond: +time.toFixed(3), filmFrameAt8fps: Math.round(time * 8),
       cssSize: o.css ?? [o.w, o.h], devicePixels: [o.w, o.h], ratio: o.css ? o.w / o.css[0] : 1, subFrames: o.samples,
       sampleCountReadBack: 'one sample a sub-frame: the linear target is allocated without multisampling (render.ts)',
       backend: stack.backend, adapter: stack.architecture, exposureStops: +ev.toFixed(3), print: { ...PRINT, exposure: PRINT.exposure * Math.pow(2, ev) },
@@ -416,8 +420,9 @@ const rig = {
     return side
   },
   /** a still from any camera: UTM place, a height (a level or 'eye'), a look point (E, N, level), an hour */
-  async probe(o: { at: [number, number]; y: number | 'eye'; look: [number, number, number]; hour: string; hfov?: number; shift?: number; stops?: number; w: number; h: number; samples: number; out: string; name: string; view?: 'grey' | 'classes'; figure?: number; air?: number; garden?: GardenState }) {
+  async probe(o: { at: [number, number]; y: number | 'eye'; look: [number, number, number]; hour: string; hfov?: number; shift?: number; stops?: number; w: number; h: number; samples: number; out: string; name: string; view?: 'grey' | 'classes'; figure?: number; air?: number; garden?: GardenState; tower?: TowerState }) {
     const [x, z] = F.s(o.at[0], o.at[1])
+    if (o.tower) tower.state(towerState(o.tower))
     uAir.value = o.air ?? (o.figure ? airOf(o.figure) : 0)
     gardens.setGarden(o.garden ?? gardenState)
     if (o.figure) {

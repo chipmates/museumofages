@@ -59,8 +59,10 @@ function mapFaces(faces, group, built, matrix, keep) {
   return faces
 }
 
-/** the map page at one stop: the bodies within `reach` metres of the stop's eye, its still cameras at the kit's sizes */
-export async function mountMap(stop, { reach = 400 } = {}) {
+/** the map page at one stop: the bodies within `reach` metres of the stop's eye, its still cameras at the kit's sizes;
+    `tower` (or BABYLON_TOWER) the tower switch's state, as `?tower=` on the page */
+export async function mountMap(stop, { reach = 400, tower: towerState = process.env.BABYLON_TOWER || 'built' } = {}) {
+  if (!['built', 'dug', 'bruegel'].includes(towerState)) throw new Error(`no tower state ${towerState}`)
   const { buildPlan, makeFrame } = await import(join(MAP, 'plan.ts'))
   const { buildBodies, tonesFrom } = await import(join(MAP, 'mass.ts'))
   const { makePath } = await import(join(MAP, 'path.ts'))
@@ -75,7 +77,12 @@ export async function mountMap(stop, { reach = 400 } = {}) {
   const planting = buildPlanting(gardens.F, gp, palmGeometry, PALM_MID)
   const court = buildCourt(gardens.built, plan, json(join(COURT, 'court-plan.json')))
   // stop 9's precinct, street and tower draw their own bodies too, as map.ts does
-  const tower = buildTower(court.built, plan, json(join(TOWER, 'tower-plan.json')))
+  const tp = json(join(TOWER, 'tower-plan.json'))
+  const tower = buildTower(court.built, plan, tp)
+  // the switch: the tower's own bodies only as built; dug, the ruin's patch in the map ground's place
+  const { buildDug } = await import(join(TOWER, 'tower-dug.ts'))
+  const dug = towerState === 'dug' ? buildDug(court.built, tp) : null
+  const towerBodies = tower.bodies.filter((b) => towerState === 'built' || !b.id.startsWith('tower-'))
   // and stop 8's temple in place of the map's block
   const { buildNabu } = await import(join(NABU, 'nabu-geom.ts'))
   const nabu = buildNabu(tower.built, plan, json(join(NABU, 'nabu-plan.json')))
@@ -105,18 +112,27 @@ export async function mountMap(stop, { reach = 400 } = {}) {
   const bodies = buildBodies(built, tonesFrom(plan), sky, TSL.uniform(new THREE.Vector3(0, 1, 0)), canalLines(plan, F), { o: F.s(gf.origin[0], gf.origin[1]), a: F.dir(gf.bearing), c: F.dir(gf.bearing + 90), len: 50, half: 2.6 })
   const [ex, , ez] = p.pos
   const keep = (v) => { const cx = (v[0].x + v[1].x + v[2].x) / 3, cz = (v[0].z + v[1].z + v[2].z) / 3; return Math.hypot(cx - ex, cz - ez) <= reach }
+  if (dug) {
+    // the page sinks the map ground's vertices strictly inside the patch's cell
+    const R = dug.region, g = bodies.group.getObjectByName('ground'), gp = g.geometry.getAttribute('position')
+    for (let i = 0; i < gp.count; i++) {
+      const x = gp.getX(i), z = gp.getZ(i)
+      if (x > R.x0 + 1e-3 && x < R.x1 - 1e-3 && z > R.z0 + 1e-3 && z < R.z1 - 1e-3) gp.setY(i, gp.getY(i) - 40)
+    }
+  }
   const faces = mapFaces([], bodies.group, built, new THREE.Matrix4(), keep)
   for (const b of [...court.bodies, ...houseBodies]) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
-  for (const b of tower.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
+  for (const b of towerBodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
+  for (const b of dug?.bodies ?? []) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
   // stop 5's bodies whole (an edge terrace's top is a few long triangles whose middles lie past the reach), and each
   // plant whole where its foot lies within the reach
   for (const b of gardens.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`)
   for (const p of planting.plants) if (Math.hypot(p.x - ex, p.z - ez) <= reach) facesFrom(faces, p.geometry, null, () => `map:${p.id}`)
   for (const b of nabu.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
-  const surface = (b) => /^map:(street|ground|water-|gate5-street-|merkes-lanes$)/.test(b)
+  const surface = (b) => /^map:(street|ground|water-|gate5-street-|merkes-lanes$|ruin-trench$|ruin-water$)/.test(b)
   return {
     court, tower, gardens, planting, nabu,
-    house,
+    house, towerState, dug,
     houseBodies,
     page: 'map', stop: String(stop), frame: "the map's scene metres (x east, z south, y up)", faces, cameras, eyes, reach,
     ground: (x, z) => built.ground(x, z),
@@ -124,7 +140,10 @@ export async function mountMap(stop, { reach = 400 } = {}) {
     counts: () => true,
     checks: (b) => !surface(b),
     floats: (b) => !surface(b) && b !== 'map:ramps',
-    allowPair: [],
+    // the dug stairs' feet lie 4 cm over the ruin's ground at every one of their top points (tower-dug.test.mjs), both
+    // surfaces on the same 0.75 m step; the check takes a face's plane from the scene's origin about 400 m off, where a
+    // thousandth of tilt between the two triangulations reads as one plane
+    allowPair: dug ? [{ test: (p) => p.kind === 'fight' && p.n[1] > 0.99 && [p.a, p.b].includes('map:ruin-trench') && [p.a, p.b].some((b) => b.startsWith('map:ruin-stair-')), why: "the dug stairs' feet 4 cm over the ruin's ground at every top point (tower-dug.test.mjs); the plane offsets are taken 400 m from the origin" }] : [],
     // the gate's own palm (palm-date-babylon, reused as it is): its frond tips stay 16 cm wide for 86 m, and the garden's
     // stand 300 to 430 m from stop 5's hold; a far preset of the part is the fix
     allowThin: [{ prefix: 'map:garden-palm-', why: "the reused gate palm's frond tips, 6 to 8 cm faces at 330 to 390 m (0.06 to 0.07 px of the 1600 px desktop, measured 4 Nov); a far preset of palm-date-babylon is open" }],
