@@ -1,6 +1,18 @@
 {
  "about": "Every body the Babylon pages build, named to its record row: match is a regular expression on the body's name as the kit's mounts give it (map:<id>, gate:<id>, panel:<id>, life:<id>); the first rule that matches wins. part groups bodies for the coverage map; piece is the row the body's form shows; plan, where given, is the row its foot band shows in the evidence switch (the plan as dug). An empty piece means the record has no row yet; needs names the row it asks for. stops limits a rule to those stops.",
  "rules": [
+  {"match": "^open:northgate-", "part": "the North Gate (open page)", "piece": "bab.northgate.body", "plan": "bab.northgate.plan", "stops": ["open"]},
+  {"match": "^open:stretch-", "part": "the walled street north of the North Gate", "piece": "bab.street.north-stretch", "stops": ["open"]},
+  {"match": "^open:bastion-", "part": "the bastions at the dam's south end", "piece": "bab.street.north-bastions", "stops": ["open"]},
+  {"match": "^open:dam$", "part": "the dam over the north moat", "piece": "bab.dam.crest", "plan": "bab.dam.plan", "stops": ["open"]},
+  {"match": "^open:northwall$", "part": "the North Palace's north wall on its limestone foot", "piece": "bab.northpalace.northwall.brick", "plan": "bab.northpalace.limestone", "note": "its foot to about +0.5 m is the limestone row", "stops": ["open"]},
+  {"match": "^open:merlon-", "part": "the north entry's battlements", "piece": "bab.northgate.body", "stops": ["open"]},
+  {"match": "^open:house-", "part": "the houses (a type, rebuilt per lot)", "piece": "bab.houses.type", "stops": ["open"]},
+  {"match": "^open:palm-(canal|river)", "part": "the date palms of the groves along the river and the canals", "piece": "bab.green.palm.plain", "stops": ["open"]},
+  {"match": "^open:palm-city", "part": "the date palms inside the walls", "piece": "bab.green.palm.city", "stops": ["open"]},
+  {"match": "^open:palm-outer", "part": "the date palms of the outer city's gardens", "piece": "bab.green.outercity", "stops": ["open"]},
+  {"match": "^open:field", "part": "the plain's fields", "piece": "bab.green.field.plain", "surface": true, "stops": ["open"]},
+  {"match": "^open:canal", "part": "the plain's canals", "piece": "bab.green.water.channels", "surface": true, "stops": ["open"]},
   {"match": "^map:ground$", "part": "the ground", "piece": "bab.ground", "surface": true},
   {"match": "^map:street$", "part": "the street (north of the gate)", "piece": "bab.street.north.surface", "surface": true, "stops": ["1", "2", "3", "open"]},
   {"match": "^map:street$", "part": "the street (south of the gate)", "piece": "bab.street.south-gate", "surface": true, "stops": ["4", "5", "6"]},
@@ -63,7 +75,6 @@
   {"match": "^map:tower-stage-", "part": "the tower's stages 2 to 6", "piece": "bab.tower.stages"},
   {"match": "^map:tower-stair", "part": "the tower's stairs", "piece": "bab.tower.stair.middle.rise", "plan": "bab.tower.stair.middle"},
   {"match": "^map:ramps$", "part": "ramps and stairs (map)", "piece": "bab.ramps.map", "note": "one body holds the tower's three stairs and the bridge's roadway; split per piece, then each takes its own rows"},
-
   {"match": "^gate:(front-pier|back-pier|front-side)-", "part": "the front gate's walls", "piece": "bab.gate.front.body", "plan": "bab.gate.front.plan"},
   {"match": "^gate:front-tower-", "part": "the front gate's towers", "piece": "bab.gate.front.towers.body", "plan": "bab.gate.front.plan"},
   {"match": "^gate:m?guard-", "part": "the guard storeys and loopholes", "piece": "bab.gate.towertops"},
