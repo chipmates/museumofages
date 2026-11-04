@@ -40,6 +40,7 @@ import { rebuildHouses } from './houses'
 import { buildPlain } from './plain'
 import { paintPlain, palmMesh } from './green'
 import { makeFlight, resolveFlight, type FlightSample } from './flight'
+import { NORTH_PAVED, northPaving } from './north-paving'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -183,7 +184,7 @@ const HOUSES = { count: 0, open: 0 }
   }
   // the paving ends where the record's street surface ends: the walled stretch north of the North Gate (REC
   // bab.street.north.surface, +7.5 north of the gate; bab.street.north-stretch to a = 233); the dam's crest and the way on are earth
-  ;(bodies.group.getObjectByName('street') as Mesh).material = streetMaterial(tones, { o: NORTH.frame.o, a: NORTH.frame.a, c: NORTH.frame.c, pavedTo: 233 }, U.uPix)
+  ;(bodies.group.getObjectByName('street') as Mesh).material = streetMaterial(tones, { o: NORTH.frame.o, a: NORTH.frame.a, c: NORTH.frame.c, pavedTo: NORTH_PAVED.a1 }, U.uPix)
   const ground = bodies.group.getObjectByName('ground') as Mesh
   // the banks the first frame and the flight see, from the moat's north bank to just south of the bridge, refined to about a
   // metre (?banks=0 keeps the coarse grid); about 1.2 s more at load on the laptop
@@ -223,15 +224,21 @@ const HOUSES = { count: 0, open: 0 }
 /* the plain's palms (plain.ts, green.ts) */
 scene.add(palmMesh(PLAIN.palms, city.ground, palmMaterial(tones)))
 
-/* the map's street and ground give way to the gate's paving inside its area (the gate page's mask) */
+/* the map's street and ground give way to the gate's paving inside its area (the gate page's mask), and north of the
+   North Gate's south door to the street's paving laid on the lion axis (north-paving.ts) */
 const uW2G = uniform(new Matrix4().copy(W2G))
 const sdx = B.street.dir[0], sdz = B.street.dir[1]
+const { a0: NPa0, a1: NPa1, half: NPhalf } = NORTH_PAVED
 const paved = (): N => {
   const p = uW2G.mul(vec4(positionWorld, 1)).xyz
   const inRect = step(-34, p.x).mul(step(p.x, 30)).mul(step(-60, p.z)).mul(step(p.z, 50))
   const s = p.x.mul(sdx).add(p.z.mul(sdz)), t = p.x.mul(sdz).sub(p.z.mul(sdx))
   const inStreet = step(20, s).mul(step(s, Number(plan.lionWalls.to) + 1)).mul(step(abs(t), B.street.halfWidth + 0.6))
-  return max(inRect, inStreet)
+  const { o: lo, a: la, c: lc } = NORTH.frame
+  const ls = positionWorld.x.sub(lo[0]).mul(la[0]).add(positionWorld.z.sub(lo[1]).mul(la[1]))
+  const lt = positionWorld.x.sub(lo[0]).mul(lc[0]).add(positionWorld.z.sub(lo[1]).mul(lc[1]))
+  const inNorth = step(NPa0, ls).mul(step(ls, NPa1)).mul(step(abs(lt), NPhalf))
+  return max(max(inRect, inStreet), inNorth)
 }
 for (const name of ['street', 'ground']) {
   const mesh = bodies.group.getObjectByName(name) as Mesh | undefined
@@ -272,6 +279,17 @@ addGate(new Mesh(A.walls, wallMaterial(U, rooms)), 'gate-walls')
 // the plan's paving letters ('R', 'G') stay out of the spec: pavingMaterial reads a spec `cls` as three class tones
 const { cls: _paveCls, restCls: _paveRest, ...paveSpec } = plan.street.paving
 addGate(new Mesh(A.paving, pavingMaterial(U, { ...paveSpec, sd: B.street.dir, st: [B.street.dir[1], -B.street.dir[0]], turnZ: 21.3 }, rooms)), 'gate-paving')
+{
+  // the same paving on from the North Gate's court to the dam's south end, on the lion axis (its local frame's own)
+  const NP = northPaving({ frame: NORTH.frame, a0: NPa0, a1: NPa1, half: NPhalf, level: (x, z) => city.streetAt(x, z).level })
+  const m = new Mesh(NP.geometry, pavingMaterial(U, { ...paveSpec, sd: [0, 1], st: [1, 0], turnZ: -1e6 }, rooms))
+  m.matrixAutoUpdate = false
+  m.matrix.copy(NP.matrix)
+  m.receiveShadow = true
+  m.frustumCulled = false
+  m.name = 'paving-north'
+  scene.add(m)
+}
 const schemesOf: Record<string, Array<[string, number]>> = { bull: [['yellow', 0]], dragon: [['white', 1]], lion: [['lionWhite', 2], ['lionYellow', 3]] }
 for (const set of A.panels) {
   if (!set.count) continue
