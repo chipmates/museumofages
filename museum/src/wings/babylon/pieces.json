@@ -68,6 +68,7 @@
   {"match": "^map:garden-stair-", "part": "the edge terraces (the gardens question)", "piece": "bab.gardens.northpalace", "note": "the stairs are ours"},
   {"match": "^map:garden-palm-", "part": "the garden's plants (stop 5)", "piece": "bab.green.northpalace.trees"},
   {"match": "^map:garden-(cypress|broad)-", "part": "the garden's plants (stop 5)", "piece": "bab.green.royal-kinds"},
+  {"match": "^map:garden-tamarisk-", "part": "the garden's plants (stop 5)", "piece": "bab.green.tamarisk"},
   {"match": "^map:garden-pomegranate-", "part": "the garden's plants (stop 5)", "piece": "bab.green.pomegranate"},
   {"match": "^map:garden-fig-", "part": "the garden's plants (stop 5)", "piece": "bab.green.fig"},
   {"match": "^map:garden-shrub-", "part": "the garden's plants (stop 5)", "piece": "bab.gardens.plants"},
