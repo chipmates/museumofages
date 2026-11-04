@@ -88,7 +88,16 @@
    skip on the reading row's foot line beside the ways */
 #wing[data-desk~='stage'] .desk-low > .walk-panel { top: var(--desk-band-air, 16px); bottom: var(--desk-band-foot, 9px); }
 #wing[data-desk~='stage'] .desk-low > .walk-panel .walk-ways { margin-top: auto; }
-#wing[data-walk] .desk-cap { opacity: 0; pointer-events: none; }
+/* the line is gone within 200 ms of the leg starting: this mark can land a frame
+   before data-walking, and a fade already running keeps the timing it began with */
+#wing[data-walk] .desk-cap { opacity: 0; pointer-events: none; transition-duration: 160ms; transition-delay: 0ms; }
+/* ONE TEXT AT A TIME: where to comes in once the line has gone */
+.desk-low > .walk-panel:not([hidden]) { animation: walk-words-in 120ms linear 160ms both; }
+@keyframes walk-words-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .desk-low > .walk-panel:not([hidden]) { animation: none; }
+}
+body.forge .desk-low > .walk-panel { animation: none; }
 /* the hold takes its room from the words' place, empty while the eye walks:
    the words keep their width there, so the band and the picture keep their
    height (the hold's 56 px and the ways' 12 px gap) */
