@@ -1869,7 +1869,10 @@ export function createWing(): WingModule {
     mountFilmWays({ hosts: h, narrow: () => form === 'upright', stops: LIFE, carried, standing: () => card, stood: () => [...stood],
       release: () => release, picture: () => picture, cells: ids => lookNow().then(l => l.cells(ids)), open: openFromOverview,
       quiet: () => { if (!look?.id) return false; lookLeaving = true; try { look.close(false) } finally { lookLeaving = false } return true },
-      openRecord, floor: () => form === 'cinema' ? innerHeight : desk?.floor() ?? (phone && !phone.root.hidden ? phone.root.getBoundingClientRect().top : innerHeight), signal })
+      openRecord, floor: () => form === 'cinema' ? innerHeight : desk?.floor() ?? (phone && !phone.root.hidden ? phone.root.getBoundingClientRect().top : innerHeight),
+      // the Plan's foot carries the round seat as the record, the list and the Menu do (shown upright by film-wing.css)
+      seat: close => { if (form === 'desk') return null; const seat = downSeat(close); sheetSeats.push(seat); nameSheetSeats(); return seat },
+      signal })
     swipeSheetsShut()
     cinema?.paint()
     window.addEventListener('keydown', e => {

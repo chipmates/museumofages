@@ -1096,5 +1096,9 @@ html:has(#wing[data-film='upright']) #instruments .film-menu-foot > .film-down {
 .film-down::after { content: ''; position: absolute; left: -16px; right: -4px; top: -4px; bottom: -4px; }
 .film-down:focus-visible { outline: 1px solid var(--na-gold, var(--ui-way)); outline-offset: 2px; }
 .film-down .film-ic { width: 16px; height: 16px; }
+/* THE PLAN'S FOOT carries it too, first in the row before the door into the life, 38 px in as the others stand */
+#wing[data-film='upright'] .wing-plan[data-narrow='true'] .wing-plan-foot > .film-down {
+  display: flex; position: relative; left: auto; flex: 0 0 44px; align-self: center; margin-left: -4px;
+}
 /* the record's foot has a 1 px rule on top: the seat stands centred on the foot line under it */
 #wing[data-film='upright'] .vinci-sources-toolbar > .film-down { top: 21px; padding: 0; border: 0; }

@@ -43,6 +43,8 @@ export interface FilmWaysHost {
   quiet(): boolean
   openRecord(id: string, title: VinciText, certainty: VinciCertainty, render: (host: HTMLElement) => void): void
   floor(): number
+  /** the round seat a tall sheet's foot carries upright, its press the sheet's own close; null where the form has none */
+  seat?(close: () => void): HTMLElement | null
   signal: AbortSignal
 }
 
@@ -102,6 +104,9 @@ export function mountFilmWays(host: FilmWaysHost): void {
         walk: id => openWork(id),
         openRecord: (event, back) => openLifeRecord(m, event, back),
         returnFocus, adopt: () => lifeAdopt })
+      // THE PLAN'S CLOSE IN REACH: the round seat first in its foot, one height down from the close at its top
+      const seat = host.seat?.(() => plan.element.querySelector<HTMLElement>('.wing-plan-shut')?.click())
+      if (seat) plan.element.querySelector('.wing-plan-foot')?.prepend(seat)
       signal.addEventListener('abort', () => { plan.dispose(); life.dispose() })
       return { m, plan, life }
     })
