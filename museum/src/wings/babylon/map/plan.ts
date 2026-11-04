@@ -22,6 +22,8 @@ export interface Prism {
   band: number
   /** its top is a floor a visitor stands on (a court in a palace) */
   walk?: boolean
+  /** the outline at y1, vertex for vertex with `poly`, where the sides lean in (a battered pier) */
+  top?: P2[]
 }
 
 /** an upright box: centre (x, z), size along its own x (sx) and z (sz), yaw about y */
@@ -38,6 +40,8 @@ export interface BoxRec {
   plan: Cls
   height: Cls
   band: number
+  /** a record only (a shaped body's footprint box), never drawn; such boxes come last in the list */
+  hidden?: boolean
 }
 
 /** a sloped block: bottom edge centre `a` at y0 rising to top edge centre `b` at y1, width w; solid to `floor` */
@@ -414,31 +418,38 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
     line = []
   }
 
-  /* ── the bridge: abutments, six free piers, the deck ── */
+  /* ── the bridge: two land piers, six free piers on a ship's waterline, the deck; t in metres from the axis' east end ── */
+  const pierRecords: BoxRec[] = []
   {
     const br = plan.bridge
     const a = F.s(br.axis[0][0], br.axis[0][1]), b = F.s(br.axis[1][0], br.axis[1][1])
     const d = norm(sub(b, a))
+    // across the axis toward the north (scene -z): the side the bows face
+    const up: P2 = leftOf(d)[1] < 0 ? leftOf(d) : mul(leftOf(d), -1)
     const yaw = Math.atan2(-d[1], d[0])
     const at = (t: number): P2 => add(a, mul(d, t))
-    const inner = 8.5
+    const P = br.piers, A = br.abutments
     const piers: number[] = []
-    for (let i = 0; i < br.piers.count; i++) piers.push(inner + br.piers.gap + br.piers.along / 2 + i * (br.piers.along + br.piers.gap))
-    const westInner = inner + br.piers.gap + br.piers.count * br.piers.along + (br.piers.count - 1) * br.piers.gap + (br.piers.lastGap ?? br.piers.gap)
+    for (let i = 0; i < P.count; i++) piers.push(P.first + i * (P.along + P.gap))
+    // the batter: every outline point drawn toward the centre so each side leans in by `batter` a metre of height
+    const hu = Math.max(...P.outline.map((q: number[]) => Math.abs(q[0]!))), hv = Math.max(...P.outline.map((q: number[]) => Math.abs(q[1]!)))
+    const inset = P.batter * (P.top - P.base)
+    const shape = (c: P2, ku: number, kv: number): P2[] => P.outline.map((q: number[]) => add(add(c, mul(d, q[0]! * ku)), mul(up, q[1]! * kv)))
     piers.forEach((t, i) => {
       const c = at(t)
-      boxes.push({ id: `bridge-pier-${i + 1}`, group: 'bridge', x: c[0], z: c[1], y0: br.piers.base, y1: br.piers.top, sx: br.piers.along, sz: br.piers.across, yaw, plan: br.piers.plan, height: br.piers.height, band: 0 })
+      prisms.push({ id: `bridge-pier-${i + 1}`, name: br.name, group: 'bridge', poly: shape(c, 1, 1), top: shape(c, (hu - inset) / hu, (hv - inset) / hv), holes: [], y0: P.base, y1: P.top, plan: P.plan, height: P.height, band: 0 })
+      pierRecords.push({ id: `bridge-pier-${i + 1}`, group: 'bridge', x: c[0], z: c[1], y0: P.base, y1: P.top, sx: P.along, sz: P.across, yaw, plan: P.plan, height: P.height, band: 0, hidden: true })
     })
-    for (const [id, t] of [['bridge-abutment-east', inner - br.abutments.along / 2], ['bridge-abutment-west', westInner + br.abutments.along / 2]] as Array<[string, number]>) {
-      const c = at(t)
-      boxes.push({ id, group: 'bridge', x: c[0], z: c[1], y0: br.abutments.base, y1: br.abutments.top, sx: br.abutments.along, sz: br.abutments.across, yaw, plan: br.abutments.plan, height: 'G', band: 0 })
+    for (const [id, s] of [['bridge-abutment-east', A.east], ['bridge-abutment-west', A.west]] as Array<[string, J]>) {
+      const c = at((s.from + s.to) / 2)
+      boxes.push({ id, group: 'bridge', x: c[0], z: c[1], y0: A.base, y1: A.top, sx: s.to - s.from, sz: s.across, yaw, plan: A.plan, height: A.height, band: 0 })
     }
     // the deck spans the street's deck points (the axis ends) and no further: past them the street's own surface lies at the
     // same level, and a deck reaching over it fought it in depth
     const e0 = a, e1 = b
     const l0 = streetAt(e0[0], e0[1]).level, l1 = streetAt(e1[0], e1[1]).level
     ramps.push({ id: 'bridge-deck', group: 'bridge', a: e0, b: e1, y0: l0, y1: l1, w: br.deck.w, floor: Math.min(l0, l1) - br.deck.thick, plan: br.deck.plan, height: br.deck.height, band: 0 })
-    facts['bridge'] = { piers: piers.map((t) => F.utm(...at(t))), abutmentsInner: [inner, westInner], span: westInner - inner, overall: westInner - inner + 2 * br.abutments.along }
+    facts['bridge'] = { piers: piers.map((t) => F.utm(...at(t))), abutmentsInner: [A.east.to, A.west.from], span: A.west.from - A.east.to, overall: A.west.to - A.east.from }
   }
 
   /* ── Etemenanki: stages and stairs ── */
@@ -603,6 +614,8 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
     }
   }
 
+  // the piers' footprint boxes go last, so a page's drawn boxes keep their order
+  boxes.push(...pierRecords)
   facts['street'] = street.map((p) => ({ utm: F.utm(p.x, p.z), s: Math.round(p.s * 10) / 10, level: p.level }))
   facts['streetLevelAtS'] = streetLevelAtS
   // the same for the boxes standing on the ground (towers, houses): down to the lowest corner

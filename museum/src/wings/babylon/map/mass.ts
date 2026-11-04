@@ -6,7 +6,7 @@
 
 import {
   BoxGeometry, BufferGeometry, Color, DoubleSide, ExtrudeGeometry, Float32BufferAttribute, Group, InstancedBufferAttribute,
-  InstancedMesh, Matrix4, Mesh, MeshBasicNodeMaterial, MeshStandardNodeMaterial, Path, Quaternion, Shape, ShapeGeometry, Vector3,
+  InstancedMesh, Matrix4, Mesh, MeshBasicNodeMaterial, MeshStandardNodeMaterial, Path, Quaternion, Shape, ShapeGeometry, ShapeUtils, Vector2, Vector3,
   type Material,
 } from 'three/webgpu'
 import * as TSL from 'three/tsl'
@@ -71,6 +71,10 @@ export function bodyMaterial(t: ClassTones, grey: number, passage?: Passage): Ma
 function prismGeometry(built: Built): BufferGeometry {
   const parts: BufferGeometry[] = []
   built.prisms.forEach((p, pi) => {
+    if (p.top) {
+      parts.push(loftGeometry(p, pi))
+      return
+    }
     // shape in (x, -z) so that extruding along +z and turning up lands on (x, y, z)
     const sh = new Shape()
     sh.moveTo(p.poly[0]![0], -p.poly[0]![1])
@@ -108,6 +112,53 @@ function prismGeometry(built: Built): BufferGeometry {
   const merged = mergeGeometries(parts.map((g) => (g.index ? g.toNonIndexed() : g)))
   for (const g of parts) g.dispose()
   return merged
+}
+
+/** a prism whose top outline is smaller than its foot (a battered pier): sides, foot and top, every face outward */
+function loftGeometry(p: Built['prisms'][number], pi: number): BufferGeometry {
+  let foot = p.poly, top = p.top!
+  let area = 0
+  for (let i = 0; i < foot.length; i++) {
+    const a = foot[i]!, b = foot[(i + 1) % foot.length]!
+    area += a[0] * b[1] - b[0] * a[1]
+  }
+  if (area < 0) {
+    foot = [...foot].reverse()
+    top = [...top].reverse()
+  }
+  const pos: number[] = []
+  const tri = (a: number[], b: number[], c: number[]): void => { pos.push(...a, ...b, ...c) }
+  const n = foot.length
+  for (let i = 0; i < n; i++) {
+    const j = (i + 1) % n
+    const p0 = [foot[i]![0], p.y0, foot[i]![1]], q0 = [foot[j]![0], p.y0, foot[j]![1]]
+    const p1 = [top[i]![0], p.y1, top[i]![1]], q1 = [top[j]![0], p.y1, top[j]![1]]
+    tri(p0, p1, q0)
+    tri(q0, p1, q1)
+  }
+  for (const [ring, y, up] of [[top, p.y1, 1], [foot, p.y0, -1]] as Array<[P2[], number, number]>) {
+    for (const [i, j, k] of ShapeUtils.triangulateShape(ring.map(([x, z]) => new Vector2(x, z)), [])) {
+      const A = [ring[i!]![0], y, ring[i!]![1]], B = [ring[j!]![0], y, ring[j!]![1]], C = [ring[k!]![0], y, ring[k!]![1]]
+      // the y part of (B - A) x (C - A) says which way the face looks
+      const ny = (B[2]! - A[2]!) * (C[0]! - A[0]!) - (B[0]! - A[0]!) * (C[2]! - A[2]!)
+      if (ny * up > 0) tri(A, B, C)
+      else tri(A, C, B)
+    }
+  }
+  const g = new BufferGeometry()
+  g.setAttribute('position', new Float32BufferAttribute(pos, 3))
+  g.computeVertexNormals()
+  const m = pos.length / 3
+  const cls = new Float32Array(m * 2), band = new Float32Array(m)
+  for (let i = 0; i < m; i++) {
+    cls[i * 2] = CLS[p.height]
+    cls[i * 2 + 1] = CLS[p.plan]
+    band[i] = p.band
+  }
+  g.setAttribute('cls', new Float32BufferAttribute(cls, 2))
+  g.setAttribute('band', new Float32BufferAttribute(band, 1))
+  g.setAttribute('pid', new Float32BufferAttribute(new Float32Array(m).fill(pi), 1))
+  return g
 }
 
 /** a sloped solid: a top face from a (low) to b (high), sides down to the floor */
@@ -309,7 +360,7 @@ export function buildBodies(built: Built, tones: ClassTones, sky: Sky, sunDir: N
   prisms.frustumCulled = false
   group.add(prisms)
   const houses = built.boxes.filter((b) => b.group === 'house')
-  const rest = built.boxes.filter((b) => b.group !== 'house')
+  const rest = built.boxes.filter((b) => b.group !== 'house' && !b.hidden)
   if (houses.length) group.add(boxMesh(houses, bodyMaterial(tones, 0.47), 'houses'))
   if (rest.length) group.add(boxMesh(rest, blockMat, 'towers-and-piers'))
 

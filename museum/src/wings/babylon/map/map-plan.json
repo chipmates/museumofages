@@ -1,5 +1,11 @@
 {
  "about": "Babylon about 570 BC as grey blocks at true scale. Positions are UTM zone 38N metres (E, N); levels are metres in the German excavation zero (+0.0 = 25.5 m above sea level). Every block names the class of its plan and of its height: M measured (read off a dug outline on the sheets, or a dug size in print), R reasoned (drawn on the sheets but not dug, or set from a text or a scholar's inference), G guessed (ours).",
+ "notes": {
+  "says": [
+   "The West Outwork's top at +12 is ours; Pedersén reconstructs it '(quite provisionally)' at +18 (P2021 p. 69)."
+  ],
+  "alternatives": []
+ },
  "frame": {
   "E0": 445700,
   "N0": 3600400,
@@ -137,7 +143,7 @@
    "level": -1.0,
    "plan": "R",
    "height": "G",
-   "src": "west bank: C6.2 and A2.1 (the drawn line west of 'Euphrates Arahtu'); east bank: the embankments and the Kasr's west front on C6.2; level: spring high water below the embankment's walkway at -0.4 (P2021 p. 24, 66); north of the Kasr the west bank is ours, about 120 m west of the outer river wall",
+   "src": "west bank: C6.2 and A2.1 (the drawn line west of 'Euphrates Arahtu'), drawn, not dug (P2021 p. 28); east bank about 570 BC: the Arahtu quay (system C) on C6.2, with a small mouth for the canal at the West Outwork's south-east (river sheet 1.2, 1.4); south of the bridge the old shore is open (0 to 100 m, P2021 p. 28), drawn here to the southern river wall; level: spring high water below the quay's walkway at -0.4 (P2021 p. 24, 66); north of the Kasr the west bank is ours",
    "poly": [
     [
      445905,
@@ -176,27 +182,55 @@
      3600598
     ],
     [
-     445380,
-     3600580
+     445489.5,
+     3600600
     ],
     [
-     445420,
-     3600400
+     445489.4,
+     3600607
     ],
     [
-     445448,
-     3600250
+     445497,
+     3600607
     ],
     [
-     445488,
-     3600000
+     445497,
+     3600587
     ],
     [
-     445515,
-     3599850
+     445490.0,
+     3600586
     ],
     [
-     445550,
+     445490.3,
+     3600505
+    ],
+    [
+     445492.5,
+     3600405
+    ],
+    [
+     445494.1,
+     3600245
+    ],
+    [
+     445534.9,
+     3600005
+    ],
+    [
+     445563.9,
+     3599865
+    ],
+    [
+     445568.9,
+     3599841
+    ],
+    [
+     445574.25,
+     3599815
+    ],
+    [
+     445556,
      3599700
     ],
     [
@@ -510,13 +544,13 @@
    },
    {
     "at": [
-     445534,
-     3599840
+     445569.5,
+     3599843.1
     ],
     "level": 2.7,
     "w": 9.0,
     "cls": "M",
-    "note": "the bridge's east abutment, street at +2.3 and +3.1 (P2021 p. 205)"
+    "note": "the street meets the bridge at the quay (S13-08), +2.3 and +3.1 (P2021 p. 205)"
    },
    {
     "at": [
@@ -540,7 +574,7 @@
    }
   ],
   "deck": {
-   "from": 445534,
+   "from": 445569.5,
    "to": 445398,
    "says": "over the river the street is a deck on the piers (G)"
   }
@@ -1114,7 +1148,7 @@
    "plan": "M",
    "height": "G",
    "src": "C6.2 (dug, X1.4); built with the North Palace's first step (P2021 p. 114)",
-   "hsrc": "ours"
+   "hsrc": "its top: see the notes"
   },
   {
    "id": "moat-counter-wall",
@@ -1616,8 +1650,8 @@
   "name": "the Euphrates bridge",
   "axis": [
    [
-    445534,
-    3599840
+    445569.5,
+    3599843.1
    ],
    [
     445398,
@@ -1629,17 +1663,103 @@
    "along": 9,
    "across": 21,
    "gap": 9,
+   "first": 57.64,
    "base": -5.0,
    "top": 2.5,
+   "outline": [
+    [
+     0,
+     10.5
+    ],
+    [
+     1.3,
+     9.5
+    ],
+    [
+     2.6,
+     8.5
+    ],
+    [
+     3.5,
+     7.3
+    ],
+    [
+     4.1,
+     6.0
+    ],
+    [
+     4.5,
+     4.0
+    ],
+    [
+     4.5,
+     -8.6
+    ],
+    [
+     3.9,
+     -9.6
+    ],
+    [
+     2.4,
+     -10.2
+    ],
+    [
+     0,
+     -10.5
+    ],
+    [
+     -2.4,
+     -10.2
+    ],
+    [
+     -3.9,
+     -9.6
+    ],
+    [
+     -4.5,
+     -8.6
+    ],
+    [
+     -4.5,
+     4.0
+    ],
+    [
+     -4.1,
+     6.0
+    ],
+    [
+     -3.5,
+     7.3
+    ],
+    [
+     -2.6,
+     8.5
+    ],
+    [
+     -1.3,
+     9.5
+    ]
+   ],
+   "outlineSays": "metres along the bridge (u) and toward the north (v), at the foot: a pointed bow upstream, convex sides, a slightly curved back",
+   "batter": 0.08,
    "plan": "M",
    "height": "R",
-   "src": "piers 21 x 9 m, 9 m apart, six free (P2021 p. 204 to 205); spacing checked on C6.2; 9 m apart except between the westernmost and the west abutment, abutments first 126 m apart (P2021 p. 204): that gap is 18 m here",
-   "hsrc": "foundations to about -5 (P2021 p. 204)",
-   "lastGap": 18
+   "src": "piers 21 x 9 m, 9 m apart, six free (P2021 p. 204 to 205); centres on C6.2; 'the sides of the piers are convex and meet in a point in front facing the current on the north. The back is also slightly curved', 'a very marked batter' (K1914 ch. XXXI); the curves are drawn after Wetzel's plate (P2021 Fig. 5.5), the batter's 1 in 12.5 is ours",
+   "hsrc": "foundations to about -5 (P2021 p. 204)"
   },
   "abutments": {
-   "along": 14,
-   "across": 24,
+   "east": {
+    "from": 0,
+    "to": 40.64,
+    "across": 15,
+    "src": "the east land pier from its inner face (126 m from the west one's, P2021 p. 204) to the Arahtu quay at about 445569.5 E (S13-08, Wetzel pl. 51 labels); no gate: the gate there is later (K1914 ch. XXXII)"
+   },
+   "west": {
+    "from": 166.64,
+    "to": 174.24,
+    "across": 13.6,
+    "src": "the west land pier, a -74.0 to -66.4 on C6.2, the roadway's width; the gap to river pier 6 about 14 m (river sheet 1.3, P2021 p. 204)"
+   },
    "base": -5.0,
    "top": 2.5,
    "plan": "M",
@@ -1652,7 +1772,8 @@
    "plan": "G",
    "height": "G",
    "src": "deck not found; stone very probable, beam holes under the street levels (P2021 p. 206)"
-  }
+  },
+  "says": "positions are metres along the axis from its east end, the quay (S13-08); the axis runs 0.6 m north of the drawn roadway, through the piers' centres (C6.2)"
  },
  "tower": {
   "name": "Etemenanki",
@@ -1893,72 +2014,66 @@
    "hsrc": "ours"
   },
   {
-   "id": "kasr-river-wall",
-   "name": "the river embankment beside the Kasr and the Sahn",
+   "id": "arahtu-quay",
+   "name": "the Arahtu quay, the river front about 570 BC",
    "line": [
     [
-     445380,
-     3600590
+     445492.62,
+     3600585.01
     ],
     [
-     445420,
-     3600400
+     445492.92,
+     3600505.03
     ],
     [
-     445448,
-     3600250
+     445495.12,
+     3600405.04
     ],
     [
-     445488,
-     3600000
+     445496.72,
+     3600245.23
     ],
     [
-     445515,
-     3599850
+     445537.48,
+     3600005.49
+    ],
+    [
+     445566.47,
+     3599865.53
+    ],
+    [
+     445569.68,
+     3599850.03
     ]
    ],
    "thick": 5.25,
    "top": 4.0,
    "base": -5.0,
-   "towers": {
-    "w": 7,
-    "proj": 3,
-    "pitch": 26,
-    "side": "right",
-    "top": 6.0
-   },
-   "plan": "M",
-   "height": "M",
-   "src": "C6.2 (dug, X1.4); base -5, 5.25 m thick, top +4.0 (P2021 p. 66)",
-   "hsrc": "P2021 p. 66 (reconstructed top)"
+   "plan": "R",
+   "height": "R",
+   "src": "C6.2, the Arahtu walls (system C), its westmost line as the water face at N 3600505 to 3599865 (river sheet 8.2); Nabopolassar's embankment with Nebuchadnezzar's facing wall in front of it, smooth faces west (K1914 ch. XXXIV); 5.25 m, base -5.0, without towers except at the corners (P2021 p. 66); Nabopolassar's wall behind it is not drawn as its own body; dug in stretches, the line between them drawn",
+   "hsrc": "walkway -0.4, top reconstructed +4.0 (P2021 p. 31, 66)"
   },
   {
-   "id": "kasr-river-wall-2",
-   "name": "the older inner embankment",
+   "id": "arahtu-quay-2",
+   "name": "the Arahtu quay south of the bridgehead",
    "line": [
     [
-     445403,
-     3600583
+     445572.32,
+     3599837.23
     ],
     [
-     445440,
-     3600410
-    ],
-    [
-     445466,
-     3600260
-    ],
-    [
-     445500,
-     3600050
+     445576.82,
+     3599815.53
     ]
    ],
-   "thick": 4,
-   "top": 8.0,
-   "plan": "M",
-   "height": "G",
-   "src": "C6.2, the second line 20 to 25 m inside (P2021 p. 66)",
-   "hsrc": "ours"
+   "thick": 5.25,
+   "top": 4.0,
+   "base": -5.0,
+   "plan": "R",
+   "height": "R",
+   "src": "as the quay north of the bridge; it stops a little south of the bridge, the shore beyond is open (P2021 p. 28)",
+   "hsrc": "as above"
   },
   {
    "id": "river-wall-south",
@@ -2332,7 +2447,7 @@
   "wall": 0.8,
   "plan": "R",
   "height": "G",
-  "src": "2.6 to 2.9 m wide, established from the river to the middle of the South Palace; its further line not known (P2021 p. 218); drawn here from the Kasr river wall east of the West Outwork"
+  "src": "2.6 to 2.9 m wide, established from the river to the middle of the South Palace; its further line not known (P2021 p. 218); about 570 BC it reaches the river at the West Fortification's south-east (river sheet 1.4, inferred); the later outflow through the tower of the Nabonidus wall (K1914 ch. XXXIII) is not shown"
  },
  "houses": {
   "says": "the filled city as a type: courtyard houses of one storey in blocks between streets, never a dug plan",

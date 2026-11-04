@@ -113,18 +113,17 @@ export function measure(plan, cams, { buildPlan, makeFrame }) {
   {
     const BF = sheetFrame(445469.7, 3599833.7, 85.0)
     const ext = (corners) => [Math.min(...corners.map((p) => BF.a(...p))), Math.max(...corners.map((p) => BF.a(...p)))]
-    const body = (id) => { const r = box1(id); if (r) return { corners: boxCorners(r), top: null }; const p = prism1(id); return p ? { corners: p.utm, prism: p } : null }
+    // a drawn prism first: a box of the same id may be the footprint's record only
+    const body = (id) => { const p = prism1(id); if (p) return { corners: p.utm, prism: p }; const r = box1(id); return r ? { corners: boxCorners(r), top: null } : null }
     const east = body('bridge-abutment-east'), west = body('bridge-abutment-west')
     const eE = east ? ext(east.corners) : [NaN, NaN], wE = west ? ext(west.corners) : [NaN, NaN]
     row('C2', "east land pier: inner face, a on the sheet's axis", eE[0], 59.6, 1.0, 'abs', 'S13-08, RIVER 1.3: west inner face a -66.4 plus the 126 m span (P2021 p. 204); about 445529 E')
     const quayA = BF.a(445569.5, 3599841)
     row('C2', 'east land pier: east end, a', eE[1], +quayA.toFixed(1), 1.5, 'abs', 'S13-08: to the Arahtu wall line at about 445569.5 E')
     const quay = prisms(/^arahtu-quay(-\d+)?$/)
-    let qa = NaN
-    for (const q of quay) {
-      const cs = crossings(q.utm.map((p) => [BF.a(...p), BF.c(...p)]), (p) => p[1], 0, (p) => p[0])
-      if (cs.length) qa = Number.isNaN(qa) ? Math.min(...cs) : Math.min(qa, ...cs)
-    }
+    // the quay opens for the land pier: its water face is read 12 m either side of the axis and averaged
+    const qf = [-12, 12].map((cc) => { const cs = quay.flatMap((q) => crossings(q.utm.map((p) => [BF.a(...p), BF.c(...p)]), (p) => p[1], cc, (p) => p[0])); return cs.length ? Math.min(...cs) : NaN })
+    const qa = (qf[0] + qf[1]) / 2
     row('C2', "east land pier: gap from its east end to the quay's water face", Number.isNaN(qa) ? NaN : Math.max(0, qa - eE[1]), 0, 0.5, 'abs', 'S13-08: the land pier abuts the Arahtu walls (Wetzel pl. 51 labels)')
     const near = [445550, 3599840]
     const gates = [...b.prisms.map((p) => ({ id: p.id, name: p.name, pts: p.poly.map(U) })), ...b.boxes.filter((r) => r.group !== 'house').map((r) => ({ id: r.id, name: '', pts: boxCorners(r) }))]
