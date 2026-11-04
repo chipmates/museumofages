@@ -1,5 +1,5 @@
 // THE EVIDENCE SWITCH FOR THE MAP PAGE AT ONE STOP, the map's half of switch.mjs (which drives the gate page): every
-// body the map page builds, stop 6's court bodies with it, named to its rows by pieces.json and given its classes from
+// body the map page builds, stop 6's court and stop 7's house bodies with it, named to its rows by pieces.json and given its classes from
 // record-classes.json through record.ts, written as the JSON the evidence check's --switch reads, one line per body.
 //
 //   node --experimental-strip-types --no-warnings forge/babylon/switch-map.mjs --out <shown.json> [--stop 6] [--bodies <tsv>]
@@ -23,7 +23,7 @@ const mapPlan = json(join(APP, 'src/wings/babylon/map/map-plan.json'))
 
 const M = await mountMap(STOP, { reach: 1e7 })
 const names = [...new Set(M.faces.map((f) => f.body.replace(/#\d+$/, '')))]
-const courtLetters = new Map(M.court.bodies.map((b) => [`map:${b.id}`, b.letters]))
+const courtLetters = new Map([...M.court.bodies, ...(M.houseBodies ?? [])].map((b) => [`map:${b.id}`, b.letters]))
 
 /** the plans' letters for a map body: [plan, height], or null when the plans do not give them (as switch.mjs) */
 function letters(body) {

@@ -98,6 +98,7 @@ export async function mountMap(stop, { reach = 400 } = {}) {
   return {
     court,
     house,
+    houseBodies,
     page: 'map', stop: String(stop), frame: "the map's scene metres (x east, z south, y up)", faces, cameras, eyes, reach,
     ground: (x, z) => built.ground(x, z),
     track: (dt = 0.25) => pathTrack(path, n, dt, (q) => ({ kind: q.kind, desktop: view(q.pos, q.look, q.hfov, q.shift), phone: view(q.pos, q.phone.look, q.phone.hfov, q.phone.shift) })),
