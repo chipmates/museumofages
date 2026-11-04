@@ -35,6 +35,7 @@ import { mountGardens, type GardenState } from '../gardens/gardens'
 import { palmGeometry } from '../gate/gate-life'
 import { mountNabu } from '../nabu/nabu'
 import { mountHouse } from '../house/house'
+import { mountBruegel } from '../bruegel/bruegel'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -51,7 +52,7 @@ const say = (s: string): void => {
 const D2R = Math.PI / 180
 
 say('reading the plan')
-const [plan, cams, pieces, recordClasses, courtPlan, towerPlan, gardensPlan, nabuPlan, housePlan]: [J, J, Pieces, ClassFile, J, J, J, J, J] = await Promise.all([
+const [plan, cams, pieces, recordClasses, courtPlan, towerPlan, gardensPlan, nabuPlan, housePlan, bruegelPlan]: [J, J, Pieces, ClassFile, J, J, J, J, J, J] = await Promise.all([
   fetch(new URL('./map-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('./map-cams.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../pieces.json', import.meta.url)).then((r) => r.json()),
@@ -61,6 +62,7 @@ const [plan, cams, pieces, recordClasses, courtPlan, towerPlan, gardensPlan, nab
   fetch(new URL('../gardens/gardens-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../nabu/nabu-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../house/house-plan.json', import.meta.url)).then((r) => r.json()),
+  fetch(new URL('../bruegel/bruegel-plan.json', import.meta.url)).then((r) => r.json()),
 ])
 const F = makeFrame(plan)
 const t0 = performance.now()
@@ -78,6 +80,8 @@ const nabu = mountNabu(tower.built, plan, nabuPlan, tones)
 // stop 7's houses likewise
 const house = mountHouse(nabu.built, plan, housePlan, tones)
 const built = house.built
+// the tower switch's third state, Bruegel's tower, on the real tower's centre (outside the record's classes)
+const bruegel = mountBruegel(tower.dug.frame, built.ground, bruegelPlan)
 const gardenState = (q.get('garden') ?? 'planted') as GardenState
 gardens.setGarden(gardenState)
 const planMs = Math.round(performance.now() - t0)
@@ -151,7 +155,13 @@ scene.add(bodies.group)
 scene.add(court.mesh)
 scene.add(tower.mesh, tower.towerMesh, ...tower.dugMeshes)
 tower.attachGround(bodies.group.getObjectByName('ground') as Mesh)
-tower.state(towerState(q.get('tower')))
+scene.add(bruegel.mesh)
+/** the tower switch: the tower as the record reads it, as dug, or Bruegel's; one camera, one light */
+const setTower = (s: TowerState): void => {
+  tower.state(s)
+  bruegel.show(s === 'bruegel')
+}
+setTower(towerState(q.get('tower')))
 scene.add(...gardens.meshes)
 scene.add(nabu.mesh)
 scene.add(house.mesh)
@@ -383,7 +393,7 @@ const rig = {
     duration: path.duration,
   }),
   /** what the scene holds, from the bodies the page built */
-  facts: () => ({ ...built.facts, court: court.court.facts, etemenanki: tower.tower.facts, gardens: gardens.facts, nabu: nabu.nabu.facts, house: house.house.facts, streetLevelAtS: undefined, sunAt: Object.fromEntries(cams.stops.map((s: J) => [s.n, sunAt(hourOf(s.hour))])) }),
+  facts: () => ({ ...built.facts, court: court.court.facts, etemenanki: tower.tower.facts, gardens: gardens.facts, nabu: nabu.nabu.facts, house: house.house.facts, bruegel: bruegel.bruegel.facts, streetLevelAtS: undefined, sunAt: Object.fromEntries(cams.stops.map((s: J) => [s.n, sunAt(hourOf(s.hour))])) }),
   stand: (E: number, N: number) => {
     const [x, z] = F.s(E, N)
     return { stand: stand(x, z), ground: built.ground(x, z), street: built.streetAt(x, z) }
@@ -391,7 +401,7 @@ const rig = {
   /** stop 5's garden: planted, its terraces bare, or the dug plans only */
   garden: (state: GardenState) => gardens.setGarden(state),
   /** the tower switch: built, dug or bruegel */
-  tower: (s: TowerState) => tower.state(towerState(s)),
+  tower: (s: TowerState) => setTower(towerState(s)),
   /** a still of one stop: the film's own frame at the stop's still second, full size, either framing */
   async shoot(o: { stop: number; framing: 'desktop' | 'phone'; view: 'grey' | 'classes'; w: number; h: number; samples: number; out: string; name?: string; css?: [number, number]; t?: number; garden?: GardenState }) {
     const s = cams.stops.find((x: J) => x.n === o.stop)
@@ -422,7 +432,7 @@ const rig = {
   /** a still from any camera: UTM place, a height (a level or 'eye'), a look point (E, N, level), an hour */
   async probe(o: { at: [number, number]; y: number | 'eye'; look: [number, number, number]; hour: string; hfov?: number; shift?: number; stops?: number; w: number; h: number; samples: number; out: string; name: string; view?: 'grey' | 'classes'; figure?: number; air?: number; garden?: GardenState; tower?: TowerState }) {
     const [x, z] = F.s(o.at[0], o.at[1])
-    if (o.tower) tower.state(towerState(o.tower))
+    if (o.tower) setTower(towerState(o.tower))
     uAir.value = o.air ?? (o.figure ? airOf(o.figure) : 0)
     gardens.setGarden(o.garden ?? gardenState)
     if (o.figure) {
