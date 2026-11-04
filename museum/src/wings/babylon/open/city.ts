@@ -8,7 +8,8 @@
    up to 32 m out in the water there); the street north of the dam comes down to
    the plain as an unpaved way (REC bab.street.outer-north, Guessed, never as dug);
    the river runs on past the map's two cut ends into the haze, and the ground
-   at the Kasr's west foot lies below the gardens' steps (both ours).
+   at the Kasr's west foot lies below the gardens' steps (both ours); the outer
+   city's river wall has no towers (REC bab.outerwall.river, SET D1).
    The functions it needs come in as arguments: node mounts it without a bundler. */
 
 import type { NorthEntry } from './north'
@@ -49,10 +50,11 @@ export function groundRows(canalZ: number[]): number[] {
 }
 
 /** the river beyond the map's cut ends (ours, Guessed): north toward Sippar in a long bend, south-east past the outer city,
-    each far enough to end in the haze; east bank first (north to south), west bank after, as the map's outline runs */
-const RIVER_NORTH_EAST: Array<[number, number]> = [[444860, 3613000], [445360, 3610000], [445760, 3607500], [445960, 3605500]]
-const RIVER_SOUTH: Array<[number, number]> = [[446650, 3597000], [446800, 3595000], [446600, 3592000], [446400, 3592000], [446600, 3595000], [446450, 3597000]]
-const RIVER_NORTH_WEST: Array<[number, number]> = [[445840, 3605500], [445640, 3607500], [445240, 3610000], [444740, 3613000]]
+    each far enough to end in the haze and narrowing to its end there, so no bright cut edge shows; east bank first (north
+    to south), west bank after, as the map's outline runs */
+const RIVER_NORTH_EAST: Array<[number, number]> = [[444780, 3614300], [444850, 3613200], [445360, 3610000], [445760, 3607500], [445960, 3605500]]
+const RIVER_SOUTH: Array<[number, number]> = [[446650, 3597000], [446790, 3595000], [446590, 3592700], [446510, 3591300], [446470, 3592700], [446610, 3595000], [446450, 3597000]]
+const RIVER_NORTH_WEST: Array<[number, number]> = [[445840, 3605500], [445640, 3607500], [445240, 3610000], [444750, 3613200], [444770, 3614300]]
 
 /** the ground at the Kasr's west foot (ours, Guessed): the map's rise toward the North Palace's +15 buried the gardens' lower
     steps (+4, +8, +11) and fell into the river as one rounded slope. Two rows of weights in the map's blend (their levels are
@@ -86,6 +88,9 @@ export function editCity(cp: J, D: CityDeps): { north: NorthEntry } {
     north.prisms.push(...D.westOutwork({ poly: ow.poly, E0: cp.frame.E0, N0: cp.frame.N0, band: -1 + Number(cp.classes.band), kind: 3, ground: probe.ground }))
     north.drop.push('west-outwork')
   }
+  // the outer city's wall along the river stands without towers (REC bab.outerwall.river: towers never as found; SET D1)
+  const orw = cp.walls.find((w: J) => w.id === 'outer-river-wall')
+  if (orw) delete orw.towers
   const rw = cp.walls.find((w: J) => w.id === 'river-wall-south')
   if (rw) rw.line = QUAY_SOUTH.map((p) => [...p])
   // the map's two points north of the North Gate (+7.5 to N 3601320) give way to the dam's end and the way down

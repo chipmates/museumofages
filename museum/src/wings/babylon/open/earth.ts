@@ -62,9 +62,24 @@ export function toneTexture(ids: string[]): DataTexture {
 
 const hash = (x: N): N => fract(sin(x.mul(12.9898)).mul(43758.5453))
 
-/** trodden earth: the dam's crest, the street past its paving, the way on over the plain (ours) */
+/** trodden earth: the dam's crest, the street past its paving, the way on over the plain (ours). Its grain reads from the
+    flight (10 to 100 m): dusty patches and compacted ones a few metres across, tracks drawn out along the way (north-south),
+    finer foot and hoof lines in them, and near the eye a grit of brick crumbs and pale lime bits */
 export function troddenEarth(p: N): N {
-  return vec3(...TONES.silt).mul(1.08).mul(float(1).add(mx_noise_float(p.mul(0.4)).mul(0.1)).add(mx_noise_float(p.mul(2.3)).mul(0.05))).mul(float(1).sub(smoothstep(0.05, 0.4, mx_noise_float(vec3(p.x.mul(0.6), 0.5, p.z.mul(0.06)))).mul(0.12)))
+  const base = vec3(...TONES.silt).mul(1.08)
+  const patch = mx_noise_float(vec3(p.x.mul(0.13), 1.9, p.z.mul(0.11)))
+  const dusty = mix(base.mul(vec3(0.94, 0.95, 0.97)), base.mul(vec3(1.1, 1.07, 1.02)), smoothstep(-0.35, 0.45, patch))
+  const tone = float(1).add(mx_noise_float(p.mul(0.4)).mul(0.1)).add(mx_noise_float(p.mul(2.3)).mul(0.05))
+  const track = smoothstep(0.05, 0.4, mx_noise_float(vec3(p.x.mul(0.5), 0.5, p.z.mul(0.11)))).mul(0.14)
+  const lines2 = smoothstep(0.1, 0.45, mx_noise_float(vec3(p.x.mul(2.2), 3.1, p.z.mul(0.35)))).mul(0.07)
+  // stains and scuffs a metre or two across, so the crest from 20 to 60 m reads as earth, not as a brushed plane
+  const scuff = smoothstep(0.2, 0.6, mx_noise_float(vec3(p.x.mul(0.7), 6.3, p.z.mul(0.7)))).mul(0.09)
+  const near = smoothstep(70, 18, p.distance(cameraPosition))
+  const cell = vec2(floor(p.x.div(0.28)), floor(p.z.div(0.28)))
+  const g = fract(sin(cell.x.mul(127.1).add(cell.y.mul(311.7))).mul(43758.5))
+  const crumb = step(0.94, g).mul(near), lime = step(g, 0.035).mul(near)
+  const ground = dusty.mul(tone).mul(float(1).sub(track).sub(lines2).sub(scuff))
+  return mix(mix(ground, base.mul(vec3(0.86, 0.66, 0.52)), crumb.mul(0.7)), base.mul(1.25), lime.mul(0.6))
 }
 
 /** a wall's face, a little uneven at every scale, its crown and any top that takes the sky a shade lighter */
@@ -159,7 +174,14 @@ export function blockMaterial(t: ClassTones, tones: DataTexture, count: number, 
   const R = roomRoofs(p, footprint(uPix, vec3(0, 1, 0)))
   const roofK = float(1).add(shade).add(patch).sub(seam.mul(0.14)).mul(R)
   const wet = waterFoot(p, up)
-  const walls = mix(face, bond(face, uPix), baked).mul(wet)
+  // baked faces as the north entry's: patches of a few metres and the courses' own shades over the bond, so a long sunlit
+  // face (the outer city's river wall from the air) never reads as one flat value
+  const tw = normalize(vec2(normalWorld.z.negate(), normalWorld.x).add(vec2(1e-5, 0)))
+  const uw = p.x.mul(tw.x).add(p.z.mul(tw.y))
+  const patchW = smoothstep(-0.25, 0.35, mx_noise_float(vec3(uw.mul(0.32), p.y.mul(0.55), 1.7))).sub(0.5).mul(0.18)
+  const broadW = mx_noise_float(vec3(uw.mul(0.045), p.y.mul(0.08), 5.3)).mul(0.1)
+  const courseW = hash(floor(p.y.div(0.105)).add(floor(uw.div(7.0)).mul(13.1))).sub(0.5).mul(0.06)
+  const walls = mix(face, bond(face.mul(float(1).add(patchW).add(broadW).add(courseW)), uPix), baked).mul(wet)
   // roofs are plastered earth over timber whatever the walls are laid in; a third of the wall's own tone kept
   const top = mix(vec3(...TONES.roof).mul(0.94), walls, 0.35).mul(roofK)
   m.colorNode = mix(mix(walls, top, up), classColour(t, attribute('cls', 'vec2'), attribute('band', 'float')), uView)
@@ -387,7 +409,8 @@ export function groundMaterial(waterLevel: number, plain?: PlainLook, sky?: (d: 
     const col = texture(plain.colour, uv).rgb
     const msk = texture(plain.masks, uv)
     const out = float(1).sub(city).mul(inDom)
-    const crop = col.mul(float(1).add(mx_noise_float(p.mul(0.25)).mul(0.08)).add(mx_noise_float(vec3(p.x.mul(1.2), 0, p.z.mul(1.2))).mul(0.05)))
+    // a field is one crop: only a little uneven inside it (a broad blotch read as patches from the air), finer rows near
+    const crop = col.mul(float(1).add(mx_noise_float(p.mul(0.25)).mul(0.035)).add(mx_noise_float(vec3(p.x.mul(1.2), 0, p.z.mul(1.2))).mul(0.05)))
     const drawn = max(smoothstep(0.3, 0.75, msk.g), smoothstep(0.3, 0.75, msk.b))
     g = mix(g, crop, drawn.mul(out))
     // the canals: damp levees, then water that takes the sky
@@ -473,7 +496,9 @@ export function waterMaterial(A: AirUniforms, sky: (d: N) => N, uTime: N, mirror
   }
   const glint = pow(max(dot(r, A.uSun), 0), 600).mul(60).mul(A.uDay)
   const sheen = pow(max(dot(r, A.uSun), 0), 24).mul(0.25).mul(A.uDay)
-  const c = mix(body, refl, fres).add(vec3(1, 0.82, 0.6).mul(glint.add(sheen)))
+  // far off the mirrored horizon sky outshone the haze over the land round it: past about 5 km the reflection gives way
+  const far = smoothstep(4500, 10000, p.distance(cameraPosition)).mul(0.5)
+  const c = mix(body, refl.mul(float(1).sub(far)), fres).add(vec3(1, 0.82, 0.6).mul(glint.add(sheen)))
   m.colorNode = mix(c, vec3(0.3, 0.33, 0.36), uView.mul(0.6))
   m.fog = false
   void uniform
