@@ -136,7 +136,8 @@ body.forge .desk-low > .walk-panel { animation: none; }
 }
 .desk-ways > .walk-plan .walk-plan-word {
   display: block;
-  font: 500 .8125rem/1 var(--sans);
+  /* the 14 px floor: nothing displayed is smaller */
+  font: 500 .875rem/1 var(--sans);
   letter-spacing: .02em;
   white-space: nowrap;
 }
