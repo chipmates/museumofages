@@ -56,8 +56,9 @@ export function paintPlain(P: Plain, px = 4096): { colour: CanvasTexture; masks:
   m2.fillStyle = 'rgb(0,0,0)'
   m2.fillRect(0, 0, px, px)
   // crops about twenty days after the spring equinox: barley green to yellow-green, wheat green, fallow silt, a field just
-  // watered (damp silt, kept light enough from the air not to read as a shadow)
-  const crop = ['rgb(104,118,62)', 'rgb(132,132,70)', 'rgb(150,132,100)', 'rgb(108,102,78)']
+  // watered (damp silt, kept light enough from the air not to read as a shadow), and the river belt's plots under palms
+  // with a green crop beneath them
+  const crop = ['rgb(104,118,62)', 'rgb(132,132,70)', 'rgb(150,132,100)', 'rgb(108,102,78)', 'rgb(98,110,62)']
   let seed = 7
   const rnd = (): number => ((seed = (seed * 16807) % 2147483647) / 2147483647)
   const poly = (ctx: CanvasRenderingContext2D, pts: Array<[number, number]>): void => {
