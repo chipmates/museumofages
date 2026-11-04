@@ -11,7 +11,7 @@ import * as TSL from 'three/tsl'
 import { APP } from './pages.mjs'
 import { cameraFrom, facesFrom, fittedFov } from './geometry.mjs'
 
-const COURT = join(APP, 'src/wings/babylon/court'), TOWER = join(APP, 'src/wings/babylon/tower'), GARDENS = join(APP, 'src/wings/babylon/gardens'), NABU = join(APP, 'src/wings/babylon/nabu'), HOUSE = join(APP, 'src/wings/babylon/house')
+const COURT = join(APP, 'src/wings/babylon/court'), TOWER = join(APP, 'src/wings/babylon/tower'), GARDENS = join(APP, 'src/wings/babylon/gardens'), NABU = join(APP, 'src/wings/babylon/nabu'), HOUSE = join(APP, 'src/wings/babylon/house'), ESAGILA = join(APP, 'src/wings/babylon/esagila')
 /** the garden's palms as the map page builds them (map.ts PALM_MID) */
 const PALM_MID = { seg: 4, sides: 5, fronds: 16, steps: 4 }
 const MAP = join(APP, 'src/wings/babylon/map'), GATE = join(APP, 'src/wings/babylon/gate'), OPEN = join(APP, 'src/wings/babylon/open')
@@ -84,7 +84,10 @@ export async function mountMap(stop, { reach = 400 } = {}) {
   const hp = json(join(HOUSE, 'house-plan.json'))
   const house = buildHouse(nabu.built, plan, hp)
   const houseBodies = [...house.bodies, lanesBody(house.lanes, hp.flat.level)]
-  const built = house.built
+  // stop 9's Esagila, its ground, the wall before Gate 8 and the street round the precinct's corner
+  const { buildEsagila } = await import(join(ESAGILA, 'esagila-geom.ts'))
+  const esagila = buildEsagila(house.built, plan, json(join(ESAGILA, 'esagila-plan.json')))
+  const built = esagila.built
   const F = makeFrame(plan)
   const stand = (x, z) => built.stand(x, z)
   const path = makePath(cams, F.s, stand)
@@ -113,10 +116,11 @@ export async function mountMap(stop, { reach = 400 } = {}) {
   for (const b of gardens.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`)
   for (const p of planting.plants) if (Math.hypot(p.x - ex, p.z - ez) <= reach) facesFrom(faces, p.geometry, null, () => `map:${p.id}`)
   for (const b of nabu.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
-  const surface = (b) => /^map:(street|ground|water-|gate5-street-|merkes-lanes$)/.test(b)
+  for (const b of esagila.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
+  const surface = (b) => /^map:(street|ground|water-|gate5-street-|merkes-lanes$|esagila-street-|esagila-ground-)/.test(b)
   return {
     court, tower, gardens, planting, nabu,
-    house,
+    house, esagila,
     houseBodies,
     page: 'map', stop: String(stop), frame: "the map's scene metres (x east, z south, y up)", faces, cameras, eyes, reach,
     ground: (x, z) => built.ground(x, z),
