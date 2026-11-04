@@ -46,7 +46,9 @@ test('the niche: opening about 8.0 m, inner step 5.85 m', () => {
 test('the room tops out at +23 and the court bodies replace the map prisms they stand for', () => {
   assert.equal(out.facts.top, 23)
   for (const [id, h] of Object.entries(out.heights)) if (id.startsWith('throne-room')) assert.ok(h[1] <= 23.0001, `${id} over +23`)
-  near(out.heights['throne-room-roof'][1], 23, 1e-3, 'roof top')
-  for (const id of ['throne-room-facade', 'throne-room-roof', 'court-paving', 'south-palace-rooms']) assert.ok(out.ids.includes(id), id)
+  near(out.heights['throne-room-parapet'][1], 23, 1e-3, 'parapet top')
+  // the roof's deck lies under the parapet's top, over the ceiling
+  assert.ok(out.heights['throne-room-roof'][1] < 23 && out.heights['throne-room-roof'][0] >= 22 - 1e-3, `deck ${out.heights['throne-room-roof']}`)
+  for (const id of ['throne-room-facade', 'throne-room-roof', 'throne-room-parapet', 'court-paving', 'south-palace-rooms']) assert.ok(out.ids.includes(id), id)
   assert.ok(!out.left.some((id) => id === 'south-palace-rooms' || id.startsWith('throne-room')), 'a replaced prism is left on the map')
 })

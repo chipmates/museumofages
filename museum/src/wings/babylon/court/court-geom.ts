@@ -19,6 +19,9 @@ export interface CourtFrame {
   sunk: number
   wallTop: number
   top: number
+  /** the roof's deck (its top) and the parapet's thickness round it; the parapet's top is `top` */
+  deck: number
+  parapet: number
   court: Box2
   outer: Box2
   inner: Box2
@@ -40,6 +43,7 @@ export function courtFrame(cp: J, E0: number, N0: number): CourtFrame {
   const N = cp.niche
   return {
     floor, pave: floor + cp.paving.top, sunk: cp.paving.sunk, wallTop: cp.room.wallTop, top: cp.room.top,
+    deck: cp.room.roof?.deck ?? cp.room.top, parapet: cp.room.roof?.parapet ?? 0,
     court, outer, inner, zF: outer.z0, zB: inner.z0, doors,
     niche: { x0: x(N.e0), x1: x(N.e1), s0: x(N.step0), s1: x(N.step1), z: inner.z1, d1: N.d1, d2: N.d2 },
   }
@@ -131,7 +135,11 @@ export function buildCourt(built: Built, mapPlan: J, cp: J): Court {
   bodies.push({ id: 'throne-room-wall-s', geometry: southWall(F), band: wallBand, letters: roomLetters })
   bodies.push({ id: 'throne-room-wall-w', geometry: slab({ x0: outer.x0, x1: inner.x0, z0: inner.z0, z1: inner.z1 }, F.floor, F.wallTop), band: wallBand, letters: roomLetters })
   bodies.push({ id: 'throne-room-wall-e', geometry: slab({ x0: inner.x1, x1: outer.x1, z0: inner.z0, z1: inner.z1 }, F.floor, F.wallTop), band: wallBand, letters: roomLetters })
-  bodies.push({ id: 'throne-room-roof', geometry: slab(outer, F.wallTop, F.top), band: F.wallTop - 1, letters: roomLetters })
+  // the flat roof: an earth deck inside a low parapet that runs round the walls' tops (the hole wound against the outline)
+  const p = F.parapet
+  const deck: Box2 = { x0: outer.x0 + p, x1: outer.x1 - p, z0: outer.z0 + p, z1: outer.z1 - p }
+  bodies.push({ id: 'throne-room-roof', geometry: slab(deck, F.wallTop, F.deck), band: F.wallTop - 1, letters: roomLetters })
+  if (p > 0) bodies.push({ id: 'throne-room-parapet', geometry: prism(rect(outer), F.wallTop, F.top, [rect(deck).reverse()]), band: F.wallTop - 1, letters: roomLetters })
   // the paving, sunk into the palace's floor body so no face of it is a sliver: the court, then the doors, the room and the niche
   const y0 = F.floor - F.sunk, y1 = F.pave
   bodies.push({ id: 'court-paving', geometry: slab(F.court, y0, y1), band: 1e6, letters: ['M', 'M'] })
@@ -149,6 +157,7 @@ export function buildCourt(built: Built, mapPlan: J, cp: J): Court {
     niche: { opening: +(N.x1 - N.x0).toFixed(2), step: +(N.s1 - N.s0).toFixed(2) },
     facade: +(F.court.x1 - F.court.x0).toFixed(2),
     top: F.top,
+    roof: { deck: F.deck, parapet: F.parapet },
   }
   return { F, bodies, built: { ...built, prisms: built.prisms.filter((p) => !TAKEN(p.id)) }, facts }
 }

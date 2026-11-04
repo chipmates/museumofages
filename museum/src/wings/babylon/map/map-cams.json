@@ -61,7 +61,7 @@
    "id": "throne-court",
    "name": "The throne-room facade",
    "hour": "17:15",
-   "stops": 1.0,
+   "stops": 1.35,
    "figure": [
     445653.6,
     3600667.6,
@@ -1453,8 +1453,8 @@
    "kind": "fly",
    "say": "over the palace roofs",
    "phone": {
-    "hfov": 44,
-    "shift": -0.25
+    "hfov": 38,
+    "shift": -0.2
    },
    "hour": "17:15"
   },
@@ -1473,8 +1473,8 @@
    "kind": "fly",
    "t": 120.43,
    "phone": {
-    "hfov": 44.0,
-    "shift": -0.25
+    "hfov": 33,
+    "shift": -0.15
    }
   },
   {
@@ -1492,8 +1492,13 @@
    "kind": "fly",
    "t": 121.83,
    "phone": {
-    "hfov": 44.0,
-    "shift": -0.25
+    "look": [
+     445658.8,
+     3600664.9,
+     25.5
+    ],
+    "hfov": 28,
+    "shift": -0.05
    }
   },
   {
@@ -1511,8 +1516,13 @@
    "kind": "fly",
    "t": 123.23,
    "phone": {
-    "hfov": 44.0,
-    "shift": -0.25
+    "look": [
+     445658.8,
+     3600664.9,
+     23.5
+    ],
+    "hfov": 23,
+    "shift": 0
    }
   },
   {
@@ -1530,8 +1540,13 @@
    "kind": "fly",
    "t": 124.63,
    "phone": {
-    "hfov": 44.0,
-    "shift": -0.25
+    "look": [
+     445658.8,
+     3600664.9,
+     21.5
+    ],
+    "hfov": 20,
+    "shift": 0
    }
   },
   {
@@ -1550,8 +1565,13 @@
    "kind": "fly",
    "say": "over the court: the throne room, the tower above it",
    "phone": {
-    "hfov": 44,
-    "shift": -0.25
+    "look": [
+     445658.8,
+     3600664.9,
+     20.7
+    ],
+    "hfov": 18,
+    "shift": 0
    }
   },
   {
@@ -1573,11 +1593,11 @@
    "phone": {
     "look": [
      445658.8,
-     3600665.0,
-     17.2
+     3600664.9,
+     17.3
     ],
-    "hfov": 30,
-    "shift": -0.1
+    "hfov": 16,
+    "shift": 0
    },
    "hour": "17:15"
   },
@@ -1599,11 +1619,11 @@
    "phone": {
     "look": [
      445658.8,
-     3600665.0,
-     17.2
+     3600664.9,
+     17.3
     ],
-    "hfov": 30,
-    "shift": -0.1
+    "hfov": 16,
+    "shift": 0
    },
    "still": true,
    "say": "the hold on the facade and its three doors",
@@ -1627,11 +1647,11 @@
    "phone": {
     "look": [
      445658.8,
-     3600665.0,
-     17.2
+     3600664.9,
+     17.3
     ],
-    "hfov": 30,
-    "shift": -0.1
+    "hfov": 16,
+    "shift": 0
    },
    "hour": "17:15"
   },
