@@ -256,7 +256,9 @@ const addGate = <T extends Mesh>(m: T, name: string, cast = true): T => {
   return m
 }
 addGate(new Mesh(A.walls, wallMaterial(U, rooms)), 'gate-walls')
-addGate(new Mesh(A.paving, pavingMaterial(U, { ...plan.street.paving, sd: B.street.dir, st: [B.street.dir[1], -B.street.dir[0]], turnZ: 21.3 }, rooms)), 'gate-paving')
+// the plan's paving letters ('R', 'G') stay out of the spec: pavingMaterial reads a spec `cls` as three class tones
+const { cls: _paveCls, restCls: _paveRest, ...paveSpec } = plan.street.paving
+addGate(new Mesh(A.paving, pavingMaterial(U, { ...paveSpec, sd: B.street.dir, st: [B.street.dir[1], -B.street.dir[0]], turnZ: 21.3 }, rooms)), 'gate-paving')
 const schemesOf: Record<string, Array<[string, number]>> = { bull: [['yellow', 0]], dragon: [['white', 1]], lion: [['lionWhite', 2], ['lionYellow', 3]] }
 for (const set of A.panels) {
   if (!set.count) continue
