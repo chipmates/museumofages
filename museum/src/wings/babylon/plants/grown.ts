@@ -154,7 +154,7 @@ export function grow(spec: GrowSpec): Grown {
       const nrm = n0.clone().multiplyScalar(0.45).addScaledVector(out3, 0.55).normalize()
       // inner sprays darker, upper and outer ones lighter; a few a shade off the kind's colour
       const depth = Math.min(1, centre.clone().sub(cv).setY(0).length() / Math.max(0.5, spec.radius))
-      const tone = (0.78 + 0.3 * depth + (r() - 0.5) * 0.18) * (0.9 + 0.2 * Math.min(1, Math.max(0, centre.y / spec.height)))
+      const tone = (0.86 + 0.3 * depth + (r() - 0.5) * 0.18) * (0.9 + 0.2 * Math.min(1, Math.max(0, centre.y / spec.height)))
       const hue = (r() - 0.5) * 0.12
       const col: V3 = [spec.leaf[0] * tone * (1 + hue), spec.leaf[1] * tone, spec.leaf[2] * tone * (1 - hue)]
       const nn: [Vector3, Vector3, Vector3] = [nrm, nrm, nrm]
