@@ -15,6 +15,8 @@
   {"match": "^open:palm-outer", "part": "the date palms of the outer city's gardens", "piece": "bab.green.outercity", "stops": ["open"]},
   {"match": "^open:field", "part": "the plain's fields", "piece": "bab.green.field.plain", "surface": true, "stops": ["open"]},
   {"match": "^open:canal", "part": "the plain's canals", "piece": "bab.green.water.channels", "surface": true, "stops": ["open"]},
+  {"match": "^open:garden", "part": "the outer city's garden plots and their channels north of the moat (a type, every line ours)", "piece": "bab.green.outercity", "surface": true, "stops": ["open"]},
+  {"match": "^open:paving-north$", "part": "the street's paving from the North Gate's court to the dam's south end (the gate's paving material)", "piece": "bab.paving.limestone", "surface": true, "note": "the breccia strips are bab.paving.breccia, the brick outside the stone bab.paving.outer; the street's levels bab.street.north.surface", "stops": ["open"]},
   {"match": "^map:ground$", "part": "the ground", "piece": "bab.ground", "surface": true},
   {"match": "^map:street$", "part": "the street (north of the gate)", "piece": "bab.street.north.surface", "surface": true, "stops": ["1", "2", "3", "open"]},
   {"match": "^map:street$", "part": "the street (south of the gate)", "piece": "bab.street.south-gate", "surface": true, "stops": ["4", "5", "6"]},
