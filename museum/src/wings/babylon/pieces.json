@@ -1,5 +1,5 @@
 {
- "about": "Every body the Babylon pages build, named to its record row: match is a regular expression on the body's name as the kit's mounts give it (map:<id>, gate:<id>, panel:<id>, life:<id>); the first rule that matches wins. part groups bodies for the coverage map; piece is the row the body's form shows; plan, where given, is the row its foot band shows in the evidence switch (the plan as dug). An empty piece means the record has no row yet; needs names the row it asks for. stops limits a rule to those stops.",
+ "about": "Every body the Babylon pages build, named to its record row: match is a regular expression on the body's name as the kit's mounts give it (map:<id>, gate:<id>, panel:<id>, life:<id>); the first rule that matches wins. part groups bodies for the coverage map; piece is the row the body's form shows; plan, where given, is the row its foot band shows in the evidence switch (the plan as dug). An empty piece means the record has no row yet; needs names the row it asks for. stops limits a rule to those stops; strips, on a paving, names the row of each of its strips, the middle first (the stone band, its sides, the rest to the walls). The class each row shows comes from record-classes.json through record.ts.",
  "rules": [
   {"match": "^map:ground$", "part": "the ground", "piece": "bab.ground", "surface": true},
   {"match": "^map:street$", "part": "the street (north of the gate)", "piece": "bab.street.north.surface", "surface": true, "stops": ["1", "2", "3", "open"]},
@@ -84,7 +84,7 @@
   {"match": "^gate:skin:", "part": "the front gate's glazed faces (ground, bands, plinth)", "piece": "bab.gate.front.body", "plan": "bab.gate.front.plan", "note": "the rosette plinth on these faces is bab.gate.rosetteplinth"},
   {"match": "^gate:ped-", "part": "the pedestals", "piece": "bab.gate.pedestals.body", "plan": "bab.gate.pedestals"},
   {"match": "^gate:leaf-", "part": "the door leaves", "piece": "bab.gate.doors"},
-  {"match": "^gate:paving$", "part": "the paving (limestone and breccia)", "piece": "bab.paving.limestone", "surface": true, "note": "the breccia strips are bab.paving.breccia, the brick outside the stone bab.paving.outer"},
+  {"match": "^gate:paving$", "part": "the paving (limestone and breccia)", "piece": "bab.paving.limestone", "strips": ["bab.paving.limestone", "bab.paving.breccia", "bab.paving.outer"], "surface": true, "note": "the breccia strips are bab.paving.breccia, the brick outside the stone bab.paving.outer"},
   {"match": "^gate:bronze-", "part": "the metal animals", "piece": "bab.gate.metalanimals"},
   {"match": "^panel:lion-", "part": "the lions (glazed panels)", "piece": "bab.lions.frieze"},
   {"match": "^panel:reveal-", "part": "the reveals' animals", "piece": "bab.gate.reveals"},

@@ -1,18 +1,21 @@
-// THE EVIDENCE SWITCH PER RECORD ROW, from what a page builds: every body named to its row by the wing's rules
-// (src/wings/babylon/pieces.json), its class read from the page's own letters, written as the JSON the evidence check's
-// --switch reads (piece -> the strongest class any of its bodies shows) and one line per body.
+// THE EVIDENCE SWITCH PER RECORD ROW, from what a page builds: every body named to its rows by the wing's rules
+// (src/wings/babylon/pieces.json) and given their classes from the class file (record-classes.json) through the same
+// module the pages paint from (src/wings/babylon/record.ts), written as the JSON the evidence check's --switch reads
+// (row -> the strongest class any body shows for it) and one line per body.
 //
 //   node --experimental-strip-types --no-warnings forge/babylon/switch.mjs --page gate --out <shown.json> [--bodies <tsv>]
 //
-// The letters are the plans' old ones, put on the record's ladder: M (measured, dug) -> in place, R (rebuilt from finds,
-// drawn but not dug, or from a text) -> known, G and T (guessed, a type) -> guessed. A body shows its plan row in its
-// foot band (the plan letter) and its body row above it (the weaker of its plan and height letters); a rule without a
-// plan row takes the weaker letter for its one row. A body no rule names, or whose letters the plans do not give, is
-// listed and left out of the JSON, never guessed.
+// A body shows its plan row in its foot band and its body row above it; a rule without a plan row shows its body row
+// to the foot; the paving shows one row per strip. The plans' letters count only for a row the class file lacks, at
+// the lower rung (M known; R, G, T guessed): such a body is listed under "no row" and still written, so the check
+// refuses a row the record does not hold. A row held at some stops only (the street's) is read part by part with each
+// part's own letters, as the page paints it (record.ts). A body no rule names is listed and left out of the JSON.
 import { readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { APP } from './pages.mjs'
 import { MOUNTS } from './mounts.mjs'
+import { isLetter, recordNamer } from '../../src/wings/babylon/record.ts'
+import { buildPlan } from '../../src/wings/babylon/map/plan.ts'
 
 const args = process.argv.slice(2)
 const opt = (k, d) => (args.includes(k) ? args[args.indexOf(k) + 1] : d)
@@ -21,14 +24,14 @@ if (PAGE !== 'gate') { console.error('--page gate (the one page with a switch to
 const OUT = opt('--out', null)
 if (!OUT) { console.error('--out <shown.json>'); process.exit(2) }
 
-const CLASS = { M: 'in place', R: 'known', G: 'guessed', T: 'guessed' }
-const RANK = { guessed: 1, known: 2, 'in place': 3 }
-const weaker = (a, b) => (RANK[CLASS[a]] <= RANK[CLASS[b]] ? a : b)
+const RANK = { blank: 0, guessed: 1, known: 2, 'in place': 3 }
 const json = (p) => JSON.parse(readFileSync(p, 'utf8'))
-const rules = json(join(APP, 'src/wings/babylon/pieces.json')).rules.map((r) => ({ ...r, re: new RegExp(r.match) }))
+// the gate page takes its rows at stop 3, as gate.ts does (RECORD_STOP)
+const STOP = '3'
+const name = recordNamer(json(join(APP, 'src/wings/babylon/pieces.json')), json(join(APP, 'src/wings/babylon/record-classes.json')), STOP)
 const mapPlan = json(join(APP, 'src/wings/babylon/map/map-plan.json'))
 
-const M = await MOUNTS.gate('3', { cityReach: 'all' })
+const M = await MOUNTS.gate(STOP, { cityReach: 'all' })
 const { B, plan } = M
 const bodies = [...new Set(M.faces.map((f) => f.body))].map((b) => b.replace(/#\d+$/, ''))
 const names = [...new Set(bodies)]
@@ -68,23 +71,36 @@ function letters(name) {
   return null
 }
 
-const shown = {}, lines = [['body', 'plan row', 'body row', 'letters', 'plan shows', 'body shows', 'note'].join('\t')]
-const unnamed = [], unlettered = []
+/** the letters of each part a page paints on its own: the street per stretch (mass.ts: a stretch takes its far
+    point's letter, the deck is the bridge's), any other body as one */
+const streetParts = (() => {
+  const P = buildPlan(mapPlan).street, out = new Map()
+  for (let i = 0; i + 1 < P.length; i++) if (!P[i].deck) out.set(P[i + 1].cls, [P[i + 1].cls, P[i + 1].cls])
+  return [...out.values()]
+})()
+const partsOf = (body) => (body === 'map:street' ? streetParts : [letters(body)])
+
+const shown = {}, lines = [['body', 'plan row', 'body row', 'letters', 'plan shows', 'body shows', 'note', 'from'].join('\t')]
+const unnamed = [], noRow = []
 const show = (piece, cls) => { if (piece && (!shown[piece] || RANK[cls] > RANK[shown[piece]])) shown[piece] = cls }
-for (const name of names) {
-  const r = rules.find((x) => x.re.test(name) && (!x.stops || x.stops.includes('3')))
-  if (!r || !r.piece) { unnamed.push([r?.part ?? name, r?.needs ?? 'no rule names this body']); continue }
-  const L = letters(name)
-  if (!L || !CLASS[L[0]] || !CLASS[L[1]]) { unlettered.push(name); continue }
-  const w = weaker(L[0], L[1])
-  if (r.plan) { show(r.plan, CLASS[L[0]]); show(r.piece, CLASS[w]) } else show(r.piece, CLASS[w])
-  lines.push([name, r.plan || '-', r.piece, L.join('/'), r.plan ? CLASS[L[0]] : '-', CLASS[w], r.note ?? ''].join('\t'))
+for (const body of names) for (const L of partsOf(body)) {
+  const c = name(body, L && isLetter(L[0]) && isLetter(L[1]) ? L : null)
+  if (!c.piece) { unnamed.push([c.rule?.part ?? body, c.missing.join('; ')]); break }
+  if (c.missing.length) noRow.push([body, c.missing])
+  if (c.plan) show(c.plan, c.foot)
+  show(c.piece, c.above)
+  for (const s of c.strips) show(s.row, s.shown)
+  const strips = c.strips.length ? `strips ${c.strips.map((s) => `${s.row} ${s.shown}`).join(', ')}` : ''
+  lines.push([body, c.plan || '-', c.piece, L ? L.join('/') : '-', c.plan ? c.foot : '-', c.above, [c.rule?.note ?? '', strips].filter(Boolean).join('; '), c.missing.length ? `letters (no row ${c.missing.join(', ')})` : 'record'].join('\t'))
 }
 writeFileSync(OUT, JSON.stringify(shown, null, 1))
 if (opt('--bodies', null)) writeFileSync(opt('--bodies'), lines.join('\n') + '\n')
-console.log(`switch for the ${PAGE} page: ${names.length} bodies, ${lines.length - 1} named with letters, ${Object.keys(shown).length} record rows shown`)
+console.log(`switch for the ${PAGE} page at stop ${STOP}: ${names.length} bodies, ${lines.length - 1} lines named to a row (a held row's body by its parts), ${Object.keys(shown).length} record rows shown`)
 const groups = new Map()
-for (const [part, needs] of unnamed) { const k = `${part}: ${needs}`; groups.set(k, (groups.get(k) ?? 0) + 1) }
-console.log(`no row (${unnamed.length} bodies):${groups.size ? '' : ' none'}`)
+for (const [part, why] of unnamed) { const k = `${part}: ${why}`; groups.set(k, (groups.get(k) ?? 0) + 1) }
+console.log(`no rule names (${unnamed.length} bodies):${groups.size ? '' : ' none'}`)
 for (const [k, n] of groups) console.log(`  ${n} x ${k}`)
-console.log(`no letters in the plans (${unlettered.length}): ${unlettered.join('; ') || 'none'}`)
+const rows = new Map()
+for (const [body, miss] of noRow) for (const m of miss) rows.set(m, [...(rows.get(m) ?? []), body])
+console.log(`no row in the class file (${noRow.length} bodies, shown by their letters):${rows.size ? '' : ' none'}`)
+for (const [m, bs] of rows) console.log(`  ${m}: ${bs.length} bodies, first ${bs[0]}`)
