@@ -216,7 +216,7 @@ export async function mountOpen(stop = '1', opts = {}) {
   const { buildPlan } = await import(join(MAP, 'plan.ts'))
   // as open.ts: the north entry replaces the map's North Gate, dam walls and north wall, trims the North Fortification
   // and opens the North Palace's two courts; the houses are rebuilt per lot
-  let NORTH = null, edited = null
+  let NORTH = null, edited = null, NP = null
   const { westOutwork } = await import(join(OPEN, 'outwork.ts'))
   const { editCity } = await import(join(OPEN, 'city.ts'))
   const cityEdit = (cp) => {
@@ -227,13 +227,19 @@ export async function mountOpen(stop = '1', opts = {}) {
   // the page's letters for its own bodies (the evidence switch), and the bodies drawn without faces here: the palms by
   // row (groves Known as a mass, the rest Guessed, as green.ts) and the plain's fields and canals (ours, Guessed)
   const openLetters = new Map()
-  const extraBodies = [['open:palm-canal', ['R', 'R']], ['open:palm-river', ['R', 'R']], ['open:palm-city', ['G', 'G']], ['open:palm-outer', ['G', 'G']], ['open:field', ['G', 'G']], ['open:canal', ['G', 'G']]]
+  const extraBodies = [['open:palm-canal', ['R', 'R']], ['open:palm-river', ['R', 'R']], ['open:palm-city', ['G', 'G']], ['open:palm-outer', ['G', 'G']], ['open:field', ['G', 'G']], ['open:canal', ['G', 'G']], ['open:garden', ['G', 'G']]]
   for (const [n, L] of extraBodies) openLetters.set(n, L)
   {
     const city = buildPlan(edited)
     const W2G0 = G.W2G
     { let k = 0; for (const f of G.faces) if (!f.body.startsWith('map:house')) G.faces[k++] = f; G.faces.length = k }
     for (const b of [...NORTH.prisms, ...NORTH.arched]) openLetters.set(`open:${b.id}`, [b.plan, b.height])
+    // the street's paving north of the North Gate's south door (north-paving.ts), laid by the gate's paving material
+    const { NORTH_PAVED, northPaving } = await import(join(OPEN, 'north-paving.ts'))
+    NP = northPaving({ frame: NORTH.frame, ...NORTH_PAVED, level: (x, z) => city.streetAt(x, z).level })
+    const pc = json(join(GATE, 'gate-plan.json')).street.paving.cls
+    openLetters.set('open:paving-north', [pc, pc])
+    facesFrom(G.faces, NP.geometry, W2G0.clone().multiply(NP.matrix), () => 'open:paving-north')
     const housePlan = json(join(MAP, 'map-plan.json')).houses.plan
     const N = northMeshes(NORTH)
     const nid = N.geometry.getAttribute('nid')
@@ -274,6 +280,8 @@ export async function mountOpen(stop = '1', opts = {}) {
   })
   return {
     ...G, page: 'open', stop: String(stop), cameras, openLetters, extraBodies,
+    // the map's street and ground are masked on the page under the north paving too
+    masked: (p, a, b) => G.masked(p, a, b) || ((/^map:(street|ground)$/.test(a) || /^map:(street|ground)$/.test(b)) && (() => { const w = new THREE.Vector3(p.x, 0, p.z).applyMatrix4(G.G2W); return NP.inside(w.x, w.z) })()),
     frame: "the gate's frame (x west, z north out of the face, y up from the +15.40 street); the flight's cameras moved into it",
     track: (dt = 0.25) => { const out = []; for (let i = 0; i * dt <= flight.duration + 1e-9; i++) out.push({ t: +(i * dt).toFixed(3), ...at(i * dt) }); return out },
   }

@@ -197,7 +197,8 @@ export function resolveFlight(f: J, F: Frames): FlightSpec {
     const [x, z] = F.scene(p.utm[0], p.utm[1])
     return [x, p.y, z]
   }
-  const lookKey = (k: J): LookKey => ({ t: k.t, at: k.walk ? F.walkLook : point(k) })
+  // a walk key may stand raised (`dy` metres over the walk's look, far down the street): the sky over a wall the camera nears
+  const lookKey = (k: J): LookKey => ({ t: k.t, at: k.walk ? [F.walkLook[0], F.walkLook[1] + (k.dy ?? 0), F.walkLook[2]] : point(k) })
   return {
     duration: f.duration,
     points: f.points.map(point),
