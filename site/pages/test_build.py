@@ -1016,8 +1016,8 @@ class Case(unittest.TestCase):
         whose the number is or what the claim was, the same fields stop the build."""
         page = self.topic_page("triceratops")
         cases = [
-            ({"en": (r", and the largest reached about 9\sm", ", and some reached about 9 m"),
-              "de": (r", die größten erreichten etwa 9\sm", ", manche erreichten etwa 9 m")},
+            ({"en": (r" often given for the largest\. ", " often given. "),
+              "de": (r", die oft für die größten genannt werden\. ", ", die oft genannt werden. ")},
              "9 m only as the largest Triceratops's round figure"),
             ({"en": (r"Printed beside the 9\sm, again with no method\. ", ""),
               "de": (r"Im selben Verzeichnis neben den 9\sm, wieder ohne Methode\. ", "")},
