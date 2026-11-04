@@ -140,6 +140,16 @@
   margin: 0;
   font-size: 14px;
 }
+/* the legal notice and the privacy page stay in sight at the rows' foot when the rows run longer than the
+   panel (the language list open, a short window): on the panel's own ground, the rows above pass under them */
+:root[data-na-panel='open']:has(#wing[data-film='wide']) #instruments .inst-links > :is([data-lobby='legalNotice'], [data-lobby='privacy']) {
+  position: sticky;
+  z-index: 1;
+  /* the sheet's gradient where these rows stand */
+  background: color-mix(in srgb, var(--na-lapis) 45%, var(--na-abyss));
+}
+:root[data-na-panel='open']:has(#wing[data-film='wide']) #instruments .inst-links > [data-lobby='legalNotice'] { bottom: 44px; }
+:root[data-na-panel='open']:has(#wing[data-film='wide']) #instruments .inst-links > [data-lobby='privacy'] { bottom: 0; }
 /* the rows read at the museum's own floor inside a wing */
 :root[data-na-panel='open'] #instruments :is(.inst-links button, .inst-links a, .inst-links summary) {
   font-size: 15px;
