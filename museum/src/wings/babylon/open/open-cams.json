@@ -33,7 +33,7 @@
   }
  },
  "flight": {
-  "duration": 26,
+  "duration": 28,
   "points": [
    {
     "utm": [
@@ -41,7 +41,7 @@
      3601950
     ],
     "y": 330,
-    "says": "the first frame (reading B2)"
+    "says": "the first frame (reading B2, the working start until the start is decided)"
    },
    {
     "street": 906.62,
@@ -91,7 +91,7 @@
     "street": 205.46,
     "across": -7.76,
     "y": 9.3,
-    "says": "through the North Gate north door, its court and its south door"
+    "says": "through the North Gate north door, its court and its south door, on the gate's axis"
    },
    {
     "street": 185.48,
@@ -99,8 +99,25 @@
     "y": 9.75
    },
    {
-    "street": 168.56,
-    "across": -4.66,
+    "street": 178.49,
+    "across": -6.52,
+    "y": "eye"
+   },
+   {
+    "street": 171.5,
+    "across": -6.19,
+    "y": "eye",
+    "says": "out of the south door still on the axis"
+   },
+   {
+    "street": 164.17,
+    "across": -4.46,
+    "y": "eye",
+    "says": "easing onto the gate sketch's street line"
+   },
+   {
+    "street": 156.69,
+    "across": -1.61,
     "y": "eye"
    },
    {
@@ -136,11 +153,11 @@
    },
    {
     "t": 15,
-    "v": 0.28
+    "v": 0.26
    },
    {
     "t": 18,
-    "v": 0.14
+    "v": 0.12
    },
    {
     "t": 21,
@@ -148,16 +165,20 @@
    },
    {
     "t": 24,
-    "v": 0.025
+    "v": 0.035
    },
    {
     "t": 26,
+    "v": 0.012
+   },
+   {
+    "t": 28,
     "v": 0
    }
   ],
   "walk": 0,
   "walkSays": "no walk at the end: the flight comes to rest at the landing",
-  "walkFrom": 24,
+  "walkFrom": 26,
   "look": [
    {
     "t": 0,
@@ -181,24 +202,24 @@
      445680.2,
      3601121.3
     ],
-    "y": 4,
+    "y": 6,
     "says": "the moat and the palace north wall"
    },
    {
-    "t": 12,
+    "t": 11,
     "utm": [
      445702.1,
      3601081.8
     ],
-    "y": 2,
+    "y": 4,
     "says": "the limestone foot at the waterline"
    },
    {
-    "t": 20,
+    "t": 20.5,
     "walk": true
    },
    {
-    "t": 26,
+    "t": 28,
     "walk": true
    }
   ],
@@ -225,22 +246,22 @@
      445680.2,
      3601121.3
     ],
-    "y": 0
+    "y": 4
    },
    {
-    "t": 12,
+    "t": 11,
     "utm": [
      445702.1,
      3601081.8
     ],
-    "y": 0
+    "y": 6
    },
    {
-    "t": 20,
+    "t": 20.5,
     "walk": true
    },
    {
-    "t": 26,
+    "t": 28,
     "walk": true
    }
   ],
@@ -261,12 +282,11 @@
    },
    {
     "t": 20,
-    "v": 35
+    "v": 34
    },
    {
-    "t": 26,
-    "v": 31,
-    "says": "narrower at the landing than the desktop so the double gate stands bigger in the tall frame"
+    "t": 28,
+    "v": 28
    }
   ]
  },
