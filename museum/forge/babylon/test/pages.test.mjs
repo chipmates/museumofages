@@ -3,7 +3,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { APP, PAGES, STOPS, checkPort, devicePixels, parseSize, resolveStop } from '../pages.mjs'
+import { APP, PAGES, STOPS, checkPort, devicePixels, parseSize, portRange, resolveStop } from '../pages.mjs'
 import { writableIn } from '../serve.mjs'
 
 test('every stop of the map film is in the kit, by number and id, in order', () => {
@@ -34,7 +34,11 @@ test('device pixels are the CSS size times the ratio', () => {
 
 test('the kit keeps to its ports', () => {
   assert.equal(checkPort(5214), 5214)
-  for (const p of [5199, 5400, 5209, 5220]) assert.throws(() => checkPort(p))
+  for (const p of [5199, 5400, 5209, 5220]) assert.throws(() => checkPort(p, [5210, 5219]))
+  const own = portRange('5220-5229')
+  assert.equal(checkPort(5221, own), 5221)
+  for (const p of [5214, 5230]) assert.throws(() => checkPort(p, own))
+  for (const bad of ['5190-5199', '5390-5400', '5229-5220', 'x']) assert.throws(() => portRange(bad))
 })
 
 test('the writer takes files inside its folder only', () => {
