@@ -39,7 +39,7 @@
 .frame__img{width:100%;height:100%;object-fit:cover}
 /* The control's row is kept from the first paint, and a flex row has no line box to grow when the button appears. */
 .place__controls{display:flex;margin-top:10px;height:44px}
-/* A place that waits for a press: the sound control joins the row while the film is out, and a long word wraps. */
+/* A place that waits for a press: the sound control stands in the row before the press, and a long word wraps. */
 .hero__plate[data-press] .place__controls{flex-wrap:wrap;gap:8px;height:auto;min-height:44px}
 .hero__plate[data-press] .plate-btn{flex:0 0 auto;white-space:nowrap}
 /* The four grades, shown by a piece inside its own box. */
@@ -299,6 +299,8 @@
   .hero__label .label__title{font-size:1rem}
   .hero__label .label__what{font-size:.8125rem}
   .place__controls{position:absolute;right:0;top:100%}
+  /* the sound control under the film's, so the pair keeps clear of the label at the left */
+  .hero__plate[data-press] .place__controls{flex-direction:column;align-items:flex-end}
   /* On the museum's page the film's music credit hangs under the label: the first screen keeps room for its two lines. */
   .hero--home .hero__first{padding-bottom:166px}
   .hero__text{grid-column:9/13;grid-row:2;display:flex;flex-direction:column;position:relative;z-index:2;padding:0 0 0 12px}

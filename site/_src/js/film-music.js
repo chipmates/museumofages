@@ -1,6 +1,8 @@
 /* The music under the landing's film. It starts only from a press on the film's control (a browser plays sound
    only after a gesture), follows that control's pauses, and fades out when the film gives the frame back to the
-   still. Its address and the sound button's words come from the place (data-music, data-sound-on, data-sound-off). */
+   still. The sound button stands beside the control from the moment the control does, so sound can be turned off
+   before the press. Its address and the sound button's words come from the place (data-music, data-sound-on,
+   data-sound-off). */
 (function () {
   var fig = document.querySelector('figure[data-press][data-music]');
   if (!fig) return;
@@ -34,8 +36,13 @@
   var on = fig.getAttribute('data-sound-on') || 'Sound on', off = fig.getAttribute('data-sound-off') || 'Sound off';
   function label() { text.textContent = muted ? on : off; sound.setAttribute('aria-pressed', muted ? 'true' : 'false'); }
   label();
-  sound.hidden = true;   // it stands beside the film only while the film is out
-  if (btn) btn.insertAdjacentElement('afterend', sound);
+  sound.hidden = true;
+  if (btn) {
+    btn.insertAdjacentElement('afterend', sound);
+    var follow = function () { sound.hidden = btn.hidden; };
+    follow();
+    new MutationObserver(follow).observe(btn, { attributes: true, attributeFilter: ['hidden'] });
+  }
   sound.addEventListener('click', function () { muted = !muted; a.muted = muted; label(); });
 
   function stopFade() { if (fading) { clearInterval(fading); fading = null; } }
@@ -53,7 +60,6 @@
     var starting = before !== btn.getAttribute('data-stop');
     if (!starting) { stopFade(); a.pause(); return; }
     stopFade();
-    sound.hidden = false;
     fig.classList.add('is-film');
     a.volume = LOUD;
     if (more && before.indexOf(more) === 0) a.currentTime = 0;   // the whole film starts from its beginning
@@ -62,7 +68,7 @@
 
   if (title) new MutationObserver(function () {
     var showing = (title.textContent || '').trim() === filmTitle;
-    if (!showing) { sound.hidden = true; fig.classList.remove('is-film'); }
+    if (!showing) fig.classList.remove('is-film');
     if (!showing && !a.paused) fadeOut(function () { a.currentTime = 0; });
   }).observe(title, { childList: true, characterData: true, subtree: true });
 })();
