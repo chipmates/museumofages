@@ -17,7 +17,7 @@ import type { AirUniforms } from './air'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
 const { mx_worley_noise_vec2 } = TSL as unknown as Record<string, N>
-const { abs, attribute, cameraPosition, cameraViewMatrix, clamp, dot, float, floor, fract, instanceIndex, max, min, mix, mx_noise_float, normalWorld, normalize, positionGeometry, positionWorld, pow, reflect, sin, smoothstep, step, texture, uniform, vec2, vec3, vec4 } = TSL as unknown as Record<string, N>
+const { abs, attribute, cameraPosition, cameraViewMatrix, clamp, dot, float, floor, fract, instanceIndex, max, min, mix, mod, mx_noise_float, normalWorld, normalize, positionGeometry, positionWorld, pow, reflect, sin, smoothstep, step, texture, uniform, vec2, vec3, vec4 } = TSL as unknown as Record<string, N>
 
 const lin = (v: number): number => (v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)
 const srgb = (r: number, g: number, b: number): [number, number, number] => [lin(r / 255), lin(g / 255), lin(b / 255)]
@@ -123,8 +123,10 @@ function roomRoofs(p: N, w: N): N {
   // the parapet between rooms, 0.6 m, box-filtered over the pixel
   const line = max(lines(x, S, 0.3, w), lines(p.z, S, 0.3, w))
   const tone = id.sub(0.5).mul(0.16).add(1)
-  // a court in about one room in eight: a square about a third of the room across, in shade
-  const court = step(0.875, id).mul(smoothstep(0.19, 0.16, max(abs(fx.sub(0.5)), abs(fz.sub(0.5)))))
+  // a court in about one room in eight: a square about a third of the room across, in shade; a far device only: within
+  // about half a kilometre a painted court reads as a flat dark square (it has no walls), so it fades out there
+  const far = smoothstep(350, 700, p.distance(cameraPosition))
+  const court = step(0.875, id).mul(smoothstep(0.19, 0.16, max(abs(fx.sub(0.5)), abs(fz.sub(0.5))))).mul(far)
   return tone.mul(float(1).sub(line.mul(0.18))).mul(float(1).sub(court.mul(0.4)))
 }
 
@@ -176,22 +178,31 @@ export function boxMaterial(t: ClassTones): Material {
 
 /** the houses: mud brick under mud plaster with a white gypsum wash (REC bab.houses.type), each house its own shade; the
     walls a little darker at the foot where the wash wears; the roofs of trodden mud plaster, each range its own shade, the
-    parapet's lip catching the light and the shade just inside it (per instance `hinfo`: house, range, the ground's level, the class band; and `size`) */
-export function houseMaterial(t: ClassTones): Material {
+    parapet's lip catching the light and the shade just inside it; each block between streets its own value, so from the air the
+    blocks read apart and the streets between them (per instance `hinfo`: house, range + 8 x the butted sides, the ground's
+    level, the block; and `size`); `band` is the class band's height over the ground */
+export function houseMaterial(t: ClassTones, band = 0): Material {
   const m = new MeshStandardNodeMaterial({ roughness: 0.95, metalness: 0 })
   const info = attribute('hinfo', 'vec4'), size = attribute('size', 'vec3')
-  const h = info.x, part = info.y, gy = info.z
+  const h = info.x, part = mod(info.y, 8), gy = info.z
+  const butt = floor(info.y.div(8))
   const g = positionGeometry, p = positionWorld
   const a = hash(h.add(0.37)), b = hash(h.mul(1.71).add(5.3)), r = hash(h.mul(3.1).add(part.mul(7.3)).add(1.9))
+  const blockK = hash(info.w.mul(0.917).add(6.1)).sub(0.5).mul(0.3).add(1)
   const lean = mix(vec3(0.97, 0.99, 1.03), vec3(1.03, 1.0, 0.95), b)
   const wash = vec3(...TONES.plaster).mul(a.sub(0.5).mul(0.24).add(1)).mul(lean)
   const above = p.y.sub(gy)
   const wall = wash.mul(mix(float(0.8), float(1), smoothstep(0.15, 0.9, above))).mul(float(1).add(mx_noise_float(p.mul(vec3(0.5, 0.12, 0.5))).mul(0.06)))
-  const ex = float(0.5).sub(abs(g.x)).mul(size.x), ez = float(0.5).sub(abs(g.z)).mul(size.z)
-  const e = min(ex, ez)
-  // a roof is trodden mud plaster: about a third of them bare of any wash, darker and browner; each range its own shade
-  const bare = step(0.64, hash(h.mul(2.3).add(8.1)))
-  const roofTone = mix(vec3(...TONES.roof), vec3(...TONES.mud).mul(1.06), bare.mul(0.75)).mul(r.sub(0.5).mul(0.2).add(1)).mul(lean)
+  // the distance to the box's nearest side that is a parapet (the house's outside or its court), not a seam where two rooms
+  // of the house meet: a lip on every room drew each roof as a row of planks
+  const side = (k: number): N => mod(floor(butt.div(k)), 2).mul(100)
+  const e = min(min(float(0.5).add(g.x).mul(size.x).add(side(1)), float(0.5).sub(g.x).mul(size.x).add(side(2))), min(float(0.5).add(g.z).mul(size.z).add(side(4)), float(0.5).sub(g.z).mul(size.z).add(side(8))))
+  // a roof is trodden mud plaster: nearly half of them bare of any wash, darker and browner; each house its own value, each
+  // range and each room its own shade, so neighbours never read as one laid tile
+  const bare = step(0.55, hash(h.mul(2.3).add(8.1)))
+  const own = hash(h.mul(5.37).add(2.9)).sub(0.5).mul(0.16).add(1)
+  const room = hash(float(instanceIndex).mul(0.731).add(4.2)).sub(0.5).mul(0.08).add(1)
+  const roofTone = mix(vec3(...TONES.roof), vec3(...TONES.mud).mul(1.06), bare.mul(0.8)).mul(r.sub(0.5).mul(0.12).add(1)).mul(own).mul(room).mul(blockK).mul(lean)
   const patch = mx_noise_float(p.mul(0.35)).mul(0.08).add(mx_noise_float(p.mul(1.4)).mul(0.04))
   const lip = smoothstep(0.34, 0.22, e)
   const inner = smoothstep(0.3, 0.42, e).mul(smoothstep(0.9, 0.6, e))
@@ -201,7 +212,11 @@ export function houseMaterial(t: ClassTones): Material {
   const jx = smoothstep(0.86, 0.93, abs(fract(p.x.div(0.33)).sub(0.5)).mul(2)), jz = smoothstep(0.86, 0.93, abs(fract(p.z.div(0.33)).sub(0.5)).mul(2))
   const court = vec3(...TONES.baked).mul(0.9).mul(float(1).add(r.sub(0.5).mul(0.12))).mul(float(1).sub(max(jx, jz).mul(0.25))).mul(mix(float(0.82), float(1), smoothstep(0.3, 1.2, e)))
   const isCourt = step(3.5, part)
-  m.colorNode = mix(mix(mix(wall, roof, up), court, isCourt.mul(up)), classColour(t, attribute('cls', 'vec2'), info.w), uView)
+  // a butted side's face shows only as the step between two rooms' roofs: the roof's plaster, not the wall's wash (a washed
+  // step drew a bright dash at every seam)
+  const seam = max(max(step(0.499, g.x.negate()).mul(side(1)), step(0.499, g.x).mul(side(2))), max(step(0.499, g.z.negate()).mul(side(4)), step(0.499, g.z).mul(side(8)))).div(100)
+  const face = mix(wall, roof.mul(0.9), seam)
+  m.colorNode = mix(mix(mix(face, roof, up), court, isCourt.mul(up)), classColour(t, attribute('cls', 'vec2'), gy.add(band)), uView)
   return m
 }
 

@@ -150,16 +150,16 @@ const HOUSES = { count: 0, open: 0 }
     const H = rebuildHouses(city.boxes.filter((b) => b.group === 'house'), city.ground)
     const geo = new BoxGeometry(1, 1, 1)
     geo.deleteAttribute('uv')
-    const im = new InstancedMesh(geo, houseMaterial(tones), H.boxes.length)
+    const im = new InstancedMesh(geo, houseMaterial(tones, Number(cityPlan.classes.band)), H.boxes.length)
     const n = H.boxes.length
-    // packed so the instanced mesh stays inside eight vertex buffers: (house, range, ground, class band), size, class letters
+    // packed so the instanced mesh stays inside eight vertex buffers: (house, range + 8 x butted sides, ground, block), size, class letters
     const info = new Float32Array(n * 4), size = new Float32Array(n * 3), cls = new Float32Array(n * 2)
     const m4 = new Matrix4(), qq = new Quaternion(), upY = new Vector3(0, 1, 0)
     H.boxes.forEach((b, i) => {
       qq.setFromAxisAngle(upY, b.yaw)
       m4.compose(new Vector3(b.x, (b.y0 + b.y1) / 2, b.z), qq, new Vector3(b.sx, b.y1 - b.y0, b.sz))
       im.setMatrixAt(i, m4)
-      info.set([b.house, b.part, b.gy, b.gy + Number(cityPlan.classes.band)], i * 4)
+      info.set([b.house, b.part + 8 * b.butt, b.gy, b.block], i * 4)
       size.set([b.sx, b.y1 - b.y0, b.sz], i * 3)
       cls.set([2, 2], i * 2)
     })
@@ -185,9 +185,10 @@ const HOUSES = { count: 0, open: 0 }
   // bab.street.north.surface, +7.5 north of the gate; bab.street.north-stretch to a = 233); the dam's crest and the way on are earth
   ;(bodies.group.getObjectByName('street') as Mesh).material = streetMaterial(tones, { o: NORTH.frame.o, a: NORTH.frame.a, c: NORTH.frame.c, pavedTo: 233 }, U.uPix)
   const ground = bodies.group.getObjectByName('ground') as Mesh
-  // opt-in (?banks=1) until a render has read it
-  if (q.get('banks') === '1') {
-    const fine = refineBanks(ground.geometry, city.ground, { x0: -450, x1: 450, z0: -700, z1: 1750 })
+  // the banks the first frame and the flight see, from the moat's north bank to just south of the bridge, refined to about a
+  // metre (?banks=0 keeps the coarse grid); about 1.2 s more at load on the laptop
+  if (q.get('banks') !== '0') {
+    const fine = refineBanks(ground.geometry, city.ground, { x0: -450, x1: 450, z0: -1700, z1: 1000 }, { soft: Number(q.get('bankSoft') ?? 1.5) })
     ground.geometry.dispose()
     ground.geometry = fine.geometry
     say(`banks: ${fine.cells} cells refined, ${fine.triangles} triangles`)

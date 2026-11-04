@@ -7,7 +7,7 @@ import { BufferGeometry, Float32BufferAttribute } from 'three'
 
 export interface BankBox { x0: number; x1: number; z0: number; z1: number }
 
-export function refineBanks(g: BufferGeometry, ground: (x: number, z: number) => number, box: BankBox, opts: { steep?: number; cell?: number } = {}): { geometry: BufferGeometry; cells: number; triangles: number } {
+export function refineBanks(g: BufferGeometry, ground: (x: number, z: number) => number, box: BankBox, opts: { steep?: number; cell?: number; soft?: number } = {}): { geometry: BufferGeometry; cells: number; triangles: number } {
   const steep = opts.steep ?? 1.2, cell = opts.cell ?? 1.0
   const P = g.getAttribute('position')
   const Nrm = g.getAttribute('normal')
@@ -56,7 +56,8 @@ export function refineBanks(g: BufferGeometry, ground: (x: number, z: number) =>
     nrm.push(Nrm.getX(v), Nrm.getY(v), Nrm.getZ(v))
   }
   const fine = new Map<string, number>()
-  const e = 0.5
+  // the normals' half step, wider than a cell: at half a cell the crest's shading followed the lattice's diagonals as fine teeth
+  const e = opts.soft ?? 1.5
   const vertex = (i: number, a: number, j: number, b: number): number => {
     // normalise to the lattice's own corner names so neighbouring cells share their edges
     if (a === kx(i) && i + 1 < nx) { i++; a = 0 }

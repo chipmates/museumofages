@@ -8,7 +8,9 @@
    degree and a little shift on its lot, and a few lots stay open ground. Every
    number here is ours. No imports. */
 
-export interface HouseBox { id: string; house: number; part: number; x: number; z: number; sx: number; sz: number; yaw: number; y0: number; y1: number; gy: number }
+/** `butt`: the box's sides that meet another room of the same house (1 its -u side, 2 +u, 4 -v, 8 +v), where no parapet runs;
+    `block`: the block of lots between streets and lanes the house stands in */
+export interface HouseBox { id: string; house: number; part: number; butt: number; block: number; x: number; z: number; sx: number; sz: number; yaw: number; y0: number; y1: number; gy: number }
 
 interface MapBox { id: string; group: string; x: number; z: number; y0: number; y1: number; sx: number; sz: number; yaw: number }
 
@@ -34,10 +36,16 @@ export function rebuildHouses(boxes: MapBox[], ground: (x: number, z: number) =>
     by.get(k)![m[2]!] = b
   }
   const out: HouseBox[] = []
+  const lots = new Map<number, Lot>()
   let open = 0
   for (const [k, r] of by) {
     const n = r['n'], s = r['s'], w = r['w'], e = r['e']
     if (!n || !s || !w || !e) continue
+    {
+      const lu = [Math.cos(n.yaw), -Math.sin(n.yaw)], lv = [Math.sin(n.yaw), Math.cos(n.yaw)]
+      const mx = (n.x + s.x) / 2, mz = (n.z + s.z) / 2
+      lots.set(k, { U: mx * lu[0]! + mz * lu[1]!, V: mx * lv[0]! + mz * lv[1]!, hu: n.sx / 2, hv: (n.sz + s.sz + w.sz) / 2 })
+    }
     if (R() < 0.025) { open++; continue }
     const yaw0 = n.yaw
     // the lot's own axes: u along the house's +x (the row), v across
@@ -68,25 +76,57 @@ export function rebuildHouses(boxes: MapBox[], ground: (x: number, z: number) =>
     ]
     // each range cut into rooms 4 to 7 m long, each room's roof its own height (steps of 15 to 45 cm), so a roof is never one
     // plane; neighbours butt end to end; the court's floor of baked brick (the dug courts were paved so) a box of its own
-    const put = (part: number, name: string, a0: number, a1: number, b0: number, b1: number, top: number): void => {
+    const put = (part: number, name: string, a0: number, a1: number, b0: number, b1: number, top: number, butt = 0): void => {
       const mu = (a0 + a1) / 2, mv = (b0 + b1) / 2
-      out.push({ id: `house-${k}-${name}`, house: k, part, x: ox + ca[0]! * mu + cb[0]! * mv, z: oz + ca[1]! * mu + cb[1]! * mv, sx: a1 - a0, sz: b1 - b0, yaw, y0: g - 0.8, y1: top, gy: g })
+      out.push({ id: `house-${k}-${name}`, house: k, part, butt, block: 0, x: ox + ca[0]! * mu + cb[0]! * mv, z: oz + ca[1]! * mu + cb[1]! * mv, sx: a1 - a0, sz: b1 - b0, yaw, y0: g - 0.8, y1: top, gy: g })
     }
     ranges.forEach(([name, a0, a1, b0, b1], i) => {
       const alongU = a1 - a0 >= b1 - b0
       const len = alongU ? a1 - a0 : b1 - b0
       const rooms = Math.max(1, Math.round(len / (4 + R() * 3)))
       let last = -1
+      // the side ranges meet the north and south ranges at both ends
+      const ends = name === 'w' || name === 'e' ? 4 | 8 : 0
       for (let r = 0; r < rooms; r++) {
         let h = base + (Math.floor(R() * 4) - 1.5) * 0.15
         if (Math.abs(h - last) < 0.1) h += 0.15
         last = h
         const f0 = r / rooms, f1 = (r + 1) / rooms
-        if (alongU) put(i, `${name}${r}`, a0 + (a1 - a0) * f0, a0 + (a1 - a0) * f1, b0, b1, g + h)
-        else put(i, `${name}${r}`, a0, a1, b0 + (b1 - b0) * f0, b0 + (b1 - b0) * f1, g + h)
+        const seam = (r > 0 ? 1 : 0) | (r < rooms - 1 ? 2 : 0)
+        if (alongU) put(i, `${name}${r}`, a0 + (a1 - a0) * f0, a0 + (a1 - a0) * f1, b0, b1, g + h, ends | seam)
+        else put(i, `${name}${r}`, a0, a1, b0 + (b1 - b0) * f0, b0 + (b1 - b0) * f1, g + h, ends | (seam << 2))
       }
     })
     put(4, 'court', u0 - 0.01, u1 + 0.01, v0 - 0.01, v1 + 0.01, g + 0.12)
   }
+  const blockOf = blocks(lots)
+  for (const b of out) b.block = blockOf.get(b.house) ?? 0
   return { boxes: out, houses: by.size - open, open }
+}
+
+interface Lot { U: number; V: number; hu: number; hv: number }
+
+/** the lots' blocks: lots touch inside a block (within a metre), lanes and streets (3.2 m and more) part them; first the
+    columns across the grid, then the blocks along each column */
+function blocks(lots: Map<number, Lot>): Map<number, number> {
+  const out = new Map<number, number>()
+  const L = [...lots.entries()].sort((a, b) => a[1].U - a[1].hu - (b[1].U - b[1].hu))
+  let col: Array<[number, Lot]> = [], end = -Infinity, nb = 0
+  const flush = (): void => {
+    col.sort((a, b) => a[1].V - a[1].hv - (b[1].V - b[1].hv))
+    let vEnd = -Infinity
+    for (const [k, l] of col) {
+      if (l.V - l.hv > vEnd + 1) nb++
+      vEnd = Math.max(vEnd, l.V + l.hv)
+      out.set(k, nb)
+    }
+    col = []
+  }
+  for (const e of L) {
+    if (e[1].U - e[1].hu > end + 1) { flush(); end = -Infinity }
+    col.push(e)
+    end = Math.max(end, e[1].U + e[1].hu)
+  }
+  flush()
+  return out
 }
