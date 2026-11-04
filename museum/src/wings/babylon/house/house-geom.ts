@@ -445,7 +445,10 @@ export function buildHouse(built: Built, mapPlan: J, hp: J): House {
       if (spec) bodies.push(blockBody({ ...spec, id: `quarter-${spec.id}` }))
     })
   }
-  const lanes: P2[] = hp.flat.poly.map(([E, N]: number[]) => [E! - E0, N0 - N!] as P2)
+  // the lanes' slab a little inside the flat, so its sides meet no block's face on the flat's edge
+  const fl: P2[] = hp.flat.poly.map(([E, N]: number[]) => [E! - E0, N0 - N!] as P2)
+  const cx = fl.reduce((t, p) => t + p[0], 0) / fl.length, cz = fl.reduce((t, p) => t + p[1], 0) / fl.length
+  const lanes: P2[] = fl.map(([x, z]) => [x - Math.sign(x - cx) * 1.3, z - Math.sign(z - cz) * 1.3] as P2)
   const facts = { house6: h6.facts, bodies: bodies.length }
   return { frame: h6.frame, bodies, built: { ...built, prisms: built.prisms.filter((p) => !TAKEN_HOUSE(p.id, taken)) }, facts, lanes }
 }
