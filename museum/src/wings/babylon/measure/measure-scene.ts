@@ -5,15 +5,20 @@
 
    Side-on, the tower's foot on the ground line: under it what was dug (the
    core's stump and the mantle's footings, in place, heavy and solid); above
-   it nothing at "not known", one dashed line at "about 66 m" with no outline,
-   the tablet's stages hatched at "about 90 m". Beside it grey figures of 1.70
-   m stand on each other's heads, as many as each reading holds, with one
-   figure drawn large in a key. Then the bricks of one model in pencil squares
-   of a million, and the city walls as twelve to fifteen of the tower's whole
-   count, each shrunk to one mark. */
+   it, where no reading stands, the base's two sides rise dashed and fade out
+   with no top, which is how the plate says "not known" without a word; one
+   dashed line at "about 66 m" with no outline, the tablet's stages hatched at
+   "about 90 m". Beside it grey figures of 1.70 m stand on each other's heads,
+   as many as each reading holds, with one figure drawn large in a key. Then
+   the bricks of one model in pencil squares of a million, and the city walls
+   as twelve to fifteen of the tower's whole count, each shrunk to one mark.
+
+   The plate's words are numbers with their unit and single names, each on
+   its own mark or dimension line, a height always on its height line: the
+   qualifiers ("not known", "in one model") are the band's. */
 
 // the kit's pure modules one by one, not its index (which brings the sheet's style), so node draws the scene too
-import { figurePath, figuresFor, stackPath, FIGURE_M } from '../paper/figure'
+import { figurePath, figuresFor, stackFigure, stackPath, FIGURE_M, STACK_SIGN_H } from '../paper/figure'
 import { unitGrid, gridBox } from '../paper/counter'
 import type { Box, Seg, Side, Taken } from '../paper/placer'
 import type { PaperFraming } from '../paper/framing'
@@ -25,8 +30,7 @@ export type Prim =
   | { type: 'line'; id: string; mark: PrimMark; ax: number; ay: number; bx: number; by: number; cls?: string; alpha?: number; width?: number }
   | { type: 'path'; id: string; mark: PrimMark; d: string; cls?: string; alpha?: number; width?: number }
 
-export type LabelKey = 'base' | 'notKnown' | 'about66' | 'about90' | 'figure' | 'count' | 'oneModel' | 'mudPair' | 'bakedPair'
-  | 'tower' | 'walls' | 'lo' | 'hi'
+export type LabelKey = 'base' | 'about66' | 'about90' | 'figure' | 'count' | 'mudPair' | 'bakedPair' | 'tower' | 'walls' | 'lo' | 'hi'
 export interface Anchor { id: LabelKey; x: number; y: number; sides: readonly Side[]; gap: number; kind: 'ink' | 'pencil' | 'quiet' | 'count' | 'big' | 'pair'; over?: string[]; alpha?: number }
 
 export interface MeasureScene {
@@ -39,6 +43,10 @@ export interface MeasureScene {
   bounds: Box
   /** the stack's count and the stages' share drawn, for the list and the readout */
   figures: number
+  /** false where a figure cannot show at this scale: the stack and its count are left off */
+  stack: boolean
+  /** how strongly the open top stands, 0 to 1: where no reading stands it says "not known" */
+  open: number
   stages: number
   units: { mud: number; baked: number }
   marks: number
@@ -57,7 +65,9 @@ const HALF = TOWER.base / 2
 /** the stack stands this far beyond the tower's side, metres */
 const STACK_OFF = 6
 /** air in pixels: over the top label, under the dimension's label, beside the stack's count */
-const HEAD = 46, FOOT = 34, SIDE = 40
+const HEAD = 36, FOOT = 34, SIDE = 40
+/** THE OPEN TOP: the guessed dash, each dash a little fainter, so the sides end in bare paper and draw no height */
+const OPEN_DASH = 7, OPEN_GAP = 4
 /** metres under the foot: the dug section and the dimension line under it */
 const UNDER = -TOWER.mantle.foot + 4.5
 
@@ -108,13 +118,14 @@ function stagesOutline(x: number, foot: number, sx: number, sy: number, reach: n
   return `M${all.map(([px, py]) => `${(x + px * sx).toFixed(2)} ${(foot - py * sy).toFixed(2)}`).join('L')}Z`
 }
 
-export function measureScene(t: number, framing: PaperFraming, w: number, h: number): MeasureScene {
+export function measureScene(t: number, framing: PaperFraming, w: number, h: number, dpr = 1): MeasureScene {
   const prims: Prim[] = [], anchors: Anchor[] = [], taken: Taken[] = [], walls: Seg[] = []
   const count = span(t, 3, 4)
   const wide = framing === 'wide'
   const z = zones(framing, w, h, count)
   // upright, the counting plate has no reading over the tower to keep air for
   const { s, gx, gy } = towerFrame(z.elev, wide ? HEAD : lerp(HEAD, 10, ease(count)))
+  const one = stackFigure(s, dpr)
   const X = (m: number): number => gx + m * s
   const Y = (m: number): number => gy - m * s
   const settled = Math.abs(t - Math.round(t)) < 1e-3
@@ -148,13 +159,32 @@ export function measureScene(t: number, framing: PaperFraming, w: number, h: num
   // upright, the counting scale leaves the one figure under two pixels: it leaves with the key
   const stackA = wide ? 1 : 1 - ease(count * 2.5)
   const stackTop = Y(shown * FIGURE_M)
-  if (stackA > 0.01) {
-    prims.push({ type: 'path', id: 'stack', mark: 'pencil', d: stackPath(sx, gy, s, shown), alpha: stackA })
-    taken.push({ l: sx - 3, t: stackTop - 2, r: sx + 3, b: gy, id: 'stack' })
+  if (stackA > 0.01 && one) {
+    prims.push({ type: 'path', id: 'stack', mark: 'pencil', d: stackPath(sx, gy, s, shown, dpr), alpha: stackA })
+    taken.push({ l: sx - one.w / 2 - 1, t: stackTop - 2, r: sx + one.w / 2 + 1, b: gy, id: 'stack' })
+  }
+  /* THE STACK'S DETAIL: at a reading's scale a figure is a few pixels tall and the column reads as a dotted line, so
+     its top two figures stand again, large, in a pencil frame beside its head, joined to them by two leaders: the
+     drawing's own way of saying "these are figures". The stack itself keeps its true height. */
+  const detailA = one && s * FIGURE_M < STACK_SIGN_H && shown > 3 && stackA > 0.01 ? stackA * clamp01((shown - 3) / 6) : 0
+  if (detailA > 0.01 && one) {
+    const fh = wide ? 34 : 26, dpx = fh / FIGURE_M, k = 2
+    const fw = Math.round(fh * 0.5 + 16), fH = k * fh + 14
+    const near = wide ? sx + one.w / 2 + 1 : sx - one.w / 2 - 1
+    const fl = wide ? near + 18 : near - 18 - fw, ft = stackTop + 6
+    const spanB = Math.min(gy, stackTop + k * FIGURE_M * s)
+    const edge = wide ? fl : fl + fw
+    prims.push({ type: 'rect', id: 'detailFrame', mark: 'measure', cls: 'paper-open', x: fl, y: ft, w: fw, h: fH, alpha: detailA })
+    prims.push({ type: 'path', id: 'detailFigures', mark: 'pencil', d: stackPath(fl + fw / 2, ft + fH - 7, dpx, k), alpha: detailA })
+    prims.push({ type: 'path', id: 'detailLeaders', mark: 'pencil', width: 0.75, alpha: detailA * 0.9,
+      d: `M${near} ${stackTop}L${edge} ${ft}M${near} ${spanB}L${edge} ${ft + fH}` })
+    taken.push({ l: fl - 2, t: ft - 2, r: fl + fw + 2, b: ft + fH + 2, id: 'detail' })
+    walls.push({ ax: near, ay: stackTop, bx: edge, by: ft }, { ax: near, ay: spanB, bx: edge, by: ft + fH })
   }
 
   // THE KEY: one figure drawn large in a pencil frame, its height measured beside it, while the plate measures
   const keyA = 1 - ease(count * 2.5)
+  let key: Box | null = null
   if (keyA > 0.01) {
     const kb = wide
       ? { l: Math.min(w - 196, sx + Math.max(56, w * 0.05)), t: Math.max(6, gy - 236), r: Math.min(w - 196, sx + Math.max(56, w * 0.05)) + 176, b: gy }
@@ -165,6 +195,7 @@ export function measureScene(t: number, framing: PaperFraming, w: number, h: num
     const kfoot = kb.b - (wide ? 22 : 30)
     const kx = kb.l + (wide ? 46 : 30)
     const dx = kx + (wide ? 34 : 22)
+    key = kb
     prims.push({ type: 'rect', id: 'keyFrame', mark: 'measure', cls: 'paper-open', x: kb.l, y: kb.t, w: kb.r - kb.l, h: kb.b - kb.t, alpha: keyA })
     prims.push({ type: 'path', id: 'keyFigure', mark: 'pencil', d: figurePath(kx, kfoot, ks), alpha: keyA })
     prims.push({ type: 'path', id: 'keyDimension', mark: 'pencil', width: 1.25, alpha: keyA,
@@ -180,17 +211,48 @@ export function measureScene(t: number, framing: PaperFraming, w: number, h: num
     }
   }
 
+  /** upright, a height line at the key's height starts right of the key's frame, never through it */
+  const clearOfKey = (x: number, y: number): number => (!wide && key && y >= key.t - 4 && y <= key.b + 4 && x < key.r + 6 ? key.r + 6 : x)
+
   // THE READINGS
   const r66 = t <= 1 ? clamp01(t * 3 - 0.3) : t <= 2 ? 1 - clamp01((t - 1) * 3.5) : 0
   if (r66 > 0) {
     // at 66 m once it has arrived; while the figures climb it rides their crown
     const at = t >= 1 ? 66 : Math.min(66, shown * FIGURE_M)
-    const y = Y(at)
-    prims.push({ type: 'line', id: 'h66', mark: 'guessed', ax: X(-HALF), ay: y, bx: sx + 4, by: y, alpha: r66 })
-    walls.push({ ax: X(-HALF), ay: y, bx: sx + 4, by: y })
+    const y = Y(at), a = clearOfKey(X(-HALF), y)
+    prims.push({ type: 'line', id: 'h66', mark: 'guessed', ax: a, ay: y, bx: sx + 4, by: y, alpha: r66 })
+    walls.push({ ax: a, ay: y, bx: sx + 4, by: y })
   }
   const built = t > 1 && t < 3 ? (t <= 2 ? ease(t - 1) : 1) : 0
   const fade = t > 2 ? 1 - ease((t - 2) * 1.6) : 1
+  // the 90 m reading's own height line, level with the top stage and beside it, never over a stage
+  const r90 = built > 0 && fade > 0 ? fade * clamp01((built - 0.6) / 0.4) : 0
+  if (r90 > 0) {
+    const y = Y(tabletHeight()), topHalf = TOWER.stages[TOWER.stages.length - 1]!.side / 2
+    for (const [a, b] of [[clearOfKey(X(-HALF), y), X(-topHalf) - 3], [X(topHalf) + 3, sx + 4]] as const) {
+      if (b - a < 6) continue
+      prims.push({ type: 'line', id: `h90${a < gx ? 'L' : 'R'}`, mark: 'guessed', ax: a, ay: y, bx: b, by: y, alpha: r90 })
+      walls.push({ ax: a, ay: y, bx: b, by: y })
+    }
+  }
+  // NOT KNOWN IS DRAWN, NOT WRITTEN: where no reading stands, the base's sides rise dashed and fade into bare paper
+  const reading = Math.max(r66, built > 0 ? fade * clamp01(built * 3) : 0)
+  const open = 1 - reading
+  if (open > 0.01) {
+    // upright, a side never runs into the key's frame at the top left; both sides fade by the same height, the lower
+    const stops = [-1, 1].map(side => (!wide && key && X(side * HALF) < key.r + 4 ? Math.max(z.elev.t + 4, key.b + 6) : z.elev.t + 4))
+    const stop = Math.max(...stops), rise = gy - stop
+    for (const side of [-1, 1]) {
+      const x = X(side * HALF)
+      for (let y = gy, i = 0; y - OPEN_DASH > stop; y -= OPEN_DASH + OPEN_GAP, i++) {
+        // full at the foot, gone before the zone's head: the top is open
+        const a = open * (1 - (gy - y) / (rise * 0.82)) ** 1.15
+        if (a <= 0.04) break
+        prims.push({ type: 'line', id: `open${side < 0 ? 'L' : 'R'}${i}`, mark: 'guessed', ax: x, ay: y, bx: x, by: y - OPEN_DASH, alpha: a })
+      }
+      walls.push({ ax: x, ay: gy, bx: x, by: Math.max(stop, gy - rise * 0.82) })
+    }
+  }
   let stagesDrawn = 0
   if (built > 0 && fade > 0) {
     const reach = built * tabletHeight()
@@ -217,20 +279,14 @@ export function measureScene(t: number, framing: PaperFraming, w: number, h: num
     }
   }
 
-  // THE LABELS of a settled step
-  const reading = step < READINGS.length ? READINGS[step] : null
-  if (settled && step <= 3) {
-    if (reading === null) {
-      anchors.push({ id: 'notKnown', x: gx, y: Y(tabletHeight() * 0.45), sides: ['on'], gap: 0, kind: 'quiet' })
-    } else if (reading === 66) {
-      anchors.push({ id: 'about66', x: X(-HALF) + 2, y: Y(66), sides: ['above-right', 'below-right'], gap: 6, kind: 'ink' })
-      anchors.push({ id: 'count', x: sx, y: stackTop, sides: ['above', 'above-right', 'right'], gap: 6, kind: 'count' })
-    } else {
-      anchors.push({ id: 'about90', x: gx, y: Y(tabletHeight()), sides: ['above', 'above-right', 'above-left'], gap: 8, kind: 'ink' })
-      anchors.push({ id: 'count', x: sx, y: stackTop, sides: ['above', 'above-right', 'right'], gap: 6, kind: 'count' })
-    }
-  } else if (settled) {
-    anchors.push({ id: 'notKnown', x: gx, y: Y(tabletHeight() * 0.45), sides: ['on', 'above'], gap: 0, kind: 'quiet' })
+  // THE LABELS of a settled step: each reading on its own height line, at its left end, and the stack's count on its head
+  const settledReading = step < READINGS.length ? READINGS[step] : null
+  if (settled && step <= 3 && settledReading !== null) {
+    // wide, at the line's left end, clear of the key beside the stack; upright the key holds the top left, so at its right end
+    const y = Y(settledReading === 66 ? 66 : tabletHeight())
+    anchors.push({ id: settledReading === 66 ? 'about66' : 'about90', x: wide ? X(-HALF) + 2 : sx - 4, y,
+      sides: wide ? ['above-right', 'below-right'] : ['above-left', 'below-left'], gap: 6, kind: 'ink' })
+    if (one) anchors.push({ id: 'count', x: sx, y: stackTop, sides: ['above', 'above-right', 'right'], gap: 6, kind: 'count' })
   }
 
   // THE COUNT in one model, from the third step on: two piles of pencil squares, a million bricks each, standing on a ground
@@ -257,8 +313,9 @@ export function measureScene(t: number, framing: PaperFraming, w: number, h: num
     const gather = span(t, 4, 4.45), row = span(t, 4.4, 5)
     units.mud = Math.round(Math.min(BRICKS.mud, BRICKS.mud * clamp01(pour / 0.32)) * 10) / 10
     units.baked = Math.round(Math.min(BRICKS.baked, BRICKS.baked * clamp01((pour - 0.32) / 0.68)) * 10) / 10
-    const x0 = wide ? Math.max(c.l, sx + 70) : c.l + 8
     const between = wide ? Math.max(70, pileW * 0.4) : Math.max(44, (c.r - c.l - 2 * pileW - 16) * 0.6)
+    // wide, the two piles keep inside the plate's right edge on a short plate, where the tower stands larger
+    const x0 = wide ? Math.min(Math.max(c.l, sx + 70), w - 8 - 2 * pileW - between) : c.l + 8
     const mudX = x0, bakedX = x0 + pileW + between
     const tallest = base - Math.ceil(BRICKS.baked / per) * pitch
     const groundEnd = wide ? Math.min(w - 8, bakedX + pileW + 30) : c.r
@@ -284,7 +341,6 @@ export function measureScene(t: number, framing: PaperFraming, w: number, h: num
       taken.push({ l: mudX - 2, t: mudTop - 2, r: mudX + pileW + 2, b: base + 2, id: 'mudPile' })
       taken.push({ l: bakedX - 2, t: tallest - 2, r: bakedX + pileW + 2, b: base + 2, id: 'bakedPile' })
       if (settled && step === 4) {
-        anchors.push({ id: 'oneModel', x: mudX, y: mudTop - 8, sides: ['above-right', 'above'], gap: 0, kind: 'quiet' })
         // each count stands under its own pile from the pile's left edge, so two long German counts never meet
         anchors.push({ id: 'mudPair', x: mudX - 2, y: base + 4, sides: ['below-right'], gap: 2, kind: 'pair' })
         anchors.push({ id: 'bakedPair', x: bakedX - 2, y: base + 4, sides: ['below-right'], gap: 2, kind: 'pair' })
@@ -315,7 +371,6 @@ export function measureScene(t: number, framing: PaperFraming, w: number, h: num
         walls.push({ ax: groundEnd, ay: base, bx: rowEnd, by: base })
       }
       if (settled && step === 5) {
-        anchors.push({ id: 'oneModel', x: x0, y: base - mh * 2.4 - (wide ? 30 : 24), sides: ['above-right'], gap: 0, kind: 'quiet' })
         anchors.push({ id: 'tower', x: x0 + mw / 2, y: base - mh, sides: ['above-right', 'above'], gap: 6, kind: 'ink' })
         anchors.push({ id: 'walls', x: (markX(0) + markX(hi - 1)) / 2, y: base + 2, sides: ['below'], gap: 6, kind: 'ink' })
         anchors.push({ id: 'lo', x: markX(lo - 1), y: base - mh, sides: ['above'], gap: 4, kind: 'count' })
@@ -326,7 +381,7 @@ export function measureScene(t: number, framing: PaperFraming, w: number, h: num
 
   return {
     prims, anchors, taken, walls, bounds: { l: 2, t: 2, r: w - 2, b: h - 2 },
-    figures: shown, stages: Math.round(stagesDrawn * 100) / 100, units, marks, s,
+    figures: shown, stack: Boolean(one), open: Math.round(open * 1000) / 1000, stages: Math.round(stagesDrawn * 100) / 100, units, marks, s,
   }
 }
 

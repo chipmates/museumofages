@@ -126,7 +126,7 @@ const PX = { wide: { ink: 15, pencil: 15, quiet: 15, count: 22, pair: 20 }, upri
 function textFor(lang, id, sc) {
   const L = words.MEASURE_WORDS[lang].labels
   const m = (n) => L.million(counter.millions(n, lang))
-  return { base: L.base, notKnown: L.notKnown, about66: L.about66, about90: L.about90, figure: L.figure, count: String(sc.figures), oneModel: L.oneModel,
+  return { base: L.base, about66: L.about66, about90: L.about90, figure: L.figure, count: String(sc.figures),
     mudPair: [m(data.BRICKS.mud), L.mud], bakedPair: [m(data.BRICKS.baked), L.baked], tower: L.tower, walls: L.walls, lo: '12', hi: '15' }[id]
 }
 const estimate = (text, px) => ({ w: Math.ceil(text.length * px * 0.56 + 8), h: Math.ceil(px * 1.15 + 2) })
@@ -146,8 +146,8 @@ test('every step\'s labels stand clear of the drawing and of each other (EN and 
     assert.deepEqual(placer.overlaps(placed, sc.taken, sc.walls, asks), [], `${lang} ${framing} ${w}x${h} step ${t}`)
     for (const p of placed) if (!p.box) left.push(`${lang} ${framing} ${w}x${h} step ${t}: ${p.id}`)
   }
-  // the readings and the counts must stand at the sizes the visitor sees; a phone of 330 px of plate may drop the key's own label
-  const essential = left.filter((x) => !/: figure$/.test(x) && !/390x330/.test(x))
+  // every label stands at the sizes the visitor sees, the key's own included; a phone of 330 px of plate may drop the key's label
+  const essential = left.filter((x) => !(/: figure$/.test(x) && /390x330/.test(x)))
   assert.deepEqual(essential, [], 'labels left off')
 })
 
@@ -182,6 +182,151 @@ test('every step\'s drawing stays on the plate, from a short phone to the deskto
   assert.deepEqual(off, [])
 })
 
+/* THE PLATE'S WORDS: numbers with their unit and single names, each on its own mark or line; nothing says how sure */
+const ON_PLATE = new Set(['base', 'about66', 'about90', 'figure', 'count', 'mudPair', 'bakedPair', 'tower', 'walls', 'lo', 'hi'])
+const QUALIFIER = /not known|unknown|nicht bekannt|unbekannt|one model|einem modell|reading|lesart|guess|vermut|maybe|perhaps|vielleicht/i
+test('no qualifier on the plate: names and numbers only, each height on its own height line', () => {
+  for (const lang of ['en', 'de']) {
+    const L = words.MEASURE_WORDS[lang].labels
+    assert.ok(!('notKnown' in L) && !('oneModel' in L), `${lang}: a qualifier is still a plate word`)
+    for (const v of Object.values(L)) if (typeof v === 'string') assert.doesNotMatch(v, QUALIFIER, `${lang}: "${v}"`)
+    for (const [framing, sizes] of Object.entries(FRAMES)) for (const [w, h] of sizes) for (let t = 0; t <= 5; t++) {
+      const sc = scene.measureScene(t, framing, w, h)
+      for (const a of sc.anchors) {
+        assert.ok(ON_PLATE.has(a.id), `${lang} ${framing} ${w}x${h} step ${t}: ${a.id} is not a plate word`)
+        const text = [textFor(lang, a.id, sc)].flat().join(' ')
+        assert.doesNotMatch(text, QUALIFIER, `${lang} ${framing} ${w}x${h} step ${t}: "${text}"`)
+        assert.ok(/\d/.test(text) || text.split(/\s+/).length <= 2, `${lang} "${text}" is neither a number nor a single name`)
+      }
+      // a height's label stands on its own height line
+      for (const [id, line] of [['about66', 'h66'], ['about90', 'h90']]) {
+        const a = sc.anchors.find((x) => x.id === id)
+        if (!a) continue
+        const ys = sc.prims.filter((p) => p.type === 'line' && p.id.startsWith(line) && (p.alpha ?? 1) > 0.5).map((p) => p.ay)
+        assert.ok(ys.some((y) => Math.abs(y - a.y) <= 1), `${framing} ${w}x${h} step ${t}: ${id} is off its line`)
+      }
+    }
+  }
+})
+
+test('the unknown height is drawn: an open, dashed top and no height line', () => {
+  for (const [framing, sizes] of Object.entries(FRAMES)) for (const [w, h] of sizes) {
+    const sc = scene.measureScene(0, framing, w, h)
+    assert.ok(sc.open > 0.99, `${framing} ${w}x${h}: the top is not open`)
+    const open = sc.prims.filter((p) => p.id.startsWith('open') && (p.alpha ?? 1) > 0.05)
+    assert.ok(open.length >= 4 && open.every((p) => p.mark === 'guessed'), `${framing} ${w}x${h}: no dashed open top`)
+    // the dashes rise and fade: the sides end in bare paper, no line closes them
+    const ys = open.map((p) => Math.min(p.ay, p.by))
+    assert.ok(Math.min(...ys) < sc.prims.find((p) => p.id === 'ground').ay, 'the dashes rise from the ground')
+    assert.deepEqual(sc.prims.filter((p) => /^h(66|90)/.test(p.id) && (p.alpha ?? 1) > 0.05).map((p) => p.id), [], `${framing} ${w}x${h}: a height line at "not known"`)
+    assert.ok(!sc.anchors.some((a) => a.id === 'about66' || a.id === 'about90'))
+  }
+  for (const [framing, [w, h]] of [['wide', [1600, 690]], ['upright', [390, 498]]]) {
+    assert.ok(scene.measureScene(1, framing, w, h).open < 0.05, 'a reading closes the top')
+    assert.ok(scene.measureScene(2, framing, w, h).open < 0.05)
+  }
+})
+
+test('"39" and "53" show their figures at every size the plate draws, or leave with them', () => {
+  const sizes = [...FRAMES.wide, ...FRAMES.upright, [390, 209], [360, 192], [1024, 560]]
+  for (const dpr of [1, 2, 3]) for (const [w, h] of sizes) for (const t of [1, 2]) {
+    const fr = framing.framingOf(w, h)
+    const sc = scene.measureScene(t, fr, w, h, dpr)
+    const stack = sc.prims.find((p) => p.id === 'stack')
+    const count = sc.anchors.find((a) => a.id === 'count')
+    const one = figure.stackFigure(sc.s, dpr)
+    if (sc.stack) {
+      assert.ok(stack && stack.d.length > 0 && count, `${w}x${h} @${dpr} step ${t}: the count stands without its figures`)
+      // a figure is a figure: at least seven device pixels, widened and never heightened
+      assert.ok(one.h * dpr >= figure.STACK_LEAST_H * 0.9 && one.h <= figure.FIGURE_M * sc.s + 1e-9, `${w}x${h} @${dpr}: ${one.h}`)
+      assert.ok(one.w >= figure.FIGURE_FORM.shoulders * sc.s - 1e-9)
+      // the figures stand one on another up to the reading: as many as the count says
+      assert.equal((stack.d.match(/a/g) ?? []).length, 2 * sc.figures, `${w}x${h} step ${t}: heads`)
+    } else {
+      assert.ok(!stack && !count, `${w}x${h} @${dpr} step ${t}: the count stands, its figures left`)
+      assert.ok(one === null)
+    }
+  }
+  // the phone's plate at three device pixels keeps its figures, a raised sheet's smaller plate lets them go
+  assert.ok(scene.measureScene(2, 'upright', 390, 330, 3).stack)
+  assert.ok(!scene.measureScene(2, 'upright', 390, 209, 1).stack)
+})
+
+/* THE CHROME'S READ-BACK (paper-shoot.mjs, chrome per step): the frozen designs' checklists, measured in the page */
+function readbacks() {
+  const dir = process.env.PAPER_READOUTS
+  return readdirSync(dir).filter((x) => x.startsWith('readout-measure-')).map((f) => ({ f, r: JSON.parse(readFileSync(join(dir, f), 'utf8')) }))
+}
+test('every step name stands under its own tick, at the frozen designs\' type size, none on another', { skip: !process.env.PAPER_READOUTS }, () => {
+  let seen = 0
+  for (const { f, r } of readbacks()) for (const [k, ro] of Object.entries(r.readouts ?? {})) {
+    const seats = (ro.seats ?? []).filter((x) => x.box.r - x.box.l > 0)
+    if (!seats.length) continue
+    seen++
+    for (const x of seats) {
+      assert.ok(x.box.l + 4 <= x.tick && x.tick <= x.box.r - 4, `${f} ${k}: ${x.id} is not under its tick`)
+      assert.ok(x.px >= 14, `${f} ${k}: ${x.id} at ${x.px} px`)
+    }
+    for (const a of seats) for (const b of seats) {
+      if (a === b) continue
+      if (a.row === b.row) assert.ok(a.box.r <= b.box.l + 0.5 || b.box.r <= a.box.l + 0.5, `${f} ${k}: ${a.id} meets ${b.id}`)
+      // a second row's hairline rises past the first row: no first-row name stands in its way
+      if (a.row === 0 && b.row === 1) assert.ok(b.tick < a.box.l || b.tick > a.box.r, `${f} ${k}: ${b.id}'s hairline crosses ${a.id}`)
+    }
+    // the order of the names is the order of the ticks
+    const byTick = [...seats].sort((a, b) => a.tick - b.tick).map((x) => x.id)
+    const byName = [...seats].sort((a, b) => (a.box.l + a.box.r) - (b.box.l + b.box.r)).map((x) => x.id)
+    assert.deepEqual(byName, byTick, `${f} ${k}: names out of their ticks' order`)
+  }
+  assert.ok(seen > 0, 'no step names in the read-back')
+})
+
+test('the desktop band: the line in two rows at the 860 measure, a heavy 20-word German line too; one x, gold in its corner', { skip: !process.env.PAPER_READOUTS }, () => {
+  let seen = 0
+  for (const { f, r } of readbacks()) for (const [k, c] of Object.entries(r.chrome ?? {})) {
+    if (c.form !== 'desk') continue
+    seen++
+    assert.ok(c.line.rows <= 2, `${f} ${k}: the line takes ${c.line.rows} rows`)
+    assert.ok(c.line.words <= words.LINE_WORDS_MOST, `${f} ${k}: ${c.line.words} words`)
+    // the proof is laid where the line stands; with the drawer open the line gives way to the words behind it
+    assert.equal(c.proof.words, words.LINE_WORDS_MOST)
+    if (c.line.rows > 0) assert.ok(c.proof.rows >= 1 && c.proof.rows <= 2, `${f} ${k}: a 20-word German line takes ${c.proof.rows} rows`)
+    assert.equal(c.measure, 860)
+    assert.ok(c.line.w <= 860, `${f} ${k}: the line runs ${c.line.w} px`)
+    // one x; a right-to-left page keeps the walk's own 2 px for the step back's focus ring on its physical left
+    assert.ok(Math.max(...c.wordsX) - Math.min(...c.wordsX) <= (c.dir === 'rtl' ? 2 : 0), `${f} ${k}: the words start at ${c.wordsX}`)
+    // at rest gold holds the band's corner; an open drawer is the walk's own taller band, its ways at the top of their column
+    if (c.line.rows > 0) assert.ok(c.gold.right < c.stage.w * 0.1 && c.gold.bottom < c.stage.h * 0.1, `${f} ${k}: gold is not in the corner`)
+    else assert.ok(c.gold.right < c.stage.w * 0.1 && c.gold.y + c.gold.h <= c.stage.h, `${f} ${k}: gold is off its column`)
+    assert.ok(c.band.y >= c.plate.y + c.plate.h - 1, `${f} ${k}: the band stands on the picture`)
+  }
+  assert.ok(seen > 0, 'no desktop chrome in the read-back')
+})
+
+test('the phone sheet: three seats in the foot row, every control centre in the thumb\'s reach, the line alone at the lowest height', { skip: !process.env.PAPER_READOUTS }, () => {
+  let seen = 0
+  for (const { f, r } of readbacks()) for (const [k, c] of Object.entries(r.chrome ?? {})) {
+    if (c.form !== 'phone') continue
+    seen++
+    assert.equal(c.seats.length, 3, `${f} ${k}: seats`)
+    const foot = c.seats.map((x) => x.cy)
+    assert.ok(Math.max(...foot) - Math.min(...foot) <= 2, `${f} ${k}: the seats are not one row`)
+    for (const x of c.controls) assert.ok(x.cy >= c.reach, `${f} ${k}: ${x.what} "${x.text}" at ${x.cy}, above the reach ${c.reach}`)
+    assert.ok(c.topmost >= c.reach)
+    // at the lowest height the steps are not shown: the line is the sheet's one text
+    if (!c.sheet.raised) assert.ok(!c.controls.some((x) => /paper-(name|slider|play)/.test(x.what)), `${f} ${k}: the steps show at the lowest height`)
+    else assert.ok(c.controls.some((x) => /paper-name/.test(x.what)), `${f} ${k}: the next height shows no steps`)
+    assert.ok(c.plate.y + c.plate.h <= c.sheet.y + 1, `${f} ${k}: the plate runs under the sheet`)
+  }
+  assert.ok(seen > 0, 'no phone chrome in the read-back')
+})
+
+test('no frame carries the harness\'s marker', { skip: !process.env.PAPER_READOUTS }, () => {
+  let seen = 0
+  for (const { f, r } of readbacks()) for (const [k, m] of Object.entries(r.marked ?? {})) { seen++; assert.equal(m, false, `${f} ${k}`) }
+  assert.ok(seen > 0, 'no frame marks in the read-back')
+})
+
 test('the browser\'s own read-back: no label on anything, at every step shot', { skip: !process.env.PAPER_READOUTS }, () => {
   const dir = process.env.PAPER_READOUTS
   let steps = 0
@@ -203,8 +348,14 @@ test('the words: names and numbers on the plate, no dash, no semicolon, every ba
     for (const s of [...Object.values(L.steps), ...Object.values(L.labels).filter((v) => typeof v === 'string')]) assert.ok(s.split(/\s+/).length <= 3, `${lang} label "${s}" is more than a name`)
     for (const [k, s] of Object.entries(L.band)) assert.ok(s.startsWith('DRAFT'), `${lang} band ${k} is not marked DRAFT`)
     for (const s of [L.ui.door, L.ui.title, L.ui.close]) assert.ok(s.startsWith('DRAFT'))
+    // a band line stands in two rows of the band: twenty words at most, DRAFT included
+    for (const [k, s] of Object.entries(L.band)) assert.ok(s.split(/\s+/).filter((x) => x && x !== '·').length <= words.LINE_WORDS_MOST, `${lang} band ${k}`)
+    // six steps, told apart by name, each name a few words
+    assert.equal(new Set(Object.values(L.steps)).size, words.STEP_IDS.length, `${lang}: two steps share a name`)
     assert.ok(!/learn more|mehr erfahren/i.test(L.ui.door), 'the door names what it shows')
   }
+  // the step names and the band's lines are DRAFT words, listed so in the words file
+  for (const k of ['steps', 'band', 'ui.title', 'ui.close']) assert.ok(words.DRAFT_WORDS.includes(k), `${k} is not marked DRAFT`)
   // the band's facts carry what the targets ask, word for word where they quote
   const en = words.BAND_KEYS
   assert.match(en['not-known'].carries, /not known/)

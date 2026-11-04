@@ -7,7 +7,7 @@
 
 export { PAPER_TOKENS, INK_SHARE, CONTRAST_FLOOR, contrast, hexRgb, luminance, mixRgb, paperStyle, shades, type Rgb } from './tokens'
 export { MARKS, HATCH, fmt, grainTile, markAttrs, markDefs, markLine, markPath, markRect, svg, type MarkIds, type MarkStyle, type PaperMark } from './marks'
-export { FIGURE_FORM, FIGURE_M, figureOutlines, figurePath, figuresFor, rulerPaths, stackPath } from './figure'
+export { FIGURE_FORM, FIGURE_M, STACK_LEAST_H, STACK_SIGN_H, figureOutlines, figurePath, figuresFor, rulerPaths, signPath, stackFigure, stackPath } from './figure'
 export { crosses, grown, meets, overlaps, placeElements, placeLabels, type Box, type LabelAsk, type Placed, type Seg, type Side, type Taken } from './placer'
 export { createPaperSteps, type PaperStep, type PaperSteps, type PaperStepsOptions } from './steps'
 export { gridBox, millions, poured, rangeRow, unitGrid, type UnitBox, type UnitGridOptions } from './counter'

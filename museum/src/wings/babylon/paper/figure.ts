@@ -57,19 +57,60 @@ export function figurePath(x: number, foot: number, px: number, tall = 1, across
   return d
 }
 
-/** a stacked figure's least width in pixels, shoulder to shoulder, below which a stack reads as a dashed line */
-export const STACK_LEAST_PX = 2.2
+/** THE STACK'S FIGURE IS A FIGURE AT EVERY SIZE IT IS DRAWN: under this height
+ * in pixels the walk's form f2 shrinks to a pencil dash, so the stack draws the
+ * same figure as a sign (a round head clear of the shoulders, a trunk, two
+ * legs), widened and never heightened; under `STACK_LEAST_H` device pixels no
+ * figure can show and the stack, with its count, leaves the plate */
+export const STACK_SIGN_H = 22
+export const STACK_LEAST_H = 7
+/** the sign's width against its height, and its least width in device pixels */
+const SIGN_ACROSS = 0.62, SIGN_LEAST_W = 5
+
+/** a stacked figure's height and width in pixels at a scale on a screen of `dpr`
+ * device pixels a pixel, or null where a figure cannot show */
+export function stackFigure(px: number, dpr = 1): { h: number; w: number } | null {
+  const h = FIGURE_M * px
+  if (h * dpr < STACK_LEAST_H) return null
+  const air = Math.min(1.2, h * 0.08)
+  if (h >= STACK_SIGN_H) return { h: h - air, w: FIGURE_FORM.shoulders * px }
+  return { h: h - air, w: Math.max(FIGURE_FORM.shoulders * px, h * SIGN_ACROSS, SIGN_LEAST_W / dpr) }
+}
+
+/** THE FIGURE AS A SIGN, soles' middle at (x, foot), `h` tall and `w` wide in
+ * pixels: the head a circle a third of the height, a gap, a trunk from the
+ * shoulders to the hips, and two legs with air between them */
+export function signPath(x: number, foot: number, h: number, w: number): string {
+  const d = Math.min(w * 0.8, h * 0.3), r = d / 2
+  const gap = Math.max(0.35, h * 0.07)
+  const sh = foot - h + d + gap, hip = foot - h * 0.38
+  const half = w / 2, hipHalf = w * 0.36, leg = w * 0.3, inner = Math.max(0.5, w * 0.1)
+  let out = `M${f2(x - half)} ${f2(sh)}L${f2(x + half)} ${f2(sh)}L${f2(x + hipHalf)} ${f2(hip + 0.4)}L${f2(x - hipHalf)} ${f2(hip + 0.4)}Z`
+  for (const s of [-1, 1]) {
+    const a = x + s * inner, b = x + s * (inner + leg)
+    out += `M${f2(Math.min(a, b))} ${f2(hip)}L${f2(Math.max(a, b))} ${f2(hip)}L${f2(Math.max(a, b))} ${f2(foot)}L${f2(Math.min(a, b))} ${f2(foot)}Z`
+  }
+  const cy = foot - h + r
+  out += `M${f2(x - r)} ${f2(cy)}a${f2(r)} ${f2(r)} 0 1 1 ${f2(2 * r)} 0a${f2(r)} ${f2(r)} 0 1 1 ${f2(-2 * r)} 0Z`
+  return out
+}
 
 /** THE STACK: `count` figures, each standing on the last one's crown, from a
  * foot at `foot`; the top of the stack is `count` times 1.70 m. Each figure
- * keeps a device pixel of air under the next one's soles, and where the scale
- * is small it is drawn wider, never taller, so the height stays the measure. */
-export function stackPath(x: number, foot: number, px: number, count: number): string {
+ * keeps a hair of air under the next one's soles, and where the scale is
+ * small it is drawn wider, never taller, so the height stays the measure.
+ * Empty where a figure cannot show at this scale. */
+export function stackPath(x: number, foot: number, px: number, count: number, dpr = 1): string {
+  const one = stackFigure(px, dpr)
+  if (!one) return ''
   let d = ''
   const whole = Math.floor(count)
-  const tall = Math.min(0.96, 1 - 1.2 / (FIGURE_M * px))
-  const across = Math.max(px, STACK_LEAST_PX / FIGURE_FORM.shoulders)
-  for (let i = 0; i < whole; i++) d += figurePath(x, foot - i * FIGURE_M * px, px, tall, across)
+  const slot = FIGURE_M * px
+  for (let i = 0; i < whole; i++) {
+    const sole = foot - i * slot
+    if (slot >= STACK_SIGN_H) d += figurePath(x, sole, px, one.h / slot, Math.max(px, one.w / FIGURE_FORM.shoulders))
+    else d += signPath(x, sole, one.h, one.w)
+  }
   return d
 }
 
