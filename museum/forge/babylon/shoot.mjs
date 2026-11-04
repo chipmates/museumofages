@@ -5,11 +5,12 @@
 //   node forge/babylon/shoot.mjs --stop 3[,map:9,open] --out <abs folder> [--framing desktop,phone]
 //        [--desktop 1600x900@2] [--phone 390x844@3] [--samples 16] [--view grey|classes] [--state full|flat|grey]
 //        [--t <second on the map film or the flight>] [--name <base>] [--q 'exp=0.6'] [--port 5214]
+//   node forge/babylon/shoot.mjs --stop <id> --out <dir> --facts   only the page's path samples (facts-<page>.json), no stills
 //   node forge/babylon/shoot.mjs --stops      the stops and the page each is on
 // File names: [<page>-]<stop>-<id>-<framing>[-classes].png (the page named when it is not the stop's own), or <name>-<framing>.png with --name. Exit 1 on any failed still
 // or console error.
 import { chromium } from 'playwright'
-import { existsSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { isAbsolute, join, resolve } from 'node:path'
 import { browserArgs, FRAME_TIME_FLAGS } from '../rig.mjs'
 import { DEFAULT_SIZES, PAGES, STOPS, buildId, devicePixels, parseSize, resolveStop } from './pages.mjs'
@@ -31,6 +32,7 @@ const fail = (m) => { console.error(m); process.exit(2) }
 if (!opt.stop || opt.stop === true) fail('--stop <id>[,<id>...] (see --stops)')
 if (!opt.out || opt.out === true || !isAbsolute(String(opt.out))) fail('--out <absolute folder>')
 const OUT = resolve(String(opt.out))
+mkdirSync(OUT, { recursive: true })
 const wanted = String(opt.stop).split(',').map(resolveStop)
 const framings = String(opt.framing ?? 'desktop,phone').split(',')
 for (const f of framings) if (!DEFAULT_SIZES[f]) fail(`framing "${f}": desktop or phone`)
@@ -60,7 +62,13 @@ for (const [name, stops] of byPage) {
   if (!ready) { console.log(`${name}: not ready after ${((Date.now() - t0) / 1000).toFixed(0)} s`); bad += stops.length; await page.close(); continue }
   const state = await page.evaluate((rig) => window[rig].state(), P.rig)
   console.log(`${name}: ready in ${((Date.now() - t0) / 1000).toFixed(1)} s, ${state.backend} ${state.architecture ?? ''}`)
-  for (const st of stops) for (const framing of framings) {
+  if (opt.facts) {
+    // the page's path, sampled every 0.1 s, for the geometry check's eyes
+    const facts = await page.evaluate((rig) => ({ samples: window[rig].pathSamples?.(0.1) ?? [] }), P.rig)
+    writeFileSync(join(OUT, `facts-${name}.json`), JSON.stringify(facts))
+    console.log(`facts-${name}.json: ${facts.samples.length} path samples`)
+  }
+  for (const st of stops) for (const framing of opt.facts ? [] : framings) {
     const size = sizes[framing]
     const [w, h] = devicePixels(size)
     const base = opt.name && opt.name !== true ? `${opt.name}-${framing}` : `${st.page !== st.owner ? `${st.page}-` : ''}${st.stop.padStart(2, '0')}-${st.id}-${framing}${view === 'classes' ? '-classes' : ''}`
