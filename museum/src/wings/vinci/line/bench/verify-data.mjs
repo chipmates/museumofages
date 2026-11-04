@@ -47,13 +47,12 @@ export const COLLECTIONS = [
     // The public copy carries the Adoration's corrected height and width, three facts rows taken
     // over from the mining catalogue, one fact reworded plainly, short titles, the Ginevra reverse's
     // own name, a German form of every holder line, the nineteen historic RC decisions
-    // restated as superseded by Tier 2, the Salvator Mundi's owner as not publicly confirmed and the
+    // restated as superseded by Tier 2, the Last Supper's credit naming the scan its
+    // reproduction copies, the Salvator Mundi's owner as not publicly confirmed and the
     // Buccleuch Yarnwinder's size, holder and record from its holder, with its German holder
-    // line reworded, the Last Supper's held scan recorded as no longer the source that hangs,
-    // and the Last Supper's credit naming the photograph that hangs, its licence and the
-    // museum's cut, sourced to the photograph's file page; the sealed original does not.
+    // line reworded; the sealed original does not.
     originalSHA256: '7e78e1a73fa55cdd58c75c495332ebe0617387e6b72babbea2695bbb8a3a5d02',
-    normalizedSHA256: 'c6d691809b9c4d3ec88da9c2a26440ffded42e50ea8d9e858dd9358f9e9a9e13',
+    normalizedSHA256: '6774c637217ccc63e3db04378e02454d90ddd723267eb8a1e168db6bafb184a0',
     expected: { works: 30, held_assets: 32, catalogue_mentions: 9 },
   },
 ]
