@@ -8,21 +8,22 @@
      ?put=<url>              where the rig hands its files (the shooter's own server) */
 
 import {
-  BackSide, Color, DoubleSide, DirectionalLight, Float32BufferAttribute, Group, InstancedBufferAttribute, InstancedMesh, Matrix3, Matrix4, Mesh,
-  MeshBasicNodeMaterial, MeshStandardNodeMaterial, PerspectiveCamera, PMREMGenerator, Scene, SphereGeometry, Vector3,
+  Color, DoubleSide, Float32BufferAttribute, Group, InstancedBufferAttribute, InstancedMesh, Matrix3, Matrix4, Mesh,
+  MeshBasicNodeMaterial, MeshStandardNodeMaterial, PerspectiveCamera, Scene, Vector3,
 } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import { createStack } from '../../../stack'
 import { IDENTITY } from '../../../stack/grade'
 import { accumulate, toPNG } from '../../animals/cave/render'
 import { printFrame } from '../../animals/cave/print'
-import type { Print } from '../../animals/cave/site'
 import { PERSON_FORMS, signPerson } from '../../place/person'
 import { buildPlan, makeFrame } from '../map/plan'
 import { buildBodies, tonesFrom, uView, type Sky } from '../map/mass'
-import { createMapLinear } from '../map/map-render'
+import { sunVector as mapSunVector } from '../map/sun'
+import { createOpenLinear } from '../open/air'
+import { walkLight } from '../open/light'
 import { makePath, type PathSample, type V3 as MV3 } from '../map/path'
-import { buildGate, gateFrame, hourOf, sunAt, sunVector, type V3 } from './gate-geom'
+import { buildGate, gateFrame, hourOf, type V3 } from './gate-geom'
 import { animalField } from './gate-relief'
 import { assemble, panelGrid } from './gate-mesh'
 import { birdsGeometry, palmsGeometry } from './gate-life'
@@ -34,7 +35,7 @@ import { NO_ROWS, bodyTones, panelTones, pavingTones, toneGateWalls, toneMapBodi
 type N = any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
-const { abs, asin, atan, clamp, dot, max, mix, normalize, positionLocal, positionWorld, pow, smoothstep, step, uniform, vec3, vec4, fog, densityFogFactor } = TSL as unknown as Record<string, N>
+const { abs, max, mix, positionLocal, positionWorld, step, uniform, vec3, vec4 } = TSL as unknown as Record<string, N>
 
 const q = new URLSearchParams(location.search)
 const says = document.getElementById('says') as HTMLElement
@@ -45,12 +46,13 @@ const say = (s: string): void => {
 const D2R = Math.PI / 180
 
 say('reading the plans')
-const [plan, cams, mapPlan, pieces, recordClasses]: [J, J, J, Pieces, ClassFile] = await Promise.all([
+const [plan, cams, mapPlan, pieces, recordClasses, openCams]: [J, J, J, Pieces, ClassFile, J] = await Promise.all([
   fetch(new URL('./gate-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('./gate-cams.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../map/map-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../pieces.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../record-classes.json', import.meta.url)).then((r) => r.json()),
+  fetch(new URL('../open/open-cams.json', import.meta.url)).then((r) => r.json()),
 ])
 const GF = gateFrame(plan)
 const MF = makeFrame(mapPlan)
@@ -107,46 +109,26 @@ U.uSwitch.value = q.get('switch') === 'classes' ? 1 : 0
 U.uSelf.value = Number(q.get('self') ?? plan.switch.selfLit?.value ?? 0)
 ;(U.uRot.value as Matrix3).copy(ROT)
 
-/* the sky and the sun (the map's sky, one set of uniforms for every hour) */
-const uSun = uniform(new Vector3(0, 1, 0))
-const uDay = uniform(1)
-const skyColour = (d: N): N => {
-  const up = clamp(d.y, 0, 1)
-  const low = smoothstep(-0.04, 0.35, uSun.y)
-  const zenith = mix(vec3(0.05, 0.08, 0.16), vec3(0.16, 0.3, 0.6), low)
-  const horizon = mix(vec3(0.5, 0.36, 0.26), vec3(0.72, 0.68, 0.6), low)
-  const cosS = max(dot(d, uSun), 0)
-  const glow = vec3(1.0, 0.72, 0.45).mul(pow(cosS, 8).mul(0.55).add(pow(cosS, 120).mul(1.6)))
-  const disc = smoothstep(0.99996, 0.99999, cosS).mul(60)
-  const sky = mix(horizon, zenith, pow(up, 0.45)).add(glow).add(vec3(1, 0.9, 0.75).mul(disc))
-  const below = horizon.mul(0.55)
-  return mix(below, sky, smoothstep(-0.02, 0.0, d.y)).mul(uDay)
+/* the walk's light, the arrival's own (open/light.ts): one sun (map/sun.ts), one sky and air, one environment, the shadow
+   fitted to the frame, one print; so the flight's last frame and the walk's first frame are lit by the same code */
+const uW2G = uniform(new Matrix4().copy(W2G))
+const L = walkLight({ renderer, scene, light: plan.light, rot: ROT, uW2G, uSunG: U.uSunG, gateAt: toWorld([0, 10, 0]), q })
+const sky: Sky = { colour: L.sky }
+const skyDome = L.dome
+/** toward the sun in the gate's frame, as the facts state it */
+const sunG = (hour: number): V3 => {
+  const v = new Vector3(...mapSunVector(hour)).applyMatrix3(ROT.clone().transpose())
+  return [v.x, v.y, v.z]
 }
-const sky: Sky = { colour: skyColour }
-const skyDome = (() => {
-  const m = new MeshBasicNodeMaterial({ side: BackSide, depthWrite: false })
-  m.colorNode = skyColour(normalize(positionLocal))
-  m.fog = false
-  const mesh = new Mesh(new SphereGeometry(1, 64, 32), m)
-  mesh.scale.setScalar(20000)
-  mesh.frustumCulled = false
-  mesh.name = 'sky'
-  return mesh
-})()
-scene.add(skyDome)
-const uHaze = uniform(new Color(0.7, 0.66, 0.58))
-const uDensity = uniform(Number(q.get('haze') ?? 0.00022))
-scene.fogNode = fog(uHaze, densityFogFactor(uDensity))
 
 say('building the city and the gate')
 const tones = tonesFrom(cityPlan)
-const bodies = buildBodies(city, tones, sky, uSun, canalZ)
+const bodies = buildBodies(city, tones, sky, L.AIR.uSun, canalZ)
 painted.push(toneMapBodies(bodies.group, city, named))
 scene.add(bodies.group)
 uView.value = U.uSwitch.value
 
 /* the map's street and ground give way to the gate's paving inside its area (a mask, the map's files untouched) */
-const uW2G = uniform(new Matrix4().copy(W2G))
 const sdx = B.street.dir[0], sdz = B.street.dir[1]
 const paved = (): N => {
   const p = uW2G.mul(vec4(positionWorld, 1)).xyz
@@ -260,87 +242,15 @@ figure.position.set(plan.figure.x, B.level(plan.figure.z), plan.figure.z)
 figure.rotation.y = plan.figure.turn ?? -Math.PI / 2
 figure.name = 'figure'
 gate.add(figure)
-
-/* light: the sun's key with a shadow fitted over the gate and the camera, the sky and the modelled bounce as an environment */
-// the light's stated values (gate-plan.json `light`); the URL may override one for a test, the sidecar records what ran
-const LIGHT = plan.light
-const SUN_I = Number(q.get('sun') ?? LIGHT.sun.intensity)
-const sunLight = new DirectionalLight(new Color(1.0, 0.86, 0.7), SUN_I)
-sunLight.castShadow = true
-sunLight.shadow.mapSize.set(8192, 8192)
-sunLight.shadow.bias = -0.0002
-sunLight.shadow.normalBias = 0.03
-scene.add(sunLight, sunLight.target)
-const uBounce = uniform(Number(q.get('bounce') ?? LIGHT.bounce.paving.value))
-const WALLS = LIGHT.bounce.eastWalls
-const wallsOn = Number(q.get('walls') ?? 1)
-// the sunlit east walls' radiance as an eye in the forecourt sees them (set per hour)
-const uWalls = uniform(new Color(0, 0, 0))
-const envScene = new Scene()
-{
-  const m = new MeshBasicNodeMaterial({ side: BackSide, depthWrite: false })
-  const d = normalize(positionLocal)
-  // below the horizon: the lit paving and walls' bounce, a warm grey (albedo times what reaches the ground)
-  const ground = vec3(...(LIGHT.bounce.paving.colour as [number, number, number])).mul(uBounce).mul(uDay)
-  // the sunlit west faces of the east bastion, the east connecting wall and the east lion wall: a warm band low in the north-east
-  const dg = uW2G.mul(vec4(d, 0)).xyz
-  const az = atan(dg.x.negate(), dg.z).mul(180 / Math.PI)
-  const el = asin(clamp(dg.y, -1, 1)).mul(180 / Math.PI)
-  const [a0, a1] = WALLS.azimuth as [number, number], [e0, e1] = WALLS.elevation as [number, number]
-  const band = smoothstep(a0 - 6, a0, az).mul(smoothstep(a1 + 6, a1, az)).mul(smoothstep(e0 - 3, e0, el)).mul(smoothstep(e1 + 3, e1, el))
-  m.colorNode = mix(ground, skyColour(d), smoothstep(-0.05, 0.02, d.y)).mul(band.oneMinus()).add(vec3(uWalls).mul(band))
-  const mesh = new Mesh(new SphereGeometry(100, 64, 32), m)
-  envScene.add(mesh)
-}
-const pmrem = new PMREMGenerator(renderer)
-let envTarget: N = null
-function bakeEnv(): void {
-  envTarget?.dispose?.()
-  envTarget = pmrem.fromScene(envScene, 0.02, 1, 1000)
-  scene.environment = envTarget.texture
-}
-const uEnv = Number(q.get('env') ?? plan.light.env)
-scene.environmentIntensity = uEnv
-
-let hourNow = -1
-function setHour(hour: number): void {
-  if (Math.abs(hour - hourNow) < 1e-4) return
-  hourNow = hour
-  const sG = sunVector(plan, hour)
-  ;(U.uSunG.value as Vector3).set(...sG)
-  const w = dirWorld(sG)
-  ;(uSun.value as Vector3).copy(w)
-  const el = Math.asin(sG[1]) / D2R
-  const k = Math.min(1, Math.max(0, (el + 0.5) / 6))
-  sunLight.intensity = SUN_I * k
-  sunLight.color.setRGB(1.0, 0.72 + 0.14 * Math.min(1, el / 20), 0.5 + 0.2 * Math.min(1, el / 20))
-  // a west-facing wall's radiance in the sun: albedo times the light on it over pi, in the wall's own buff
-  const onWest = Math.max(0, sG[0]) * sunLight.intensity * WALLS.albedo * wallsOn / Math.PI
-  ;(uWalls.value as Color).setRGB(sunLight.color.r * WALLS.colour[0] * onWest, sunLight.color.g * WALLS.colour[1] * onWest, sunLight.color.b * WALLS.colour[2] * onWest)
-  const day = Math.min(1, Math.max(0.18, (el + 6) / 14))
-  uDay.value = day
-  ;(uHaze.value as Color).setRGB(0.72 * day, 0.64 * day, 0.54 * day)
-  bakeEnv()
+// a probe only, never in the film (?figure=s,t): the figure on the street s metres out on its line, t across (+ west)
+if (q.get('figure')) {
+  const [fs, ft] = q.get('figure')!.split(',').map(Number) as [number, number]
+  const fx = fs * B.street.dir[0] + (ft ?? 0) * B.street.dir[1], fz = fs * B.street.dir[1] - (ft ?? 0) * B.street.dir[0]
+  figure.position.set(fx, B.level(fz), fz)
 }
 
-function fitShadow(): void {
-  const sun = (uSun.value as Vector3).clone().normalize()
-  // the gate, the forecourt and the street to the desktop camera: centre 10 m out on the axis, 95 m round
-  const focus = toWorld([0, 6, 12])
-  const r = 95
-  sunLight.position.copy(focus).addScaledVector(sun, 3000)
-  sunLight.target.position.copy(focus)
-  sunLight.target.updateMatrixWorld()
-  sunLight.updateMatrixWorld()
-  const sc = sunLight.shadow.camera
-  sc.left = -r
-  sc.right = r
-  sc.top = r
-  sc.bottom = -r
-  sc.near = 2800
-  sc.far = 3200
-  sc.updateProjectionMatrix()
-}
+/* light: the sun's key and its shadow, the sky and the modelled bounce as an environment (open/light.ts) */
+const setHour = (hour: number): void => L.setHour(hour)
 
 /* the camera: a level look with the frame slid up (a shift lens, `rail-projection.ts`'s math copied: ceiling 0.7) */
 let shiftNow = 0
@@ -370,7 +280,8 @@ function aimWorld(pos: Vector3, look: Vector3, vfov: number, w: number, h: numbe
   skyDome.position.copy(camera.position)
   skyDome.updateMatrixWorld(true)
   U.uPix.value = (2 * Math.tan((vfov / 2) * D2R)) / h
-  fitShadow()
+  const f = L.frame(camera)
+  linear?.setRadius(f.aoRadius)
 }
 
 /** a trial camera in the gate's frame; a null height stands the eye on the street's profile and looks level */
@@ -414,8 +325,10 @@ const pathCams = {
     else if (k.look === 'south') look = [south[0], 1.65, south[1]]
     else look = [k.look[0], k.look[1], k.look[2]]
     const [lE, lN] = GF.utm(look[0], look[2])
-    // a stop's first key repeats the last stop's last key at the same second, so each stop starts at its own key
-    return { t: k.t + (i === 0 ? 1e-4 : 0), at: [E, N], y: 'eye', look: [lE, lN, look[1] + L0], stop: s.n, hold: k.kind === 'hold' || i === 0, kind: k.kind, cut: false }
+    // a stop's first key repeats the last stop's last key at the same second, so each stop starts at its own key; the
+    // walk's first key is the arrival's landing, so its clock starts at the landing's hour (one clock across the cut)
+    const first = s === cams.stops[0] && i === 0
+    return { t: k.t + (i === 0 && !first ? 1e-4 : 0), at: [E, N], y: 'eye', look: [lE, lN, look[1] + L0], stop: s.n, hold: k.kind === 'hold' || i === 0, kind: k.kind, cut: false, ...(first ? { hour: openCams.hour } : {}) }
   })),
 }
 const standMap = (x: number, z: number): number => {
@@ -429,7 +342,7 @@ if (q.get('ids') === '1') {
   // both sides, as the palms' and birds' own material draws them
   const flat = (r: number, g: number, b: number): MeshBasicNodeMaterial => { const m = new MeshBasicNodeMaterial({ side: DoubleSide }); m.colorNode = vec3(r, g, b); m.fog = false; return m }
   const SKY = flat(0, 0, 1), GLAZED = flat(0, 1, 0), PLAIN = flat(1, 0, 0), PAVING = flat(1, 1, 0), FIGURE = flat(1, 1, 1), OTHER = flat(1, 0, 1)
-  scene.fogNode = null
+  L.AIR.uOn.value = 0
   ;(skyDome.material as MeshBasicNodeMaterial).colorNode = vec3(0, 0, 1)
   const wallIds = new MeshBasicNodeMaterial()
   {
@@ -454,16 +367,13 @@ if (q.get('ids') === '1') {
 
 /* one pipeline: the scene pass, the contact occlusion, output linear; the print on the CPU */
 setHour(hourOf(cams.hour))
+let linear: ReturnType<typeof createOpenLinear> | null = null
 const first = stillView('desktop')
 aimView(first, 1600, 900)
 renderer.render(scene, camera)
-const linear = createMapLinear(renderer, scene, camera, { ao: { on: q.get('ao') !== '0', intensity: Number(q.get('ao') ?? 0.75), radius: 1.2 }, fade: [120, 600] })
-const P0 = plan.light.print
-const three = (k: string, d: number[]): [number, number, number] => (q.get(k) ?? d.join(',')).split(',').map(Number) as [number, number, number]
-const PRINT: Print = {
-  exposure: Number(q.get('exp') ?? plan.light.exposure), toe: Number(q.get('toe') ?? P0.toe), shoulder: 1, lift: [0, 0, 0], gamma: [1, 1, 1], gain: three('gain', P0.gain), warm: [1.02, 1, 0.97], cool: [0.97, 1, 1.03],
-  split: 0.3, saturation: Number(q.get('sat') ?? P0.saturation), vignette: 0.1, grain: 0.003, glow: { threshold: 1.2, strength: Number(q.get('glow') ?? P0.glow), radii: [0.012, 0.06] },
-}
+linear = createOpenLinear(renderer, scene, camera, L.AIR, { ao: { on: q.get('ao') !== '0', intensity: L.uAoOn, radius: 1.2, fadeNear: L.uAoNear, fadeFar: L.uAoFar } })
+/** the print for the camera where it stands, with extra stops (the brighter state) */
+const printNow = (stops = 0) => L.printFor(camera.position.y, L.stopsAt(camera.position.y) + stops)
 
 const putBase = q.get('put') ?? ''
 async function upload(file: string, bytes: Uint8Array | string): Promise<void> {
@@ -511,11 +421,11 @@ async function render(w: number, h: number, samples: number, stops = 0): Promise
   }) as typeof renderer.readRenderTargetPixelsAsync
   let rgb: Float32Array
   try {
-    rgb = await accumulate(renderer, camera, linear.post, w, h, samples)
+    rgb = await accumulate(renderer, camera, linear!.post, w, h, samples)
   } finally {
     renderer.readRenderTargetPixelsAsync = read
   }
-  const bytes = printFrame(rgb, w, h, { ...PRINT, exposure: PRINT.exposure * Math.pow(2, stops) }, 0)
+  const bytes = printFrame(rgb, w, h, printNow(stops), 0)
   return { bytes, rgb, ms: Math.round(performance.now() - t), readBack }
 }
 
@@ -536,7 +446,7 @@ function setStates(o: { state?: 'grey' | 'flat' | 'full'; switch?: boolean }): v
 const rig = {
   ready: true,
   state: () => ({ planMs, counts: { ...A.counts, cityTriangles: bodies.counts.triangles }, backend: stack.backend, architecture: stack.architecture, state: U.uState.value, switch: U.uSwitch.value, duration: path.duration, record: { stop: RECORD_STOP, bodies: painted.reduce((s, p) => s + p.bodies, 0), byLetters: painted.flatMap((p) => p.byLetters) } }),
-  facts: () => ({ ...B.facts, figure: { x: figure.position.x, y: figure.position.y, z: figure.position.z, height: plan.figure.height }, panels: B.panels.length, sun: Object.fromEntries(['16:45', '17:00', '12:00'].map((h) => [h, { ...sunAt(plan, hourOf(h)), toward: sunVector(plan, hourOf(h)) }])), views: { desktop: stillView('desktop'), phone: stillView('phone') }, level: (z: number) => B.level(z) }),
+  facts: () => ({ ...B.facts, figure: { x: figure.position.x, y: figure.position.y, z: figure.position.z, height: plan.figure.height }, panels: B.panels.length, sun: Object.fromEntries(['16:40', '16:45', '17:00', '12:00'].map((h) => [h, { ...L.sunAt(hourOf(h)), toward: sunG(hourOf(h)) }])), views: { desktop: stillView('desktop'), phone: stillView('phone') }, level: (z: number) => B.level(z) }),
   views: () => ({ desktop: stillView('desktop'), phone: stillView('phone'), keys: path.keys.map((k) => ({ t: k.t, stop: k.stop, kind: k.kind, pos: k.pos })), duration: path.duration }),
   /** device-pixel boxes of the crop anchors for a framing at a size */
   crops(o: { framing: 'desktop' | 'phone'; w: number; h: number }) {
@@ -588,14 +498,14 @@ const rig = {
     const { bytes, ms, readBack } = await render(o.w, o.h, o.samples, o.stops ?? 0)
     const file = `${o.out}/${o.name}.png`
     await upload(file, await toPNG(bytes, o.w, o.h))
-    const s = sunAt(plan, hourOf(hour))
+    const s = L.sunAt(hourOf(hour))
     const side = {
       file, framing: o.framing, state: ['grey', 'flat', 'full'][U.uState.value as number], switch: !!U.uSwitch.value,
       cssSize: o.css, devicePixels: [o.w, o.h], ratio: +(o.w / o.css[0]).toFixed(3), subFramesAsked: o.samples, subFrames: readBack.subFrames,
       renderTarget: readBack.target, sampleCountReadBack: readBack.target?.samples ?? null,
-      backend: stack.backend, adapter: stack.architecture, print: { ...PRINT, exposure: PRINT.exposure * Math.pow(2, o.stops ?? 0) },
-      hour, sun: { azimuth: +s.azimuth.toFixed(1), elevation: +s.elevation.toFixed(1), toward: sunVector(plan, hourOf(hour)).map((x) => +x.toFixed(3)) },
-      env: { intensity: scene.environmentIntensity, bounce: uBounce.value, sunIntensity: sunLight.intensity, eastWalls: [(uWalls.value as Color).r, (uWalls.value as Color).g, (uWalls.value as Color).b].map((v) => +v.toFixed(4)) },
+      backend: stack.backend, adapter: stack.architecture, print: printNow(o.stops ?? 0),
+      hour, sun: { azimuth: +s.azimuth.toFixed(1), elevation: +s.elevation.toFixed(1), toward: sunG(hourOf(hour)).map((x) => +x.toFixed(3)), source: 'map/sun.ts' },
+      env: { intensity: scene.environmentIntensity, bounce: L.uBounce.value, sunIntensity: L.sunLight.intensity, eastWalls: [(L.uWalls.value as Color).r, (L.uWalls.value as Color).g, (L.uWalls.value as Color).b].map((v) => +v.toFixed(4)), air: { sigma: L.AIR.uSigma.value, scale: L.AIR.uScale.value, on: L.AIR.uOn.value } },
       camera: o.look ? { gate: o.look } : { gate: { pos: v.pos.map((x) => +x.toFixed(3)), look: v.look }, utm: GF.utm(v.pos[0], v.pos[2]).map((x) => +x.toFixed(2)), eyeOverStreet: +(v.pos[1] - B.level(v.pos[2])).toFixed(3), hfov: v.hfov, vfov: +camera.fov.toFixed(3), shift: shiftNow, near: camera.near, far: camera.far },
       brightness: brightness(bytes), box: o.box ? { box: o.box, ...brightness(bytes, o.box, o.w) } : undefined, ms,
     }

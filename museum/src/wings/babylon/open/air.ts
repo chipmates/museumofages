@@ -33,6 +33,8 @@ export interface AirUniforms {
   uBeta: N
   /** the haze's own strength, 0 to switch the air off for a test */
   uOn: N
+  /** the zenith's blue at full day (the sky over a street lights its shade) */
+  uZenith: N
   /** the far air's colour at full day away from the sun and toward it, and how far round toward the sun the warm side reaches */
   uAway: N
   uNear: N
@@ -48,6 +50,7 @@ export function makeAirUniforms(o: { sigma?: number; scale?: number; floor?: num
     uFloor: uniform(o.floor ?? 3),
     uBeta: uniform(new Vector3(0.88, 1, 1.16)),
     uOn: uniform(1),
+    uZenith: uniform(new Vector3(0.11, 0.23, 0.52)),
     uAway: uniform(new Vector3(0.52, 0.48, 0.45)),
     uNear: uniform(new Vector3(0.92, 0.72, 0.5)),
     uReach: uniform(-1.0),
@@ -71,7 +74,7 @@ export function airColour(U: AirUniforms, d: N): N {
 export function skyColour(U: AirUniforms, d: N): N {
   const up = clamp(d.y, 0, 1)
   const low = smoothstep(-0.04, 0.35, U.uSun.y)
-  const zenith = mix(vec3(0.05, 0.08, 0.16), vec3(0.11, 0.23, 0.52), low)
+  const zenith = mix(vec3(0.05, 0.08, 0.16), vec3(U.uZenith), low)
   const air = airColour(U, d)
   const above = mix(air, zenith.mul(U.uDay), pow(up, 0.5))
   const cosS = max(dot(d, U.uSun), 0)

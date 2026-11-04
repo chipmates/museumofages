@@ -156,22 +156,26 @@ export function gateFrame(plan: J) {
   return { utm, fromUtm, toMap, level0: L0 }
 }
 
-/* ── the sun (GATE-RESEARCH 5.1, `PILOT/scratch/sun2.py`): local apparent solar time ── */
-export function sunAt(plan: J, hour: number): { azimuth: number; elevation: number; dec: number } {
-  const phi = plan.hour.latitude * D2R
-  const dec = Math.asin(Math.sin(plan.hour.obliquity * D2R) * Math.sin(plan.hour.days * D2R))
+/* ── the sun: the pages light with map/sun.ts (the walk's one clock). This file takes no imports so node can mount it,
+   so for the node checks it mirrors map/sun.ts's formula and constants; forge/babylon/test/sun.test.mjs holds the two
+   equal. Local apparent solar time. ── */
+const SUN = { latitude: 32.54, obliquity: 23.76, daysAfterEquinox: 19 }
+export function sunAt(_plan: J, hour: number): { azimuth: number; elevation: number; dec: number } {
+  const phi = SUN.latitude * D2R
+  const dec = Math.asin(Math.sin(SUN.obliquity * D2R) * Math.sin(SUN.daysAfterEquinox * 0.9856 * D2R))
   const H = (hour - 12) * 15 * D2R
   const el = Math.asin(Math.sin(phi) * Math.sin(dec) + Math.cos(phi) * Math.cos(dec) * Math.cos(H))
-  const az = Math.atan2(-Math.cos(dec) * Math.sin(H), Math.sin(dec) * Math.cos(phi) - Math.cos(dec) * Math.sin(phi) * Math.cos(H))
+  const az = Math.atan2(Math.sin(H), Math.cos(H) * Math.sin(phi) - Math.tan(dec) * Math.cos(phi)) + Math.PI
   return { azimuth: ((az / D2R) % 360 + 360) % 360, elevation: el / D2R, dec: dec / D2R }
 }
 
-/** toward the sun in the gate's frame */
+/** toward the sun in the gate's frame: the world vector (x east, y up, z south) on the gate's grid axes, as gate.ts turns it */
 export function sunVector(plan: J, hour: number): V3 {
   const { azimuth, elevation } = sunAt(plan, hour)
-  const n = plan.frame.faceNormalTrue as number
   const c = Math.cos(elevation * D2R)
-  return [c * Math.cos((azimuth - (n - 90)) * D2R), Math.sin(elevation * D2R), c * Math.cos((azimuth - n) * D2R)]
+  const w: V3 = [c * Math.sin(azimuth * D2R), Math.sin(elevation * D2R), -c * Math.cos(azimuth * D2R)]
+  const zb = plan.frame.zGrid * D2R, xb = (plan.frame.zGrid - 90) * D2R
+  return [w[0] * Math.sin(xb) - w[2] * Math.cos(xb), w[1], w[0] * Math.sin(zb) - w[2] * Math.cos(zb)]
 }
 
 /** "17:00" in hours */
