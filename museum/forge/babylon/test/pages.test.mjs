@@ -16,6 +16,8 @@ test('a stop resolves by number, id, page prefix and page name', () => {
   assert.equal(resolveStop('3').page, 'gate')
   assert.equal(resolveStop('forecourt').stop, '3')
   assert.equal(resolveStop('map:3').page, 'map')
+  assert.equal(resolveStop('map:3').owner, 'gate')
+  assert.equal(resolveStop('3').owner, 'gate')
   assert.equal(resolveStop('9').page, 'map')
   assert.equal(resolveStop('open').page, 'open')
   assert.throws(() => resolveStop('15'), /no stop/)

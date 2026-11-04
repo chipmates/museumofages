@@ -63,15 +63,15 @@ export const STOPS = [
 /** a stop by number or id, `<page>:<stop>` to take it from another page, or a page name for its own first view */
 export function resolveStop(text) {
   const s = String(text).trim()
-  if (PAGES[s]) return { stop: s === 'open' ? '1' : s === 'gate' ? '2' : '1', id: s, page: s, own: true }
+  if (PAGES[s]) return { stop: s === 'gate' ? '2' : '1', id: s, page: s, owner: s }
   const m = /^([a-z]+):(.+)$/.exec(s)
   const [page, key] = m ? [m[1], m[2]] : [null, s]
   if (page && !PAGES[page]) throw new Error(`no Babylon page "${page}" (pages: ${Object.keys(PAGES).join(', ')})`)
   const hit = STOPS.find((x) => x.stop === key || x.id === key)
   if (!hit) throw new Error(`no stop "${key}" (stops 1 to 14 by number or id)`)
-  if (page === 'map') return { ...hit, page: 'map' }
+  if (page === 'map') return { ...hit, page: 'map', owner: hit.page }
   if (page && page !== hit.page) throw new Error(`stop ${hit.stop} is not on the ${page} page (it is on ${hit.page}, and every stop is on map)`)
-  return { ...hit }
+  return { ...hit, owner: hit.page }
 }
 
 /** the build a still came from: the worktree's head and whether Babylon's files differ from it */
