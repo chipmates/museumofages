@@ -11,7 +11,9 @@ import * as TSL from 'three/tsl'
 import { APP } from './pages.mjs'
 import { cameraFrom, facesFrom, fittedFov } from './geometry.mjs'
 
-const COURT = join(APP, 'src/wings/babylon/court')
+const COURT = join(APP, 'src/wings/babylon/court'), GARDENS = join(APP, 'src/wings/babylon/gardens')
+/** the garden's palms as the map page builds them (map.ts PALM_MID) */
+const PALM_MID = { seg: 4, sides: 5, fronds: 16, steps: 4 }
 const MAP = join(APP, 'src/wings/babylon/map'), GATE = join(APP, 'src/wings/babylon/gate'), OPEN = join(APP, 'src/wings/babylon/open')
 const json = (p) => JSON.parse(readFileSync(p, 'utf8'))
 /** the kit's still sizes, device pixels: both framings at the shooter's defaults, and the smaller desktop */
@@ -63,9 +65,14 @@ export async function mountMap(stop, { reach = 400 } = {}) {
   const { buildBodies, tonesFrom } = await import(join(MAP, 'mass.ts'))
   const { makePath } = await import(join(MAP, 'path.ts'))
   const { buildCourt } = await import(join(COURT, 'court-geom.ts'))
-  const plan = json(join(MAP, 'map-plan.json')), cams = json(join(MAP, 'map-cams.json'))
-  // stop 6's court draws its own bodies in place of the map's prisms it replaces, as map.ts does
-  const court = buildCourt(buildPlan(plan), plan, json(join(COURT, 'court-plan.json')))
+  const { buildGardens } = await import(join(GARDENS, 'gardens-geom.ts'))
+  const { buildPlanting } = await import(join(GARDENS, 'gardens-plants.ts'))
+  const { palmGeometry } = await import(join(GATE, 'gate-life.ts'))
+  const plan = json(join(MAP, 'map-plan.json')), cams = json(join(MAP, 'map-cams.json')), gp = json(join(GARDENS, 'gardens-plan.json'))
+  // stop 5's candidates and stop 6's court draw their own bodies in place of the map's prisms they replace, as map.ts does
+  const gardens = buildGardens(buildPlan(plan), plan, gp)
+  const planting = buildPlanting(gardens.F, gp, palmGeometry, PALM_MID)
+  const court = buildCourt(gardens.built, plan, json(join(COURT, 'court-plan.json')))
   const built = court.built
   const F = makeFrame(plan)
   const stand = (x, z) => built.stand(x, z)
@@ -89,9 +96,11 @@ export async function mountMap(stop, { reach = 400 } = {}) {
   const keep = (v) => { const cx = (v[0].x + v[1].x + v[2].x) / 3, cz = (v[0].z + v[1].z + v[2].z) / 3; return Math.hypot(cx - ex, cz - ez) <= reach }
   const faces = mapFaces([], bodies.group, built, new THREE.Matrix4(), keep)
   for (const b of court.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
+  for (const b of gardens.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
+  for (const p of planting.plants) facesFrom(faces, p.geometry, null, () => `map:${p.id}`, keep)
   const surface = (b) => /^map:(street|ground|water-)/.test(b)
   return {
-    court,
+    court, gardens, planting,
     page: 'map', stop: String(stop), frame: "the map's scene metres (x east, z south, y up)", faces, cameras, eyes, reach,
     ground: (x, z) => built.ground(x, z),
     track: (dt = 0.25) => pathTrack(path, n, dt, (q) => ({ kind: q.kind, desktop: view(q.pos, q.look, q.hfov, q.shift), phone: view(q.pos, q.phone.look, q.phone.hfov, q.phone.shift) })),

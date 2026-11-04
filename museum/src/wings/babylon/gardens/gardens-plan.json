@@ -1,0 +1,79 @@
+{
+ "about": "Stop 5 on the map page (the gardens question): the two candidates in UTM metres (E, N) and German-zero levels like map-plan.json. Koldewey's vaulted building as its own block in the South Palace's north-east corner, the North Palace on its +15 m terrace with its courts and principal rooms, and one guessed garden on the edge terraces the map already holds (gardens-edge-1 to 4). Plans read off sheet S3.45 (Uppsala, CC BY 4.0) and printed sizes; every height above a measured floor, every wall top, the stairs and every plant are ours, and say so.",
+ "vaulted": {
+  "unit": [[445733.7, 3600786.0], [445766.0, 3600793.5], [445776.0, 3600751.0], [445733.7, 3600750.0]],
+  "core": [[445744.3, 3600785.9], [445761.4, 3600790.4], [445767.3, 3600762.4], [445744.3, 3600760.9]],
+  "src": "S3.45 read off (plus or minus 2 m): the cells' block either side of the central passage, a slightly irregular quadrangle at 445744 to 445767 E, 3600761 to 3600790 N, the corridor round it, the outer wall, the west range and the south range with the stair room; about 1,500 m2 drawn (P2021 p. 101: a half-basement of about 1,600 m2); turned with the palace's north and east walls",
+  "foot": 11.0,
+  "deck": 12.4,
+  "coreTop": 13.0,
+  "cells": 7,
+  "parapet": { "t": 0.8, "top": 13.3 },
+  "hsrc": "floor +4.6, walls founded at +0.8 (P2021 p. 101), both under the palace floor (+12); the roof is ours (REC bab.vaulted.upper): an earth roof at +12.4 just over the palace floor, the cells' block a step higher at +13.0, a parapet to +13.3 on the drawn outline; no garden on it (REC bab.vaulted.roofgarden: words only)"
+ },
+ "northPalace": {
+  "courts": [
+   { "id": "np-court-w", "rect": [445547.6, 445580.7, 3600903.1, 3600938.5], "src": "West Courtyard on S3.45, 33.1 x 35.4 m (P2021 p. 126: 33 x 35 m)" },
+   { "id": "np-court-e", "rect": [445599.0, 445633.7, 3600898.5, 3600935.6], "src": "East Courtyard on S3.45, 34.7 x 37.1 m (P2021 p. 126: 34 x 37 m)" }
+  ],
+  "halls": [
+   { "id": "np-hall-w", "rect": [445553.7, 445575.6, 3600890.1, 3600898.8], "src": "the West Courtyard's principal room on S3.45, 21.9 x 8.7 m (P2021 p. 126: 21 x 9 m)" },
+   { "id": "np-hall-e", "rect": [445599.1, 445630.2, 3600882.8, 3600894.1], "src": "the East Courtyard's principal room on S3.45, 31.1 x 11.3 m (P2021 p. 126: 31 x 11 m)" }
+  ],
+  "floor": 15.0,
+  "roof": 20.0,
+  "hallTop": 24.0,
+  "parapet": { "t": 1.0, "h": 0.9 },
+  "paving": { "sunk": 0.2, "top": 0.06 },
+  "hsrc": "the main floor +15 (P2021 p. 118); the rooms' roofs at the map's +20 and the principal rooms raised to +24 are ours (REC bab.northpalace.main.body: a height as a fact never); roofs of cedar, fir and cypress beams and blue-glazed crenellations are named in the king's texts and not drawn this round"
+ },
+ "terraces": {
+  "src": "the map's edge terraces gardens-edge-1 to 4 (Pedersén's model levels +13, +11, +8, +4 on the terrace sections 22 m north and 48 m west of the building, P2021 p. 117 to 118, fig. 3.23, 3.32: 'only preliminary attempts'); the strips below are their visible tops",
+  "strips": [
+   { "id": "1w", "level": 13, "e": [445510.8, 445522.8], "n": [3600808.6, 3600965.0], "out": "w" },
+   { "id": "1n", "level": 13, "e": [445510.8, 445719.0], "n": [3600965.5, 3600971.0], "out": "n" },
+   { "id": "2w", "level": 11, "e": [445498.8, 445510.8], "n": [3600805.3, 3600970.5], "out": "w" },
+   { "id": "2n", "level": 11, "e": [445498.8, 445719.5], "n": [3600971.0, 3600976.5], "out": "n" },
+   { "id": "3w", "level": 8, "e": [445486.8, 445498.8], "n": [3600802.0, 3600976.0], "out": "w" },
+   { "id": "3n", "level": 8, "e": [445486.8, 445719.8], "n": [3600976.5, 3600982.0], "out": "n" },
+   { "id": "4w", "level": 4, "e": [445474.8, 445486.8], "n": [3600798.7, 3600981.5], "out": "w" },
+   { "id": "4n", "level": 4, "e": [445474.8, 445720.1], "n": [3600982.0, 3600987.5], "out": "n" }
+  ],
+  "southClear": 7.0,
+  "eastClear": 9.0,
+  "stairs": [
+   { "id": "garden-stair-w", "n": 3600902.0, "w": 2.6, "src": "ours: one flight down each step on the west side, on the palace's middle line; Pedersén's model shows none" },
+   { "id": "garden-stair-n", "e": 445616.0, "w": 2.2, "src": "ours: one flight down each step on the north side, running along the wall where the strips are only 6 m wide" }
+  ],
+  "tread": 0.32,
+  "riser": 0.16
+ },
+ "ground": {
+  "poly": [[445470.0, 3600795.0], [445714.0, 3600862.0], [445721.9, 3601008.0], [445470.0, 3601008.0]],
+  "level": 0.0,
+  "slope": 0.5,
+  "src": "the ground round the edge terraces at the canal's embankment, plus or minus 0 (P2021 p. 115: the terrace top +15 and the embankment ±0 'within a limited area some 22 m wide'); the map's ground field stood at +11 to +14 here and buried the terraces. Its south side is the inner walls' line, its east the terrace's east edge; outside it the ground climbs back to the map's field at one in two (ours). On the map page only"
+ },
+ "planting": {
+  "src": "every plant ours (REC bab.gardens.plants, bab.green.*: Guessed). Berossus: terraces planted with all manner of trees; the Nineveh garden relief (BM 124939, a type, never Babylon): trees in close regular rows on a slope; Sheldon 1924 (an illustration): trees on every terrace edge, creepers over plain brick edges, palms at the water. Kinds as types: date palm (palm-date-babylon), cypress, broad aromatic and fruit trees, a few pomegranates, one fig; vines and caper hanging from the edges (GREEN H). April: the deciduous kinds in new leaf",
+  "seed": 570,
+  "rows": {
+   "w": [{ "at": 2.4, "every": 6.4, "mix": "edge" }, { "at": 7.6, "every": 7.5, "mix": "inner" }],
+   "n": [{ "at": 2.8, "every": 6.0, "mix": "north" }]
+  },
+  "mixes": {
+   "edge": [["broad", 0.5], ["palm", 0.3], ["cypress", 0.12], ["pomegranate", 0.05], ["fig", 0.03]],
+   "inner": [["cypress", 0.35], ["broad", 0.35], ["palm", 0.2], ["shrub", 0.1]],
+   "north": [["cypress", 0.3], ["palm", 0.35], ["broad", 0.35]]
+  },
+  "kinds": {
+   "palm": { "h": [10.0, 15.5], "row": "bab.green.northpalace.trees" },
+   "cypress": { "h": [11.0, 17.0], "r": [1.2, 1.8], "row": "bab.green.royal-kinds" },
+   "broad": { "h": [6.5, 9.5], "r": [2.6, 3.8], "row": "bab.green.royal-kinds" },
+   "pomegranate": { "h": [3.0, 4.5], "r": [1.4, 1.9], "max": 6, "row": "bab.green.pomegranate" },
+   "fig": { "h": [5.5, 6.5], "r": [2.8, 3.2], "max": 1, "row": "bab.green.fig" },
+   "shrub": { "h": [1.2, 2.2], "r": [1.0, 1.6], "row": "bab.gardens.plants" }
+  },
+  "hanging": { "every": 3.6, "w": [1.6, 3.4], "drop": [0.9, 2.6], "vine": 0.45, "src": "vine curtains and caper mounds over the terraces' own edges only, never a documented wall (GREEN H; REC bab.green.hanging, bab.green.vine)" }
+ }
+}
