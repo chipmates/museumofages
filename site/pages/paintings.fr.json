@@ -236,7 +236,7 @@
   "tag_chart": "Fait pour cette page",
   "crumb_here": "Tableaux",
   "tag_still": "Reproduction",
-  "still_open": "Une image du film de l’aile. Le mur porte",
+  "still_open": "Une image de l’aile. Le mur porte",
   "burlington_line": "Les mentions du musée portent sur la reproduction, pas sur le dessin.",
   "salvator_line": "La photographie, prise pour Christie’s en 2017 après la restauration, montrait le cadre. Ici, elle est recadrée sur le tableau.",
   "ginevra_front_line": "La face: une reproduction du domaine public issue de Wikimedia Commons, avec l’aimable autorisation de la National Gallery of Art, Washington, sous CC0.",
@@ -947,9 +947,9 @@
        "door": "la Cène",
        "shape": "wide",
        "pic": "supper",
-       "alt": "Une image du film de l’aile: la reproduction de la Cène sur un mur clair de la cour, avec son socle et le sol devant. Le Christ au milieu de treize figures derrière une longue table, dans une salle peinte.",
+       "alt": "Une image de l’aile: la reproduction de la Cène sur un mur clair de la cour, avec son socle et le sol devant. Le Christ au milieu de treize figures derrière une longue table, dans une salle peinte.",
        "src": [
-        "Une image du film de l’aile. Le mur porte une reproduction du tableau. Photo: Mariordo (Mario Roberto Duran Ortiz), 2024, ",
+        "Une image de l’aile. Le mur porte une reproduction du tableau. Photo: Mariordo (Mario Roberto Duran Ortiz), 2024, ",
         {
          "text": "CC BY-SA 4.0",
          "href": "https://creativecommons.org/licenses/by-sa/4.0/"

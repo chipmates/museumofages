@@ -236,7 +236,7 @@
   "tag_chart": "Made for this page",
   "crumb_here": "Paintings",
   "tag_still": "Reproduction",
-  "still_open": "A still from the wing's film. The wall carries",
+  "still_open": "A still from the wing. The wall carries",
   "burlington_line": "The museum labels the reproduction, not the drawing.",
   "salvator_line": "The photograph, taken for Christie's in 2017 after the restoration, showed the frame. Here it is cropped to the painting.",
   "ginevra_front_line": "The front: a public domain reproduction from Wikimedia Commons, courtesy of the National Gallery of Art, Washington, under CC0.",
@@ -968,9 +968,9 @@
        "door": "the Last Supper",
        "shape": "wide",
        "pic": "supper",
-       "alt": "A still from the wing's film: the reproduction of the Last Supper on a pale wall of the court, with its plinth and the floor in front. Christ in the middle of thirteen figures behind a long table, in a painted hall.",
+       "alt": "A still from the wing: the reproduction of the Last Supper on a pale wall of the court, with its plinth and the floor in front. Christ in the middle of thirteen figures behind a long table, in a painted hall.",
        "src": [
-        "A still from the wing's film. The wall carries a reproduction of the painting. Photograph by Mariordo (Mario Roberto Duran Ortiz), 2024, ",
+        "A still from the wing. The wall carries a reproduction of the painting. Photograph by Mariordo (Mario Roberto Duran Ortiz), 2024, ",
         {
          "text": "CC BY-SA 4.0",
          "href": "https://creativecommons.org/licenses/by-sa/4.0/"
