@@ -5,6 +5,7 @@
 //   node forge/babylon/shoot.mjs --stop 3[,map:9,open] --out <abs folder> [--framing desktop,phone]
 //        [--desktop 1600x900@2] [--phone 390x844@3] [--samples 16] [--view grey|classes] [--state full|flat|grey]
 //        [--t <second on the map film or the flight>] [--name <base>] [--q 'exp=0.6'] [--port 5214]
+//        [--look '{"pos":[x,null,z],"look":[x,y,z],"hfov":58}'] (the gate page: a still from any stand in its frame)
 //   node forge/babylon/shoot.mjs --stop <id> --out <dir> --facts   only the page's path samples (facts-<page>.json), no stills
 //   node forge/babylon/shoot.mjs --stops      the stops and the page each is on
 // File names: [<page>-]<stop>-<id>-<framing>[-classes].png (the page named when it is not the stop's own), or <name>-<framing>.png with --name. Exit 1 on any failed still
@@ -75,6 +76,7 @@ for (const [name, stops] of byPage) {
     const call = P.still({
       stop: st.stop, framing, view, w, h, css: size.css, samples, out: OUT, name: base,
       state: opt.state && opt.state !== true ? String(opt.state) : undefined, t: opt.t && opt.t !== true ? Number(opt.t) : undefined,
+      look: opt.look && opt.look !== true ? JSON.parse(String(opt.look)) : undefined,
     })
     const r = await page.evaluate(([rig, fn, arg]) => window[rig][fn](arg), [P.rig, call.fn, call.arg]).catch((e) => ({ error: String(e) }))
     if (r.error) { bad++; console.log(`FAILED ${st.stop} ${framing}: ${r.error.slice(0, 600)}`); continue }

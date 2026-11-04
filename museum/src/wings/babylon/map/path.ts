@@ -26,6 +26,8 @@ export interface Key {
   still: boolean
   kind: string
   say: string
+  /** a solar hour the clock holds at this key, where a stop's light is set to a minute of its own */
+  hour?: number
 }
 
 export interface PathSample {
@@ -40,6 +42,11 @@ export interface PathSample {
   kind: string
 }
 
+const hhmm = (s: string): number => {
+  const [h, m] = String(s).split(':').map(Number)
+  return (h ?? 0) + (m ?? 0) / 60
+}
+
 export function makePath(cams: J, toScene: (E: number, N: number) => [number, number], stand: (x: number, z: number) => number) {
   const EYE: number = cams.eye
   const keys: Key[] = cams.path.map((k: J) => {
@@ -51,7 +58,7 @@ export function makePath(cams: J, toScene: (E: number, N: number) => [number, nu
     const ph = k.phone ?? {}
     const pl = ph.look ? toScene(ph.look[0], ph.look[1]) : null
     const phone = { look: pl ? ([pl[0], ph.look[2] as number, pl[1]] as V3) : look, hfov: ph.hfov ?? cams.lens.phoneFilm ?? cams.lens.phone, shift: ph.shift ?? 0 }
-    return { t: k.t, pos: [x, y, z] as V3, look, eye, hfov: k.hfov ?? cams.lens.desktop, shift: k.shift ?? 0, phone, stop: k.stop, cut: !!k.cut, hold: !!k.hold, still: !!k.still, kind: k.kind ?? (eye ? 'walk' : 'fly'), say: k.say ?? '' }
+    return { t: k.t, pos: [x, y, z] as V3, look, eye, hfov: k.hfov ?? cams.lens.desktop, shift: k.shift ?? 0, phone, stop: k.stop, cut: !!k.cut, hold: !!k.hold, still: !!k.still, kind: k.kind ?? (eye ? 'walk' : 'fly'), say: k.say ?? '', ...(k.hour ? { hour: hhmm(k.hour) } : {}) }
   })
   const duration = keys[keys.length - 1]!.t
   /** a scalar's tangent at key i inside its run, by time: zero on a held key, the leg's own pace at a run's
@@ -102,7 +109,22 @@ export function makePath(cams: J, toScene: (E: number, N: number) => [number, nu
   }
   const stopStart = new Map<number, number>()
   for (const k of keys) if (!stopStart.has(k.stop)) stopStart.set(k.stop, k.t)
+  /* keys that hold the clock at an hour of their own: between two such keys, or such a key and a stop's start, the
+     hour runs straight from one to the other; a held key at a stop's start speaks for that start */
+  const pins = keys.filter((k) => k.hour !== undefined).map((k) => ({ t: k.t, h: k.hour! }))
+  const lastStart = Math.max(...stopStart.values())
+  const pinned = (t: number): number | null => {
+    if (!pins.length || t >= lastStart) return null
+    const anchors = [...[...stopStart.entries()].filter(([, t0]) => !pins.some((p) => Math.abs(p.t - t0) < 1e-6)).map(([n, t0]) => ({ t: t0, h: stopHour.get(n)! })), ...pins].sort((a, b) => a.t - b.t)
+    for (let i = 0; i + 1 < anchors.length; i++) {
+      const a = anchors[i]!, b = anchors[i + 1]!
+      if (t >= a.t && t < b.t) return a.h + ((b.h - a.h) * (t - a.t)) / Math.max(1e-6, b.t - a.t)
+    }
+    return null
+  }
   const hourAt = (t: number): number => {
+    const held = pinned(t)
+    if (held !== null) return held
     const stops = [...stopStart.entries()].sort((a, b) => a[1] - b[1])
     for (let i = 0; i < stops.length; i++) {
       const [n, t0] = stops[i]!

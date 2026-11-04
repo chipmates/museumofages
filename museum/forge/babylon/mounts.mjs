@@ -1,7 +1,8 @@
 // WHAT EACH BABYLON PAGE BUILDS, MOUNTED IN NODE for the geometry check: named triangles, the stills' cameras at the
 // kit's sizes, the eyes that decide what is seen, the ground under a body, and the page's own allowances.
 // A new stop module adds a mount here: `mount<Page>(stop, opts)` returning
-//   { frame, faces, cameras, eyes, ground(x, z), counts(a, b), checks(body), floats(body), masked?, allowPair, allowThin, allowFloat }
+//   { frame, faces, cameras, eyes, ground(x, z), counts(a, b), checks(body), floats(body), masked?, allowPair, allowThin, allowFloat,
+//     track(dt) }   track: the stop's moving camera every dt seconds, both framings, in the mount's frame (the coverage map)
 // Run under `node --experimental-strip-types` (the pages' modules are TypeScript).
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
@@ -10,7 +11,8 @@ import * as TSL from 'three/tsl'
 import { APP } from './pages.mjs'
 import { cameraFrom, facesFrom, fittedFov } from './geometry.mjs'
 
-const MAP = join(APP, 'src/wings/babylon/map'), GATE = join(APP, 'src/wings/babylon/gate')
+const COURT = join(APP, 'src/wings/babylon/court')
+const MAP = join(APP, 'src/wings/babylon/map'), GATE = join(APP, 'src/wings/babylon/gate'), OPEN = join(APP, 'src/wings/babylon/open')
 const json = (p) => JSON.parse(readFileSync(p, 'utf8'))
 /** the kit's still sizes, device pixels: both framings at the shooter's defaults, and the smaller desktop */
 export const SIZES = [['desktop', 3200, 1800], ['desktop', 1600, 900], ['phone', 1170, 2532], ['phone', 1080, 1920]]
@@ -19,6 +21,18 @@ const sky = { colour: () => TSL.vec3(0.5) }
 function canalLines(plan, F) {
   const cz = F.s(plan.canal.line[0][0], plan.canal.line[0][1])[1]
   return [-2.4, -plan.canal.w / 2, plan.canal.w / 2, 2.4].map((d) => Math.round((cz + d) * 100) / 100)
+}
+
+/** one track sample: a view per framing; a view is { eye, look, hfov, shift, authored } as the page aims it */
+const view = (eye, look, hfov, shift = 0, authored = null) => ({ eye: [...eye], look: [...look], hfov, shift, authored })
+/** a page's path from its first key of a stop to the next stop's first key, every dt seconds (the end included) */
+function pathTrack(path, n, dt, pick) {
+  const ks = path.keys.filter((k) => k.stop === n)
+  const t0 = ks[0].t, nxt = path.keys.find((k) => k.t > t0 && k.stop !== n && k.stop > n)
+  const t1 = nxt ? nxt.t : ks[ks.length - 1].t
+  const out = []
+  for (let i = 0; t0 + i * dt <= t1 + 1e-9; i++) { const t = t0 + i * dt; out.push({ t: +t.toFixed(3), ...pick(path.sample(t)) }) }
+  return out
 }
 
 /** the map's bodies as named triangles: each prism by its plan id (the `pid` attribute), each box by instance */
@@ -48,8 +62,11 @@ export async function mountMap(stop, { reach = 400 } = {}) {
   const { buildPlan, makeFrame } = await import(join(MAP, 'plan.ts'))
   const { buildBodies, tonesFrom } = await import(join(MAP, 'mass.ts'))
   const { makePath } = await import(join(MAP, 'path.ts'))
+  const { buildCourt } = await import(join(COURT, 'court-geom.ts'))
   const plan = json(join(MAP, 'map-plan.json')), cams = json(join(MAP, 'map-cams.json'))
-  const built = buildPlan(plan)
+  // stop 6's court draws its own bodies in place of the map's prisms it replaces, as map.ts does
+  const court = buildCourt(buildPlan(plan), plan, json(join(COURT, 'court-plan.json')))
+  const built = court.built
   const F = makeFrame(plan)
   const stand = (x, z) => built.stand(x, z)
   const path = makePath(cams, F.s, stand)
@@ -71,10 +88,13 @@ export async function mountMap(stop, { reach = 400 } = {}) {
   const [ex, , ez] = p.pos
   const keep = (v) => { const cx = (v[0].x + v[1].x + v[2].x) / 3, cz = (v[0].z + v[1].z + v[2].z) / 3; return Math.hypot(cx - ex, cz - ez) <= reach }
   const faces = mapFaces([], bodies.group, built, new THREE.Matrix4(), keep)
+  for (const b of court.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
   const surface = (b) => /^map:(street|ground|water-)/.test(b)
   return {
+    court,
     page: 'map', stop: String(stop), frame: "the map's scene metres (x east, z south, y up)", faces, cameras, eyes, reach,
     ground: (x, z) => built.ground(x, z),
+    track: (dt = 0.25) => pathTrack(path, n, dt, (q) => ({ kind: q.kind, desktop: view(q.pos, q.look, q.hfov, q.shift), phone: view(q.pos, q.phone.look, q.phone.hfov, q.phone.shift) })),
     counts: () => true,
     checks: (b) => !surface(b),
     floats: (b) => !surface(b) && b !== 'map:ramps',
@@ -85,7 +105,7 @@ export async function mountMap(stop, { reach = 400 } = {}) {
 }
 
 /** the gate page (stops 2 to 4): the gate's bodies as the page builds them, the map's within reach, both hero stills */
-export async function mountGate(stop, { eyesFile = null } = {}) {
+export async function mountGate(stop, { eyesFile = null, cityReach = 'near' } = {}) {
   const { buildGate, gateFrame } = await import(join(GATE, 'gate-geom.ts'))
   const { animalField } = await import(join(GATE, 'gate-relief.ts'))
   const { assemble, paved } = await import(join(GATE, 'gate-mesh.ts'))
@@ -93,6 +113,7 @@ export async function mountGate(stop, { eyesFile = null } = {}) {
   const { buildPlan, makeFrame } = await import(join(MAP, 'plan.ts'))
   const { buildBodies, tonesFrom } = await import(join(MAP, 'mass.ts'))
   const plan = json(join(GATE, 'gate-plan.json')), cams = json(join(GATE, 'gate-cams.json')), mapPlan = json(join(MAP, 'map-plan.json'))
+  const cityAll = cityReach === 'all'
   const B = buildGate(plan)
   const fields = { bull: animalField('bull'), dragon: animalField('dragon'), lion: animalField('lion') }
   const A = assemble(B, plan, fields)
@@ -128,7 +149,8 @@ export async function mountGate(stop, { eyesFile = null } = {}) {
   const F2 = makeFrame(cityPlan)
   const bodies = buildBodies(city, tonesFrom(cityPlan), sky, TSL.uniform(new THREE.Vector3(0, 1, 0)), canalLines(cityPlan, F2))
   const REACH = { x: [-130, 130], z: [-170, 280] }
-  const keep = (v) => v.some((p) => p.x >= REACH.x[0] && p.x <= REACH.x[1] && p.z >= REACH.z[0] && p.z <= REACH.z[1])
+  // cityReach 'all': every body the page builds (the coverage map sees the far city); 'near': the geometry check's box
+  const keep = cityAll ? null : (v) => v.some((p) => p.x >= REACH.x[0] && p.x <= REACH.x[1] && p.z >= REACH.z[0] && p.z <= REACH.z[1])
   mapFaces(faces, bodies.group, city, W2G, keep)
   const cameras = SIZES.map(([framing, w, h]) => {
     const v = cams.stills[framing]
@@ -141,7 +163,11 @@ export async function mountGate(stop, { eyesFile = null } = {}) {
   const FOOT_Y = Math.min(...B.boxes.map((b) => b.y0))
   const toG = (x, y, z) => new THREE.Vector3(x, y, z).applyMatrix4(G2W)
   const surface = (b) => /^map:(street|ground|water-)/.test(b)
+  const gv = (p) => { const v = new THREE.Vector3(...p).applyMatrix4(W2G); return [v.x, v.y, v.z] }
   return {
+    // the page's own walk (gate.ts: its keys through the map's easing); the film's phone is hfov 46 on 390x844, no shift
+    track: (dt = 0.25) => pathTrack(gatePath(plan, cams, B, GF, MF), Number(stop), dt, (q) => ({ kind: q.kind, desktop: view(gv(q.pos), gv(q.look), q.hfov, 0, [16, 9]), phone: view(gv(q.pos), gv(q.look), 46, 0, [390, 844]) })),
+    G2W, W2G, MF, GF, B, plan,
     page: 'gate', stop: String(stop), frame: "the gate's frame (x west, z north out of the face, y up from the +15.40 street)", faces, cameras, eyes,
     ground: (x, z) => { const w = toG(x, 0, z); return new THREE.Vector3(w.x, city.ground(w.x, w.z), w.z).applyMatrix4(W2G).y },
     // two of the map's bodies are the map's to answer; only pairs touching the gate are this page's
@@ -156,4 +182,59 @@ export async function mountGate(stop, { eyesFile = null } = {}) {
   }
 }
 
-export const MOUNTS = { map: mountMap, gate: mountGate }
+/** the gate page's walk as gate.ts builds it: the gate's keys in UTM and German levels through the map's easing */
+async function gatePathAsync() { return import(join(MAP, 'path.ts')) }
+const { makePath } = await gatePathAsync()
+function gatePath(plan, cams, B, GF, MF) {
+  const L0 = plan.frame.level0
+  const south = GF.fromUtm(445831, 3600652)
+  const keyAt = (at) => (typeof at === 'string' && at.startsWith('street:') ? [Number(at.slice(7)) * B.street.dir[0], Number(at.slice(7)) * B.street.dir[1]] : at)
+  const pathCams = {
+    eye: cams.eye,
+    lens: { desktop: cams.stills.desktop.hfov },
+    stops: cams.stops.map((s) => ({ n: s.n, hour: s.hour[0] })),
+    path: cams.stops.flatMap((s) => s.keys.map((k, i) => {
+      const [x, z] = keyAt(k.at)
+      const [E, N] = GF.utm(x, z)
+      const eyeY = B.level(z) + cams.eye
+      const look = k.look === 'gate' ? [0, eyeY, -20] : k.look === 'south' ? [south[0], 1.65, south[1]] : [k.look[0], k.look[1], k.look[2]]
+      const [lE, lN] = GF.utm(look[0], look[2])
+      return { t: k.t + (i === 0 ? 1e-4 : 0), at: [E, N], y: 'eye', look: [lE, lN, look[1] + L0], stop: s.n, hold: k.kind === 'hold' || i === 0, kind: k.kind, cut: false }
+    })),
+  }
+  const standMap = (x, z) => { const [, gz] = GF.fromUtm(x + MF.E0, MF.N0 - z); return B.level(gz) + L0 }
+  return makePath(pathCams, MF.s, standMap)
+}
+
+/** the arrival: the opening page (the gate page's bodies and the whole city) under its flight's cameras (open.ts) */
+export async function mountOpen(stop = '1', opts = {}) {
+  const { makeFlight, resolveFlight } = await import(join(OPEN, 'flight.ts'))
+  const G = await mountGate('2', { ...opts, cityReach: 'all' })
+  const cams = json(join(OPEN, 'open-cams.json')), gateCams = json(join(GATE, 'gate-cams.json'))
+  const { B, GF, MF, W2G, plan } = G
+  const L0 = plan.frame.level0
+  const g2s = (x, z) => { const [E, N] = GF.utm(x, z); return MF.s(E, N) }
+  const streetAt = (s, t = 0) => {
+    const x = s * B.street.dir[0] + t * B.street.dir[1], z = s * B.street.dir[1] - t * B.street.dir[0]
+    const [sx, sz] = g2s(x, z)
+    return { x: sx, z: sz, level: B.level(z) + L0 }
+  }
+  const sFirst = Number(String(gateCams.stops[0].keys[0].at).slice(7))
+  const endEye = B.level(sFirst * B.street.dir[1]) + cams.eye
+  const [wlx, wlz] = g2s(0, -20)
+  const flight = makeFlight(resolveFlight(cams.flight, { scene: MF.s, street: streetAt, eye: cams.eye, walkLook: [wlx, endEye + L0, wlz] }))
+  const gv = (p) => { const v = new THREE.Vector3(...p).applyMatrix4(W2G); return [v.x, v.y, v.z] }
+  const at = (t) => { const p = flight.sample(t); return { kind: 'fly', desktop: view(gv(p.pos), gv(p.look), p.hfov, p.shift), phone: view(gv(p.pos), gv(p.phoneLook), p.phoneHfov, p.phoneShift) } }
+  const first = at(0)
+  const cameras = SIZES.map(([framing, w, h]) => {
+    const v = first[framing]
+    return cameraFrom({ name: `open first ${framing} ${w}x${h}`, eye: v.eye, look: v.look, vfov: fittedFov(v.hfov, w, h), w, h, shift: v.shift })
+  })
+  return {
+    ...G, page: 'open', stop: String(stop), cameras,
+    frame: "the gate's frame (x west, z north out of the face, y up from the +15.40 street); the flight's cameras moved into it",
+    track: (dt = 0.25) => { const out = []; for (let i = 0; i * dt <= flight.duration + 1e-9; i++) out.push({ t: +(i * dt).toFixed(3), ...at(i * dt) }); return out },
+  }
+}
+
+export const MOUNTS = { map: mountMap, gate: mountGate, open: mountOpen }

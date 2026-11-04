@@ -3,7 +3,8 @@
   python3 -I boxes.py check <PART-BOXES.tsv> [<stills dir> ...] [--since <the last cycle's table>] [--eyes-only <patterns>]
 
 The table, one per stop, tab-separated, one header line:
-  part     its RULES number, then a short name ("4 the lion frieze's glaze")
+  part     its RULES number (4, A.9, 6.3; a letter after it for a second box under one rule, 3.5a), then a short
+           name ("4 the lion frieze's glaze", "A.9 the north wall's brick")
   eye      the still's file name in a version folder, at its packet size ("03-forecourt-desktop.png")
   box      x y w h on that still, device pixels
   ref      the reference picture's absolute path, or -
@@ -78,7 +79,7 @@ def read(tsv, patterns=None):
         if len(f) != len(HEAD):
             raise Refused(f'{tsv} line {k}: {len(f)} fields, not {len(HEAD)}')
         r = dict(zip(HEAD, f))
-        if not re.fullmatch(r'\d+[a-z]?', num(r['part'])):
+        if not re.fullmatch(r'(?:[A-Z]\.)?\d+(?:\.\d+)?[a-z]?', num(r['part'])):
             raise Refused(f'{tsv} line {k}: the part must start with its RULES number')
         if num(r['part']) in seen:
             raise Refused(f'{tsv} line {k}: part {num(r["part"])} has two rows; one box per part')

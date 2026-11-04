@@ -3,7 +3,8 @@
    walk's hours, and the walk as a timed camera path. Dev only; the rig
    `window.__map` takes the stills and the moving sketch.
 
-     ?view=classes   the plan's and the height's class (M, R, G) in three tones
+     ?view=classes   each body's record classes (in place, known, guessed) in three tones: its plan row in a
+                     band at its foot, its body row above (record.ts), at the stop the camera is at
      ?tower=base     Etemenanki's excavated base only
      ?ao=0           no contact occlusion; ?aofade=250,900 where it fades out (m)
      ?put=<url>      where the rig hands its files (the shooter's own server) */
@@ -22,8 +23,11 @@ import type { Print } from '../../animals/cave/site'
 import { PERSON_FORMS, signPerson } from '../../place/person'
 import { buildPlan, makeFrame } from './plan'
 import { buildBodies, tonesFrom, uView, type Sky } from './mass'
+import { recordNamer, type ClassFile, type Pieces } from '../record'
+import { toneMapBodies, type Painted } from '../record-tones'
 import { hourOf, sunAt, sunVector } from './sun'
 import { makePath, type PathSample, type V3 } from './path'
+import { mountCourt } from '../court/court'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -40,14 +44,20 @@ const say = (s: string): void => {
 const D2R = Math.PI / 180
 
 say('reading the plan')
-const [plan, cams]: [J, J] = await Promise.all([
+const [plan, cams, pieces, recordClasses, courtPlan]: [J, J, Pieces, ClassFile, J] = await Promise.all([
   fetch(new URL('./map-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('./map-cams.json', import.meta.url)).then((r) => r.json()),
+  fetch(new URL('../pieces.json', import.meta.url)).then((r) => r.json()),
+  fetch(new URL('../record-classes.json', import.meta.url)).then((r) => r.json()),
+  fetch(new URL('../court/court-plan.json', import.meta.url)).then((r) => r.json()),
 ])
 if (q.get('tower') === 'base') plan.tower.stages = plan.tower.stages.slice(0, 1)
 const F = makeFrame(plan)
 const t0 = performance.now()
-const built = buildPlan(plan)
+const tones = tonesFrom(plan)
+// stop 6's court and throne room draw themselves; the city's bodies are built without the prisms they replace
+const court = mountCourt(buildPlan(plan), plan, courtPlan, tones)
+const built = court.built
 const planMs = Math.round(performance.now() - t0)
 
 /* the canal's banks get their own ground lines, so its cut stays 2.8 m wide on a 6 m grid */
@@ -101,12 +111,21 @@ const uDensity = uniform(Number(q.get('haze') ?? 0.0002))
 scene.fogNode = fog(uHaze, densityFogFactor(uDensity))
 
 say('building the city')
-const tones = tonesFrom(plan)
 // the Ishtar Gate's passage through both gates, along its axis from the north face
 const gateFrame = plan.frames.gate
 const bodies = buildBodies(built, tones, sky, uSun, canalZ, { o: F.s(gateFrame.origin[0], gateFrame.origin[1]), a: F.dir(gateFrame.bearing), c: F.dir(gateFrame.bearing + 90), len: 50, half: 2.6 })
 scene.add(bodies.group)
+scene.add(court.mesh)
 uView.value = q.get('view') === 'classes' ? 1 : 0
+/* the class view from the record at the camera's stop: some rows hold at certain stops only (the street's) */
+let tonedAt = '', painted: Painted = { bodies: 0, byLetters: [] }
+function toneAt(stop: number): void {
+  if (String(stop) === tonedAt) return
+  tonedAt = String(stop)
+  const name = recordNamer(pieces, recordClasses, tonedAt)
+  const city = toneMapBodies(bodies.group, built, name), own = court.tone(name)
+  painted = { bodies: city.bodies + own.bodies, byLetters: [...city.byLetters, ...own.byLetters] }
+}
 
 /* the person for size, at each stop's place for one */
 const personMat = new MeshStandardNodeMaterial({ roughness: 0.8, metalness: 0 })
@@ -217,6 +236,7 @@ function aim(pos: V3, look: V3, hfov: number, w: number, h: number, shift = 0): 
   camera.aspect = w / h
   shiftNow = shift
   camera.updateProjectionMatrix()
+  court.setPixel(camera.fov, h)
   camera.updateMatrixWorld(true)
   skyDome.position.copy(camera.position)
   skyDome.updateMatrixWorld(true)
@@ -228,6 +248,9 @@ const path = makePath(cams, F.s, stand)
 /* one pipeline: the scene pass, the contact occlusion, output linear; the print on the CPU */
 setHour(hourOf(cams.stops[0].hour))
 const first = path.sample(0)
+const toneMs = performance.now()
+toneAt(first.stop)
+const recordMs = Math.round(performance.now() - toneMs)
 aim(first.pos, first.look, first.hfov, 1600, 900, first.shift)
 renderer.render(scene, camera)
 const fade = (q.get('aofade') ?? '250,900').split(',').map(Number) as [number, number]
@@ -283,6 +306,7 @@ const expAt = (time: number): number => {
 }
 function aimFilm(time: number, framing: 'desktop' | 'phone', w: number, h: number): PathSample {
   const p = path.sample(time)
+  toneAt(p.stop)
   setHour(p.hour)
   const ph = framing === 'phone'
   aim(p.pos, ph ? p.phone.look : p.look, ph ? p.phone.hfov : p.hfov, w, h, ph ? p.phone.shift : p.shift)
@@ -300,7 +324,7 @@ function stillTime(stop: number): number {
 
 const rig = {
   ready: true,
-  state: () => ({ planMs, counts: bodies.counts, backend: stack.backend, architecture: stack.architecture, view: uView.value, tower: q.get('tower') ?? 'full', duration: path.duration }),
+  state: () => ({ planMs, counts: bodies.counts, backend: stack.backend, architecture: stack.architecture, view: uView.value, tower: q.get('tower') ?? 'full', duration: path.duration, record: { stop: tonedAt, ms: recordMs, ...painted } }),
   views: () => ({
     frame: plan.frame,
     stops: cams.stops.map((s: J) => ({ n: s.n, id: s.id, hour: s.hour, still: stillTime(s.n) })),
@@ -308,7 +332,7 @@ const rig = {
     duration: path.duration,
   }),
   /** what the scene holds, from the bodies the page built */
-  facts: () => ({ ...built.facts, streetLevelAtS: undefined, sunAt: Object.fromEntries(cams.stops.map((s: J) => [s.n, sunAt(hourOf(s.hour))])) }),
+  facts: () => ({ ...built.facts, court: court.court.facts, streetLevelAtS: undefined, sunAt: Object.fromEntries(cams.stops.map((s: J) => [s.n, sunAt(hourOf(s.hour))])) }),
   stand: (E: number, N: number) => {
     const [x, z] = F.s(E, N)
     return { stand: stand(x, z), ground: built.ground(x, z), street: built.streetAt(x, z) }
@@ -340,8 +364,12 @@ const rig = {
     return side
   },
   /** a still from any camera: UTM place, a height (a level or 'eye'), a look point (E, N, level), an hour */
-  async probe(o: { at: [number, number]; y: number | 'eye'; look: [number, number, number]; hour: string; hfov?: number; shift?: number; stops?: number; w: number; h: number; samples: number; out: string; name: string; view?: 'grey' | 'classes' }) {
+  async probe(o: { at: [number, number]; y: number | 'eye'; look: [number, number, number]; hour: string; hfov?: number; shift?: number; stops?: number; w: number; h: number; samples: number; out: string; name: string; view?: 'grey' | 'classes'; figure?: number }) {
     const [x, z] = F.s(o.at[0], o.at[1])
+    if (o.figure) {
+      toneAt(o.figure)
+      showFigure(o.figure)
+    }
     const y = o.y === 'eye' ? stand(x, z) + cams.eye : o.y
     const [lx, lz] = F.s(o.look[0], o.look[1])
     uView.value = o.view === 'classes' ? 1 : 0
@@ -390,7 +418,7 @@ const rig = {
   },
 }
 ;(window as unknown as { __map: typeof rig }).__map = rig
-say(`ready: ${bodies.counts.prisms} prisms, ${bodies.counts.boxes} boxes, ${bodies.counts.houses} houses, ${bodies.counts.triangles} triangles, plan ${planMs} ms`)
+say(`ready: ${bodies.counts.prisms} prisms, ${bodies.counts.boxes} boxes, ${bodies.counts.houses} houses, ${bodies.counts.triangles} triangles, plan ${planMs} ms; record classes at stop ${tonedAt} in ${recordMs} ms, ${painted.byLetters.length ? `${painted.byLetters.length} bodies on their letters (no row): ${painted.byLetters.slice(0, 6).join(', ')}` : 'every body on its row'}`)
 
 /* a live look for a person at the page: the first stop, redrawn on resize */
 if (!putBase) {

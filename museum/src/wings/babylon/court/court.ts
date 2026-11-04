@@ -1,0 +1,87 @@
+/* STOP 6 ON THE MAP PAGE: the court's bodies (court-geom.ts) as one mesh in the court's material (court-mat.ts),
+   and their classes in the evidence view painted from the record like the map's (record.ts): each body by its name,
+   its plan row in the band at its foot, its body row above. */
+
+import { DirectionalLight, Float32BufferAttribute, HemisphereLight, Mesh, Vector3, type BufferGeometry, type Object3D } from 'three/webgpu'
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
+import type { Built, Cls } from '../map/plan'
+import type { ClassTones } from '../map/mass'
+import { TONE, type Namer } from '../record'
+import type { Painted } from '../record-tones'
+import { buildCourt, type Court } from './court-geom'
+import { courtMaterial, setCourtPixel, uCourtLight } from './court-mat'
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type J = any
+
+const TONE_OF: Record<Cls, number> = { M: 0, R: 1, G: 2 }
+
+/* the court's modelled reflection and bounce follow the page's own sun and sky lights, read before each draw; the
+   page's sky light at full day stands at 1.4 x 1.04 (map.ts), so its intensity over that is the sky dome's day factor */
+const FULL_SKY = 1.4 * 1.04
+const lights: { sun: DirectionalLight | null; sky: HemisphereLight | null } = { sun: null, sky: null }
+const tmp = new Vector3()
+function readLights(scene: Object3D): void {
+  if (!lights.sun || !lights.sky) {
+    scene.traverse((o) => {
+      if ((o as DirectionalLight).isDirectionalLight && !lights.sun) lights.sun = o as DirectionalLight
+      if ((o as HemisphereLight).isHemisphereLight && !lights.sky) lights.sky = o as HemisphereLight
+    })
+  }
+  const { sun, sky } = lights
+  if (sun) {
+    ;(uCourtLight.sun.value as Vector3).copy(tmp.copy(sun.position).sub(sun.target.position).normalize())
+    ;(uCourtLight.sunIrr.value as Vector3).set(sun.color.r, sun.color.g, sun.color.b).multiplyScalar(sun.intensity)
+  }
+  if (sky) {
+    ;(uCourtLight.sky.value as Vector3).set(sky.color.r, sky.color.g, sky.color.b).multiplyScalar(sky.intensity)
+    ;(uCourtLight.gnd.value as Vector3).set(sky.groundColor.r, sky.groundColor.g, sky.groundColor.b).multiplyScalar(sky.intensity)
+    uCourtLight.day.value = sky.intensity / FULL_SKY
+  }
+}
+
+export interface CourtMount {
+  court: Court
+  /** the map's plan without the prisms the court draws: build the city's bodies from this one */
+  built: Built
+  mesh: Mesh
+  tone: (name: Namer) => Painted
+  setPixel: (vfovDeg: number, heightPx: number) => void
+}
+
+export function mountCourt(built: Built, mapPlan: J, courtPlan: J, tones: ClassTones): CourtMount {
+  const court = buildCourt(built, mapPlan, courtPlan)
+  const parts: BufferGeometry[] = court.bodies.map((b, i) => {
+    const g = b.geometry
+    const n = g.getAttribute('position').count
+    const cls = new Float32Array(n * 2), band = new Float32Array(n).fill(b.band), cid = new Float32Array(n).fill(i)
+    for (let k = 0; k < n; k++) {
+      cls[k * 2] = TONE_OF[b.letters[1]]
+      cls[k * 2 + 1] = TONE_OF[b.letters[0]]
+    }
+    g.setAttribute('cls', new Float32BufferAttribute(cls, 2))
+    g.setAttribute('band', new Float32BufferAttribute(band, 1))
+    g.setAttribute('cid', new Float32BufferAttribute(cid, 1))
+    return g
+  })
+  const geometry = mergeGeometries(parts)
+  const mesh = new Mesh(geometry, courtMaterial(court.F, courtPlan, tones))
+  mesh.name = 'court'
+  mesh.castShadow = true
+  mesh.receiveShadow = true
+  mesh.frustumCulled = false
+  mesh.onBeforeRender = (_r, scene) => readLights(scene)
+  const tone = (name: Namer): Painted => {
+    const each = court.bodies.map((b) => name(`map:${b.id}`, b.letters))
+    const a = geometry.getAttribute('cls') as Float32BufferAttribute, cid = geometry.getAttribute('cid')
+    const arr = a.array as Float32Array
+    for (let k = 0; k < a.count; k++) {
+      const c = each[cid.getX(k)]!
+      arr[k * 2] = TONE[c.above]
+      arr[k * 2 + 1] = TONE[c.foot]
+    }
+    a.needsUpdate = true
+    return { bodies: court.bodies.length, byLetters: court.bodies.filter((_, i) => each[i]!.missing.length).map((b) => b.id) }
+  }
+  return { court, built: court.built, mesh, tone, setPixel: setCourtPixel }
+}
