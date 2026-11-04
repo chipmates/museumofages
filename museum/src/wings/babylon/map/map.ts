@@ -21,6 +21,7 @@ import { printFrame } from '../../animals/cave/print'
 import { createOpenLinear } from '../open/air'
 import { aloft, walkLight } from '../open/light'
 import { rebuildHouses } from '../open/houses'
+import { NORTH_PAVED } from '../open/north-paving'
 import { cityOnCourtRooms, paintCity, setCityPixel, uCityPix } from './city'
 import { PERSON_FORMS, signPerson } from '../../place/person'
 import { buildPlan, makeFrame } from './plan'
@@ -137,7 +138,11 @@ const gateFrame = plan.frames.gate
 const bodies = buildBodies(built, tones, sky, L.AIR.uSun, canalZ, { o: F.s(gateFrame.origin[0], gateFrame.origin[1]), a: F.dir(gateFrame.bearing), c: F.dir(gateFrame.bearing + 90), len: 50, half: 2.6 }, { houses: { rebuild: rebuildHouses, band: Number(plan.classes.band) } })
 /* the city in the arrival's materials (city.ts), the precinct's ground painted over it; the South Palace's rooms, drawn
    by the court to cut its court into them, take the city's look outside the court's own fronts */
-paintCity(bodies.group, built, tones, { band: Number(plan.classes.band), ground: tower.ground })
+const lion = plan.frames.lion
+paintCity(bodies.group, built, tones, {
+  band: Number(plan.classes.band), ground: tower.ground,
+  street: { o: F.s(lion.origin[0], lion.origin[1]), a: F.dir(lion.bearing), c: F.dir(lion.bearing + 90), pavedTo: NORTH_PAVED.a1 },
+})
 cityOnCourtRooms(court.mesh as Mesh, court.court.F.court, uCityPix)
 scene.add(bodies.group)
 scene.add(court.mesh)

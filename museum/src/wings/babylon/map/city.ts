@@ -4,14 +4,15 @@
    and the palace's north wall in baked brick, the gate's two massings glazed blue, the inner and outer walls in mud
    brick with their embankments baked (REC bab.innerwall.embankment, bab.outerwall.embankment); a floor a visitor
    stands on (the South Palace's courts) paved in baked brick. The houses are the arrival's own (open/houses.ts,
-   rebuilt in mass.ts), the ground its beaten earth. The class view paints the record's classes over all of it as
+   rebuilt in mass.ts), the ground its beaten earth, the streets its street. The class view paints the record's classes over all of it as
    the grey map did; the ground stays grey there, as on the arrival. Every tone is ours (class G for colour). */
 
 import { DataTexture, FloatType, InstancedBufferAttribute, MeshStandardNodeMaterial, NearestFilter, RGBAFormat, type InstancedMesh, type Material, type Mesh, type Object3D } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import type { Built } from './plan'
 import { classColour, uView, type ClassTones } from './mass'
-import { TONES, boxMaterial, cityBlockColour, groundMaterial, houseMaterial, toneOf, troddenEarth } from '../open/earth'
+import { TONES, boxMaterial, cityBlockColour, groundMaterial, houseMaterial, streetMaterial, toneOf, type StreetLook } from '../open/earth'
+import { PRESETS as PAVING } from '../parts/paving-brick-court-babylon'
 import { PAL } from '../gate/gate-colours'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -61,12 +62,14 @@ const hash = (x: N): N => fract(sin(x.mul(12.9898)).mul(43758.5453))
     a wider spread of each room's value, so a palace's roof never reads as one tiled slab */
 const SEAMS = { seamsFrom: [150, 400] as [number, number], rooms: { split: 0.6, line: 0.1, tone: 0.24 } }
 
-/** a floor of square baked bricks laid flat (about 33 cm, the palace's courts), joints faded over the pixel's footprint */
+/** a floor of square baked bricks laid flat (the court paving's brick, paving-brick-court-babylon's court preset) in world
+    space for the many courts the map draws plain, joints faded over the pixel's footprint */
+const BRICK = PAVING.court.brick
 function brickFloor(p: N, uPix: N): N {
   const w = uPix.mul(p.distance(cameraPosition)).div(max(abs(normalize(cameraPosition.sub(p)).y), 0.2))
   const fade = smoothstep(0.12, 0.03, w)
-  const jx = smoothstep(0.86, 0.93, abs(fract(p.x.div(0.33)).sub(0.5)).mul(2)), jz = smoothstep(0.86, 0.93, abs(fract(p.z.div(0.33)).sub(0.5)).mul(2))
-  const each = hash(floor(p.x.div(0.33)).mul(17.3).add(floor(p.z.div(0.33)).mul(31.1))).sub(0.5).mul(0.12).mul(fade)
+  const jx = smoothstep(0.86, 0.93, abs(fract(p.x.div(BRICK)).sub(0.5)).mul(2)), jz = smoothstep(0.86, 0.93, abs(fract(p.z.div(BRICK)).sub(0.5)).mul(2))
+  const each = hash(floor(p.x.div(BRICK)).mul(17.3).add(floor(p.z.div(BRICK)).mul(31.1))).sub(0.5).mul(0.12).mul(fade)
   const broad = mx_noise_float(vec3(p.x.mul(0.06), 4.4, p.z.mul(0.06))).mul(0.08).add(mx_noise_float(p.mul(0.7)).mul(0.04))
   const joint = max(jx, jz).mul(0.22).mul(fade).add(float(0.07).mul(float(1).sub(fade)))
   return vec3(...TONES.baked).mul(0.92).mul(float(1).add(each).add(broad)).mul(float(1).sub(joint))
@@ -94,17 +97,6 @@ export function cityBlockMaterial(t: ClassTones, tones: DataTexture, count: numb
   return m
 }
 
-/** the street's look: pale slabs, the walked middle lighter, dust gathering toward its edges (ours: the paving's
-    pattern is drawn where it was dug, by the stops that stand on it) */
-export function streetLook(): N {
-  const p = positionWorld
-  const v = mx_noise_float(p.mul(0.05)).mul(0.07).add(mx_noise_float(p.mul(0.6)).mul(0.04)).add(1)
-  const slab = vec3(...TONES.slab).mul(0.94).mul(v)
-  const dust = troddenEarth(p)
-  const patchy = smoothstep(-0.1, 0.5, mx_noise_float(vec3(p.x.mul(0.08), 7.7, p.z.mul(0.08))))
-  return mix(slab, dust, patchy.mul(0.35))
-}
-
 /** each instanced box's tone (0 mud, 1 baked) by the body it stands on: wall towers take their wall's */
 function boxTone(id: string): number {
   const k = mapTone(id.replace(/-t\d+-\d+$/, ''))
@@ -112,8 +104,9 @@ function boxTone(id: string): number {
 }
 
 /** the map's bodies (mass.ts buildBodies) given the city's materials; `ground` a stop's paint over the ground (the
-    precinct's), `band` the class band's height over the ground */
-export function paintCity(group: Object3D, built: Built, tones: ClassTones, o: { band: number; ground?: (base: N) => N }): void {
+    precinct's), `band` the class band's height over the ground, `street` the lion frame the arrival's street material is
+    measured in (its paving north of the gate, plain slab inside the city) */
+export function paintCity(group: Object3D, built: Built, tones: ClassTones, o: { band: number; ground?: (base: N) => N; street: StreetLook }): void {
   const blocks = group.getObjectByName('blocks') as Mesh | undefined
   if (blocks) blocks.material = cityBlockMaterial(tones, cityTones(built.prisms), Math.max(1, built.prisms.length), uCityPix)
   const houses = group.getObjectByName('houses') as InstancedMesh | undefined
@@ -133,10 +126,7 @@ export function paintCity(group: Object3D, built: Built, tones: ClassTones, o: {
     ground.material = g
   }
   const street = group.getObjectByName('street') as Mesh | undefined
-  if (street) {
-    const s = street.material as MeshStandardNodeMaterial
-    s.colorNode = mix(streetLook(), classColour(tones, attribute('cls', 'vec2'), attribute('band', 'float')), uView)
-  }
+  if (street) street.material = streetMaterial(tones, o.street, uCityPix)
 }
 
 /** the court's body of the South Palace's rooms (the court draws it, to cut its court and room into it) in the city's
