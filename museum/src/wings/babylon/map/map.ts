@@ -118,6 +118,7 @@ const skyColour = (d: N): N => {
   return mix(uHaze, above, smoothstep(0.0, 0.12, d.y)).add(sun)
 }
 const sky: Sky = { colour: skyColour }
+tower.sky(sky)
 const skyDome = (() => {
   const m = new MeshBasicNodeMaterial({ side: BackSide, depthWrite: false })
   m.colorNode = skyColour(normalize(positionLocal))
@@ -148,7 +149,7 @@ const gateFrame = plan.frames.gate
 const bodies = buildBodies(built, tones, sky, uSun, canalZ, { o: F.s(gateFrame.origin[0], gateFrame.origin[1]), a: F.dir(gateFrame.bearing), c: F.dir(gateFrame.bearing + 90), len: 50, half: 2.6 }, { ground: tower.ground })
 scene.add(bodies.group)
 scene.add(court.mesh)
-scene.add(tower.mesh)
+scene.add(tower.mesh, tower.towerMesh)
 scene.add(...gardens.meshes)
 scene.add(nabu.mesh)
 scene.add(house.mesh)
