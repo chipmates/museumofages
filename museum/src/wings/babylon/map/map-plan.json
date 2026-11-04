@@ -172,6 +172,62 @@
     "level": 4.95,
     "blend": 35,
     "why": "the quarter round House VI on its own level (house/house-plan.json flat): the streets round House VI about +4.95, a little under its floor at +5.2 (P2021 p. 250: the house stood on the quarter's northern slope, not on a terrace); the level and the area ours"
+   },
+   {
+    "id": "esagila-ground",
+    "poly": [
+     [
+      445592,
+      3599842.2
+     ],
+     [
+      445835,
+      3599891.9
+     ],
+     [
+      445835,
+      3599650
+     ],
+     [
+      445592,
+      3599650
+     ]
+    ],
+    "level": 2.3,
+    "blend": 25,
+    "why": "the open ground before Esagila, nobody dug it: one level a little under the street (+2.1 to +2.5, P2021 p. 208), so the outer casing shows from its lowest attested course at +2.4 (K1914 ch. XXXV) and the ramps climb to the +4.4 m floor; the level and the area ours"
+   },
+   {
+    "id": "esagila-street-east",
+    "poly": [
+     [
+      445830,
+      3599891.0
+     ],
+     [
+      445985,
+      3599919.3
+     ],
+     [
+      446005,
+      3599923.3
+     ],
+     [
+      446005,
+      3599898.3
+     ],
+     [
+      445985,
+      3599894.3
+     ],
+     [
+      445830,
+      3599866.0
+     ]
+    ],
+    "level": 2.3,
+    "blend": 20,
+    "why": "the open street area south of the paved street from the corner to Esagila's flat: the paved 6.4 m ran near the north wall of a wider open street area (P2021 p. 208), its width not known; laid at the flat's level for 25 m, ours"
    }
   ]
  },
@@ -659,11 +715,12 @@
    {
     "at": [
      445600,
-     3599860
+     3599849.9
     ],
     "level": 2.5,
     "w": 8.0,
-    "cls": "R"
+    "cls": "R",
+    "note": "on the straight line C6.2 draws from the bridge's quay to the precinct's south-east corner: the street's centre between its two drawn edges, 6.2 m apart, read by script from 445750 to 446010 E (P2021 p. 208: 6.4 m wide)"
    },
    {
     "at": [
@@ -1959,68 +2016,64 @@
    "name": "Esagila, Marduk's temple",
    "poly": [
     [
-     445620.9,
-     3599756.3
+     445620.01,
+     3599756.01
     ],
     [
-     445698.4,
-     3599769.6
+     445696.95,
+     3599774.34
     ],
     [
-     445717.4,
-     3599691.4
+     445717.3,
+     3599689.66
     ],
     [
-     445640.4,
-     3599671.7
+     445640.36,
+     3599671.28
     ]
    ],
    "base": 0,
-   "top": 21.5,
+   "top": 16.4,
    "courtRect": [
     31.3,
     37.6
    ],
    "plan": "M",
    "height": "G",
-   "src": "C6.2: its corners read by eye (precinct sheet 1.4), the east side at 166.3 degrees, the south side 79.5 m; 79.3 x 85.8 m (K1914 ch. XXXV), 81 x 75 to 86 x 79 m (P2021 p. 142, the printed N a slip); no gate drawn toward the street, about 100 m of undug ground lie between them (G-C2-20)",
-   "hsrc": "walls 16.5 m, Pedersén's model value (P2021 p. 143)"
+   "src": "C6.2: the outer wall face read by script (four sides fitted to the drawn edge on the sheet's grid, half a stroke inside), 79.1 x 87.1 m, the east side at 166.5 degrees (the record: 78.6 x 86.8 m and 166.3 degrees on C6.2); 79.3 x 85.8 m (K1914 ch. XXXV), 81 x 75 to 86 x 79 m (P2021 p. 142, the printed N a slip); the court 31.3 x 37.6 m; the north gate's unit read off the same sheet; about 100 m of undug ground lie between the street and the north front (G-C2-20)",
+   "hsrc": "12 m above the +4.4 m floor, the record's lower bound (ours); 16.5 m above it is the highest reconstruction (P2021 p. 143), never as found"
   },
   {
    "id": "esagila-annex",
    "name": "Esagila's annex",
    "poly": [
     [
-     445698.4,
-     3599769.6
+     445697.19,
+     3599773.33
     ],
     [
-     445707,
-     3599777
+     445784.48,
+     3599793.55
     ],
     [
-     445784,
-     3599792
+     445810.06,
+     3599679.75
     ],
     [
-     445809,
-     3599681
+     445736.49,
+     3599662.86
     ],
     [
-     445736,
-     3599665
-    ],
-    [
-     445717.4,
-     3599691.4
+     445717.3,
+     3599689.66
     ]
    ],
    "base": 0,
-   "top": 15.0,
+   "top": 14.4,
    "court": 0.55,
    "plan": "M",
    "height": "G",
-   "src": "outline only (K1914 ch. XXXVI), C6.2",
+   "src": "outline only (K1914 ch. XXXVI); C6.2 read by script: the north side 89.6 m from the main building's east face, 1.0 m behind its north front, the east side 116.6 m (the record: 89.4 x 116 m, 117.4 m on C6.2)",
    "hsrc": "ours"
   },
   {

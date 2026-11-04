@@ -1,0 +1,178 @@
+{
+ "about": "Stop 9 of the walk (the map's old stops 10 and 11): Marduk's temple, Esagila, seen from the street along the precinct's south side across the undug ground before its north front. Positions are UTM zone 38N metres (E, N), levels metres in the German excavation zero. The outlines of the main building and the annex are the map's blocks `esagila` and `esagila-annex` (map-plan.json), read off sheet C6.2 by script; this file holds the stop's own numbers. Along a face, s runs from its west (north face) corner and t outward from the drawn outer face; every form above the plan is guessed after Koldewey's description and his drawing of 1914, and says so in its line.",
+ "main": {
+  "says": "the main building round its court; the court 31.3 x 37.6 m (K1914 ch. XXXV); the floor of Nebuchadnezzar's rebuilding at +4.4 m (P2021 p. 143); the walls' top is the block's top in map-plan.json",
+  "court": [
+   31.3,
+   37.6
+  ],
+  "floor": 4.4
+ },
+ "casing": {
+  "says": "the outer casing, 2 m thick, of small unstamped baked brick, attested from +2.4 to +5.8 m (K1914 ch. XXXV; P2021 p. 143): its outer face is the outline C6.2 draws; above it the walls stand 2 m behind (ours: the casing as a plinth under the whole front)",
+  "thick": 2.0,
+  "top": 5.8,
+  "lap": 0.4
+ },
+ "units": {
+  "says": "tower-like units every 10 to 11 m, of two stepped layers, the front one with two vertical grooves, in units of three at the gates (K1914 ch. XXXV; P2021 p. 150; ILL E02: stepped pilasters, the walls dense with vertical grooves); two shallow pilasters on each stretch of wall between; widths, projections, grooves and heights ours (guessed)",
+  "corner": {
+   "w": 5.0,
+   "out": 1.4,
+   "top": 17.8
+  },
+  "tower": {
+   "w": 4.4,
+   "out": 0.8,
+   "top": 17.2,
+   "inner": {
+    "w": 2.4,
+    "out": 1.4,
+    "top": 17.6
+   }
+  },
+  "pilaster": {
+   "w": 0.8,
+   "out": 0.3,
+   "n": 2
+  },
+  "between": 2,
+  "foot": 5.4,
+  "grooves": {
+   "w": 0.3,
+   "depth": 0.2
+  }
+ },
+ "gate": {
+  "says": "the north gate's unit on C6.2 along the north face (read by script): the unit 31.1 to 49.8 m, its flanks 1.85 m out of the drawn face, the centre block 36.4 to 44.8 m and 6.0 m out, a passage 3.5 m wide through it; the walls above stand 2 m behind the casing's face as everywhere; heights, the arch in a stepped reveal, the grooves and the door ours (guessed)",
+  "flanks": [
+   [
+    31.1,
+    36.4
+   ],
+   [
+    44.8,
+    49.8
+   ]
+  ],
+  "flankOut": 1.85,
+  "flankTop": 18.6,
+  "centre": [
+   36.4,
+   44.8
+  ],
+  "centreOut": 6.0,
+  "centreTop": 19.6,
+  "passage": [
+   38.85,
+   42.35
+  ],
+  "arch": 11.9,
+  "door": {
+   "at": 1.4,
+   "thick": 0.25
+  },
+  "reveal": {
+   "w": 0.5,
+   "depth": 0.5
+  },
+  "archSlices": 12
+ },
+ "ramp": {
+  "says": "a paved ramp with side balustrades up to the north gate (K1914 ch. XXXV: the plan in words, the form not known): the passage's width, from the ground to the floor; its length and the balustrades ours (guessed)",
+  "length": 14.0,
+  "balustrade": {
+   "w": 0.6,
+   "h": 0.9
+  }
+ },
+ "annex": {
+  "says": "the annex east of the main building: outline only (K1914 ch. XXXVI), its west side reaching into the main building's walls; its court as the map draws it; the grooved towers only as a rhythm in its plaster (guessed)",
+  "into": 2.6,
+  "pitch": 10.5
+ },
+ "ground": {
+  "says": "the open ground between the street and the north fronts, nobody dug it: trodden earth on the map's flat before Esagila, a sheet from a cell's diagonal inside the flat's street edge to under the fronts, the map's own ground painted the same earth from the street's edge, lighter where feet went most and along a few worn tracks, fading into the map's ground at its ends (guessed)",
+  "from": 445601,
+  "to": 445800,
+  "lift": 0.05,
+  "tracks": {
+   "says": "faint tracks worn across the open ground (ours): two along the fronts at t metres out from the casing's face, one slanting over the ground from beyond the annex toward the river, none leading to the gate",
+   "along": [
+    28.0,
+    60.0
+   ],
+   "half": 0.9,
+   "slant": [
+    110.0,
+    75.0,
+    -40.0,
+    30.0
+   ],
+   "share": 0.45
+  },
+  "cell": 6.0,
+  "inset": 9.0,
+  "paint": {
+   "says": "the map's own ground painted the stop's earth: from just under the street's edge (m from its centre) to the fronts and south to the flat's edge, beyond the sheet's ends by `beyond` m, fading over `fade` m",
+   "fromStreet": 3.6,
+   "beyond": 6.0,
+   "fade": 16.0,
+   "south": 3599655.0
+  }
+ },
+ "street": {
+  "says": "the street round the precinct's south-east corner and west along its south side, on the map's points 17 to 20: 6.4 m of asphalt on brick on the middle of the map's street (P2021 p. 208), its shoulders trodden; the turn to about 445990 E (the corner read off C6.2), the trench-found run to Gate 8's open space at 445678.5 E, the assumed run west of it",
+  "from": 17,
+  "to": 20,
+  "paved": 6.4,
+  "lift": 0.05,
+  "turnTo": 445990,
+  "dugTo": 445678.5
+ },
+ "wallGate8": {
+  "says": "the wall before Gate 8 on C6.2's band south of the street, 445656 to 445725 E (P2021 p. 208: founded at +2.0 m, 20 m from the precinct, may be from a precinct round Esagila); its line read off, its thickness the sheet's band, its height and finish ours (guessed)",
+  "line": [
+   [
+    445656.0,
+    3599854.9
+   ],
+   [
+    445725.0,
+    3599864.3
+   ]
+  ],
+  "thick": 2.0,
+  "foot": 2.0,
+  "height": 1.0,
+  "batter": 0.3
+ },
+ "colours": {
+  "src": "linear albedo, ours, as the neighbouring stops: the lime-gypsum plaster matte and a little warm (the precinct's and Nabu's plaster); the casing's baked brick the yellow-buff of Babylon's unglazed brick (the tower's); the street's and the ramp's asphalt coat weathered to a dark grey-brown (Nabu's floor coat); the earth and the mud as the precinct's",
+  "plaster": [
+   0.66,
+   0.62,
+   0.54
+  ],
+  "brick": [
+   0.48,
+   0.39,
+   0.28
+  ],
+  "asphalt": [
+   0.12,
+   0.105,
+   0.09
+  ],
+  "earth": [
+   0.44,
+   0.38,
+   0.29
+  ],
+  "mud": [
+   0.42,
+   0.34,
+   0.25
+  ]
+ }
+}
