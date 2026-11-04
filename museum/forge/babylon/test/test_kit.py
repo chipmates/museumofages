@@ -75,6 +75,17 @@ with tempfile.TemporaryDirectory() as T:
         except bx.Refused:
             pass
     ok('a version word, a box outside its still and a reference without credit are refused')
+    ids = os.path.join(T, 'ids.tsv')
+    table(ids, [[p + ' a part', '03-forecourt-desktop.png', '10 20 100 80', '-', '-', '-', 'c1', '-'] for p in ('9', '9a', 'A.9', 'A.14', '6.3', '3.5a')])
+    assert [bx.num(r['part']) for r in bx.read(ids)] == ['9', '9a', 'A.9', 'A.14', '6.3', '3.5a']
+    for bad in ('A', 'A9', 'a.9', '6.', '.3', '(9)', '6.3x1'):
+        table(ids, [[bad + ' a part', '03-forecourt-desktop.png', '10 20 100 80', '-', '-', '-', 'c1', '-']])
+        try:
+            bx.read(ids)
+            raise AssertionError(f'not refused: part {bad!r}')
+        except bx.Refused:
+            pass
+    ok('a part leads with a whole number or a rule number (A.9, 6.3, 3.5a); anything else is refused')
     moved = os.path.join(T, 'moved.tsv')
     table(moved, [['4 the lion frieze', '03-forecourt-desktop.png', '12 20 100 80', R, '0 0 150 120', 'A credit, CC BY 4.0', 'c2', '-']])
     try:
