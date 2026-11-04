@@ -21,7 +21,7 @@ import { printFrame } from '../../animals/cave/print'
 import { createOpenLinear } from '../open/air'
 import { aloft, walkLight } from '../open/light'
 import { rebuildHouses } from '../open/houses'
-import { paintCity } from './city'
+import { cityOnCourtRooms, paintCity, setCityPixel, uCityPix } from './city'
 import { PERSON_FORMS, signPerson } from '../../place/person'
 import { buildPlan, makeFrame } from './plan'
 import { buildBodies, tonesFrom, uView, type Sky } from './mass'
@@ -138,6 +138,7 @@ const bodies = buildBodies(built, tones, sky, L.AIR.uSun, canalZ, { o: F.s(gateF
 /* the city in the arrival's materials (city.ts), the precinct's ground painted over it; the South Palace's rooms, drawn
    by the court to cut its court into them, take the city's look outside the court's own fronts */
 paintCity(bodies.group, built, tones, { band: Number(plan.classes.band) })
+cityOnCourtRooms(court.mesh as Mesh, court.court.F.court, uCityPix)
 scene.add(bodies.group)
 scene.add(court.mesh)
 scene.add(tower.mesh)
@@ -217,6 +218,7 @@ function aim(pos: V3, look: V3, hfov: number, w: number, h: number, shift = 0): 
   gardens.setPixel(camera.fov, h)
   nabu.setPixel(camera.fov, h)
   house.setPixel(camera.fov, h)
+  setCityPixel(camera.fov, h)
   camera.updateMatrixWorld(true)
   skyDome.position.copy(camera.position)
   skyDome.updateMatrixWorld(true)

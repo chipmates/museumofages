@@ -127,8 +127,11 @@ function bond(base: N, uPix: N): N {
 }
 
 /** the room roofs' factor on a top (1 is the plain plaster): rooms in a jittered grid, parapet lines box-filtered over the
-    pixel's footprint `w`, a court in about one room in eight */
-function roomRoofs(p: N, w: N): N {
+    pixel's footprint `w`, a court in about one room in eight. `o` refines it for a nearer camera: `split` the share of
+    cells cut into two rooms at 30 to 70 percent across (a palace's halls are not one square each), `line` how dark a
+    parapet's line, `tone` each room's spread of value; none keeps the arrival's */
+export interface RoomRoofs { split?: number; line?: number; tone?: number }
+function roomRoofs(p: N, w: N, o: RoomRoofs = {}): N {
   const S = 11.0
   const row = floor(p.z.div(S))
   const x = p.x.add(hash(row.mul(3.7).add(1.3)).mul(0.6 * S))
@@ -136,13 +139,23 @@ function roomRoofs(p: N, w: N): N {
   const id = hash(col.mul(17.1).add(row.mul(31.7)).add(0.5))
   const fx = fract(x.div(S)), fz = fract(p.z.div(S))
   // the parapet between rooms, 0.6 m, box-filtered over the pixel
-  const line = max(lines(x, S, 0.3, w), lines(p.z, S, 0.3, w))
-  const tone = id.sub(0.5).mul(0.16).add(1)
+  let line: N = max(lines(x, S, 0.3, w), lines(p.z, S, 0.3, w))
+  let tone: N = id.sub(0.5).mul(o.tone ?? 0.16).add(1)
+  if (o.split) {
+    // a cell cut in two along x or z, each room its own value, the cut a parapet like the rest
+    const across = step(0.5, hash(id.mul(3.1).add(5.7)))
+    const at = hash(id.mul(7.3).add(2.1)).mul(0.4).add(0.3)
+    const cut = step(1 - o.split, hash(id.mul(11.3).add(0.9)))
+    const f = mix(fx, fz, across)
+    line = max(line, lines(f.sub(at).mul(S), S, 0.3, w).mul(cut))
+    const id2 = hash(id.mul(5.9).add(step(at, f).mul(cut).mul(13.7)).add(1.1))
+    tone = id2.sub(0.5).mul(o.tone ?? 0.16).add(1)
+  }
   // a court in about one room in eight: a square about a third of the room across, in shade; a far device only: within
   // about half a kilometre a painted court reads as a flat dark square (it has no walls), so it fades out there
   const far = smoothstep(350, 700, p.distance(cameraPosition))
   const court = step(0.875, id).mul(smoothstep(0.19, 0.16, max(abs(fx.sub(0.5)), abs(fz.sub(0.5))))).mul(far)
-  return tone.mul(float(1).sub(line.mul(0.18))).mul(float(1).sub(court.mul(0.4)))
+  return tone.mul(float(1).sub(line.mul(o.line ?? 0.18))).mul(float(1).sub(court.mul(0.4)))
 }
 
 /** a wall's foot in the river or a moat (the water at -1.0): darker and wetter toward the water, about 1.5 m of it */
@@ -160,18 +173,28 @@ export function blockMaterial(t: ClassTones, tones: DataTexture, count: number, 
   const own = smoothstep(-0.5, -0.4, pid)
   const base = mix(vec3(...TONES.baked), row, own)
   const baked = mix(float(1), tex.a, own)
+  m.colorNode = mix(cityBlockColour(base, baked, uPix), classColour(t, attribute('cls', 'vec2'), attribute('band', 'float')), uView)
+  return m
+}
+
+/** a block's look without the class view, for a page that composes its own material (the map): `base` its tone, `baked`
+    0 to 1 how much of its brick bond shows; `seamsFrom` the distances (m) over which the roof cells' seams come in, for
+    a camera that comes down to the roofs (close up a seam reads as a crack), none keeps them at every distance; `rooms`
+    the room roofs' refinement (roomRoofs) */
+export function cityBlockColour(base: N, baked: N, uPix: N, o: { seamsFrom?: [number, number]; rooms?: RoomRoofs } = {}): N {
   const face = brickFace(base)
   // a flat roof is never one plane from the air: rooms' roofs in irregular cells a few metres across, each its own shade,
   // a darker seam where two meet, patches of fresh plaster
   const p = positionWorld
   const up = smoothstep(0.55, 0.85, normalWorld.y)
   const cell = mx_worley_noise_vec2(vec2(p.x, p.z).mul(0.19))
-  const seam = smoothstep(0.07, 0.02, cell.y.sub(cell.x))
+  const seam0 = smoothstep(0.07, 0.02, cell.y.sub(cell.x))
+  const seam = o.seamsFrom ? seam0.mul(smoothstep(o.seamsFrom[0], o.seamsFrom[1], p.distance(cameraPosition))) : seam0
   const shade = mx_noise_float(vec3(floor(p.x.mul(0.19).add(cell.x.mul(0.6))), 1.3, floor(p.z.mul(0.19).add(cell.x.mul(0.6))))).mul(0.12)
   const patch = mx_noise_float(p.mul(0.3)).mul(0.07).add(mx_noise_float(p.mul(1.2)).mul(0.04))
   // and at the scale of whole rooms, seen from the air: a jittered grid of room roofs 8 to 14 m, each its own shade, a parapet's
   // dark line between them, now and then a small court or light well in shade (ours, a type: no room plan is claimed)
-  const R = roomRoofs(p, footprint(uPix, vec3(0, 1, 0)))
+  const R = roomRoofs(p, footprint(uPix, vec3(0, 1, 0)), o.rooms)
   const roofK = float(1).add(shade).add(patch).sub(seam.mul(0.14)).mul(R)
   const wet = waterFoot(p, up)
   // baked faces as the north entry's: patches of a few metres and the courses' own shades over the bond, so a long sunlit
@@ -184,8 +207,7 @@ export function blockMaterial(t: ClassTones, tones: DataTexture, count: number, 
   const walls = mix(face, bond(face.mul(float(1).add(patchW).add(broadW).add(courseW)), uPix), baked).mul(wet)
   // roofs are plastered earth over timber whatever the walls are laid in; a third of the wall's own tone kept
   const top = mix(vec3(...TONES.roof).mul(0.94), walls, 0.35).mul(roofK)
-  m.colorNode = mix(mix(walls, top, up), classColour(t, attribute('cls', 'vec2'), attribute('band', 'float')), uView)
-  return m
+  return mix(walls, top, up)
 }
 
 /** the instanced boxes: wall towers in mud brick, the tower's stages and the bridge's piers in baked brick (a per-instance `tone`, 0 mud, 1 baked) */
