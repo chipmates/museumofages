@@ -468,7 +468,7 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
     let y = T.base
     const tower: Array<{ side: number; y0: number; y1: number }> = []
     T.stages.forEach((st: J, i: number) => {
-      boxes.push({ id: `tower-stage-${i + 1}`, group: 'tower-stage', x: f.o[0], z: f.o[1], y0: i === 0 ? 0 : y - 0.05, y1: y + st.h, sx: st.side, sz: st.side, yaw, plan: st.plan, height: st.height, band: i === 0 ? 0 : -1 })
+      boxes.push({ id: `tower-stage-${i + 1}`, group: 'tower-stage', x: f.o[0], z: f.o[1], y0: i === 0 ? 0 : y - 0.05, y1: y + st.h, sx: st.side, sz: st.across ?? st.side, yaw, plan: st.plan, height: st.height, band: i === 0 ? 0 : -1 })
       tower.push({ side: st.side, y0: y, y1: y + st.h })
       y += st.h
     })

@@ -2,9 +2,14 @@
  "about": "Babylon about 570 BC as grey blocks at true scale. Positions are UTM zone 38N metres (E, N); levels are metres in the German excavation zero (+0.0 = 25.5 m above sea level). Every block names the class of its plan and of its height: M measured (read off a dug outline on the sheets, or a dug size in print), R reasoned (drawn on the sheets but not dug, or set from a text or a scholar's inference), G guessed (ours).",
  "notes": {
   "says": [
-   "The West Outwork's top at +12 is ours; Pedersén reconstructs it '(quite provisionally)' at +18 (P2021 p. 69)."
+   "The West Outwork's top at +12 is ours; Pedersén reconstructs it '(quite provisionally)' at +18 (P2021 p. 69).",
+   "Etemenanki: the stages follow the Esagila tablet, a later school text's figures, read at about 6 m to the gar. Its first stage stands on the measured base, 91.5 m; the tower above its base is shown as guessed, about 90 m in all."
   ],
-  "alternatives": []
+  "alternatives": [
+   "Etemenanki in Pedersén's model (P2021 Fig. 4.18, C6.2): stage sides 91.5, 80.5, 69.8, 60.2, 48.8, 38.0 and about 27 m; 91.5 m high in one model; the first terrace about 30 m, its top about +26 (P2021 p. 158, 164).",
+   "Etemenanki on the tablet: the base 15 gar, about 90 m (P2021 p. 159), against the 91.5 m measured; a first terrace of 15 m (the father's 30 cubits, P2021 p. 158) is a third reading.",
+   "Etemenanki's height: the proposals run from about 66 to about 90 m (a 2005 study; the tablet's sum)."
+  ]
  },
  "frame": {
   "E0": 445700,
@@ -92,9 +97,9 @@
      445870,
      3600430
     ],
-    "level": 7.0,
+    "level": 8.0,
     "r": 100,
-    "why": "the Nabu temple's street at +7.5 to +8 (P2021 p. 215)"
+    "why": "the Nabu temple at +8.0 (P2021 p. 168) and its street at +7.5 to +8 (P2021 p. 215)"
    },
    {
     "at": [
@@ -131,6 +136,15 @@
     "level": 7.5,
     "r": 45,
     "why": "the street north of the North Gate at +7.5 (P2021 p. 228)"
+   },
+   {
+    "at": [
+     445668,
+     3599925
+    ],
+    "level": 2.5,
+    "r": 40,
+    "why": "the stair's court at Level 2, +2.0 to +3.0 (P2021 p. 154)"
    }
   ],
   "bed": -4.0,
@@ -580,33 +594,33 @@
    },
    {
     "at": [
-     446020,
+     446010.3,
      3599962
     ],
     "level": 2.6,
     "w": 8.6,
     "cls": "R",
-    "note": "along the precinct's east wall"
+    "note": "along the precinct's east wall, the centre 2 m off the wall plus half its 6.4 m (S9-08)"
    },
    {
     "at": [
-     446024,
-     3599925
+     446018.5,
+     3599932.0
     ],
     "level": 2.4,
     "w": 8.6,
     "cls": "R",
-    "note": "the turn west (P2021 p. 208: +2.1 to +2.5)"
+    "note": "the turn west round the precinct's south-east corner at about 446012, 3599936 (S10-02, C6.2), the street's centre 2 m off the wall plus half its 6.4 m (S9-08) (P2021 p. 208: +2.1 to +2.5)"
    },
    {
     "at": [
      445985,
-     3599918
+     3599925.3
     ],
     "level": 2.4,
     "w": 8.0,
     "cls": "R",
-    "note": "along the precinct's south side"
+    "note": "along the precinct's south side, its centre as at the turn"
    },
    {
     "at": [
@@ -674,11 +688,11 @@
   },
   "tower": {
    "origin": [
-    445641.5,
-    3600034
+    445640.5,
+    3600036.0
    ],
-   "bearing": 163,
-   "says": "the tower's centre (C6.2, P2021 p. 153: 445640, 3600040); a toward the south stairs"
+   "bearing": 165.6,
+   "says": "the tower's centre on C6.2 (precinct sheet 8.1; P2021 p. 153: 445640, 3600040); a toward the south stairs, the stair face's normal 165.6 grid"
   },
   "lion": {
    "origin": [
@@ -1522,13 +1536,13 @@
     "across": 34,
     "bearing": 0
    },
-   "base": 0,
+   "base": 8.0,
    "top": 17.0,
    "court": 0.4,
    "plan": "M",
    "height": "G",
    "src": "1,080 m2, west of the street (P2021 p. 167, 445860 3600410); outline C6.2",
-   "hsrc": "floor about +7.5, walls ours"
+   "hsrc": "the rebuilt temple at +8.0 m (P2021 p. 168, re-read); walls ours"
   },
   {
    "id": "ishtar-akkad",
@@ -1592,7 +1606,7 @@
   },
   {
    "id": "merkes-1",
-   "name": "Merkes houses, dug",
+   "name": "Merkes area, houses as a type",
    "poly": [
     [
      445918,
@@ -1613,15 +1627,15 @@
    ],
    "base": 0,
    "top": 9.5,
-   "court": 0.3,
-   "plan": "M",
+   "court": 0.12,
+   "plan": "G",
    "height": "G",
-   "src": "C6.2 (Merkes, green on X1.4; 13 house plans, P2021 p. 246)",
+   "src": "C6.2: the Merkes area, dug (green on X1.4; 13 house plans, P2021 p. 246); the block is a type laid into it, not a dug plan, its court about 12 percent (walls sheet 8.7)",
    "hsrc": "one storey, about 3 m over the floor (P2021 p. 29)"
   },
   {
    "id": "merkes-2",
-   "name": "Merkes houses, dug",
+   "name": "Merkes area, houses as a type",
    "poly": [
     [
      445962,
@@ -1642,15 +1656,15 @@
    ],
    "base": 0,
    "top": 9.0,
-   "court": 0.3,
-   "plan": "M",
+   "court": 0.12,
+   "plan": "G",
    "height": "G",
-   "src": "C6.2",
+   "src": "C6.2: the Merkes area, dug (green on X1.4; 13 house plans, P2021 p. 246); the block is a type laid into it, not a dug plan, its court about 12 percent (walls sheet 8.7)",
    "hsrc": "as above"
   },
   {
    "id": "merkes-3",
-   "name": "Merkes houses, dug",
+   "name": "Merkes area, houses as a type",
    "poly": [
     [
      446002,
@@ -1671,15 +1685,15 @@
    ],
    "base": 0,
    "top": 9.0,
-   "court": 0.3,
-   "plan": "M",
+   "court": 0.12,
+   "plan": "G",
    "height": "G",
-   "src": "C6.2",
+   "src": "C6.2: the Merkes area, dug (green on X1.4; 13 house plans, P2021 p. 246); the block is a type laid into it, not a dug plan, its court about 12 percent (walls sheet 8.7)",
    "hsrc": "as above"
   },
   {
    "id": "merkes-4",
-   "name": "Merkes houses, dug",
+   "name": "Merkes area, houses as a type",
    "poly": [
     [
      446038,
@@ -1700,15 +1714,15 @@
    ],
    "base": 0,
    "top": 9.0,
-   "court": 0.3,
-   "plan": "M",
+   "court": 0.12,
+   "plan": "G",
    "height": "G",
-   "src": "C6.2",
+   "src": "C6.2: the Merkes area, dug (green on X1.4; 13 house plans, P2021 p. 246); the block is a type laid into it, not a dug plan, its court about 12 percent (walls sheet 8.7)",
    "hsrc": "as above"
   },
   {
    "id": "merkes-5",
-   "name": "Merkes houses, dug",
+   "name": "Merkes area, houses as a type",
    "poly": [
     [
      446073,
@@ -1729,15 +1743,15 @@
    ],
    "base": 0,
    "top": 9.0,
-   "court": 0.3,
-   "plan": "M",
+   "court": 0.12,
+   "plan": "G",
    "height": "G",
-   "src": "C6.2",
+   "src": "C6.2: the Merkes area, dug (green on X1.4; 13 house plans, P2021 p. 246); the block is a type laid into it, not a dug plan, its court about 12 percent (walls sheet 8.7)",
    "hsrc": "as above"
   },
   {
    "id": "merkes-6",
-   "name": "Merkes large house, dug",
+   "name": "Merkes area, houses as a type",
    "poly": [
     [
      445918,
@@ -1758,10 +1772,10 @@
    ],
    "base": 0,
    "top": 10.0,
-   "court": 0.35,
-   "plan": "M",
+   "court": 0.12,
+   "plan": "G",
    "height": "G",
-   "src": "C6.2",
+   "src": "C6.2: the Merkes area, dug (green on X1.4; 13 house plans, P2021 p. 246); the block is a type laid into it, not a dug plan, its court about 12 percent (walls sheet 8.7)",
    "hsrc": "as above"
   },
   {
@@ -1855,20 +1869,20 @@
    "name": "Esagila, Marduk's temple",
    "poly": [
     [
-     445625,
-     3599756
+     445620.9,
+     3599756.3
     ],
     [
-     445703,
-     3599768
+     445698.4,
+     3599769.6
     ],
     [
-     445713,
-     3599685
+     445717.4,
+     3599691.4
     ],
     [
-     445640,
-     3599672
+     445640.4,
+     3599671.7
     ]
    ],
    "base": 0,
@@ -1879,7 +1893,7 @@
    ],
    "plan": "M",
    "height": "G",
-   "src": "79.3 x 85.8 m (K1914 ch. XXXV) on its place in C6.2 (P2021 p. 142, the printed N is a slip)",
+   "src": "C6.2: its corners read by eye (precinct sheet 1.4), the east side at 166.3 degrees, the south side 79.5 m; 79.3 x 85.8 m (K1914 ch. XXXV), 81 x 75 to 86 x 79 m (P2021 p. 142, the printed N a slip); no gate drawn toward the street, about 100 m of undug ground lie between them (G-C2-20)",
    "hsrc": "walls 16.5 m, Pedersén's model value (P2021 p. 143)"
   },
   {
@@ -1887,8 +1901,8 @@
    "name": "Esagila's annex",
    "poly": [
     [
-     445703,
-     3599768
+     445698.4,
+     3599769.6
     ],
     [
      445707,
@@ -1907,8 +1921,8 @@
      3599665
     ],
     [
-     445713,
-     3599685
+     445717.4,
+     3599691.4
     ]
    ],
    "base": 0,
@@ -2090,83 +2104,85 @@
  "tower": {
   "name": "Etemenanki",
   "in": "tower",
-  "base": 3.5,
+  "base": 2.5,
   "stages": [
    {
     "side": 91.5,
-    "h": 30.0,
+    "h": 33.0,
     "plan": "M",
-    "height": "R",
-    "src": "base 91.5 x 91.5 m (P2021 p. 153), about 90 m (K1914 ch. XXX)",
-    "hsrc": "the father's 15 m mantle and the son's terrace of 30 cubits, about 30 m (P2021 p. 158)"
+    "height": "G",
+    "src": "base 91.5 x 91.5 m as measured (P2021 p. 153; K1914 ch. XXX: about 90 m)",
+    "hsrc": "the Esagila tablet's first stage, 5½ gar high (W-C2-01, Smith's reading, at 6 m a gar)"
    },
    {
     "side": 78.0,
     "h": 18.0,
     "plan": "G",
     "height": "G",
-    "src": "stages after the stele (P2021 p. 159 to 160, Fig. 4.18)"
+    "src": "the Esagila tablet: 13 gar square, 3 high (W-C2-01, Smith's reading, at 6 m a gar)"
    },
    {
     "side": 60.0,
-    "h": 12.0,
+    "h": 6.0,
     "plan": "G",
     "height": "G",
-    "src": "as above"
+    "src": "the Esagila tablet: 10 gar square, 1 high (W-C2-01, Smith's reading, at 6 m a gar)"
    },
    {
     "side": 51.0,
-    "h": 9.0,
+    "h": 6.0,
     "plan": "G",
     "height": "G",
-    "src": "as above"
+    "src": "the Esagila tablet: 8½ gar square, 1 high (W-C2-01, Smith's reading, at 6 m a gar)"
    },
    {
     "side": 42.0,
-    "h": 7.0,
+    "h": 6.0,
     "plan": "G",
     "height": "G",
-    "src": "as above"
+    "src": "the Esagila tablet: 7 gar square, 1 high (W-C2-01, Smith's reading, at 6 m a gar)"
    },
    {
     "side": 33.0,
-    "h": 6.5,
+    "h": 6.0,
     "plan": "G",
     "height": "G",
-    "src": "as above"
+    "src": "the tablet does not give stage 6; Smith restored it as 5½ gar square, 1 high (W-C2-01)"
    },
    {
-    "side": 23.0,
-    "h": 9.0,
+    "side": 24.0,
+    "across": 21.0,
+    "h": 15.0,
     "plan": "G",
     "height": "G",
-    "src": "the top temple in blue glaze is text-attested, its form not (EV section 6)"
+    "src": "the Esagila tablet's upper temple, 4 by 3½ gar, 2½ high (W-C2-01, Smith's reading, at 6 m a gar); the king says he built the top shrine in blue-glazed brick; its turn ours"
    }
   ],
-  "total": 91.5,
+  "total": 90.0,
   "range": [
    66,
    91.5
   ],
   "stairs": {
    "middle": {
-    "w": 9.0,
-    "from": 51.6,
+    "w": 10.2,
+    "from": 59.55,
     "to": 0,
-    "top": 30.0,
+    "top": 33.0,
     "plan": "M",
     "height": "G",
-    "src": "the middle stair from 51.6 m out (P2021 p. 156)"
+    "src": "the middle stair's foot 105.3 m from the centre on C6.2, 51.6 m from the side-stair band (P2021 p. 156); 10.2 m outside, 6.2 m clear; it climbs to the first stage's top"
    },
    "side": {
     "w": 8.0,
     "run": 40.0,
-    "top": 30.0,
+    "top": 33.0,
     "plan": "M",
     "height": "G",
     "src": "two side stairs along the south face (P2021 p. 156)"
    }
-  }
+  },
+  "says": "see the notes"
  },
  "walls": [
   {
@@ -2526,15 +2542,15 @@
    "gaps": [
     {
      "at": [
-      445686,
-      3599900
+      445687.5,
+      3599899
      ],
-     "w": 14
+     "w": 21
     }
    ],
    "plan": "M",
    "height": "G",
-   "src": "C6.2; the south side had gates with open squares 21 x 25 m before them (P2021 p. 208); one gate is cut here on the middle stair's axis, its place ours",
+   "src": "C6.2; the south side had gates with open squares 21 x 25 m before them (P2021 p. 208); one is cut here where C6.2 draws it, between 445677 and 445698 E (precinct sheet 1.3); the stair's axis meets the front 11 to 12 m west of it, as drawn",
    "hsrc": "ours"
   }
  ],
@@ -2772,7 +2788,7 @@
    3.4,
    5.2
   ],
-  "src": "13 complete house plans in Merkes, all round courtyards, walls about 1 m, about 3 m high (P2021 p. 29, 246); the street grid is ours, laid on the precinct's own orientation",
+  "src": "13 complete house plans in Merkes, all round courtyards, walls about 1 m, about 3 m high (P2021 p. 29, 246); the main court 10 to 15 percent of the plot (P2021's numbers, walls sheet 8.7); the street grid is ours, laid on the precinct's own orientation",
   "bearing": 73,
   "block": [
    64,
@@ -2788,7 +2804,7 @@
    16,
    28
   ],
-  "court": 0.36,
+  "court": 0.12,
   "seed": 570,
   "regions": [
    {
