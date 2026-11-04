@@ -40,14 +40,16 @@ export interface PavingIn {
   inDoorX: N
   /** more thresholds on the court's floor (x, z, radius), where doors open in its other sides */
   more?: Array<{ x: number; z: number; r: number }>
+  /** the joints: how much they cover the brick's edge, and how full of dust they are (0 bitumen, 1 dust) */
+  joint?: { cover: number; dust: number }
 }
 
-export const DEFAULTS = Object.freeze({ brick: 0.33 })
+export const DEFAULTS = Object.freeze({ brick: 0.33, joint: Object.freeze({ cover: 0.72, dust: 0.55 }) })
 export const PRESETS = Object.freeze({
   /** the throne room's Main Courtyard: 33 cm bricks, guessed */
-  court: Object.freeze({ brick: 0.33 }),
-  /** House VI's court: the lower paving's 40 cm bricks (P2021 p. 250) */
-  house: Object.freeze({ brick: 0.4 }),
+  court: Object.freeze({ brick: 0.33, joint: DEFAULTS.joint }),
+  /** House VI's court: the lower paving's 40 cm bricks (P2021 p. 250); a house court's joints swept less, fuller of dust */
+  house: Object.freeze({ brick: 0.4, joint: Object.freeze({ cover: 0.5, dust: 0.65 }) }),
 })
 
 export interface Paving { colour: N; wear: N; dWall: N; inCourt: N }
@@ -110,7 +112,8 @@ export function pavingBrickCourt(I: PavingIn): Paving {
   const dustCol = vec3(0.52, 0.47, 0.39)
   pTone = mix(pTone.mul(mix(vec3(1), vec3(0.97, 0.91, 0.86), wear)), dustCol, dust.mul(0.62))
   // the joints: bitumen, half filled with the court's dust; swept emptier and darker on the walked ways
-  const jointPCol = mix(mix(V(PAL.asphalt as RGB).mul(2), dustCol.mul(0.78), float(0.55).add(chip.mul(0.35))), V(PAL.asphalt as RGB).mul(2.5), wear.mul(0.35))
-  const colour = mix(pTone, jointPCol, jointP.mul(0.72))
+  const J = I.joint ?? DEFAULTS.joint
+  const jointPCol = mix(mix(V(PAL.asphalt as RGB).mul(2), dustCol.mul(0.78), float(J.dust).add(chip.mul(0.35))), V(PAL.asphalt as RGB).mul(2.5), wear.mul(0.35))
+  const colour = mix(pTone, jointPCol, jointP.mul(J.cover))
   return { colour, wear, dWall, inCourt }
 }

@@ -17,14 +17,15 @@ const { float, max, mix, mx_noise_float, mx_worley_noise_vec2, smoothstep, vec2,
 type RGB = [number, number, number]
 const V = (c: RGB): N => vec3(...c)
 
-export interface RoofIn { p: N; U: { uPix: N }; ax: N; az: N; dPar: N; copeU: N; tone?: RGB }
+/** `cracks`: how dark the fine cracks print where they show (0 to 1) */
+export interface RoofIn { p: N; U: { uPix: N }; ax: N; az: N; dPar: N; copeU: N; tone?: RGB; cracks?: number }
 
-export const DEFAULTS = Object.freeze({ tone: TONES.roof as RGB })
+export const DEFAULTS = Object.freeze({ tone: TONES.roof as RGB, cracks: 0.35 })
 export const PRESETS = Object.freeze({
   /** the throne room's roof */
-  court: Object.freeze({ tone: TONES.roof as RGB }),
-  /** the Merkes houses' roofs: the same earth */
-  house: Object.freeze({ tone: TONES.roof as RGB }),
+  court: Object.freeze({ tone: TONES.roof as RGB, cracks: 0.35 }),
+  /** the Merkes houses' roofs: the same earth, seen from a few metres, its cracks fainter */
+  house: Object.freeze({ tone: TONES.roof as RGB, cracks: 0.06 }),
 })
 
 export interface Roof { deck: N; cope: N; fR: N }
@@ -41,7 +42,7 @@ export function roofEarth(I: RoofIn): Roof {
   const deckTone = V(I.tone ?? DEFAULTS.tone).mul(float(1).add(mx_noise_float(vec3(P.x.mul(0.05), 4.1, P.z.mul(0.05))).mul(0.16)).add(mx_noise_float(vec3(P.x.mul(0.45), 2.2, P.z.mul(0.45))).mul(0.08)))
   // a darker damp margin along the parapet's foot
   const deck = mix(deckTone.mul(mix(float(1), float(1.12), fresh.mul(0.8))), deckTone.mul(vec3(0.8, 0.8, 0.82)), old.mul(0.7))
-    .mul(float(1).sub(float(1).sub(smoothstep(0.0, 1.2, dPar)).mul(0.2))).mul(float(1).sub(cracks.mul(0.35)))
+    .mul(float(1).sub(float(1).sub(smoothstep(0.0, 1.2, dPar)).mul(0.2))).mul(float(1).sub(cracks.mul(I.cracks ?? DEFAULTS.cracks)))
   const cope = mix(V(PAL.buff as RGB).mul(0.86), V(PAL.asphalt as RGB), lines(I.copeU, BR, 0.006, fR).mul(0.8))
   return { deck, cope, fR }
 }

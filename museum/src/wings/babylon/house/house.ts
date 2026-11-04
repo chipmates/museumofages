@@ -2,19 +2,26 @@
    as one mesh in the house material (house-mat.ts), and their classes in the evidence view painted from the record
    like the court's (record.ts). */
 
-import { Float32BufferAttribute, Mesh, type BufferGeometry } from 'three/webgpu'
+import { Float32BufferAttribute, Mesh, Vector3, type BufferGeometry, type DirectionalLight, type Object3D } from 'three/webgpu'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import type { Built, Cls } from '../map/plan'
 import type { ClassTones } from '../map/mass'
 import { TONE, type Namer } from '../record'
 import type { Painted } from '../record-tones'
 import { buildHouse, lanesBody, type Body, type House } from './house-geom'
-import { houseMaterial, setHousePixel } from './house-mat'
+import { houseMaterial, setHousePixel, uHouseSun } from './house-mat'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
 
 const TONE_OF: Record<Cls, number> = { M: 0, R: 1, G: 2 }
+
+/* the court's bounce follows the page's own sun, read before each draw */
+let sun: DirectionalLight | null = null
+function readSun(scene: Object3D): void {
+  if (!sun) scene.traverse((o) => { if ((o as DirectionalLight).isDirectionalLight && !sun) sun = o as DirectionalLight })
+  if (sun) (uHouseSun.value as Vector3).set(sun.color.r, sun.color.g, sun.color.b).multiplyScalar(sun.intensity)
+}
 
 export interface HouseMount {
   house: House
@@ -50,6 +57,7 @@ export function mountHouse(built: Built, mapPlan: J, housePlan: J, tones: ClassT
   mesh.castShadow = true
   mesh.receiveShadow = true
   mesh.frustumCulled = false
+  mesh.onBeforeRender = (_r, scene) => readSun(scene)
   const tone = (name: Namer): Painted => {
     const each = bodies.map((b) => name(`map:${b.id}`, b.letters))
     const a = geometry.getAttribute('cls') as Float32BufferAttribute, cid = geometry.getAttribute('cid')
