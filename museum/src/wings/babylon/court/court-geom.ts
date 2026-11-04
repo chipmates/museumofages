@@ -64,7 +64,7 @@ function prism(poly: P2[], y0: number, y1: number, holes: P2[][] = []): BufferGe
   g.rotateX(-Math.PI / 2)
   g.translate(0, y0, 0)
   g.deleteAttribute('uv')
-  return g.toNonIndexed()
+  return g.index ? g.toNonIndexed() : g
 }
 const rect = (b: Box2): P2[] => [[b.x0, b.z0], [b.x1, b.z0], [b.x1, b.z1], [b.x0, b.z1]]
 const slab = (b: Box2, y0: number, y1: number): BufferGeometry => prism(rect(b), y0, y1)
@@ -92,7 +92,7 @@ function northWall(F: CourtFrame): BufferGeometry {
   const g = new ExtrudeGeometry(sh, { depth: F.zB - F.zF, bevelEnabled: false, steps: 1, curveSegments: 1 })
   g.translate(0, 0, F.zF)
   g.deleteAttribute('uv')
-  return g.toNonIndexed()
+  return g.index ? g.toNonIndexed() : g
 }
 
 /** the south wall with the doubly recessed niche cut into its inner face, full height */
