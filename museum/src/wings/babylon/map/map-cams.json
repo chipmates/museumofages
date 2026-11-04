@@ -53,8 +53,13 @@
    "n": 5,
    "id": "gardens",
    "name": "The gardens question",
-   "hour": "17:37",
-   "stops": 0.2
+   "hour": "17:10",
+   "stops": 0.2,
+   "figure": [
+    445791.0,
+    3600745.0,
+    120
+   ]
   },
   {
    "n": 6,
@@ -1165,198 +1170,165 @@
    }
   },
   {
-   "t": 95.03,
+   "t": 89.03,
    "at": [
-    445789.37,
-    3600789.39
+    445796,
+    3600764
    ],
-   "y": 46,
+   "y": 34,
+   "look": [
+    445640,
+    3600036,
+    80
+   ],
+   "stop": 5,
+   "kind": "fly",
+   "say": "rises over the street south of the gate: the tower far off over the palace",
+   "phone": {
+    "hfov": 44,
+    "shift": 0
+   }
+  },
+  {
+   "t": 94.53,
+   "at": [
+    445826,
+    3600722
+   ],
+   "y": 54,
    "look": [
     445560,
-    3600600,
+    3600430,
     40
    ],
    "stop": 5,
-   "kind": "fly",
-   "say": "rises straight up, turning right: the tower far off over the palace",
+   "kind": "turn",
+   "say": "drawing back as it rises, turning right",
    "phone": {
-    "hfov": 44,
-    "shift": -0.35
+    "hfov": 40,
+    "shift": 0
    }
   },
   {
+   "t": 99.53,
    "at": [
-    445789.37,
-    3600789.39
+    445852,
+    3600692
    ],
-   "y": 49.08,
+   "y": 68,
    "look": [
-    445523.17,
-    3600671.35,
-    35.6
+    445590,
+    3600660,
+    22
    ],
    "stop": 5,
    "kind": "turn",
-   "t": 96.41,
    "phone": {
-    "hfov": 44.0,
-    "shift": -0.35
+    "look": [
+     445620,
+     3600700,
+     0
+    ],
+    "hfov": 38,
+    "shift": 0
    }
   },
   {
+   "t": 102.53,
    "at": [
-    445789.37,
-    3600789.39
+    445860,
+    3600682
    ],
-   "y": 52.16,
+   "y": 72,
    "look": [
-    445507.39,
-    3600748.34,
-    31.2
-   ],
-   "stop": 5,
-   "kind": "turn",
-   "t": 97.78,
-   "phone": {
-    "hfov": 44.0,
-    "shift": -0.35
-   }
-  },
-  {
-   "at": [
-    445789.37,
-    3600789.39
-   ],
-   "y": 55.24,
-   "look": [
-    445512.96,
-    3600825.05,
-    26.8
-   ],
-   "stop": 5,
-   "kind": "turn",
-   "t": 99.16,
-   "phone": {
-    "hfov": 44.0,
-    "shift": -0.35
-   }
-  },
-  {
-   "at": [
-    445789.37,
-    3600789.39
-   ],
-   "y": 58.32,
-   "look": [
-    445538.55,
-    3600895.77,
-    22.4
-   ],
-   "stop": 5,
-   "kind": "turn",
-   "t": 100.53,
-   "phone": {
-    "hfov": 44.0,
-    "shift": -0.35
-   }
-  },
-  {
-   "t": 102.03,
-   "at": [
-    445789.37,
-    3600789.39
-   ],
-   "y": 60,
-   "look": [
-    445560,
-    3600930,
-    20
-   ],
-   "stop": 5,
-   "kind": "turn",
-   "say": "at +60: the North Palace and its terraces",
-   "hold": true,
-   "phone": {
-    "hfov": 44,
-    "shift": -0.35
-   }
-  },
-  {
-   "t": 107.03,
-   "at": [
-    445789.37,
-    3600789.39
-   ],
-   "y": 60,
-   "look": [
-    445560,
-    3600930,
-    20
+    445680,
+    3600822,
+    13
    ],
    "stop": 5,
    "kind": "hold",
-   "still": true,
    "hold": true,
+   "say": "at +72: the vaulted building's block in the palace's north-east corner below, the North Palace on its terrace beyond, its edge terraces planted (guessed)",
    "phone": {
-    "hfov": 44,
-    "shift": -0.35
+    "look": [
+     445700,
+     3600812,
+     2
+    ],
+    "hfov": 28,
+    "shift": 0
    }
   },
   {
+   "t": 107.53,
    "at": [
-    445782.32,
-    3600790.91
+    445860,
+    3600682
    ],
-   "y": 58.86,
+   "y": 72,
    "look": [
-    445557.85,
-    3600902.45,
-    21.43
+    445680,
+    3600822,
+    13
    ],
    "stop": 5,
-   "kind": "fly",
-   "t": 108.53,
+   "kind": "hold",
+   "hold": true,
+   "still": true,
    "phone": {
-    "hfov": 44.0,
-    "shift": -0.336
+    "look": [
+     445700,
+     3600812,
+     2
+    ],
+    "hfov": 28,
+    "shift": 0
    }
   },
   {
-   "at": [
-    445768.21,
-    3600793.94
-   ],
-   "y": 56.57,
-   "look": [
-    445562.87,
-    3600853.81,
-    24.29
-   ],
-   "stop": 5,
-   "kind": "fly",
    "t": 110.03,
-   "phone": {
-    "hfov": 44.0,
-    "shift": -0.307
-   }
-  },
-  {
    "at": [
-    445754.11,
-    3600796.97
+    445806,
+    3600742
    ],
-   "y": 54.29,
+   "y": 46,
    "look": [
-    445577.98,
-    3600815.74,
-    27.14
+    445752,
+    3600774,
+    12
    ],
    "stop": 5,
    "kind": "fly",
-   "t": 111.53,
+   "say": "down past the corner by the gate, looking into the vaulted building's block",
    "phone": {
-    "hfov": 44.0,
-    "shift": -0.279
+    "hfov": 40,
+    "shift": 0
+   }
+  },
+  {
+   "t": 112.03,
+   "at": [
+    445806,
+    3600722
+   ],
+   "y": "eye",
+   "look": [
+    445784,
+    3600770,
+    21
+   ],
+   "stop": 5,
+   "kind": "walk",
+   "hold": true,
+   "say": "on the street: the palace's corner over the vaulted building, the gate beyond",
+   "phone": {
+    "look": [
+     445786,
+     3600768,
+     18
+    ],
+    "hfov": 44,
+    "shift": 0
    }
   },
   {
@@ -1378,7 +1350,7 @@
     "hfov": 44,
     "shift": -0.25
    },
-   "hour": "17:40"
+   "cut": true
   },
   {
    "at": [
