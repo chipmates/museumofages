@@ -10,10 +10,18 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 export const APP = resolve(dirname(fileURLToPath(import.meta.url)), '../..')
-/** the kit's ports; 5199 (the sweep) and 5400 (the walk server) are never a kit tool's */
-export const PORTS = [5210, 5219]
-export function checkPort(p) {
-  if (!Number.isInteger(p) || p < PORTS[0] || p > PORTS[1]) throw new Error(`port ${p}: the Babylon kit owns ${PORTS[0]} to ${PORTS[1]} only`)
+/** the kit's ports; 5199 (the sweep) and 5400 (the walk server) are never a kit tool's. A seat given its own ten ports
+    names them in BABYLON_PORTS ("5220-5229"), inside the Babylon band 5210 to 5299 */
+export function portRange(text) {
+  if (!text) return [5210, 5219]
+  const m = /^(\d+)-(\d+)$/.exec(String(text).trim())
+  const r = m ? [Number(m[1]), Number(m[2])] : null
+  if (!r || r[0] > r[1] || r[0] < 5210 || r[1] > 5299) throw new Error(`BABYLON_PORTS "${text}": write <first>-<last> inside 5210-5299`)
+  return r
+}
+export const PORTS = portRange(process.env.BABYLON_PORTS)
+export function checkPort(p, range = PORTS) {
+  if (!Number.isInteger(p) || p < range[0] || p > range[1]) throw new Error(`port ${p}: the Babylon kit owns ${range[0]} to ${range[1]} only`)
   return p
 }
 
