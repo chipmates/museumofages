@@ -99,7 +99,7 @@ export async function mountMap(stop, { reach = 400 } = {}) {
 }
 
 /** the gate page (stops 2 to 4): the gate's bodies as the page builds them, the map's within reach, both hero stills */
-export async function mountGate(stop, { eyesFile = null, cityReach = 'near' } = {}) {
+export async function mountGate(stop, { eyesFile = null, cityReach = 'near', cityEdit = null } = {}) {
   const { buildGate, gateFrame } = await import(join(GATE, 'gate-geom.ts'))
   const { animalField } = await import(join(GATE, 'gate-relief.ts'))
   const { assemble, paved } = await import(join(GATE, 'gate-mesh.ts'))
@@ -116,6 +116,7 @@ export async function mountGate(stop, { eyesFile = null, cityReach = 'near' } = 
   const cityPlan = structuredClone(mapPlan)
   cityPlan.blocks = cityPlan.blocks.filter((b) => !dropB.has(b.id))
   cityPlan.walls = cityPlan.walls.filter((w) => !dropW.has(w.id))
+  if (cityEdit) cityEdit(cityPlan)
   const city = buildPlan(cityPlan)
   const MF = makeFrame(mapPlan), GF = gateFrame(plan)
   const G2W = new THREE.Matrix4().fromArray(GF.toMap(MF.E0, MF.N0)), W2G = G2W.clone().invert()
@@ -203,7 +204,51 @@ function gatePath(plan, cams, B, GF, MF) {
 /** the arrival: the opening page (the gate page's bodies and the whole city) under its flight's cameras (open.ts) */
 export async function mountOpen(stop = '1', opts = {}) {
   const { makeFlight, resolveFlight } = await import(join(OPEN, 'flight.ts'))
-  const G = await mountGate('2', { ...opts, cityReach: 'all' })
+  const { northEntry } = await import(join(OPEN, 'north.ts'))
+  const { northMeshes } = await import(join(OPEN, 'north-mesh.ts'))
+  const { rebuildHouses } = await import(join(OPEN, 'houses.ts'))
+  const { buildPlan } = await import(join(MAP, 'plan.ts'))
+  // as open.ts: the north entry replaces the map's North Gate, dam walls and north wall, trims the North Fortification
+  // and opens the North Palace's two courts; the houses are rebuilt per lot
+  let NORTH = null, edited = null
+  const cityEdit = (cp) => {
+    const probe = buildPlan(cp, { houses: false })
+    NORTH = northEntry(cp, (x, z) => probe.streetAt(x, z).level, Number(cp.classes.band))
+    cp.blocks = cp.blocks.filter((b) => !NORTH.drop.includes(b.id))
+    for (const b of cp.blocks) {
+      if (NORTH.trim[b.id]) b.poly = NORTH.trim[b.id]
+      if (b.id === 'north-palace-main') b.holes = [{ id: 'court-west', rect: [445546, 445580, 3600903, 3600940] }, { id: 'court-east', rect: [445598, 445632, 3600900, 3600935] }]
+    }
+    edited = cp
+  }
+  const G = await mountGate('2', { ...opts, cityReach: 'all', cityEdit })
+  // the page's letters for its own bodies (the evidence switch), and the bodies drawn without faces here: the palms by
+  // row (groves Known as a mass, the rest Guessed, as green.ts) and the plain's fields and canals (ours, Guessed)
+  const openLetters = new Map()
+  const extraBodies = [['open:palm-canal', ['R', 'R']], ['open:palm-river', ['R', 'R']], ['open:palm-city', ['G', 'G']], ['open:palm-outer', ['G', 'G']], ['open:field', ['G', 'G']], ['open:canal', ['G', 'G']]]
+  for (const [n, L] of extraBodies) openLetters.set(n, L)
+  {
+    const city = buildPlan(edited)
+    const W2G0 = G.W2G
+    { let k = 0; for (const f of G.faces) if (!f.body.startsWith('map:house')) G.faces[k++] = f; G.faces.length = k }
+    for (const b of [...NORTH.prisms, ...NORTH.arched]) openLetters.set(`open:${b.id}`, [b.plan, b.height])
+    const housePlan = json(join(MAP, 'map-plan.json')).houses.plan
+    const N = northMeshes(NORTH)
+    const nid = N.geometry.getAttribute('nid')
+    facesFrom(G.faces, N.geometry, W2G0, (i) => `open:${N.bodies[nid.getX(i)]}`)
+    const box = new THREE.BoxGeometry(1, 1, 1)
+    const CL = ['M', 'R', 'G']
+    N.merlons.matrices.forEach((m, k) => {
+      openLetters.set(`open:merlon-${N.merlons.names[k]}`, [CL[N.merlons.cls[k * 2 + 1]], CL[N.merlons.cls[k * 2]]])
+      facesFrom(G.faces, box, W2G0.clone().multiply(m), () => `open:merlon-${N.merlons.names[k]}`)
+    })
+    const q = new THREE.Quaternion(), up = new THREE.Vector3(0, 1, 0)
+    for (const h of rebuildHouses(city.boxes.filter((b) => b.group === 'house'), city.ground).boxes) {
+      const m = new THREE.Matrix4().compose(new THREE.Vector3(h.x, (h.y0 + h.y1) / 2, h.z), q.setFromAxisAngle(up, h.yaw), new THREE.Vector3(h.sx, h.y1 - h.y0, h.sz))
+      openLetters.set(`open:${h.id}`, [housePlan, 'G'])
+      facesFrom(G.faces, box, W2G0.clone().multiply(m), () => `open:${h.id}`)
+    }
+  }
   const cams = json(join(OPEN, 'open-cams.json')), gateCams = json(join(GATE, 'gate-cams.json'))
   const { B, GF, MF, W2G, plan } = G
   const L0 = plan.frame.level0
@@ -214,7 +259,8 @@ export async function mountOpen(stop = '1', opts = {}) {
     return { x: sx, z: sz, level: B.level(z) + L0 }
   }
   const sFirst = Number(String(gateCams.stops[0].keys[0].at).slice(7))
-  const endEye = B.level(sFirst * B.street.dir[1]) + cams.eye
+  const sLand = Number(cams.land?.street ?? sFirst), tLand = Number(cams.land?.across ?? 0)
+  const endEye = streetAt(sLand, tLand).level - L0 + cams.eye
   const [wlx, wlz] = g2s(0, -20)
   const flight = makeFlight(resolveFlight(cams.flight, { scene: MF.s, street: streetAt, eye: cams.eye, walkLook: [wlx, endEye + L0, wlz] }))
   const gv = (p) => { const v = new THREE.Vector3(...p).applyMatrix4(W2G); return [v.x, v.y, v.z] }
@@ -225,7 +271,7 @@ export async function mountOpen(stop = '1', opts = {}) {
     return cameraFrom({ name: `open first ${framing} ${w}x${h}`, eye: v.eye, look: v.look, vfov: fittedFov(v.hfov, w, h), w, h, shift: v.shift })
   })
   return {
-    ...G, page: 'open', stop: String(stop), cameras,
+    ...G, page: 'open', stop: String(stop), cameras, openLetters, extraBodies,
     frame: "the gate's frame (x west, z north out of the face, y up from the +15.40 street); the flight's cameras moved into it",
     track: (dt = 0.25) => { const out = []; for (let i = 0; i * dt <= flight.duration + 1e-9; i++) out.push({ t: +(i * dt).toFixed(3), ...at(i * dt) }); return out },
   }

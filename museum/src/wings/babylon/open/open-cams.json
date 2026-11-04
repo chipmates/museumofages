@@ -326,15 +326,15 @@
     ],
     "y": 380,
     "look": [
-     445680,
-     3600000,
+     445690,
+     3600300,
      0
     ],
     "hfov": 34
    }
   },
   "B2": {
-   "says": "the working start (see first)",
+   "says": "the working start (see first); its candidate still in the phone frame looked at (445700, 3600800, 0), the flight's phone start looks lower",
    "desktop": {
     "at": [
      445380,

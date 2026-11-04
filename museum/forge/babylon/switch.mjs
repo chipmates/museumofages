@@ -17,7 +17,8 @@ import { MOUNTS } from './mounts.mjs'
 const args = process.argv.slice(2)
 const opt = (k, d) => (args.includes(k) ? args[args.indexOf(k) + 1] : d)
 const PAGE = opt('--page', 'gate')
-if (PAGE !== 'gate') { console.error('--page gate (the one page with a switch today)'); process.exit(2) }
+if (PAGE !== 'gate' && PAGE !== 'open') { console.error('--page gate|open'); process.exit(2) }
+const STOP = PAGE === 'open' ? 'open' : '3'
 const OUT = opt('--out', null)
 if (!OUT) { console.error('--out <shown.json>'); process.exit(2) }
 
@@ -28,10 +29,10 @@ const json = (p) => JSON.parse(readFileSync(p, 'utf8'))
 const rules = json(join(APP, 'src/wings/babylon/pieces.json')).rules.map((r) => ({ ...r, re: new RegExp(r.match) }))
 const mapPlan = json(join(APP, 'src/wings/babylon/map/map-plan.json'))
 
-const M = await MOUNTS.gate('3', { cityReach: 'all' })
+const M = PAGE === 'open' ? await MOUNTS.open('open') : await MOUNTS.gate('3', { cityReach: 'all' })
 const { B, plan } = M
 const bodies = [...new Set(M.faces.map((f) => f.body))].map((b) => b.replace(/#\d+$/, ''))
-const names = [...new Set(bodies)]
+const names = [...new Set([...bodies, ...(M.extraBodies ?? []).map(([n]) => n)])]
 
 /** the page's letters for a body: [plan, height], or null when the plans do not give them */
 const gateLetters = new Map()
@@ -44,6 +45,7 @@ for (const q of B.panels) gateLetters.set(`panel:${q.id}`, [q.cls, q.cls])
 B.doors.forEach((d, i) => gateLetters.set(`gate:leaf-${i}`, [plan.doors.cls, plan.doors.cls]))
 const lifeCls = plan.life.cls ?? 'G'
 function letters(name) {
+  if (M.openLetters?.has(name)) return M.openLetters.get(name)
   if (gateLetters.has(name)) return gateLetters.get(name)
   if (/^gate:bronze-/.test(name)) return [plan.bronze.cls, plan.bronze.cls]
   if (/^life:/.test(name)) return [lifeCls, lifeCls]
@@ -72,7 +74,7 @@ const shown = {}, lines = [['body', 'plan row', 'body row', 'letters', 'plan sho
 const unnamed = [], unlettered = []
 const show = (piece, cls) => { if (piece && (!shown[piece] || RANK[cls] > RANK[shown[piece]])) shown[piece] = cls }
 for (const name of names) {
-  const r = rules.find((x) => x.re.test(name) && (!x.stops || x.stops.includes('3')))
+  const r = rules.find((x) => x.re.test(name) && (!x.stops || x.stops.includes(STOP)))
   if (!r || !r.piece) { unnamed.push([r?.part ?? name, r?.needs ?? 'no rule names this body']); continue }
   const L = letters(name)
   if (!L || !CLASS[L[0]] || !CLASS[L[1]]) { unlettered.push(name); continue }
