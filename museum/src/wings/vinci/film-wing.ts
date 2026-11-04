@@ -5,7 +5,7 @@
    from the wing's own data by key; the phone's rest, walk, wait and dip stand
    in the frozen form's one graded box. */
 
-import { leaveWingFinished, setRegister, type WingHosts, type WingModule, type WingStation } from '../frame'
+import { leaveWingFinished, setRegister, stationFromHash, type WingHosts, type WingModule, type WingStation } from '../frame'
 import { lang, pageLang, say, tagged, WING_TEXT } from '../content'
 import { LOBBY_TEXT } from '../../content/lobby'
 import { vinciAbsences, vinciCertaintyWords, vinciCollectionThreshold, vinciContent, vinciEveningSky, vinciGrounds, vinciHourArithmetic, vinciHourIntegrity, vinciHourLabel,
@@ -14,8 +14,7 @@ import { vinciAbsences, vinciCertaintyWords, vinciCollectionThreshold, vinciCont
 import { shownCitation } from './citations'
 import { showLicences } from './licence-words'
 import { keepTogether, keepTogetherIn } from './keep-together'
-import { vinciStory } from './story'
-import { VINCI_LISA_STOP, VINCI_OFF_THE_WALK, VINCI_VALVE } from './walk-places'
+import { lifeStops, releaseOrder } from './film-order'
 import { awaitOpening } from './opening-seam'
 import { endWith, learnWord, lobbyWord, talkAtTheGrave } from './ending-talk'
 import { deskControl, deskStoryStop } from '../desk-story'
@@ -138,23 +137,6 @@ const CARD_HANDOVER = 0.5
 const READING = { stroll: 8, walk: 10, brisk: 13 } as const
 const readingMs = (title: VinciText | null): number => title ? Math.round((2 + text(title).length / READING[gaitPace()]) * 1000) : 900
 
-/** The life's own order, from the story and the stations the wing builds: the
-    walk the film was rendered along. */
-interface LifeStop { id: string; station: string; name: VinciText }
-function lifeStops(): LifeStop[] {
-  const built = new Set(vinciContent.map(s => s.id as string))
-  const out: LifeStop[] = []
-  for (const stop of [...vinciStory].sort((a, b) => a.order - b.order)) {
-    if (stop.kind === 'cut') continue
-    // the wall stop is named by its own chapter: the rail that carries these names stands down in the film
-    if (stop.id === VINCI_LISA_STOP) out.push({ id: stop.id, station: 'picture-room', name: stop.chapter })
-    else if (built.has(stop.id) && !VINCI_OFF_THE_WALK.has(stop.id)) out.push({ id: stop.id, station: stop.id, name: vinciContent.find(s => s.id === stop.id)!.name })
-    // the heart valve's stop follows the body wall, as in the walk (walk.ts)
-    if (stop.id === VINCI_VALVE.station) out.push({ id: VINCI_VALVE.place, station: VINCI_VALVE.station, name: VINCI_VALVE.name })
-  }
-  return out
-}
-
 /** ONE SENTENCE A ROW, cut as the desktop's drawer cuts them: a German day
     or century keeps its period ("2. Mai", "19. Jahrhundert"), an age or a
     year before a stop ends the sentence in either language. */
@@ -194,9 +176,18 @@ function releaseFirstStill(): void {
 const stopNode = (id: string): PictureNode => `stop:${id}`
 const viewNode = (exhibit: string): PictureNode => `view:${exhibit}`
 
+/** the story list of the release this page loaded: the fresh module the frame
+    builds for a jump inside the standing wing gives it its stations in that order */
+let renderedAlong: { base: string; story: readonly string[] | undefined } | undefined
+
 export function createWing(): WingModule {
-  const LIFE = lifeStops()
+  /** the story file's order (or a loaded release's) until the release arrives, then, in place, the order it was rendered along */
+  const LIFE = releaseOrder(lifeStops(), renderedAlong?.base === filmReleaseBase() ? renderedAlong.story : undefined)
   const stationOf = (id: string) => vinciContent.find(s => s.id === id) ?? vinciContent[0]!
+  const stationsNow = (): WingStation[] => LIFE.map(s => ({ id: s.id, name: text(s.name), question: text(stationOf(s.station).door), door: stationOf(s.station).door.station }))
+  /** An entry that names its stop by id keeps that stop when the order turns; a number keeps its place, which
+      every visit wrote in the release's order. Read before the frame writes the address. */
+  const entryId = ((at): string | null => (typeof at === 'string' && !/^\d+$/.test(at) ? at : null))(stationFromHash())
   /** An entry that names a stop stands there; any other begins at the walk's
       start where the release carries one, and walks down into the first stop
       once the opening and the door are done. Read before the frame writes
@@ -1733,6 +1724,16 @@ export function createWing(): WingModule {
     }
     release = await adoptRelease(filmReleaseBase())
     if (!hosts) return
+    /* THE ORDER TURNS BEFORE ANY CHROME COUNTS OR NAMES A STOP: the frame
+       resolved the entry in the story file's order, so a stop named by id is
+       found again and the frame takes the new names, place and address */
+    const shown = card
+    LIFE.splice(0, LIFE.length, ...releaseOrder(LIFE, release.story))
+    renderedAlong = { base: filmReleaseBase(), story: release.story }
+    module.stations = stationsNow()
+    const named = entryId ? LIFE.findIndex(s => s.id === entryId) : -1
+    if (named >= 0) card = asked = named
+    if (card !== shown) h.navigate(card)
     // the visit enters at the stop asked for, or at the first this release carries
     if (!carried(card)) card = asked = Math.max(0, LIFE.findIndex((_, i) => carried(i)))
     // a release that does not carry the first stop has no door to stand at
@@ -1982,7 +1983,7 @@ export function createWing(): WingModule {
   }
 
   const module: WingModule = {
-    stations: LIFE.map((s): WingStation => ({ id: s.id, name: text(s.name), question: text(stationOf(s.station).door), door: stationOf(s.station).door.station })),
+    stations: stationsNow(),
     doorDisclosure: 'first-press',
     navigation: () => {
       const s = picture?.state()
@@ -2014,7 +2015,7 @@ export function createWing(): WingModule {
       report?.({ stage: 'walk', share: 1 })
     },
     language() {
-      module.stations = LIFE.map(s => ({ id: s.id, name: text(s.name), question: text(stationOf(s.station).door), door: stationOf(s.station).door.station }))
+      module.stations = stationsNow()
       if (sourceButton) sourceButton.textContent = say(SOURCES_WORD)
       nameSheetSeats()
       paint()
