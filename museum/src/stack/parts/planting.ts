@@ -45,6 +45,7 @@ const BARK = 'oak-beams'
 /* ── the species ───────────────────────────────────────────────────────── */
 
 export type Species = 'oak' | 'lime' | 'plane' | 'yew' | 'cypress' | 'shrub'
+  | 'pomegranate' | 'fig' | 'tamarisk' | 'terebinth' | 'poplar-euphrates' | 'willow'
 export type Season = 'summer' | 'october' | 'bare'
 
 interface Habit {
@@ -75,7 +76,7 @@ interface Habit {
   /** an evergreen keeps its own colour through October */
   evergreen: boolean
   /** the leaf the atlas draws */
-  blade: 'lobed' | 'cordate' | 'palmate' | 'needle' | 'scale'
+  blade: 'lobed' | 'cordate' | 'palmate' | 'needle' | 'scale' | 'lanceolate' | 'jointed' | 'fig'
   bark: string
   /** how far the bark set is taken off its own measured mean. A plane's
       bark is pale, and the palest set in the library is paler still. */
@@ -187,6 +188,110 @@ const HABIT: Record<Species, Habit> = {
     blade: 'cordate',
     bark: BARK,
     barkValue: 1,
+  },
+  /* the plants of a Mesopotamian garden and river bank, in April (a wing's own trees; the shapes are the kinds' habits
+     as the open photographs show them, never a measurement; the height is the caller's) */
+  pomegranate: {
+    crownBase: 0.12,
+    spread: 0.95,
+    head: 1.15,
+    step: 0.55,
+    tropism: 0.24,
+    points: 500,
+    leaf: 0.22,
+    nominal: 3.5,
+    cards: 4,
+    green: '#4a6a2a',
+    autumn: '#a08a2e',
+    evergreen: false,
+    blade: 'lanceolate',
+    bark: BARK,
+    barkValue: 0.9,
+  },
+  fig: {
+    crownBase: 0.2,
+    spread: 1.3,
+    head: 1.75,
+    step: 0.55,
+    tropism: 0.06,
+    points: 700,
+    leaf: 0.5,
+    nominal: 6,
+    cards: 3,
+    green: '#5f7c36',
+    autumn: '#9a8a3a',
+    evergreen: false,
+    blade: 'fig',
+    bark: 'plaster-lime-aged',
+    barkValue: 0.7,
+  },
+  tamarisk: {
+    crownBase: 0.18,
+    spread: 1.1,
+    head: 1.3,
+    step: 0.55,
+    tropism: -0.04,
+    points: 800,
+    leaf: 0.34,
+    nominal: 8,
+    cards: 5,
+    green: '#5a6b52',
+    autumn: '#5a6b52',
+    evergreen: true,
+    blade: 'jointed',
+    bark: BARK,
+    barkValue: 0.8,
+  },
+  terebinth: {
+    crownBase: 0.28,
+    spread: 1.15,
+    head: 1.6,
+    step: 0.55,
+    tropism: 0.1,
+    points: 1100,
+    leaf: 0.38,
+    nominal: 8,
+    cards: 4,
+    green: '#4d6831',
+    autumn: '#8c5a2c',
+    evergreen: false,
+    blade: 'lanceolate',
+    bark: BARK,
+    barkValue: 0.85,
+  },
+  'poplar-euphrates': {
+    crownBase: 0.36,
+    spread: 0.8,
+    head: 1.0,
+    step: 0.55,
+    tropism: 0.18,
+    points: 800,
+    leaf: 0.32,
+    nominal: 11,
+    cards: 3,
+    green: '#6e7d58',
+    autumn: '#b09a42',
+    evergreen: false,
+    blade: 'cordate',
+    bark: BARK,
+    barkValue: 0.75,
+  },
+  willow: {
+    crownBase: 0.24,
+    spread: 1.05,
+    head: 1.2,
+    step: 0.55,
+    tropism: -0.1,
+    points: 900,
+    leaf: 0.3,
+    nominal: 7,
+    cards: 4,
+    green: '#677b43',
+    autumn: '#9a913e',
+    evergreen: false,
+    blade: 'lanceolate',
+    bark: BARK,
+    barkValue: 0.85,
   },
 }
 
@@ -492,6 +597,16 @@ function drawBlade(ctx: CanvasRenderingContext2D, blade: Habit['blade'], R: numb
     ctx.fill()
     return
   }
+  if (blade === 'lanceolate') {
+    ctx.ellipse(0, 0, R * 0.2, R, 0, 0, Math.PI * 2)
+    ctx.fill()
+    return
+  }
+  if (blade === 'jointed') {
+    for (let i = 0; i < 6; i++) ctx.rect(-R * 0.6 + i * R * 0.24, -R, R * 0.05, R * 1.9 - (i % 3) * R * 0.3)
+    ctx.fill()
+    return
+  }
   const steps = 48
   for (let i = 0; i <= steps; i++) {
     const a = (i / steps) * Math.PI * 2
@@ -502,6 +617,7 @@ function drawBlade(ctx: CanvasRenderingContext2D, blade: Habit['blade'], R: numb
       rr = R * (0.55 + 0.55 * Math.pow(Math.abs(s), 0.55)) * (a > Math.PI * 0.85 && a < Math.PI * 1.15 ? 0.72 : 1)
     }
     if (blade === 'palmate') rr = R * (0.42 + 0.6 * Math.pow(Math.abs(Math.cos(a * 2.5)), 1.6))
+    if (blade === 'fig') rr = R * (0.4 + 0.6 * Math.pow(Math.abs(Math.cos(a * 2.5)), 0.9))
     const x = Math.cos(a - Math.PI / 2) * rr
     const y = Math.sin(a - Math.PI / 2) * rr
     if (i === 0) ctx.moveTo(x, y)

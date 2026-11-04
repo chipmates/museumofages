@@ -12,8 +12,6 @@ import { APP } from './pages.mjs'
 import { cameraFrom, facesFrom, fittedFov } from './geometry.mjs'
 
 const COURT = join(APP, 'src/wings/babylon/court'), TOWER = join(APP, 'src/wings/babylon/tower'), GARDENS = join(APP, 'src/wings/babylon/gardens'), NABU = join(APP, 'src/wings/babylon/nabu'), HOUSE = join(APP, 'src/wings/babylon/house')
-/** the garden's palms as the map page builds them (map.ts PALM_MID) */
-const PALM_MID = { seg: 4, sides: 5, fronds: 16, steps: 4 }
 const MAP = join(APP, 'src/wings/babylon/map'), GATE = join(APP, 'src/wings/babylon/gate'), OPEN = join(APP, 'src/wings/babylon/open')
 const json = (p) => JSON.parse(readFileSync(p, 'utf8'))
 /** the kit's still sizes, device pixels: both framings at the shooter's defaults, and the smaller desktop */
@@ -68,7 +66,8 @@ export async function mountMap(stop, { reach = 400 } = {}) {
   const { buildTower } = await import(join(TOWER, 'tower-geom.ts'))
   const { buildGardens } = await import(join(GARDENS, 'gardens-geom.ts'))
   const { buildPlanting } = await import(join(GARDENS, 'gardens-plants.ts'))
-  const { palmGeometry } = await import(join(GATE, 'gate-life.ts'))
+  // the garden's palms as the map page builds them (map.ts takes PALM_MID)
+  const { palmGeometry, PALM_MID } = await import(join(GATE, 'gate-life.ts'))
   const plan = json(join(MAP, 'map-plan.json')), cams = json(join(MAP, 'map-cams.json')), gp = json(join(GARDENS, 'gardens-plan.json'))
   // stop 5's candidates and stop 6's court draw their own bodies in place of the map's prisms they replace, as map.ts does
   const gardens = buildGardens(buildPlan(plan), plan, gp)

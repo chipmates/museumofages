@@ -1,20 +1,26 @@
-/* STOP 5'S PLANTING, pure geometry with vertex colours (no DOM): the guessed garden on the edge terraces. Trees as a
-   trunk under a crown of jittered lobes whose normals lean out from the crown's middle, so a crown shades as one soft
-   mass seen from 150 to 400 m; cypresses as a tall spindle of lobes; the date palms are the gate's own (passed in, so
-   this module keeps no relative import for node); vine curtains and caper mounds hang over the terraces' own edges.
-   Every vertex carries `leaf` (1 foliage, 0 wood) and `centre` (its crown's middle, for the leaves' light). */
+/* STOP 5'S PLANTING, geometry with vertex colours: the guessed garden on the edge terraces. The trees are the stack's
+   tree kit's, grown in the page through the wing's adapter (plants/grown.ts, which a page loads; node mounts each
+   tree's stand-in, its crown's bounds as one closed body, so the checks run without a DOM); the date palms are the
+   gate's own at their mid preset (passed in, so this module keeps no relative import for node); vine curtains and
+   caper mounds hang over the terraces' own edges. Every vertex carries `leaf` (1 foliage, 0 wood) and `centre` (its
+   crown's middle, for the leaves' light). April (the flora's seasons): the deciduous kinds in new leaf, no fruit. */
 
 import { BufferGeometry, Float32BufferAttribute } from 'three/webgpu'
 import type { GardensFrame, Strip } from './gardens-geom'
+import type { GrowSpec, Spray } from '../plants/grown'
+import type { Species } from '../../../stack/parts/planting'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
 type V3 = [number, number, number]
 
-export type Kind = 'palm' | 'cypress' | 'broad' | 'pomegranate' | 'fig' | 'shrub' | 'vine' | 'caper'
-export interface Plant { id: string; kind: Kind; row: string; x: number; z: number; y: number; h: number; geometry: BufferGeometry }
+export type Kind = 'palm' | 'cypress' | 'broad' | 'tamarisk' | 'pomegranate' | 'fig' | 'shrub' | 'vine' | 'caper'
+export interface Plant { id: string; kind: Kind; row: string; x: number; z: number; y: number; h: number; geometry: BufferGeometry; crown?: { y0: number; y1: number; rx: number; rz: number }; grown?: boolean }
 /** the gate's palm builder (gate-life.ts palmGeometry): one palm at the origin, its foot at 0 */
 export type PalmBuilder = (h: number, detail: { seg: number; sides: number; fronds: number; steps: number }, seed: number) => BufferGeometry
+
+/** the kit's trees grow only where a page can draw their leaf atlas */
+const kit: typeof import('../plants/grown') | null = typeof document === 'undefined' ? null : await import('../plants/grown')
 
 const rnd = (seed: number): (() => number) => {
   let s = seed >>> 0
@@ -22,18 +28,27 @@ const rnd = (seed: number): (() => number) => {
 }
 const norm = (a: V3): V3 => { const l = Math.hypot(...a) || 1; return [a[0] / l, a[1] / l, a[2] / l] }
 
-/** linear albedos of the leaves and wood, April (the deciduous kinds in new leaf); ours, from the photo sheet's kinds */
-const LEAF: Record<Kind, V3> = {
-  broad: [0.07, 0.1, 0.032],
-  cypress: [0.028, 0.046, 0.022],
-  pomegranate: [0.085, 0.12, 0.03],
-  fig: [0.1, 0.14, 0.045],
-  shrub: [0.065, 0.088, 0.038],
-  palm: [0.06, 0.095, 0.035],
-  vine: [0.105, 0.15, 0.038],
-  caper: [0.07, 0.095, 0.05],
+/** each tree kind as the kit grows it: its species row, how it carries its leaves, its April leaf and its bark (linear
+    albedos, ours, from the photo sheet's kinds); `base` is the share of the height the kit starts the crown at */
+interface TreeKind { species: Species; spray: Spray; leaf: V3; wood: V3; base: number; lod: 1 | 2 }
+const TREES: Partial<Record<Kind, TreeKind>> = {
+  broad: { species: 'terebinth', spray: 'broad', leaf: [0.076, 0.108, 0.038], wood: [0.12, 0.1, 0.08], base: 0.28, lod: 1 },
+  tamarisk: { species: 'tamarisk', spray: 'thread', leaf: [0.08, 0.098, 0.07], wood: [0.13, 0.085, 0.062], base: 0.18, lod: 1 },
+  pomegranate: { species: 'pomegranate', spray: 'narrow', leaf: [0.07, 0.1, 0.03], wood: [0.12, 0.11, 0.09], base: 0.12, lod: 1 },
+  fig: { species: 'fig', spray: 'broad', leaf: [0.1, 0.14, 0.045], wood: [0.24, 0.22, 0.19], base: 0.2, lod: 1 },
+  cypress: { species: 'cypress', spray: 'scale', leaf: [0.03, 0.048, 0.024], wood: [0.11, 0.085, 0.062], base: 0.06, lod: 1 },
+  shrub: { species: 'shrub', spray: 'broad', leaf: [0.065, 0.088, 0.038], wood: [0.11, 0.085, 0.062], base: 0.06, lod: 1 },
 }
-const WOOD: V3 = [0.11, 0.085, 0.062], FIG_WOOD: V3 = [0.24, 0.22, 0.19]
+/** the leaves reach this far past the kit's crown (a spray's card), and the stand-in keeps that margin */
+const MARGIN = 0.6
+/** the stand-in's bounds of a grown tree: the crown from its base share to the top, its radius, and the margin */
+export function standInCrown(kind: Kind, h: number, r: number): { y0: number; y1: number; rx: number; rz: number } {
+  const t = TREES[kind]!
+  return { y0: Math.max(0.2, h * t.base - MARGIN), y1: h + MARGIN, rx: r + MARGIN, rz: r + MARGIN }
+}
+const WOOD: V3 = [0.11, 0.085, 0.062]
+/** linear albedos of the hanging green, April; ours, from the photo sheet's kinds */
+const LEAF: Partial<Record<Kind, V3>> = { vine: [0.105, 0.15, 0.038], caper: [0.07, 0.095, 0.05] }
 
 class Mesh {
   pos: number[] = []
@@ -65,124 +80,35 @@ class Mesh {
 const T = (1 + Math.sqrt(5)) / 2
 const ICO_V: V3[] = [[-1, T, 0], [1, T, 0], [-1, -T, 0], [1, -T, 0], [0, -1, T], [0, 1, T], [0, -1, -T], [0, 1, -T], [T, 0, -1], [T, 0, 1], [-T, 0, -1], [-T, 0, 1]].map((v) => norm(v as V3))
 const ICO_F = [[0, 11, 5], [0, 5, 1], [0, 1, 7], [0, 7, 10], [0, 10, 11], [1, 5, 9], [5, 11, 4], [11, 10, 2], [10, 7, 6], [7, 1, 8], [3, 9, 4], [3, 4, 2], [3, 2, 6], [3, 6, 8], [3, 8, 9], [4, 9, 5], [2, 4, 11], [6, 2, 10], [8, 6, 7], [9, 8, 1]]
-/** the icosahedron split once: 42 corners, 80 faces, round enough that a crown's lobe reads as foliage, not a facet */
-const ICO1 = (() => {
-  const V: V3[] = [...ICO_V], F: number[][] = [], mid = new Map<string, number>()
-  const half = (a: number, b: number): number => {
-    const key = a < b ? `${a}-${b}` : `${b}-${a}`
-    let i = mid.get(key)
-    if (i === undefined) {
-      i = V.length
-      V.push(norm([(V[a]![0] + V[b]![0]) / 2, (V[a]![1] + V[b]![1]) / 2, (V[a]![2] + V[b]![2]) / 2]))
-      mid.set(key, i)
-    }
-    return i
-  }
-  for (const [a, b, c] of ICO_F) {
-    const ab = half(a!, b!), bc = half(b!, c!), ca = half(c!, a!)
-    F.push([a!, ab, ca], [b!, bc, ab], [c!, ca, bc], [ab, bc, ca])
-  }
-  return { V, F }
-})()
 
-/** one lobe of foliage: an icosphere with each corner a little in or out, its normals bent toward the crown's own */
-function lobe(m: Mesh, c: V3, r: [number, number, number], crown: V3, col: V3, r01: () => number, bend = 0.62, fine = true): void {
-  const S = fine ? ICO1 : { V: ICO_V, F: ICO_F }
-  const k = S.V.map(() => 0.86 + r01() * 0.24)
-  const P = S.V.map((v, i): V3 => [c[0] + v[0] * r[0] * k[i]!, c[1] + v[1] * r[1] * k[i]!, c[2] + v[2] * r[2] * k[i]!])
-  const N = P.map((p, i): V3 => {
-    const own = S.V[i]!
-    const out = norm([p[0] - crown[0], (p[1] - crown[1]) * 1.4, p[2] - crown[2]])
-    return norm([own[0] * (1 - bend) + out[0] * bend, own[1] * (1 - bend) + out[1] * bend, own[2] * (1 - bend) + out[2] * bend])
-  })
-  for (const f of S.F) m.tri(P[f[0]!]!, P[f[1]!]!, P[f[2]!]!, [N[f[0]!]!, N[f[1]!]!, N[f[2]!]!], col, 1, crown)
+/** a lobe: an icosahedron scaled to `r`, for the hanging curtains' clumps */
+function lobe(m: Mesh, c: V3, r: [number, number, number], crown: V3, col: V3): void {
+  const P = ICO_V.map((v): V3 => [c[0] + v[0] * r[0], c[1] + v[1] * r[1], c[2] + v[2] * r[2]])
+  for (const f of ICO_F) m.tri(P[f[0]!]!, P[f[1]!]!, P[f[2]!]!, [ICO_V[f[0]!]!, ICO_V[f[1]!]!, ICO_V[f[2]!]!], col, 1, crown)
 }
 
-/** a trunk: a tapered five-sided stem from the foot to `top`, leaning a little */
-function trunk(m: Mesh, x: number, y: number, z: number, top: number, r0: number, r1: number, lean: [number, number], col: V3, crown: V3): void {
-  const S = 4, seg = 2
-  const ring = (t: number): V3[] => {
-    const c: V3 = [x + lean[0] * t * t, y + (top - y) * t, z + lean[1] * t * t]
-    const r = r0 + (r1 - r0) * t
-    return Array.from({ length: S }, (_, k): V3 => [c[0] + Math.cos((k / S) * Math.PI * 2) * r, c[1], c[2] + Math.sin((k / S) * Math.PI * 2) * r])
-  }
-  for (let i = 0; i < seg; i++) {
-    const a = ring(i / seg), b = ring((i + 1) / seg)
-    for (let k = 0; k < S; k++) {
-      const k1 = (k + 1) % S
-      const n0 = norm([Math.cos((k / S) * Math.PI * 2), 0, Math.sin((k / S) * Math.PI * 2)])
-      const n1 = norm([Math.cos((k1 / S) * Math.PI * 2), 0, Math.sin((k1 / S) * Math.PI * 2)])
-      m.tri(a[k]!, b[k]!, b[k1]!, [n0, n0, n1], col, 0, crown)
-      m.tri(a[k]!, b[k1]!, a[k1]!, [n0, n1, n1], col, 0, crown)
-    }
-  }
-}
-
-const tint = (c: V3, k: number, warm = 0): V3 => [c[0] * k * (1 + warm), c[1] * k, c[2] * k * (1 - warm)]
-
-/** a broad crown on a short trunk: lobes over an ellipsoid, lighter and larger toward the top, darker underneath */
-function broadTree(m: Mesh, x: number, y: number, z: number, h: number, r: number, kind: Kind, seed: number): void {
-  const R = rnd(seed)
-  const cy = y + h * (kind === 'fig' ? 0.52 : 0.62), ry = h * (kind === 'fig' ? 0.42 : 0.36)
+/** a grown tree's stand-in for node: one closed body over the crown's bounds (an icosahedron stretched to them, its
+    lowest corner on the crown's foot) and a four-sided stem from the ground to it */
+function standIn(m: Mesh, x: number, y: number, z: number, b: { y0: number; y1: number; rx: number; rz: number }, col: V3): void {
+  const cy = y + (b.y0 + b.y1) / 2, hy = (b.y1 - b.y0) / 2
   const crown: V3 = [x, cy, z]
-  const lean: [number, number] = [(R() - 0.5) * 0.8, (R() - 0.5) * 0.8]
-  trunk(m, x, y - 0.3, z, cy, kind === 'fig' ? 0.36 : 0.32, 0.25, lean, kind === 'fig' ? FIG_WOOD : WOOD, crown)
-  const n = kind === 'shrub' || kind === 'pomegranate' ? 6 : 10
-  for (let i = 0; i < n; i++) {
-    // a direction over the upper part of a sphere, the lobes nearer the top a little larger
-    const u = R() * 2 - 0.6, a = R() * Math.PI * 2
-    const s = Math.sqrt(Math.max(0, 1 - u * u))
-    const d: V3 = [Math.cos(a) * s, u, Math.sin(a) * s]
-    const f = 0.42 + R() * 0.32
-    const c: V3 = [x + lean[0] + d[0] * r * f, cy + d[1] * ry * f, z + lean[1] + d[2] * r * f]
-    const lr = r * (0.48 + R() * 0.16) * (1 + Math.max(0, d[1]) * 0.18)
-    const col = tint(LEAF[kind], (0.78 + R() * 0.3) * (0.82 + 0.3 * Math.max(0, d[1] * 0.5 + 0.5)), (R() - 0.5) * 0.12)
-    lobe(m, c, [lr, lr * 0.8, lr], crown, col, R)
+  // the icosahedron's corners reach 0.85 of its radius along y: stretched so its top and foot touch the bounds
+  const ky = hy / 0.8507
+  const P = ICO_V.map((v): V3 => [x + v[0] * b.rx, cy + v[1] * ky, z + v[2] * b.rz])
+  for (const f of ICO_F) m.tri(P[f[0]!]!, P[f[1]!]!, P[f[2]!]!, [ICO_V[f[0]!]!, ICO_V[f[1]!]!, ICO_V[f[2]!]!], col, 1, crown)
+  const foot = Math.min(...P.map((p) => p[1]))
+  const w = 0.25
+  const q: V3[] = [[x - w, 0, z - w], [x + w, 0, z - w], [x + w, 0, z + w], [x - w, 0, z + w]]
+  for (let k = 0; k < 4; k++) {
+    const a = q[k]!, b2 = q[(k + 1) % 4]!
+    const n = norm([a[0] + b2[0] - 2 * x, 0, a[2] + b2[2] - 2 * z])
+    const lo = (p: V3): V3 => [p[0], y - 0.3, p[2]], hi = (p: V3): V3 => [p[0], foot + 0.4, p[2]]
+    m.tri(lo(a), lo(b2), hi(b2), [n, n, n], WOOD, 0, crown)
+    m.tri(lo(a), hi(b2), hi(a), [n, n, n], WOOD, 0, crown)
   }
 }
 
-/** a cypress: a short stem and one tall spindle, widest a third of the way up and closing to a point, its surface
-    uneven as a cypress's sprays are; a few tufts stand out of it */
-function cypress(m: Mesh, x: number, y: number, z: number, h: number, r: number, seed: number): void {
-  const R = rnd(seed)
-  const crown: V3 = [x, y + h * 0.5, z]
-  trunk(m, x, y - 0.3, z, y + h * 0.12, 0.3, 0.22, [0, 0], WOOD, crown)
-  const S = 7, RINGS = 10
-  const y0 = y + h * 0.07
-  const ring: V3[][] = []
-  const tone = 0.85 + R() * 0.25
-  for (let j = 0; j <= RINGS; j++) {
-    const t = j / RINGS
-    const w = Math.max(r * 0.42, r * Math.pow(Math.sin(Math.PI * Math.min(1, 0.18 + t * 0.9)), 0.75) * (1 - 0.4 * t) + 0.05)
-    const yy = y0 + (h - 0.5 - (y0 - y)) * t
-    ring.push(Array.from({ length: S }, (_, k): V3 => {
-      const a = (k / S) * Math.PI * 2 + j * 0.08
-      const ww = w * (0.84 + R() * 0.3)
-      return [x + Math.cos(a) * ww, yy + (R() - 0.5) * 0.1 * (j > 0 && j < RINGS ? 1 : 0), z + Math.sin(a) * ww]
-    }))
-  }
-  const nrm = (p: V3, j: number): V3 => norm([p[0] - x, 0.35 + (j / RINGS) * 0.5, p[2] - z])
-  for (let j = 0; j < RINGS; j++) {
-    const t = j / RINGS
-    const col = tint(LEAF.cypress, tone * (0.82 + 0.3 * t))
-    for (let k = 0; k < S; k++) {
-      const k1 = (k + 1) % S
-      const a = ring[j]![k]!, b = ring[j]![k1]!, c = ring[j + 1]![k1]!, d = ring[j + 1]![k]!
-      m.tri(a, c, b, [nrm(a, j), nrm(c, j + 1), nrm(b, j)], col, 1, crown)
-      m.tri(a, d, c, [nrm(a, j), nrm(d, j + 1), nrm(c, j + 1)], col, 1, crown)
-    }
-  }
-  // the top closed in a low cap and the bottom under the spindle
-  for (let k = 0; k < S; k++) m.tri(ring[RINGS]![k]!, [x, y + h, z], ring[RINGS]![(k + 1) % S]!, [[0, 1, 0], [0, 1, 0], [0, 1, 0]], tint(LEAF.cypress, tone * 1.1), 1, crown)
-  for (let k = 0; k < S; k++) m.tri([x, y0, z], ring[0]![k]!, ring[0]![(k + 1) % S]!, [[0, -1, 0], [0, -1, 0], [0, -1, 0]], tint(LEAF.cypress, tone * 0.7), 1, crown)
-  for (let i = 0; i < 4; i++) {
-    const t = 0.2 + R() * 0.55, a = R() * Math.PI * 2
-    const w = r * Math.pow(Math.sin(Math.PI * Math.min(1, 0.18 + t * 0.9)), 0.75) * (1 - 0.4 * t)
-    const c: V3 = [x + Math.cos(a) * w * 0.85, y0 + (h - (y0 - y)) * t, z + Math.sin(a) * w * 0.85]
-    const tr = Math.max(0.5, w * 0.5)
-    lobe(m, c, [tr, tr * 1.2, tr], crown, tint(LEAF.cypress, tone * (0.9 + 0.3 * t)), R, 0.6, false)
-  }
-}
+const tint = (c: V3, k: number): V3 => [c[0] * k, c[1] * k, c[2] * k]
 
 /** a hanging curtain over a terrace's edge: a lip on the top, then a ragged sheet down the face, bulging out from it */
 function curtain(m: Mesh, at: { x: number; z: number; nx: number; nz: number }, top: number, w: number, drop: number, kind: Kind, seed: number): void {
@@ -209,7 +135,7 @@ function curtain(m: Mesh, at: { x: number; z: number; nx: number; nz: number }, 
     }
     grid.push(row)
   }
-  const col = (j: number): V3 => tint(LEAF[kind], (0.85 + R() * 0.25) * (1 - j * 0.04))
+  const col = (j: number): V3 => tint(LEAF[kind]!, (0.85 + R() * 0.25) * (1 - j * 0.04))
   for (let j = 0; j <= rows; j++) {
     for (let i = 0; i < cols; i++) {
       const a = grid[j]![i]!, b = grid[j]![i + 1]!, c = grid[j + 1]![i + 1]!, d = grid[j + 1]![i]!
@@ -225,7 +151,7 @@ function curtain(m: Mesh, at: { x: number; z: number; nx: number; nz: number }, 
     const u = (R() - 0.5) * w * 0.8, d = drop * (0.15 + R() * 0.5)
     const c: V3 = [at.x + at.nx * 0.3 + tx * u, top - d, at.z + at.nz * 0.3 + tz * u]
     const r = 0.35 + R() * 0.3
-    lobe(m, c, [r, r * 0.9, r], centre, col(1), R, 0.5, false)
+    lobe(m, c, [r, r * 0.9, r], centre, col(1))
   }
 }
 
@@ -262,9 +188,12 @@ export function buildPlanting(F: GardensFrame, gp: J, palm: PalmBuilder, palmDet
     return true
   }
 
-  const put = (k: Kind, x: number, z: number, y: number, room: number): void => {
-    const spec = P.kinds[k]
+  const put = (k0: Kind, x: number, z: number, y: number, room: number): void => {
+    const spec = P.kinds[k0]
     const h = range(spec.h)
+    // the royal garden's broad trees: terebinths, and tamarisks under their own row (the Assyrian kings' lists name both)
+    const k: Kind = k0 === 'broad' && R() < 0.4 ? 'tamarisk' : k0
+    const row: string = k === 'tamarisk' ? 'bab.green.tamarisk' : spec.row
     const id = nextId(k)
     const seed = Math.floor(R() * 1e9)
     const m = new Mesh()
@@ -272,7 +201,7 @@ export function buildPlanting(F: GardensFrame, gp: J, palm: PalmBuilder, palmDet
       const g = palm(h, palmDetail, seed % 997)
       const turn = R() * Math.PI * 2, c = Math.cos(turn), s = Math.sin(turn)
       const lean: [number, number] = [(R() - 0.5) * 1.6, (R() - 0.5) * 1.6]
-      const pos = g.getAttribute('position'), nor = g.getAttribute('normal'), col = g.getAttribute('color')
+      const pos = g.getAttribute('position'), nor = g.getAttribute('normal'), col = g.getAttribute('color'), lf = g.getAttribute('leaf')
       const crown: V3 = [x + lean[0], y + h, z + lean[1]]
       const tone = 0.9 + R() * 0.2
       for (let i = 0; i < pos.count; i += 3) {
@@ -283,14 +212,30 @@ export function buildPlanting(F: GardensFrame, gp: J, palm: PalmBuilder, palmDet
           const f = Math.max(0, py / h) ** 2
           v.push([x + px * c - pz * s + lean[0] * f, y + py, z + px * s + pz * c + lean[1] * f])
           n.push([nor.getX(i + j) * c - nor.getZ(i + j) * s, nor.getY(i + j), nor.getX(i + j) * s + nor.getZ(i + j) * c])
-          if (py > h * 0.9) isLeaf = 1
+          if (lf ? lf.getX(i + j) > 0.5 : py > h * 0.9) isLeaf = 1
         }
         const cc: V3 = [col.getX(i) * tone, col.getY(i) * tone, col.getZ(i) * tone]
         m.tri(v[0]!, v[1]!, v[2]!, [n[0]!, n[1]!, n[2]!], cc, isLeaf, crown)
       }
-    } else if (k === 'cypress') cypress(m, x, y, z, h, Math.min(range(spec.r), room), seed)
-    else broadTree(m, x, y, z, h, Math.min(range(spec.r), room), k, seed)
-    plants.push({ id, kind: k, row: spec.row, x, z, y, h, geometry: m.geometry() })
+      plants.push({ id, kind: k, row, x, z, y, h, geometry: m.geometry() })
+      return
+    }
+    const t = TREES[k]!
+    const r = Math.min(range(spec.r), room)
+    if (kit) {
+      const g = kit.grow({ species: t.species, height: h, radius: r, seed, spray: t.spray, leaf: tint(t.leaf, 0.92 + R() * 0.16), wood: t.wood, lod: t.lod } satisfies GrowSpec)
+      const at = g.geometry.getAttribute('position') as Float32BufferAttribute, cen = g.geometry.getAttribute('centre') as Float32BufferAttribute
+      for (let i = 0; i < at.count; i++) {
+        at.setXYZ(i, at.getX(i) + x, at.getY(i) + y, at.getZ(i) + z)
+        cen.setXYZ(i, cen.getX(i) + x, cen.getY(i) + y, cen.getZ(i) + z)
+      }
+      plants.push({ id, kind: k, row, x, z, y, h, geometry: g.geometry, crown: g.crown, grown: true })
+    } else {
+      R()
+      const b = standInCrown(k, h, r)
+      standIn(m, x, y, z, b, t.leaf)
+      plants.push({ id, kind: k, row, x, z, y, h, geometry: m.geometry(), crown: b, grown: false })
+    }
   }
 
   for (const t of F.strips) {
