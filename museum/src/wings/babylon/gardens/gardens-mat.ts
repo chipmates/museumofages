@@ -43,7 +43,9 @@ function roofCells(p: N, w: N, S: number): N {
   const x = p.x.add(hash(row.mul(3.7).add(1.3)).mul(0.6 * S))
   const id = hash(floor(x.div(S)).mul(17.1).add(row.mul(31.7)).add(0.5))
   const line = max(lines(x, S, 0.25, w), lines(p.z, S, 0.25, w))
-  return id.sub(0.5).mul(0.14).add(1).mul(float(1).sub(line.mul(0.2)))
+  // broad drifts of older and newer plaster across the cells, so the grid never reads as laid tiles
+  const drift = mx_noise_float(vec3(p.x.mul(0.035), 3.7, p.z.mul(0.035))).mul(0.12).add(mx_noise_float(vec3(p.x.mul(0.13), 1.1, p.z.mul(0.13))).mul(0.06))
+  return id.sub(0.5).mul(0.08).add(1).add(drift).mul(float(1).sub(line.mul(0.09)))
 }
 
 /** the vaulted building's cells block in plan: its passage's line (origin o, unit direction a along it, c across) and
