@@ -23,6 +23,8 @@ export interface Plain {
   /** grove floors: polygons under the palms, for the map */
   groves: P2[][]
   palms: Palm[]
+  /** how many of `fields` are the outer city's garden plots (the last ones) */
+  gardens: number
   says: string
 }
 
@@ -148,6 +150,46 @@ export function buildPlain(mapPlan: J, opts: { palms?: boolean; reach?: number }
     }
   }
 
+  /* the outer city's gardens north of the moat (bab.green.outercity, Guessed): a mosaic of small plots on a jittered
+     lattice, so no two are the same shape, some bare or fallow, fed by a few small channels off the river along the
+     lattice's rows; every line ours */
+  const gardens: Field[] = []
+  const gChannels: Canal[] = []
+  {
+    const GR = rng(5701)
+    const cellE = 58, cellN = 46, E0g = 445420, N0g = 3601200, nE = 24, nN = 30
+    const tilt = 0.21
+    const node = (i: number, j: number): P2 => {
+      const h = Math.sin(i * 127.1 + j * 311.7) * 43758.5453, h2 = Math.sin(i * 269.5 + j * 183.3) * 43758.5453
+      const jx = (h - Math.floor(h) - 0.5) * cellE * 0.45, jz = (h2 - Math.floor(h2) - 0.5) * cellN * 0.45
+      const e = E0g + i * cellE + j * cellN * tilt + jx, n = N0g + j * cellN - i * cellE * tilt * 0.35 + jz
+      return s(e, n)
+    }
+    const inOuter = (x: number, z: number): boolean => inPoly(x, z, outerCity)
+    for (let j = 0; j < nN; j++) {
+      for (let i = 0; i < nE; i++) {
+        const q = [node(i, j), node(i + 1, j), node(i + 1, j + 1), node(i, j + 1)]
+        const mx = (q[0]![0] + q[2]![0]) / 2, mz = (q[0]![1] + q[2]![1]) / 2
+        if (!inOuter(mx, mz) || blocked(mx, mz, 8)) continue
+        const u = GR()
+        if (u < 0.2) continue
+        // a plot keeps a metre or two of its cell for the bank between plots
+        const inset = 1.6 + GR() * 1.2
+        const pts = q.map((v) => [v[0] + (mx - v[0]) * (inset / 26), v[1] + (mz - v[1]) * (inset / 22)] as P2)
+        gardens.push({ pts, tone: u < 0.62 ? 0 : u < 0.8 ? 1 : u < 0.92 ? 2 : 3 })
+      }
+    }
+    for (const j of [4, 11, 19, 26]) {
+      const pts: P2[] = []
+      for (let i = 0; i <= nE; i++) {
+        const v = node(i, j)
+        if (inOuter(v[0], v[1]) && !blocked(v[0], v[1], -6)) pts.push(v)
+        else if (pts.length > 1) break
+      }
+      if (pts.length > 2) gChannels.push({ id: `garden-${j}`, pts, w: 3 })
+    }
+  }
+
   /* the palms: groves along the canals and the river outside the walls (a mass), gardens in the outer city, a few by the
      canal inside the walls; within `reach` metres of the city only, the far groves left to the map's tone */
   const palms: Palm[] = []
@@ -158,6 +200,30 @@ export function buildPlain(mapPlan: J, opts: { palms?: boolean; reach?: number }
       if (Math.hypot(x - centre[0], z - centre[1]) > reach) return
       if (blocked(x, z, gap)) return
       palms.push({ x, z, s: 0.75 + R() * 0.55, yaw: R() * Math.PI * 2, lean: (R() - 0.5) * 0.12, row })
+    }
+    /* a grove is planted in rows, but every grove its own: a cell of about 240 m (its edges warped) gives the rows' direction,
+       spacing and drift; a slow density field makes clumps and clearings. A candidate is moved onto its grove's own row
+       lattice, and a lattice point is taken once */
+    const fr = (v: number): number => v - Math.floor(v)
+    const hs = (a: number, b: number, k: number): number => fr(Math.sin(a * 127.1 + b * 311.7 + k * 74.7) * 43758.5453)
+    const taken = new Set<string>()
+    const grove = (x: number, z: number): { x: number; z: number; key: string; dens: number } | null => {
+      const GS = 240
+      const wx = x + 70 * Math.sin(z * 0.0061 + 1.3) + 35 * Math.sin(z * 0.017), wz = z + 70 * Math.sin(x * 0.0057 + 0.4) + 35 * Math.sin(x * 0.019)
+      const gi = Math.floor(wx / GS), gj = Math.floor(wz / GS)
+      const th = hs(gi, gj, 1) * Math.PI, sp = 7.2 + hs(gi, gj, 2) * 3.4
+      const c = Math.cos(th), sn = Math.sin(th)
+      const u = x * c + z * sn, v = -x * sn + z * c
+      const drift = (5 + hs(gi, gj, 3) * 9) * Math.sin(v / (70 + hs(gi, gj, 4) * 90) + hs(gi, gj, 5) * 6.3)
+      const iu = Math.round((u - drift) / sp), iv = Math.round(v / (sp * (0.9 + hs(gi, gj, 6) * 0.35)))
+      const key = `${gi},${gj},${iu},${iv}`
+      if (taken.has(key)) return null
+      taken.add(key)
+      const u0 = iu * sp + drift + (hs(iu, iv, 7) - 0.5) * 2.4, v0 = iv * sp * (0.9 + hs(gi, gj, 6) * 0.35) + (hs(iu, iv, 8) - 0.5) * 2.4
+      // clumps and clearings, a few hundred metres across, and a grove now and then left out
+      const d0 = Math.sin(x * 0.0093 + 2.1) * Math.sin(z * 0.0107 + 0.7) + 0.6 * Math.sin(x * 0.023 + z * 0.017 + 4.2)
+      const dens = Math.max(0, Math.min(1.7, 0.75 + d0 * 0.9)) * (hs(gi, gj, 9) < 0.14 ? 0.15 : 1)
+      return { x: u0 * c - v0 * sn, z: u0 * sn + v0 * c, key, dens }
     }
     // along the canals' levees, in a loose band
     for (const c of canals) {
@@ -179,9 +245,16 @@ export function buildPlain(mapPlan: J, opts: { palms?: boolean; reach?: number }
         const dr = polyD(jx, jz, river)
         const inOuter = inPoly(jx, jz, outerCity)
         if (dr < 260) {
-          const p = dr < 30 ? 0 : 0.7 - (dr - 30) * 0.0024
-          if (R() < p) put(jx, jz, 'river', 0)
-        } else if (inOuter && R() < 0.05 + 0.1 * Math.max(0, Math.sin(jx * 0.004) * Math.cos(jz * 0.0031))) put(jx, jz, 'outer', 0)
+          const g = grove(jx, jz)
+          if (!g) continue
+          const p = dr < 30 ? 0 : (0.78 - (dr - 30) * 0.0026) * g.dens
+          if (R() < p) put(g.x, g.z, 'river', 0)
+        } else if (inOuter) {
+          // the outer city's gardens: groves in clumps between the plots, bare ground between them
+          const g = grove(jx, jz)
+          if (!g) continue
+          if (R() < Math.max(0, g.dens - 0.55) * 0.42) put(g.x, g.z, 'outer', 0)
+        }
       }
     }
     // inside the walls: a sparse row by the Libil-hegalla canal (guessed)
@@ -197,7 +270,7 @@ export function buildPlain(mapPlan: J, opts: { palms?: boolean; reach?: number }
   }
   return {
     domain: { x0: -5200, z0: -5400, size: 12800 },
-    canals, fields, groves, palms,
+    canals: [...canals, ...gChannels], fields: [...fields, ...gardens], groves, palms, gardens: gardens.length,
     says: 'canals, fields and groves of the plain: kinds Known as types (GREEN.settled), every line and place ours',
   }
 }

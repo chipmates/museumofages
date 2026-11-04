@@ -55,8 +55,9 @@ export function paintPlain(P: Plain, px = 4096): { colour: CanvasTexture; masks:
   c2.fillRect(0, 0, px, px)
   m2.fillStyle = 'rgb(0,0,0)'
   m2.fillRect(0, 0, px, px)
-  // crops about twenty days after the spring equinox: barley green to yellow-green, wheat green, fallow silt, a field just watered
-  const crop = ['rgb(104,118,62)', 'rgb(132,132,70)', 'rgb(150,132,100)', 'rgb(88,84,66)']
+  // crops about twenty days after the spring equinox: barley green to yellow-green, wheat green, fallow silt, a field just
+  // watered (damp silt, kept light enough from the air not to read as a shadow)
+  const crop = ['rgb(104,118,62)', 'rgb(132,132,70)', 'rgb(150,132,100)', 'rgb(108,102,78)']
   let seed = 7
   const rnd = (): number => ((seed = (seed * 16807) % 2147483647) / 2147483647)
   const poly = (ctx: CanvasRenderingContext2D, pts: Array<[number, number]>): void => {
@@ -76,6 +77,10 @@ export function paintPlain(P: Plain, px = 4096): { colour: CanvasTexture; masks:
     const j = 0.9 + rnd() * 0.2
     c2.fillStyle = base.replace(/rgb\((\d+),(\d+),(\d+)\)/, (_s, r, g, b) => `rgb(${Math.round(Number(r) * j)},${Math.round(Number(g) * j)},${Math.round(Number(b) * j)})`)
     poly(c2, f.pts as Array<[number, number]>)
+    // the low earth bank round each plot, a little darker and drier than the crop: plots read as plots, not as patches
+    c2.strokeStyle = 'rgb(124,110,84)'
+    c2.lineWidth = 1.1
+    c2.stroke()
     m2.fillStyle = f.tone === 3 ? 'rgb(0,255,0)' : 'rgb(0,200,0)'
     poly(m2, f.pts as Array<[number, number]>)
   }
@@ -89,6 +94,9 @@ export function paintPlain(P: Plain, px = 4096): { colour: CanvasTexture; masks:
   }
   const tex = (c: HTMLCanvasElement, srgbData: boolean): CanvasTexture => {
     const t = new CanvasTexture(c)
+    // the canvas's first row is the domain's z0 and the ground reads v = (z - z0) / size: no flip (with three's default
+    // flip every field and canal lay mirrored about the domain's middle, away from its palms)
+    t.flipY = false
     if (srgbData) t.colorSpace = SRGBColorSpace
     t.minFilter = LinearMipmapLinearFilter
     t.magFilter = LinearFilter
