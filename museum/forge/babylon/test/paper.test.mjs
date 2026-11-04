@@ -36,6 +36,9 @@ test('every meaning stroke keeps 3:1 on the paper, the main stroke 7:1, every te
   // the ink draws the four marks' lines and the hatch; the pencil draws our measures and their numbers
   assert.ok(ratio('ink') >= tokens.CONTRAST_FLOOR.main, `ink ${ratio('ink').toFixed(2)}`)
   assert.ok(ratio('pencil') >= tokens.CONTRAST_FLOOR.text, `pencil ${ratio('pencil').toFixed(2)}`)
+  // the grain darkens the paper by its share at most: the pencil's numbers keep 4.5:1 there too (measured in the frames, not only on the token)
+  const grained = tokens.contrast(S.pencil, S.grain)
+  assert.ok(grained >= tokens.CONTRAST_FLOOR.text, `pencil on the grain ${grained.toFixed(2)}`)
   for (const [mark, style] of Object.entries(marks.MARKS)) {
     if (style.stroke === 0) continue
     const r = ratio(style.hand === 'ink' ? 'ink' : 'pencil')

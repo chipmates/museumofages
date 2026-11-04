@@ -17,8 +17,8 @@ export const PAPER_TOKENS = {
  * the only knob a plate has: the floor each one has to keep against the
  * paper is tested beside it (`paper.test.mjs`). */
 export const INK_SHARE = {
-  /** our measures (figure, ruler, counted unit, counter): grey pencil, text-safe at 4.5:1 */
-  pencil: 0.66,
+  /** our measures (figure, ruler, counted unit, counter): grey pencil, text-safe at 4.5:1 on the grain's darkest paper too */
+  pencil: 0.7,
   /** the solid fill of what is in place, under its heavy line */
   solid: 0.3,
   /** the core inside a solid: a second solid, darker, never a pattern */
