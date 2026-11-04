@@ -2,7 +2,10 @@
 // body the map page builds, stop 6's court and stop 7's house bodies with it, named to its rows by pieces.json and given its classes from
 // record-classes.json through record.ts, written as the JSON the evidence check's --switch reads, one line per body.
 //
-//   node --experimental-strip-types --no-warnings forge/babylon/switch-map.mjs --out <shown.json> [--stop 6] [--bodies <tsv>]
+//   node --experimental-strip-types --no-warnings forge/babylon/switch-map.mjs --out <shown.json> [--stop 6] [--bodies <tsv>] [--tower built|dug|bruegel]
+//
+// --tower mounts the tower switch's state as the page's ?tower= does; Bruegel's tower is outside the classes, so its
+// bodies are listed and never shown with a class.
 import { readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { APP } from './pages.mjs'
@@ -21,9 +24,10 @@ const json = (p) => JSON.parse(readFileSync(p, 'utf8'))
 const name = recordNamer(json(join(APP, 'src/wings/babylon/pieces.json')), json(join(APP, 'src/wings/babylon/record-classes.json')), STOP)
 const mapPlan = json(join(APP, 'src/wings/babylon/map/map-plan.json'))
 
-const M = await mountMap(STOP, { reach: 1e7 })
+const TOWER = opt('--tower', 'built')
+const M = await mountMap(STOP, { reach: 1e7, tower: TOWER })
 const names = [...new Set(M.faces.map((f) => f.body.replace(/#\d+$/, '')))]
-const courtLetters = new Map([...M.court.bodies, ...(M.houseBodies ?? [])].map((b) => [`map:${b.id}`, b.letters]))
+const courtLetters = new Map([...M.court.bodies, ...(M.houseBodies ?? []), ...(M.dug?.bodies ?? [])].map((b) => [`map:${b.id}`, b.letters]))
 
 /** the plans' letters for a map body: [plan, height], or null when the plans do not give them (as switch.mjs) */
 function letters(body) {
@@ -55,7 +59,9 @@ const partsOf = (body) => (body === 'map:street' ? streetParts : [letters(body)]
 const shown = {}, lines = [['body', 'plan row', 'body row', 'letters', 'plan shows', 'body shows', 'from'].join('\t')]
 const unnamed = [], noRow = []
 const show = (piece, cls) => { if (piece && (!shown[piece] || RANK[cls] > RANK[shown[piece]])) shown[piece] = cls }
+const outside = names.filter((b) => b.startsWith('map:bruegel-'))
 for (const body of names) for (const L of partsOf(body)) {
+  if (outside.includes(body)) { lines.push([body, '-', '-', '-', '-', 'outside the classes', 'SET E5'].join('\t')); break }
   const c = name(body, L && isLetter(L[0]) && isLetter(L[1]) ? L : null)
   if (!c.piece) { unnamed.push([c.rule?.part ?? body, c.missing.join('; ')]); break }
   if (c.missing.length) noRow.push([body, c.missing])
@@ -66,7 +72,7 @@ for (const body of names) for (const L of partsOf(body)) {
 }
 writeFileSync(OUT, JSON.stringify(shown, null, 1))
 if (opt('--bodies', null)) writeFileSync(opt('--bodies'), lines.join('\n') + '\n')
-console.log(`switch for the map page at stop ${STOP}: ${names.length} bodies, ${lines.length - 1} lines named to a row, ${Object.keys(shown).length} record rows shown`)
+console.log(`switch for the map page at stop ${STOP}, tower ${TOWER}: ${names.length} bodies, ${lines.length - 1 - outside.length} lines named to a row, ${Object.keys(shown).length} record rows shown, ${outside.length} outside the classes`)
 const groups = new Map()
 for (const [part, why] of unnamed) { const k = `${part}: ${why}`; groups.set(k, (groups.get(k) ?? 0) + 1) }
 console.log(`no rule names (${unnamed.length} bodies):${groups.size ? '' : ' none'}`)
