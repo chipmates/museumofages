@@ -2,7 +2,7 @@
 // (plan.ts mounted in node), against the excavation sheet's value and a tolerance named per row. Prints one
 // table (point, measure, the map's value, the target, the delta, the tolerance, pass). Exit 1 on any fail.
 //
-//   node --experimental-strip-types --no-warnings forge/babylon-map/sheet-measure.mjs [--plan <json>] [--md <out>] [--json <out>]
+//   node --experimental-strip-types --no-warnings forge/babylon-map/sheet-measure.mjs [--map <dir>] [--plan <json>] [--md <out>] [--json <out>]
 //
 // Targets are the sheets' read-offs in UTM zone 38N metres and German-zero levels; their sources are in each row.
 import { readFileSync, writeFileSync } from 'node:fs'
@@ -486,9 +486,11 @@ export function table(rows) {
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   const arg = (k) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : null }
-  const { buildPlan, makeFrame } = await import(join(MAP, 'plan.ts'))
-  const plan = JSON.parse(readFileSync(arg('--plan') ?? join(MAP, 'map-plan.json'), 'utf8'))
-  const cams = JSON.parse(readFileSync(join(MAP, 'map-cams.json'), 'utf8'))
+  // --map <dir>: another copy of the map's folder (plan.ts, map-plan.json, map-cams.json), e.g. a base for a like-for-like before
+  const dir = arg('--map') ?? MAP
+  const { buildPlan, makeFrame } = await import(join(dir, 'plan.ts'))
+  const plan = JSON.parse(readFileSync(arg('--plan') ?? join(dir, 'map-plan.json'), 'utf8'))
+  const cams = JSON.parse(readFileSync(join(dir, 'map-cams.json'), 'utf8'))
   const rows = measure(plan, cams, { buildPlan, makeFrame })
   const md = table(rows)
   console.log(md)
