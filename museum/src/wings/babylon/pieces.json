@@ -1,7 +1,7 @@
 {
  "about": "Every body the Babylon pages build, named to its record row: match is a regular expression on the body's name as the kit's mounts give it (map:<id>, gate:<id>, panel:<id>, life:<id>); the first rule that matches wins. part groups bodies for the coverage map; piece is the row the body's form shows; plan, where given, is the row its foot band shows in the evidence switch (the plan as dug). An empty piece means the record has no row yet; needs names the row it asks for. stops limits a rule to those stops.",
  "rules": [
-  {"match": "^map:ground$", "part": "the ground", "piece": "", "surface": true, "needs": "a row for the open ground (the plain and the city's unbuilt ground: its level and surface)"},
+  {"match": "^map:ground$", "part": "the ground", "piece": "bab.ground", "surface": true},
   {"match": "^map:street$", "part": "the street (north of the gate)", "piece": "bab.street.north.surface", "surface": true, "stops": ["1", "2", "3", "open"]},
   {"match": "^map:street$", "part": "the street (south of the gate)", "piece": "bab.street.south-gate", "surface": true, "stops": ["4", "5", "6"]},
   {"match": "^map:street$", "part": "the street (south, to the canal)", "piece": "bab.street.south-paved", "surface": true, "stops": ["7", "8"]},
@@ -12,8 +12,8 @@
   {"match": "^map:water-moat-east$", "part": "the water east of the dam", "piece": "bab.moat-east.water", "surface": true},
   {"match": "^map:water-canal-north$", "part": "the North Palace canal's water", "piece": "bab.northpalace.canal", "surface": true},
   {"match": "^map:water-canal$", "part": "the canal's water", "piece": "bab.canal.water", "surface": true},
-  {"match": "^map:water-(inner-east|west-city)-moat$", "part": "the inner moat's water", "piece": "bab.innerwall.moat", "surface": true},
-  {"match": "^map:water-outer-east-moat$", "part": "the outer moat's water", "piece": "bab.outerwall.moat", "surface": true},
+  {"match": "^map:water-(inner-east|west-city)-moat$", "part": "the inner moat's water", "piece": "bab.moats.water", "surface": true},
+  {"match": "^map:water-outer-east-moat$", "part": "the outer moat's water", "piece": "bab.moats.water", "surface": true},
   {"match": "^map:house", "part": "the houses (a type)", "piece": "bab.houses.type"},
   {"match": "^map:merkes-", "part": "the Merkes blocks", "piece": "bab.houses.merkes"},
   {"match": "^map:inner-east-karu", "part": "the inner wall's embankment", "piece": "bab.innerwall.embankment.tops", "plan": "bab.innerwall.embankment"},
@@ -22,9 +22,9 @@
   {"match": "^map:kasr-wall-[bc]-t", "part": "the inner wall's towers (Kasr)", "piece": "bab.innerwall.body", "plan": "bab.innerwall.plan"},
   {"match": "^map:kasr-wall-[bc]", "part": "the inner wall through the Kasr", "piece": "bab.innerwall.body", "plan": "bab.innerwall.plan"},
   {"match": "^map:west-city-", "part": "the west city's walls", "piece": "bab.innerwall.drawn"},
-  {"match": "^map:outer-east-karu", "part": "the outer wall's embankment", "piece": "", "needs": "a row for the outer wall's embankment (bab.outerwall.embankment)"},
+  {"match": "^map:outer-east-karu", "part": "the outer wall's embankment", "piece": "bab.outerwall.embankment", "plan": "bab.outerwall.plan"},
   {"match": "^map:outer-east-", "part": "the outer east wall", "piece": "bab.outerwall.body", "plan": "bab.outerwall.plan"},
-  {"match": "^map:outer-river-wall", "part": "the outer city's river wall", "piece": "", "needs": "a row for the outer city's wall along the river (bab.outerwall.river)"},
+  {"match": "^map:outer-river-wall", "part": "the outer city's river wall", "piece": "bab.outerwall.river"},
   {"match": "^map:gate-front-tower-", "part": "the front gate's towers (map blocks)", "piece": "bab.gate.front.towers.body", "plan": "bab.gate.front.plan"},
   {"match": "^map:gate-front", "part": "the front gate (map blocks)", "piece": "bab.gate.front.body", "plan": "bab.gate.front.plan"},
   {"match": "^map:gate-main-tower-", "part": "the main gate's towers (map blocks)", "piece": "bab.gate.main.towers.body", "plan": "bab.gate.main.plan"},
@@ -62,7 +62,7 @@
   {"match": "^map:tower-stage-7$", "part": "the temple on the tower", "piece": "bab.tower.top"},
   {"match": "^map:tower-stage-", "part": "the tower's stages 2 to 6", "piece": "bab.tower.stages"},
   {"match": "^map:tower-stair", "part": "the tower's stairs", "piece": "bab.tower.stair.middle.rise", "plan": "bab.tower.stair.middle"},
-  {"match": "^map:ramps$", "part": "ramps and stairs (map)", "piece": "", "needs": "the map's ramps are one body; split per stair (the tower's: bab.tower.stair.middle, bab.tower.stairs.side; Esagila's: bab.esagila.ramps) before they can be named"},
+  {"match": "^map:ramps$", "part": "ramps and stairs (map)", "piece": "bab.ramps.map", "note": "one body holds the tower's three stairs and the bridge's roadway; split per piece, then each takes its own rows"},
 
   {"match": "^gate:(front-pier|back-pier|front-side)-", "part": "the front gate's walls", "piece": "bab.gate.front.body", "plan": "bab.gate.front.plan"},
   {"match": "^gate:front-tower-", "part": "the front gate's towers", "piece": "bab.gate.front.towers.body", "plan": "bab.gate.front.plan"},
@@ -90,10 +90,10 @@
   {"match": "^panel:reveal-", "part": "the reveals' animals", "piece": "bab.gate.reveals"},
   {"match": "^panel:m(tower|door)-.*-r[1-4]-", "part": "the main gate's relief rows 1 to 4", "piece": "bab.gate.rows.1-4"},
   {"match": "^panel:m(tower|door)-.*-r[56]-", "part": "the main gate's relief rows 5 and 6", "piece": "bab.gate.rows.5-6"},
-  {"match": "^panel:m(tower|door)-.*-r[78]-", "part": "the main gate's relief rows 7 and 8", "piece": "", "needs": "a row for the main gate's rows above 6 (its eight rows are a model's count, P2021; bab.gate.rows.5-6 widened to rows 5 to 8, or bab.gate.rows.7-8)"},
+  {"match": "^panel:m(tower|door)-.*-r[78]-", "part": "the main gate's relief rows 7 and 8", "piece": "bab.gate.rows.5-6", "note": "the row covers the rows above 4 on both gates"},
   {"match": "^panel:(tower|door)-.*-r[1-4]-", "part": "the front gate's relief rows 1 to 4", "piece": "bab.gate.rows.1-4"},
   {"match": "^panel:(tower|door)-.*-r[56]-", "part": "the front gate's relief rows 5 and 6", "piece": "bab.gate.rows.5-6"},
   {"match": "^life:palm-", "part": "the palms by the forecourt", "piece": "bab.palms"},
-  {"match": "^life:bird-", "part": "the birds", "piece": "", "needs": "a row for life traces over the city (birds, smoke), Guessed by rule"}
+  {"match": "^life:bird-", "part": "the birds", "piece": "bab.life.birds"}
  ]
 }
