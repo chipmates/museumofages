@@ -257,8 +257,9 @@ export function northMaterial(t: ClassTones, L: NorthLook, uPix: N): Material {
   const blk = floor(u.add(off).div(2.0))
   const sj = max(lines(depth, 0.75, 0.012, w), lines(u.add(off), 2.0, 0.012, w))
   const bt = hash(blk.mul(13.1).add(course.mul(7.7)))
-  const rough = mx_noise_float(p.mul(1.1)).mul(0.035).add(mx_noise_float(p.mul(4.5)).mul(0.02))
-  const stone = mix(vec3(...TONES.lime).mul(bt.sub(0.5).mul(0.34).add(1)).mul(float(1).add(rough)), vec3(...TONES.lime).mul(0.42), sj)
+  // block to block and over each face as uneven as the dug wall's stone (fill target A.10, k1914 fig. 110 at the moat pass)
+  const rough = mx_noise_float(p.mul(1.1)).mul(0.05).add(mx_noise_float(p.mul(4.5)).mul(0.03))
+  const stone = mix(vec3(...TONES.lime).mul(bt.sub(0.5).mul(0.44).add(1)).mul(float(1).add(rough)), vec3(...TONES.lime).mul(0.42), sj)
   const isStone = isWall.mul(step(p.y, L.stoneTop)).mul(float(1).sub(up))
   c = mix(c, stone, isStone)
   // the culvert's mouths on the dam's sloping walls: a narrow opening, its top drawn in like the roof of edge-laid bricks
