@@ -4,7 +4,10 @@
 //
 //   node forge/babylon/paper-shoot.mjs --page sheet|measure --out <abs folder> [--port 5304] [--engine chromium|webkit]
 //        [--sizes desktop,phone,phone-short,phone-small] [--langs en,de] [--stills <abs folder>] [--reduced] [--keys]
-//        [--dir rtl] [--steps 0,1,2,3,4,5] [--between] [--only-steps]
+//        [--dir rtl] [--steps 0,1,2,3,4,5] [--between] [--only-steps] [--raised 2] [--drawer 4]
+// --raised: on a phone, the sheet one height up (the steps) at these steps; --drawer: on a desktop, the band's drawer
+// open at these steps. Each step's read-back carries the chrome's own numbers (`chrome`): the band or the sheet, the
+// line's rows, every control's centre, the plate's share of the stage.
 // --stills holds held-desktop.jpg, held-phone.jpg, ink-desktop.jpg, ink-phone.jpg (any missing: the page goes without).
 // Frames: <page>-<lang>-<size>[-reduced]-<what>.png and readout-<lang>-<size>[-reduced].json. Exit 1 on a console error,
 // a failed request, a label overlap or a target under 44 px.
@@ -45,6 +48,8 @@ const STILLS = opt.stills && opt.stills !== true ? resolve(String(opt.stills)) :
 const reduced = Boolean(opt.reduced)
 const dir = opt.dir === 'rtl' ? 'rtl' : 'ltr'
 const wantSteps = opt.steps && opt.steps !== true ? String(opt.steps).split(',').map(Number) : [0, 1, 2, 3, 4, 5]
+const list = (k, d) => (opt[k] === undefined ? d : opt[k] === true ? [] : String(opt[k]).split(',').filter(Boolean).map(Number))
+const raisedSteps = list('raised', [2]), drawerSteps = list('drawer', [])
 const PATHS = { sheet: 'src/wings/babylon/paper/sheet.html', measure: 'src/wings/babylon/measure/measure.html' }
 
 const s = await serve({ port: PORT })
@@ -76,8 +81,14 @@ for (const lang of langs) for (const size of sizes) {
   const rig = PAGE === 'sheet' ? '__paper' : '__measure'
   await page.waitForFunction((r) => window[r]?.ready === true, rig, { timeout: 60000, polling: 200 })
   await frames(page)
-  const shot = async (what) => { const f = join(OUT, `${tag}-${what}.png`); await page.screenshot({ path: f }); return f }
-  const row = { lang, size, engine: ENGINE, reduced, dir, frames: [], readouts: {}, errors, failed }
+  // each frame says whether the harness's own marker stood in it: it must not, outside the harness's own address
+  const marked = {}
+  const shot = async (what) => {
+    const f = join(OUT, `${tag}-${what}.png`); await page.screenshot({ path: f })
+    marked[what] = await page.evaluate(() => { const n = document.getElementById('says'); return Boolean(n && n.getClientRects().length && getComputedStyle(n).visibility !== 'hidden' && n.textContent) })
+    return f
+  }
+  const row = { lang, size, engine: ENGINE, reduced, dir, frames: [], readouts: {}, chrome: {}, marked, errors, failed }
   if (PAGE === 'sheet') {
     await wait(page, 300)
     row.frames.push(await shot('sheet'))
@@ -114,12 +125,28 @@ for (const lang of langs) for (const size of sizes) {
         await frames(page); await wait(page, 120)
         const ro = await page.evaluate(() => window.__measure.readout())
         row.readouts[`step${st}`] = ro
+        row.chrome[`step${st}`] = await page.evaluate(() => window.__measure.chrome())
         row.frames.push(await shot(`step${st}`))
         if (ro.overlaps.length) { bad++; console.log(`${tag} step ${st}: OVERLAP ${ro.overlaps.join('; ')}`) }
         const off = ro.labels.filter((l) => !l.box).map((l) => l.id)
         if (off.length) console.log(`${tag} step ${st}: left off ${off.join(', ')}`)
       }
       row.targets.open = await page.evaluate(() => window.__measure.targets())
+      const phone = SIZES[size].width <= 700
+      for (const st of phone ? raisedSteps : drawerSteps) {
+        await page.evaluate((n) => window.__measure.go(n), st)
+        await page.evaluate((up) => (up ? window.__measure.raise(true) : window.__measure.drawer(true)), phone)
+        await frames(page); await wait(page, 200)
+        const what = `${phone ? 'raised' : 'drawer'}-step${st}`
+        const ro = await page.evaluate(() => window.__measure.readout())
+        row.readouts[what] = ro
+        row.chrome[what] = await page.evaluate(() => window.__measure.chrome())
+        row.targets[what] = await page.evaluate(() => window.__measure.targets())
+        row.frames.push(await shot(what))
+        if (ro.overlaps.length) { bad++; console.log(`${tag} ${what}: OVERLAP ${ro.overlaps.join('; ')}`) }
+        await page.evaluate((up) => (up ? window.__measure.raise(false) : window.__measure.drawer(false)), phone)
+        await frames(page); await wait(page, 150)
+      }
       if (opt.between) for (const at of [0.5, 1.5, 2.5, 3.5, 4.25, 4.7]) {
         await page.evaluate((x) => window.__measure.at(x), at)
         await frames(page); await wait(page, 80)
@@ -134,7 +161,7 @@ for (const lang of langs) for (const size of sizes) {
         row.frames.push(await shot('9-closed'))
       }
     }
-    const small = [...(row.targets.rest ?? []), ...(row.targets.open ?? [])].filter((t) => t.w < 44 || t.h < 44)
+    const small = Object.values(row.targets).flat().filter((t) => t.w < 44 || t.h < 44)
     if (small.length) { console.log(`${tag}: under 44 px: ${small.map((t) => `${t.what} ${t.w}x${t.h}`).join(', ')}`) ; bad++ }
   }
   if (errors.length || failed.length) { bad++; console.log(`${tag}: ${errors.length} console error(s), ${failed.length} failed request(s): ${[...errors, ...failed].slice(0, 4).join(' | ')}`) }
