@@ -348,8 +348,41 @@ export interface Bodies {
   counts: { prisms: number; boxes: number; houses: number; triangles: number }
 }
 
-/** a stop module's paint over a shared body's colour (the ground under a precinct); none leaves the map's own */
-export interface Paint { ground?: (base: N) => N }
+/** one rebuilt house box, as the arrival's houses.ts gives it (that module is passed in: node resolves no import here) */
+export interface HouseBoxLike { house: number; part: number; butt: number; block: number; x: number; z: number; sx: number; sz: number; yaw: number; y0: number; y1: number; gy: number }
+export type HouseRebuild = (boxes: Built['boxes'], ground: (x: number, z: number) => number) => { boxes: HouseBoxLike[] }
+
+/** a stop module's paint over a shared body's colour (the ground under a precinct); none leaves the map's own. `houses`
+    rebuilds the generic house boxes as the arrival does (rooms of their own heights round a court of its own size), the
+    class band `band` metres over each house's ground */
+export interface Paint { ground?: (base: N) => N; houses?: { rebuild: HouseRebuild; band: number } }
+
+/** the rebuilt houses in one instanced mesh, packed as the arrival packs them: `hinfo` (house, range + 8 x the butted
+    sides, the ground's level, the block), `size`, the class letters (the type, G over G) and the band over the ground */
+function rebuiltHouses(list: HouseBoxLike[], band: number, mat: Material): InstancedMesh {
+  const geo = new BoxGeometry(1, 1, 1)
+  geo.deleteAttribute('uv')
+  const im = new InstancedMesh(geo, mat, list.length)
+  const n = list.length
+  const info = new Float32Array(n * 4), size = new Float32Array(n * 3), cls = new Float32Array(n * 2), bd = new Float32Array(n)
+  const m4 = new Matrix4(), qq = new Quaternion(), upY = new Vector3(0, 1, 0)
+  list.forEach((b, i) => {
+    qq.setFromAxisAngle(upY, b.yaw)
+    m4.compose(new Vector3(b.x, (b.y0 + b.y1) / 2, b.z), qq, new Vector3(b.sx, b.y1 - b.y0, b.sz))
+    im.setMatrixAt(i, m4)
+    info.set([b.house, b.part + 8 * b.butt, b.gy, b.block], i * 4)
+    size.set([b.sx, b.y1 - b.y0, b.sz], i * 3)
+    cls.set([CLS.G, CLS.G], i * 2)
+    bd[i] = b.gy + band
+  })
+  for (const [k, v, w] of [['hinfo', info, 4], ['size', size, 3], ['cls', cls, 2], ['band', bd, 1]] as Array<[string, Float32Array, number]>) geo.setAttribute(k, new InstancedBufferAttribute(v, w))
+  im.instanceMatrix.needsUpdate = true
+  im.castShadow = true
+  im.receiveShadow = true
+  im.frustumCulled = false
+  im.name = 'houses'
+  return im
+}
 
 export function buildBodies(built: Built, tones: ClassTones, sky: Sky, sunDir: N, canalZ: number[], passage?: Passage, paint: Paint = {}): Bodies {
   const group = new Group()
@@ -364,7 +397,8 @@ export function buildBodies(built: Built, tones: ClassTones, sky: Sky, sunDir: N
   group.add(prisms)
   const houses = built.boxes.filter((b) => b.group === 'house')
   const rest = built.boxes.filter((b) => b.group !== 'house' && !b.hidden)
-  if (houses.length) group.add(boxMesh(houses, bodyMaterial(tones, 0.47), 'houses'))
+  if (houses.length && paint.houses) group.add(rebuiltHouses(paint.houses.rebuild(houses, built.ground).boxes, paint.houses.band, bodyMaterial(tones, 0.47)))
+  else if (houses.length) group.add(boxMesh(houses, bodyMaterial(tones, 0.47), 'houses'))
   if (rest.length) group.add(boxMesh(rest, blockMat, 'towers-and-piers'))
 
   const streetMat = new MeshStandardNodeMaterial({ roughness: 0.85, metalness: 0 })
