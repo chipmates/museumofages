@@ -49,6 +49,26 @@ export function walkLight(o: WalkLightOptions) {
   /* the air and the sky: one set of uniforms */
   const AIR: AirUniforms = makeAirUniforms({ sigma: Number(q.get('sigma') ?? 0.00018), scale: Number(q.get('scale') ?? 300), floor: 3 })
   AIR.uOn.value = Number(q.get('air') ?? 1)
+  const vec = (k: string, d: number[]): [number, number, number] => (q.get(k) ?? d.join(',')).split(',').map(Number) as [number, number, number]
+  /* the sky over the street and from the air: from the air the far air's warm side reaches round the whole horizon (the
+     evening haze over the plain); in a street the sky is what lights the shade and what the glazes mirror, so its warm side
+     keeps to the sun's half and its zenith is a clearer blue. One function on both pages, set by the camera's height. */
+  const SKY = {
+    // the gate pilot's sky kept its glazes blue in shade (its zenith); the dusty horizon away from the sun a pale grey-blue
+    street: { reach: Number(q.get('reachStreet') ?? 0), zenith: vec('zenithStreet', [0.16, 0.3, 0.6]), away: vec('awayStreet', [0.62, 0.62, 0.66]) },
+    aloft: { reach: Number(q.get('reach') ?? -1.0), zenith: vec('zenith', [0.11, 0.23, 0.52]), away: vec('away', [0.52, 0.48, 0.45]) },
+  }
+  let skyNow = -1
+  function setSky(a: number): boolean {
+    if (Math.abs(a - skyNow) < 0.01) return false
+    skyNow = a
+    const S = SKY.street, A = SKY.aloft
+    AIR.uReach.value = S.reach + (A.reach - S.reach) * a
+    ;(AIR.uZenith.value as Vector3).set(...(S.zenith.map((v, i) => v + (A.zenith[i]! - v) * a) as [number, number, number]))
+    ;(AIR.uAway.value as Vector3).set(...(S.away.map((v, i) => v + (A.away[i]! - v) * a) as [number, number, number]))
+    return true
+  }
+  setSky(1)
   const sky = (d: N): N => skyColour(AIR, d)
   const dome = (() => {
     const m = new MeshBasicNodeMaterial({ side: BackSide, depthWrite: false })
@@ -192,6 +212,7 @@ export function walkLight(o: WalkLightOptions) {
   function frame(cam: PerspectiveCamera): { texel: number; aoRadius: number } {
     const y = cam.position.y
     const over = Math.max(1.5, y - 5)
+    if (setSky(aloft(y))) bakeEnv()
     scene.environmentIntensity = ENV.street + (ENV.aloft - ENV.street) * Math.min(1, Math.max(0, y - 15) / 120)
     uAoNear.value = 250 + over * 1.2
     uAoFar.value = 900 + over * 3.5
