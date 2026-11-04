@@ -4,7 +4,7 @@
    the rig `window.__gate` takes the stills, the sketch and the facts.
 
      ?state=grey|flat|full   massing grey, the first pass (flat glaze, plain animals, noon sun), or full (default)
-     ?switch=classes         the evidence switch: the class colours on the same scene
+     ?switch=classes         the evidence switch: each body's record classes on the same scene (record.ts)
      ?put=<url>              where the rig hands its files (the shooter's own server) */
 
 import {
@@ -27,6 +27,8 @@ import { animalField } from './gate-relief'
 import { assemble, panelGrid } from './gate-mesh'
 import { birdsGeometry, palmsGeometry } from './gate-life'
 import { bakePanel, lifeMaterial, makeUniforms, panelMaterial, pavingMaterial, wallMaterial, C as COURSE, type Rooms } from './gate-mat'
+import { isLetter, recordNamer, type ClassFile, type Letter, type Pieces } from '../record'
+import { NO_ROWS, bodyTones, panelTones, pavingTones, toneGateWalls, toneMapBodies } from '../record-tones'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -43,10 +45,12 @@ const say = (s: string): void => {
 const D2R = Math.PI / 180
 
 say('reading the plans')
-const [plan, cams, mapPlan]: [J, J, J] = await Promise.all([
+const [plan, cams, mapPlan, pieces, recordClasses]: [J, J, J, Pieces, ClassFile] = await Promise.all([
   fetch(new URL('./gate-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('./gate-cams.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../map/map-plan.json', import.meta.url)).then((r) => r.json()),
+  fetch(new URL('../pieces.json', import.meta.url)).then((r) => r.json()),
+  fetch(new URL('../record-classes.json', import.meta.url)).then((r) => r.json()),
 ])
 const GF = gateFrame(plan)
 const MF = makeFrame(mapPlan)
@@ -69,6 +73,16 @@ const canalZ: number[] = []
 const B = buildGate(plan)
 const fields = { bull: animalField('bull'), dragon: animalField('dragon'), lion: animalField('lion') }
 const A = assemble(B, plan, fields)
+/* the class view from the record: every body's rows at stop 3, the stop the evidence switch reads (forge/babylon/switch.mjs) */
+const RECORD_STOP = '3'
+const named = recordNamer(pieces, recordClasses, RECORD_STOP)
+const letter = (s: unknown): Letter => (isLetter(s) ? s : 'G')
+const painted = [toneGateWalls(A.walls, A.marks, named)]
+for (const set of A.panels) panelTones(B.panels.filter((p) => p.kind === set.kind), named).forEach((t, i) => { set.iB[i * 4 + 2] = t })
+A.bronzes.forEach((b, i) => {
+  const t = bodyTones(named, `gate:bronze-${i}`, [letter(plan.bronze.cls), letter(plan.bronze.cls)])
+  b.cls = [t.foot, t.above, b.cls[2], NO_ROWS]
+})
 const planMs = Math.round(performance.now() - t0)
 
 /* gate frame to the map's scene (the world here) */
@@ -127,6 +141,7 @@ scene.fogNode = fog(uHaze, densityFogFactor(uDensity))
 say('building the city and the gate')
 const tones = tonesFrom(cityPlan)
 const bodies = buildBodies(city, tones, sky, uSun, canalZ)
+painted.push(toneMapBodies(bodies.group, city, named))
 scene.add(bodies.group)
 uView.value = U.uSwitch.value
 
@@ -176,7 +191,8 @@ wallMesh.receiveShadow = true
 wallMesh.frustumCulled = false
 wallMesh.name = 'gate-walls'
 gate.add(wallMesh)
-const pave = new Mesh(A.paving, pavingMaterial(U, { ...plan.street.paving, sd: B.street.dir, st: [B.street.dir[1], -B.street.dir[0]], turnZ: 21.3 }, rooms))
+const paveL = letter(plan.street.paving.cls)
+const pave = new Mesh(A.paving, pavingMaterial(U, { ...plan.street.paving, sd: B.street.dir, st: [B.street.dir[1], -B.street.dir[0]], turnZ: 21.3, cls: pavingTones(named, [paveL, paveL]) }, rooms))
 pave.receiveShadow = true
 pave.castShadow = true
 pave.frustumCulled = false
@@ -209,7 +225,7 @@ for (const set of A.panels) {
 }
 for (const b of A.bronzes) {
   const m = new Mesh(b.geometry, wallMaterial(U, rooms))
-  // the bronze's attributes: kind 7 everywhere, class G (named in the king's text, form guessed)
+  // the bronze's attributes: kind 7 everywhere, its row's classes (set above from the record)
   const n = b.geometry.getAttribute('position').count
   const fill = (k: number, v: number[]): Float32BufferAttribute => { const a = new Float32Array(n * k); for (let i = 0; i < n; i++) a.set(v, i * k); return new Float32BufferAttribute(a, k) }
   b.geometry.setAttribute('gU', fill(1, [0]))
@@ -223,15 +239,15 @@ for (const b of A.bronzes) {
   gate.add(m)
 }
 
-/* life without bodies (G): date palms beyond the walls, a few birds over the forecourt */
-const lifeMat = lifeMaterial(U)
-const palms = new Mesh(palmsGeometry(plan.life.palms, B.level), lifeMat)
+/* life without bodies: date palms beyond the walls, a few birds over the forecourt, each kind in its row's class */
+const lifeL = letter(plan.life.cls)
+const palms = new Mesh(palmsGeometry(plan.life.palms, B.level), lifeMaterial(U, bodyTones(named, 'life:palm-0', [lifeL, lifeL]).above))
 palms.castShadow = true
 palms.receiveShadow = true
 palms.frustumCulled = false
 palms.name = 'palms'
 gate.add(palms)
-const birds = new Mesh(birdsGeometry(plan.life.birds), lifeMat)
+const birds = new Mesh(birdsGeometry(plan.life.birds), lifeMaterial(U, bodyTones(named, 'life:bird-0', [lifeL, lifeL]).above))
 birds.frustumCulled = false
 birds.name = 'birds'
 gate.add(birds)
@@ -519,7 +535,7 @@ function setStates(o: { state?: 'grey' | 'flat' | 'full'; switch?: boolean }): v
 
 const rig = {
   ready: true,
-  state: () => ({ planMs, counts: { ...A.counts, cityTriangles: bodies.counts.triangles }, backend: stack.backend, architecture: stack.architecture, state: U.uState.value, switch: U.uSwitch.value, duration: path.duration }),
+  state: () => ({ planMs, counts: { ...A.counts, cityTriangles: bodies.counts.triangles }, backend: stack.backend, architecture: stack.architecture, state: U.uState.value, switch: U.uSwitch.value, duration: path.duration, record: { stop: RECORD_STOP, bodies: painted.reduce((s, p) => s + p.bodies, 0), byLetters: painted.flatMap((p) => p.byLetters) } }),
   facts: () => ({ ...B.facts, figure: { x: figure.position.x, y: figure.position.y, z: figure.position.z, height: plan.figure.height }, panels: B.panels.length, sun: Object.fromEntries(['16:45', '17:00', '12:00'].map((h) => [h, { ...sunAt(plan, hourOf(h)), toward: sunVector(plan, hourOf(h)) }])), views: { desktop: stillView('desktop'), phone: stillView('phone') }, level: (z: number) => B.level(z) }),
   views: () => ({ desktop: stillView('desktop'), phone: stillView('phone'), keys: path.keys.map((k) => ({ t: k.t, stop: k.stop, kind: k.kind, pos: k.pos })), duration: path.duration }),
   /** device-pixel boxes of the crop anchors for a framing at a size */
@@ -621,7 +637,8 @@ const rig = {
   },
 }
 ;(window as unknown as { __gate: typeof rig }).__gate = rig
-say(`ready: ${A.counts.wallTriangles} wall triangles, ${A.counts.panels} panels, ${A.counts.pavingTriangles} paving triangles, plan ${planMs} ms`)
+const byLetters = painted.flatMap((p) => p.byLetters)
+say(`ready: ${A.counts.wallTriangles} wall triangles, ${A.counts.panels} panels, ${A.counts.pavingTriangles} paving triangles, plan ${planMs} ms; record classes at stop ${RECORD_STOP}, ${byLetters.length ? `${byLetters.length} bodies on their letters (no row): ${byLetters.slice(0, 6).join(', ')}` : 'every body on its row'}`)
 
 if (!putBase) {
   const draw = (): void => {

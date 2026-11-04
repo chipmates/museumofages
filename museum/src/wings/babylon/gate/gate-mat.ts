@@ -302,7 +302,8 @@ export function bakePanel(f: Field, schemes: string[]): PanelMaps {
 
 /**
  * The panel material of one kind. Instance attributes: iU (the face's u in the gate frame), iN (its normal),
- * iA (bond u at the panel's u = 0, the feet course's base y, walking direction, course shift), iB (scheme index, ground: 0 cobalt 1 turquoise).
+ * iA (bond u at the panel's u = 0, the feet course's base y, walking direction, course shift), iB (scheme index, ground: 0 cobalt 1 turquoise,
+ * the class tone for the switch).
  */
 export function panelMaterial(U: GateUniforms, maps: PanelMaps, schemes: Array<[string, number]>, rooms: Rooms): Material {
   const f = maps.field
@@ -363,7 +364,7 @@ export function panelMaterial(U: GateUniforms, maps: PanelMaps, schemes: Array<[
   const flat = mix(ground, body, sil)
   const grey = vec3(PAL.grey).mul(mx_noise_float(positionWorld.mul(0.07)).mul(0.05).add(1))
   const stateCol = select(U.uState.lessThan(0.5), grey, select(U.uState.lessThan(1.5), flat, full))
-  const cc = classColour(U, float(1), bondU, yW, fw)
+  const cc = classColour(U, iB.z, bondU, yW, fw)
   m.colorNode = mix(stateCol, cc, U.uSwitch)
   m.emissiveNode = cc.mul(U.uSwitch.mul(U.uSelf))
   m.roughnessNode = mix(select(U.uState.lessThan(1.5), select(U.uState.lessThan(0.5), float(0.92), float(0.45)), mix(float(0.18), float(0.9), joint)), float(0.85), U.uSwitch)
@@ -397,7 +398,7 @@ export function panelMaterial(U: GateUniforms, maps: PanelMaps, schemes: Array<[
 }
 
 /* ── the paving: limestone on the axis, breccia beside it, brick with asphalt joints to the walls ── */
-export interface PaveSpec { limestone: number; limestoneN: number; breccia: number; brecciaN: number; sd: [number, number]; st: [number, number]; turnZ: number }
+export interface PaveSpec { limestone: number; limestoneN: number; breccia: number; brecciaN: number; sd: [number, number]; st: [number, number]; turnZ: number; cls?: [number, number, number] }
 export function pavingMaterial(U: GateUniforms, P: PaveSpec, rooms: Rooms): Material {
   const m = new MeshStandardNodeMaterial({ roughness: 0.8, metalness: 0 })
   const p = positionLocal
@@ -445,8 +446,9 @@ export function pavingMaterial(U: GateUniforms, P: PaveSpec, rooms: Rooms): Mate
   const flat = mix(mix(V(PAL.buff).mul(0.8), V(PAL.breccia), inBrec), V(PAL.limestone), inLime)
   const grey = vec3(0.6).mul(mx_noise_float(positionWorld.mul(0.07)).mul(0.05).add(1))
   const stateCol = select(U.uState.lessThan(0.5), grey, select(U.uState.lessThan(1.5), flat, full))
-  // the class: limestone and breccia R (found), the brick paving to the walls G
-  const ci = select(at.lessThan(outer), float(1), float(2))
+  // the class per strip, the middle first (limestone, breccia, the brick to the walls): R, R, G unless the page names their rows
+  const [c0, c1, c2] = P.cls ?? [1, 1, 2]
+  const ci = select(at.lessThan(half), float(c0), select(at.lessThan(outer), float(c1), float(c2)))
   const cc = classColour(U, ci, s, t, fw)
   m.colorNode = mix(stateCol, cc, U.uSwitch)
   m.emissiveNode = cc.mul(U.uSwitch.mul(U.uSelf))
@@ -455,12 +457,12 @@ export function pavingMaterial(U: GateUniforms, P: PaveSpec, rooms: Rooms): Mate
   return m
 }
 
-/* ── life without bodies: palms and birds in their vertex colours, grey in the massing state, class G in the switch ── */
-export function lifeMaterial(U: GateUniforms): Material {
+/* ── life without bodies: palms and birds in their vertex colours, grey in the massing state, class G in the switch unless the page names their row ── */
+export function lifeMaterial(U: GateUniforms, cls = 2): Material {
   const m = new MeshStandardNodeMaterial({ roughness: 0.75, metalness: 0, side: DoubleSide })
   const fw = U.uPix.mul(positionWorld.distance(cameraPosition))
   const stateCol = select(U.uState.lessThan(0.5), vec3(0.6), attribute('color', 'vec3'))
-  const cc = classColour(U, float(2), positionWorld.x, positionWorld.y, fw)
+  const cc = classColour(U, float(cls), positionWorld.x, positionWorld.y, fw)
   m.colorNode = mix(stateCol, cc, U.uSwitch)
   m.emissiveNode = cc.mul(U.uSwitch.mul(U.uSelf))
   return m

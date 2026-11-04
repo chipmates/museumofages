@@ -429,7 +429,8 @@ export function assemble(B: Built, plan: any, fields: Record<'bull' | 'dragon' |
       iU.set(u, i * 3)
       iN.set(nn, i * 3)
       iA.set([q.u0 + f.uOff, q.y0, q.dir, f.shift], i * 4)
-      iB.set([SCHEME[q.colour], f.kind === 'lion' ? 1 : 0, 0, 0], i * 4)
+      // z: the class tone the switch paints, R until a page names the panel's row (record-tones.ts)
+      iB.set([SCHEME[q.colour], f.kind === 'lion' ? 1 : 0, 1, 0], i * 4)
     })
     panels.push({ kind, count: n, matrices: mats, iU, iN, iA, iB })
   }
