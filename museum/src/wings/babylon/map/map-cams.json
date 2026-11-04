@@ -61,7 +61,7 @@
    "id": "throne-court",
    "name": "The throne-room facade",
    "hour": "17:15",
-   "stops": 0.6,
+   "stops": 1.0,
    "figure": [
     445653.6,
     3600667.6,

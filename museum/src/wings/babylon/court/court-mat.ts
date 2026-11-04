@@ -232,8 +232,9 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   const bF = bond(u, y, float(0), fu, fy, 0.0025)
   const jointF = bF.bed.add(bF.head).min(1)
   const vary = bF.brick.sub(0.5).mul(float(1).sub(smoothstep(0.08, 0.3, fu)))
-  const pool = lines(y, C, 0.012, fy).add(lines(u, BR / 2, 0.012, fu)).min(1).mul(0.06)
-  const glazeCol = g.mul(float(1).add(vary.mul(0.07)).sub(pool))
+  // pooling darkens by a share, never by an amount: a fixed amount would eat the dark blue's red and green first
+  const pool = lines(y, C, 0.012, fy).add(lines(u, BR / 2, 0.012, fu)).min(1).mul(0.12)
+  const glazeCol = g.mul(float(1).add(vary.mul(0.07))).mul(float(1).sub(pool))
   const facadeCol = mix(glazeCol, V(col.jointGlaze), jointF.mul(0.85))
 
   /* ── the reveals and soffits: the ground in its bond, along the wall's depth ── */
