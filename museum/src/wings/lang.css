@@ -31,8 +31,10 @@
 /* THE TAG under the line of the Arno card and of the welcome: smaller and
    quieter than the line, the originals' names each a full target. */
 .arno-tag,
+.arno-tag-note,
 .arno-tag-link,
 .na-plate-tag,
+.na-plate-tag-note,
 .na-plate-tag-link {
   max-width: 54ch;
   font: .875rem/1.5 var(--sans);
@@ -40,7 +42,7 @@
 }
 .na-plate-tag { margin: 14px 0 0; }
 .arno-tag { margin: 6px 0 0; }
-.arno-tag-link, .na-plate-tag-link { margin: 0; }
+.arno-tag-note, .na-plate-tag-note, .arno-tag-link, .na-plate-tag-link { margin: 0; }
 .arno-tag[hidden], .arno-tag-link[hidden] { display: none; }
 :is(.arno-tag-link, .na-plate-tag-link) a {
   display: inline-flex;

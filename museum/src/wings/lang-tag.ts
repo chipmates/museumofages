@@ -2,13 +2,15 @@
    (the Arno card, the welcome): the catalog's line that no person has read
    the words yet, and the originals named and linked to the same address in
    English and in German. None on an English or German page, and none once a
-   person has read the walk's words. */
+   person has read the walk's words. A catalog that writes a note (the story
+   still in English) says it on the line under the tag. */
 
 import { sayNamed, tagged, type Lang } from './content'
 import { keepLanguage } from './browser-lang'
 
 export interface TagWords {
   line: string
+  note?: string | undefined
   link?: string | undefined
   originals?: readonly { word: string; href: string; lang: Lang }[]
 }
@@ -21,7 +23,7 @@ export function tagWords(): TagWords | undefined {
     address.searchParams.set('lang', code)
     return `${address.pathname}${address.search}${address.hash}`
   }
-  return { line, link: sayNamed('lang.tag_link'),
+  return { line, note: sayNamed('lang.tag_note'), link: sayNamed('lang.tag_link'),
     originals: [{ word: 'English', href: at('en'), lang: 'en' }, { word: 'Deutsch', href: at('de'), lang: 'de' }] }
 }
 
@@ -31,7 +33,14 @@ export function tagNodes(tag: TagWords, document_: Document, className: string):
   const line = document_.createElement('p')
   line.className = className
   line.textContent = tag.line
-  if (!tag.link) return [line]
+  const lines: HTMLElement[] = [line]
+  if (tag.note) {
+    const note = document_.createElement('p')
+    note.className = `${className}-note`
+    note.textContent = tag.note
+    lines.push(note)
+  }
+  if (!tag.link) return lines
   const link = document_.createElement('p')
   link.className = `${className}-link`
   let rest = tag.link
@@ -46,5 +55,5 @@ export function tagNodes(tag: TagWords, document_: Document, className: string):
     rest = rest.slice(at + original.word.length)
   }
   link.append(rest)
-  return [line, link]
+  return [...lines, link]
 }
