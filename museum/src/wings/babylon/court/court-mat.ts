@@ -312,10 +312,10 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
 
   /* ── the glaze on its bricks: courses of 8.6 cm in a half-brick bond, tight joints (the mortar stops short of the
      face). Each brick fired its own (the original fragments run from near black to a pale steel blue brick by brick):
-     the dark blue ground lighter or darker by up to a half, one brick in three a good deal darker, one in six thin
-     and pale, some leaning to teal, bricks of one batch in small clusters; the light glazes of the design vary less (their bricks read whole, not
-     scorched); in patches from a brick's length to a few metres; the glaze pooling darker at its edges (by a share: an
-     amount would eat a dark blue's red first). ── */
+     the dark blue ground lighter or darker by up to four fifths, one brick in four a good deal darker, one in five thin
+     and pale (a lighter blue), some leaning to teal, bricks of one batch in small clusters; the light glazes of the
+     design vary less (their bricks read whole, not scorched); in patches from a brick's length to a few metres; the
+     glaze pooling darker at its edges (by a share: an amount would eat a dark blue's red first). ── */
   const bF = bond(u, y, float(0), fu, fy, 0.0035)
   const jointF = bF.bed.add(bF.head).min(1)
   const each = float(1).sub(smoothstep(0.08, 0.3, fu))
@@ -323,15 +323,20 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   // how much of a point is the plain ground: the design's light glazes take a gentler firing
   const onGround = float(1).sub(smoothstep(0.02, 0.12, length(g.sub(G))))
   // bricks laid from one firing's batch sit in small clusters, a couple of bricks along and a few courses up
-  const lot = hash2(floor(bi.div(2)).add(0.37), floor(k.div(3)).add(5.1)).sub(0.5).mul(0.85)
-  const vary = h1.sub(0.5).mul(1.3).add(lot).sub(step(0.7, h4).mul(0.5)).mul(each).mul(mix(float(0.4), float(1), onGround))
-  const pale = step(h4, 0.18).mul(each).mul(onGround)
+  const lot = hash2(floor(bi.div(2)).add(0.37), floor(k.div(3)).add(5.1)).sub(0.5)
+  // the ground's spread sits in value: fewer very dark bricks, the pale ones a lighter blue, not grey; the design's
+  // light glazes keep their own firing
+  const varyG = h1.sub(0.5).mul(1.8).add(lot.mul(1.4)).sub(step(0.75, h4).mul(0.3)).sub(0.24)
+  const varyD = h1.sub(0.5).mul(1.3).add(lot.mul(0.85)).sub(step(0.7, h4).mul(0.5)).mul(0.4)
+  const vary = mix(varyD, varyG, onGround).mul(each)
+  const pale = step(h4, 0.2).mul(each).mul(onGround)
   const lean = h5.sub(0.5).mul(2).mul(each)
   const tint = vec3(1).add(vec3(-0.03, 0.05, -0.01).mul(lean))
   const pool = lines(y, C, 0.012, fy).add(lines(u, BR / 2, 0.012, fu)).min(1).mul(0.12)
   const patch = mx_noise_float(P.mul(0.7)).mul(0.2).add(mx_noise_float(P.mul(2.6)).mul(0.16)).mul(float(1).sub(smoothstep(0.3, 1.2, fu)))
-  // a dark brick stays a dark glaze, never a hole: the firing takes at most seven tenths of the ground's value
-  const glazeCol = g.mul(max(float(1).add(vary).add(patch), 0.3)).mul(tint).add(vec3(0.11, 0.12, 0.13).mul(pale)).mul(float(1).sub(pool))
+  // a dark brick stays a dark glaze, never a hole: under the map's print a ground brick under about half its value
+  // prints near black
+  const glazeCol = g.mul(max(float(1).add(vary).add(patch), mix(float(0.3), float(0.46), onGround))).mul(tint).add(vec3(0.118, 0.185, 0.336).mul(pale)).mul(float(1).sub(pool))
   const facadeCol = mix(glazeCol, V(col.jointGlaze), jointF.mul(0.85))
 
   /* ── the glass takes the court: Fresnel over what a ray reflected from the face meets (the court's floor, the court's
@@ -355,7 +360,7 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   const met = mix(floorL, mix(skyRadiance(rr), brickL, overFronts), step(tWall, tFloor))
   const cosV = max(dot(nG, view), 0)
   const fres = float(0.04).add(float(0.96).mul(pow(float(1).sub(cosV), 5)))
-  const gloss = float(0.15).add(h3.mul(1.7).mul(each)).add(float(0.85).mul(float(1).sub(each)))
+  const gloss = float(0.5).add(h3.mul(each)).add(float(0.5).mul(float(1).sub(each)))
   const sheen = met.mul(fres).mul(gloss).mul(front).mul(float(1).sub(jointF)).mul(float(1).sub(uView))
 
   /* ── the reveals and soffits: the ground in its bond, along the wall's depth. Round each arch's head the courses
