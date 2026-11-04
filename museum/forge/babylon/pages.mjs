@@ -48,6 +48,13 @@ export const PAGES = {
     // the flight's frame at a second, 0 being the first frame
     still: (r) => ({ fn: 'still', arg: { framing: r.framing, view: r.view ?? 'grey', w: r.w, h: r.h, css: r.css, samples: r.samples, out: r.out, name: r.name, t: r.t ?? 0 } }),
   },
+  // feature 1's three things on the turntable: their beats come from objects-shoot.mjs, the smoke opens them like the rest
+  objects: {
+    html: 'src/wings/babylon/objects/bench.html',
+    rig: '__objects',
+    readyMs: 120000,
+    still: () => { throw new Error('feature 1, hidden words: shoot it with forge/babylon/objects-shoot.mjs') },
+  },
 }
 
 /** the walk's fourteen stops (map-cams.json) and the page that shows each today; stop 1 folds into the opening flight */

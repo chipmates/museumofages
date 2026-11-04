@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Babylon hidden words bench</title>
+    <style>
+      :root { color-scheme: dark; }
+      html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg-primary, Canvas); }
+      canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+      #glass { position: fixed; inset: 0; touch-action: none; }
+      #chrome { position: fixed; left: 8px; right: 8px; bottom: 8px; font: 13px/1.4 system-ui, sans-serif; color: GrayText; }
+      #chrome.off { display: none; }
+      #caption { min-height: 1.4em; }
+      #says { position: fixed; left: 16px; top: 12px; margin: 0; font: 13px/1.4 system-ui, sans-serif; color: GrayText; }
+      #says.off { display: none; }
+      .vitrine-control { min-width: 44px; min-height: 44px; }
+    </style>
+  </head>
+  <body>
+    <canvas id="stage"></canvas>
+    <div id="glass" aria-label="hidden words"></div>
+    <div id="chrome"><p id="caption" aria-live="polite"></p><div id="controls"></div><div id="aside"></div></div>
+    <p id="says">building</p>
+    <script type="module" src="./bench.ts"></script>
+  </body>
+</html>
