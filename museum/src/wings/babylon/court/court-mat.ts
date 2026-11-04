@@ -168,6 +168,23 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   }
   // the columns' zone
   {
+    // the palmettes that join the capitals, drawn first so the capitals lie over their garlands: a stem with a lily at
+    // each row and a light blue garland under each row
+    const joinZ = band(y, Z['voluteLow']![0] * C, Z['crown']![1] * C, fy).mul(between)
+    {
+      let o: N = g
+      for (const k of ['voluteLow', 'voluteHigh']) {
+        const p = vec2(bu, yz(k))
+        const h = 7 * C
+        const garland = max(abs(length(vec2(bu, yz(k).sub(h * 0.95))).sub(0.5)).sub(0.02), yz(k).sub(h * 0.62))
+        const lily = union(ellipse(p, 0, h * 0.62, 0.035, 0.11), union(capsule(p, 0, h * 0.5, -0.09, h * 0.78, 0.025), capsule(p, 0, h * 0.5, 0.09, h * 0.78, 0.025)))
+        const zk = zone(k)
+        o = mix(o, paint(o, garland, L, 0.01, 0.008), zk)
+        o = mix(o, paint(o, lily, Y, 0.012, 0.008), zk)
+      }
+      o = mix(o, paint(o, abs(bu).sub(0.02), L, 0.008, 0.006), band(y, Z['voluteLow']![0] * C, Z['voluteHigh']![0] * C + 0.15, fy))
+      g = mix(g, o, joinZ)
+    }
     const colZ = band(y, Z['baseRing']![0] * C, Z['crown']![1] * C, fy).mul(onColumn)
     let f: N = g
     // the shaft
@@ -210,22 +227,6 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
       f = mix(f, o, zone('crown'))
     }
     g = mix(g, f, colZ)
-    // the palmettes that join the capitals: a stem with a lily at each row and a light blue garland under each row
-    const joinZ = band(y, Z['voluteLow']![0] * C, Z['crown']![1] * C, fy).mul(between)
-    {
-      let o: N = g
-      for (const k of ['voluteLow', 'voluteHigh']) {
-        const p = vec2(bu, yz(k))
-        const h = 7 * C
-        const garland = max(abs(length(vec2(bu, yz(k).sub(h * 0.95))).sub(0.5)).sub(0.02), yz(k).sub(h * 0.62))
-        const lily = union(ellipse(p, 0, h * 0.62, 0.035, 0.11), union(capsule(p, 0, h * 0.5, -0.09, h * 0.78, 0.025), capsule(p, 0, h * 0.5, 0.09, h * 0.78, 0.025)))
-        const zk = zone(k)
-        o = mix(o, paint(o, garland, L, 0.01, 0.008), zk)
-        o = mix(o, paint(o, lily, Y, 0.012, 0.008), zk)
-      }
-      o = mix(o, paint(o, abs(bu).sub(0.02), L, 0.008, 0.006), band(y, Z['voluteLow']![0] * C, Z['voluteHigh']![0] * C + 0.15, fy))
-      g = mix(g, o, joinZ)
-    }
   }
   // the glaze on its bricks: courses of 8.6 cm in a half-brick bond, tight joints (the mortar stops short of the face),
   // each brick a little different, the glaze pooling darker at its edges
