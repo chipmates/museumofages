@@ -96,8 +96,10 @@ export async function mountMap(stop, { reach = 400 } = {}) {
   const keep = (v) => { const cx = (v[0].x + v[1].x + v[2].x) / 3, cz = (v[0].z + v[1].z + v[2].z) / 3; return Math.hypot(cx - ex, cz - ez) <= reach }
   const faces = mapFaces([], bodies.group, built, new THREE.Matrix4(), keep)
   for (const b of court.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
-  for (const b of gardens.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
-  for (const p of planting.plants) facesFrom(faces, p.geometry, null, () => `map:${p.id}`, keep)
+  // stop 5's bodies whole (an edge terrace's top is a few long triangles whose middles lie past the reach), and each
+  // plant whole where its foot lies within the reach
+  for (const b of gardens.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`)
+  for (const p of planting.plants) if (Math.hypot(p.x - ex, p.z - ez) <= reach) facesFrom(faces, p.geometry, null, () => `map:${p.id}`)
   const surface = (b) => /^map:(street|ground|water-)/.test(b)
   return {
     court, gardens, planting,
@@ -108,8 +110,12 @@ export async function mountMap(stop, { reach = 400 } = {}) {
     checks: (b) => !surface(b),
     floats: (b) => !surface(b) && b !== 'map:ramps',
     allowPair: [],
-    allowThin: [],
-    allowFloat: [],
+    // the gate's own palm (palm-date-babylon, reused as it is): its frond tips stay 16 cm wide for 86 m, and the garden's
+    // stand 300 to 430 m from stop 5's hold; a far preset of the part is the fix
+    allowThin: [{ prefix: 'map:garden-palm-', why: "the reused gate palm's frond tips, 6 to 8 cm faces at 330 to 390 m (0.06 to 0.07 px of the 1600 px desktop, measured 4 Nov); a far preset of palm-date-babylon is open" }],
+    // a curtain hangs on a terrace's face from its lip on the terrace's top: held by the face, which the plan-view
+    // support rule cannot see (as the gate's facing skins)
+    allowFloat: [{ prefix: 'map:garden-vine-', why: "a curtain hung on a terrace's face from its lip on the top: held by the face behind it" }, { prefix: 'map:garden-caper-', why: "a caper curtain hung on a terrace's face from its lip on the top: held by the face behind it" }],
   }
 }
 

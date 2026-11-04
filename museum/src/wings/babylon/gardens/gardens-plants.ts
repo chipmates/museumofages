@@ -100,7 +100,7 @@ function lobe(m: Mesh, c: V3, r: [number, number, number], crown: V3, col: V3, r
 
 /** a trunk: a tapered five-sided stem from the foot to `top`, leaning a little */
 function trunk(m: Mesh, x: number, y: number, z: number, top: number, r0: number, r1: number, lean: [number, number], col: V3, crown: V3): void {
-  const S = 5, seg = 2
+  const S = 4, seg = 2
   const ring = (t: number): V3[] => {
     const c: V3 = [x + lean[0] * t * t, y + (top - y) * t, z + lean[1] * t * t]
     const r = r0 + (r1 - r0) * t
@@ -126,7 +126,7 @@ function broadTree(m: Mesh, x: number, y: number, z: number, h: number, r: numbe
   const cy = y + h * (kind === 'fig' ? 0.52 : 0.62), ry = h * (kind === 'fig' ? 0.42 : 0.36)
   const crown: V3 = [x, cy, z]
   const lean: [number, number] = [(R() - 0.5) * 0.8, (R() - 0.5) * 0.8]
-  trunk(m, x, y - 0.3, z, cy, kind === 'fig' ? 0.26 : 0.17, 0.09, lean, kind === 'fig' ? FIG_WOOD : WOOD, crown)
+  trunk(m, x, y - 0.3, z, cy, kind === 'fig' ? 0.36 : 0.32, 0.25, lean, kind === 'fig' ? FIG_WOOD : WOOD, crown)
   const n = kind === 'shrub' || kind === 'pomegranate' ? 6 : 10
   for (let i = 0; i < n; i++) {
     // a direction over the upper part of a sphere, the lobes nearer the top a little larger
@@ -146,19 +146,19 @@ function broadTree(m: Mesh, x: number, y: number, z: number, h: number, r: numbe
 function cypress(m: Mesh, x: number, y: number, z: number, h: number, r: number, seed: number): void {
   const R = rnd(seed)
   const crown: V3 = [x, y + h * 0.5, z]
-  trunk(m, x, y - 0.3, z, y + h * 0.12, 0.2, 0.14, [0, 0], WOOD, crown)
-  const S = 9, RINGS = 12
+  trunk(m, x, y - 0.3, z, y + h * 0.12, 0.3, 0.22, [0, 0], WOOD, crown)
+  const S = 7, RINGS = 10
   const y0 = y + h * 0.07
   const ring: V3[][] = []
   const tone = 0.85 + R() * 0.25
   for (let j = 0; j <= RINGS; j++) {
     const t = j / RINGS
-    const w = j === RINGS ? 0 : r * Math.pow(Math.sin(Math.PI * Math.min(1, 0.18 + t * 0.9)), 0.75) * (1 - 0.4 * t) + 0.05
-    const yy = y0 + (h - (y0 - y)) * t
+    const w = Math.max(r * 0.42, r * Math.pow(Math.sin(Math.PI * Math.min(1, 0.18 + t * 0.9)), 0.75) * (1 - 0.4 * t) + 0.05)
+    const yy = y0 + (h - 0.5 - (y0 - y)) * t
     ring.push(Array.from({ length: S }, (_, k): V3 => {
-      const a = (k / S) * Math.PI * 2 + j * 0.35
+      const a = (k / S) * Math.PI * 2 + j * 0.08
       const ww = w * (0.84 + R() * 0.3)
-      return [x + Math.cos(a) * ww, yy + (R() - 0.5) * 0.25 * (j > 0 && j < RINGS ? 1 : 0), z + Math.sin(a) * ww]
+      return [x + Math.cos(a) * ww, yy + (R() - 0.5) * 0.1 * (j > 0 && j < RINGS ? 1 : 0), z + Math.sin(a) * ww]
     }))
   }
   const nrm = (p: V3, j: number): V3 => norm([p[0] - x, 0.35 + (j / RINGS) * 0.5, p[2] - z])
@@ -172,20 +172,22 @@ function cypress(m: Mesh, x: number, y: number, z: number, h: number, r: number,
       m.tri(a, d, c, [nrm(a, j), nrm(d, j + 1), nrm(c, j + 1)], col, 1, crown)
     }
   }
-  // the bottom closed, under the spindle
+  // the top closed in a low cap and the bottom under the spindle
+  for (let k = 0; k < S; k++) m.tri(ring[RINGS]![k]!, [x, y + h, z], ring[RINGS]![(k + 1) % S]!, [[0, 1, 0], [0, 1, 0], [0, 1, 0]], tint(LEAF.cypress, tone * 1.1), 1, crown)
   for (let k = 0; k < S; k++) m.tri([x, y0, z], ring[0]![k]!, ring[0]![(k + 1) % S]!, [[0, -1, 0], [0, -1, 0], [0, -1, 0]], tint(LEAF.cypress, tone * 0.7), 1, crown)
   for (let i = 0; i < 4; i++) {
     const t = 0.2 + R() * 0.55, a = R() * Math.PI * 2
     const w = r * Math.pow(Math.sin(Math.PI * Math.min(1, 0.18 + t * 0.9)), 0.75) * (1 - 0.4 * t)
     const c: V3 = [x + Math.cos(a) * w * 0.85, y0 + (h - (y0 - y)) * t, z + Math.sin(a) * w * 0.85]
-    lobe(m, c, [w * 0.45, h * 0.06, w * 0.45], crown, tint(LEAF.cypress, tone * (0.9 + 0.3 * t)), R, 0.6, false)
+    const tr = Math.max(0.5, w * 0.5)
+    lobe(m, c, [tr, tr * 1.2, tr], crown, tint(LEAF.cypress, tone * (0.9 + 0.3 * t)), R, 0.6, false)
   }
 }
 
 /** a hanging curtain over a terrace's edge: a lip on the top, then a ragged sheet down the face, bulging out from it */
 function curtain(m: Mesh, at: { x: number; z: number; nx: number; nz: number }, top: number, w: number, drop: number, kind: Kind, seed: number): void {
   const R = rnd(seed)
-  const cols = 5, rows = 4
+  const cols = 4, rows = 4
   const tx = -at.nz, tz = at.nx
   const centre: V3 = [at.x + at.nx * 0.6, top - drop * 0.4, at.z + at.nz * 0.6]
   const ends = Array.from({ length: cols + 1 }, () => drop * (0.45 + R() * 0.55))
@@ -197,13 +199,13 @@ function curtain(m: Mesh, at: { x: number; z: number; nx: number; nz: number }, 
       const edgeK = Math.sin((i / cols) * Math.PI)
       if (j === 0) {
         // the lip: half a metre in from the edge, a hand over the top
-        row.push([at.x - at.nx * 0.55 + tx * u, top + 0.12 + R() * 0.1, at.z - at.nz * 0.55 + tz * u])
+        row.push([at.x - at.nx * 0.55 + tx * u, top + 0.25 + R() * 0.1, at.z - at.nz * 0.55 + tz * u])
         continue
       }
       const t = (j - 1) / rows
       const d = ends[i]! * Math.min(1, t * (0.85 + edgeK * 0.15))
       const bulge = 0.12 + (0.18 + R() * 0.2) * Math.sin(Math.PI * Math.min(1, t + 0.15)) * (0.5 + edgeK * 0.5)
-      row.push([at.x + at.nx * bulge + tx * u * (1 - t * 0.12), top - d + (j === 1 ? 0.05 : 0), at.z + at.nz * bulge + tz * u * (1 - t * 0.12)])
+      row.push([at.x + at.nx * bulge + tx * u * (1 - t * 0.12), top - Math.max(d, j === 1 ? 0.3 : (j - 1) * 0.25 + 0.3), at.z + at.nz * bulge + tz * u * (1 - t * 0.12)])
     }
     grid.push(row)
   }
