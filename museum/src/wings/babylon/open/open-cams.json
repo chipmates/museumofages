@@ -149,26 +149,50 @@
    },
    {
     "t": 0.5,
-    "v": 0.115
+    "v": 0.025
    },
    {
     "t": 1,
-    "v": 0.255
+    "v": 0.08
+   },
+   {
+    "t": 1.5,
+    "v": 0.17
    },
    {
     "t": 2,
-    "v": 0.53
+    "v": 0.28
+   },
+   {
+    "t": 2.5,
+    "v": 0.4
    },
    {
     "t": 3,
-    "v": 0.79
+    "v": 0.52
    },
    {
-    "t": 3.8,
-    "v": 0.95
+    "t": 3.5,
+    "v": 0.64
+   },
+   {
+    "t": 4,
+    "v": 0.75
    },
    {
     "t": 4.5,
+    "v": 0.85
+   },
+   {
+    "t": 5,
+    "v": 0.93
+   },
+   {
+    "t": 5.5,
+    "v": 0.98
+   },
+   {
+    "t": 6,
     "v": 1
    },
    {
@@ -356,7 +380,7 @@
     "v": 46
    }
   ],
-  "speedSays": "relative speed, scaled so the way is covered in time: moving from the first second (about 24 m/s at 1 s, 50 at 2), cruise from 4.5 s, slower through the two doors, the walker's glide down the street and to rest in about 1.5 s",
+  "speedSays": "relative speed, scaled so the way is covered in time: easing in from rest (about 8 m/s at 1 s, 30 at 2; no lurch off the first frame), cruise from 6 s, slower through the two doors, the walker's glide down the street and to rest in about 1.5 s",
   "phoneHfovSays": "the phone's lens opens from the first frame's 20 degrees to the walk's 46 (gate.ts clip, phone) by the North Gate's north door, in step with the approach: its rate stays under a quarter of the rate at which the camera's own motion enlarges the North Gate, so nothing ever shrinks on screen; at rest the look is the walk's first"
  },
  "land": {
