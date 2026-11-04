@@ -1,26 +1,25 @@
 /* BABYLON ABOUT 570 BC, THE MAP (`/src/wings/babylon/map/map.html`): the city
-   in grey blocks at true scale from the excavation sheets, a plain sun at the
-   walk's hours, and the walk as a timed camera path. Dev only; the rig
-   `window.__map` takes the stills and the moving sketch.
+   at true scale from the excavation sheets in the arrival's mud and baked brick
+   (city.ts), under the walk's one light (open/light.ts: the sun at the walk's
+   hours, the sky and the far air, the contact shade, the print), and the walk as
+   a timed camera path. Dev only; the rig `window.__map` takes the stills and the
+   moving sketch.
 
      ?view=classes   each body's record classes (in place, known, guessed) in three tones: its plan row in a
                      band at its foot, its body row above (record.ts), at the stop the camera is at
      ?tower=base     Etemenanki's excavated base only
-     ?ao=0           no contact occlusion; ?aofade=250,900 where it fades out (m)
+     ?ao=0           no contact occlusion; ?air=0 no haze; ?sigma=0.00018&scale=300 the haze's density and height
      ?garden=bare    stop 5's terraces without their planting; ?garden=dug without the guessed terraces too
      ?put=<url>      where the rig hands its files (the shooter's own server) */
 
-import {
-  BackSide, Color, DirectionalLight, HemisphereLight, Mesh, MeshBasicNodeMaterial, MeshStandardNodeMaterial, PerspectiveCamera,
-  Scene, SphereGeometry, Vector3, type Object3D,
-} from 'three/webgpu'
+import { Matrix3, Matrix4, MeshStandardNodeMaterial, PerspectiveCamera, Scene, Vector3, type Mesh, type Object3D } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import { createStack } from '../../../stack'
 import { IDENTITY } from '../../../stack/grade'
 import { accumulate, toPNG } from '../../animals/cave/render'
-import { createMapLinear } from './map-render'
 import { printFrame } from '../../animals/cave/print'
-import type { Print } from '../../animals/cave/site'
+import { createOpenLinear } from '../open/air'
+import { aloft, walkLight } from '../open/light'
 import { PERSON_FORMS, signPerson } from '../../place/person'
 import { buildPlan, makeFrame } from './plan'
 import { buildBodies, tonesFrom, uView, type Sky } from './mass'
@@ -39,7 +38,7 @@ import { mountHouse } from '../house/house'
 type N = any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
-const { cameraPosition, clamp, dot, exp, float, max, mix, normalize, positionLocal, positionWorld, pow, smoothstep, step, uniform, vec3, fog, densityFogFactor } = TSL as unknown as Record<string, N>
+const { mix, uniform, vec3 } = TSL as unknown as Record<string, N>
 
 const q = new URLSearchParams(location.search)
 const says = document.getElementById('says') as HTMLElement
@@ -50,7 +49,7 @@ const say = (s: string): void => {
 const D2R = Math.PI / 180
 
 say('reading the plan')
-const [plan, cams, pieces, recordClasses, courtPlan, towerPlan, gardensPlan, nabuPlan, housePlan]: [J, J, Pieces, ClassFile, J, J, J, J, J] = await Promise.all([
+const [plan, cams, pieces, recordClasses, courtPlan, towerPlan, gardensPlan, nabuPlan, housePlan, gatePlan]: [J, J, Pieces, ClassFile, J, J, J, J, J, J] = await Promise.all([
   fetch(new URL('./map-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('./map-cams.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../pieces.json', import.meta.url)).then((r) => r.json()),
@@ -60,6 +59,8 @@ const [plan, cams, pieces, recordClasses, courtPlan, towerPlan, gardensPlan, nab
   fetch(new URL('../gardens/gardens-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../nabu/nabu-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../house/house-plan.json', import.meta.url)).then((r) => r.json()),
+  // the walk's light is stated once, in the gate's plan (its `light`), for every page that takes open/light.ts
+  fetch(new URL('../gate/gate-plan.json', import.meta.url)).then((r) => r.json()),
 ])
 if (q.get('tower') === 'base') plan.tower.stages = plan.tower.stages.slice(0, 1)
 const F = makeFrame(plan)
@@ -96,56 +97,42 @@ const canvas = document.getElementById('stage') as HTMLCanvasElement
 const stack = await createStack({ canvas })
 const renderer = stack.renderer
 const scene = new Scene()
-const camera = new PerspectiveCamera(40, 16 / 9, 0.3, 26000)
+// the far plane past the ground's farthest corner, as the arrival's: ground near the far plane reads as sky in the haze's depth test
+const camera = new PerspectiveCamera(40, 16 / 9, 0.3, 60000)
 stack.setScene(scene, camera, { ...IDENTITY, name: 'babylon-map' })
 
-/* the sky and the sun, one set of uniforms for every hour */
-const uSun = uniform(new Vector3(0, 1, 0))
-const uDay = uniform(1)
-const uHaze = uniform(new Color(0.7, 0.66, 0.58))
-/* at and below the horizon the sky is the haze the far ground fades into, blended upward over about
-   seven degrees: a darker dome under a lit haze printed a hard band from every height above the roofs */
-const skyColour = (d: N): N => {
-  const up = clamp(d.y, 0, 1)
-  const low = smoothstep(-0.04, 0.35, uSun.y)
-  const zenith = mix(vec3(0.05, 0.08, 0.16), vec3(0.16, 0.3, 0.6), low)
-  const horizon = mix(vec3(0.5, 0.36, 0.26), vec3(0.72, 0.68, 0.6), low)
-  const cosS = max(dot(d, uSun), 0)
-  const glow = vec3(1.0, 0.72, 0.45).mul(pow(cosS, 8).mul(0.55).add(pow(cosS, 120).mul(1.6)))
-  const disc = smoothstep(0.99996, 0.99999, cosS).mul(60)
-  const above = mix(horizon, zenith, pow(up, 0.45)).mul(uDay)
-  const sun = glow.add(vec3(1, 0.9, 0.75).mul(disc)).mul(smoothstep(-0.03, 0.0, d.y)).mul(uDay)
-  return mix(uHaze, above, smoothstep(0.0, 0.12, d.y)).add(sun)
+/* the walk's light (open/light.ts, the arrival's and the gate's): one sun from sun.ts, one sky and far air, the
+   environment, the shadow fitted to the frame, the contact shade's reach and the print by the camera's height. The
+   forecourt's sunlit east walls and its paving's bounce belong to the gate, so the map takes the plain's: the band off,
+   the gate's place out of reach. The exposure's base is the map's own (the stops' `stops` in map-cams.json rest on it).
+   With the band off, a street's shade takes the sunlit walls round it as more of the environment at street level (ours) */
+const MAP_EXPOSURE = 0.8
+const MAP_ENV = 0.8
+const lq = new URLSearchParams(q)
+lq.set('walls', '0')
+if (!lq.has('exp')) lq.set('exp', String(MAP_EXPOSURE))
+if (!lq.has('env')) lq.set('env', String(MAP_ENV))
+const L = walkLight({ renderer, scene, light: gatePlan.light, rot: new Matrix3(), uW2G: uniform(new Matrix4()), uSunG: uniform(new Vector3()), gateAt: new Vector3(1e7, 0, 0), q: lq })
+const sky: Sky = { colour: L.sky }
+const skyDome = L.dome
+/* a stop may set its own air (`air`, extinction a metre at the plain): it thickens the walk's haze there, never thins it */
+const SIGMA = L.AIR.uSigma.value as number
+const setAir = (a: number): void => { L.AIR.uSigma.value = Math.max(SIGMA, a) }
+/* the ground's bounce in the environment by the camera's height: in a street the sunlit paving and walls round it, the
+   gate's forecourt value; from the air the plain's */
+const BOUNCE = { street: Number(gatePlan.light.bounce.paving.value), aloft: 0.18 }
+function setBounce(y: number): void {
+  const b = BOUNCE.street + (BOUNCE.aloft - BOUNCE.street) * aloft(y)
+  if (Math.abs((L.uBounce.value as number) - b) < 0.005) return
+  L.uBounce.value = b
+  L.uWallsNear.value = 0
+  L.bakeEnv()
 }
-const sky: Sky = { colour: skyColour }
-const skyDome = (() => {
-  const m = new MeshBasicNodeMaterial({ side: BackSide, depthWrite: false })
-  m.colorNode = skyColour(normalize(positionLocal))
-  m.fog = false
-  const mesh = new Mesh(new SphereGeometry(1, 64, 32), m)
-  mesh.scale.setScalar(20000)
-  mesh.frustumCulled = false
-  mesh.name = 'sky'
-  return mesh
-})()
-scene.add(skyDome)
-const uDensity = uniform(Number(q.get('haze') ?? 0.0002))
-/* a stop may set its own air (`air`, extinction a metre): the light between the eye and a far face is then partly the
-   sunlit haze's, in the horizon sky's colour toward the view, the sun's glow included; 0 leaves the page's fog */
-const uAir = uniform(0)
-const airFog = (() => {
-  const v = positionWorld.sub(cameraPosition)
-  const dist = v.length()
-  const toward = skyColour(normalize(vec3(v.x, dist.mul(0.03), v.z)))
-  const airF = float(1).sub(exp(dist.mul(uAir).negate()))
-  return fog(mix(uHaze, toward, step(1e-7, uAir)), max(densityFogFactor(uDensity), airF))
-})()
-scene.fogNode = airFog
 
 say('building the city')
 // the Ishtar Gate's passage through both gates, along its axis from the north face
 const gateFrame = plan.frames.gate
-const bodies = buildBodies(built, tones, sky, uSun, canalZ, { o: F.s(gateFrame.origin[0], gateFrame.origin[1]), a: F.dir(gateFrame.bearing), c: F.dir(gateFrame.bearing + 90), len: 50, half: 2.6 }, { ground: tower.ground })
+const bodies = buildBodies(built, tones, sky, L.AIR.uSun, canalZ, { o: F.s(gateFrame.origin[0], gateFrame.origin[1]), a: F.dir(gateFrame.bearing), c: F.dir(gateFrame.bearing + 90), len: 50, half: 2.6 }, { ground: tower.ground })
 scene.add(bodies.group)
 scene.add(court.mesh)
 scene.add(tower.mesh)
@@ -200,59 +187,7 @@ function figuresInFrame(): number[] {
   return seen
 }
 
-/* light: the sun's key with a shadow fitted round each view, and the sky's fill */
-/** From three r187 a dielectric's diffuse light loses its Fresnel share: the
- * grey blocks keep the level they were approved at by this gain on both lights. */
-const LIGHT_HOLD = 1.04
-const sunLight = new DirectionalLight(new Color(1.0, 0.86, 0.7), 3.2)
-sunLight.castShadow = true
-sunLight.shadow.mapSize.set(8192, 8192)
-sunLight.shadow.bias = -0.0003
-sunLight.shadow.normalBias = 0.06
-const fill = new HemisphereLight(new Color(0.55, 0.64, 0.82), new Color(0.4, 0.39, 0.37), 1.4)
-scene.add(sunLight, sunLight.target, fill)
-
-let hourNow = -1
-function setHour(hour: number): void {
-  if (Math.abs(hour - hourNow) < 1e-4) return
-  hourNow = hour
-  const v = sunVector(hour)
-  ;(uSun.value as Vector3).set(...v)
-  const el = Math.asin(v[1]) / D2R
-  // the key fades into the haze below a few degrees; the sky dims after sunset
-  const k = Math.min(1, Math.max(0, (el + 0.5) / 6))
-  sunLight.intensity = 3.2 * k * LIGHT_HOLD
-  sunLight.color.setRGB(1.0, 0.72 + 0.14 * Math.min(1, el / 20), 0.5 + 0.2 * Math.min(1, el / 20))
-  const day = Math.min(1, Math.max(0.18, (el + 6) / 14))
-  uDay.value = day
-  fill.intensity = 1.4 * day * LIGHT_HOLD
-  ;(uHaze.value as Color).setRGB(0.72 * day, 0.64 * day, 0.54 * day)
-}
-
-function fitShadow(cam: PerspectiveCamera): void {
-  const sun = new Vector3(...(uSun.value as Vector3).toArray()).normalize()
-  const fwd = new Vector3()
-  cam.getWorldDirection(fwd)
-  fwd.y = 0
-  if (fwd.lengthSq() < 1e-6) fwd.set(0, 0, -1)
-  fwd.normalize()
-  const h = Math.max(0, cam.position.y - stand(cam.position.x, cam.position.z))
-  const r = Math.min(2400, 420 + h * 6)
-  const focus = cam.position.clone().addScaledVector(fwd, r * 0.75)
-  focus.y = 20
-  sunLight.position.copy(focus).addScaledVector(sun, 6000)
-  sunLight.target.position.copy(focus)
-  sunLight.target.updateMatrixWorld()
-  sunLight.updateMatrixWorld()
-  const sc = sunLight.shadow.camera
-  sc.left = -r
-  sc.right = r
-  sc.top = r
-  sc.bottom = -r
-  sc.near = 4000
-  sc.far = 8000
-  sc.updateProjectionMatrix()
-}
+const setHour = (hour: number): void => L.setHour(hour)
 
 /* the camera: a level look with the frame slid up or down (a shift lens) where a view asks */
 let shiftNow = 0
@@ -280,25 +215,27 @@ function aim(pos: V3, look: V3, hfov: number, w: number, h: number, shift = 0): 
   camera.updateMatrixWorld(true)
   skyDome.position.copy(camera.position)
   skyDome.updateMatrixWorld(true)
-  fitShadow(camera)
+  // the environment, the sky by height, the contact shade's fade and reach, and the shadow follow the camera (light.ts)
+  const f = L.frame(camera)
+  setBounce(camera.position.y)
+  linear?.setRadius(f.aoRadius)
 }
 
 const path = makePath(cams, F.s, stand)
 
-/* one pipeline: the scene pass, the contact occlusion, output linear; the print on the CPU */
+/* one pipeline, the arrival's (open/air.ts): the scene pass, the contact occlusion, the height haze; output linear; the
+   print on the CPU */
 setHour(hourOf(cams.stops[0].hour))
 const first = path.sample(0)
 const toneMs = performance.now()
 toneAt(first.stop)
 const recordMs = Math.round(performance.now() - toneMs)
+let linear: ReturnType<typeof createOpenLinear> | null = null
 aim(first.pos, first.look, first.hfov, 1600, 900, first.shift)
 renderer.render(scene, camera)
-const fade = (q.get('aofade') ?? '250,900').split(',').map(Number) as [number, number]
-const linear = createMapLinear(renderer, scene, camera, { ao: { on: q.get('ao') !== '0', intensity: Number(q.get('ao') ?? 0.75), radius: 1.2 }, fade })
-const PRINT: Print = {
-  exposure: Number(q.get('exp') ?? 0.62), toe: 0.01, shoulder: 1, lift: [0, 0, 0], gamma: [1, 1, 1], gain: [1, 1, 1], warm: [1.02, 1, 0.97], cool: [0.97, 1, 1.03],
-  split: 0.3, saturation: 0.9, vignette: 0.12, grain: 0.004, glow: { threshold: 1.2, strength: 0.05, radii: [0.012, 0.06] },
-}
+linear = createOpenLinear(renderer, scene, camera, L.AIR, { ao: { on: q.get('ao') !== '0', intensity: L.uAoOn, radius: 1.2, fadeNear: L.uAoNear, fadeFar: L.uAoFar } })
+/** the print for the camera where it stands: the stop's own stops and the walk's by height (light.ts) */
+const printAt = (stops: number) => L.printFor(camera.position.y, stops + L.stopsAt(camera.position.y))
 
 const putBase = q.get('put') ?? ''
 async function upload(path: string, bytes: Uint8Array | string): Promise<void> {
@@ -332,8 +269,8 @@ function brightness(bytes: Uint8ClampedArray): { median: number; p1: number; p99
 
 async function render(w: number, h: number, samples: number, stops = 0): Promise<{ bytes: Uint8ClampedArray; ms: number }> {
   const t = performance.now()
-  const rgb = await accumulate(renderer, camera, linear.post, w, h, samples)
-  const bytes = printFrame(rgb, w, h, { ...PRINT, exposure: PRINT.exposure * Math.pow(2, stops) }, 0)
+  const rgb = await accumulate(renderer, camera, linear!.post, w, h, samples)
+  const bytes = printFrame(rgb, w, h, printAt(stops), 0)
   return { bytes, ms: Math.round(performance.now() - t) }
 }
 
@@ -356,7 +293,7 @@ function aimFilm(time: number, framing: 'desktop' | 'phone', w: number, h: numbe
   toneAt(p.stop)
   setHour(p.hour)
   const ph = framing === 'phone'
-  uAir.value = airAt(time)
+  setAir(airAt(time))
   aim(p.pos, ph ? p.phone.look : p.look, ph ? p.phone.hfov : p.hfov, w, h, ph ? p.phone.shift : p.shift)
   showFigure(p.stop)
   return p
@@ -405,7 +342,8 @@ const rig = {
       file, stop: s.n, id: s.id, framing: o.framing, view: o.view, filmSecond: +time.toFixed(3), filmFrameAt8fps: Math.round(time * 8),
       cssSize: o.css ?? [o.w, o.h], devicePixels: [o.w, o.h], ratio: o.css ? o.w / o.css[0] : 1, subFrames: o.samples,
       sampleCountReadBack: 'one sample a sub-frame: the linear target is allocated without multisampling (render.ts)',
-      backend: stack.backend, adapter: stack.architecture, exposureStops: +ev.toFixed(3), print: { ...PRINT, exposure: PRINT.exposure * Math.pow(2, ev) },
+      backend: stack.backend, adapter: stack.architecture, exposureStops: +ev.toFixed(3), heightStops: +L.stopsAt(camera.position.y).toFixed(3), print: printAt(ev),
+      air: { sigma: L.AIR.uSigma.value, scale: L.AIR.uScale.value, on: L.AIR.uOn.value }, env: { intensity: scene.environmentIntensity, sun: L.sunLight.intensity },
       hour: +p.hour.toFixed(3), sun: { azimuth: +sun.azimuth.toFixed(1), elevation: +sun.elevation.toFixed(1) },
       camera: { utm: F.utm(p.pos[0], p.pos[2]), y: +p.pos[1].toFixed(2), eyeOverStand: +(p.pos[1] - stand(p.pos[0], p.pos[2])).toFixed(3), hfov: +camera.fov.toFixed(2), kind: p.kind, near: camera.near, far: camera.far },
       figures: figuresInFrame().filter((n) => n === p.stop),
@@ -417,7 +355,7 @@ const rig = {
   /** a still from any camera: UTM place, a height (a level or 'eye'), a look point (E, N, level), an hour */
   async probe(o: { at: [number, number]; y: number | 'eye'; look: [number, number, number]; hour: string; hfov?: number; shift?: number; stops?: number; w: number; h: number; samples: number; out: string; name: string; view?: 'grey' | 'classes'; figure?: number; air?: number; garden?: GardenState }) {
     const [x, z] = F.s(o.at[0], o.at[1])
-    uAir.value = o.air ?? (o.figure ? airOf(o.figure) : 0)
+    setAir(o.air ?? (o.figure ? airOf(o.figure) : 0))
     gardens.setGarden(o.garden ?? gardenState)
     if (o.figure) {
       toneAt(o.figure)
