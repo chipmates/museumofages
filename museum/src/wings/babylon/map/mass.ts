@@ -348,7 +348,10 @@ export interface Bodies {
   counts: { prisms: number; boxes: number; houses: number; triangles: number }
 }
 
-export function buildBodies(built: Built, tones: ClassTones, sky: Sky, sunDir: N, canalZ: number[], passage?: Passage): Bodies {
+/** a stop module's paint over a shared body's colour (the ground under a precinct); none leaves the map's own */
+export interface Paint { ground?: (base: N) => N }
+
+export function buildBodies(built: Built, tones: ClassTones, sky: Sky, sunDir: N, canalZ: number[], passage?: Passage, paint: Paint = {}): Bodies {
   const group = new Group()
   group.name = 'babylon-map'
   const blockMat = bodyMaterial(tones, 0.42, passage)
@@ -374,7 +377,8 @@ export function buildBodies(built: Built, tones: ClassTones, sky: Sky, sunDir: N
 
   const groundMat = new MeshStandardNodeMaterial({ roughness: 1, metalness: 0 })
   const g0 = vec3(0.5, 0.48, 0.44)
-  groundMat.colorNode = g0.mul(mx_noise_float(positionWorld.mul(0.02)).mul(0.06).add(1)).mul(smoothstep(-4, 1, positionWorld.y).mul(0.4).add(0.6))
+  const groundBase = g0.mul(mx_noise_float(positionWorld.mul(0.02)).mul(0.06).add(1)).mul(smoothstep(-4, 1, positionWorld.y).mul(0.4).add(0.6))
+  groundMat.colorNode = paint.ground ? paint.ground(groundBase) : groundBase
   const ground = new Mesh(groundGeometry(built, canalZ), groundMat)
   ground.receiveShadow = true
   ground.castShadow = true

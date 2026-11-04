@@ -1,0 +1,90 @@
+{
+ "about": "Stop 9 on the map page: Etemenanki seen across its precinct's court from Gate 5, in UTM metres (E, N) and German-zero levels like map-plan.json. The precinct's east wall keeps the map's line, thickness and Gate 5 gap; the recess, the store blocks, the street's paving and the tower's faces are drawn here. Every height and finish above the dug plans is guessed, and says so.",
+ "gate5": {
+  "opening": [
+   445964.5,
+   3600121.5
+  ],
+  "half": 15.2,
+  "depth": 75,
+  "src": "an opening about 30 m wide between the two east store buildings (P2021 p. 211); its centre read off C6.2 at about 445964.5, 3600121.5 on the wall's outer face, the recess's sides about 30 m apart; its depth not known: C6.2 draws an inner cross wall about 70 to 75 m in, drawn, not dug",
+  "axis": "the recess runs in square to the map's wall line (254.1 grid; the sheet's read-off is about 255, inside its error)",
+  "inner": "the gate at the recess's inner end was totally destroyed (P2021 p. 209 to 211): no gate body, no height, no facade; its place is a threshold course across the recess's end, guessed"
+ },
+ "wall": {
+  "top": 12.0,
+  "towers": {
+   "pitch": 10.4,
+   "w": 4.0,
+   "out": 0.5,
+   "over": 0.6
+  },
+  "store": {
+   "back": 85,
+   "depth": 75
+  },
+  "src": "the map's line and 8 m thickness (C6.2); a mud-brick double wall with slight towers, two store buildings with deep chambers against the east side (K1914 ch. XXX)",
+  "hsrc": "the walls' height, the towers' pitch, width and rise are ours (bab.precinct.body, guessed; the rhythm of slight towers after Koldewey's drawing of 1919); white lime-gypsum plaster over mud brick as one model shows it (P2021 fig. 4.19 caption), guessed"
+ },
+ "street": {
+  "from": 14,
+  "to": 17,
+  "dug": 6.4,
+  "breccia": {
+   "w": 0.59,
+   "n": 7,
+   "src": "the west and middle 4.2 m in reddish breccia slabs about 59 by 59 cm, seven across (P2021 p. 209 to 213)"
+  },
+  "brick": {
+   "w": 2.2,
+   "src": "the east 2.2 m in brick laid in asphalt (P2021 p. 209 to 213)"
+  },
+  "margin": "the map's street is 8.6 m wide; the dug 6.4 m lies on its middle, the rest is the street's unpaved shoulder, guessed",
+  "split": 30,
+  "splitSrc": "the paving as dug at the main entrance (bab.street.south-paved) to 30 m south of the opening's axis; south of that the street to the corner was reached only in a few trenches (bab.street.precinct-east, guessed)"
+ },
+ "cross": {
+  "w": 4.2,
+  "src": "a perpendicular street 4.2 m wide led from the Processional Way into the precinct (P2021 p. 209 to 213); drawn on C6.2 along the recess's middle; its paving not described, brick here, guessed"
+ },
+ "tower": {
+  "panels": {
+   "pitch1": 7.0,
+   "share": 0.58,
+   "out": 0.5,
+   "src": "the first stage 'indented or ornamented with buttresses' (Smith's reading of the tablet, K1914 ch. XXX); about 13 tall panels a side in Pedersén's model (P2021 fig. 4.18): the panels, their depth and the upper stages' panels are ours (bab.tower.wallface, guessed; the rhythm after Koldewey's restored tower of 1919)"
+  },
+  "temple": {
+   "glaze": true,
+   "src": "the king says he raised Etemenanki's top with baked bricks of shining blue glaze (RIBo Nebuchadnezzar II 002 iii 15); no such fragment was found at Babylon (P2021 p. 162): blue, guessed (bab.tower.topglaze)"
+  },
+  "brick": "baked brick 32 by 32 or 31.5 cm in bitumen, unstamped (P2021 p. 155): the bond and the tone are ours"
+ },
+ "air": {
+  "sigma": 0.00025,
+  "src": "the spring air's extinction over the plain, ours: about 8 percent of the light between the gate and the tower's face is the sunlit haze's (a visual range of about 15 km); the haze takes the horizon sky's colour toward the view, the sun's glow included"
+ },
+ "colours": {
+  "src": "linear albedo, ours: the baked brick from the gate kit's buff and red-brown (PAL), tinted toward the yellow-buff of Babylon's unglazed brick; the white plaster warm and matte (an open plaster scan's look, tinted); the mud brick at the walls' foot where splash wore the plaster; the court's earth the plain's dust",
+  "plaster": [
+   0.66,
+   0.6,
+   0.5
+  ],
+  "mud": [
+   0.42,
+   0.34,
+   0.25
+  ],
+  "earth": [
+   0.44,
+   0.38,
+   0.29
+  ],
+  "brick": [
+   0.48,
+   0.39,
+   0.28
+  ]
+ }
+}
