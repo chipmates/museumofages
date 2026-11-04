@@ -1,0 +1,286 @@
+{
+ "about": "The Nabu sha hare temple on the map page, in UTM metres (E, N) and German-zero levels like map-plan.json. Boxes are [E west, E east, N south, N north]. The plan is read off sheet C6.2 (Uppsala, CC BY 4.0) and P2021 p. 167 to 170; every height, every door and the finish are guessed and say so.",
+ "outline": {
+  "box": [
+   445839.5,
+   445871.4,
+   3600394.0,
+   3600428.2
+  ],
+  "src": "the temple's outer faces on C6.2, its drawn wall line read at its middle: 31.9 x 34.2 m, 1,091 m2 (P2021 p. 167: about 1,080 m2); the baked-brick casing round the buried older walls lies under the street's fill at +8.0 and is not drawn"
+ },
+ "floor": 8.0,
+ "floorSrc": "the rebuilt temple 'constructed on the remains of the mudbrick walls at +8.0 m' (P2021 p. 168)",
+ "paving": {
+  "top": 0.03,
+  "src": "baked brick covered with bitumen, guessed: Koldewey found an asphalt covering on the Ninmah court's pavement (K1914 ch. IX), Pedersen's model gives this court bricks covered with asphalt (P2021 fig. 4.24)"
+ },
+ "wall": 1.8,
+ "wallSrc": "walls 1.8 m thick (P2021 p. 170)",
+ "heights": {
+  "ceiling": 13.4,
+  "deck": 14.0,
+  "top": 14.6,
+  "towerTop": 15.5,
+  "src": "ours, inside Pedersen's model's 9.0 m at most on the upper level (P2021 p. 170): the walls 6.6 m over the floor, the roof's deck 6.0, the rooms 5.4 m high, the gate towers 7.5 m and their battlements to +17.0"
+ },
+ "courts": {
+  "nabu": {
+   "box": [
+    445848.65,
+    445857.35,
+    3600407.05,
+    3600421.85
+   ],
+   "src": "Nabu's court 14.8 x 8.7 m (P2021 p. 168), centred on its open area on C6.2"
+  },
+  "small": {
+   "box": [
+    445863.0,
+    445869.6,
+    3600400.6,
+    3600409.7
+   ],
+   "src": "the smaller court 9.1 x 6.6 m (P2021 p. 168), on its open area on C6.2, its east side the outer wall"
+  }
+ },
+ "rooms": {
+  "cella": {
+   "box": [
+    445847.35,
+    445858.35,
+    3600400.35,
+    3600405.25
+   ],
+   "src": "Nabu's cella south of his court, 4.9 m wide, 54 m2 (P2021 p. 168): 11.0 x 4.9 m behind a 1.8 m wall"
+  },
+  "smallCella": {
+   "box": [
+    445863.0,
+    445869.6,
+    3600395.8,
+    3600398.8
+   ],
+   "src": "the goddess's cella south of the smaller court, 3.0 m wide, 20 m2 (P2021 p. 168)"
+  },
+  "vestibule": {
+   "box": [
+    445859.15,
+    445869.6,
+    3600415.2,
+    3600420.0
+   ],
+   "src": "guessed: a vestibule from the gate to the court, as Koldewey describes the temples' gate rooms (K1914 ch. IX, XXXIX); the gate's place on C6.2 and P2021 fig. 4.20"
+  },
+  "west1": {
+   "box": [
+    445843.6,
+    445846.85,
+    3600408.9,
+    3600412.3
+   ],
+   "src": "guessed: a room behind a side door"
+  },
+  "west2": {
+   "box": [
+    445843.6,
+    445846.85,
+    3600416.5,
+    3600419.9
+   ],
+   "src": "guessed: a room behind a side door"
+  },
+  "east1": {
+   "box": [
+    445859.15,
+    445862.6,
+    3600408.6,
+    3600412.2
+   ],
+   "src": "guessed: a room behind a side door"
+  }
+ },
+ "niche": {
+  "e": [
+   445851.6,
+   445854.4
+  ],
+  "depth": 0.9,
+  "h": 3.2,
+  "src": "guessed: the cult niche in the cella's back wall (the type, P2021 p. 180)"
+ },
+ "doors": [
+  {
+   "id": "gate",
+   "wall": "x",
+   "at": 3600417.6,
+   "w": 2.4,
+   "h": 4.6,
+   "from": 445869.6,
+   "to": 445872.8,
+   "src": "the main entrance on the street side between its towers (P2021 p. 170; C6.2, the double altar before it), plain, never arched (P2021 p. 168); width and height guessed"
+  },
+  {
+   "id": "court",
+   "wall": "x",
+   "at": 3600417.6,
+   "w": 2.0,
+   "h": 4.0,
+   "from": 445857.35,
+   "to": 445859.15,
+   "src": "guessed: the vestibule's door into Nabu's court"
+  },
+  {
+   "id": "cella",
+   "wall": "z",
+   "at": 445853.0,
+   "w": 2.6,
+   "h": 4.8,
+   "from": 3600405.25,
+   "to": 3600407.05,
+   "src": "the cella's door on the court's axis, plain (P2021 p. 168); width and height guessed"
+  },
+  {
+   "id": "west1",
+   "wall": "x",
+   "at": 3600410.6,
+   "w": 1.5,
+   "h": 3.2,
+   "from": 445846.85,
+   "to": 445848.65,
+   "src": "guessed, after the side doors of Pedersen's model (P2021 figs. 4.24, 4.26), plain"
+  },
+  {
+   "id": "west2",
+   "wall": "x",
+   "at": 3600418.2,
+   "w": 1.5,
+   "h": 3.2,
+   "from": 445846.85,
+   "to": 445848.65,
+   "src": "guessed, as west1"
+  },
+  {
+   "id": "east1",
+   "wall": "x",
+   "at": 3600410.4,
+   "w": 1.5,
+   "h": 3.2,
+   "from": 445857.35,
+   "to": 445859.15,
+   "src": "guessed, as west1"
+  },
+  {
+   "id": "smallCella",
+   "wall": "z",
+   "at": 445866.3,
+   "w": 1.6,
+   "h": 3.4,
+   "from": 3600398.8,
+   "to": 3600400.6,
+   "src": "the goddess's cella door in the black wall, plain; width and height guessed"
+  }
+ ],
+ "towers": {
+  "proj": 1.4,
+  "w": 3.4,
+  "grooves": {
+   "w": 0.3,
+   "d": 0.15,
+   "n": 2
+  },
+  "src": "the usual towers beside the main entrance (P2021 p. 170), with vertical grooves top to bottom as Koldewey found on temple fronts (K1914 ch. IX); sizes guessed (Guessed, after Koldewey, 1914, temple Z)"
+ },
+ "pilasters": {
+  "w": 1.3,
+  "d": 0.35,
+  "pitch": 3.3,
+  "src": "shallow towers close together along the outer walls, each with a vertical groove top to bottom, the temples' type (K1914 ch. IX: grooves are the sacred buildings' own decoration; P2021 p. 180 on the pilasters of religious buildings); sizes guessed",
+  "groove": {
+   "w": 0.22,
+   "d": 0.1
+  }
+ },
+ "merlons": {
+  "low": [
+   0.8,
+   0.6,
+   0.55
+  ],
+  "high": [
+   0.4,
+   0.6,
+   0.4
+  ],
+  "src": "stepped battlements, two tiers (K1914 ch. IX: the temples crowned like fortifications with the usual stepped battlements); one on each pilaster, one in each recess between, one at each corner, two over the gate, one on each fin of a gate tower; sizes guessed"
+ },
+ "bands": {
+  "foot": [
+   0.0,
+   0.12
+  ],
+  "low": [
+   1.3,
+   1.42
+  ],
+  "high": [
+   1.52,
+   1.6
+  ],
+  "pier": 0.6,
+  "pitch": 2.6,
+  "frame": [
+   0.1,
+   0.26,
+   0.38,
+   0.48
+  ],
+  "src": "plain black bitumen bands on white lime-gypsum plaster, recorded on the older temple below (P2021 p. 167, fig. 4.23) and carried up as a transfer (Guessed); the layout after Pedersen's model of this court (P2021 fig. 4.24): a dado of black piers under two bands, black frames round the doors; no motif drawn as found"
+ },
+ "black": {
+  "src": "the court wall before the goddess's cella all black with bitumen (P2021 p. 170)"
+ },
+ "ashratum": {
+  "box": [
+   445876.0,
+   445889.4,
+   3600394.2,
+   3600413.8
+  ],
+  "court": [
+   445878.0,
+   445883.6,
+   3600401.6,
+   3600409.6
+  ],
+  "top": 13.4,
+  "src": "the Ashratum temple between the street and the Nabu temple, about 260 m2, pilasters and no towers (P2021 p. 180, 445880 E 3600400 N; C6.2): 13.4 x 19.6 m; its floor near +6 is open (P2021 p. 181); its height, finish and state at 570 BC guessed"
+ },
+ "apron": {
+  "top": 7.98,
+  "src": "the open ground before the gate at the street's level (+7.5 to +8.0, P2021 p. 215), guessed, beaten earth over brick"
+ },
+ "colours": {
+  "src": "linear albedo, ours: lime-gypsum plaster matte and a little warm, fresh (MATERIALS, Plaster003); bitumen near black with a dull sheen (Asphalt026C), the floor's coat weathered to a dark grey-brown as old asphalt goes; the earth roof as the court's",
+  "plaster": [
+   0.66,
+   0.63,
+   0.57
+  ],
+  "bitumen": [
+   0.03,
+   0.028,
+   0.026
+  ],
+  "paving": [
+   0.12,
+   0.105,
+   0.09
+  ],
+  "apron": [
+   0.42,
+   0.36,
+   0.28
+  ]
+ }
+}

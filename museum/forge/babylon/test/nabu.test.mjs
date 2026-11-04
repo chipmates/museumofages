@@ -1,0 +1,71 @@
+// node --test forge/babylon/test/*.test.mjs (stop 8's temple built in a child node that strips its types)
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import { spawnSync } from 'node:child_process'
+import { join } from 'node:path'
+import { pathToFileURL } from 'node:url'
+import { APP } from '../pages.mjs'
+
+const W = join(APP, 'src/wings/babylon')
+const url = (p) => JSON.stringify(pathToFileURL(join(W, p)).href)
+const code = `
+import { readFileSync } from 'node:fs'
+import { buildPlan } from ${url('map/plan.ts')}
+import { buildCourt } from ${url('court/court-geom.ts')}
+import { buildNabu, SURF } from ${url('nabu/nabu-geom.ts')}
+const j = (p) => JSON.parse(readFileSync(new URL(p), 'utf8'))
+const plan = j(${url('map/map-plan.json')})
+const court = buildCourt(buildPlan(plan, { houses: false }), plan, j(${url('court/court-plan.json')}))
+const n = buildNabu(court.built, plan, j(${url('nabu/nabu-plan.json')}))
+const box = (g) => { g.computeBoundingBox(); const b = g.boundingBox; return [b.min.y, b.max.y] }
+const surf = Object.fromEntries(n.bodies.map((b) => { const s = b.geometry.getAttribute('surf'), c = {}; for (let i = 0; i < s.count; i++) c[s.getX(i)] = 1; return [b.id, Object.keys(c).map(Number)] }))
+const F = n.F, x = (E) => E - plan.frame.E0, z = (N) => plan.frame.N0 - N
+console.log(JSON.stringify({ facts: n.facts, ids: n.bodies.map((b) => b.id), left: n.built.prisms.map((p) => p.id), SURF, surf,
+  heights: Object.fromEntries(n.bodies.map((b) => [b.id, box(b.geometry)])),
+  stand: { court: n.built.stand(x(445853), z(3600414)), small: n.built.stand(x(445866), z(3600405)), apron: n.built.stand(x(445874.5), z(3600424)) },
+  pave: F.pave, apronTop: F.apronTop }))`
+const r = spawnSync(process.execPath, ['--experimental-strip-types', '--no-warnings', '--input-type=module', '-e', code], { encoding: 'utf8' })
+const out = r.status === 0 ? JSON.parse(r.stdout.trim().split('\n').pop()) : null
+const near = (a, b, tol, what) => assert.ok(Math.abs(a - b) <= tol, `${what}: ${a} against ${b} (tolerance ${tol})`)
+
+test('the temple builds', () => assert.equal(r.status, 0, r.stderr))
+
+test('the temple stands at the dug sizes (P2021 p. 167 to 170)', () => {
+  const f = out.facts
+  near(f.area, 1080, 25, 'built area')
+  near(f.court[0], 8.7, 0.01, "Nabu's court east-west"); near(f.court[1], 14.8, 0.01, "Nabu's court north-south")
+  near(f.cella.width, 4.9, 0.01, "Nabu's cella width"); near(f.cella.area, 54, 0.5, "Nabu's cella area")
+  near(f.small[0], 6.6, 0.01, 'smaller court east-west'); near(f.small[1], 9.1, 0.01, 'smaller court north-south')
+  near(f.smallCella.width, 3.0, 0.01, "the goddess's cella width"); near(f.smallCella.area, 20, 0.5, "the goddess's cella area")
+  for (const [k, v] of Object.entries(f.walls)) near(v, 1.8, 0.01, `wall ${k}`)
+})
+
+test('each cella lies south of its court, behind a wall', () => {
+  assert.equal(out.facts.cella.southOfCourt, true)
+  assert.equal(out.facts.smallCella.southOfCourt, true)
+})
+
+test('the floor at +8.0, every door plain, nothing over the 9.0 m the model allows', () => {
+  const f = out.facts
+  assert.equal(f.floor, 8.0)
+  assert.ok(f.doors.every((d) => d.flat), 'a door is not plain')
+  assert.ok(f.merlonTop <= f.floor + 9.0 + 1e-6, `battlements at ${f.merlonTop}`)
+  assert.ok(out.heights['nabu'][1] <= f.floor + 9.0 + 1e-6, `the temple's top at ${out.heights['nabu'][1]}`)
+})
+
+test("the map's block is taken off and the temple's bodies replace it", () => {
+  assert.ok(!out.left.includes('nabu'), "the map's nabu block is still drawn")
+  assert.deepEqual(out.ids, ['nabu', 'nabu-ashratum', 'nabu-apron'])
+})
+
+test('the smaller court has its black wall, Nabu\'s court its banded walls', () => {
+  assert.ok(out.surf['nabu'].includes(out.SURF.black), 'no black wall')
+  assert.ok(out.surf['nabu'].includes(out.SURF.courtWall), 'no banded court wall')
+  assert.ok(out.surf['nabu'].includes(out.SURF.bandedRoom), 'no banded cella')
+})
+
+test('a visitor stands on the paving inside and on the open ground before the gate', () => {
+  near(out.stand.court, out.pave, 1e-6, "in Nabu's court")
+  near(out.stand.small, out.pave, 1e-6, 'in the smaller court')
+  near(out.stand.apron, out.apronTop, 1e-6, 'before the gate')
+})
