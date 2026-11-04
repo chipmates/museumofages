@@ -6,7 +6,9 @@
    embankment (outwork.ts); the quay south of the bridge stands on the river's
    bank, its face on the water's edge (REC bab.river.quay570; the map's line ran
    up to 32 m out in the water there); the street north of the dam comes down to
-   the plain as an unpaved way (REC bab.street.outer-north, Guessed, never as dug).
+   the plain as an unpaved way (REC bab.street.outer-north, Guessed, never as dug);
+   the river runs on past the map's two cut ends into the haze, and the ground
+   at the Kasr's west foot lies below the gardens' steps (both ours).
    The functions it needs come in as arguments: node mounts it without a bundler. */
 
 import type { NorthEntry } from './north'
@@ -46,7 +48,31 @@ export function groundRows(canalZ: number[]): number[] {
   return out
 }
 
+/** the river beyond the map's cut ends (ours, Guessed): north toward Sippar in a long bend, south-east past the outer city,
+    each far enough to end in the haze; east bank first (north to south), west bank after, as the map's outline runs */
+const RIVER_NORTH_EAST: Array<[number, number]> = [[444860, 3613000], [445360, 3610000], [445760, 3607500], [445960, 3605500]]
+const RIVER_SOUTH: Array<[number, number]> = [[446650, 3597000], [446800, 3595000], [446600, 3592000], [446400, 3592000], [446600, 3595000], [446450, 3597000]]
+const RIVER_NORTH_WEST: Array<[number, number]> = [[445840, 3605500], [445640, 3607500], [445240, 3610000], [444740, 3613000]]
+
+/** the ground at the Kasr's west foot (ours, Guessed): the map's rise toward the North Palace's +15 buried the gardens' lower
+    steps (+4, +8, +11) and fell into the river as one rounded slope. Two rows of weights in the map's blend (their levels are
+    weights, not levels): one under the steps pulls the ground below every step's top, one by the river holds a strip at about
+    +2 to +4 between the lowest step and the bank, so each step stands clear and the bank to the water is short */
+const KASR_FOOT = [3600815, 3600860, 3600905, 3600950, 3600990].flatMap((N) => [
+  { at: [445495, N], level: -8, r: 22, why: "under the gardens' steps at the Kasr's west foot (ours)" },
+  { at: [445463, N], level: 2, r: 18, why: "the strip between the gardens' lowest step and the river (ours)" },
+])
+
 export function editCity(cp: J, D: CityDeps): { north: NorthEntry } {
+  cp.ground.points.push(...KASR_FOOT.map((p) => ({ ...p, at: [...p.at] })))
+  const river = cp.water.find((w: J) => w.id === 'euphrates')
+  if (river) {
+    const P: Array<[number, number]> = river.poly
+    const iSouth = P.findIndex((q) => q[0] === 446300 && q[1] === 3598300)
+    if (P[0]![1] === 3603800 && P[P.length - 1]![1] === 3603800 && iSouth > 0) {
+      river.poly = [...RIVER_NORTH_EAST, ...P.slice(0, iSouth + 1), ...RIVER_SOUTH, ...P.slice(iSouth + 1), ...RIVER_NORTH_WEST].map((q) => [...q])
+    }
+  }
   const probe = D.buildPlan(cp, { houses: false })
   const north = D.northEntry(cp, (x, z) => probe.streetAt(x, z).level, Number(cp.classes.band))
   cp.blocks = cp.blocks.filter((b: J) => !north.drop.includes(b.id))
