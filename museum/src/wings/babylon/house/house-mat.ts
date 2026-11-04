@@ -183,7 +183,7 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
   m.roughnessNode = float(0.94)
   // House VI's court: the light its sunlit band and its floor throw back into the shade, which the stack does not carry;
   // warm, a share of the sun's irradiance, more toward the floor where the lit east wall is seen whole
-  const inCourt6 = step(abs(u), ct.u[1] + 1.2).mul(step(abs(v), ct.v[1] + 1.2)).mul(six)
+  const inCourt6 = step(abs(u), ct.u[1] + 2.0).mul(step(abs(v), ct.v[1] + 2.0)).mul(six)
   const bounceZ = max(max(is(Z.court), is(Z.paving)), is(Z.reveal)).mul(inCourt6)
   const bounce = uHouseSun.mul(vec3(1.0, 0.95, 0.88)).mul(float(0.018).add(float(1).sub(smoothstep(0.0, 3.4, yF)).mul(0.012)))
   m.emissiveNode = c.mul(bounce).mul(bounceZ).mul(float(1).sub(uView))
