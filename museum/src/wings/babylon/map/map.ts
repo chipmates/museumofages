@@ -145,7 +145,7 @@ const sky: Sky = { colour: L.sky }
 /* `?sky=sampled`: an offline still takes the sky's light as shadowed samples over its sub-frames (sky-sample.ts), the
    reference the field (`?sky=set`, open/sky-set.ts) is measured against */
 const skyS = q.get('sky') === 'sampled'
-  ? skySampler({ renderer, scene, camera, air: L.AIR, sun: L.sunLight, uBounce: L.uBounce, groundColour: gatePlan.light.bounce.paving.colour, restoreEnv: () => L.bakeEnv(), mapSize: Number(q.get('skymap') ?? 8192) })
+  ? skySampler({ renderer, scene, camera, air: L.AIR, sun: L.sunLight, uBounce: L.uBounce, groundColour: gatePlan.light.bounce.paving.colour, setEnv: (t) => L.holdEnv(t), restoreEnv: () => L.bakeEnv(), mapSize: Number(q.get('skymap') ?? 8192) })
   : null
 const skyDome = L.dome
 // the last stop's crescent on the dome, at the minute the page's sun stands at (crescent/crescent.ts)

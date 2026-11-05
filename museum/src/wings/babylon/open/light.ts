@@ -279,6 +279,8 @@ export function walkLight(o: WalkLightOptions) {
     setHour, setNear, fitShadow, frame, stopsAt, printFor, bakeEnv,
     /** the environment's source for the hours this sky does not hold: a texture for the hour, or null for this sky */
     setEnvSource: (f: ((hour: number) => Texture | null) | null): void => { envSource = f },
+    /** an offline still's own environment for its accumulation (the sampled sky's ground-only one); bakeEnv puts the walk's back */
+    holdEnv: (t: Texture): void => { scene.environment = t },
     /** which environment the scene holds now, and how many times this sky was baked */
     env: () => ({ by: envBy, bakes: envBakes }),
     /** the sun at an hour, as the facts and sidecars state it */

@@ -48,7 +48,7 @@ export interface SkySampler {
   facts(): Record<string, unknown>
 }
 
-export function skySampler(o: { renderer: WebGPURenderer; scene: Scene; camera: PerspectiveCamera; air: AirUniforms; sun: DirectionalLight; uBounce: N; groundColour: RGB; restoreEnv: () => void; mapSize?: number }): SkySampler {
+export function skySampler(o: { renderer: WebGPURenderer; scene: Scene; camera: PerspectiveCamera; air: AirUniforms; sun: DirectionalLight; uBounce: N; groundColour: RGB; setEnv: (t: N) => void; restoreEnv: () => void; mapSize?: number }): SkySampler {
   const { scene, camera, air, sun } = o
   const light = new DirectionalLight(0xffffff, 0)
   light.castShadow = true
@@ -117,7 +117,7 @@ export function skySampler(o: { renderer: WebGPURenderer; scene: Scene; camera: 
       groundEnv?.dispose?.()
       groundEnv = pmrem.fromScene(envScene, 0.02, 1, 1000)
       envI = scene.environmentIntensity
-      scene.environment = groundEnv.texture
+      o.setEnv(groundEnv.texture)
       light.visible = true
       sunHome.copy(sun.position)
       sunTarget.copy(sun.target.position)
