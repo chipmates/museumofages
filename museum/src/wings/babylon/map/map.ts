@@ -21,6 +21,7 @@ import { IDENTITY } from '../../../stack/grade'
 import { accumulate, toPNG } from '../../animals/cave/render'
 import { printFrame } from '../../animals/cave/print'
 import { createOpenLinear } from '../open/air'
+import { setWaterPixel } from '../open/earth'
 import { aloft, walkLight } from '../open/light'
 import { rebuildHouses } from '../open/houses'
 import { NORTH_PAVED } from '../open/north-paving'
@@ -288,6 +289,7 @@ function aim(pos: V3, look: V3, hfov: number, w: number, h: number, shift = 0): 
   esagila.setPixel(camera.fov, h)
   setCityPixel(camera.fov, h)
   bridge.setPixel(camera.fov, h)
+  setWaterPixel(camera.fov, h)
   crescent.setPixel(camera.fov, h)
   ishtar.setPixel(camera.fov, h)
   camera.updateMatrixWorld(true)
