@@ -1,0 +1,17 @@
+/* A paper feature over the held frame: the paper ground, the feature's pictures on it, the plate's drawing over them.
+   No colour value here: every shade is a token mixed by tokens.ts. */
+.paper-look { position: absolute; inset: 0; pointer-events: none; }
+.paper-look-ground {
+  position: absolute; inset: 0; opacity: 0;
+  background-color: var(--paper); background-image: var(--paper-grain); background-size: 240px 240px;
+}
+.paper-pictures { position: absolute; inset: 0; pointer-events: none; opacity: 0; }
+.paper-picture { position: absolute; display: block; max-width: none; }
+.paper-picture[hidden] { display: none; }
+.paper-plate.paper-look-plate { position: absolute; left: 0; top: 0; background: none; opacity: 0; }
+/* a picture's credit: printed in, under its picture, wrapped to the picture's width; 14 px, the kit's least */
+.paper-label.paper-credit {
+  box-sizing: border-box; white-space: normal; font-size: 0.875rem; line-height: 1.3; letter-spacing: 0.01em; color: var(--paper-pencil);
+  overflow-wrap: break-word; hyphens: manual;
+}
+.paper-plate[data-framing='upright'] .paper-label.paper-credit { font-size: 0.875rem; }

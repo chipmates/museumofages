@@ -75,5 +75,13 @@
    "shrub": { "h": [1.2, 2.2], "r": [1.0, 1.6], "row": "bab.gardens.plants" }
   },
   "hanging": { "every": 3.6, "w": [1.6, 3.4], "drop": [0.9, 2.6], "vine": 0.45, "src": "vine curtains and caper mounds over the terraces' own edges only, never a documented wall (GREEN H; REC bab.green.hanging, bab.green.vine)" }
+ },
+ "door": {
+  "features": ["oil", "garden-words"],
+  "opens": "the oil list and its peoples (feature 2, src/wings/babylon/oil/) and gardens in words of their time (feature 3, src/wings/babylon/garden-words/), two close looks on paper",
+  "wide": { "right": 0.03, "bottom": 0.05 },
+  "upright": { "middle": true, "bottom": 0.04 },
+  "colour": { "wide": [0.56, 0.36], "upright": [0.5, 0.32], "zoom": { "wide": 1.4, "upright": 1 } },
+  "src": "the stop's two presses as one group where the frozen designs put the one control (the lower right corner of the wide frame; centred inside the thumb's reach upright), each named by what it shows and never 'Learn more' (the words are the writer's); colour: the point of the held frame feature 3's colour panel settles on, the terraces (fractions of the frame), and how far it closes in (zoom, at least 1); today's camera: it moves with the stop's next round"
  }
 }

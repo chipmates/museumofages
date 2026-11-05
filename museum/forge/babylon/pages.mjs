@@ -69,6 +69,19 @@ export const PAGES = {
     readyMs: 120000,
     still: () => { throw new Error('feature 1, hidden words: shoot it with forge/babylon/objects-shoot.mjs') },
   },
+  // stop 4's two paper features on one bench, each page opening its own first
+  oil: {
+    html: 'src/wings/babylon/oil/oil.html',
+    rig: '__look',
+    readyMs: 60000,
+    still: () => { throw new Error('feature 2: shoot it with forge/babylon/paper-shoot.mjs --page oil') },
+  },
+  words: {
+    html: 'src/wings/babylon/garden-words/garden-words.html',
+    rig: '__look',
+    readyMs: 60000,
+    still: () => { throw new Error('feature 3: shoot it with forge/babylon/paper-shoot.mjs --page words') },
+  },
 }
 
 /** the walk's fourteen stops (map-cams.json) and the page that shows each today; stop 1 folds into the opening flight */
