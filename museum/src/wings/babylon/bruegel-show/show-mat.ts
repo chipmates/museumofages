@@ -98,6 +98,8 @@ export function showMaterial(f: ShowFrame, sp: J): Material {
      moss on the ledges; the shade by facing only, so pieces broken out side by side read as one face ── */
   const plane = h1(floor(n.x.mul(5.0)).add(floor(n.z.mul(5.0)).mul(11.0)).add(floor(n.y.mul(4.0)).mul(37.0)))
   const rN = mx_noise_float(P.mul(0.09)).mul(0.16).add(mx_noise_float(P.mul(0.45)).mul(0.07))
+  // the grain close to: fine pits and chips, faded out before a pixel spans them
+  const rFine = mx_noise_float(P.mul(2.6)).mul(0.07).add(mx_noise_float(P.mul(7.5)).mul(0.04)).mul(float(1).sub(smoothstep(0.04, 0.16, fw)))
   // the painter's strokes down each plane: tone that runs upright, fine across
   const stroke = mx_noise_float(vec3(P.x.mul(2.2), P.y.mul(0.09), P.z.mul(2.2))).mul(0.08)
   // stains run down the planes (noise stretched upright), broad furrows in shade between them, the bedding faintly across
@@ -107,7 +109,7 @@ export function showMaterial(f: ShowFrame, sp: J): Material {
   // a quarried face (fresh 1) is cut clean: paler, half the stains and furrows, each step shaded toward its foot
   const cut = fresh
   const weather = float(1).sub(cut.mul(0.5))
-  let rock: N = V(C.rock as RGB).mul(float(1).add(plane.sub(0.5).mul(0.5)).add(rN).add(stroke)).mul(float(1).sub(rStain.mul(weather)).sub(furrow.mul(weather)).sub(bed))
+  let rock: N = V(C.rock as RGB).mul(float(1).add(plane.sub(0.5).mul(0.5)).add(rN).add(rFine).add(stroke)).mul(float(1).sub(rStain.mul(weather)).sub(furrow.mul(weather)).sub(bed))
   rock = rock.mul(mix(float(1), mix(float(1.1), float(0.74), smoothstep(0.2, 5.0, under)), cut))
   rock = mix(rock, rock.mul(vec3(1.1, 0.98, 0.78)), smoothstep(-0.1, 0.5, mx_noise_float(P.mul(0.05).add(vec3(3, 1, 2)))).mul(0.5))
   // the yellow ochre the painter laid where the stone is broken and its dust lies

@@ -506,7 +506,7 @@ function ringBays(n: number, off: number): Array<{ i: number; a0: number; a1: nu
     faces run upright in broad planes split by clefts; strata where it steps in; its top broken off in a tilted plane */
 function mass(S: Soup, f: ShowFrame, phi: number, r: number, w: number, dep: number, h0: number, h1: number, seed: number, tone: number, clefts = 2): void {
   const F = radialFrame(f, phi)
-  const N = 11, M = Math.max(3, Math.round((h1 - h0) / 5))
+  const N = 16, M = Math.max(4, Math.round((h1 - h0) / 3))
   const cl = Array.from({ length: clefts }, (_, i) => Math.floor(hash(seed, i, 21) * N))
   const rock = q(SK.rock, tone, 0, 0, h1)
   const corner = Array.from({ length: N }, (_, i) => (0.72 + 0.48 * hash(seed, i, 23)) * (cl.includes(i) ? 0.62 : 1))
@@ -519,9 +519,11 @@ function mass(S: Soup, f: ShowFrame, phi: number, r: number, w: number, dep: num
     const batter = (1 - 0.16 * u) * step
     return Array.from({ length: N }, (_, i) => {
       const a = (2 * Math.PI * (i + 0.3 * (hash(seed, i, 28) - 0.5))) / N
-      const k = corner[i]! * (1 + 0.07 * noise3(i * 0.9, seed, u * 3.0)) * batter
+      const k = corner[i]! * (1 + 0.1 * noise3(i * 0.9, seed, u * 5.0)) * batter
       const sx = Math.cos(a) * (w / 2) * k, dz = Math.sin(a) * (dep / 2) * k
-      const tt = j === M ? t - 0.12 * (h1 - h0) * (0.5 + tilt[0]! * sx / (w / 2) + tilt[1]! * dz / (dep / 2)) - 0.6 * hash(seed, i, 29) : t
+      // the broken top tilts within its own row, never down onto the row below (that folds a face to a sliver)
+      const row = (h1 - h0) / M
+      const tt = j === M ? Math.max(t - 0.6 * row, t - 0.12 * (h1 - h0) * (0.5 + tilt[0]! * sx / (w / 2) + tilt[1]! * dz / (dep / 2)) - 0.6 * hash(seed, i, 29)) : t
       return at(F, sx, tt, r + dz)
     })
   }
