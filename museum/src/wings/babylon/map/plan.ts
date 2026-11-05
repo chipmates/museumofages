@@ -156,6 +156,39 @@ function centroid(poly: P2[]): P2 {
   return [x / poly.length, z / poly.length]
 }
 
+/** the South Palace's ranges (map-plan.json `ranges`: UTM rects on C6.2's walls, clipped to the outline): each range's
+    roof a deck inside a parapet `parapet.t` thick (the outer walls `parapet.outer`), so the rooms body keeps its walls' top as the parapets and loses each
+    deck's well. Returns the wells (wound as the block's rect holes) and the decks, sunk 0.1 m into the floor body */
+function palaceRanges(b: J, poly: P2[], s: (E: number, N: number) => P2): { wells: P2[][]; decks: Array<{ id: string; poly: P2[]; y0: number; y1: number }> } {
+  const t: number = b.parapet.t
+  const halves = poly.map((a, i) => {
+    const c = poly[(i + 1) % poly.length]!, mid = mul(add(a, c), 0.5)
+    let n = leftOf(norm(sub(c, a)))
+    if (!pointInPoly(add(mid, mul(n, 0.05)), poly)) n = mul(n, -1)
+    return { a, n }
+  })
+  const clip = (pts: P2[], a: P2, n: P2, off: number): P2[] => {
+    const f = (p: P2): number => (p[0] - a[0]) * n[0] + (p[1] - a[1]) * n[1] - off
+    const out: P2[] = []
+    pts.forEach((p, i) => {
+      const q = pts[(i + 1) % pts.length]!, fp = f(p), fq = f(q)
+      if (fp >= 0) out.push(p)
+      if (fp >= 0 !== fq >= 0) out.push(add(p, mul(sub(q, p), fp / (fp - fq))))
+    })
+    return out
+  }
+  const wells: P2[][] = [], decks: Array<{ id: string; poly: P2[]; y0: number; y1: number }> = []
+  for (const r of b.ranges) {
+    const [e0, e1, n0, n1] = r.rect as number[]
+    let w: P2[] = [s(e0! + t, n0! + t), s(e1! - t, n0! + t), s(e1! - t, n1! - t), s(e0! + t, n1! - t)]
+    for (const h of halves) w = clip(w, h.a, h.n, b.parapet.outer ?? t)
+    if (w.length < 3 || Math.abs(polyArea(w)) < 4) continue
+    wells.push(w)
+    decks.push({ id: `${b.id.replace(/-rooms$/, '')}-deck-${r.id}`, poly: [...w].reverse(), y0: b.base - 0.1, y1: r.deck ?? b.parapet.deck })
+  }
+  return { wells, decks }
+}
+
 /** a polyline offset sideways by `off` (positive to the left, map view), mitred at the joints */
 export function offsetLine(line: P2[], off: number): P2[] {
   const out: P2[] = []
@@ -356,6 +389,8 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
       const [w, h] = b.courtRect as number[]
       holes.push([add(add(c, mul(ea, -w! / 2)), mul(ec, -h! / 2)), add(add(c, mul(ea, w! / 2)), mul(ec, -h! / 2)), add(add(c, mul(ea, w! / 2)), mul(ec, h! / 2)), add(add(c, mul(ea, -w! / 2)), mul(ec, h! / 2))])
     }
+    const ranges = b.ranges ? palaceRanges(b, poly, F.s) : null
+    if (ranges) holes.push(...ranges.wells)
     const pushP = (id: string, p: P2[], y0: number, y1: number, hs: P2[][] = []): void => {
       prisms.push({ id, name: b.name, group: 'block', poly: p, holes: hs, y0, y1, plan: cls.plan, height: cls.height, band: 0, ...(b.walk ? { walk: true } : {}) })
     }
@@ -390,6 +425,19 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
       pushP(`${b.id}-wall-end`, [[from, zN], [x1, zN], [x1, zN + wall], [from, zN + wall]], b.base, b.top)
       facts['throne-room'] = { interior: [plan.blocks.find((q: J) => q.id === 'throne-room') ? 51.9 : 0], outer: [x1 - x0, zS - zN], doors: b.facade.doors }
     } else pushP(b.id, poly, b.base, b.top, holes)
+    if (ranges) for (const d of ranges.decks) pushP(d.id, d.poly, d.y0, d.y1)
+    if (b.front) {
+      // the towered wall C6.2 draws before the South Palace's south face: a curtain on the towers' line, its towers
+      const fr = b.front, fc = { plan: fr.plan as Cls, height: fr.height as Cls }
+      const a = F.s(fr.line[0][0], fr.line[0][1]), c = F.s(fr.line[1][0], fr.line[1][1]), d = norm(sub(c, a))
+      prisms.push({ id: `${b.id}-front`, name: fr.name, group: 'wall', poly: bandPoly([a, c], fr.thick / 2), holes: [], y0: fr.base, y1: fr.top, plan: fc.plan, height: fc.height, band: 0 })
+      const T = fr.towers
+      for (let k = 0; k < T.count; k++) {
+        const along = (T.first + k * T.pitch - fr.line[0][0]) / d[0]
+        const p = add(a, mul(d, along))
+        boxes.push({ id: `${b.id}-front-t0-${k}`, group: 'tower', x: p[0], z: p[1], y0: fr.base, y1: T.top, sx: T.w, sz: T.w, yaw: Math.atan2(-d[1], d[0]), plan: fc.plan, height: fc.height, band: 0 })
+      }
+    }
   }
 
   /* ── walls by line: the Kasr's, the lion street's (stepped with the street), embankments, the precinct's ── */

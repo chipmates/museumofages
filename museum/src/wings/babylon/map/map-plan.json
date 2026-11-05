@@ -1095,7 +1095,34 @@
    "height": "R",
    "src": "outline C6.2 (dug: green and orange on X1.4)",
    "hsrc": "the top level's floor about +12 (P2021 p. 93, 104); its top is the courts' floor",
-   "walk": true
+   "walk": true,
+   "front": {
+    "name": "the South Palace's towered south wall",
+    "line": [
+     [
+      445516,
+      3600601.87
+     ],
+     [
+      445708,
+      3600613.16
+     ]
+    ],
+    "thick": 2.0,
+    "base": -1.0,
+    "top": 15.0,
+    "towers": {
+     "w": 5.3,
+     "first": 445522.8,
+     "pitch": 10.55,
+     "count": 18,
+     "top": 17.0
+    },
+    "plan": "R",
+    "height": "G",
+    "src": "C6.2: a wall with towers 5.3 m square at about 10.55 m, 2 to 8 m before the south face, meeting it near 445708 E (read off the sheet); not checked against X1.4's colours, so R",
+    "hsrc": "curtain +15, towers +17, ours"
+   }
   },
   {
    "id": "south-palace-rooms",
@@ -1216,7 +1243,206 @@
    "plan": "M",
    "height": "G",
    "src": "outline and courts C6.2",
-   "hsrc": "walls to about +23 (P2021 p. 67, GR 5.2)"
+   "hsrc": "walls to about +23 (P2021 p. 67, GR 5.2)",
+   "parapet": {
+    "t": 0.75,
+    "outer": 3.0,
+    "deck": 22.0,
+    "src": "the parapets 0.75 m thick on the ranges' edges, the outer walls 3 m and 1.0 m over the decks, ours (G); the ranges' edges on C6.2's walls (M)"
+   },
+   "ranges": [
+    {
+     "id": "wb-n",
+     "rect": [
+      445500,
+      445560,
+      3600708,
+      3600900
+     ]
+    },
+    {
+     "id": "wb-s",
+     "rect": [
+      445500,
+      445560,
+      3600590,
+      3600672
+     ]
+    },
+    {
+     "id": "wb-w",
+     "rect": [
+      445500,
+      445523,
+      3600672,
+      3600708
+     ]
+    },
+    {
+     "id": "wb-e",
+     "rect": [
+      445555,
+      445560,
+      3600672,
+      3600708
+     ]
+    },
+    {
+     "id": "wa-n",
+     "rect": [
+      445560,
+      445619.5,
+      3600708,
+      3600900
+     ]
+    },
+    {
+     "id": "wa-s",
+     "rect": [
+      445560,
+      445619.5,
+      3600590,
+      3600672
+     ]
+    },
+    {
+     "id": "wa-w",
+     "rect": [
+      445560,
+      445572,
+      3600672,
+      3600708
+     ]
+    },
+    {
+     "id": "wa-e",
+     "rect": [
+      445606,
+      445614.5,
+      3600672,
+      3600708
+     ]
+    },
+    {
+     "id": "m-n",
+     "rect": [
+      445619.5,
+      445696.5,
+      3600725.3,
+      3600900
+     ]
+    },
+    {
+     "id": "m-s",
+     "rect": [
+      445619.5,
+      445696.5,
+      3600590,
+      3600635.3
+     ],
+     "deck": 22.45
+    },
+    {
+     "id": "m-w",
+     "rect": [
+      445619.5,
+      445628.9,
+      3600635.3,
+      3600725.3
+     ]
+    },
+    {
+     "id": "m-e",
+     "rect": [
+      445688.4,
+      445696.5,
+      3600635.3,
+      3600725.3
+     ]
+    },
+    {
+     "id": "c-n",
+     "rect": [
+      445696.5,
+      445746.5,
+      3600715,
+      3600750
+     ]
+    },
+    {
+     "id": "c-n2",
+     "rect": [
+      445696.5,
+      445733.7,
+      3600750,
+      3600900
+     ]
+    },
+    {
+     "id": "c-s",
+     "rect": [
+      445696.5,
+      445746.5,
+      3600590,
+      3600672
+     ]
+    },
+    {
+     "id": "c-w",
+     "rect": [
+      445696.5,
+      445701,
+      3600672,
+      3600715
+     ]
+    },
+    {
+     "id": "c-e",
+     "rect": [
+      445737,
+      445746.5,
+      3600672,
+      3600715
+     ]
+    },
+    {
+     "id": "e-n",
+     "rect": [
+      445746.5,
+      445830,
+      3600714,
+      3600750
+     ]
+    },
+    {
+     "id": "e-n2",
+     "rect": [
+      445777.5,
+      445830,
+      3600750,
+      3600900
+     ]
+    },
+    {
+     "id": "e-s",
+     "rect": [
+      445746.5,
+      445830,
+      3600590,
+      3600659
+     ]
+    },
+    {
+     "id": "e-e",
+     "rect": [
+      445788,
+      445830,
+      3600659,
+      3600714
+     ]
+    }
+   ],
+   "rangesSrc": "ranges round each court between the unit walls C6.2 draws at about 445560, 445619.5, 445696.5 and 445746.5 E (read off the sheet); the throne room's range (the main unit's south range) roofed at the throne room's own deck, the rest a metre under their parapets (G)"
   },
   {
    "id": "throne-room",
