@@ -510,11 +510,31 @@ export function groundMaterial(waterLevel: number, plain?: PlainLook, sky?: (d: 
 
 /** the water: the silt-laden body, by Fresnel the mirrored scene (walls, the tower, the sky: a planar reflection at the
     water's level, its image bent by the ripples) or the sky alone, wind streaks, ripples moving with the clock, the sun's glints */
-export function waterMaterial(A: AirUniforms, sky: (d: N) => N, uTime: N, mirror?: N): Material {
+/** the river seen from near, an eye on a bridge's deck (additive: without it the opening's far river is unchanged): the
+    body's colour, the current (scene metres a second) that carries the ripples, a finer ripple for the near water, the
+    piers that heap the water at their bows and leave a rougher wake behind, the glint's strength, the page's fog */
+export interface WaterLook {
+  body?: [number, number, number]
+  flow?: [number, number]
+  fine?: number
+  /** each pier: its centre, half its length along the current and half its width across it, the wake's length */
+  wakes?: Array<{ x: number; z: number; r: number; h: number; len: number }>
+  glint?: number
+  fog?: boolean
+  /** the long swells' share (1 the opening's): near water at a low eye reads calmer */
+  swell?: number
+  /** what the reflected ray meets before the sky (banks, walls), given the water's point, the ray and the sky it sees */
+  reflect?: (p: N, r: N, sky: N) => N
+}
+
+export function waterMaterial(A: AirUniforms, sky: (d: N) => N, uTime: N, mirror?: N, look: WaterLook = {}): Material {
   const m = new MeshBasicNodeMaterial({ side: DoubleSide })
   const p = positionWorld
   const t = uTime
-  const slope = (k: number, s: number, amp: number, drift: [number, number]): N => {
+  const flow = look.flow
+  const slope = (k: number, s: number, amp: number, drift0: [number, number]): N => {
+    // carried by the current where one is given: the pattern moves at the water's speed
+    const drift: [number, number] = flow ? [-flow[0] * k * 0.8, -flow[1] * k * 0.8] : drift0
     const q = vec3(p.x.mul(k).add(t.mul(drift[0])), t.mul(s), p.z.mul(k).add(t.mul(drift[1])))
     const e = 0.35
     const h0 = mx_noise_float(q)
@@ -524,10 +544,25 @@ export function waterMaterial(A: AirUniforms, sky: (d: N) => N, uTime: N, mirror
   }
   const streak = smoothstep(-0.3, 0.5, mx_noise_float(vec3(p.x.mul(0.004), 1.7, p.z.mul(0.0011)).add(vec3(t.mul(0.002), 0, t.mul(0.004)))))
   const calm = mix(0.35, 1, streak)
-  const s1 = slope(0.018, 0.05, 0.06, [0.004, 0.012])
-  const s2 = slope(0.09, 0.22, 0.12, [0.02, 0.05])
-  const s3 = slope(0.45, 0.6, 0.11, [0.06, 0.12])
-  const sl = s1.add(s2.add(s3).mul(calm))
+  const sw = look.swell ?? 1
+  const s1 = slope(0.018, 0.05, 0.06 * sw, [0.004, 0.012])
+  const s2 = slope(0.09, 0.22, 0.12 * sw, [0.02, 0.05])
+  const s3 = slope(0.45, 0.6, 0.11 * sw, [0.06, 0.12])
+  let sl: N = s1.add(s2.add(s3).mul(calm))
+  if (look.fine) sl = sl.add(slope(2.1, 1.3, look.fine, [0.2, 0.4]).mul(calm))
+  if (look.wakes && flow) {
+    // behind each pier the water runs rough for a while; at its bow it heaps a little
+    const fl = Math.hypot(flow[0], flow[1]) || 1, fx = flow[0] / fl, fz = flow[1] / fl
+    let rough: N = float(0)
+    for (const w of look.wakes) {
+      const dx = p.x.sub(w.x), dz = p.z.sub(w.z)
+      const down = dx.mul(fx).add(dz.mul(fz)), side = abs(dx.mul(fz).sub(dz.mul(fx)))
+      const wake = smoothstep(w.r * 0.85, w.r * 1.05, down).mul(float(1).sub(smoothstep(w.r, w.r + w.len, down))).mul(float(1).sub(smoothstep(w.h * 0.6, down.sub(w.r).mul(0.05).add(w.h * 1.2), side)))
+      const bow = float(1).sub(smoothstep(0, 3, down.negate().sub(w.r))).mul(step(down, -w.r * 0.9)).mul(float(1).sub(smoothstep(0.5, w.h * 0.7, side)))
+      rough = max(rough, max(wake, bow.mul(0.7)))
+    }
+    sl = sl.mul(float(1).add(rough.mul(1.6))).add(slope(1.2, 0.9, 0.09, [0.1, 0.2]).mul(rough))
+  }
   const n = normalize(vec3(sl.x.negate(), 1, sl.y.negate()))
   const view = normalize(p.sub(cameraPosition))
   const r = reflect(view, n)
@@ -535,21 +570,22 @@ export function waterMaterial(A: AirUniforms, sky: (d: N) => N, uTime: N, mirror
   const cosV = max(dot(n, view.negate()), 0)
   const fres = float(0.035).add(float(0.965).mul(pow(float(1).sub(cosV), 5)))
   const lit = max(A.uSun.y, 0).mul(1.6).add(0.55).mul(A.uDay)
-  const body = vec3(0.085, 0.095, 0.085).mul(lit)
+  const body = (look.body ? vec3(...look.body) : vec3(0.085, 0.095, 0.085)).mul(lit)
   let refl: N = sky(normalize(rUp)).mul(vec3(0.92, 0.96, 1.0))
+  if (look.reflect) refl = look.reflect(p, normalize(rUp), refl)
   if (mirror) {
     // the mirrored scene, its lookup bent by the ripples' slope; distance thins the bend so far walls stay whole
     const bend = sl.mul(0.012).div(max(p.distance(cameraPosition).mul(0.0015), 1))
     mirror.uvNode = mirror.uvNode.add(bend)
     refl = mirror.rgb.mul(vec3(0.92, 0.96, 1.0))
   }
-  const glint = pow(max(dot(r, A.uSun), 0), 600).mul(60).mul(A.uDay)
+  const glint = pow(max(dot(r, A.uSun), 0), 600).mul(look.glint ?? 60).mul(A.uDay)
   const sheen = pow(max(dot(r, A.uSun), 0), 24).mul(0.25).mul(A.uDay)
   // far off the mirrored horizon sky outshone the haze over the land round it: past about 5 km the reflection gives way
   const far = smoothstep(4500, 10000, p.distance(cameraPosition)).mul(0.5)
   const c = mix(body, refl.mul(float(1).sub(far)), fres).add(vec3(1, 0.82, 0.6).mul(glint.add(sheen)))
   m.colorNode = mix(c, vec3(0.3, 0.33, 0.36), uView.mul(0.6))
-  m.fog = false
+  m.fog = look.fog ?? false
   void uniform
   void min
   return m

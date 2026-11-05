@@ -238,7 +238,7 @@
    "level": -1.0,
    "plan": "R",
    "height": "G",
-   "src": "west bank: C6.2 and A2.1 (the drawn line west of 'Euphrates Arahtu'), drawn, not dug (P2021 p. 28); east bank about 570 BC: the Arahtu quay (system C) on C6.2, with a small mouth for the canal at the West Outwork's south-east (river sheet 1.2, 1.4); south of the bridge the old shore is open (0 to 100 m, P2021 p. 28), drawn here to the southern river wall; level: spring high water below the quay's walkway at -0.4 (P2021 p. 24, 66); north of the Kasr the west bank is ours",
+   "src": "west bank: C6.2 and A2.1 (the drawn line west of 'Euphrates Arahtu'), drawn, not dug (P2021 p. 28); east bank about 570 BC: the Arahtu quay (system C) on C6.2, with a small mouth for the canal at the West Outwork's south-east (river sheet 1.2, 1.4); south of the bridge the water stands at the quay's face (the shore of 0 to 100 m at low water is open, P2021 p. 28); at the bridge the west bank meets the west land pier's inner face, so the land piers stand 126 m apart over water (P2021 p. 204); level: spring high water below the quay's walkway at -0.4 (P2021 p. 24, 66); north of the Kasr the west bank is ours",
    "poly": [
     [
      445905,
@@ -321,24 +321,20 @@
      3599841
     ],
     [
-     445574.25,
-     3599815
+     445574.21,
+     3599815.2
     ],
     [
-     445556,
-     3599700
+     445587.41,
+     3599524.08
     ],
     [
-     445600,
-     3599520
+     445782.0,
+     3599260.29
     ],
     [
-     445700,
-     3599330
-    ],
-    [
-     445830,
-     3599140
+     445932.13,
+     3599108.16
     ],
     [
      445980,
@@ -369,8 +365,12 @@
      3599525
     ],
     [
-     445410,
-     3599840
+     445404.5,
+     3599812
+    ],
+    [
+     445401.8,
+     3599846
     ],
     [
      445343,
@@ -2137,79 +2137,191 @@
    "top": 2.5,
    "outline": [
     [
-     0,
+     0.0,
      10.5
     ],
     [
-     1.3,
-     9.5
+     0.587,
+     9.869
     ],
     [
-     2.6,
-     8.5
+     1.222,
+     9.099
     ],
     [
-     3.5,
-     7.3
+     1.824,
+     8.266
     ],
     [
-     4.1,
-     6.0
+     2.372,
+     7.39
+    ],
+    [
+     2.862,
+     6.481
+    ],
+    [
+     3.29,
+     5.543
+    ],
+    [
+     3.655,
+     4.582
+    ],
+    [
+     3.955,
+     3.599
+    ],
+    [
+     4.191,
+     2.598
+    ],
+    [
+     4.361,
+     1.581
+    ],
+    [
+     4.465,
+     0.547
     ],
     [
      4.5,
-     4.0
+     -0.5
     ],
     [
      4.5,
-     -8.6
+     -6.45
     ],
     [
-     3.9,
-     -9.6
+     4.422,
+     -8.951
     ],
     [
-     2.4,
-     -10.2
+     4.194,
+     -9.416
     ],
     [
-     0,
+     3.84,
+     -9.801
+    ],
+    [
+     3.394,
+     -10.072
+    ],
+    [
+     2.9,
+     -10.208
+    ],
+    [
+     2.32,
+     -10.313
+    ],
+    [
+     1.74,
+     -10.395
+    ],
+    [
+     1.16,
+     -10.453
+    ],
+    [
+     0.58,
+     -10.488
+    ],
+    [
+     0.0,
      -10.5
     ],
     [
-     -2.4,
-     -10.2
+     -0.58,
+     -10.488
     ],
     [
-     -3.9,
-     -9.6
+     -1.16,
+     -10.453
+    ],
+    [
+     -1.74,
+     -10.395
+    ],
+    [
+     -2.32,
+     -10.313
+    ],
+    [
+     -2.9,
+     -10.208
+    ],
+    [
+     -3.394,
+     -10.072
+    ],
+    [
+     -3.84,
+     -9.801
+    ],
+    [
+     -4.194,
+     -9.416
+    ],
+    [
+     -4.422,
+     -8.951
     ],
     [
      -4.5,
-     -8.6
+     -6.45
     ],
     [
      -4.5,
-     4.0
+     -0.5
     ],
     [
-     -4.1,
-     6.0
+     -4.465,
+     0.547
     ],
     [
-     -3.5,
-     7.3
+     -4.361,
+     1.581
     ],
     [
-     -2.6,
-     8.5
+     -4.191,
+     2.598
     ],
     [
-     -1.3,
-     9.5
+     -3.955,
+     3.599
+    ],
+    [
+     -3.655,
+     4.582
+    ],
+    [
+     -3.29,
+     5.543
+    ],
+    [
+     -2.862,
+     6.481
+    ],
+    [
+     -2.372,
+     7.39
+    ],
+    [
+     -1.824,
+     8.266
+    ],
+    [
+     -1.222,
+     9.099
+    ],
+    [
+     -0.587,
+     9.869
     ]
    ],
-   "outlineSays": "metres along the bridge (u) and toward the north (v), at the foot: a pointed bow upstream, convex sides, a slightly curved back",
+   "outlineSays": "metres along the bridge (u) and toward the north (v), at the waterline: a pointed bow upstream whose convex sides leave the straight flanks about half way along (a tangent ogive), a slightly curved back with rounded corners; read after Wetzel's plan (P2021 Fig. 5.5), its curves ours",
    "batter": 0.08,
    "plan": "M",
    "height": "R",
@@ -2513,8 +2625,8 @@
      3599865.53
     ],
     [
-     445569.68,
-     3599850.03
+     445567.85,
+     3599858.84
     ]
    ],
    "thick": 5.25,
@@ -2522,7 +2634,7 @@
    "base": -5.0,
    "plan": "R",
    "height": "R",
-   "src": "C6.2, the Arahtu walls (system C), its westmost line as the water face at N 3600505 to 3599865 (river sheet 8.2); Nabopolassar's embankment with Nebuchadnezzar's facing wall in front of it, smooth faces west (K1914 ch. XXXIV); 5.25 m, base -5.0, without towers except at the corners (P2021 p. 66); Nabopolassar's wall behind it is not drawn as its own body; dug in stretches, the line between them drawn",
+   "src": "C6.2, the Arahtu walls (system C), its westmost line as the water face at N 3600505 to 3599865 (river sheet 8.2); Nabopolassar's embankment with Nebuchadnezzar's facing wall in front of it, smooth faces west (K1914 ch. XXXIV); 5.25 m, base -5.0, without towers except at the corners (P2021 p. 66); Nabopolassar's wall behind it is not drawn as its own body; dug in stretches, the line between them drawn; it ends a pier's width (9 m) short of the bridge's east land pier: by the bridge the king's embankment \"may never have been erected here, or it may have been pulled down\" (P2021 p. 66), so its form there is open and the build claims the least; it ends a pier's width (9 m) short of the bridge's east land pier: by the bridge the king's embankment \"may never have been erected here, or it may have been pulled down\" (P2021 p. 66), so its form there is open and the build claims the least",
    "hsrc": "walkway -0.4, top reconstructed +4.0 (P2021 p. 31, 66)"
   },
   {
@@ -2530,8 +2642,8 @@
    "name": "the Arahtu quay south of the bridgehead",
    "line": [
     [
-     445572.32,
-     3599837.23
+     445574.15,
+     3599828.42
     ],
     [
      445576.82,
@@ -2543,7 +2655,7 @@
    "base": -5.0,
    "plan": "R",
    "height": "R",
-   "src": "as the quay north of the bridge; it stops a little south of the bridge, the shore beyond is open (P2021 p. 28)",
+   "src": "as the quay north of the bridge, from a pier's width (9 m) south of the east land pier; south of the bridge the water stands at the quay (the shore of 0 to 100 m at low water, P2021 p. 28 after a text not read, is open)",
    "hsrc": "as above"
   },
   {
@@ -2551,8 +2663,8 @@
    "name": "the river wall south of the bridge",
    "line": [
     [
-     445540,
-     3599800
+     445576.82,
+     3599815.53
     ],
     [
      445590,
@@ -2572,7 +2684,7 @@
    "base": -5.0,
    "plan": "R",
    "height": "R",
-   "src": "A2.1 and X1.4, drawn",
+   "src": "A2.1 and X1.4, drawn; joined to the quay at the bridge (its first point moved from 445540, 3599800, which stood in the water) so the water meets one quay face south of the bridge",
    "hsrc": "as the embankment, P2021 p. 66"
   },
   {
