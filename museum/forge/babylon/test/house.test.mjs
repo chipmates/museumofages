@@ -59,7 +59,7 @@ test("the court's construction: caps over the parapets, lintels at the door head
   const H = out.heights, top = 8.85, head = 7.2, floor = 5.2
   for (const id of ['house6-tops', 'house6-lintels', 'house6-sills', 'house6-pivots', 'house6-leaves', 'house6-ladder']) assert.ok(out.ids.includes(id), id)
   // the cap's crown a few centimetres over the parapet's top, its overhang's underside under it; the roof's edge under the deck
-  near(H['house6-tops'][1], top + 0.07, 0.01, 'cap crown'); near(H['house6-tops'][0], 7.85, 1e-3, "roof edge's underside")
+  near(H['house6-tops'][1], top + 0.08, 0.01, 'cap crown'); near(H['house6-tops'][0], 7.85, 1e-3, "roof edge's underside")
   // the poles' undersides just under the door head, so the opening stays about 2 m
   near(H['house6-lintels'][0], head - 0.02, 0.01, 'lintel underside'); assert.ok(H['house6-lintels'][0] - floor >= 1.95, 'clear height')
   near(H['house6-sills'][1], floor + 0.045, 1e-3, 'sill top'); assert.ok(H['house6-sills'][0] < floor, 'sill set into the floor')

@@ -156,7 +156,7 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
   const woodBase = mix(vec3(0.2, 0.155, 0.11), vec3(0.27, 0.235, 0.19), smoothstep(-0.3, 0.6, big.add(0.2)))
   // checks along the grain and knots, the weathered surface's own dark
   const checks = smoothstep(0.62, 0.7, mx_noise_float(vec3(wl.x.mul(1.6), wl.y.mul(48), 3.7)).add(0.5)).mul(float(1).sub(smoothstep(0.003, 0.012, fw)))
-  const knots = smoothstep(0.8, 0.86, mx_noise_float(vec3(wl.x.mul(9), wl.y.mul(16), 8.8)).add(0.5))
+  const knots = smoothstep(0.86, 0.9, mx_noise_float(vec3(wl.x.mul(18), wl.y.mul(30), 8.8)).add(0.5))
   const woodCol = woodBase.mul(float(0.86).add(grainN.mul(0.2))).mul(float(1).sub(checks.mul(0.45)).sub(knots.mul(0.2)))
   // a leaf: boards about 19 cm wide (its local s across them), rubbed darker where hands push it
   const board = floor(wl.x.add(9).div(0.19))
@@ -169,7 +169,10 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
   const sJoint = max(lines(wl.x.add(offS), 0.33, 0.014, fAlong), lines(wl.y.add(3), 0.33, 0.014, fAlong)).mul(step(0.5, n.y))
   // the walked middle of the opening darker and smoother, dust in the joints and at the jambs
   const sillBrick = mix(V(PAL.buff as RGB), V(PAL.redBrown as RGB), hash2(kS, float(2.7)).mul(0.5).add(0.3)).mul(float(0.64).add(hash2(kS, float(5.1)).mul(0.14)).add(mid.mul(0.06)))
-  const sillCol = mix(sillBrick, V(PAL.dust as RGB).mul(0.8), sJoint.mul(0.75))
+  // the fired clay's grain and pits as the court's paving shows them; the faces of the course in its own shade
+  const sGrain = mx_noise_float(vec3(wl.x.mul(38), wl.y.mul(38), 4.1)).mul(0.08).add(smoothstep(0.62, 0.7, mx_noise_float(vec3(wl.x.mul(90), wl.y.mul(90), 1.3)).add(0.5)).mul(-0.12)).mul(float(1).sub(smoothstep(0.002, 0.008, fw)))
+  const sillTop = mix(sillBrick.mul(float(1).add(sGrain)), V(PAL.dust as RGB).mul(0.8), sJoint.mul(0.75))
+  const sillCol = mix(sillTop, mix(sillBrick, vec3(sillBrick.dot(vec3(0.2126, 0.7152, 0.0722))), 0.35).mul(0.72), step(abs(n.y), 0.5))
   // the pivot stones: pale limestone, the cup round the pole dark and smooth
   const cup = float(1).sub(smoothstep(0.045, 0.075, length(wl))).mul(step(0.5, n.y))
   const stoneCol = mix(V(TONES.lime as RGB).mul(float(0.82).add(mid.mul(0.1))), V(TONES.damp as RGB), cup.mul(0.7))
