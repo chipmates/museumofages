@@ -217,12 +217,12 @@ export function clayBody(file: ClaySignFile): ClayBody {
 
   // THE STYLUS beside the tablet, lying on the floor, its cut tip toward the tablet's foot
   const stylus = stylusMesh()
-  stylus.position.set(sx / 2 + 0.018, STYLUS.height / 2, -0.004)
+  stylus.position.set(sx / 2 + 0.009, STYLUS.height / 2, -0.004)
   const turn = new Group(), root = new Group()
   turn.add(tablet, stylus)
   turn.rotation.y = FACING
   const r = ruler()
-  layRuler(r, -sx / 2, sz / 2 + 0.022)
+  layRuler(r, -sx / 2, sz / 2 + 0.011)
   root.add(turn, r)
   root.name = 'clay:root'
 

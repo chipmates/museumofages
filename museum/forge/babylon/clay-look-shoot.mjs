@@ -104,7 +104,8 @@ for (const lang of langs) for (const size of sizes) {
     row.hands.push({ played })
     if (Math.abs(played - 23) > 0.01) { bad++; console.log(`${tag}: play stopped at ${played}`) }
     await page.evaluate(() => window.__claylook.pose(0))
-    await page.mouse.click(5, 5); await page.keyboard.press('Space'); await wait(page, 900); const spaced = await clock()
+    // Space on a focused button presses that button, as it should: the hand's Space is tried with nothing focused
+    await page.evaluate(() => document.activeElement?.blur?.()); await page.keyboard.press('Space'); await wait(page, 900); const spaced = await clock()
     row.hands.push({ spaced })
     if (Math.abs(spaced - 1) > 0.01) { bad++; console.log(`${tag}: Space pressed to ${spaced}`) }
     await page.evaluate(() => window.__claylook.pose(0))
