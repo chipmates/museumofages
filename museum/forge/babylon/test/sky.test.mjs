@@ -195,6 +195,30 @@ function readbacks() {
   return readdirSync(process.env.PAPER_READOUTS).filter((x) => /^readout-sky-/.test(x)).map((f) => ({ f, r: JSON.parse(readFileSync(join(process.env.PAPER_READOUTS, f), 'utf8')) }))
 }
 
+test('read-back: each step\'s subject drawn inside the plate, the lump\'s ring on the heaps\' picture (P1)', R, () => {
+  let seen = 0
+  const inside = (c, w, h, f) => assert.ok(c.x - c.r >= 0 && c.y - c.r >= 0 && c.x + c.r <= w && c.y + c.r <= h, f)
+  const within = (b, w, h, f) => assert.ok(b && b.l >= 0 && b.t >= 0 && b.r <= w && b.b <= h, f)
+  for (const { f, r } of readbacks()) for (const [k, ro] of Object.entries(r.readouts ?? {})) {
+    const F = ro.facts, { w, h } = ro.size
+    if (F.state === 'evenings') {
+      assert.equal(F.panels.length, 2, `${f} ${k}`)
+      for (const p of F.panels) for (const part of ['moon', 'sun', 'disc']) inside(p[part], w, h, `${f} ${k}: ${p.id} ${part}`)
+      seen++
+    }
+    if (F.state === 'shekel') {
+      for (const part of ['photo', 'heaps', 'silver']) within(F[part], w, h, `${f} ${k}: ${part}`)
+      assert.ok(F.silverMark, `${f} ${k}: no ring round the lump`)
+      const m = F.silverMark, b = F.heaps
+      assert.ok(m.x - m.r > b.l && m.x + m.r < b.r && m.y - m.r > b.t && m.y + m.r < b.b, `${f} ${k}: the ring off the picture`)
+      assert.equal(m.lead, F.silver.l >= F.heaps.r + 4, `${f} ${k}: a leader where the close picture stands beside`)
+      seen++
+    }
+    if (F.state === 'rise' && F.step === 2) for (const id of ['rise', 'base', 'level-across']) within(ro.drawn.find((d) => d.id === id)?.box, w, h, `${f} ${k}: ${id}`)
+  }
+  assert.ok(seen > 0)
+})
+
 test('read-back: no label on anything and none left off, at every step shot, EN and DE, desktop and three phones (P6)', R, () => {
   const tags = new Set()
   for (const { f, r } of readbacks()) for (const [k, ro] of Object.entries(r.readouts ?? {})) {
