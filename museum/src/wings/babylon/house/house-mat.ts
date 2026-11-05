@@ -283,8 +283,15 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
   const kP = kxP.add(kzP.mul(31.7))
   const smooth = smoothstep(0.35, 0.75, hash2(kP, float(6.2))).mul(0.85)
   const blot = smoothstep(0.1, 0.35, mx_noise_float(vec3(u.mul(6.5), 2.2, v.mul(6.5)).add(hash2(kP, float(1.9)).mul(9)))).mul(step(0.55, hash2(kP, float(4.8))))
+  // the fired clay's sand, its pores and its grains of lime, a few millimetres each: the paving next to the eye, where a
+  // pixel spans less than two of them and the centimetre grain above alone read soft and magnified
+  const pvFine = float(1).sub(smoothstep(0.0015, 0.004, fPv)), q = vec3(u, P.y, v)
+  const sand = mx_noise_float(q.mul(vec3(160, 9, 160))).mul(0.1)
+  const pore = smoothstep(0.36, 0.46, mx_noise_float(q.mul(vec3(140, 7, 140)).add(vec3(3.1, 0, 7.7)))).mul(0.18)
+  const limeG = smoothstep(0.42, 0.5, mx_noise_float(q.mul(vec3(110, 5, 110)).add(vec3(9.4, 0, 1.3)))).mul(0.14)
+  const pvGrain = float(1).add(sand.sub(pore).add(limeG).mul(pvFine))
   const pvFace = float(1).add(pits.mul(smooth)).mul(float(1).sub(blot.mul(0.1).mul(pvNear))).mul(float(1).add(mx_noise_float(vec3(u.mul(16), 1.1, v.mul(16))).mul(0.06).mul(pvNear)))
-  c = mix(c, mix(pv.colour, vec3(pvL).mul(vec3(1.12, 1.0, 0.78)), 0.3).mul(brickTone).mul(pvFace), is(Z.paving))
+  c = mix(c, mix(pv.colour, vec3(pvL).mul(vec3(1.12, 1.0, 0.78)), 0.3).mul(brickTone).mul(pvFace).mul(pvGrain), is(Z.paving))
   c = mix(c, courtFloorCol, is(Z.courtFloor))
   c = mix(c, rf.deck, is(Z.deck))
   c = mix(c, copeCol, is(Z.coping))
@@ -365,6 +372,11 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
     const into = tC.sub(edge).mul(sg)
     const sideIn = step(s0 - 0.02, sC).mul(step(sC, s1 + 0.02))
     contact = contact.mul(float(1).sub(float(1).sub(smoothstep(0.0, 0.08, into)).mul(step(0, into)).mul(sideIn).mul(0.45).mul(is(Z.floor))))
+    // and its court-side edge on the paving: a 40 cm row's joint lies 5 cm off the court's north and south faces, so
+    // between it and the sill's front a strip of brick a centimetre or two wide caught the light alone
+    const front = line - sg * hp.build.sill.out
+    const before = float(front).sub(tC).mul(sg)
+    contact = contact.mul(float(1).sub(float(1).sub(smoothstep(0.0, 0.04, before)).mul(step(0, before)).mul(sideIn).mul(0.5).mul(is(Z.paving))))
   }
   // the lap over a lintel's end pole sits in the pole's crevice, deepest against the pole
   ao = ao.mul(contact).mul(float(1).sub(lapM.mul(0.32)).sub(lapCrev.mul(0.38)))
