@@ -205,6 +205,11 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
       { prefix: 'map:garden-caper-', why: "a curtain's sheet faces, about 0.2 m by 1 m at 315 to 390 m (0.5 to 1 px of the 1600 px desktop, measured 4 Nov); foliage at that range, as the clumps beside them" },
       { prefix: 'map:garden-vine-', why: "a curtain's sheet faces, about 0.2 m by 1 m at 315 to 390 m (0.5 to 1 px of the 1600 px desktop, measured 4 Nov); foliage at that range, as the clumps beside them" },
       { prefix: 'map:bridge-palm-', why: "the same reused gate palm on the west bank, its frond tips at 100 to 400 m from the bridge's hold; a far preset of palm-date-babylon is open" },
+      // the west bank seen from stops 11, 12 and 14 (measured 5 Nov at the landing); a far preset for the bank trees is open
+      { prefix: 'map:bridge-poplar-', why: "the bank poplars' trunks and limbs, 0.11 to 0.16 m at 220 to 405 m (0.22 to 0.81 px)" },
+      { prefix: 'map:bridge-willow-', why: "the bank willows' trunks and limbs, 0.17 to 0.44 m at 220 to 370 m (0.26 to 0.95 px)" },
+      { prefix: 'map:bridge-tamarisk-', why: "the bank tamarisks' stems, 0.19 to 0.32 m at 225 to 365 m (0.28 to 0.99 px)" },
+      { prefix: 'map:bridge-deck-boards', why: "the deck's 8 cm board edges at 379 m from stop 14's phone frame (0.24 to 0.26 px)" },
     ],
     // a curtain hangs on a terrace's face from its lip on the terrace's top: held by the face, which the plan-view
     // support rule cannot see (as the gate's facing skins)
