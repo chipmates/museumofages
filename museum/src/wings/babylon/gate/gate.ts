@@ -424,7 +424,7 @@ const keyAt = (at: J): [number, number] => {
 }
 const pathCams = {
   eye: cams.eye,
-  lens: { desktop: cams.stills.desktop.hfov },
+  lens: { desktop: cams.stills.desktop.hfov, phoneFilm: cams.phoneFilm },
   stops: cams.stops.map((s: J) => ({ n: s.n, hour: s.hour[0] })),
   path: cams.stops.flatMap((s: J) => s.keys.map((k: J, i: number) => {
     const [x, z] = keyAt(k.at)
@@ -438,7 +438,7 @@ const pathCams = {
     // a stop's first key repeats the last stop's last key at the same second, so each stop starts at its own key; the
     // walk's first key is the arrival's landing, so its clock starts at the landing's hour (one clock across the cut)
     const first = s === cams.stops[0] && i === 0
-    return { t: k.t + (i === 0 && !first ? 1e-4 : 0), at: [E, N], y: 'eye', look: [lE, lN, look[1] + L0], stop: s.n, hold: k.kind === 'hold' || i === 0, kind: k.kind, cut: false, ...(first ? { hour: openCams.hour } : {}) }
+    return { t: k.t + (i === 0 && !first ? 1e-4 : 0), at: [E, N], y: 'eye', look: [lE, lN, look[1] + L0], stop: s.n, hold: k.kind === 'hold' || i === 0, kind: k.kind, cut: false, ...(k.phone ? { phone: k.phone } : {}), ...(first ? { hour: openCams.hour } : {}) }
   })),
 }
 const standMap = (x: number, z: number): number => {
@@ -633,14 +633,16 @@ const rig = {
       const time = from + i / o.fps
       const p: PathSample = path.sample(time)
       setHour(p.hour)
-      const hfov = o.framing === 'phone' ? 46 : p.hfov
+      // the phone's lens and shift from the path (a hold's from its still), eased between keys; the desktop's as before
+      const hfov = o.framing === 'phone' ? p.phone.hfov : p.hfov
+      const shift = o.framing === 'phone' ? p.phone.shift : 0
       const vfov = fittedFov(hfov, o.framing === 'phone' ? [390, 844] : [16, 9], o.w, o.h)
-      aimWorld(new Vector3(...(p.pos as MV3)), new Vector3(...(p.look as MV3)), vfov, o.w, o.h, 0)
+      aimWorld(new Vector3(...(p.pos as MV3)), new Vector3(...(p.look as MV3)), vfov, o.w, o.h, shift)
       const { bytes } = await render(o.w, o.h, o.samples, 0)
       const g = Math.round(time * o.fps)
       await upload(`${o.out}/${o.framing ?? 'desktop'}-f${String(g).padStart(5, '0')}.jpg`, await jpeg(bytes, o.w, o.h))
       const pg = new Vector3(...(p.pos as MV3)).applyMatrix4(W2G), lg = new Vector3(...(p.look as MV3)).applyMatrix4(W2G)
-      log.push({ i: g, t: +time.toFixed(3), stop: p.stop, kind: p.kind, gate: [+pg.x.toFixed(2), +pg.y.toFixed(2), +pg.z.toFixed(2)], look: [+lg.x.toFixed(2), +lg.y.toFixed(2), +lg.z.toFixed(2)], eyeOverStreet: +(pg.y - B.level(pg.z)).toFixed(3), hour: +p.hour.toFixed(3) })
+      log.push({ i: g, t: +time.toFixed(3), stop: p.stop, kind: p.kind, gate: [+pg.x.toFixed(2), +pg.y.toFixed(2), +pg.z.toFixed(2)], look: [+lg.x.toFixed(2), +lg.y.toFixed(2), +lg.z.toFixed(2)], eyeOverStreet: +(pg.y - B.level(pg.z)).toFixed(3), hour: +p.hour.toFixed(3), hfov: +hfov.toFixed(3), shift: +shift.toFixed(4) })
     }
     await upload(`${o.out}/${o.framing ?? 'desktop'}-frames-${String(Math.round(from * o.fps)).padStart(5, '0')}.json`, JSON.stringify({ fps: o.fps, w: o.w, h: o.h, samples: o.samples, from, to, frames: log }))
     return { frames: n, ms: Math.round(performance.now() - t) }
