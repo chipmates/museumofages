@@ -446,7 +446,7 @@ export function buildTower(built: Built, mapPlan: J, tp: J): Tower {
     const letters: [Cls, Cls] = [p.plan, p.height]
     bodies.push({ id: 'precinct-north-wall-skin-0', geometry: prism(strip(0, k), p.y0, p.y1, KIND.wall), band: wallBand, letters })
     bodies.push({ id: 'precinct-north-wall-skin-1', geometry: prism(strip(1 - k, 1), p.y0, p.y1, KIND.wall), band: wallBand, letters })
-    bodies.push({ id: 'precinct-north-wall-core', geometry: prism(strip(k, 1 - k), p.y0, p.y1 - NORTH.walk, KIND.wall), band: wallBand, letters })
+    bodies.push({ id: 'precinct-north-wall', geometry: prism(strip(k, 1 - k), p.y0, p.y1 - NORTH.walk, KIND.wall), band: wallBand, letters })
     const L = Math.hypot(b0[0] - a0[0], b0[1] - a0[1])
     const along: P2 = [(b0[0] - a0[0]) / L, (b0[1] - a0[1]) / L]
     const toA1: P2 = [(a1[0] - a0[0]) / thick, (a1[1] - a0[1]) / thick]
@@ -458,7 +458,7 @@ export function buildTower(built: Built, mapPlan: J, tp: J): Tower {
     const put = (f: { o: P2; out: P2 }, s: number, w: number, dep: number): void => {
       const at: P2 = [f.o[0] + along[0] * s, f.o[1] + along[1] * s]
       const corners: P2[] = [-1, 1].flatMap((u) => [0, 1].map((v): P2 => [at[0] + along[0] * u * w / 2 + f.out[0] * v * dep, at[1] + along[1] * u * w / 2 + f.out[1] * v * dep]))
-      bodies.push({ id: `precinct-tower-north-${++n}`, geometry: slightTowerAt(at, along, f.out, w, dep, minG(corners) - 0.4, p.y1 + NORTH.over), band: wallBand, letters: ['R', 'G'] })
+      bodies.push({ id: `precinct-north-tower-${++n}`, geometry: slightTowerAt(at, along, f.out, w, dep, minG(corners) - 0.4, p.y1 + NORTH.over), band: wallBand, letters: ['R', 'G'] })
     }
     const B = NORTH.block
     for (const f of faces) {
