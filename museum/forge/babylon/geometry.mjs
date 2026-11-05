@@ -40,22 +40,41 @@ export function facesFrom(faces, geo, matrix, bodyAt, keep = null) {
   return faces
 }
 
+// one buffer for sharedArea's per-cell heights and gaps, grown to the largest grid
+let pool = new Float32Array(0)
+const scratch = (n) => {
+  if (pool.length < 3 * n) pool = new Float32Array(3 * n)
+  return [pool.subarray(0, n), pool.subarray(n, 2 * n), pool.subarray(2 * n, 3 * n)]
+}
+/** the k-th least of xs[0, len), in place (Hoare's selection: runs of equal values stay linear) */
+function nth(xs, len, k) {
+  let lo = 0, hi = len - 1
+  while (hi > lo) {
+    const pivot = xs[(lo + hi) >> 1]
+    let i = lo, j = hi
+    while (i <= j) {
+      while (xs[i] < pivot) i++
+      while (xs[j] > pivot) j--
+      if (i <= j) { const t = xs[i]; xs[i] = xs[j]; xs[j] = t; i++; j-- }
+    }
+    if (k <= j) hi = j
+    else if (k >= i) lo = i
+    else return xs[k]
+  }
+  return xs[k]
+}
+
 /** the shared area of two face sets in one plane, on a grid; `cover` faces (a third body's, looking the other way)
     close the cells they lie on; `masked(point)` drops a cell the page hides. A cell counts only where the two sets'
     own planes lie within `bedM` of each other along `n` there (the local gap): a plane's offset from the origin
     matches a long, slightly tilted face to a level one far above it. `gapMm` is the local gap's median over the
-    counted cells, `gapMinMm` its least over every shared cell; `overlap` and `overlapGapMm` the area and median of
-    every shared cell, counted or not. */
+    counted cells, `gapMinMm` its least over every shared cell, `overlap` the area of every shared cell. */
 export function sharedArea(a, b, n, { cover = [], masked = null, bedM = Infinity } = {}) {
   const helper = Math.abs(n.y) < 0.9 ? new THREE.Vector3(0, 1, 0) : new THREE.Vector3(1, 0, 0)
   const e1 = new THREE.Vector3().crossVectors(n, helper).normalize()
   const e2 = new THREE.Vector3().crossVectors(n, e1)
   const flat = (set) => set.map((f) => f.v.map((q) => [q.dot(e1), q.dot(e2)]))
   const FA = flat(a), FB = flat(b), FC = flat(cover)
-  const d0 = a[0].d
-  // a face's height over the plane `d0` along n at (u, v): t = c - pu * u - pv * v, from its own normal and offset
-  const height = (set) => set.map((f) => { const k = f.n.dot(n); return [f.n.dot(e1) / k, f.n.dot(e2) / k, f.d / k - d0] })
-  const HA = height(a), HB = height(b)
   const bb = (F) => { const p = F.flat(); return [minOf(p.map((x) => x[0])), minOf(p.map((x) => x[1])), maxOf(p.map((x) => x[0])), maxOf(p.map((x) => x[1]))] }
   const ba = bb(FA), bq = bb(FB)
   const box = [Math.max(ba[0], bq[0]), Math.max(ba[1], bq[1]), Math.min(ba[2], bq[2]), Math.min(ba[3], bq[3])]
@@ -65,9 +84,13 @@ export function sharedArea(a, b, n, { cover = [], masked = null, bedM = Infinity
   const F = 0.537
   const cols = Math.ceil((box[2] - box[0]) / CELL) + 1, rows = Math.ceil((box[3] - box[1]) / CELL) + 1
   const grid = new Uint8Array(cols * rows)
+  const d0 = a[0].d
+  // a face's height over the plane `d0` along n at (u, v): t = c - pu * u - pv * v, from its own normal and offset
+  const height = (set) => set.map((f) => { const k = f.n.dot(n); return [f.n.dot(e1) / k, f.n.dot(e2) / k, f.d / k - d0] })
+  const HA = height(a), HB = height(b)
   // per cell: the lowest and highest of a's heights, then the least gap from any of b's faces to either of them
-  // (exact where a lays at most two faces on a cell)
-  const aLo = new Float32Array(cols * rows), aHi = new Float32Array(cols * rows), gap = new Float32Array(cols * rows).fill(Infinity)
+  // (exact where a lays at most two faces on a cell); the grid's bits say which cells hold a value
+  const [aLo, aHi, gap] = scratch(cols * rows)
   const side = (p, q, r) => (q[0] - p[0]) * (r[1] - p[1]) - (q[1] - p[1]) * (r[0] - p[0])
   const paint = (set, bit, H = null) => {
     for (let t = 0; t < set.length; t++) {
@@ -85,7 +108,8 @@ export function sharedArea(a, b, n, { cover = [], masked = null, bedM = Infinity
           if (!(grid[k] & 1)) { aLo[k] = y; aHi[k] = y } else if (y < aLo[k]) aLo[k] = y; else if (y > aHi[k]) aHi[k] = y
         } else if (bit === 2 && grid[k] & 1) {
           const y = h[2] - h[0] * P[0] - h[1] * P[1]
-          gap[k] = Math.min(gap[k], Math.abs(y - aLo[k]), Math.abs(y - aHi[k]))
+          const g = Math.min(Math.abs(y - aLo[k]), Math.abs(y - aHi[k]))
+          if (!(grid[k] & 2) || g < gap[k]) gap[k] = g
         }
         grid[k] |= bit
       }
@@ -94,22 +118,24 @@ export function sharedArea(a, b, n, { cover = [], masked = null, bedM = Infinity
   paint(FA, 1, HA)
   paint(FB, 2, HB)
   paint(FC, 4)
-  const shared = []
+  // the shared cells' gaps packed to the front in place, those within the bed first
+  let w = 0, both = 0, least = Infinity
   for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
     if (grid[j * cols + i] !== 3) continue
     if (masked) {
       const p = e1.clone().multiplyScalar(box[0] + (i + F) * CELL).addScaledVector(e2, box[1] + (j + F) * CELL).addScaledVector(n, d0)
       if (masked(p)) continue
     }
-    shared.push(gap[j * cols + i])
+    const g = gap[j * cols + i]
+    if (g < least) least = g
+    gap[w] = gap[both]
+    if (g <= bedM) gap[both++] = g; else gap[w] = g
+    w++
   }
-  const gaps = Float32Array.from(shared).sort()
-  let both = 0
-  while (both < gaps.length && gaps[both] <= bedM) both++
-  const mm = (x) => (x === undefined ? null : +(x * 1000).toFixed(1))
+  const mm = (x) => +(x * 1000).toFixed(1)
   return {
-    area: both * CELL * CELL, cell: +CELL.toFixed(3), gapMm: mm(gaps[(both - 1) >> 1]), gapMinMm: mm(gaps[0]),
-    overlap: +(gaps.length * CELL * CELL).toFixed(3), overlapGapMm: mm(gaps[(gaps.length - 1) >> 1]),
+    area: both * CELL * CELL, cell: +CELL.toFixed(3), gapMm: both ? mm(nth(gap, both, (both - 1) >> 1)) : null, gapMinMm: w ? mm(least) : null,
+    overlap: +(w * CELL * CELL).toFixed(3),
   }
 }
 
