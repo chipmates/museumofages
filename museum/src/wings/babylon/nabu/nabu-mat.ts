@@ -272,6 +272,9 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
     lampE = lampE.add(max(dot(n, d.div(dist)), 0).div(float(1).add(dist.div(LA.r).mul(dist.div(LA.r)))))
   }
   const inCella = max(inBox(R['cella']!, 0.03), inBox(F.niche, 0.03)).mul(below)
+  // the niche's sides hide most of its back from flames standing beside the pedestal
+  const nicheDeep = step(F.niche.x0 - 0.02, P.x).mul(step(P.x, F.niche.x1 + 0.02)).mul(step(F.niche.z0 + 0.02, P.z)).mul(step(P.z, F.niche.z1 + 0.05))
+  lampE = lampE.mul(float(1).sub(nicheDeep.mul(0.45)))
   m.emissiveNode = stateCol.mul(V(LA.colour)).mul(lampE.mul(LA.gain)).mul(inCella).mul(ceilingK).mul(float(1).sub(uView))
   // no sun reaches into a room under its roof; the shadow map's contact edges leak it
   // the temple's floors: lit only where the ray toward the sun clears the court's walls (the shadow map leaks at their
