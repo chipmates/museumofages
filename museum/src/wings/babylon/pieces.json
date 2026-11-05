@@ -40,7 +40,7 @@
   {"match": "^map:house3$", "part": "House III in Merkes on its terrace", "piece": "bab.houses.merkes"},
   {"match": "^map:quarter-merkes-", "part": "the Merkes blocks round House VI, court houses as a type", "piece": "bab.houses.merkes"},
   {"match": "^map:merkes-lanes$", "part": "the Merkes lanes", "piece": "bab.houses.merkes", "surface": true, "note": "unpaved; their level ours"},
-  {"match": "^map:house", "part": "the houses (a type)", "piece": "bab.houses.type"},
+  {"match": "^map:house", "part": "the houses (a type)", "piece": "bab.houses.type", "note": "Guessed, a type: each range a flat roof inside a parapet round the outside and the court (House VI's 45 cm wall; roofs P2021 p. 37 to 38), the street ranges higher than the side ranges, a room on about one roof in five (P2021 p. 242), one street door a house (wooden doors, P2021 p. 278); heights, sizes, the doors' and roof rooms' places ours"},
   {"match": "^map:merkes-", "part": "the Merkes blocks", "piece": "bab.houses.merkes"},
   {"match": "^map:inner-east-karu", "part": "the inner wall's embankment", "piece": "bab.innerwall.embankment.tops", "plan": "bab.innerwall.embankment"},
   {"match": "^map:inner-east-(main|front)-\\d+-t", "part": "the inner wall's towers", "piece": "bab.innerwall.body", "plan": "bab.innerwall.plan"},

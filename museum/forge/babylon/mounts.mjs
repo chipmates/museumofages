@@ -51,6 +51,10 @@ function mapFaces(faces, group, built, matrix, keep) {
         o.getMatrixAt(k, im)
         facesFrom(faces, o.geometry, M.clone().multiply(im), () => `map:${o.name === 'houses' ? 'house' : list[k]?.id ?? o.name}#${k}`, keep)
       }
+    } else if (o.name === 'houses' && o.geometry.getAttribute('hdoor')) {
+      // the map's houses drawn as trays (mass.ts trayHouses): one body a house, by its `hinfo` house number
+      const hi = o.geometry.getAttribute('hinfo')
+      facesFrom(faces, o.geometry, M, (i) => `map:house#${hi.getX(i)}`, keep)
     } else if (o.name === 'blocks') {
       const pid = o.geometry.getAttribute('pid')
       facesFrom(faces, o.geometry, M, (i) => { const p = pid.getX(i); return p < 0 ? 'map:ramps' : `map:${built.prisms[p].id}` }, keep)
