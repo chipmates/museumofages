@@ -15,3 +15,6 @@
   overflow-wrap: break-word; hyphens: manual;
 }
 .paper-plate[data-framing='upright'] .paper-label.paper-credit { font-size: 0.875rem; }
+/* a stop's ink still, where the feature has one: exactly where the held frame is, under the paper */
+.paper-ink { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; }
+.paper-ink[hidden] { display: none; }

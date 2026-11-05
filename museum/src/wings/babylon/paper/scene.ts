@@ -77,3 +77,49 @@ export function primBox(p: Prim): Box | null {
   const all = [...pts, ...arcs]
   return all.length ? { l: Math.min(...all.map((q) => q[0])), t: Math.min(...all.map((q) => q[1])), r: Math.max(...all.map((q) => q[0])), b: Math.max(...all.map((q) => q[1])) } : null
 }
+
+/** the parts of a line inside a box (Liang-Barsky per segment), as runs */
+export function clipLine(pts: readonly (readonly [number, number])[], b: Box): [number, number][][] {
+  const runs: [number, number][][] = []
+  let cur: [number, number][] = []
+  const flush = (): void => { if (cur.length >= 2) runs.push(cur); cur = [] }
+  for (let i = 0; i + 1 < pts.length; i++) {
+    const [ax, ay] = pts[i]!, [bx, by] = pts[i + 1]!
+    const dx = bx - ax, dy = by - ay
+    let t0 = 0, t1 = 1, ok = true
+    for (const [p, q] of [[-dx, ax - b.l], [dx, b.r - ax], [-dy, ay - b.t], [dy, b.b - ay]] as const) {
+      if (p === 0) { if (q < 0) { ok = false; break } continue }
+      const r = q / p
+      if (p < 0) { if (r > t1) { ok = false; break } if (r > t0) t0 = r } else { if (r < t0) { ok = false; break } if (r < t1) t1 = r }
+    }
+    if (!ok) { flush(); continue }
+    const s: [number, number] = [ax + dx * t0, ay + dy * t0], e: [number, number] = [ax + dx * t1, ay + dy * t1]
+    if (!cur.length || Math.hypot(cur[cur.length - 1]![0] - s[0], cur[cur.length - 1]![1] - s[1]) > 0.01) { flush(); cur.push(s) }
+    cur.push(e)
+    if (t1 < 1) flush()
+  }
+  flush()
+  return runs
+}
+
+/** a closed polygon cut to a box (Sutherland-Hodgman), for a filled area that runs past the plate's map */
+export function clipPoly(pts: readonly (readonly [number, number])[], b: Box): [number, number][] {
+  type P = [number, number]
+  let out = pts.map((p) => [p[0], p[1]] as P)
+  const edges: [(p: P) => boolean, (p: P, q: P) => P][] = [
+    [(p) => p[0] >= b.l, (p, q) => [b.l, p[1] + ((q[1] - p[1]) * (b.l - p[0])) / (q[0] - p[0])]],
+    [(p) => p[0] <= b.r, (p, q) => [b.r, p[1] + ((q[1] - p[1]) * (b.r - p[0])) / (q[0] - p[0])]],
+    [(p) => p[1] >= b.t, (p, q) => [p[0] + ((q[0] - p[0]) * (b.t - p[1])) / (q[1] - p[1]), b.t]],
+    [(p) => p[1] <= b.b, (p, q) => [p[0] + ((q[0] - p[0]) * (b.b - p[1])) / (q[1] - p[1]), b.b]],
+  ]
+  for (const [inside, cut] of edges) {
+    const src = out
+    out = []
+    for (let i = 0; i < src.length; i++) {
+      const p = src[i]!, q = src[(i + 1) % src.length]!
+      if (inside(q)) { if (!inside(p)) out.push(cut(p, q)); out.push(q) }
+      else if (inside(p)) out.push(cut(p, q))
+    }
+  }
+  return out
+}

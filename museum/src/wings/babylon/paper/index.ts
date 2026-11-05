@@ -12,3 +12,4 @@ export { crosses, grown, meets, overlaps, placeElements, placeLabels, type Box, 
 export { createPaperSteps, type PaperStep, type PaperSteps, type PaperStepsOptions } from './steps'
 export { gridBox, millions, poured, rangeRow, unitGrid, type UnitBox, type UnitGridOptions } from './counter'
 export { createPaperPlate, framingOf, paperSheet, WIDE_LEAST, type PaperFraming, type PaperPlate } from './plate'
+export { clipLine, clipPoly } from './scene'

@@ -2,11 +2,12 @@
 // in each language asked, with the page's own read-back beside each frame (where every label stood, what it overlapped,
 // the line, the list). The stills a feature opens from are handed in from a folder by address, never from the store.
 //
-//   node forge/babylon/paper-shoot.mjs --page sheet|measure|oil|words --out <abs folder> [--port 5304] [--engine chromium|webkit]
+//   node forge/babylon/paper-shoot.mjs --page sheet|measure|oil|words|river --out <abs folder> [--port 5304] [--engine chromium|webkit]
 //        [--sizes desktop,phone,phone-short,phone-small] [--langs en,de] [--stills <abs folder>] [--reduced] [--keys]
 //        [--dir rtl] [--steps 0,1,2,3,4,5] [--between] [--only-steps] [--raised 2] [--drawer 4]
 // oil and words are stop 4's two paper features on one bench (rig __look, two doors at rest); their steps are read from
-// the page, and --stills may also hold vat16378.jpg and coasts.json, handed to the bench by address.
+// the page, and --stills may also hold vat16378.jpg and coasts.json, handed to the bench by address. river is stop 13's
+// feature 10 (rig __look, one door); --stills may hold its ink stills and gadmer1927.jpg.
 // --raised: on a phone, the sheet one height up (the steps) at these steps; --drawer: on a desktop, the band's drawer
 // open at these steps. Each step's read-back carries the chrome's own numbers (`chrome`): the band or the sheet, the
 // line's rows, every control's centre, the plate's share of the stage.
@@ -31,7 +32,7 @@ for (let i = 0; i < argv.length; i++) {
 }
 const fail = (m) => { console.error(m); process.exit(2) }
 const PAGE = String(opt.page ?? '')
-if (!['sheet', 'measure', 'oil', 'words'].includes(PAGE)) fail('--page sheet|measure|oil|words')
+if (!['sheet', 'measure', 'oil', 'words', 'river'].includes(PAGE)) fail('--page sheet|measure|oil|words|river')
 if (!opt.out || opt.out === true || !isAbsolute(String(opt.out))) fail('--out <absolute folder>')
 const OUT = resolve(String(opt.out))
 mkdirSync(OUT, { recursive: true })
@@ -53,9 +54,11 @@ const dir = opt.dir === 'rtl' ? 'rtl' : 'ltr'
 const askedSteps = opt.steps && opt.steps !== true ? String(opt.steps).split(',').map(Number) : null
 const list = (k, d) => (opt[k] === undefined ? d : opt[k] === true ? [] : String(opt[k]).split(',').filter(Boolean).map(Number))
 const raisedSteps = list('raised', [2]), drawerSteps = list('drawer', [])
-const PATHS = { sheet: 'src/wings/babylon/paper/sheet.html', measure: 'src/wings/babylon/measure/measure.html', oil: 'src/wings/babylon/oil/oil.html', words: 'src/wings/babylon/garden-words/garden-words.html' }
-const RIGS = { sheet: '__paper', measure: '__measure', oil: '__look', words: '__look' }
-const LOOK = PAGE === 'oil' || PAGE === 'words'
+const PATHS = { sheet: 'src/wings/babylon/paper/sheet.html', measure: 'src/wings/babylon/measure/measure.html', oil: 'src/wings/babylon/oil/oil.html', words: 'src/wings/babylon/garden-words/garden-words.html', river: 'src/wings/babylon/river/river.html' }
+const RIGS = { sheet: '__paper', measure: '__measure', oil: '__look', words: '__look', river: '__look' }
+const LOOK = PAGE === 'oil' || PAGE === 'words' || PAGE === 'river'
+// a page whose feature crosses through the stop's ink still: its opening frames are the ink's
+const INKED = PAGE === 'measure' || PAGE === 'river'
 const FEATURE = PAGE === 'words' ? 'garden-words' : PAGE
 
 const s = await serve({ port: PORT })
@@ -81,7 +84,8 @@ for (const lang of langs) for (const size of sizes) {
   const has = (n) => STILLS && existsSync(join(STILLS, n))
   const params = new URLSearchParams({ lang, ...(dir === 'rtl' ? { dir } : {}) })
   if (PAGE !== 'sheet' && has('held-desktop.jpg')) params.set('held', '/_stills/held-{framing}.jpg')
-  if (PAGE === 'measure' && has('ink-desktop.jpg')) params.set('ink', '/_stills/ink-{framing}.jpg')
+  if (INKED && has('ink-desktop.jpg')) params.set('ink', '/_stills/ink-{framing}.jpg')
+  if (PAGE === 'river' && has('gadmer1927.jpg')) params.set('photo', '/_stills/gadmer1927.jpg')
   if (LOOK && has('vat16378.jpg')) params.set('photo', '/_stills/vat16378.jpg')
   if (LOOK && has('coasts.json')) params.set('coasts', '/_stills/coasts.json')
   const tag = `${PAGE}-${lang}-${size}${reduced ? '-reduced' : ''}${dir === 'rtl' ? '-rtl' : ''}${ENGINE === 'webkit' ? '-webkit' : ''}`
@@ -125,7 +129,7 @@ for (const lang of langs) for (const size of sizes) {
     } else {
       await R('open', LOOK ? FEATURE : undefined)
       if (!reduced && !opt['only-steps']) {
-        if (LOOK) { await wait(page, 380); row.frames.push(await shot('1-cross-half')) }
+        if (LOOK && !INKED) { await wait(page, 380); row.frames.push(await shot('1-cross-half')) }
         else {
           await wait(page, 450); row.frames.push(await shot('1-ink-half'))
           await page.waitForFunction((r) => window[r].phase() !== 'ink', rig, { timeout: 5000 }); row.frames.push(await shot('2-ink'))

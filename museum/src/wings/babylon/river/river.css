@@ -1,0 +1,11 @@
+/* Feature 10's own marks. The river of 570 BC takes the stop's own water colour (set on the plate from its plan);
+   today's channel is in place (heavy, solid), the old bed's edge dashed, the road a fine plain line. No colour value. */
+/* the stop's water as a wash on the paper: light enough that our pencil measure keeps 3:1 over it (3.8 at 35 %) */
+.paper-mark.river-water { fill: color-mix(in srgb, var(--river-570) 35%, var(--paper)); stroke: none; }
+/* upright, the river's width stands in two rows inside the water (its number pairs break only at the range's word),
+   and today's channel's name in two rows beside the narrow channel */
+.paper-plate[data-framing='upright'] .paper-label:is([data-label='width'], [data-label='channel']) { white-space: normal; width: min-content; text-align: center; }
+/* on a phone's smaller scale the piers keep their heavy line but leave their shape readable */
+.paper-plate[data-framing='upright'] .paper-mark.river-pier { stroke-width: 2; }
+.paper-mark.river-road { stroke-linejoin: round; }
+.paper-mark.river-channel, .paper-mark.river-bank, .paper-mark.river-bed { stroke-linejoin: round; }
