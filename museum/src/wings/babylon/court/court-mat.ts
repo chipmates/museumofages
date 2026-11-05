@@ -424,7 +424,8 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   stateCol = mix(stateCol, pavingCol, paving)
   m.colorNode = mix(stateCol, classColour(tones, attribute('cls', 'vec2'), attribute('band', 'float')), uView)
   m.emissiveNode = sheen
-  const glazed = max(front, reveal).mul(float(1).sub(jointF.mul(front)))
+  // the reveals take no sun (indoors, below): a gloss there could only mirror the page's sky, which a passage cannot see
+  const glazed = front.mul(float(1).sub(jointF))
   m.roughnessNode = mix(mix(float(0.92), float(0.3), glazed), float(0.92), uView)
 
   /* ── the light the stack does not carry: inside the room only what comes through the doors (strongest in front of
