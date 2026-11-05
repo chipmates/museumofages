@@ -64,17 +64,24 @@ class DepthShadowNode extends (ShadowNode as unknown as new (light: N, shadow?: 
 class SunShadowNode extends (ShadowBaseNode as unknown as new (light: N) => N) {
   far: N
   near: N
-  constructor(light: N, holder: N, private uNearM: N, private uNearOn: N, private band: number) {
+  nearM: N
+  nearOn: N
+  nearBand: number
+  // fields set by hand, not as parameter properties: the kit's node tests load this file with type stripping only
+  constructor(light: N, holder: N, uNearM: N, uNearOn: N, band: number) {
     super(light)
+    this.nearM = uNearM
+    this.nearOn = uNearOn
+    this.nearBand = band
     this.far = new DepthShadowNode(light, light.shadow)
     this.near = new DepthShadowNode(holder, holder.shadow)
   }
   setup(): N {
     return Fn((b: N) => {
       this.setupShadowPosition(b)
-      const c = this.uNearM.mul(vec4(shadowPositionWorld, 1)).xyz
+      const c = this.nearM.mul(vec4(shadowPositionWorld, 1)).xyz
       const e = min(min(c.x, c.x.oneMinus()), min(c.y, c.y.oneMinus()))
-      const w = smoothstep(0, this.band, e).mul(this.uNearOn).toVar()
+      const w = smoothstep(0, this.nearBand, e).mul(this.nearOn).toVar()
       const ret = float(1).toVar()
       If(w.greaterThan(0.999), () => { ret.assign(this.near) })
         .ElseIf(w.greaterThan(0.001), () => { ret.assign(mix(this.far, this.near, w)) })
@@ -82,6 +89,46 @@ class SunShadowNode extends (ShadowBaseNode as unknown as new (light: N) => N) {
       return ret
     })()
   }
+}
+
+type Box = { x0: number; x1: number; y0: number; y1: number }
+/** the box in the sun's frame round these points (the light camera put 6000 m up the sun from their centre), a share
+    and a few metres of margin */
+export function sunBox(lightCam: OrthographicCamera, pts: Vector3[], centre: Vector3, sun: Vector3, share: number, pad: number): Box {
+  lightCam.position.copy(centre).addScaledVector(sun, 6000)
+  lightCam.lookAt(centre)
+  lightCam.updateMatrixWorld(true)
+  const view = lightCam.matrixWorldInverse
+  let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity
+  for (const p of pts) {
+    const v = p.clone().applyMatrix4(view)
+    x0 = Math.min(x0, v.x); x1 = Math.max(x1, v.x); y0 = Math.min(y0, v.y); y1 = Math.max(y1, v.y)
+  }
+  const mx = (x1 - x0) * share + pad, my = (y1 - y0) * share + pad
+  return { x0: x0 - mx, x1: x1 + mx, y0: y0 - my, y1: y1 + my }
+}
+/** the near slice's view depth by the camera's height over the plain: the court round an eye at the street, the near
+    quarters from the air; never past the far map's reach */
+export const nearDepthOf = (h: number, reach: number, d0 = 24, k = 6): number => Math.min(reach, d0 + h * k)
+/** the near slice's points: the eye and a 5x5 grid of view rays out to `depth` of view depth */
+export function nearSlice(cam: PerspectiveCamera, depth: number): Vector3[] {
+  const inv = cam.projectionMatrixInverse, world = cam.matrixWorld, origin = cam.position.clone()
+  const tmp = new Vector3()
+  const fwd = tmp.set(0, 0, -1).transformDirection(world).clone()
+  // nothing stands above 100 m to take a shadow; the ground under an eye can lie under the plain's 5 m (the stair's foot)
+  const ground = Math.min(5, origin.y - 2)
+  const clampY = (y: number): number => Math.min(100, Math.max(ground, y))
+  const pts: Vector3[] = [new Vector3(origin.x, clampY(origin.y), origin.z)]
+  for (let i = 0; i <= 4; i++) for (let k = 0; k <= 4; k++) {
+    const dir = tmp.set(i / 2 - 1, k / 2 - 1, 0.5).applyMatrix4(inv).applyMatrix4(world).sub(origin).normalize().clone()
+    let t = depth / Math.max(1e-3, dir.dot(fwd))
+    if (dir.y < -1e-4) t = Math.min(t, (ground - origin.y) / dir.y)
+    if (dir.y > 1e-4 && origin.y < 100) t = Math.min(t, (100 - origin.y) / dir.y)
+    const p = origin.clone().addScaledVector(dir, Math.max(0, t))
+    p.y = clampY(p.y)
+    pts.push(p)
+  }
+  return pts
 }
 
 export function walkLight(o: WalkLightOptions) {
@@ -132,7 +179,7 @@ export function walkLight(o: WalkLightOptions) {
   sunLight.shadow.normalBias = 0.03
   scene.add(sunLight, sunLight.target)
   /* the near map (`?near=0` the far map alone): its own light holder and shadow, fitted in fitShadow below */
-  const NEAR = { on: q.get('near') !== '0', size: Number(q.get('nearMap') ?? 8192), band: 0.06, bias: Number(q.get('nearB') ?? 1), normal: Number(q.get('nearN') ?? 0.5), floor: Number(q.get('nearF') ?? 0.003) }
+  const NEAR = { on: q.get('near') !== '0', size: Number(q.get('nearMap') ?? 8192), band: 0.06, bias: Number(q.get('nearB') ?? 0.25), normal: Number(q.get('nearN') ?? 0.5), floor: Number(q.get('nearF') ?? 0.001) }
   const holder = new Object3D() as Object3D & { target: Object3D; shadow: N; castShadow: boolean }
   holder.target = new Object3D()
   holder.castShadow = true
@@ -240,40 +287,13 @@ export function walkLight(o: WalkLightOptions) {
   /* the shadow: an orthographic box in the sun's frame round the ground the frame sees, out to a reach that grows with height */
   const lightCam = new OrthographicCamera()
   const tmp = new Vector3()
-  /** the box in the light's frame round these points, a share and a few metres of margin */
-  function boxOf(pts: Vector3[], centre: Vector3, sun: Vector3, share: number, pad: number): { x0: number; x1: number; y0: number; y1: number } {
-    lightCam.position.copy(centre).addScaledVector(sun, 6000)
-    lightCam.lookAt(centre)
-    lightCam.updateMatrixWorld(true)
-    const view = lightCam.matrixWorldInverse
-    let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity
-    for (const p of pts) {
-      const v = p.clone().applyMatrix4(view)
-      x0 = Math.min(x0, v.x); x1 = Math.max(x1, v.x); y0 = Math.min(y0, v.y); y1 = Math.max(y1, v.y)
-    }
-    const mx = (x1 - x0) * share + pad, my = (y1 - y0) * share + pad
-    return { x0: x0 - mx, x1: x1 + mx, y0: y0 - my, y1: y1 + my }
-  }
+  const boxOf = (pts: Vector3[], centre: Vector3, sun: Vector3, share: number, pad: number): Box => sunBox(lightCam, pts, centre, sun, share, pad)
   /** the near slice's view depth by the camera's height: the court round an eye at the street, the near quarters from the air */
-  const nearDepth = (h: number, reach: number): number => Math.min(reach, Number(q.get('nearD') ?? 24) + h * Number(q.get('nearK') ?? 6))
+  const nearDepth = (h: number, reach: number): number => nearDepthOf(h, reach, Number(q.get('nearD') ?? 24), Number(q.get('nearK') ?? 6))
   const nearFacts = { depth: 0, w: 0, h: 0, texel: 0 }
   function fitNear(cam: PerspectiveCamera, sun: Vector3, h: number, reach: number): void {
     const depth = nearDepth(h, reach)
-    const inv = cam.projectionMatrixInverse, world = cam.matrixWorld, origin = cam.position.clone()
-    const fwd = tmp.set(0, 0, -1).transformDirection(world).clone()
-    // nothing stands above 100 m to take a shadow; the ground under an eye can lie under the plain's 5 m (the stair's foot)
-    const ground = Math.min(5, origin.y - 2)
-    const clampY = (y: number): number => Math.min(100, Math.max(ground, y))
-    const pts: Vector3[] = [new Vector3(origin.x, clampY(origin.y), origin.z)]
-    for (let i = 0; i <= 4; i++) for (let k = 0; k <= 4; k++) {
-      const dir = tmp.set(i / 2 - 1, k / 2 - 1, 0.5).applyMatrix4(inv).applyMatrix4(world).sub(origin).normalize().clone()
-      let t = depth / Math.max(1e-3, dir.dot(fwd))
-      if (dir.y < -1e-4) t = Math.min(t, (ground - origin.y) / dir.y)
-      if (dir.y > 1e-4 && origin.y < 100) t = Math.min(t, (100 - origin.y) / dir.y)
-      const p = origin.clone().addScaledVector(dir, Math.max(0, t))
-      p.y = clampY(p.y)
-      pts.push(p)
-    }
+    const pts = nearSlice(cam, depth)
     const centre = pts.reduce((a, p) => a.add(p), new Vector3()).multiplyScalar(1 / pts.length)
     const b = boxOf(pts, centre, sun, 0.02, 0.5)
     holder.position.copy(lightCam.position)
@@ -288,7 +308,8 @@ export function walkLight(o: WalkLightOptions) {
     sh.updateMatrices(holder)
     ;(uNearM.value as Matrix4).copy(sh.matrix)
     const texel = Math.max(b.x1 - b.x0, b.y1 - b.y0) / NEAR.size
-    // the near map's biases follow its own texel: the lips' shades are a centimetre or two tall, under the far map's floors
+    // the near map's biases follow its own texel: the lips' shades are a centimetre or two tall, under the far map's floors;
+    // a quarter texel of depth, since a whole one let the sun past a wall's corner onto the grazing face beside it
     sh.normalBias = Math.max(0.002, texel * NEAR.normal)
     sh.bias = -Math.max(NEAR.floor, texel * NEAR.bias) / (sc.far - sc.near)
     Object.assign(nearFacts, { depth: +depth.toFixed(1), w: +(b.x1 - b.x0).toFixed(1), h: +(b.y1 - b.y0).toFixed(1), texel: +texel.toFixed(4) })
