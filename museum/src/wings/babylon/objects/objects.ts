@@ -138,7 +138,7 @@ function signsAt(root: Object3D, block: Block, faceName: string, ins: Inscriptio
 }
 
 /** the 10 cm ruler in the walk's grey: a flat bar, a notch every centimetre, a longer one at 5 and 10 */
-function ruler(): Mesh {
+export function ruler(): Mesh {
   const [x, y, z] = SIZES.ruler
   const notch = (u: number, v: number): number => {
     const cm = u / 10, near = Math.abs(cm - Math.round(cm)) * 10
@@ -159,7 +159,7 @@ function ruler(): Mesh {
 
 /** where the ruler lies: on the floor in front of the body as the eye sees it, its left end under the body's left
  *  side, `ahead` metres out from the body's middle (clear of whatever the body sweeps as it turns) */
-function layRuler(r: Object3D, left: number, ahead: number): void {
+export function layRuler(r: Object3D, left: number, ahead: number): void {
   r.position.set(left + SIZES.ruler[0] / 2, SIZES.ruler[1] / 2, ahead).applyAxisAngle(new Vector3(0, 1, 0), FACING)
   r.rotation.y = FACING
 }
