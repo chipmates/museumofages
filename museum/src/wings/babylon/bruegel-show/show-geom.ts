@@ -565,6 +565,12 @@ function quarry(S: Soup, f: ShowFrame, a0: number, a1: number, rFoot: number, rT
       upQuad(S, P(p0, r0, t), P(p1, r0, t), P(p1, r1, t), P(p0, r1, t), tread)
       const [ox, oz] = sceneAt(f, (p0 + p1) / 2, r0 - 3)
       awayQuad(S, P(p0, r0, Math.min(tb, t) - 0.05), P(p1, r0, Math.min(tb, t) - 0.05), P(p1, r0, t), P(p0, r0, t), [ox, f.base + (t + tb) / 2, oz], q(SK.rock, hash(seed, k, i, 4), 0, 0, t))
+      // the slope's own sides, down to the ground, so it stands as one wedge of rock between the masses
+      if (i === 0 || i === n - 1) {
+        const e = i === 0 ? p0 : p1, inward = i === 0 ? e + 2 : e - 2
+        const [sx, sz] = sceneAt(f, inward, (r0 + r1) / 2)
+        awayQuad(S, P(e, r0, -0.4), P(e, r1, -0.4), P(e, r1, t), P(e, r0, t), [sx, f.base + t / 2, sz], q(SK.rock, hash(seed, k, i, 7), 0, 0, t))
+      }
       // where a neighbouring piece stands higher, the step's side shows
       if (i + 1 < n) {
         const tn = tAt(k, i + 1)
