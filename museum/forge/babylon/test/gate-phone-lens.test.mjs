@@ -1,5 +1,5 @@
 // The gate page's film on the phone: at each hold whose phone still stands on it, the film's lens and shift are the
-// still's (the frame that is judged is the frame that ships); 46 degrees elsewhere. The lens is eased by path.ts from the
+// still's (the frame that is judged is the frame that ships); 46 degrees and no shift where a key names none. The lens is eased by path.ts from the
 // keys' `phone`, which gate.ts hands over as they are. GATE_CLIP=<folder of gate-clip.mjs frames> also reads the
 // film's own frame logs there.
 import test from 'node:test'
@@ -48,14 +48,12 @@ test("at each hold with its own phone still the film's phone lens and shift are 
   assert.ok(n >= 2, `${n} holds checked`)
 })
 
-test("a hold whose phone still stands elsewhere keeps the film's 46", () => {
-  for (const s of cams.stops) {
-    if (s.still) continue
-    const hold = s.keys.filter((k) => k.kind === 'hold').at(-1)
-    assert.deepEqual(atOf(hold.at), atOf(s.keys.at(-1).at))
-    assert.notDeepEqual(atOf(hold.at), cams.stills.phone.at, `stop ${s.n}: the hero phone still stands on this hold`)
-    assert.equal(path.sample(hold.t).phone.hfov, cams.phoneFilm, `stop ${s.n} at ${hold.t} s`)
-  }
+test("the last hold, looking south where no still stands, keeps the film's 46 and no shift", () => {
+  const s = cams.stops.at(-1), hold = s.keys.filter((k) => k.kind === 'hold').at(-1)
+  assert.notEqual(hold.t, s.still?.t)
+  assert.equal(hold.phone, undefined)
+  const p = path.sample(hold.t)
+  assert.deepEqual([p.phone.hfov, p.phone.shift], [cams.phoneFilm, 0], `at ${hold.t} s`)
   assert.equal(cams.phoneFilm, 46)
 })
 
