@@ -126,24 +126,32 @@ export function treeGeometry(kind: TreeKind, h: number, seed: number): BufferGeo
       lobe(s, [Math.cos(b) * out, h * (0.4 + R() * 0.25), Math.sin(b) * out], [h * 0.12, h * (0.17 + R() * 0.06), h * 0.12], leaf, R, 0.7)
     }
   } else if (kind === 'reed') {
-    // a clump of reed as the deck sees it across 100 to 400 m of water: sheaves of blades fanning up from one foot,
-    // each a wedge half a metre across under its tip (one blade is far under a pixel there), fanned across the local
-    // x axis (the instance turns it to face the bridge), last year's straw among the new green
-    const n = 9 + Math.floor(R() * 5)
+    // a clump of reed as the deck sees it across 100 to 400 m of water: many narrow blades and stems from one foot, each
+    // about a pixel wide there and turned its own way, so the clump reads as a fine mass with a ragged top and not as a
+    // few lit wedges; a standing blade's face is near vertical, so its normal lies near the horizontal. Last year's straw
+    // among the new green, a dark plume on some of the straw
+    const n = 20 + Math.floor(R() * 9)
     for (let j = 0; j < n; j++) {
-      const b = (R() < 0.5 ? 0 : Math.PI) + (R() - 0.5) * 1.2, lean = 0.06 + R() * 0.2, hh = h * (0.55 + R() * 0.45)
-      const tx = -Math.sin(b), tz = Math.cos(b), side = (R() < 0.5 ? -1 : 1) * (0.38 + R() * 0.14), fan = (R() - 0.5) * 0.25 * hh
-      const foot: V3 = [(R() - 0.5) * 0.16, -0.2, (R() - 0.5) * 0.16]
-      const tip: V3 = [foot[0] + Math.cos(b) * lean * hh + tx * fan, hh, foot[2] + Math.sin(b) * lean * hh + tz * fan]
-      const lo = 0.6 + R() * 0.2
-      const wing: V3 = [foot[0] + (tip[0] - foot[0]) * lo + tx * side, hh * lo, foot[2] + (tip[2] - foot[2]) * lo + tz * side]
-      const nrm: V3 = [Math.cos(b) * 0.3, 0.9, Math.sin(b) * 0.3]
+      const b = R() * Math.PI * 2, lean = 0.04 + R() * 0.2, hh = h * (0.5 + R() * 0.5)
+      const foot: V3 = [(R() - 0.5) * 0.6, -0.2, (R() - 0.5) * 0.6]
+      const tip: V3 = [foot[0] + Math.cos(b) * lean * hh, hh, foot[2] + Math.sin(b) * lean * hh]
+      // the blade bows outward a little at its middle
+      const mid: V3 = [foot[0] + (tip[0] - foot[0]) * 0.55 + Math.cos(b) * lean * hh * 0.12, hh * 0.55, foot[2] + (tip[2] - foot[2]) * 0.55 + Math.sin(b) * lean * hh * 0.12]
+      const a = R() * Math.PI, ax = Math.cos(a), az = Math.sin(a)
+      const w = 0.045 + R() * 0.04
+      const side = (p: V3, k: number): V3 => [p[0] + ax * k, p[1], p[2] + az * k]
+      const nrm: V3 = [-az * 0.94, 0.34, ax * 0.94]
       const straw = R() < 0.35
       const c0: V3 = straw ? [0.2, 0.17, 0.1] : leaf
-      const c1: V3 = [c0[0] * 1.25, c0[1] * 1.25, c0[2] * 1.2]
-      s.push(foot, nrm, [c0[0] * 0.8, c0[1] * 0.8, c0[2] * 0.8])
-      s.push(wing, nrm, c1)
-      s.push(tip, nrm, c1)
+      const c1: V3 = [c0[0] * (1.05 + R() * 0.2), c0[1] * (1.05 + R() * 0.2), c0[2] * 1.1]
+      const base: V3 = [c0[0] * 0.75, c0[1] * 0.75, c0[2] * 0.75]
+      for (const [p, c] of [[side(foot, -w), base], [side(foot, w), base], [side(mid, w * 0.7), c1], [side(foot, -w), base], [side(mid, w * 0.7), c1], [side(mid, -w * 0.7), c1], [side(mid, -w * 0.7), c1], [side(mid, w * 0.7), c1], [tip, c1]] as Array<[V3, V3]>) s.push(p, nrm, c)
+      if (straw && R() < 0.6) {
+        // the plume: a small dark tuft hanging from the stem's top
+        const pl: V3 = [0.16, 0.12, 0.08]
+        const t1: V3 = [tip[0] + Math.cos(b) * 0.1, tip[1] - 0.32, tip[2] + Math.sin(b) * 0.1]
+        for (const p of [side(tip, -0.07), side(tip, 0.07), t1] as V3[]) s.push(p, nrm, pl)
+      }
     }
   } else {
     // a dense, upright, feathery shrub-tree from the ground, wider than high, in a few columns (the athel on the sheet)
@@ -160,9 +168,11 @@ export function treeGeometry(kind: TreeKind, h: number, seed: number): BufferGeo
 }
 
 /** the palm part's builder (gate-life.ts palmGeometry), passed in so this module keeps no relative import for node */
-export type PalmBuilder = (h: number, detail: { seg: number; sides: number; fronds: number; steps: number }, seed: number) => BufferGeometry
-/** the palms across the river: between the garden's middle palm and the plain's far one, seen at 100 to 400 m */
-export const PALM_BANK = { seg: 3, sides: 5, fronds: 14, steps: 3 }
+export type PalmBuilder = (h: number, detail: { seg: number; sides: number; fronds: number; steps: number; leaflets?: number }, seed: number) => BufferGeometry
+/** the palms across the river: between the garden's middle palm and the plain's far one, seen at 100 to 400 m; their
+    fronds toothed (the leaflets of a stretch of rib as one blade), so a crown against the dusk reads feathered, not as
+    folded blades with straight edges */
+export const PALM_BANK = { seg: 3, sides: 5, fronds: 24, steps: 3, leaflets: 14 }
 /** each kind's base height; an instance scales it */
 export const PLANT_BASE_H: Record<PlantKind, number> = { palm: 12, poplar: 11, willow: 9, tamarisk: 4, reed: 2 }
 /** a kind's two shapes, v 0 or 1 (the plants of a kind take them in turn) */
