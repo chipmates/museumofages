@@ -2,9 +2,10 @@
    precinct's east wall with Gate 5's recess and the store blocks either side, their slight towers, the threshold at the
    recess's inner end, the street's paving before the gate, and Etemenanki's stages drawn with their faces' own data.
    Scene frame as plan.ts (x east, y up, z south). Every body carries one attribute set, so the page merges them into one
-   mesh: `kind` (0 plaster wall, 1 tower brick, 2 the glazed temple, 3 the street, 4 the threshold, 5 a stair) and `fa`
-   (per kind: the tower's face centre in plan, its half width and panel pitch; the street's along and across metres; a
-   stair's foot and its run direction scaled to steps per metre).
+   mesh: `kind` (0 plaster wall, 1 tower brick, 2 the glazed temple, 3 the street, 4 the threshold, 5 a stair, 6 a stair's
+   side wall, 7 the temple's door), `fa` (per kind: the tower's face centre in plan, its half width and panel pitch; the
+   street's along and across metres; a stair's foot and its run direction scaled to steps per metre) and `fb` (a stage's
+   face: the level its visible foot stands on, its top, the stage's number).
    Only type imports from the wing: node resolves no relative module without its extension. */
 
 import { BufferGeometry, ExtrudeGeometry, Float32BufferAttribute, Shape } from 'three/webgpu'
@@ -13,7 +14,7 @@ import type { BoxRec, Built, Cls, P2, Ramp } from '../map/plan'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
 
-export const KIND = { wall: 0, brick: 1, glaze: 2, street: 3, threshold: 4, stair: 5 } as const
+export const KIND = { wall: 0, brick: 1, glaze: 2, street: 3, threshold: 4, stair: 5, cheek: 6, door: 7 } as const
 
 export interface TowerBody { id: string; geometry: BufferGeometry; band: number; letters: [Cls, Cls] }
 
@@ -62,12 +63,38 @@ class Soup {
   pos: number[] = []
   kind: number[] = []
   fa: number[] = []
+  fb: number[] = []
+  /** the stage data every following face carries */
+  stage: number[] = [0, 0, 0, 0]
   tri(p: number[][], k: number, f: number[][]): void {
     for (let j = 0; j < 3; j++) {
       this.pos.push(...p[j]!)
       this.kind.push(k)
       this.fa.push(...f[j]!)
+      this.fb.push(...this.stage)
     }
+  }
+  /** a quad turned so its front faces `out` */
+  quadOut(p: number[][], k: number, f: number[][], out: number[]): void {
+    const a = p[0]!, b = p[1]!, c = p[2]!
+    const u = [b[0]! - a[0]!, b[1]! - a[1]!, b[2]! - a[2]!], v = [c[0]! - a[0]!, c[1]! - a[1]!, c[2]! - a[2]!]
+    const n = [u[1]! * v[2]! - u[2]! * v[1]!, u[2]! * v[0]! - u[0]! * v[2]!, u[0]! * v[1]! - u[1]! * v[0]!]
+    if (n[0]! * out[0]! + n[1]! * out[1]! + n[2]! * out[2]! < 0) this.quad([p[0]!, p[3]!, p[2]!, p[1]!], k, [f[0]!, f[3]!, f[2]!, f[1]!])
+    else this.quad(p, k, f)
+  }
+  /** an upright box (centre x, z, yaw as the map's boxes) without its underside, every face plain */
+  box(x: number, z: number, yaw: number, sx: number, sz: number, y0: number, y1: number, k: number): void {
+    const c = Math.cos(yaw), s = Math.sin(yaw)
+    const P = (lx: number, lz: number, y: number): number[] => [x + lx * c + lz * s, y, z - lx * s + lz * c]
+    const hx = sx / 2, hz = sz / 2
+    const f = Array(4).fill([x, z, 0, 0])
+    const ring: Array<[number, number]> = [[-hx, -hz], [hx, -hz], [hx, hz], [-hx, hz]]
+    for (let i = 0; i < 4; i++) {
+      const [x0, z0] = ring[i]!, [x1, z1] = ring[(i + 1) % 4]!
+      const m = P((x0 + x1) / 2, (z0 + z1) / 2, 0)
+      this.quadOut([P(x0, z0, y0), P(x0, z0, y1), P(x1, z1, y1), P(x1, z1, y0)], k, f, [m[0]! - x, 0, m[2]! - z])
+    }
+    this.quadOut([P(-hx, -hz, y1), P(-hx, hz, y1), P(hx, hz, y1), P(hx, -hz, y1)], k, f, [0, 1, 0])
   }
   /** a quad p0 p1 p2 p3 (counter-clockwise seen from its front) */
   quad(p: number[][], k: number, f: number[][]): void {
@@ -79,6 +106,7 @@ class Soup {
     g.setAttribute('position', new Float32BufferAttribute(this.pos, 3))
     g.setAttribute('kind', new Float32BufferAttribute(this.kind, 1))
     g.setAttribute('fa', new Float32BufferAttribute(this.fa, 4))
+    g.setAttribute('fb', new Float32BufferAttribute(this.fb, 4))
     g.computeVertexNormals()
     return g
   }
@@ -98,17 +126,19 @@ function prism(poly: P2[], y0: number, y1: number, kind: number): BufferGeometry
   const n = g.getAttribute('position').count
   g.setAttribute('kind', new Float32BufferAttribute(new Float32Array(n).fill(kind), 1))
   g.setAttribute('fa', new Float32BufferAttribute(new Float32Array(n * 4), 4))
+  g.setAttribute('fb', new Float32BufferAttribute(new Float32Array(n * 4), 4))
   return g
 }
 
 /** an upright box as the map draws its BoxRec (centre x, z; sx along its own x turned by yaw; sz across), every face
     carrying its plan centre, its half width and the panel pitch for the tower's material */
-function towerBox(b: BoxRec, kind: number, pitch: number): BufferGeometry {
+function towerBox(b: BoxRec, kind: number, pitch: number, stage: number[] = [0, 0, 0, 0]): BufferGeometry {
   const c = Math.cos(b.yaw), s = Math.sin(b.yaw)
   // three's rotation about y: local (x, z) -> (x c + z s, -x s + z c)
   const P = (lx: number, lz: number, y: number): number[] => [b.x + lx * c + lz * s, y, b.z - lx * s + lz * c]
   const hx = b.sx / 2, hz = b.sz / 2
   const q = new Soup()
+  q.stage = stage
   const fa = (half: number): number[][] => Array(4).fill([b.x, b.z, half, pitch])
   // the four sides: corners walked so each face looks outward
   const ring: Array<[number, number]> = [[-hx, -hz], [hx, -hz], [hx, hz], [-hx, hz]]
@@ -183,6 +213,96 @@ function stairBody(r: Ramp, riser: number): BufferGeometry {
   return g
 }
 
+/** a stair as the dig gives it: a flight between side walls (`walls`: the side, -1 or 1 across the run, and the
+    width each takes off the ramp's), their tops `above` over the flight's line, from the foot to `inset` short of the
+    ramp's head (the map sinks the middle stair's head into the face); a side with no wall stands against the tower and
+    draws no face. The flight carries its tread data as `stairBody`'s; a wall's outer face carries the mantle's panels. */
+function flankedStair(r: Ramp, riser: number, walls: Array<{ side: number; w: number }>, above: number, inset: number, terrace: number, pitch: number): { flight: BufferGeometry; walls: Array<{ side: number; geometry: BufferGeometry }> } {
+  const d = norm(sub(r.b, r.a)), run = Math.hypot(r.b[0] - r.a[0], r.b[1] - r.a[1])
+  const n: P2 = [-d[1], d[0]]
+  const k = Math.max(1, Math.round((r.y1 - r.y0) / riser)) / run
+  const fa = Array(4).fill([r.a[0], r.a[1], d[0] * k, d[1] * k])
+  const at = (t: number, v: number, y: number): number[] => [r.a[0] + d[0] * run * t + n[0] * v, y, r.a[1] + d[1] * run * t + n[1] * v]
+  const line = (t: number): number => r.y0 + (r.y1 - r.y0) * t
+  const tEnd = 1 - inset / run
+  const ho = r.w / 2
+  const edge = (side: number): number => side * (ho - (walls.find((w) => w.side === side)?.w ?? 0))
+  const lo = edge(-1), hi = edge(1)
+  const fl = new Soup()
+  fl.quadOut([at(0, lo, line(0)), at(0, hi, line(0)), at(1, hi, line(1)), at(1, lo, line(1))], KIND.stair, fa, [0, 1, 0])
+  fl.quadOut([at(0, lo, r.floor), at(0, hi, r.floor), at(0, hi, line(0)), at(0, lo, line(0))], KIND.stair, fa, [-d[0], 0, -d[1]])
+  // an open head (a side stair's, beside the middle stair) shows its end
+  if (inset === 0) fl.quadOut([at(1, lo, r.floor), at(1, hi, r.floor), at(1, hi, line(1)), at(1, lo, line(1))], KIND.stair, fa, [d[0], 0, d[1]])
+  const out = walls.map(({ side }) => {
+    const q = new Soup()
+    const vi = edge(side), vo = side * ho
+    const f0 = Array(4).fill([0, 0, 0, 0])
+    const mid = at(tEnd / 2, vo, 0)
+    const fp = Array(4).fill([mid[0]!, mid[2]!, (run * tEnd) / 2, pitch])
+    const o: number[] = [n[0] * side, 0, n[1] * side], inn: number[] = [-n[0] * side, 0, -n[1] * side]
+    q.quadOut([at(0, vi, line(0)), at(tEnd, vi, line(tEnd)), at(tEnd, vi, line(tEnd) + above), at(0, vi, line(0) + above)], KIND.cheek, f0, inn)
+    q.quadOut([at(0, vo, r.floor), at(tEnd, vo, r.floor), at(tEnd, vo, line(tEnd) + above), at(0, vo, line(0) + above)], KIND.brick, fp, o)
+    q.quadOut([at(0, vi, line(0) + above), at(tEnd, vi, line(tEnd) + above), at(tEnd, vo, line(tEnd) + above), at(0, vo, line(0) + above)], KIND.cheek, f0, [0, 1, 0])
+    q.quadOut([at(0, vi, r.floor), at(0, vo, r.floor), at(0, vo, line(0) + above), at(0, vi, line(0) + above)], KIND.cheek, f0, [-d[0], 0, -d[1]])
+    // the head: over the terrace where the stair runs into the face, whole where it stands free
+    const y0h = inset > 0 ? terrace : r.floor
+    q.quadOut([at(tEnd, vi, y0h), at(tEnd, vo, y0h), at(tEnd, vo, line(tEnd) + above), at(tEnd, vi, line(tEnd) + above)], KIND.cheek, f0, [d[0], 0, d[1]])
+    return { side, geometry: q.geometry() }
+  })
+  return { flight: fl.geometry(), walls: out }
+}
+
+/** the temple on the top: its box, a door in the face toward the stairs (own +x), and the stepped battlements round its
+    roof as their own body; every face but the door's recess carries the panels' data */
+function templeBody(b: BoxRec, pitch: number, door: { w: number; h: number; d: number; floor: number }, crest: { pitch: number; low: [number, number, number]; high: [number, number, number] }, stage: number[]): { body: BufferGeometry; crest: BufferGeometry } {
+  const c = Math.cos(b.yaw), s = Math.sin(b.yaw)
+  const P = (lx: number, lz: number, y: number): number[] => [b.x + lx * c + lz * s, y, b.z - lx * s + lz * c]
+  const dir = (lx: number, lz: number): number[] => [lx * c + lz * s, 0, -lx * s + lz * c]
+  const hx = b.sx / 2, hz = b.sz / 2
+  const q = new Soup()
+  q.stage = stage
+  const fa = (half: number): number[][] => Array(4).fill([b.x, b.z, half, pitch])
+  const plain = Array(4).fill([b.x, b.z, 0, pitch])
+  // the three plain sides
+  q.quadOut([P(-hx, -hz, b.y0), P(hx, -hz, b.y0), P(hx, -hz, b.y1), P(-hx, -hz, b.y1)], KIND.glaze, fa(hx), dir(0, -1))
+  q.quadOut([P(-hx, hz, b.y0), P(hx, hz, b.y0), P(hx, hz, b.y1), P(-hx, hz, b.y1)], KIND.glaze, fa(hx), dir(0, 1))
+  q.quadOut([P(-hx, -hz, b.y0), P(-hx, hz, b.y0), P(-hx, hz, b.y1), P(-hx, -hz, b.y1)], KIND.glaze, fa(hz), dir(-1, 0))
+  // the face toward the stairs, round its door
+  const dw = door.w / 2, yd = door.floor + door.h, X = hx, Xb = hx - door.d
+  q.quadOut([P(X, -hz, b.y0), P(X, -dw, b.y0), P(X, -dw, b.y1), P(X, -hz, b.y1)], KIND.glaze, fa(hz), dir(1, 0))
+  q.quadOut([P(X, dw, b.y0), P(X, hz, b.y0), P(X, hz, b.y1), P(X, dw, b.y1)], KIND.glaze, fa(hz), dir(1, 0))
+  q.quadOut([P(X, -dw, yd), P(X, dw, yd), P(X, dw, b.y1), P(X, -dw, b.y1)], KIND.glaze, fa(hz), dir(1, 0))
+  // the recess: its back the door, its sides and the lintel's underside plain glaze
+  q.quadOut([P(Xb, -dw, door.floor), P(Xb, dw, door.floor), P(Xb, dw, yd), P(Xb, -dw, yd)], KIND.door, plain, dir(1, 0))
+  q.quadOut([P(Xb, -dw, door.floor), P(X, -dw, door.floor), P(X, -dw, yd), P(Xb, -dw, yd)], KIND.glaze, plain, dir(0, 1))
+  q.quadOut([P(Xb, dw, door.floor), P(X, dw, door.floor), P(X, dw, yd), P(Xb, dw, yd)], KIND.glaze, plain, dir(0, -1))
+  q.quadOut([P(Xb, -dw, yd), P(X, -dw, yd), P(X, dw, yd), P(Xb, dw, yd)], KIND.glaze, plain, [0, -1, 0])
+  q.quadOut([P(-hx, -hz, b.y1), P(-hx, hz, b.y1), P(hx, hz, b.y1), P(hx, -hz, b.y1)], KIND.glaze, fa(0), [0, 1, 0])
+  q.quadOut([P(-hx, -hz, b.y0), P(-hx, hz, b.y0), P(hx, hz, b.y0), P(hx, -hz, b.y0)], KIND.glaze, fa(0), [0, -1, 0])
+  // the battlements: a broad lower tier and a narrow upper one along each edge, their outer faces 5 cm inside it
+  const cr = new Soup()
+  cr.stage = stage
+  const edges: Array<[number, number, number, number, number]> = [[-hx, -hz, hx, -hz, 1], [hx, -hz, hx, hz, 1], [hx, hz, -hx, hz, 1], [-hx, hz, -hx, -hz, 1]]
+  for (const [x0, z0, x1, z1] of edges) {
+    const len = Math.hypot(x1 - x0, z1 - z0), ux = (x1 - x0) / len, uz = (z1 - z0) / len
+    // inward in the box's own frame
+    const ix = -uz, iz = ux
+    const count = Math.max(1, Math.floor((len - crest.low[1]) / crest.pitch))
+    const step = (len - crest.low[1]) / count
+    for (let k = 0; k <= count; k++) {
+      const along = crest.low[1] / 2 + step * k
+      for (const [w, dpt, h, y0] of [[crest.low[0], crest.low[1], crest.low[2], b.y1], [crest.high[0], crest.high[1], crest.high[2], b.y1 + crest.low[2]]] as Array<[number, number, number, number]>) {
+        const lx = x0 + ux * along + ix * (dpt / 2 + 0.05), lz = z0 + uz * along + iz * (dpt / 2 + 0.05)
+        const wc = P(lx, lz, 0)
+        // the box's own x along the edge: the yaw of the edge in the scene
+        const ed = dir(ux, uz)
+        cr.box(wc[0]!, wc[2]!, Math.atan2(-ed[2]!, ed[0]!), w, dpt, y0, y0 + h, KIND.glaze)
+      }
+    }
+  }
+  return { body: q.geometry(), crest: cr.geometry() }
+}
+
 /** the map prisms and boxes this module draws on the map page instead of the map */
 export const TAKEN_PRISM = (id: string): boolean => id.startsWith('precinct-')
 export const TAKEN_BOX = (id: string): boolean => id.startsWith('tower-stage-')
@@ -211,7 +331,10 @@ export function buildTower(built: Built, mapPlan: J, tp: J): Tower {
   bodies.push({ id: 'precinct-east-s', geometry: prism(south, 0, top, KIND.wall), band: wallBand, letters: wallLetters })
   // the precinct's other walls and rooms keep the map's outlines and heights, drawn in the same plaster
   for (const p of built.prisms.filter((q) => TAKEN_PRISM(q.id) && !/^precinct-(east-wall|ne-block|se-block)/.test(q.id))) {
-    bodies.push({ id: p.id, geometry: prism(p.poly, p.y0, p.y1, KIND.wall), band: wallBand, letters: [p.plan, p.height] })
+    // the south rooms overlap the west rooms and the east wall at their corners: their roofs 3 cm lower, so no two
+    // roofs fight in depth where the flight looks down on them
+    const y1 = p.id.startsWith('precinct-south-rooms') ? p.y1 - 0.03 : p.y1
+    bodies.push({ id: p.id, geometry: prism(p.poly, p.y0, y1, KIND.wall), band: wallBand, letters: [p.plan, p.height] })
   }
 
   /* ── the slight towers: on the street face, and on both sides of the recess ── */
@@ -299,16 +422,43 @@ export function buildTower(built: Built, mapPlan: J, tp: J): Tower {
   const stages = built.boxes.filter((b) => TAKEN_BOX(b.id))
   const PN = tp.tower.panels
   const towerGround = g(stages[0]!.x, stages[0]!.z)
+  const TT = tp.tower
   for (const b of stages) {
     const k = Number(b.id.split('-').pop())
-    const glazed = k === stages.length && tp.tower.temple.glaze
+    // the stage's visible foot: the court for the first, the terrace below for the rest
+    const stage = [k === 1 ? towerGround : b.y0 + 0.05, b.y1, k, 0]
+    if (k === stages.length && TT.temple.glaze) {
+      const t = templeBody(b, PN.pitch1, { ...TT.temple.door, floor: b.y0 + 0.05 }, TT.temple.crest, stage)
+      bodies.push({ id: b.id, geometry: t.body, band: -1, letters: [b.plan, b.height] })
+      bodies.push({ id: 'tower-top-crest', geometry: t.crest, band: -1, letters: [b.plan, b.height] })
+      continue
+    }
     // about 13 panels a side on the first stage; the upper stages keep its pitch, so the rhythm runs up the tower
-    const geo = towerBox(b, glazed ? KIND.glaze : KIND.brick, PN.pitch1)
-    bodies.push({ id: b.id, geometry: geo, band: k === 1 ? towerGround + BAND : -1, letters: [b.plan, b.height] })
+    bodies.push({ id: b.id, geometry: towerBox(b, KIND.brick, PN.pitch1, stage), band: k === 1 ? towerGround + BAND : -1, letters: [b.plan, b.height] })
   }
-  // the three stairs up to the first stage's top, on the map's ramps
+  // the three stairs up to the first stage's top, on the map's ramps: the middle one a flight between its side walls,
+  // the side ones from a foot beyond the tower's corner (the west one's dug foot lies 1.9 m west of the tower)
   const stairs = built.ramps.filter((r) => TAKEN_RAMP(r.id))
-  for (const r of stairs) bodies.push({ id: r.id, geometry: stairBody(r, tp.tower.stairs.riser), band: r.band, letters: [r.plan, r.height] })
+  const terrace = stages[0]!.y1
+  const MS = TT.stairs.middle, SS = TT.stairs.side
+  const centre: P2 = [stages[0]!.x, stages[0]!.z]
+  for (const r of stairs) {
+    const middle = r.id === 'tower-stair-middle'
+    const d = norm(sub(r.b, r.a)), run = Math.hypot(r.b[0] - r.a[0], r.b[1] - r.a[1]), slope = (r.y1 - r.y0) / run
+    const ramp: Ramp = middle ? r : { ...r, a: [r.a[0] - d[0] * SS.beyond, r.a[1] - d[1] * SS.beyond], y0: r.y0 - slope * SS.beyond }
+    // a side stair's wall stands on its outer edge, away from the tower
+    const n: P2 = [-d[1], d[0]], m: P2 = [(r.a[0] + r.b[0]) / 2, (r.a[1] + r.b[1]) / 2]
+    const outer = dot(sub(m, centre), n) > 0 ? 1 : -1
+    const walls = middle ? [{ side: -1, w: (r.w - MS.clear) / 2 }, { side: 1, w: (r.w - MS.clear) / 2 }] : [{ side: outer, w: SS.wall }]
+    const st = flankedStair(ramp, TT.stairs.riser, walls, middle ? MS.above : SS.above, middle ? MS.inset : 0, terrace, PN.pitch1)
+    bodies.push({ id: r.id, geometry: st.flight, band: r.band, letters: [r.plan, r.height] })
+    for (const w of st.walls) {
+      const g0 = w.geometry
+      g0.computeBoundingBox()
+      const name = middle ? ((g0.boundingBox!.min.x + g0.boundingBox!.max.x) / 2 > (r.a[0] + r.b[0]) / 2 ? 'e' : 'w') : 'outer'
+      bodies.push({ id: `${r.id}-wall-${name}`, geometry: g0, band: r.band, letters: [r.plan, r.height] })
+    }
+  }
 
   const facts = {
     opening: +(2 * half).toFixed(2),

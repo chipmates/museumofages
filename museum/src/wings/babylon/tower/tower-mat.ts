@@ -2,8 +2,13 @@
    of the stop, branching on the body's `kind` attribute and the face's own data, never on screen derivatives.
      0 the precinct's walls   white lime-gypsum plaster over mud brick, guessed: patches of older and newer coats, the
                               mud showing where splash and flaking took the plaster at the foot, runs under the tops
-     1 the tower's brick      baked brick in thick bitumen joints on the kit's bond, the faces in tall panels
-     2 the temple on top      blue-glazed brick (the king's claim), each brick fired a little differently
+     1 the tower's brick      baked brick in thick bitumen joints on the kit's bond, the faces in tall panels; each stage
+                              its own batch, a coping at its top with the drip's shadow under it, the inner corner
+                              at an upper stage's foot holding the sky back
+     2 the temple on top      blue-glazed brick (the king's claim; the hue ours), each brick fired a little differently,
+                              the glaze giving back the sky it faces
+     6 a stair's side walls   brick in the bond
+     7 the temple's door      dark wood in the shade of its recess
      3 the street             the dug 6.4 m: seven breccia slabs across on the west, brick in asphalt on the east; the
                               map street's wider shoulders as trodden dust
      4 the threshold          brick, where the destroyed gate stood
@@ -14,7 +19,7 @@
 import { MeshStandardNodeMaterial, type Material } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import { BR, PAL, bond, footprint, hash2, lines } from '../gate/gate-mat'
-import { classColour, greyNode, uView, type ClassTones } from '../map/mass'
+import { classColour, greyNode, uView, type ClassTones, type Sky } from '../map/mass'
 import type { GateFrame } from './tower-geom'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,7 +27,7 @@ type N = any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
 const T = TSL as unknown as Record<string, N>
-const { abs, attribute, clamp, dot, float, floor, fract, max, min, mix, mx_noise_float, mx_worley_noise_vec2, normalize, positionWorld, select, smoothstep, step, uniform, vec2, vec3 } = T
+const { abs, attribute, cameraPosition, clamp, dot, float, floor, fract, max, min, mix, mx_noise_float, mx_worley_noise_vec2, normalize, positionWorld, pow, reflect, select, smoothstep, step, uniform, vec2, vec3 } = T
 
 type RGB = [number, number, number]
 const V = (c: RGB): N => vec3(...c)
@@ -118,8 +123,21 @@ export function towerMaterial(F: GateFrame, tp: J, tones: ClassTones): Material 
     .mul(float(1).add(batch.mul(0.04)).add(courses.mul(0.07)).add(panelId.sub(0.5).mul(0.05).mul(inPanel)))
   const joint = clamp(tb.bed.add(tb.head), 0, 1)
   let towerCol: N = mix(brickTone, V(PAL.asphalt as RGB).mul(2.2), joint.mul(0.85))
-  towerCol = towerCol.mul(mix(float(1), float(0.93), recess)).mul(float(1).sub(streakN.mul(0.09)))
+  const mottle1 = mx_noise_float(vec3(uT.mul(0.09), P.y.mul(0.11), 5.5)).mul(0.06)
+  towerCol = towerCol.mul(mix(float(1), float(0.93), recess)).mul(float(1).sub(streakN.mul(0.13))).mul(float(1).add(mottle1))
   towerCol = towerCol.mul(mix(float(0.86), float(1), smoothstep(3.5, 6.0, P.y)))
+  // each stage its own: a batch of brick a little apart in tone, a coping of three courses at its top lighter with the
+  // dust on its lip, the drip's shadow under it, and an upper stage's foot darker where the terrace meets its face
+  const fb = attribute('fb', 'vec4')
+  const sk = fb.z, yb = fb.x, yt = fb.y
+  const hUp = P.y.sub(yb), hDown = yt.sub(P.y)
+  const stageTone = float(1).add(hash2(sk, float(3.1)).sub(0.5).mul(0.09))
+  const coping = float(1).sub(smoothstep(float(0.95).sub(fy), float(0.95).add(fy), hDown))
+  const drip = float(1).sub(smoothstep(float(0.25).sub(fy), float(0.25).add(fy), abs(hDown.sub(1.2))))
+  const cornerAO = float(1).sub(smoothstep(0.0, 5.0, hUp)).mul(step(1.5, sk))
+  const upFace = smoothstep(0.0, max(yt.sub(yb), 1.0), hUp)
+  const staged = stageTone.mul(mix(float(0.93), float(1.04), upFace)).mul(float(1).add(coping.mul(0.13))).mul(float(1).sub(drip.mul(0.22))).mul(float(1).sub(cornerAO.mul(0.3)))
+  towerCol = towerCol.mul(mix(float(1), staged, step(0.5, sk)))
   // the stage tops: brick laid flat, dust lying on it
   const flatB = max(lines(P.x, BR, 0.008, fw), lines(P.z, BR, 0.008, fw))
   const towerTop = mix(mix(V(col.brick), V(PAL.dust as RGB), 0.5), V(PAL.asphalt as RGB).mul(2.2), flatB.mul(0.6))
@@ -128,7 +146,7 @@ export function towerMaterial(F: GateFrame, tp: J, tones: ClassTones): Material 
   /* ── 2 the temple's blue glaze ── */
   const gb = bond(uT, P.y, float(0), fu, fy, 0.004)
   // the cobalt range's light end (0.22 of the white), so the glaze in shade stays blue
-  const glazeG: RGB = [0.11, 0.163, 0.298]
+  const glazeG: RGB = tp.tower.temple.colour
   const gVary = gb.brick.sub(0.5).mul(0.3).mul(seen(fw, 0.3))
   const glaze = mix(V(glazeG).mul(float(1).add(gVary)), V(PAL.black as RGB), clamp(gb.bed.add(gb.head), 0, 1).mul(0.7)).mul(mix(float(1), float(0.9), recess))
   const glazeCol = mix(glaze, towerTop, upward)
@@ -200,6 +218,11 @@ export function towerMaterial(F: GateFrame, tp: J, tones: ClassTones): Material 
   stateCol = mix(stateCol, streetCol, is(3))
   stateCol = mix(stateCol, thCol, is(4))
   stateCol = mix(stateCol, stairCol, is(5))
+  stateCol = mix(stateCol, cheek, is(6))
+  /* ── 7 the door: dark wood in its recess ── */
+  const plank = lines(uFace, 0.4, 0.01, fu)
+  const doorCol = V([0.07, 0.045, 0.03]).mul(float(1).sub(plank.mul(0.4)))
+  stateCol = mix(stateCol, doorCol, is(7))
   m.colorNode = mix(stateCol, classColour(tones, attribute('cls', 'vec2'), attribute('band', 'float')), uView)
   const glazed = is(2).mul(float(1).sub(upward))
   m.roughnessNode = mix(mix(mix(float(0.92), float(0.35), glazed), float(0.75), is(3).mul(inBrec)), float(0.92), uView)
@@ -207,9 +230,25 @@ export function towerMaterial(F: GateFrame, tp: J, tones: ClassTones): Material 
   const footAO = float(1).sub(float(1).sub(smoothstep(0.0, 0.9, yUp)).mul(0.28))
   let ao: N = float(1)
   ao = mix(ao, float(1).sub(shade.mul(0.22)), max(is(1), is(2)).mul(vertical))
+  ao = mix(ao, float(0.55), is(7))
   ao = mix(ao, footAO, is(0).mul(vertical))
   m.aoNode = mix(ao, float(1), uView)
+  m.userData['glazed'] = glazed
   return m
+}
+
+/** the glaze gives back the sky it faces: a Fresnel share of the sky's colour in the reflected direction, on the
+    glazed faces only and never in the class view (set once the page has its sky) */
+export function glazeSky(m: Material, sky: Sky): void {
+  const n = normalize(attribute('normal', 'vec3'))
+  const v = normalize(positionWorld.sub(cameraPosition))
+  const r = reflect(v, n)
+  const fres = float(0.04).add(float(0.96).mul(pow(float(1).sub(clamp(dot(n, v.negate()), 0, 1)), 5)))
+  const glazed = (m.userData['glazed'] ?? float(0)) as N
+  // a face looking down gives back the ground, not the sky: the reflection fades out below the horizon
+  const skyward = smoothstep(-0.05, 0.15, r.y)
+  ;(m as MeshStandardNodeMaterial).emissiveNode = sky.colour(normalize(vec3(r.x, max(r.y, 0.02), r.z))).mul(fres).mul(skyward).mul(glazed).mul(float(1).sub(uView))
+  m.needsUpdate = true
 }
 
 /** the map ground's colour inside the precinct and on the open ground before Gate 5: packed earth, the perpendicular

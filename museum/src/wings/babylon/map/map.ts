@@ -7,7 +7,8 @@
 
      ?view=classes   each body's record classes (in place, known, guessed) in three tones: its plan row in a
                      band at its foot, its body row above (record.ts), at the stop the camera is at
-     ?tower=base     Etemenanki's excavated base only
+     ?tower=built|dug|bruegel   the tower switch: Etemenanki as the record reads it, as excavated, or Bruegel's painted
+                     tower, at one camera and one light; the rest of the scene unchanged (apart from ?view)
      ?ao=0           no contact occlusion; ?air=0 no haze; ?sigma=0.00018&scale=300 the haze's density and height
      ?garden=bare    stop 5's terraces without their planting; ?garden=dug without the guessed terraces too
      ?put=<url>      where the rig hands its files (the shooter's own server) */
@@ -31,12 +32,13 @@ import { toneMapBodies, type Painted } from '../record-tones'
 import { hourOf, sunAt, sunVector } from './sun'
 import { makePath, type PathSample, type V3 } from './path'
 import { mountCourt } from '../court/court'
-import { mountTower } from '../tower/tower'
+import { mountTower, towerState, type TowerState } from '../tower/tower'
 import { mountGardens, type GardenState } from '../gardens/gardens'
 import { PALM_MID, palmGeometry } from '../gate/gate-life'
 import { mountNabu } from '../nabu/nabu'
 import { mountHouse } from '../house/house'
 import { mountEsagila } from '../esagila/esagila'
+import { mountBruegel } from '../bruegel/bruegel'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -53,7 +55,7 @@ const say = (s: string): void => {
 const D2R = Math.PI / 180
 
 say('reading the plan')
-const [plan, cams, pieces, recordClasses, courtPlan, towerPlan, gardensPlan, nabuPlan, housePlan, esagilaPlan, gatePlan]: [J, J, Pieces, ClassFile, J, J, J, J, J, J, J] = await Promise.all([
+const [plan, cams, pieces, recordClasses, courtPlan, towerPlan, gardensPlan, nabuPlan, housePlan, esagilaPlan, gatePlan, bruegelPlan]: [J, J, Pieces, ClassFile, J, J, J, J, J, J, J, J] = await Promise.all([
   fetch(new URL('./map-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('./map-cams.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../pieces.json', import.meta.url)).then((r) => r.json()),
@@ -66,8 +68,8 @@ const [plan, cams, pieces, recordClasses, courtPlan, towerPlan, gardensPlan, nab
   fetch(new URL('../esagila/esagila-plan.json', import.meta.url)).then((r) => r.json()),
   // the walk's light is stated once, in the gate's plan (its `light`), for every page that takes open/light.ts
   fetch(new URL('../gate/gate-plan.json', import.meta.url)).then((r) => r.json()),
+  fetch(new URL('../bruegel/bruegel-plan.json', import.meta.url)).then((r) => r.json()),
 ])
-if (q.get('tower') === 'base') plan.tower.stages = plan.tower.stages.slice(0, 1)
 const F = makeFrame(plan)
 const t0 = performance.now()
 const tones = tonesFrom(plan)
@@ -84,6 +86,8 @@ const house = mountHouse(nabu.built, plan, housePlan, tones)
 // stop 9's Esagila, its ground, the wall before Gate 8 and the street round the precinct's corner (the old stops 10, 11)
 const esagila = mountEsagila(house.built, plan, esagilaPlan, tones)
 const built = esagila.built
+// the tower switch's third state, Bruegel's tower, on the real tower's centre (outside the record's classes)
+const bruegel = mountBruegel(tower.dug.frame, built.ground, bruegelPlan)
 const gardenState = (q.get('garden') ?? 'planted') as GardenState
 gardens.setGarden(gardenState)
 const planMs = Math.round(performance.now() - t0)
@@ -133,6 +137,7 @@ function setBounce(y: number): void {
   L.uWallsNear.value = 0
   L.bakeEnv()
 }
+tower.sky(sky, L.AIR.uSun)
 
 say('building the city')
 // the Ishtar Gate's passage through both gates, along its axis from the north face
@@ -148,7 +153,15 @@ paintCity(bodies.group, built, tones, {
 cityOnCourtRooms(court.mesh as Mesh, court.court.F.court, uCityPix)
 scene.add(bodies.group)
 scene.add(court.mesh)
-scene.add(tower.mesh)
+scene.add(tower.mesh, tower.towerMesh, ...tower.dugMeshes)
+tower.attachGround(bodies.group.getObjectByName('ground') as Mesh)
+scene.add(bruegel.mesh)
+/** the tower switch: the tower as the record reads it, as dug, or Bruegel's; one camera, one light */
+const setTower = (s: TowerState): void => {
+  tower.state(s)
+  bruegel.show(s === 'bruegel')
+}
+setTower(towerState(q.get('tower')))
 scene.add(...gardens.meshes)
 scene.add(nabu.mesh)
 scene.add(house.mesh)
@@ -325,7 +338,7 @@ function stillTime(stop: number): number {
 
 const rig = {
   ready: true,
-  state: () => ({ planMs, counts: bodies.counts, backend: stack.backend, architecture: stack.architecture, view: uView.value, tower: q.get('tower') ?? 'full', duration: path.duration, record: { stop: tonedAt, ms: recordMs, ...painted } }),
+  state: () => ({ planMs, counts: bodies.counts, backend: stack.backend, architecture: stack.architecture, view: uView.value, tower: tower.current(), duration: path.duration, record: { stop: tonedAt, ms: recordMs, ...painted } }),
   views: () => ({
     frame: plan.frame,
     stops: cams.stops.map((s: J) => ({ n: s.n, id: s.id, hour: s.hour, still: stillTime(s.n) })),
@@ -333,13 +346,15 @@ const rig = {
     duration: path.duration,
   }),
   /** what the scene holds, from the bodies the page built */
-  facts: () => ({ ...built.facts, court: court.court.facts, etemenanki: tower.tower.facts, gardens: gardens.facts, nabu: nabu.nabu.facts, house: house.house.facts, esagila: esagila.esagila.facts, streetLevelAtS: undefined, sunAt: Object.fromEntries(cams.stops.map((s: J) => [s.n, sunAt(hourOf(s.hour))])) }),
+  facts: () => ({ ...built.facts, court: court.court.facts, etemenanki: tower.tower.facts, gardens: gardens.facts, nabu: nabu.nabu.facts, house: house.house.facts, esagila: esagila.esagila.facts, bruegel: bruegel.bruegel.facts, streetLevelAtS: undefined, sunAt: Object.fromEntries(cams.stops.map((s: J) => [s.n, sunAt(hourOf(s.hour))])) }),
   stand: (E: number, N: number) => {
     const [x, z] = F.s(E, N)
     return { stand: stand(x, z), ground: built.ground(x, z), street: built.streetAt(x, z) }
   },
   /** stop 5's garden: planted, its terraces bare, or the dug plans only */
   garden: (state: GardenState) => gardens.setGarden(state),
+  /** the tower switch: built, dug or bruegel */
+  tower: (s: TowerState) => setTower(towerState(s)),
   /** a still of one stop: the film's own frame at the stop's still second, full size, either framing */
   async shoot(o: { stop: number; framing: 'desktop' | 'phone'; view: 'grey' | 'classes'; w: number; h: number; samples: number; out: string; name?: string; css?: [number, number]; t?: number; garden?: GardenState }) {
     const s = cams.stops.find((x: J) => x.n === o.stop)
@@ -355,7 +370,7 @@ const rig = {
     await upload(file, await toPNG(bytes, o.w, o.h))
     const sun = sunAt(p.hour)
     const side = {
-      file, stop: s.n, id: s.id, framing: o.framing, view: o.view, filmSecond: +time.toFixed(3), filmFrameAt8fps: Math.round(time * 8),
+      file, stop: s.n, id: s.id, framing: o.framing, view: o.view, tower: tower.current(), filmSecond: +time.toFixed(3), filmFrameAt8fps: Math.round(time * 8),
       cssSize: o.css ?? [o.w, o.h], devicePixels: [o.w, o.h], ratio: o.css ? o.w / o.css[0] : 1, subFrames: o.samples,
       sampleCountReadBack: 'one sample a sub-frame: the linear target is allocated without multisampling (render.ts)',
       backend: stack.backend, adapter: stack.architecture, exposureStops: +ev.toFixed(3), heightStops: +L.stopsAt(camera.position.y).toFixed(3), print: printAt(ev),
@@ -369,8 +384,9 @@ const rig = {
     return side
   },
   /** a still from any camera: UTM place, a height (a level or 'eye'), a look point (E, N, level), an hour */
-  async probe(o: { at: [number, number]; y: number | 'eye'; look: [number, number, number]; hour: string; hfov?: number; shift?: number; stops?: number; w: number; h: number; samples: number; out: string; name: string; view?: 'grey' | 'classes'; figure?: number; air?: number; garden?: GardenState }) {
+  async probe(o: { at: [number, number]; y: number | 'eye'; look: [number, number, number]; hour: string; hfov?: number; shift?: number; stops?: number; w: number; h: number; samples: number; out: string; name: string; view?: 'grey' | 'classes'; figure?: number; air?: number; garden?: GardenState; tower?: TowerState }) {
     const [x, z] = F.s(o.at[0], o.at[1])
+    if (o.tower) setTower(towerState(o.tower))
     setAir(o.air ?? (o.figure ? airOf(o.figure) : 0))
     gardens.setGarden(o.garden ?? gardenState)
     if (o.figure) {

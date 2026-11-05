@@ -56,11 +56,49 @@
   },
   "stairs": {
    "riser": 0.3,
-   "src": "the middle stair and the two side stairs where the map draws them, up to the first stage's top (P2021 p. 156); their steps are ours, about 30 cm risers, drawn in the material on the stair's slope (bab.tower.stair.middle.rise, bab.tower.stairs.side.rise, guessed)"
+   "src": "the middle stair and the two side stairs where the map draws them, up to the first stage's top (P2021 p. 156); their steps are ours, about 30 cm risers, drawn in the material on the stair's slope (bab.tower.stair.middle.rise, bab.tower.stairs.side.rise, guessed)",
+   "middle": {
+    "clear": 6.2,
+    "above": 1.0,
+    "inset": 0.5,
+    "src": "10.2 m wide outside, walls about 2 m, 6.2 m clear (P2021 p. 156; bab.tower.stair.middle): a flight between two side walls; the walls' height over the flight is ours, 1 m"
+   },
+   "side": {
+    "beyond": 1.9,
+    "src": "the west side stair's foot lies 1.9 m west of the tower (P2021 p. 156); the east one's the same, ours by symmetry; a wall 1.2 m thick on each one's outer edge, 1 m over its flight, ours",
+    "wall": 1.2,
+    "above": 1.0
+   }
   },
   "temple": {
    "glaze": true,
-   "src": "the king says he raised Etemenanki's top with baked bricks of shining blue glaze (RIBo Nebuchadnezzar II 002 iii 15); no such fragment was found at Babylon (P2021 p. 162): blue, guessed (bab.tower.topglaze)"
+   "src": "the king says he raised Etemenanki's top with baked bricks of shining blue glaze (RIBo Nebuchadnezzar II 002 iii 15); no such fragment was found at Babylon (P2021 p. 162): blue, guessed (bab.tower.topglaze); the hue is ours, no colour source for the tower's glaze exists, taken inside the gate's measured cobalt range",
+   "door": {
+    "w": 4.2,
+    "h": 7.5,
+    "d": 1.5,
+    "src": "one door in the face toward the stairs; its size and place are ours (bab.tower.top: the top building's form is not known)"
+   },
+   "crest": {
+    "pitch": 2.0,
+    "low": [
+     1.3,
+     0.9,
+     0.9
+    ],
+    "high": [
+     0.7,
+     0.9,
+     0.6
+    ],
+    "src": "stepped battlements round the roof as the gate and the walls carry them (the battlements part); on the temple they are ours"
+   },
+   "colour": [
+    0.1,
+    0.17,
+    0.36
+   ],
+   "colourSrc": "linear albedo, ours: CIELAB hue 277, chroma 29, a fifth of the white's lightness, inside the gate's measured cobalt (hue 264 to 284, 0.08 to 0.22 of the white) at its light end, so the glaze in shade stays blue"
   },
   "brick": "baked brick 32 by 32 or 31.5 cm in bitumen, unstamped (P2021 p. 155): the bond and the tone are ours"
  },
@@ -103,5 +141,51 @@
    "bottom": 0.04
   },
   "src": "the stop's one press, named by what it shows and never 'Learn more' (the words are the writer's); it stands clear of the tower in both framings, on the court at the lower right of the wide frame and on the cross street under the tower in the upright one, so the frame at rest keeps far more than two thirds picture"
+ },
+ "dug": {
+  "about": "the switch's second state: the tower as excavated, not the state of 570 BC (bab.tower.ruin, In place, not of the date); the precinct round it stays as it was about 570 BC",
+  "region": [
+   -140,
+   22,
+   286,
+   478
+  ],
+  "lattice": 6,
+  "step": 0.75,
+  "core": {
+   "half": 30,
+   "top": [
+    2.0,
+    2.5
+   ],
+   "slope": 3.5,
+   "src": "a core of unbaked mud brick about 60 by 60 m, its top today about +2.0 to +2.5 (P2021 p. 155); its eroded sides' slope ours"
+  },
+  "trench": {
+   "floor": -4.0,
+   "debris": 0.8,
+   "bankFoot": 43,
+   "bankTop": 47.0,
+   "src": "the mantle about 15 m thick, founded at -4.0 (P2021 p. 155), robbed for its bricks from 1886, leaving a deep cut round the core (P2021 p. 153; K1914 ch. XXX): the floor at the mantle's foundation, the banks' slope and the debris on the floor ours"
+  },
+  "water": {
+   "level": -1.2,
+   "src": "the cut is often water-filled (P2021 p. 153, fig. 4.14 caption): its level and its look ours"
+  },
+  "stairs": {
+   "proud": 0.04,
+   "band": [
+    48.0,
+    53.4
+   ],
+   "halfSpan": 47.65,
+   "middle": {
+    "w": 10.2,
+    "clear": 6.2,
+    "foot": 105.3
+   },
+   "src": "the three stairs' foundations as dug: the middle stair's two walls to its foot 105.3 m from the centre, the side stairs' band 45.6 to 53.4 m from the centre, the west foot 1.9 m beyond the tower (P2021 p. 156); drawn as their walls' tops just proud of the ground, the band's part over the robbers' bank left out; their level as dug is not given, ours"
+  },
+  "look": "the photograph of the ruin today (Verburg 2012, CC0) for the look only, never as a texture"
  }
 }

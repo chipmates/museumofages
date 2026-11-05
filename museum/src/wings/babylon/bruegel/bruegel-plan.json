@@ -1,0 +1,269 @@
+{
+ "about": "The switch's third state: Bruegel's Tower of Babel (Vienna, Kunsthistorisches Museum GG 1026, 1563), a painter's invention, outside the evidence classes (record bab.bruegel.tower). Its forms and colours are read off the painting by eye (the precinct research, section 6), never its pixels. Heights are metres over its foot; angles in degrees round its axis, 0 toward the camera's side of the tower (the real tower's stairs), positive to the viewer's right.",
+ "scale": {
+  "mPerPx": 0.04103,
+  "src": "a design choice, never a measure: the base storey at the real base's 91.5 m (2230 px on the 3840 px copy), so one camera holds both towers; the painting has no scale (the record's first alternative; at the painter's own figures it would be 1.2 to 1.5 times as large)"
+ },
+ "storeys": [
+  {
+   "r0": 45.75,
+   "r1": 44.2,
+   "y0": 0,
+   "y1": 22.3,
+   "bays": 26,
+   "arch": "round",
+   "white": [
+    [
+     -180,
+     180
+    ]
+   ]
+  },
+  {
+   "r0": 42.1,
+   "r1": 42.1,
+   "y0": 22.3,
+   "y1": 34.2,
+   "bays": 26,
+   "arch": "round",
+   "white": [
+    [
+     -180,
+     180
+    ]
+   ]
+  },
+  {
+   "r0": 39.4,
+   "r1": 39.4,
+   "y0": 34.2,
+   "y1": 45.1,
+   "bays": 26,
+   "arch": "round",
+   "white": [
+    [
+     -180,
+     180
+    ]
+   ]
+  },
+  {
+   "r0": 37.2,
+   "r1": 37.2,
+   "y0": 45.1,
+   "y1": 53.9,
+   "bays": 24,
+   "arch": "pointed",
+   "white": [
+    [
+     -180,
+     -8
+    ],
+    [
+     120,
+     180
+    ]
+   ],
+   "brick": [
+    [
+     60,
+     120
+    ]
+   ]
+  },
+  {
+   "r0": 35.4,
+   "r1": 35.4,
+   "y0": 53.9,
+   "y1": 63.9,
+   "bays": 24,
+   "arch": "pointed",
+   "white": [
+    [
+     -180,
+     -35
+    ],
+    [
+     130,
+     180
+    ]
+   ],
+   "brick": [
+    [
+     55,
+     130
+    ]
+   ]
+  },
+  {
+   "r0": 34.0,
+   "r1": 34.0,
+   "y0": 63.9,
+   "y1": 72.4,
+   "bays": 24,
+   "arch": "pointed",
+   "white": [
+    [
+     -150,
+     -40
+    ]
+   ],
+   "brick": [
+    [
+     45,
+     105
+    ]
+   ],
+   "broken": true
+  }
+ ],
+ "storeysSrc": "the ledges on the left silhouette at y 2060 (foot), 1517, 1227, 960, 745, 500 and 295 px; radii 1115 (base, battered to about 1078 at its top), 1027, 960, 907, 864, 829 px; the white facing whole on the lower three storeys, on the upper ones only on the left and behind (the cutaway on the front right shows the red brick inside), the top white ring broken, the far right an unfaced brick shell (read off GG 1026, the research's section 6.1); the backs are not painted: ours",
+ "wall": 3.0,
+ "wallSrc": "the upper storeys' shells about 3 m thick: ours",
+ "cornice": {
+  "h": 0.7,
+  "out": 0.5,
+  "src": "a frieze of small arches on corbels under every terrace edge (6.3): drawn as a projecting band, its arches in the material"
+ },
+ "cells": [
+  {
+   "r": 33.0,
+   "y1": 48.5
+  },
+  {
+   "r": 28.0,
+   "y1": 53.0
+  },
+  {
+   "r": 22.5,
+   "y1": 57.5
+  },
+  {
+   "r": 17.0,
+   "y1": 62.7
+  }
+ ],
+ "cellsFins": {
+  "every": 11,
+  "out": 3.4,
+  "from": -40,
+  "to": 60
+ },
+ "cellsSrc": "the red brick inside, seen in the cutaway: rows of vaulted cells stepping back toward the core, radial walls every 11 degrees or so (6.3; 30 to 35 arches a ring near the centre); the rows' radii and heights read off by eye, plus or minus a storey",
+ "core": [
+  {
+   "r": 12.3,
+   "y0": 62.7,
+   "y1": 68.1,
+   "bays": 32
+  },
+  {
+   "r": 10.5,
+   "y0": 68.1,
+   "y1": 75.1,
+   "bays": 30
+  },
+  {
+   "r": 9.3,
+   "y0": 75.1,
+   "y1": 79.1,
+   "bays": 28
+  },
+  {
+   "r": 8.0,
+   "y0": 79.1,
+   "y1": 83.6,
+   "bays": 24,
+   "broken": true
+  }
+ ],
+ "coreSrc": "the red core above the white rings: ring A (y 530 to 400 px) radius 300, ring B (400 to 230) radius 257, the top ring (130 to 22) radius 195, unfinished; between B and the top ring a cloud hides the masonry, the ring there ours",
+ "ramp": [
+  {
+   "on": 1,
+   "from": -100,
+   "to": -25
+  },
+  {
+   "on": 2,
+   "from": -75,
+   "to": 0
+  },
+  {
+   "on": 3,
+   "from": -125,
+   "to": -50
+  },
+  {
+   "on": 4,
+   "from": -115,
+   "to": -40
+  }
+ ],
+ "rampSrc": "the outer ramp: the ledges rise from right to left across the front, clockwise from above (6.2, Rotterdam's clear spiral as the check); drawn as one ramp per terrace rising a full storey along it, a build choice that reads the same at film distance (6.2's grey-massing note)",
+ "rocks": [
+  {
+   "phi": [
+    -15,
+    19
+   ],
+   "y": [
+    -1.5,
+    40
+   ],
+   "out": 2.2,
+   "seed": 1
+  },
+  {
+   "phi": [
+    -26,
+    -13
+   ],
+   "y": [
+    -1.5,
+    6
+   ],
+   "out": 1.4,
+   "seed": 3
+  },
+  {
+   "phi": [
+    30,
+    74
+   ],
+   "y": [
+    45.1,
+    66
+   ],
+   "out": 1.4,
+   "back": 26,
+   "seed": 4,
+   "stands": true,
+   "mound": true
+  }
+ ],
+ "rocksSrc": "the rock the tower is built round: bare across the lowest storeys' front and rising there as a crag, and a crag on the right from the third storey up in the cutaway (6.1, 'built around a very steep small mountain'); its patches read off by eye, its shape made in code, proud of the masonry by about 2 m in its middle and sinking behind it at its edges",
+ "colours": {
+  "stone": [
+   0.62,
+   0.55,
+   0.38
+  ],
+  "brick": [
+   0.48,
+   0.15,
+   0.1
+  ],
+  "rock": [
+   0.42,
+   0.39,
+   0.3
+  ],
+  "dark": [
+   0.06,
+   0.05,
+   0.04
+  ],
+  "src": "read off the painting by eye as albedos (cream stone facing, red brick inside, a pale grey-ochre rock), never sampled from its pixels into a file"
+ }
+}
