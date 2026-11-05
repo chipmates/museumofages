@@ -346,11 +346,15 @@ const airAt = (time: number): number => {
   for (let k = -6; k <= 6; k++) acc += airOf(path.sample(time + k * 0.5).stop)
   return acc / 13
 }
+/* the river's ripples run on the film's seconds; where a stop was put in before the bridge, `waterClock` runs them slower
+   across its span, so the water at every later second is the water it was (the bridge's stills stay as landed) */
+const WC = cams.waterClock as { from: number; to: number; seconds: number } | undefined
+const waterAt = (t: number): number => (!WC || t <= WC.from ? t : t >= WC.to ? t - (WC.to - WC.from - WC.seconds) : WC.from + ((t - WC.from) * WC.seconds) / (WC.to - WC.from))
 function aimFilm(time: number, framing: 'desktop' | 'phone', w: number, h: number): PathSample {
   const p = path.sample(time)
   toneAt(p.stop)
   setHour(p.hour)
-  bridge.setTime(time)
+  bridge.setTime(waterAt(time))
   const ph = framing === 'phone'
   setAir(airAt(time))
   aim(p.pos, ph ? p.phone.look : p.look, ph ? p.phone.hfov : p.hfov, w, h, ph ? p.phone.shift : p.shift)

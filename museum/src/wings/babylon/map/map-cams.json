@@ -4705,5 +4705,11 @@
     }
    }
   ]
+ },
+ "waterClock": {
+  "about": "the river's ripple clock over a span of film seconds: it runs `seconds` across from..to, so the water after the span is as it was before stop 15 was put in (map.ts waterAt)",
+  "from": 389.03,
+  "to": 478.03,
+  "seconds": 52.0
  }
 }
