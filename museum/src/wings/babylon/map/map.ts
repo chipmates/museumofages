@@ -212,8 +212,10 @@ for (const s of cams.stops) {
 }
 /* one figure in a frame: the running stop's own, or the next stop's where the stop has none, so a figure
    changes only at a cut or far out of sight */
+const walkOrder = [...new Set((cams.path as J[]).map((k) => k.stop as number))]
 function showFigure(stop: number): void {
-  const own = figures.some((f) => f.userData['stop'] === stop) ? stop : stop + 1
+  // the next stop in the walk's order, not by number
+  const own = figures.some((f) => f.userData['stop'] === stop) ? stop : walkOrder[walkOrder.indexOf(stop) + 1]
   for (const f of figures) f.visible = f.userData['stop'] === own
 }
 const ndc = new Vector3()

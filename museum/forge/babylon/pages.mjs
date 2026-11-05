@@ -71,7 +71,7 @@ export const PAGES = {
   },
 }
 
-/** the walk's fourteen stops (map-cams.json) and the page that shows each today; stop 1 folds into the opening flight */
+/** the walk's stops in its order (map-cams.json; a number is not a place in the walk) and the page that shows each today; stop 1 folds into the opening flight */
 export const STOPS = [
   { stop: '1', id: 'moat', page: 'open' },
   { stop: '2', id: 'lion-street', page: 'gate' },
@@ -85,6 +85,7 @@ export const STOPS = [
   { stop: '10', id: 'turn', page: 'map' },
   { stop: '11', id: 'esagila', page: 'map' },
   { stop: '12', id: 'great-stair', page: 'map' },
+  { stop: '15', id: 'city-from-top', page: 'map' },
   { stop: '13', id: 'bridge', page: 'map' },
   { stop: '14', id: 'city-and-sky', page: 'map' },
 ]
@@ -97,7 +98,7 @@ export function resolveStop(text) {
   const [page, key] = m ? [m[1], m[2]] : [null, s]
   if (page && !PAGES[page]) throw new Error(`no Babylon page "${page}" (pages: ${Object.keys(PAGES).join(', ')})`)
   const hit = STOPS.find((x) => x.stop === key || x.id === key)
-  if (!hit) throw new Error(`no stop "${key}" (stops 1 to 14 by number or id)`)
+  if (!hit) throw new Error(`no stop "${key}" (stops 1 to 15 by number or id)`)
   if (page === 'map') return { ...hit, page: 'map', owner: hit.page }
   if (page && page !== hit.page) throw new Error(`stop ${hit.stop} is not on the ${page} page (it is on ${hit.page}, and every stop is on map)`)
   return { ...hit, owner: hit.page }

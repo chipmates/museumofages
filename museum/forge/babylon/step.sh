@@ -5,7 +5,7 @@
 #   bash step.sh geometry <stop>                coplanar, sub-pixel and floating bodies of the stop's page: checks/geometry-<stop>.txt
 #   bash step.sh change <label a> <label b>     the change measure between two still sets: checks/change-<a>-<b>.txt (exit 2: no judge)
 #   bash step.sh crops <boxes.tsv> <label a> <label b> <out>   the fixed part boxes of two still sets beside their references
-# <stop> is a number or an id (stops 1 to 14), map:<stop> for the map's grey blocks, or a page name (map, gate, open).
+# <stop> is a number or an id (stops 1 to 15), map:<stop> for the map's grey blocks, or a page name (map, gate, open).
 set -u
 WM="$(cd "$(dirname "$0")/../.." && pwd)"
 # BABYLON_HAND names the hand-in folder of the round; BABYLON_LOCK a script that runs <log> <command...> under the lock.

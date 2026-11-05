@@ -28,7 +28,9 @@ const view = (eye, look, hfov, shift = 0, authored = null) => ({ eye: [...eye], 
 /** a page's path from its first key of a stop to the next stop's first key, every dt seconds (the end included) */
 function pathTrack(path, n, dt, pick) {
   const ks = path.keys.filter((k) => k.stop === n)
-  const t0 = ks[0].t, nxt = path.keys.find((k) => k.t > t0 && k.stop !== n && k.stop > n)
+  // the next stop is the next to start in time: a stop's number is not its place in the walk
+  const startOf = (m) => path.keys.find((k) => k.stop === m).t
+  const t0 = ks[0].t, nxt = path.keys.find((k) => k.t > t0 && k.stop !== n && startOf(k.stop) > t0)
   const t1 = nxt ? nxt.t : ks[ks.length - 1].t
   const out = []
   for (let i = 0; t0 + i * dt <= t1 + 1e-9; i++) { const t = t0 + i * dt; out.push({ t: +t.toFixed(3), ...pick(path.sample(t)) }) }
