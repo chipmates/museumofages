@@ -4,7 +4,7 @@
 
 import type { PaperFraming } from '../paper/framing'
 import type { Box, Seg, Taken } from '../paper/placer'
-import { settledAt, type Anchor, type Inset, type PaperScene, type Prim } from '../paper/scene'
+import { clipLine, clipPoly, settledAt, type Anchor, type Inset, type PaperScene, type Prim } from '../paper/scene'
 import { BRIDGE, DECK_W, DIG, PHOTO, QUAY, RIVER_570, TODAY, WINDOWS, type P2 } from './river-data'
 
 export const STEP_IDS = ['then', 'dig', 'today', 'photo'] as const
@@ -80,51 +80,6 @@ function roomBesideChannel(s: number, n: number, west0: number, tall: number): P
   return best
 }
 
-/** Sutherland-Hodgman: a polygon cut to a box (plate pixels) */
-function clipPoly(pts: readonly P2[], b: Box): P2[] {
-  let out = pts.slice() as P2[]
-  const edges: [(p: P2) => boolean, (p: P2, q: P2) => P2][] = [
-    [(p) => p[0] >= b.l, (p, q) => [b.l, p[1] + ((q[1] - p[1]) * (b.l - p[0])) / (q[0] - p[0])]],
-    [(p) => p[0] <= b.r, (p, q) => [b.r, p[1] + ((q[1] - p[1]) * (b.r - p[0])) / (q[0] - p[0])]],
-    [(p) => p[1] >= b.t, (p, q) => [p[0] + ((q[0] - p[0]) * (b.t - p[1])) / (q[1] - p[1]), b.t]],
-    [(p) => p[1] <= b.b, (p, q) => [p[0] + ((q[0] - p[0]) * (b.b - p[1])) / (q[1] - p[1]), b.b]],
-  ]
-  for (const [inside, cut] of edges) {
-    const src = out
-    out = []
-    for (let i = 0; i < src.length; i++) {
-      const p = src[i]!, q = src[(i + 1) % src.length]!
-      if (inside(q)) { if (!inside(p)) out.push(cut(p, q)); out.push(q) }
-      else if (inside(p)) out.push(cut(p, q))
-    }
-  }
-  return out
-}
-
-/** an open line cut to a box: the runs inside it */
-function clipRuns(pts: readonly P2[], b: Box): P2[][] {
-  const inside = (p: P2): boolean => p[0] >= b.l && p[0] <= b.r && p[1] >= b.t && p[1] <= b.b
-  const runs: P2[][] = []
-  let cur: P2[] = []
-  const cross = (p: P2, q: P2): P2 => {
-    // the point where p to q leaves (or enters) the box, by the largest step inside
-    let lo = 0, hi = 1
-    const pin = inside(p)
-    for (let k = 0; k < 24; k++) { const m = (lo + hi) / 2; const x: P2 = [p[0] + (q[0] - p[0]) * m, p[1] + (q[1] - p[1]) * m]; if (inside(x) === pin) lo = m; else hi = m }
-    const m = pin ? lo : hi
-    return [p[0] + (q[0] - p[0]) * m, p[1] + (q[1] - p[1]) * m]
-  }
-  for (let i = 0; i < pts.length; i++) {
-    const p = pts[i]!
-    if (inside(p)) {
-      if (!cur.length && i > 0) cur.push(cross(p, pts[i - 1]!))
-      cur.push(p)
-    } else if (cur.length) { cur.push(cross(cur[cur.length - 1]!, p)); runs.push(cur); cur = [] }
-  }
-  if (cur.length >= 2) runs.push(cur)
-  return runs.filter((r) => r.length >= 2)
-}
-
 const f = (n: number): string => (Math.round(n * 10) / 10).toString()
 const pathOf = (pts: readonly P2[], close = false): string => `M${pts.map((p) => `${f(p[0])} ${f(p[1])}`).join('L')}${close ? 'Z' : ''}`
 const boxOf = (pts: readonly P2[]): Box => ({ l: Math.min(...pts.map((p) => p[0])), t: Math.min(...pts.map((p) => p[1])), r: Math.max(...pts.map((p) => p[0])), b: Math.max(...pts.map((p) => p[1])) })
@@ -165,7 +120,7 @@ export function riverScene(t: number, framing: PaperFraming, w: number, h: numbe
   const map: Box = { l: Math.max(box.l, P([Wn.w, Wn.n])[0]), t: Math.max(box.t, P([Wn.w, Wn.n])[1]), r: Math.min(box.r, P([Wn.e, Wn.s])[0]), b: Math.min(box.b, P([Wn.e, Wn.s])[1]) }
   const wallsOf = (pts: readonly P2[]): void => { for (let q = 0; q + 1 < pts.length; q++) walls.push({ ax: pts[q]![0], ay: pts[q]![1], bx: pts[q + 1]![0], by: pts[q + 1]![1] }) }
   const line = (id: string, mark: 'known' | 'guessed' | 'place', pts: readonly P2[], cls?: string): void => {
-    for (const [j, run] of clipRuns(pts.map(P), map).entries()) {
+    for (const [j, run] of clipLine(pts.map(P), map).entries()) {
       prims.push({ type: 'path', id: `${id}-${j}`, mark, d: pathOf(run), cls })
       wallsOf(run)
     }
@@ -197,7 +152,7 @@ export function riverScene(t: number, framing: PaperFraming, w: number, h: numbe
     if (state === 'today') {
       const channel = clipPoly([...TODAY.west, ...TODAY.east.slice().reverse()].map(P), map)
       if (channel.length >= 3) prims.push({ type: 'path', id: 'channel-today', mark: 'place', cls: 'river-channel', d: pathOf(channel, true) })
-      for (const side of ['west', 'east'] as const) for (const run of clipRuns(TODAY[side].map(P), map)) wallsOf(run)
+      for (const side of ['west', 'east'] as const) for (const run of clipLine(TODAY[side].map(P), map)) wallsOf(run)
       const west = RIVER_570.poly.slice(RIVER_570.westFrom).filter((p) => p[1] >= RIVER_570.westBank.from && p[1] <= RIVER_570.westBank.to)
       line('bed-570', 'guessed', west, 'paper-open river-bed')
       line('road', 'known', TODAY.road, 'river-road')

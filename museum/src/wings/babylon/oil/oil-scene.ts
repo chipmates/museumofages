@@ -18,7 +18,7 @@ import { rulerPaths } from '../paper/figure'
 import { unitGrid, poured } from '../paper/counter'
 import type { PaperFraming } from '../paper/framing'
 import type { Box, Seg, Side, Taken } from '../paper/placer'
-import { circlePath, ease, lerp, span, settledAt, type Anchor, type Inset, type PaperScene, type Prim } from '../paper/scene'
+import { circlePath, clipLine, ease, lerp, span, settledAt, type Anchor, type Inset, type PaperScene, type Prim } from '../paper/scene'
 import { CSS_CM, HALVES, LANDS, MAP, PHOTO, type Coasts, type LandId, type RowId } from './oil-data'
 
 /** which counts each step's band line names: a row's count stands on the plate only at these steps */
@@ -55,29 +55,6 @@ function rulerUpright(x: number, y: number, pxPerCm: number): { body: string; ti
   return { body: swap(r.body), ticks: swap(r.ticks), w: Math.max(10, pxPerCm * 0.9), h: 10 * pxPerCm }
 }
 
-/** the parts of a line inside a box (Liang-Barsky per segment), as runs */
-function clipLine(pts: readonly (readonly [number, number])[], b: Box): [number, number][][] {
-  const runs: [number, number][][] = []
-  let cur: [number, number][] = []
-  const flush = (): void => { if (cur.length >= 2) runs.push(cur); cur = [] }
-  for (let i = 0; i + 1 < pts.length; i++) {
-    const [ax, ay] = pts[i]!, [bx, by] = pts[i + 1]!
-    const dx = bx - ax, dy = by - ay
-    let t0 = 0, t1 = 1, ok = true
-    for (const [p, q] of [[-dx, ax - b.l], [dx, b.r - ax], [-dy, ay - b.t], [dy, b.b - ay]] as const) {
-      if (p === 0) { if (q < 0) { ok = false; break } continue }
-      const r = q / p
-      if (p < 0) { if (r > t1) { ok = false; break } if (r > t0) t0 = r } else { if (r < t0) { ok = false; break } if (r < t1) t1 = r }
-    }
-    if (!ok) { flush(); continue }
-    const s: [number, number] = [ax + dx * t0, ay + dy * t0], e: [number, number] = [ax + dx * t1, ay + dy * t1]
-    if (!cur.length || Math.hypot(cur[cur.length - 1]![0] - s[0], cur[cur.length - 1]![1] - s[1]) > 0.01) { flush(); cur.push(s) }
-    cur.push(e)
-    if (t1 < 1) flush()
-  }
-  flush()
-  return runs
-}
 
 export interface OilFacts {
   rows: { id: string; count: number; units: number; size: number; w: number; left: number; y: number }[]
