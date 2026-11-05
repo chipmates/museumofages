@@ -12,8 +12,6 @@ import { APP } from './pages.mjs'
 import { cameraFrom, facesFrom, fittedFov } from './geometry.mjs'
 
 const COURT = join(APP, 'src/wings/babylon/court'), TOWER = join(APP, 'src/wings/babylon/tower'), GARDENS = join(APP, 'src/wings/babylon/gardens'), NABU = join(APP, 'src/wings/babylon/nabu'), HOUSE = join(APP, 'src/wings/babylon/house'), ESAGILA = join(APP, 'src/wings/babylon/esagila')
-/** the garden's palms as the map page builds them (map.ts PALM_MID) */
-const PALM_MID = { seg: 4, sides: 5, fronds: 16, steps: 4 }
 const MAP = join(APP, 'src/wings/babylon/map'), GATE = join(APP, 'src/wings/babylon/gate'), OPEN = join(APP, 'src/wings/babylon/open')
 const json = (p) => JSON.parse(readFileSync(p, 'utf8'))
 /** the kit's still sizes, device pixels: both framings at the shooter's defaults, and the smaller desktop */
@@ -68,7 +66,8 @@ export async function mountMap(stop, { reach = 400 } = {}) {
   const { buildTower } = await import(join(TOWER, 'tower-geom.ts'))
   const { buildGardens } = await import(join(GARDENS, 'gardens-geom.ts'))
   const { buildPlanting } = await import(join(GARDENS, 'gardens-plants.ts'))
-  const { palmGeometry } = await import(join(GATE, 'gate-life.ts'))
+  // the garden's palms as the map page builds them (map.ts takes PALM_MID)
+  const { palmGeometry, PALM_MID } = await import(join(GATE, 'gate-life.ts'))
   const plan = json(join(MAP, 'map-plan.json')), cams = json(join(MAP, 'map-cams.json')), gp = json(join(GARDENS, 'gardens-plan.json'))
   // stop 5's candidates and stop 6's court draw their own bodies in place of the map's prisms they replace, as map.ts does
   const gardens = buildGardens(buildPlan(plan), plan, gp)
@@ -131,9 +130,14 @@ export async function mountMap(stop, { reach = 400 } = {}) {
     checks: (b) => !surface(b),
     floats: (b) => !surface(b) && b !== 'map:ramps',
     allowPair: [],
-    // the gate's own palm (palm-date-babylon, reused as it is): its frond tips stay 16 cm wide for 86 m, and the garden's
-    // stand 300 to 430 m from stop 5's hold; a far preset of the part is the fix
-    allowThin: [{ prefix: 'map:garden-palm-', why: "the reused gate palm's frond tips, 6 to 8 cm faces at 330 to 390 m (0.06 to 0.07 px of the 1600 px desktop, measured 4 Nov); a far preset of palm-date-babylon is open" }],
+    // a curtain's sheet is foliage in faces of about 0.2 by 1 m, and at 300 to 400 m from stop 5's hold a few of them
+    // fall under a device pixel wherever the planting's sequence puts them
+    // the palm's mid preset (palm-date-babylon): a frond's leaflets drawn as teeth along its rib, their tips narrow
+    allowThin: [
+      { prefix: 'map:garden-palm-', why: "the mid preset's leaflet teeth, their tips 3 to 4 cm at 320 to 390 m (0.09 to 0.2 px, measured 4 Nov); a frond's fine edge, which the sub-frames average as foliage does" },
+      { prefix: 'map:garden-caper-', why: "a curtain's sheet faces, about 0.2 m by 1 m at 315 to 390 m (0.5 to 1 px of the 1600 px desktop, measured 4 Nov); foliage at that range, as the clumps beside them" },
+      { prefix: 'map:garden-vine-', why: "a curtain's sheet faces, about 0.2 m by 1 m at 315 to 390 m (0.5 to 1 px of the 1600 px desktop, measured 4 Nov); foliage at that range, as the clumps beside them" },
+    ],
     // a curtain hangs on a terrace's face from its lip on the terrace's top: held by the face, which the plan-view
     // support rule cannot see (as the gate's facing skins)
     allowFloat: [{ prefix: 'map:garden-vine-', why: "a curtain hung on a terrace's face from its lip on the top: held by the face behind it" }, { prefix: 'map:garden-caper-', why: "a caper curtain hung on a terrace's face from its lip on the top: held by the face behind it" }],
@@ -261,9 +265,10 @@ export async function mountOpen(stop = '1', opts = {}) {
   }
   const G = await mountGate('2', { ...opts, cityReach: 'all', cityEdit })
   // the page's letters for its own bodies (the evidence switch), and the bodies drawn without faces here: the palms by
-  // row (groves Known as a mass, the rest Guessed, as green.ts) and the plain's fields and canals (ours, Guessed)
+  // row (groves Known as a mass, the rest Guessed, as green.ts), the banks' reed and trees (Guessed) and the plain's
+  // fields and canals (ours, Guessed)
   const openLetters = new Map()
-  const extraBodies = [['open:palm-canal', ['R', 'R']], ['open:palm-river', ['R', 'R']], ['open:palm-city', ['G', 'G']], ['open:palm-outer', ['G', 'G']], ['open:field', ['G', 'G']], ['open:canal', ['G', 'G']], ['open:garden', ['G', 'G']]]
+  const extraBodies = [['open:palm-canal', ['R', 'R']], ['open:palm-river', ['R', 'R']], ['open:palm-city', ['G', 'G']], ['open:palm-outer', ['G', 'G']], ['open:reed', ['G', 'G']], ['open:bank-tamarisk', ['G', 'G']], ['open:bank-poplar', ['G', 'G']], ['open:bank-willow', ['G', 'G']], ['open:field', ['G', 'G']], ['open:canal', ['G', 'G']], ['open:garden', ['G', 'G']]]
   for (const [n, L] of extraBodies) openLetters.set(n, L)
   {
     const city = buildPlan(edited)

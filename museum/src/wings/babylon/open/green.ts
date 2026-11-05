@@ -6,36 +6,75 @@
    relief BM 124920 the date palms have scaled trunks and a crown of long fronds,
    GREEN.settled bab.green.palm.plain). Sizes ours: trunk 9 to 15 m, fronds 4 m. */
 
-import { CanvasTexture, InstancedBufferAttribute, InstancedMesh, LinearFilter, LinearMipmapLinearFilter, Matrix4, Quaternion, SRGBColorSpace, Vector3, type Material } from 'three/webgpu'
+import { BufferGeometry, CanvasTexture, InstancedBufferAttribute, InstancedMesh, LinearFilter, LinearMipmapLinearFilter, Matrix4, Quaternion, SRGBColorSpace, Vector3, type Material } from 'three/webgpu'
 import type { Plain, Palm } from './plain'
-import { PALM_FAR, palmGeometry } from '../gate/gate-life'
+import { PALM_FAR, PALM_MID, PALM_NEAR, palmGeometry } from '../gate/gate-life'
+import { reedGeometry } from '../plants/banks'
 
-/** the palms as one instanced mesh: each its own size, turn and lean, its row's class letters per instance */
+// the bank trees grow in the stack's tree kit, whose leaf atlas is drawn on a canvas: a page only
+const kit: typeof import('../plants/grown') | null = typeof document === 'undefined' ? null : await import('../plants/grown')
+
+/* the banks' trees from the air, in their mid-April state (the kit's own habits, sizes ours): the tamarisk grey-green
+   and not in bloom, the Euphrates poplar and the willow in new leaf; two of each, the flight passing none closer than
+   about 130 m, so each spray is drawn larger to hold the crown's mass from there */
+const BANK_TREES: Record<string, { species: 'tamarisk' | 'poplar-euphrates' | 'willow'; height: number; radius: number; spray: 'thread' | 'narrow'; leaf: [number, number, number]; wood: [number, number, number] }> = {
+  tamarisk: { species: 'tamarisk', height: 6.5, radius: 3.2, spray: 'thread', leaf: [0.085, 0.1, 0.072], wood: [0.09, 0.072, 0.056] },
+  poplar: { species: 'poplar-euphrates', height: 12.5, radius: 4.2, spray: 'narrow', leaf: [0.08, 0.104, 0.064], wood: [0.11, 0.1, 0.085] },
+  willow: { species: 'willow', height: 9, radius: 4.6, spray: 'narrow', leaf: [0.085, 0.118, 0.05], wood: [0.08, 0.068, 0.052] },
+}
+const BANK = new Set(['reed', ...Object.keys(BANK_TREES)])
+
+/** the plain's plants, one instanced mesh per drawing: the far palms (palm-date-babylon's far preset, the parent), the
+    palms under the flight's descent at the mid preset, the reed clumps and the bank trees; each its own size, turn and
+    lean and its row's class letters per instance */
 export function palmMesh(palms: Palm[], ground: (x: number, z: number) => number, mat: Material): InstancedMesh {
-  // palm-date-babylon's own palm at its far preset (gate-life.ts), 12 m to the crown, in its vertex colours
-  const geo = palmGeometry(12, PALM_FAR)
-  const im = new InstancedMesh(geo, mat, Math.max(1, palms.length))
-  const cls = new Float32Array(palms.length * 2), band = new Float32Array(palms.length)
   const m = new Matrix4(), q = new Quaternion(), e = new Vector3()
-  palms.forEach((p, i) => {
-    const y = ground(p.x, p.z)
-    q.setFromAxisAngle(e.set(Math.cos(p.yaw), 0, Math.sin(p.yaw)).normalize(), p.lean)
-    m.compose(new Vector3(p.x, y, p.z), q, new Vector3(p.s, p.s, p.s))
-    im.setMatrixAt(i, m)
-    // the groves outside the walls are Known as a mass (R), the palms inside the walls and in the outer city's gardens Guessed (G)
-    const k = p.row === 'canal' || p.row === 'river' ? 1 : 2
-    cls[i * 2] = k
-    cls[i * 2 + 1] = k
-    band[i] = y + 0.5
-  })
-  geo.setAttribute('cls', new InstancedBufferAttribute(cls, 2))
-  geo.setAttribute('band', new InstancedBufferAttribute(band, 1))
-  im.instanceMatrix.needsUpdate = true
-  im.castShadow = true
-  im.receiveShadow = true
-  im.frustumCulled = false
-  im.name = 'palms-plain'
-  return im
+  const set = (geo: BufferGeometry, list: Palm[], name: string, letter: (p: Palm) => number): InstancedMesh => {
+    const im = new InstancedMesh(geo, mat, Math.max(1, list.length))
+    const cls = new Float32Array(Math.max(1, list.length) * 2), band = new Float32Array(Math.max(1, list.length))
+    list.forEach((p, i) => {
+      const y = ground(p.x, p.z)
+      q.setFromAxisAngle(e.set(Math.cos(p.yaw), 0, Math.sin(p.yaw)).normalize(), p.lean)
+      m.compose(new Vector3(p.x, y, p.z), q, new Vector3(p.s, p.s, p.s))
+      im.setMatrixAt(i, m)
+      const k = letter(p)
+      cls[i * 2] = k
+      cls[i * 2 + 1] = k
+      band[i] = y + 0.5
+    })
+    if (!list.length) im.count = 0
+    geo.setAttribute('cls', new InstancedBufferAttribute(cls, 2))
+    geo.setAttribute('band', new InstancedBufferAttribute(band, 1))
+    im.instanceMatrix.needsUpdate = true
+    im.castShadow = true
+    im.receiveShadow = true
+    im.frustumCulled = false
+    im.name = name
+    return im
+  }
+  // the groves outside the walls are Known as a mass (R), the palms inside the walls and in the outer city's gardens
+  // Guessed (G); the banks' plants Guessed
+  const palmLetter = (p: Palm): number => (p.row === 'canal' || p.row === 'river' ? 1 : 2)
+  const bankLetter = (): number => 2
+  const tree = palms.filter((p) => !BANK.has(p.row))
+  const root = set(palmGeometry(12, PALM_FAR), tree.filter((p) => !p.detail), 'palms-plain', palmLetter)
+  root.add(set(palmGeometry(12, PALM_MID), tree.filter((p) => p.detail === 'mid'), 'palms-plain-mid', palmLetter))
+  // the few the flight passes within about 110 m: the near preset, two palms of it
+  const near = tree.filter((p) => p.detail === 'near')
+  for (let v = 0; v < 2; v++) root.add(set(palmGeometry(12, PALM_NEAR, 17 + v * 12), near.filter((_, i) => i % 2 === v), `palms-plain-near-${v}`, palmLetter))
+  // the reed in three clumps, each place one of them
+  const reed = palms.filter((p) => p.row === 'reed')
+  for (let v = 0; v < 3; v++) root.add(set(reedGeometry(11 + v * 7), reed.filter((_, i) => i % 3 === v), `reed-plain-${v}`, bankLetter))
+  if (kit) {
+    for (const [row, t] of Object.entries(BANK_TREES)) {
+      const list = palms.filter((p) => p.row === row)
+      for (let v = 0; v < 2; v++) {
+        const g = kit.grow({ species: t.species, height: t.height, radius: t.radius, seed: 31 + v * 54, spray: t.spray, leaf: t.leaf, wood: t.wood, lod: 1, minTwig: 0.04, fill: 1.75 })
+        root.add(set(g.geometry, list.filter((_, i) => i % 2 === v), `bank-${row}-${v}`, bankLetter))
+      }
+    }
+  }
+  return root
 }
 
 /** the plain's map in three textures over the domain: colour (fields by crop, grove floors), masks (r canal water,

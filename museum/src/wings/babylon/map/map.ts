@@ -33,7 +33,7 @@ import { makePath, type PathSample, type V3 } from './path'
 import { mountCourt } from '../court/court'
 import { mountTower } from '../tower/tower'
 import { mountGardens, type GardenState } from '../gardens/gardens'
-import { palmGeometry } from '../gate/gate-life'
+import { PALM_MID, palmGeometry } from '../gate/gate-life'
 import { mountNabu } from '../nabu/nabu'
 import { mountHouse } from '../house/house'
 import { mountEsagila } from '../esagila/esagila'
@@ -74,8 +74,6 @@ const tones = tonesFrom(plan)
 // stop 5's candidates, stop 6's court and throne room, stop 7's houses, stop 8's temple and stop 9's precinct wall, Gate 5's recess, the street before
 // it and the tower draw themselves; the city's bodies are built without the prisms they replace (the gardens open the
 // palace's rooms over the vaulted building before the court draws them)
-/** the palms of the garden: between the gate's near palm and the plain's far one, for 150 to 400 m */
-const PALM_MID = { seg: 4, sides: 5, fronds: 16, steps: 4 }
 const gardens = mountGardens(buildPlan(plan), plan, gardensPlan, tones, palmGeometry, PALM_MID)
 const court = mountCourt(gardens.built, plan, courtPlan, tones)
 const tower = mountTower(court.built, plan, towerPlan, tones)
