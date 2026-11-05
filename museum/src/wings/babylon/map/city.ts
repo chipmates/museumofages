@@ -122,6 +122,9 @@ export function trayMaterial(t: ClassTones, band: number, uPix: N): Material {
   const fallen = smoothstep(0.2, 0.7, wearN.add(smoothstep(1.6, 0.2, above).mul(0.25))).mul(0.45)
   let wall: N = mix(wash, mix(wash, vec3(...TONES.mud), 0.7), fallen)
   wall = wall.mul(mix(float(0.7), float(1), smoothstep(0.1, 1.1, above))).mul(float(1).add(mx_noise_float(p.mul(vec3(0.9, 0.2, 0.9))).mul(0.05)))
+  // rain marks run down from the parapets and spouts, the coat uneven under the hand that laid it
+  const streak = smoothstep(0.5, 0.85, mx_noise_float(vec3(p.x.mul(2.2), p.y.mul(0.16), p.z.mul(2.2)).add(h.mul(0.7))))
+  wall = wall.mul(float(1).sub(streak.mul(0.13).mul(smoothstep(0.4, 1.6, above)))).mul(float(1).add(mx_noise_float(p.mul(2.1)).mul(0.05)))
   // a court's walls take less of the sky the deeper they go (the renderer draws no such shadow of the sky)
   wall = wall.mul(mix(float(1), mix(float(0.22), float(0.6), smoothstep(0, 3.4, above)), isK(6)))
   // a door: the opening's board leaf, dark in its recess
