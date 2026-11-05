@@ -132,6 +132,10 @@ export function skySet(o: SkySetOptions) {
   function lightFor(builder: N): void {
     // a material that lights its own rooms names where the field applies (1 open, 0 its rooms); none: everywhere
     const open: N = builder.material?.skyOpenNode ?? float(1)
+    // a material that knows its surroundings' bounce (white walls in sun) names the share of the hidden sky's light
+    // they give back, in place of the multi-bounce fit where it gives more, and the share of the mirrored hidden sky
+    const own: N = builder.material?.skyBounceNode ?? null
+    const mirror: N = builder.material?.skyMirrorNode ?? float(0)
     const n = normalWorld
     const all = vec3(0).toVar('skyAll'), seen = vec3(0).toVar('skySeen'), hid = vec3(0).toVar('skyHid'), lobeSum = float(0).toVar('skyLobe')
     // the environment's own lookup (EnvironmentNode): the reflected ray bent toward the normal by roughness to the fourth
@@ -161,7 +165,8 @@ export function skySet(o: SkySetOptions) {
     const v = luminance(seen).div(max(lumAll, 1e-6))
     const a = 2.0404 * ALBEDO - 0.3324, bb = -4.7951 * ALBEDO + 0.6417, c = 2.7552 * ALBEDO + 0.6903
     const v2 = max(v, v.mul(a).add(bb).mul(v).add(c).mul(v)).min(1)
-    const back = mix(vec3(uBuff), all.div(max(lumAll, 1e-6)), uHue).mul(v2.sub(v).mul(lumAll)).mul(uGive)
+    const multi = mix(vec3(uBuff), all.div(max(lumAll, 1e-6)), uHue).mul(v2.sub(v).mul(lumAll)).mul(uGive)
+    const back = own ? max(multi, all.sub(seen).mul(own)) : multi
     const gate = uOn.mul(open)
     const corr = seen.sub(all).add(back).mul(float(uStride)).mul(gate)
     const lm = builder.context.lightingModel
@@ -169,7 +174,7 @@ export function skySet(o: SkySetOptions) {
     else if (FIT === 1 && lm?.singleScatteringDielectric) builder.context.irradiance.addAssign(corr.div(max(vec3(1).sub(lm.singleScatteringDielectric.add(lm.multiScatteringDielectric)), 0.05)))
     else builder.context.irradiance.addAssign(corr)
     // the lobe's mean of the hidden sky's radiance (each weight is a radiance times its solid angle)
-    builder.context.radiance.addAssign(hid.div(max(lobeSum, 1e-6).mul(solidAngle(COUNT))).mul(uSpec).mul(gate).negate())
+    builder.context.radiance.addAssign(hid.div(max(lobeSum, 1e-6).mul(solidAngle(COUNT))).mul(uSpec).mul(gate).mul(float(1).sub(mirror)).negate())
   }
 
   const light = new SkySetLight(0xffffff, 1)
