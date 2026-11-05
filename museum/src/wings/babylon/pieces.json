@@ -114,6 +114,7 @@
   {"match": "^map:ruin-stair-middle-", "part": "the tower as excavated: the middle stair's foot", "piece": "bab.tower.stair.middle", "note": "the switch's dug state; drawn as its walls' tops on the ground, their level ours"},
   {"match": "^map:ruin-stair-side$", "part": "the tower as excavated: the side stairs' band", "piece": "bab.tower.stairs.side", "note": "the switch's dug state; drawn as its band's top on the ground, its level ours"},
   {"match": "^map:ruin-", "part": "the tower as excavated: core, trench and water", "piece": "bab.tower.ruin", "note": "the switch's dug state, not of 570 BC; the banks' slope, the water's level and look ours"},
+  {"match": "^map:bruegel-show-", "part": "Bruegel's Tower of Babel, the showpiece", "piece": "bab.bruegel.tower", "note": "the switch's fourth state, the same painting at its own figure scale, outside the evidence classes: never toned, never shown with a class"},
   {"match": "^map:bruegel-", "part": "Bruegel's Tower of Babel", "piece": "bab.bruegel.tower", "note": "the switch's third state, outside the evidence classes: never toned, never shown with a class"},
   {"match": "^map:ramps$", "part": "ramps and stairs (map)", "piece": "bab.ramps.map", "note": "one body holds the bridge's roadway; the tower's three stairs are their own bodies (map:tower-stair-*); split per piece, then each takes its own rows"},
   {"match": "^gate:(front-pier|back-pier|front-side)-", "part": "the front gate's walls", "piece": "bab.gate.front.body", "plan": "bab.gate.front.plan"},
