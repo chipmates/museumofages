@@ -3,60 +3,108 @@
 //
 //   node --experimental-strip-types --no-warnings forge/babylon/geometry-check.mjs --stop <id> [--near <mm>] [--area 0.01]
 //        [--reach 400] (map stops: metres around the eye) [--eyes <facts.json>] (gate: the page's path samples)
+//        [--bound frame|none] (the open page: coplanar on what its first frame can show, the default, or on all of it)
 //        [--all] [--json <out>]
 // Exit 0 when nothing outside the allowances is found, 1 otherwise. Not covered, said plainly: anything a material
 // draws (relief, displacement), occlusion (a thin face behind a wall still counts), the sign person, the opening's
-// flight cameras (the opening's stills are its first frame only).
-import { writeFileSync } from 'node:fs'
+// flight cameras (the opening's stills are its first frame only). Every report names its bound: the mount's own cut,
+// and on the open page the first frame's (the faces kept and left out), with the seconds of each pass.
+import { realpathSync, writeFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import { resolveStop } from './pages.mjs'
 import { MOUNTS } from './mounts.mjs'
-import { coplanar, floating, subPixel } from './geometry.mjs'
+import { coplanar, floating, frameKeep, pixelCell, subPixel } from './geometry.mjs'
 
-const args = process.argv.slice(2)
-const opt = (k, d) => (args.includes(k) ? args[args.indexOf(k) + 1] : d)
-if (!args.includes('--stop')) { console.error('--stop <id> (a stop number or id, map:<stop>, or a page name)'); process.exit(2) }
-const st = resolveStop(opt('--stop'))
-const page = st.page
-const ALL = args.includes('--all')
-const NEAR = Number(opt('--near', 0))
-const BED = NEAR > 0 ? NEAR / 1000 : 0.002
-const AREA = Number(opt('--area', 0.01))
-const JSON_OUT = opt('--json', null)
+const MARGIN = 1.1, PER_PX = 4
 
-const t0 = Date.now()
-const M = await MOUNTS[page](st.stop, { reach: Number(opt('--reach', 400)), eyesFile: opt('--eyes', null) })
-const pairs = coplanar(M.faces, { bedM: BED, areaMin: AREA, eyes: M.eyes, counts: M.counts, masked: M.masked ?? null })
-const ALLOWED_PAIRS = [
-  { kind: 'butt', why: 'two closed bodies meeting face to face: both faces lie inside the union, no eye outside sees either' },
-  { kind: 'unseen', why: "every eye of the stop stands behind the plane, so both faces are culled from every eye" },
-  ...M.allowPair,
-]
-const allowedPair = (p) => ALLOWED_PAIRS.find((r) => (r.test && r.test(p)) || (r.kind && r.kind === p.kind))
-const thin = subPixel(M.faces, M.cameras, { checks: M.checks })
-const allowedThin = (r) => M.allowThin.find((x) => x.body === r.body || (x.prefix && r.body.startsWith(x.prefix)))
-const floatRows = floating(M.faces, { ground: M.ground, checks: M.floats })
-const allowedFloat = (r) => M.allowFloat.find((x) => x.body === r.body || (x.prefix && r.body.startsWith(x.prefix)))
-const floats = floatRows.filter((r) => !allowedFloat(r))
+/** the check on a mounted stop: { report, lines, bad }. `bound` is the open page's option ('frame' or 'none') */
+export function checkMount(M, st, { bed = 0.002, area = 0.01, all = false, bound = 'frame', mountSeconds = null } = {}) {
+  const passSeconds = { mount: mountSeconds }
+  const timed = (k, f) => { const t = Date.now(); const r = f(); passSeconds[k] = +((Date.now() - t) / 1000).toFixed(1); return r }
+  const open = M.page === 'open'
+  if (!['frame', 'none'].includes(bound)) throw new Error(`--bound ${bound}: frame or none`)
+  const framed = open && bound === 'frame'
+  let pairFaces = M.faces, cover = { kind: 'mount', says: M.cut ?? null }
+  const px = framed ? pixelCell(M.cameras, { perPx: PER_PX }) : null
+  if (framed) {
+    const keep = frameKeep(M.cameras, { margin: MARGIN })
+    const kept = [], seen = new Map() // body -> [faces kept, faces left out]
+    for (const f of M.faces) {
+      const k = keep(f)
+      if (k) kept.push(f)
+      const r = seen.get(f.body) ?? [0, 0]
+      r[k ? 0 : 1]++
+      seen.set(f.body, r)
+    }
+    pairFaces = kept
+    const whole = [...seen.values()].filter(([a, b]) => a > 0 && b === 0).length, part = [...seen.values()].filter(([a, b]) => a > 0 && b > 0).length
+    const out = [...seen].filter(([, [a]]) => a === 0).map(([b]) => b)
+    const heads = new Map()
+    for (const b of out) { const h = b.replace(/[-#][^:]*$/, ''); heads.set(h, (heads.get(h) ?? 0) + 1) }
+    cover = {
+      kind: 'frame',
+      says: `the coplanar pass on the faces the first frame's still cameras can show, at their pixel scale: a face is left out where all three corners lie past one side of every camera's frustum (${MARGIN} times each half width, the near side at 0.25 m), and a pair's grid cell is 1/${PER_PX} of the finest still's device pixel where the pair comes nearest to an eye (never under the kit's 1 to 5 cm); the sub-pixel and floating passes on the whole page (sub-pixel rows only where a face lies inside a still)`,
+      mount: M.cut ?? null, cameras: M.cameras.map((c) => c.name), margin: MARGIN, passes: { coplanar: 'frame', subPixel: 'whole page', floating: 'whole page' },
+      faces: { kept: kept.length, out: M.faces.length - kept.length },
+      bodies: { whole: whole, part, out: out.length },
+      outByName: Object.fromEntries([...heads].sort((a, b) => b[1] - a[1])),
+    }
+  } else if (open) cover = { kind: 'none', says: 'the whole page: every body the opening builds', mount: M.cut ?? null, faces: { kept: M.faces.length, out: 0 } }
+  const pairs = timed('coplanar', () => coplanar(pairFaces, { bedM: bed, areaMin: area, eyes: M.eyes, counts: M.counts, masked: M.masked ?? null, cellOf: px?.cellOf ?? null }))
+  if (px) cover.cell = { perPx: PER_PX, grids: px.used.calls, leastM: px.used.calls ? +px.used.least.toFixed(4) : null, mostM: px.used.calls ? +px.used.most.toFixed(4) : null }
+  const ALLOWED_PAIRS = [
+    { kind: 'butt', why: 'two closed bodies meeting face to face: both faces lie inside the union, no eye outside sees either' },
+    { kind: 'unseen', why: "every eye of the stop stands behind the plane, so both faces are culled from every eye" },
+    ...M.allowPair,
+  ]
+  const allowedPair = (p) => ALLOWED_PAIRS.find((r) => (r.test && r.test(p)) || (r.kind && r.kind === p.kind))
+  const thin = timed('subPixel', () => subPixel(M.faces, M.cameras, { checks: M.checks }))
+  const allowedThin = (r) => M.allowThin.find((x) => x.body === r.body || (x.prefix && r.body.startsWith(x.prefix)))
+  const floatRows = timed('floating', () => floating(M.faces, { ground: M.ground, checks: M.floats }))
+  const allowedFloat = (r) => M.allowFloat.find((x) => x.body === r.body || (x.prefix && r.body.startsWith(x.prefix)))
+  const floats = floatRows.filter((r) => !allowedFloat(r))
 
-const pairOff = pairs.filter((p) => !allowedPair(p))
-const thinOff = thin.rows.filter((r) => !allowedThin(r))
-const bodies = new Set(M.faces.map((f) => f.body)).size
-const report = {
-  checker: 'babylon-geometry', stop: st.stop, stopId: st.id, page: M.page, frame: M.frame, faces: M.faces.length, bodies, bedMm: BED * 1000, areaMin: AREA,
-  cameras: M.cameras.map((c) => c.name), eyes: M.eyes.length,
-  coplanar: { pairs: pairs.length, offences: pairOff.length, list: (ALL ? pairs : pairOff).map((p) => ({ ...p, why: allowedPair(p)?.why ?? null })) },
-  subPixel: { sliversInAPlane: thin.slivers, rows: thin.rows.length, offences: thinOff.length, list: (ALL ? thin.rows : thinOff).map((r) => ({ ...r, why: allowedThin(r)?.why ?? null })) },
-  floating: { rows: floatRows.length, offences: floats.length, list: (ALL ? floatRows : floats).map((r) => ({ ...r, why: allowedFloat(r)?.why ?? null })) },
-  seconds: Math.round((Date.now() - t0) / 1000),
+  const pairOff = pairs.filter((p) => !allowedPair(p))
+  const thinOff = thin.rows.filter((r) => !allowedThin(r))
+  const bodies = new Set(M.faces.map((f) => f.body)).size
+  const seconds = Math.round((passSeconds.mount ?? 0) + passSeconds.coplanar + passSeconds.subPixel + passSeconds.floating)
+  const report = {
+    checker: 'babylon-geometry', stop: st.stop, stopId: st.id, page: M.page, frame: M.frame, faces: M.faces.length, bodies, bedMm: bed * 1000, areaMin: area,
+    cameras: M.cameras.map((c) => c.name), eyes: M.eyes.length, bound: cover,
+    coplanar: { pairs: pairs.length, offences: pairOff.length, list: (all ? pairs : pairOff).map((p) => ({ ...p, why: allowedPair(p)?.why ?? null })) },
+    subPixel: { sliversInAPlane: thin.slivers, rows: thin.rows.length, offences: thinOff.length, list: (all ? thin.rows : thinOff).map((r) => ({ ...r, why: allowedThin(r)?.why ?? null })) },
+    floating: { rows: floatRows.length, offences: floats.length, list: (all ? floatRows : floats).map((r) => ({ ...r, why: allowedFloat(r)?.why ?? null })) },
+    seconds, passSeconds,
+  }
+  const L = []
+  L.push(`stop ${st.stop} (${st.id}) on the ${M.page} page${st.page === 'open' ? ' (the opening mounted as the gate page)' : ''}: ${M.faces.length} faces in ${bodies} bodies, ${M.cameras.length} cameras, ${M.eyes.length} eyes, ${seconds} s`)
+  if (framed) L.push(`bound: the first frame (${M.cameras.length} still cameras, margin ${MARGIN}): coplanar on ${cover.faces.kept} of ${M.faces.length} faces (bodies: ${cover.bodies.whole} whole, ${cover.bodies.part} in part, ${cover.bodies.out} left out), ${cover.faces.out} faces left out, its grid cells 1/${PER_PX} device px at the pair (${cover.cell.leastM} to ${cover.cell.mostM} m asked over ${cover.cell.grids} grids, never under the kit's own); sub-pixel and floating on the whole page`)
+  else if (open) L.push(`bound: none, the whole page (${M.faces.length} faces)`)
+  else L.push(`bound: the mount's own${M.cut ? `, ${M.cut}` : ''}`)
+  L.push(`seconds by pass: ${Object.entries(passSeconds).map(([k, v]) => `${k} ${v}`).join(', ')}`)
+  L.push(`coplanar (bed ${bed * 1000} mm where the faces overlap, area over ${area} m2; gap: the median where they do): ${pairs.length} pairs (${['fight', 'unseen', 'butt'].map((k) => `${k} ${pairs.filter((p) => p.kind === k).length}`).join(', ')}; ${pairs.filter((p) => p.across).length} across offset runs), ${pairOff.length} not allowed`)
+  for (const p of (all ? pairs : pairOff).slice(0, 30)) L.push(`  [${p.kind} ${p.facing > 0 ? '+' : '-'}${p.across ? `, across ${p.across} run pairs` : ''}] ${p.a} | ${p.b}: ${p.area} m2, gap ${p.gapMm} mm (least ${p.gapMinMm}), n ${p.n.join(',')}, x ${p.x.join('..')} y ${p.y.join('..')} z ${p.z.join('..')}`)
+  L.push(`sub-pixel (under 1 device px over 4 px; ${thin.slivers} slivers of triangulated planes set aside): ${thin.rows.length} rows, ${thinOff.length} not allowed`)
+  for (const r of (all ? thin.rows : thinOff).slice(0, 30)) L.push(`  ${r.body} at ${r.camera}: ${r.faces} faces, thinnest ${r.thinnestPx} px (${r.thickM} m at ${r.atM} m, run ${r.runPx} px)`)
+  L.push(`floating (the map's rule: a grounded body's corner over the ground by more than 1 cm, a raised body with nothing under its centre or its ends): ${floatRows.length} rows, ${floats.length} not allowed`)
+  for (const r of (all ? floatRows : floats).slice(0, 30)) L.push(`  ${r.body}: base ${r.baseY} m, ${r.gapM} m over the ground at ${r.at.join(', ')} (${r.rule})`)
+  const bad = pairOff.length + thinOff.length + floats.length
+  L.push(bad === 0 ? 'geometry: ok' : `geometry: FAILED (${pairOff.length} coplanar, ${thinOff.length} sub-pixel, ${floats.length} floating)`)
+  return { report, lines: L, bad }
 }
-if (JSON_OUT) writeFileSync(JSON_OUT, JSON.stringify(report, null, 1))
-console.log(`stop ${st.stop} (${st.id}) on the ${M.page} page${st.page === 'open' ? ' (the opening mounted as the gate page)' : ''}: ${M.faces.length} faces in ${bodies} bodies, ${M.cameras.length} cameras, ${M.eyes.length} eyes, ${report.seconds} s`)
-console.log(`coplanar (bed ${BED * 1000} mm where the faces overlap, area over ${AREA} m2; gap: the median where they do): ${pairs.length} pairs (${['fight', 'unseen', 'butt'].map((k) => `${k} ${pairs.filter((p) => p.kind === k).length}`).join(', ')}; ${pairs.filter((p) => p.across).length} across offset runs), ${pairOff.length} not allowed`)
-for (const p of (ALL ? pairs : pairOff).slice(0, 30)) console.log(`  [${p.kind} ${p.facing > 0 ? '+' : '-'}${p.across ? `, across ${p.across} run pairs` : ''}] ${p.a} | ${p.b}: ${p.area} m2, gap ${p.gapMm} mm (least ${p.gapMinMm}), n ${p.n.join(',')}, x ${p.x.join('..')} y ${p.y.join('..')} z ${p.z.join('..')}`)
-console.log(`sub-pixel (under 1 device px over 4 px; ${thin.slivers} slivers of triangulated planes set aside): ${thin.rows.length} rows, ${thinOff.length} not allowed`)
-for (const r of (ALL ? thin.rows : thinOff).slice(0, 30)) console.log(`  ${r.body} at ${r.camera}: ${r.faces} faces, thinnest ${r.thinnestPx} px (${r.thickM} m at ${r.atM} m, run ${r.runPx} px)`)
-console.log(`floating (the map's rule: a grounded body's corner over the ground by more than 1 cm, a raised body with nothing under its centre or its ends): ${floatRows.length} rows, ${floats.length} not allowed`)
-for (const r of (ALL ? floatRows : floats).slice(0, 30)) console.log(`  ${r.body}: base ${r.baseY} m, ${r.gapM} m over the ground at ${r.at.join(', ')} (${r.rule})`)
-const bad = pairOff.length + thinOff.length + floats.length
-console.log(bad === 0 ? 'geometry: ok' : `geometry: FAILED (${pairOff.length} coplanar, ${thinOff.length} sub-pixel, ${floats.length} floating)`)
-process.exit(bad === 0 ? 0 : 1)
+
+if (process.argv[1] && realpathSync(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const args = process.argv.slice(2)
+  const opt = (k, d) => (args.includes(k) ? args[args.indexOf(k) + 1] : d)
+  if (!args.includes('--stop')) { console.error('--stop <id> (a stop number or id, map:<stop>, or a page name)'); process.exit(2) }
+  const st = resolveStop(opt('--stop'))
+  const NEAR = Number(opt('--near', 0))
+  const t0 = Date.now()
+  const M = await MOUNTS[st.page](st.stop, { reach: Number(opt('--reach', 400)), eyesFile: opt('--eyes', null) })
+  const mountSeconds = +((Date.now() - t0) / 1000).toFixed(1)
+  const { report, lines, bad } = checkMount(M, st, { bed: NEAR > 0 ? NEAR / 1000 : 0.002, area: Number(opt('--area', 0.01)), all: args.includes('--all'), bound: opt('--bound', 'frame'), mountSeconds })
+  const out = opt('--json', null)
+  if (out) writeFileSync(out, JSON.stringify(report, null, 1))
+  for (const l of lines) console.log(l)
+  process.exit(bad === 0 ? 0 : 1)
+}
