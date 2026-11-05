@@ -130,7 +130,8 @@ export function walkLight(o: WalkLightOptions) {
   let envBakes = 0
   /* `?sky=set`: the sky each point sees takes the place of the open sky in the environment's diffuse (sky-set.ts); made
      here, drawn at a page's first still, off while another source gives the environment */
-  const field: SkySet | null = q.get('sky') === 'set'
+  // WebGPU only (a depth-only target over a depth array): elsewhere the page keeps the environment as it is
+  const field: SkySet | null = q.get('sky') === 'set' && (renderer as unknown as { backend?: { isWebGPUBackend?: boolean } }).backend?.isWebGPUBackend === true
     ? skySet({
       renderer, scene, air: AIR, envIntensity: () => scene.environmentIntensity, lobe: { toward: uToward, away: uAwayK },
       buff: LIGHT.bounce.paving.colour as [number, number, number], count: Number(q.get('skyN') ?? 128), size: Number(q.get('skyMap') ?? 1024),
