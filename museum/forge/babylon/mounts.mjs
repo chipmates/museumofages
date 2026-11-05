@@ -455,6 +455,17 @@ export async function mountOpen(stop = '1', opts = {}) {
     masked: (p, a, b) => G.masked(p, a, b) || ((/^map:(street|ground)$/.test(a) || /^map:(street|ground)$/.test(b)) && (() => { const w = new THREE.Vector3(p.x, 0, p.z).applyMatrix4(G.G2W); return NP.inside(w.x, w.z) })()),
     frame: "the gate's frame (x west, z north out of the face, y up from the +15.40 street); the flight's cameras moved into it",
     track: (dt = 0.25) => { const out = []; for (let i = 0; i * dt <= flight.duration + 1e-9; i++) out.push({ t: +(i * dt).toFixed(3), ...at(i * dt) }); return out },
+    // the flight's still cameras every `dt` seconds after the first frame, the landing always among them, at the
+    // stills' four sizes (the geometry check's bound)
+    flightCameras: (dt) => {
+      const ts = []
+      for (let i = 1; i * dt < flight.duration - 1e-6; i++) ts.push(+(i * dt).toFixed(3))
+      ts.push(flight.duration)
+      return ts.flatMap((t) => {
+        const s = at(t)
+        return SIZES.map(([framing, w, h]) => { const v = s[framing]; return { t, ...cameraFrom({ name: `open flight ${t} s ${framing} ${w}x${h}`, eye: v.eye, look: v.look, vfov: fittedFov(v.hfov, w, h), w, h, shift: v.shift }) } })
+      })
+    },
   }
 }
 
