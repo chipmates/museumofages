@@ -176,8 +176,7 @@ export const MET_TABLET = Object.freeze({
   id: '86.11.361',
   /** the Met's size, cm: width, height, thickness */
   cm: [9.9, 9.7, 4.4] as const,
-  /** the photo's file and its pixels; the tablet's extent in it (px), measured off the photo's light ground */
-  file: 'met-86.11.361-school-exercise-tablet.jpg',
+  /** the photo's pixels (800 by 772); its file is named where the kit's assets are recorded, with its credit */
   px: [800, 772] as const,
   credit: 'Photo: The Metropolitan Museum of Art, New York, 86.11.361, Purchase 1886. Public domain (CC0).',
 })
