@@ -41,11 +41,12 @@ const SIDES: Record<LandId, readonly Side[]> = {
 /** upright, the coast's three cities stand closer than a name is tall: they take turns, sea and land */
 const SIDES_UPRIGHT: Partial<Record<LandId, readonly Side[]>> = {
   arvad: ['right', 'above-right', 'above-left', 'above'],
-  byblos: ['right', 'below-right', 'left'],
+  // never below-right: there Byblos's name stands level with Tyre's dot and reads as its name
+  byblos: ['right', 'left'],
   tyre: ['left', 'below-left', 'above-left'],
 }
-/** upright, Arvad's and Byblos's names sit a little above and below their dots' line, so both fit on the land side */
-const NUDGE_UPRIGHT: Partial<Record<LandId, number>> = { arvad: -4, byblos: 3 }
+/** upright, Arvad's and Byblos's names sit a little above and below their dots' line, so Byblos's clears Arvad's dot */
+const NUDGE_UPRIGHT: Partial<Record<LandId, number>> = { arvad: -4, byblos: 6 }
 
 /** a vertical ruler: the kit's ruler laid on its side, its ticks against the thing it measures (to its left) */
 function rulerUpright(x: number, y: number, pxPerCm: number): { body: string; ticks: string; w: number; h: number } {
