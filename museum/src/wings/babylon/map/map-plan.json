@@ -513,7 +513,7 @@
   "plan": "R",
   "height": "R",
   "skirt": true,
-  "src": "line: C6.2 and E2.2, with P2021's UTM points; levels: +7.5 north of the North Gate, +12.5 at survey point 2 north of the gate and +15.4 in the gate (about 3 percent near the gate), +13 at the palace, +7.5 to +8 at Nabu, +3.0 at Gate 5, +2.1 to +2.5 on the turn, +2.3 and +3.1 at the bridge (P2021 p. 205, 208, 213, 215, 228; K1918 p. 8)",
+  "src": "line: C6.2 and E2.2, with P2021's UTM points; levels: +7.5 north of the North Gate, +12.5 at survey point 2 north of the gate and +15.4 in the gate (about 3 percent near the gate), +13 at the palace, +7.5 to +8 at Nabu, +3.0 at Gate 5, +2.1 to +2.5 on the turn, +2.3 and +3.1 at the bridge (P2021 p. 205, 208, 213, 215, 228; K1918 p. 8); through the gate on the gate's own axis (gate-plan.json frame.face, sheet 2.28 at 600 dpi, plus or minus 0.3 m)",
   "points": [
    {
     "at": [
@@ -557,23 +557,23 @@
    },
    {
     "at": [
-     445773.0,
-     3600844.0
+     445774.8,
+     3600843.7
     ],
     "level": 15.4,
     "w": 20,
     "cls": "M",
-    "note": "the gate's north face, +15.40 (K1918 p. 8)"
+    "note": "the gate's north face on the gate's axis, +15.40 (K1918 p. 8); the face's place: gate-plan.json frame.face, sheet 2.28 at 600 dpi, plus or minus 0.3 m; from survey point 2 the street hands off from the lion street's axis to the gate's (both masked by the gate's own build on the map)"
    },
    {
     "at": [
-     445787.3,
-     3600796.1
+     445792.24,
+     3600786.29
     ],
     "level": 15.4,
     "w": 10,
     "cls": "M",
-    "note": "the gate's south face"
+    "note": "the gate's own paving's end on the gate's axis, 60 m from the north face (the gate's 49.95 m: front gate 12.95, court 4.0, main gate 33.0, K1918 p. 16 and 37, P2021 p. 72; its paving 10 m on, gate-mesh.ts pavingGeometry): level on the axis through the gate to here, then the line to the palace's east front"
    },
    {
     "at": [
@@ -762,11 +762,11 @@
  "frames": {
   "gate": {
    "origin": [
-    445772.7,
-    3600843.9
+    445774.8,
+    3600843.7
    ],
    "bearing": 163.1,
-   "says": "a along the gate's axis from its north face (343.1 grid, 342.8 true, read off sheet 2.28 for the gate), c across toward 253; 50 m long in all (K1918 p. 37, P2021 p. 71 to 72)"
+   "says": "a along the gate's axis from its north face (the origin at the face: gate-plan.json frame.face, sheet 2.28 at 600 dpi, plus or minus 0.3 m) (343.1 grid, 342.8 true, read off sheet 2.28 for the gate), c across toward 253; 50 m long in all (K1918 p. 37, P2021 p. 71 to 72)"
   },
   "tower": {
    "origin": [

@@ -2,6 +2,7 @@
   "about": "The gate's cameras in the gate's frame (x west, the visitor's right facing the gate; z north out of the face; y up from the +15.40 street). Positions [x, z] stand on the street's profile with the eye over it; looks are [x, y, z]. One file for every arm.",
   "eye": 1.65,
   "hour": "17:00",
+  "phoneFilm": 46,
   "stills": {
     "desktop": {
       "at": [
@@ -207,7 +208,11 @@
             22.0
           ],
           "look": "gate",
-          "kind": "arrive"
+          "kind": "arrive",
+          "phone": {
+            "hfov": 58,
+            "shift": 0
+          }
         },
         {
           "t": 108,
@@ -216,7 +221,11 @@
             22.0
           ],
           "look": "gate",
-          "kind": "hold"
+          "kind": "hold",
+          "phone": {
+            "hfov": 58,
+            "shift": 0
+          }
         },
         {
           "t": 113,
@@ -230,7 +239,11 @@
             -1.3
           ],
           "kind": "look-left",
-          "says": "the east wall's stairs down"
+          "says": "the east wall's stairs down",
+          "phone": {
+            "hfov": 58,
+            "shift": 0
+          }
         },
         {
           "t": 117,
@@ -239,7 +252,11 @@
             22.0
           ],
           "look": "gate",
-          "kind": "back"
+          "kind": "back",
+          "phone": {
+            "hfov": 58,
+            "shift": 0
+          }
         },
         {
           "t": 121,
@@ -253,7 +270,11 @@
             3.2
           ],
           "kind": "look-right",
-          "says": "the west postern"
+          "says": "the west postern",
+          "phone": {
+            "hfov": 58,
+            "shift": 0
+          }
         },
         {
           "t": 125,
@@ -262,7 +283,11 @@
             22.0
           ],
           "look": "gate",
-          "kind": "back"
+          "kind": "back",
+          "phone": {
+            "hfov": 58,
+            "shift": 0
+          }
         },
         {
           "t": 136,
@@ -275,7 +300,11 @@
             1.65,
             -200
           ],
-          "kind": "walk"
+          "kind": "walk",
+          "phone": {
+            "hfov": 58,
+            "shift": 0
+          }
         },
         {
           "t": 139,
@@ -288,7 +317,11 @@
             1.65,
             -200
           ],
-          "kind": "hold"
+          "kind": "hold",
+          "phone": {
+            "hfov": 58,
+            "shift": 0
+          }
         }
       ],
       "ends": "the open door with the chamber and the main gate's door beyond",
@@ -324,7 +357,11 @@
             1.65,
             -200
           ],
-          "kind": "walk"
+          "kind": "walk",
+          "phone": {
+            "hfov": 58,
+            "shift": 0
+          }
         },
         {
           "t": 175,
@@ -338,7 +375,11 @@
             -200
           ],
           "kind": "arrive",
-          "says": "through the front gate, the court and the main gate's chamber to the south passage's north mouth"
+          "says": "through the front gate, the court and the main gate's chamber to the south passage's north mouth",
+          "phone": {
+            "hfov": 58,
+            "shift": 0.15
+          }
         },
         {
           "t": 179,
@@ -352,7 +393,11 @@
             -200
           ],
           "kind": "hold",
-          "says": "the hold: the south passage's glazed jambs and its arch frame the procession street south to the far haze"
+          "says": "the hold: the south passage's glazed jambs and its arch frame the procession street south to the far haze",
+          "phone": {
+            "hfov": 58,
+            "shift": 0.15
+          }
         },
         {
           "t": 194,
@@ -404,5 +449,6 @@
   ],
   "speedSays": "about 1.3 m/s walking, holds of 3 to 4 s at each stop's last frame; the look eases over each leg",
   "looksSay": "an explicit look's y is in the gate's frame (1.65 = eye height over the +15.40 street); 'gate' is a level look at the face's axis; 'south' is the map's stop 4 look",
-  "stillsSay": "`stills` are the hero stills (stop 2's, kept as they are); a stop's `still` is its own hold: the key at `t`, each framing's lens, and an `at` or `look` of a framing's own over that key"
+  "stillsSay": "`stills` are the hero stills (stop 2's, kept as they are); a stop's `still` is its own hold: the key at `t`, each framing's lens, and an `at` or `look` of a framing's own over that key",
+  "phoneSays": "the film's phone lens: `phoneFilm` (46 degrees) where a key names none; a key's `phone` is its own lens and shift, eased between keys. Each hold whose phone still stands on it carries the still's lens over the keys of its stand (stop 3 from 105 s, stop 4 at 175 and 179 s), and between two such holds the lens stays; stop 2's phone still stands on stop 3's hold, so stop 2's own hold keeps 46, as does stop 4's last hold looking south"
 }

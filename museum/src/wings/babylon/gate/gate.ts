@@ -135,18 +135,18 @@ painted.push(toneMapBodies(bodies.group, city, named))
 scene.add(bodies.group)
 uView.value = U.uSwitch.value
 
-/* the south paving's line (built below the gate's paving): from the paving's end 20 m along the gate's axis, then through
-   the map's street points (its ribbon south of the gate) on a Catmull-Rom curve, sampled every 2 m, to the palace's south-east corner */
+/* the south paving's line (built below the gate's paving): from the paving's end, where the map's street line leaves the
+   gate's axis, through the map's street points (its ribbon south of the gate) on a Catmull-Rom curve, sampled every 2 m,
+   to the palace's south-east corner */
 const PAVE_END = -60 // the gate's paving's south edge (gate-mesh.ts pavingGeometry)
 const SOUTH = (() => {
   const half = (plan.street.paving.limestone * plan.street.paving.limestoneN) / 2 + plan.street.paving.breccia * plan.street.paving.brecciaN
   const ctl: Array<[number, number, number]> = [[0, PAVE_END + 20, B.level(PAVE_END)], [0, PAVE_END, B.level(PAVE_END)]]
+  // the map's points past the paving's end (its point at the end is ctl[1]: a run on the axis past it bent the paving in an S)
   for (const p of mapPlan.street.points as Array<{ at: [number, number]; level: number }>) {
     const [x, z] = GF.fromUtm(p.at[0], p.at[1])
-    if (z < PAVE_END - 40 && z > -230) ctl.push([x, z, p.level - L0])
+    if (z < PAVE_END - 0.5 && z > -230) ctl.push([x, z, p.level - L0])
   }
-  // 20 m on the axis first, so the curve leaves the gate's paving square to it; its level on the map line's grade
-  ctl.splice(2, 0, [0, PAVE_END - 20, ctl[1]![2] + ((ctl[2]![2] - ctl[1]![2]) * 20) / (ctl[1]![1] - ctl[2]![1])])
   ctl.push(ctl[ctl.length - 1]!.map((v, i) => 2 * v - ctl[ctl.length - 2]![i]!) as [number, number, number])
   const cr = (a: number, b: number, c: number, d: number, t: number): number =>
     0.5 * (2 * b + (c - a) * t + (2 * a - 5 * b + 4 * c - d) * t * t + (3 * b - a - 3 * c + d) * t * t * t)
@@ -424,7 +424,7 @@ const keyAt = (at: J): [number, number] => {
 }
 const pathCams = {
   eye: cams.eye,
-  lens: { desktop: cams.stills.desktop.hfov },
+  lens: { desktop: cams.stills.desktop.hfov, phoneFilm: cams.phoneFilm },
   stops: cams.stops.map((s: J) => ({ n: s.n, hour: s.hour[0] })),
   path: cams.stops.flatMap((s: J) => s.keys.map((k: J, i: number) => {
     const [x, z] = keyAt(k.at)
@@ -438,7 +438,7 @@ const pathCams = {
     // a stop's first key repeats the last stop's last key at the same second, so each stop starts at its own key; the
     // walk's first key is the arrival's landing, so its clock starts at the landing's hour (one clock across the cut)
     const first = s === cams.stops[0] && i === 0
-    return { t: k.t + (i === 0 && !first ? 1e-4 : 0), at: [E, N], y: 'eye', look: [lE, lN, look[1] + L0], stop: s.n, hold: k.kind === 'hold' || i === 0, kind: k.kind, cut: false, ...(first ? { hour: openCams.hour } : {}) }
+    return { t: k.t + (i === 0 && !first ? 1e-4 : 0), at: [E, N], y: 'eye', look: [lE, lN, look[1] + L0], stop: s.n, hold: k.kind === 'hold' || i === 0, kind: k.kind, cut: false, ...(k.phone ? { phone: k.phone } : {}), ...(first ? { hour: openCams.hour } : {}) }
   })),
 }
 const standMap = (x: number, z: number): number => {
@@ -633,18 +633,22 @@ const rig = {
       const time = from + i / o.fps
       const p: PathSample = path.sample(time)
       setHour(p.hour)
-      const hfov = o.framing === 'phone' ? 46 : p.hfov
+      // the phone's lens and shift from the path (a hold's from its still), eased between keys; the desktop's as before
+      const hfov = o.framing === 'phone' ? p.phone.hfov : p.hfov
+      const shift = o.framing === 'phone' ? p.phone.shift : 0
       const vfov = fittedFov(hfov, o.framing === 'phone' ? [390, 844] : [16, 9], o.w, o.h)
-      aimWorld(new Vector3(...(p.pos as MV3)), new Vector3(...(p.look as MV3)), vfov, o.w, o.h, 0)
+      aimWorld(new Vector3(...(p.pos as MV3)), new Vector3(...(p.look as MV3)), vfov, o.w, o.h, shift)
       const { bytes } = await render(o.w, o.h, o.samples, 0)
       const g = Math.round(time * o.fps)
       await upload(`${o.out}/${o.framing ?? 'desktop'}-f${String(g).padStart(5, '0')}.jpg`, await jpeg(bytes, o.w, o.h))
       const pg = new Vector3(...(p.pos as MV3)).applyMatrix4(W2G), lg = new Vector3(...(p.look as MV3)).applyMatrix4(W2G)
-      log.push({ i: g, t: +time.toFixed(3), stop: p.stop, kind: p.kind, gate: [+pg.x.toFixed(2), +pg.y.toFixed(2), +pg.z.toFixed(2)], look: [+lg.x.toFixed(2), +lg.y.toFixed(2), +lg.z.toFixed(2)], eyeOverStreet: +(pg.y - B.level(pg.z)).toFixed(3), hour: +p.hour.toFixed(3) })
+      log.push({ i: g, t: +time.toFixed(3), stop: p.stop, kind: p.kind, gate: [+pg.x.toFixed(2), +pg.y.toFixed(2), +pg.z.toFixed(2)], look: [+lg.x.toFixed(2), +lg.y.toFixed(2), +lg.z.toFixed(2)], eyeOverStreet: +(pg.y - B.level(pg.z)).toFixed(3), hour: +p.hour.toFixed(3), hfov: +hfov.toFixed(3), shift: +shift.toFixed(4) })
     }
     await upload(`${o.out}/${o.framing ?? 'desktop'}-frames-${String(Math.round(from * o.fps)).padStart(5, '0')}.json`, JSON.stringify({ fps: o.fps, w: o.w, h: o.h, samples: o.samples, from, to, frames: log }))
     return { frames: n, ms: Math.round(performance.now() - t) }
   },
+  /** the south paving's centre line in the gate's frame, [x, z, y] every 2 m (a probe for its line against the map's) */
+  south: () => SOUTH.line,
   /** the path in the gate's frame, no rendering (the leg numbers) */
   pathSamples(dt = 0.1) {
     const out: Array<Record<string, unknown>> = []
