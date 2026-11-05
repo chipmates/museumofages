@@ -24,7 +24,8 @@ const fbm = (p: N, f: number, octaves = 3): N => {
 
 /** THE BRICK'S CLAY: the buff of the king's baked bricks, a few points warmer or paler from brick to brick and across
  *  one face as the kiln left it, flecked with sand and the odd dark grit; matte */
-export function clayMaterial(): MeshStandardNodeMaterial {
+export function clayMaterial(o: { fresh?: boolean } = {}): MeshStandardNodeMaterial {
+  if (o.fresh) return freshClay()
   const m = new MeshStandardNodeMaterial({ roughness: 0.92, metalness: 0 })
   const p = positionLocal
   const broad = fbm(p, 9, 2)
@@ -36,6 +37,19 @@ export function clayMaterial(): MeshStandardNodeMaterial {
   const sand = mx_noise_float(p.mul(260).add(2.2)).mul(0.5).add(0.5)
   m.colorNode = warm.mul(float(0.9).add(fleck.mul(0.12)).add(broad.mul(0.1)).add(sand.mul(0.06))).mul(float(1).sub(grit.mul(0.5)))
   m.roughnessNode = float(0.9).add(fleck.mul(0.06))
+  return m
+}
+
+/** FRESH CLAY, UNFIRED AND WET: the same river clay before the kiln, darker and greyer while damp, smoothed by hand so
+ *  no sand or grit stands proud, with the dull sheen of a damp surface */
+function freshClay(): MeshStandardNodeMaterial {
+  const m = new MeshStandardNodeMaterial({ roughness: 0.66, metalness: 0 })
+  const p = positionLocal
+  const broad = fbm(p, 14, 2)
+  const fine = mx_noise_float(p.mul(900)).mul(0.5).add(0.5)
+  const damp = mix(V(PAL.buff), vec3(0.3, 0.28, 0.25), 0.68).mul(0.74)
+  m.colorNode = damp.mul(float(0.95).add(broad.mul(0.06)).add(fine.mul(0.04)))
+  m.roughnessNode = float(0.62).add(fine.mul(0.08)).add(broad.mul(0.05))
   return m
 }
 

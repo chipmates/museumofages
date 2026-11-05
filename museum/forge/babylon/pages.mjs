@@ -82,6 +82,20 @@ export const PAGES = {
     readyMs: 60000,
     still: () => { throw new Error('feature 3: shoot it with forge/babylon/paper-shoot.mjs --page words') },
   },
+  // feature 6's fresh tablet on the turntable, pressed wedge by wedge: its beats come from clay-shoot.mjs
+  clay: {
+    html: 'src/wings/babylon/clay/clay.html',
+    rig: '__clay',
+    readyMs: 120000,
+    still: () => { throw new Error('feature 6, write in clay: shoot it with forge/babylon/clay-shoot.mjs') },
+  },
+  // feature 6 as the walk opens it: stop 7's held frame, its door, the press and the paper steps in the walk's chrome
+  claylook: {
+    html: 'src/wings/babylon/clay/look.html',
+    rig: '__claylook',
+    readyMs: 120000,
+    still: () => { throw new Error('feature 6\'s look: shoot it with forge/babylon/clay-look-shoot.mjs') },
+  },
 }
 
 /** the walk's fourteen stops (map-cams.json) and the page that shows each today; stop 1 folds into the opening flight */

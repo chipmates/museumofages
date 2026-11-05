@@ -1,0 +1,23 @@
+/* The look inside the viewport: the turntable's glass, the paper's ground over it, the plate. No colour value here. */
+.clay-look { position: absolute; inset: 0; pointer-events: none; }
+.clay-glass { position: absolute; inset: 0; pointer-events: auto; }
+.clay-look[data-paper='true'] .clay-glass { pointer-events: none; }
+.clay-ground {
+  position: absolute; inset: 0; opacity: 0;
+  background-color: var(--paper); background-image: var(--paper-grain); background-size: 240px 240px;
+}
+.paper-plate.clay-plate { position: absolute; left: 0; top: 0; background: none; opacity: 0; }
+.paper-plate.clay-plate[hidden] { display: none; }
+.clay-photo[hidden] { display: none; }
+.clay-quiet { display: none; }
+/* THE PRESS'S ROW: three controls of 44 px over the steps, in the band's own colour */
+.clay-press-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 10px; }
+.clay-press-row[hidden] { display: none; }
+.clay-control {
+  min-height: 44px; min-width: 44px; padding: 0 16px;
+  font: 600 1rem/1.2 var(--sans, system-ui, sans-serif); color: inherit; background: transparent;
+  border: 1.5px solid currentColor; border-radius: 3px; cursor: pointer;
+}
+.clay-control.clay-back, .clay-control.clay-play { font-weight: 500; }
+.clay-control:disabled { opacity: 0.45; cursor: default; }
+.clay-control:focus-visible { outline: 3px solid currentColor; outline-offset: 2px; }

@@ -1,0 +1,28 @@
+{
+ "id": "clay-kadingirraki",
+ "text": "KA₂.DINGIR.RA{KI}",
+ "edition": "RIBo Nebuchadnezzar II 035 ii 6, su-le-e KA₂.DINGIR.RA{KI} (F. Weiershäuser and J. Novotny, Oracc): the spelling",
+ "credit": "Sign forms after A. Amiaud and L. Méchineau, Tableau comparé des écritures babylonienne et assyrienne (Paris 1887; 2nd ed. 1902), the Bab. mod. column.",
+ "copy": {
+  "name": "Amiaud and Méchineau 1902, the contemporary Neo-Babylonian forms (Bab. mod.)",
+  "item": "Internet Archive tableaucompard00amia, 400 ppi page images",
+  "note": "each sign's wedges are read by eye off its own page, in that page's pixels: the head's back, the tail's bearing, the whole length and the head's width"
+ },
+ "order": "ours: the signs in the edition's order; inside a sign, left to right by the head's back, top to bottom where heads stand one over another",
+ "signs": [
+  { "sign": "KA2", "code": "U+1218D", "reading": "KÁ", "am": 222, "page": 93, "leaf": 115,
+    "from": "AM No 222, Bab. mod., p. 93 (leaf 115 of the 1902 scan)",
+    "w": [[79, 2991, 2, 72, 20], [77, 3036, -1, 74, 20], [117, 3018, -5, 18, 26, "w"], [152, 2978, 93, 85, 22],
+          [163, 3000, 0, 63, 20], [163, 3031, 0, 60, 18], [228, 2978, 95, 84, 22]] },
+  { "sign": "AN", "code": "U+1202D", "reading": "DINGIR", "am": 11, "page": 5, "leaf": 27,
+    "from": "AM No 11, Babyl. mod., p. 5 (leaf 27 of the 1902 scan)",
+    "w": [[85, 1153, 0, 50, 30], [130, 1153, 0, 142, 30], [196, 1105, 90, 113, 30]] },
+  { "sign": "RA", "code": "U+1228F", "reading": "RA", "am": 217, "page": 90, "leaf": 112,
+    "from": "AM No 217, Babyl. mod., p. 90 (leaf 112 of the 1902 scan)",
+    "w": [[110, 2304, 0, 91, 22], [112, 2347, -1, 89, 24], [137, 2324, 0, 62, 19], [200, 2289, 91, 78, 20], [229, 2291, 90, 76, 20]] },
+  { "sign": "KI", "code": "U+121A0", "reading": "KI", "am": 250, "page": 104, "leaf": 126, "silent": true,
+    "from": "AM No 250, Babyl. mod., p. 104 (leaf 126 of the 1902 scan)",
+    "w": [[124, 1975, 0, 33, 48, "w"], [166, 1955, 0, 76, 22], [165, 1987, 0, 77, 21], [246, 1941, 90, 27, 15], [246, 1973, 90, 27, 15],
+          [279, 1944, 55, 30, 18], [275, 1969, 50, 28, 18], [308, 1941, 91, 62, 22]] }
+ ]
+}
