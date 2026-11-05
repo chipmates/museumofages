@@ -1,0 +1,7 @@
+/* Feature 2's own marks: a land the lists name is a solid ink dot, a restored name an open dashed ring; today's
+   coasts are our pencil. No colour value: the kit's tokens only. */
+.paper-mark.oil-dot { fill: var(--paper-ink); stroke: none; }
+.paper-mark.oil-ring { fill: none; stroke-dasharray: 3 2.2; stroke-width: 1.6; }
+.paper-pencil-line.oil-today { stroke-linejoin: round; }
+/* upright, a row's count and its name stand on one line over the row */
+.paper-plate[data-framing='upright'] .paper-label-pair { flex-direction: row; align-items: baseline; gap: 0.4em; }
