@@ -568,9 +568,10 @@ function skin(S: Soup, f: ShowFrame, a0: number, a1: number, r: number, foot: (p
     const p = (phiAt(j, i) + phiAt(j + 1, i)) / 2, h = (hAt(j, i) + hAt(j + 1, i + 1)) / 2
     return caves.some(([c0, c1, h0, h1]) => {
       const pc = (c0! + c1!) / 2, hw = (c1! - c0!) / 2, hc = h0! + 0.45 * (h1! - h0!)
-      const dp = (p - pc) / hw, wob = 1 + 0.22 * noise3(p * 0.7, h * 0.4, o.seed)
+      // on a metre grid a wobbled edge broke the mouth into a cross; a clean outline reads as a cave
+      const dp = (p - pc) / hw
       if (h < h0!) return false
-      return h < hc ? Math.abs(dp) < wob : dp * dp + ((h - hc) / (h1! - hc)) ** 2 < wob
+      return h < hc ? Math.abs(dp) < 1 : dp * dp + ((h - hc) / (h1! - hc)) ** 2 < 1
     })
   }
   // a cleft's floor lies back in the rock, so the sky's light thins there as in a reveal
