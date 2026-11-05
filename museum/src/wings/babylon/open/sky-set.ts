@@ -283,7 +283,8 @@ export function skySet(o: SkySetOptions) {
     light,
     /** before a still: the maps for the camera's region (drawn once while the camera stays in it) and the weights */
     prepare(cam: PerspectiveCamera): void {
-      if (!covered(cam)) fit(cam)
+      // under another source's environment (the twilight) the field is off: no maps are drawn for it
+      if (on && !covered(cam)) fit(cam)
       if (!added) {
         scene.add(light)
         added = true
