@@ -38,7 +38,7 @@ function rng(seed: number): () => number {
   }
 }
 
-export function rebuildHouses(boxes: MapBox[], ground: (x: number, z: number) => number): { boxes: HouseBox[]; houses: number; open: number; trays: HouseTray[] } {
+export function rebuildHouses(boxes: MapBox[], ground: (x: number, z: number) => number): { boxes: HouseBox[]; houses: number; open: number; trays: HouseTray[]; parted: number } {
   const R = rng(5701)
   // the trays draw from their own stream, so the arrival's rooms stay as they were
   const R2 = rng(5702)
@@ -116,11 +116,55 @@ export function rebuildHouses(boxes: MapBox[], ground: (x: number, z: number) =>
     put(4, 'court', u0 - 0.01, u1 + 0.01, v0 - 0.01, v1 + 0.01, g + 0.12)
     houseTrays(trays, R2, k, { W, D, u0, u1, v0, v1, base, g, yaw, ox, oz })
   }
+  const parted = partTops(out)
   const blockOf = blocks(lots)
   for (const b of out) b.block = blockOf.get(b.house) ?? 0
   for (const t of trays) t.block = blockOf.get(t.house) ?? 0
   streetDoors(trays, lots, blockOf, R2)
-  return { boxes: out, houses: by.size - open, open, trays }
+  return { boxes: out, houses: by.size - open, open, trays, parted }
+}
+
+/** the step a room's top takes down where it would share its level with a room it overlaps, and the nearness that counts
+    as shared (the geometry check's bed is 2 mm) */
+export const PART = { step: 0.005, near: 0.003 }
+
+/** no two rooms whose plans overlap keep one top: the later room steps down PART.step (5 mm, unseen), so the two roofs
+    never fight where a side range reaches 2 cm into an end range, or where two neighbours' turned houses meet; the
+    later room lies inside the earlier one there, so nothing of it shows. Returns the rooms stepped */
+function partTops(list: HouseBox[]): number {
+  const CELL = 16, grid = new Map<number, number[]>()
+  const key = (i: number, j: number): number => (i + 4096) * 8192 + (j + 4096)
+  const axes = list.map((b) => [Math.cos(b.yaw), -Math.sin(b.yaw), Math.sin(b.yaw), Math.cos(b.yaw)] as const)
+  const cells = (b: HouseBox, a: readonly number[]): number[] => {
+    const ex = (Math.abs(a[0]!) * b.sx + Math.abs(a[2]!) * b.sz) / 2, ez = (Math.abs(a[1]!) * b.sx + Math.abs(a[3]!) * b.sz) / 2
+    const out: number[] = []
+    for (let i = Math.floor((b.x - ex) / CELL); i <= Math.floor((b.x + ex) / CELL); i++) for (let j = Math.floor((b.z - ez) / CELL); j <= Math.floor((b.z + ez) / CELL); j++) out.push(key(i, j))
+    return out
+  }
+  // two turned rectangles overlap by more than a millimetre on every separating axis (a butt end to end does not count)
+  const overlap = (p: number, q: number): boolean => {
+    const A = list[p]!, B = list[q]!, a = axes[p]!, b = axes[q]!
+    const dx = B.x - A.x, dz = B.z - A.z
+    for (const [ax, az] of [[a[0]!, a[1]!], [a[2]!, a[3]!], [b[0]!, b[1]!], [b[2]!, b[3]!]] as Array<[number, number]>) {
+      const rA = (A.sx * Math.abs(a[0]! * ax + a[1]! * az) + A.sz * Math.abs(a[2]! * ax + a[3]! * az)) / 2
+      const rB = (B.sx * Math.abs(b[0]! * ax + b[1]! * az) + B.sz * Math.abs(b[2]! * ax + b[3]! * az)) / 2
+      if (rA + rB - Math.abs(dx * ax + dz * az) <= 0.001) return false
+    }
+    return true
+  }
+  let stepped = 0
+  list.forEach((b, i) => {
+    const ks = cells(b, axes[i]!)
+    const near = new Set<number>()
+    for (const k of ks) for (const j of grid.get(k) ?? []) near.add(j)
+    const over = [...near].filter((j) => overlap(i, j))
+    for (let tries = 0; tries < 4 && over.some((j) => Math.abs(list[j]!.y1 - b.y1) < PART.near); tries++) {
+      b.y1 -= PART.step
+      if (tries === 0) stepped++
+    }
+    for (const k of ks) (grid.get(k) ?? grid.set(k, []).get(k)!).push(i)
+  })
+  return stepped
 }
 
 const NONE = Infinity, ALL = -Infinity
