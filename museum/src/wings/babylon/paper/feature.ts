@@ -1,6 +1,7 @@
-/* A PAPER FEATURE AS A CLOSE LOOK'S PAYLOAD, for a stop without an ink still:
-   it opens over the stop's held frame by a plain crossfade (a cut under
-   reduced motion), lays the paper with the feature's pictures and drawing,
+/* A PAPER FEATURE AS A CLOSE LOOK'S PAYLOAD: it opens over the stop's held
+   frame by a plain crossfade, or, where the stop has an ink still, turns the
+   frame to ink first (about a second) as feature 7 does (a cut under reduced
+   motion), lays the paper with the feature's pictures and drawing,
    walks its named steps, one band line a step, and closes the same way back
    onto the held frame. The drawing is the feature's scene (`scene.ts`), the
    labels are placed by the kit's rule, the words are the caller's. Feature 7
@@ -41,6 +42,10 @@ export interface PaperFeatureOptions {
   data?: Record<string, unknown>
   /** extra style for the feature's own marks (no colour value: the kit's tokens only) */
   css?: string
+  /** the stop's ink still in each framing: the frame turns to ink before the paper comes; absent, a plain crossfade */
+  ink?: { wide: string; upright: string } | null
+  /** custom properties the feature's own marks read, set on the plate (values from the stop's plan, never typed) */
+  vars?: Record<string, string>
 }
 
 export interface PaperFeatureReadout {
@@ -72,15 +77,19 @@ export interface PaperFeaturePayload extends VitrinePayload {
   relayStepNames(): void
 }
 
-type Phase = 'paper' | 'open' | 'leaving' | 'gone'
+type Phase = 'ink' | 'paper' | 'open' | 'leaving' | 'gone'
 /** the paper coming up over the held frame, and going back */
 const IN_S = 0.8, OUT_S = 0.6
+/** with an ink still: the frame turning to ink, the paper laid over it, and the way back (feature 7's times) */
+const INK_S = 1.0, PAPER_S = 0.55, BACK_PAPER_S = 0.4, BACK_INK_S = 0.8
 
 export function createPaperFeature(o: PaperFeatureOptions): PaperFeaturePayload {
   const dir = o.dir ?? 'ltr'
   const last = o.steps.length - 1
   let host: VitrinePayloadHost | undefined
   let root: HTMLDivElement | undefined, ground: HTMLDivElement | undefined, pictures: HTMLDivElement | undefined
+  let ink: HTMLImageElement | undefined
+  const inked = Boolean(o.ink)
   let plate: PaperPlate | undefined, steps: PaperSteps | undefined
   let phase: Phase = 'paper', clock = 0, t = 0, drawnAt = NaN, drawnSize = '', framing: PaperFraming = 'wide'
   let scene: PaperScene | undefined, placed: Placed[] = [], asked: LabelAsk[] = [], inset: Inset = insetFor('wide')
@@ -202,17 +211,34 @@ export function createPaperFeature(o: PaperFeatureOptions): PaperFeaturePayload 
   function alpha(): void {
     if (!ground || !plate || !pictures) return
     const ease = (x: number): number => { const u = Math.max(0, Math.min(1, x)); return u * u * (3 - 2 * u) }
-    let a = 1
-    if (phase === 'paper') a = ease(clock / IN_S)
+    let a = 1, inkA = 0
+    if (inked) {
+      inkA = 1
+      if (phase === 'ink') { inkA = ease(clock / INK_S); a = 0 }
+      else if (phase === 'paper') a = ease(clock / PAPER_S)
+      else if (phase === 'leaving') { a = 1 - ease(clock / BACK_PAPER_S); inkA = 1 - ease((clock - BACK_PAPER_S) / BACK_INK_S) }
+      else if (phase === 'gone') { a = 0; inkA = 0 }
+    } else if (phase === 'paper') a = ease(clock / IN_S)
     else if (phase === 'leaving') a = 1 - ease(clock / OUT_S)
     else if (phase === 'gone') a = 0
     for (const n of [ground, pictures, plate.root]) n.style.opacity = a.toFixed(3)
+    if (ink) ink.style.opacity = inkA.toFixed(3)
+  }
+
+  /** the ink still covers the stage exactly as the held frame does */
+  function layoutInk(): void {
+    if (!ink || !host || !o.ink) return
+    const view = host.element.ownerDocument.defaultView!
+    const src = o.ink[framingOf(view.innerWidth, view.innerHeight)]
+    if (src && ink.getAttribute('src') !== src) ink.src = src
+    ink.hidden = !src
   }
 
   function advance(dt: number): void {
     clock += dt
-    if (phase === 'paper' && (o.reducedMotion || clock >= IN_S)) setPhase('open')
-    if (phase === 'leaving' && (o.reducedMotion || clock >= OUT_S)) { setPhase('gone'); leaving?.(); leaving = null }
+    if (phase === 'ink' && (o.reducedMotion || clock >= INK_S)) setPhase('paper')
+    if (phase === 'paper' && (o.reducedMotion || clock >= (inked ? PAPER_S : IN_S))) setPhase('open')
+    if (phase === 'leaving' && (o.reducedMotion || clock >= (inked ? BACK_PAPER_S + BACK_INK_S : OUT_S))) { setPhase('gone'); leaving?.(); leaving = null }
     alpha()
   }
 
@@ -231,10 +257,17 @@ export function createPaperFeature(o: PaperFeatureOptions): PaperFeaturePayload 
       ground.className = 'paper-look-ground'
       pictures = doc.createElement('div')
       pictures.className = 'paper-pictures'
-      root.append(style, ground)
+      root.append(style)
+      if (inked) {
+        ink = doc.createElement('img')
+        ink.className = 'paper-ink'; ink.alt = ''; ink.decoding = 'async'
+        root.append(ink)
+      }
+      root.append(ground)
       next.element.append(root, pictures)
       plate = createPaperPlate(doc, { lang: o.lang, dir, name: o.title })
       plate.root.classList.add('paper-look-plate')
+      for (const [k, v] of Object.entries(o.vars ?? {})) plate.root.style.setProperty(k, v)
       next.element.append(plate.root)
       next.aside.append(plate.list)
       steps = createPaperSteps({
@@ -247,7 +280,8 @@ export function createPaperFeature(o: PaperFeatureOptions): PaperFeaturePayload 
       next.describe(o.title)
       next.surface('hold')
       t = 0; lineStep = -1; drawnSize = ''
-      setPhase(next.reducedMotion || o.reducedMotion ? 'open' : 'paper')
+      layoutInk()
+      setPhase(next.reducedMotion || o.reducedMotion ? 'open' : inked ? 'ink' : 'paper')
       alpha()
       draw(true)
     },
@@ -257,7 +291,7 @@ export function createPaperFeature(o: PaperFeatureOptions): PaperFeaturePayload 
       steps?.update(dt)
       draw()
     },
-    layout() { if (host) draw(true) },
+    layout() { if (host) { layoutInk(); draw(true) } },
     key(event) {
       if (!steps || phase !== 'open') return false
       if (steps.element.contains(event.target as Node)) return false
@@ -267,7 +301,7 @@ export function createPaperFeature(o: PaperFeatureOptions): PaperFeaturePayload 
       steps?.dispose(); plate?.dispose(); root?.remove(); pictures?.remove()
       if (host) host.caption.textContent = ''
       imgs.clear()
-      steps = undefined; plate = undefined; root = undefined; ground = undefined; pictures = undefined; host = undefined
+      steps = undefined; plate = undefined; root = undefined; ground = undefined; pictures = undefined; ink = undefined; host = undefined
       leaving?.(); leaving = null
     },
     aspect: () => null,

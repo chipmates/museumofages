@@ -9,7 +9,7 @@
    writes a colour. A dev page: the window around the feature stands in for the
    vitrine's own. Addresses:
 
-     ?held=<url with {framing}>  the stop's held frame (framing: desktop or phone)
+     ?held=<url with {framing}>  the stop's held frame (framing: desktop or phone); ?ink= its ink still, the same way
      ?lang=de  ?open=1  ?feature=<id>  ?step=<n>  ?rig=1 (the harness's marker, never shown otherwise)
 
    The rig `window.__look` opens, steps, raises, closes and reads back. */
@@ -36,7 +36,7 @@ export interface BenchFeature {
   door: string
   title: string
   close: string
-  make(o: { lang: 'en' | 'de'; reducedMotion: boolean; still(key: 'held'): { wide: string; upright: string } | null }): PaperFeaturePayload
+  make(o: { lang: 'en' | 'de'; reducedMotion: boolean; still(key: 'held' | 'ink'): { wide: string; upright: string } | null }): PaperFeaturePayload
 }
 
 /** THE DOOR'S HOOK in the stop's plan: where the group of presses stands at rest */
@@ -83,7 +83,7 @@ export function createPaperBench(o: { lang: 'en' | 'de'; features: BenchFeature[
   const PHONE_MOST = 700
   const phoneForm = (): boolean => innerWidth <= PHONE_MOST
   const stillAt = (key: 'held'): string | null => { const at = q.get(key); return at ? at.replace('{framing}', upright() ? 'phone' : 'desktop') : null }
-  const stillBoth = (key: 'held'): { wide: string; upright: string } | null => {
+  const stillBoth = (key: 'held' | 'ink'): { wide: string; upright: string } | null => {
     const at = q.get(key)
     return at ? { wide: at.replace('{framing}', 'desktop'), upright: at.replace('{framing}', 'phone') } : null
   }

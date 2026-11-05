@@ -179,5 +179,20 @@
    0.25,
    0.19
   ]
+ },
+ "door": {
+  "features": [
+   "river"
+  ],
+  "opens": "the river, then and now (feature 10), a close look on paper: src/wings/babylon/river/",
+  "wide": {
+   "right": 0.03,
+   "bottom": 0.05
+  },
+  "upright": {
+   "middle": true,
+   "bottom": 0.04
+  },
+  "src": "the stop's one press, named by what it shows and never 'Learn more' (the words are the writer's); it stands on the open water at the lower right of the wide frame and under the piers in the upright one, clear of the deck and the piers, so the frame at rest keeps far more than two thirds picture"
  }
 }

@@ -96,6 +96,13 @@ export const PAGES = {
     readyMs: 120000,
     still: () => { throw new Error('feature 6\'s look: shoot it with forge/babylon/clay-look-shoot.mjs') },
   },
+  // feature 10 at the bridge: stop 13's held frame, its door, the river in dated states through the stop's ink still
+  river: {
+    html: 'src/wings/babylon/river/river.html',
+    rig: '__look',
+    readyMs: 60000,
+    still: () => { throw new Error('feature 10: shoot it with forge/babylon/paper-shoot.mjs --page river') },
+  },
 }
 
 /** the walk's fourteen stops (map-cams.json) and the page that shows each today; stop 1 folds into the opening flight */
