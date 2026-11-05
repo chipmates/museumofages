@@ -2,19 +2,37 @@
    their classes in the evidence view painted from the record like the map's (record.ts): each body by its name, its
    plan row in the band at its foot, its body row above. */
 
-import { Float32BufferAttribute, Mesh, type BufferGeometry } from 'three/webgpu'
+import { Float32BufferAttribute, Mesh, Vector3, type BufferGeometry, type DirectionalLight, type HemisphereLight, type Object3D } from 'three/webgpu'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import type { Built, Cls } from '../map/plan'
 import type { ClassTones } from '../map/mass'
 import { TONE, type Namer } from '../record'
 import type { Painted } from '../record-tones'
 import { buildNabu, type Nabu } from './nabu-geom'
-import { nabuMaterial, setNabuPixel } from './nabu-mat'
+import { nabuMaterial, setNabuPixel, uNabuLight } from './nabu-mat'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
 
 const TONE_OF: Record<Cls, number> = { M: 0, R: 1, G: 2 }
+
+/* the temple's modelled shade, bounce and lamp follow the page's own sun and sky lights, read before each draw */
+const lights: { sun: DirectionalLight | null; sky: HemisphereLight | null } = { sun: null, sky: null }
+const tmp = new Vector3()
+function readLights(scene: Object3D): void {
+  if (!lights.sun || !lights.sky) {
+    scene.traverse((o) => {
+      if ((o as DirectionalLight).isDirectionalLight && !lights.sun) lights.sun = o as DirectionalLight
+      if ((o as HemisphereLight).isHemisphereLight && !lights.sky) lights.sky = o as HemisphereLight
+    })
+  }
+  const { sun, sky } = lights
+  if (sun) {
+    ;(uNabuLight.sun.value as Vector3).copy(tmp.copy(sun.position).sub(sun.target.position).normalize())
+    ;(uNabuLight.sunIrr.value as Vector3).set(sun.color.r, sun.color.g, sun.color.b).multiplyScalar(sun.intensity)
+  }
+  if (sky) (uNabuLight.sky.value as Vector3).set(sky.color.r, sky.color.g, sky.color.b).multiplyScalar(sky.intensity)
+}
 
 export interface NabuMount {
   nabu: Nabu
@@ -46,6 +64,7 @@ export function mountNabu(built: Built, mapPlan: J, np: J, tones: ClassTones): N
   mesh.castShadow = true
   mesh.receiveShadow = true
   mesh.frustumCulled = false
+  mesh.onBeforeRender = (_r, scene) => readLights(scene)
   const tone = (name: Namer): Painted => {
     const each = nabu.bodies.map((b) => name(`map:${b.id}`, b.letters))
     const a = geometry.getAttribute('cls') as Float32BufferAttribute, cid = geometry.getAttribute('cid')

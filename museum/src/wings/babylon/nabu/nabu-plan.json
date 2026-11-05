@@ -13,7 +13,15 @@
  "floorSrc": "the rebuilt temple 'constructed on the remains of the mudbrick walls at +8.0 m' (P2021 p. 168)",
  "paving": {
   "top": 0.03,
-  "src": "baked brick covered with bitumen, guessed: Koldewey found an asphalt covering on the Ninmah court's pavement (K1914 ch. IX), Pedersen's model gives this court bricks covered with asphalt (P2021 fig. 4.24)"
+  "brick": 0.33,
+  "joint": {
+   "cover": 0.85,
+   "dust": 0.12
+  },
+  "coat": 0.55,
+  "coatWear": 0.45,
+  "sheen": 0.45,
+  "src": "baked brick covered with bitumen, guessed: Koldewey found an asphalt covering on the Ninmah court's pavement (K1914 ch. IX), Pedersen's model gives this court bricks covered with asphalt (P2021 fig. 4.24); the king's common brick about 33 cm square (P2021 p. 20); the coat's thickness and its wear ours: a thin coat over the whole court, every joint full, worn thinner on the walked ways"
  },
  "wall": 1.8,
  "wallSrc": "walls 1.8 m thick (P2021 p. 170)",
@@ -273,9 +281,9 @@
    0.026
   ],
   "paving": [
-   0.12,
-   0.105,
-   0.09
+   0.13,
+   0.1,
+   0.075
   ],
   "apron": [
    0.42,
