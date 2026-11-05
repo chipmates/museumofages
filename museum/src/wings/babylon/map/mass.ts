@@ -12,7 +12,6 @@ import {
 import * as TSL from 'three/tsl'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import type { Built, Cls, P2 } from './plan'
-import { RIM } from '../open/houses'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -362,7 +361,9 @@ export interface HouseBoxLike { house: number; part: number; butt: number; block
     its `hide` level, a door on side `door`; part 5 a room standing on tray `on` */
 export interface HouseTrayLike extends HouseBoxLike { rims: number; hide: [number, number, number, number]; door: number; doorAt: number; doorW: number; doorH: number; on: number }
 export type HouseRebuild = (boxes: Built['boxes'], ground: (x: number, z: number) => number) => { boxes: HouseBoxLike[]; trays?: HouseTrayLike[] }
-const TRAY_RIM = RIM
+/** the parapet's width and height over the roof: open/houses.ts RIM (a test holds the two equal; the kit's node checks
+    load this file without resolving a value import) */
+export const TRAY_RIM = { w: 0.45, h: 0.5 }
 
 /** a stop module's paint over a shared body's colour (the ground under a precinct); none leaves the map's own. `houses`
     rebuilds the generic house boxes as the arrival does (rooms of their own heights round a court of its own size), the
@@ -479,78 +480,87 @@ function settleTrays(list: HouseTrayLike[], ground: (x: number, z: number) => nu
     6 a range's face on its court */
 function trayHouses(list: HouseTrayLike[], band: number, mat: Material): Mesh {
   const W = TRAY_RIM.w, RH = TRAY_RIM.h
-  const pos: number[] = [], nor: number[] = [], info: number[] = [], door: number[] = [], idx: number[] = []
-  let nv = 0
+  // at most 21 quads a tray (4 sides, 8 parapet ends, 4 parapet tops, 4 inner faces, the roof); typed arrays cut to size
+  const cap = list.length * 21 * 4
+  const pos = new Float32Array(cap * 3), nor = new Float32Array(cap * 3), info = new Float32Array(cap * 4), door = new Float32Array(cap * 2)
+  const idx = new Uint32Array((cap / 4) * 6)
+  let nv = 0, ni = 0
+  const P = new Float64Array(12)
   for (const t of list) {
-    const ca = [Math.cos(t.yaw), -Math.sin(t.yaw)], cb = [Math.sin(t.yaw), Math.cos(t.yaw)]
+    const c0 = Math.cos(t.yaw), c1 = -Math.sin(t.yaw), d0 = -c1, d1 = c0
     const hx = t.sx / 2, hz = t.sz / 2, top = t.y1
     // rims only where the roof between them keeps 30 cm
     let r = t.rims
     if (t.sx - ((r & 1 ? W : 0) + (r & 2 ? W : 0)) < 0.3) r &= ~3
     if (t.sz - ((r & 4 ? W : 0) + (r & 8 ? W : 0)) < 0.3) r &= ~12
     const has = (s: number): boolean => (r & (1 << s)) !== 0
-    const kindOf = (k: number): number => (t.part === 5 && k === 0 ? 5 : k) + 16 * t.part
-    const W0 = (u: number, v: number): [number, number] => [t.x + ca[0]! * u + cb[0]! * v, t.z + ca[1]! * u + cb[1]! * v]
-    // a quad from local corners (u, y, v), wound so its normal points along n (local: 0 -u, 1 +u, 2 -v, 3 +v, 4 up)
-    const quad = (c: Array<[number, number, number]>, n: number, kind: number, doorAlong?: (u: number, v: number) => number, doorTop = 0): void => {
-      const nl = n === 4 ? [0, 1, 0] : n < 2 ? [ca[0]! * (n === 0 ? -1 : 1), 0, ca[1]! * (n === 0 ? -1 : 1)] : [cb[0]! * (n === 2 ? -1 : 1), 0, cb[1]! * (n === 2 ? -1 : 1)]
-      const P = c.map(([u, y, v]) => { const [x, z] = W0(u, v); return [x, y, z] as [number, number, number] })
-      const e1 = [P[1]![0] - P[0]![0], P[1]![1] - P[0]![1], P[1]![2] - P[0]![2]], e2 = [P[2]![0] - P[0]![0], P[2]![1] - P[0]![1], P[2]![2] - P[0]![2]]
-      const cr = [e1[1]! * e2[2]! - e1[2]! * e2[1]!, e1[2]! * e2[0]! - e1[0]! * e2[2]!, e1[0]! * e2[1]! - e1[1]! * e2[0]!]
-      const flip = cr[0]! * nl[0]! + cr[1]! * nl[1]! + cr[2]! * nl[2]! < 0
-      c.forEach(([u, , v], i) => {
-        pos.push(...P[i]!)
-        nor.push(...nl)
-        info.push(t.house, kindOf(kind), t.gy, t.block)
-        door.push(doorAlong ? doorAlong(u, v) : 1000, doorTop)
-      })
-      if (flip) idx.push(nv, nv + 2, nv + 1, nv, nv + 3, nv + 2)
-      else idx.push(nv, nv + 1, nv + 2, nv, nv + 2, nv + 3)
+    const kind0 = 16 * t.part
+    const dTop = (t.part === 5 ? t.y0 + 0.05 : t.gy) + t.doorH
+    // a quad from local corners (u, y, v) x 4, wound so its normal points along n (0 -u, 1 +u, 2 -v, 3 +v, 4 up); `da` the
+    // door's distance along this face at u (or v), NaN where the face has no door
+    const quad = (q: number[], n: number, kind: number, doorAlongU: number): void => {
+      const nx = n === 4 ? 0 : n < 2 ? c0 * (n === 0 ? -1 : 1) : d0 * (n === 2 ? -1 : 1)
+      const ny = n === 4 ? 1 : 0
+      const nz = n === 4 ? 0 : n < 2 ? c1 * (n === 0 ? -1 : 1) : d1 * (n === 2 ? -1 : 1)
+      for (let i = 0; i < 4; i++) {
+        const u = q[i * 3]!, y = q[i * 3 + 1]!, v = q[i * 3 + 2]!
+        P[i * 3] = t.x + c0 * u + d0 * v; P[i * 3 + 1] = y; P[i * 3 + 2] = t.z + c1 * u + d1 * v
+      }
+      const e1x = P[3]! - P[0]!, e1y = P[4]! - P[1]!, e1z = P[5]! - P[2]!, e2x = P[6]! - P[0]!, e2y = P[7]! - P[1]!, e2z = P[8]! - P[2]!
+      const flip = (e1y * e2z - e1z * e2y) * nx + (e1z * e2x - e1x * e2z) * ny + (e1x * e2y - e1y * e2x) * nz < 0
+      for (let i = 0; i < 4; i++) {
+        const k = nv + i
+        pos[k * 3] = P[i * 3]!; pos[k * 3 + 1] = P[i * 3 + 1]!; pos[k * 3 + 2] = P[i * 3 + 2]!
+        nor[k * 3] = nx; nor[k * 3 + 1] = ny; nor[k * 3 + 2] = nz
+        info[k * 4] = t.house; info[k * 4 + 1] = (t.part === 5 && kind === 0 ? 5 : kind) + kind0; info[k * 4 + 2] = t.gy; info[k * 4 + 3] = t.block
+        door[k * 2] = Number.isNaN(doorAlongU) ? 1000 : (doorAlongU === 0 ? q[i * 3]! + hx : q[i * 3 + 2]! + hz) - t.doorAt
+        door[k * 2 + 1] = dTop
+      }
+      if (flip) { idx[ni++] = nv; idx[ni++] = nv + 2; idx[ni++] = nv + 1; idx[ni++] = nv; idx[ni++] = nv + 3; idx[ni++] = nv + 2 }
+      else { idx[ni++] = nv; idx[ni++] = nv + 1; idx[ni++] = nv + 2; idx[ni++] = nv; idx[ni++] = nv + 2; idx[ni++] = nv + 3 }
       nv += 4
     }
     const u0 = -hx + (has(0) ? W : 0), u1 = hx - (has(1) ? W : 0), v0 = -hz + (has(2) ? W : 0), v1 = hz - (has(3) ? W : 0)
-    const dTop = (t.part === 5 ? t.y0 + 0.05 : t.gy) + t.doorH
     // the sides: s 0 and 1 at u = -hx, +hx along v; 2 and 3 at v = -hz, +hz along u
     for (let s = 0; s < 4; s++) {
       if (t.hide[s] === Infinity) continue
       const lo = Math.max(t.y0, t.hide[s]!), hi = has(s) ? top + RH : top
       const alongU = s >= 2, c = s === 0 ? -hx : s === 1 ? hx : s === 2 ? -hz : hz
-      const at = (a: number, y: number): [number, number, number] => (alongU ? [a, y, c] : [c, y, a])
+      const face = (a0: number, a1: number, y0: number, y1: number): number[] => (alongU ? [a0, y0, c, a1, y0, c, a1, y1, c, a0, y1, c] : [c, y0, a0, c, y0, a1, c, y1, a1, c, y1, a0])
       const half = alongU ? hx : hz
-      const da = t.door === s ? (u: number, v: number): number => (alongU ? u + hx : v + hz) - t.doorAt : undefined
       // a range's face on its court (kind 6): the court's walls see less of the sky
       const onCourt = t.part < 4 && s === [3, 2, 1, 0][t.part]
-      if (hi > lo) quad([at(-half, lo), at(half, lo), at(half, hi), at(-half, hi)], s, onCourt ? 6 : 0, da, dTop)
+      if (hi > lo) quad(face(-half, half, lo, hi), s, onCourt ? 6 : 0, t.door === s ? (alongU ? 0 : 1) : NaN)
       if (has(s)) continue
       // the ends of the neighbouring sides' parapets on this face
-      const ends: Array<[number, number, boolean]> = alongU ? [[-hx, -hx + W, has(0)], [hx - W, hx, has(1)]] : [[-hz, -hz + W, has(2)], [hz - W, hz, has(3)]]
       const cl = Math.max(lo, top)
-      for (const [a0, a1, on] of ends) if (on && top + RH > cl) quad([at(a0, cl), at(a1, cl), at(a1, top + RH), at(a0, top + RH)], s, 0)
+      if (top + RH <= cl) continue
+      if (has(alongU ? 0 : 2)) quad(face(-half, -half + W, cl, top + RH), s, 0, NaN)
+      if (has(alongU ? 1 : 3)) quad(face(half - W, half, cl, top + RH), s, 0, NaN)
     }
     // the parapets' tops (the -v and +v ones take the corners) and their inner faces
     const T = top + RH
-    if (has(2)) quad([[-hx, T, -hz], [hx, T, -hz], [hx, T, -hz + W], [-hx, T, -hz + W]], 4, 1)
-    if (has(3)) quad([[-hx, T, hz - W], [hx, T, hz - W], [hx, T, hz], [-hx, T, hz]], 4, 1)
-    if (has(0)) quad([[-hx, T, v0], [-hx + W, T, v0], [-hx + W, T, v1], [-hx, T, v1]], 4, 1)
-    if (has(1)) quad([[hx - W, T, v0], [hx, T, v0], [hx, T, v1], [hx - W, T, v1]], 4, 1)
-    if (has(2)) quad([[u0, top, -hz + W], [u1, top, -hz + W], [u1, T, -hz + W], [u0, T, -hz + W]], 3, 2)
-    if (has(3)) quad([[u0, top, hz - W], [u1, top, hz - W], [u1, T, hz - W], [u0, T, hz - W]], 2, 2)
-    if (has(0)) quad([[-hx + W, top, v0], [-hx + W, top, v1], [-hx + W, T, v1], [-hx + W, T, v0]], 1, 2)
-    if (has(1)) quad([[hx - W, top, v0], [hx - W, top, v1], [hx - W, T, v1], [hx - W, T, v0]], 0, 2)
+    if (has(2)) quad([-hx, T, -hz, hx, T, -hz, hx, T, -hz + W, -hx, T, -hz + W], 4, 1, NaN)
+    if (has(3)) quad([-hx, T, hz - W, hx, T, hz - W, hx, T, hz, -hx, T, hz], 4, 1, NaN)
+    if (has(0)) quad([-hx, T, v0, -hx + W, T, v0, -hx + W, T, v1, -hx, T, v1], 4, 1, NaN)
+    if (has(1)) quad([hx - W, T, v0, hx, T, v0, hx, T, v1, hx - W, T, v1], 4, 1, NaN)
+    if (has(2)) quad([u0, top, -hz + W, u1, top, -hz + W, u1, T, -hz + W, u0, T, -hz + W], 3, 2, NaN)
+    if (has(3)) quad([u0, top, hz - W, u1, top, hz - W, u1, T, hz - W, u0, T, hz - W], 2, 2, NaN)
+    if (has(0)) quad([-hx + W, top, v0, -hx + W, top, v1, -hx + W, T, v1, -hx + W, T, v0], 1, 2, NaN)
+    if (has(1)) quad([hx - W, top, v0, hx - W, top, v1, hx - W, T, v1, hx - W, T, v0], 0, 2, NaN)
     // the roof (or the court's floor, or the roof room's top) inside the parapets
-    quad([[u0, top, v0], [u1, top, v0], [u1, top, v1], [u0, top, v1]], 4, t.part === 4 ? 4 : 3)
+    quad([u0, top, v0, u1, top, v0, u1, top, v1, u0, top, v1], 4, t.part === 4 ? 4 : 3, NaN)
   }
   const geo = new BufferGeometry()
-  geo.setAttribute('position', new Float32BufferAttribute(pos, 3))
-  geo.setAttribute('normal', new Float32BufferAttribute(nor, 3))
-  geo.setAttribute('hinfo', new Float32BufferAttribute(info, 4))
-  geo.setAttribute('hdoor', new Float32BufferAttribute(door, 2))
-  const n = pos.length / 3
-  const cls = new Float32Array(n * 2).fill(CLS.G), bd = new Float32Array(n)
-  for (let i = 0; i < n; i++) bd[i] = info[i * 4 + 2]! + band
-  geo.setAttribute('cls', new Float32BufferAttribute(cls, 2))
-  geo.setAttribute('band', new Float32BufferAttribute(bd, 1))
-  geo.setIndex(n > 65535 ? new BufferAttribute(new Uint32Array(idx), 1) : idx)
+  geo.setAttribute('position', new BufferAttribute(pos.slice(0, nv * 3), 3))
+  geo.setAttribute('normal', new BufferAttribute(nor.slice(0, nv * 3), 3))
+  geo.setAttribute('hinfo', new BufferAttribute(info.slice(0, nv * 4), 4))
+  geo.setAttribute('hdoor', new BufferAttribute(door.slice(0, nv * 2), 2))
+  const cls = new Float32Array(nv * 2).fill(CLS.G), bd = new Float32Array(nv)
+  for (let i = 0; i < nv; i++) bd[i] = info[i * 4 + 2]! + band
+  geo.setAttribute('cls', new BufferAttribute(cls, 2))
+  geo.setAttribute('band', new BufferAttribute(bd, 1))
+  geo.setIndex(new BufferAttribute(idx.slice(0, ni), 1))
   geo.computeBoundingSphere()
   const mesh = new Mesh(geo, mat)
   mesh.castShadow = true
