@@ -327,20 +327,35 @@
           "kind": "walk"
         },
         {
-          "t": 192,
+          "t": 175,
           "at": [
             0,
-            -56
+            -39.5
           ],
           "look": [
             0,
             1.65,
             -200
           ],
-          "kind": "arrive"
+          "kind": "arrive",
+          "says": "through the front gate, the court and the main gate's chamber to the south passage's north mouth"
         },
         {
-          "t": 193,
+          "t": 179,
+          "at": [
+            0,
+            -39.5
+          ],
+          "look": [
+            0,
+            1.65,
+            -200
+          ],
+          "kind": "hold",
+          "says": "the hold: the south passage's glazed jambs and its arch frame the procession street south to the far haze"
+        },
+        {
+          "t": 194,
           "at": [
             0,
             -56
@@ -350,7 +365,8 @@
             1.65,
             -200
           ],
-          "kind": "hold"
+          "kind": "walk",
+          "says": "out of the south mouth onto the street"
         },
         {
           "t": 198,
@@ -373,16 +389,20 @@
       ],
       "ends": "outside the main gate's south door, looking along the procession street south (the map's stop 4 look, UTM 445831, 3600652), the city below and the way to the tower's precinct ahead",
       "still": {
-        "t": 193,
+        "t": 179,
         "desktop": {
           "hfov": 58,
-          "shift": 0
+          "shift": 0.15
         },
         "phone": {
+          "at": [
+            0,
+            -37
+          ],
           "hfov": 58,
-          "shift": 0
+          "shift": 0.2
         },
-        "says": "stop 4's own hold (the arrival's hold), level as the walk holds it"
+        "says": "stop 4's own hold in the south passage's north mouth, 8.4 m from the south mouth: on the desktop the glazed jambs frame the street to the far haze; the phone stands 2.5 m back, so the mouth's arch and the vault over it stand whole above the street and the sky stays inside the arch"
       }
     }
   ],

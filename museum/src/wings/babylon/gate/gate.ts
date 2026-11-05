@@ -8,7 +8,7 @@
      ?put=<url>              where the rig hands its files (the shooter's own server) */
 
 import {
-  Color, DoubleSide, Float32BufferAttribute, Group, InstancedBufferAttribute, InstancedMesh, Matrix3, Matrix4, Mesh,
+  BufferGeometry, Color, DoubleSide, Float32BufferAttribute, Group, InstancedBufferAttribute, InstancedMesh, Matrix3, Matrix4, Mesh,
   MeshBasicNodeMaterial, MeshStandardNodeMaterial, PerspectiveCamera, Scene, Vector3,
 } from 'three/webgpu'
 import * as TSL from 'three/tsl'
@@ -19,6 +19,9 @@ import { printFrame } from '../../animals/cave/print'
 import { PERSON_FORMS, signPerson } from '../../place/person'
 import { buildPlan, makeFrame } from '../map/plan'
 import { buildBodies, tonesFrom, uView, type Sky } from '../map/mass'
+import { paintCity, setCityPixel } from '../map/city'
+import { rebuildHouses } from '../open/houses'
+import { NORTH_PAVED } from '../open/north-paving'
 import { sunVector as mapSunVector } from '../map/sun'
 import { createOpenLinear } from '../open/air'
 import { walkLight } from '../open/light'
@@ -35,7 +38,7 @@ import { NO_ROWS, bodyTones, panelTones, pavingTones, toneGateWalls, toneMapBodi
 type N = any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
-const { abs, max, mix, positionLocal, positionWorld, step, uniform, vec3, vec4 } = TSL as unknown as Record<string, N>
+const { abs, float, max, mix, positionLocal, positionWorld, smoothstep, step, uniform, vec3, vec4 } = TSL as unknown as Record<string, N>
 
 const q = new URLSearchParams(location.search)
 const says = document.getElementById('says') as HTMLElement
@@ -123,25 +126,64 @@ const sunG = (hour: number): V3 => {
 
 say('building the city and the gate')
 const tones = tonesFrom(cityPlan)
-const bodies = buildBodies(city, tones, sky, L.AIR.uSun, canalZ)
+const band = Number(mapPlan.classes.band)
+const bodies = buildBodies(city, tones, sky, L.AIR.uSun, canalZ, undefined, { houses: { rebuild: rebuildHouses, band } })
+/* the city round the gate in the map page's own materials (map/city.ts), so the street south of the gate is the next stop's */
+const lion = mapPlan.frames.lion
+paintCity(bodies.group, city, tones, { band, street: { o: MF.s(lion.origin[0], lion.origin[1]), a: MF.dir(lion.bearing), c: MF.dir(lion.bearing + 90), pavedTo: NORTH_PAVED.a1 } })
 painted.push(toneMapBodies(bodies.group, city, named))
 scene.add(bodies.group)
 uView.value = U.uSwitch.value
 
+/* the south paving's line (built below the gate's paving): from the paving's end 20 m along the gate's axis, then through
+   the map's street points (its ribbon south of the gate) on a Catmull-Rom curve, sampled every 2 m, to the palace's south-east corner */
+const PAVE_END = -60 // the gate's paving's south edge (gate-mesh.ts pavingGeometry)
+const SOUTH = (() => {
+  const half = (plan.street.paving.limestone * plan.street.paving.limestoneN) / 2 + plan.street.paving.breccia * plan.street.paving.brecciaN
+  const ctl: Array<[number, number, number]> = [[0, PAVE_END + 20, B.level(PAVE_END)], [0, PAVE_END, B.level(PAVE_END)]]
+  for (const p of mapPlan.street.points as Array<{ at: [number, number]; level: number }>) {
+    const [x, z] = GF.fromUtm(p.at[0], p.at[1])
+    if (z < PAVE_END - 40 && z > -230) ctl.push([x, z, p.level - L0])
+  }
+  // 20 m on the axis first, so the curve leaves the gate's paving square to it; its level on the map line's grade
+  ctl.splice(2, 0, [0, PAVE_END - 20, ctl[1]![2] + ((ctl[2]![2] - ctl[1]![2]) * 20) / (ctl[1]![1] - ctl[2]![1])])
+  ctl.push(ctl[ctl.length - 1]!.map((v, i) => 2 * v - ctl[ctl.length - 2]![i]!) as [number, number, number])
+  const cr = (a: number, b: number, c: number, d: number, t: number): number =>
+    0.5 * (2 * b + (c - a) * t + (2 * a - 5 * b + 4 * c - d) * t * t + (3 * b - a - 3 * c + d) * t * t * t)
+  const line: Array<[number, number, number]> = []
+  for (let i = 1; i + 2 < ctl.length; i++) {
+    const [a, b, c, d] = [ctl[i - 1]!, ctl[i]!, ctl[i + 1]!, ctl[i + 2]!]
+    const k = Math.max(1, Math.round(Math.hypot(c[0] - b[0], c[1] - b[1]) / 2))
+    for (let j = 0; j < k; j++) {
+      const t = j / k
+      // the level runs straight between the map's points, as its ribbon does
+      line.push([cr(a[0], b[0], c[0], d[0], t), cr(a[1], b[1], c[1], d[1], t), b[2] + (c[2] - b[2]) * t])
+    }
+  }
+  line.push(ctl[ctl.length - 2]!)
+  return { half, line, zEnd: line[line.length - 1]![1] }
+})()
 /* the map's street and ground give way to the gate's paving inside its area (a mask, the map's files untouched) */
+/** the apron's south edge beside the street: 0 to 3 m short of the paving's end, uneven along x; the band itself runs on */
+const apronEnd = (x: N): N => float(PAVE_END).add(smoothstep(SOUTH.half, SOUTH.half + 1.5, abs(x)).mul(TSL.mx_noise_float(vec3(x.mul(0.37), 1.7, 0.3)).add(0.5).mul(2.4).add(0.6)))
 const sdx = B.street.dir[0], sdz = B.street.dir[1]
 const paved = (): N => {
   const p = uW2G.mul(vec4(positionWorld, 1)).xyz
-  const inRect = step(-34, p.x).mul(step(p.x, 30)).mul(step(-60, p.z)).mul(step(p.z, 50))
+  const inRect = step(-34, p.x).mul(step(p.x, 30)).mul(step(apronEnd(p.x), p.z)).mul(step(p.z, 50))
   const s = p.x.mul(sdx).add(p.z.mul(sdz)), t = p.x.mul(sdz).sub(p.z.mul(sdx))
   const inStreet = step(20, s).mul(step(s, Number(plan.lionWalls.to) + 1)).mul(step(abs(t), B.street.halfWidth + 0.6))
   return max(inRect, inStreet)
+}
+/** the map's street ribbon where the south paving below lies over it (only the ribbon runs in that span of the axis) */
+const pavedSouth = (): N => {
+  const p = uW2G.mul(vec4(positionWorld, 1)).xyz
+  return step(SOUTH.zEnd, p.z).mul(step(p.z, PAVE_END + 0.5)).mul(step(abs(p.x), 30))
 }
 for (const name of ['street', 'ground']) {
   const mesh = bodies.group.getObjectByName(name) as Mesh | undefined
   if (!mesh) continue
   const mat = mesh.material as MeshStandardNodeMaterial
-  mat.maskNode = paved().lessThan(0.5)
+  mat.maskNode = name === 'street' ? max(paved(), pavedSouth()).lessThan(0.5) : paved().lessThan(0.5)
 }
 
 /* the rooms: how open each chamber and passage is to the sky (the bounce and sky are modelled; the stack has no GI) */
@@ -179,7 +221,61 @@ pave.receiveShadow = true
 pave.castShadow = true
 pave.frustumCulled = false
 pave.name = 'gate-paving'
+;(pave.material as MeshStandardNodeMaterial).maskNode = positionLocal.z.greaterThanEqual(apronEnd(positionLocal.x))
 gate.add(pave)
+
+/* the processional way south of the gate's paving, in the gate's own paving (pavingMaterial, its slabs laid in the local x
+   and z of each piece): along the gate's axis for 20 m, then on the map's street line (map-plan.json street.points, the
+   ribbon this replaces) to the palace's south-east corner; one mitred piece per leg in that leg's own frame, with a skirt */
+{
+  const L = SOUTH.line, n = L.length
+  const dir = (i: number): [number, number] => { const dx = L[i + 1]![0] - L[i]![0], dz = L[i + 1]![1] - L[i]![1], l = Math.hypot(dx, dz); return [dx / l, dz / l] }
+  // each vertex's left and right edge points: square to the axis at the start, mitred between legs
+  const edge = (i: number): [[number, number], [number, number]] => {
+    let nx: number, nz: number
+    if (i === 0) { nx = 1; nz = 0 }
+    else if (i === n - 1) { const d = dir(i - 1); nx = -d[1]; nz = d[0] }
+    else {
+      const a = dir(i - 1), b = dir(i)
+      const mx = -(a[1] + b[1]), mz = a[0] + b[0], ml = Math.hypot(mx, mz), cosH = (mx * -a[1] + mz * a[0]) / ml
+      nx = mx / ml / cosH; nz = mz / ml / cosH
+    }
+    const h = SOUTH.half
+    return [[L[i]![0] + nx * h, L[i]![1] + nz * h], [L[i]![0] - nx * h, L[i]![1] - nz * h]]
+  }
+  const southMat = pavingMaterial(U, { ...plan.street.paving, sd: B.street.dir, st: [B.street.dir[1], -B.street.dir[0]], turnZ: 21.3, cls: pavingTones(named, [paveL, paveL]) }, rooms)
+  let along = -PAVE_END
+  for (let i = 0; i + 1 < n; i++) {
+    const d = dir(i), len = Math.hypot(L[i + 1]![0] - L[i]![0], L[i + 1]![1] - L[i]![1])
+    // the leg's frame: local x across (n = (-dz, dx)), local z back up the street, so the slabs' courses run on from the gate's
+    const nx = -d[1], nz = d[0], ox = L[i]![0] - d[0] * along, oz = L[i]![1] - d[1] * along
+    const toLocal = (x: number, z: number): [number, number] => { const rx = x - ox, rz = z - oz; return [rx * nx + rz * nz, -(rx * d[0] + rz * d[1])] }
+    const [a0, a1] = edge(i), [b0, b1] = edge(i + 1)
+    const steps = Math.max(1, Math.ceil(len / 2))
+    const pos: number[] = []
+    const lerp = (p: [number, number], q: [number, number], f: number): [number, number] => [p[0] + (q[0] - p[0]) * f, p[1] + (q[1] - p[1]) * f]
+    for (let k = 0; k < steps; k++) {
+      const f0 = k / steps, f1 = (k + 1) / steps
+      const y0 = L[i]![2] + (L[i + 1]![2] - L[i]![2]) * f0, y1 = L[i]![2] + (L[i + 1]![2] - L[i]![2]) * f1
+      const l0 = toLocal(...lerp(a0, b0, f0)), r0 = toLocal(...lerp(a1, b1, f0)), l1 = toLocal(...lerp(a0, b0, f1)), r1 = toLocal(...lerp(a1, b1, f1))
+      // the top (facing up), then the two skirts 0.6 m down (facing out)
+      pos.push(l0[0], y0, l0[1], l1[0], y1, l1[1], r0[0], y0, r0[1], r0[0], y0, r0[1], l1[0], y1, l1[1], r1[0], y1, r1[1])
+      pos.push(l0[0], y0, l0[1], l0[0], y0 - 0.6, l0[1], l1[0], y1, l1[1], l1[0], y1, l1[1], l0[0], y0 - 0.6, l0[1], l1[0], y1 - 0.6, l1[1])
+      pos.push(r0[0], y0, r0[1], r1[0], y1, r1[1], r0[0], y0 - 0.6, r0[1], r1[0], y1, r1[1], r1[0], y1 - 0.6, r1[1], r0[0], y0 - 0.6, r0[1])
+    }
+    const g = new BufferGeometry()
+    g.setAttribute('position', new Float32BufferAttribute(pos, 3))
+    g.computeVertexNormals()
+    const m = new Mesh(g, southMat)
+    m.position.set(ox, 0, oz)
+    m.rotation.y = Math.atan2(-nz, nx)
+    m.receiveShadow = true
+    m.frustumCulled = false
+    m.name = 'gate-paving-south'
+    gate.add(m)
+    along += len
+  }
+}
 
 const schemesOf: Record<string, Array<[string, number]>> = { bull: [['yellow', 0]], dragon: [['white', 1]], lion: [['lionWhite', 2], ['lionYellow', 3]] }
 const panelMeshes: InstancedMesh[] = []
@@ -280,6 +376,7 @@ function aimWorld(pos: Vector3, look: Vector3, vfov: number, w: number, h: numbe
   skyDome.position.copy(camera.position)
   skyDome.updateMatrixWorld(true)
   U.uPix.value = (2 * Math.tan((vfov / 2) * D2R)) / h
+  setCityPixel(vfov, h)
   const f = L.frame(camera)
   linear?.setRadius(f.aoRadius)
 }
@@ -371,7 +468,7 @@ if (q.get('ids') === '1') {
     const m = o as Mesh
     if (!m.isMesh || o === skyDome) return
     const n = o.name
-    m.material = n === 'gate-walls' ? wallIds : n.startsWith('panels-') ? GLAZED : n === 'gate-paving' || n === 'street' || n === 'ground' ? PAVING
+    m.material = n === 'gate-walls' ? wallIds : n.startsWith('panels-') ? GLAZED : n.startsWith('gate-paving') || n === 'street' || n === 'ground' ? PAVING
       : n === 'figure' || o.parent?.name === 'figure' ? FIGURE : n === 'bronze' || n === 'palms' || n === 'birds' || n.startsWith('water') ? OTHER : PLAIN
   })
   figure.traverse((o) => { if ((o as Mesh).isMesh) (o as Mesh).material = FIGURE })
