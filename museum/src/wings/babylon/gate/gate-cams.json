@@ -170,7 +170,15 @@
             66
           ],
           "look": "gate",
-          "kind": "arrive"
+          "kind": "arrive",
+          "desktop": {
+            "hfov": 58,
+            "shift": 0.35
+          },
+          "phone": {
+            "hfov": 46,
+            "shift": -0.25
+          }
         },
         {
           "t": 68,
@@ -179,10 +187,30 @@
             66
           ],
           "look": "gate",
-          "kind": "hold"
+          "kind": "hold",
+          "desktop": {
+            "hfov": 58,
+            "shift": 0.35
+          },
+          "phone": {
+            "hfov": 46,
+            "shift": -0.25
+          }
         }
       ],
-      "ends": "the forecourt and the double gate ahead (the desktop still)"
+      "ends": "the forecourt and the double gate ahead (the desktop still)",
+      "still": {
+        "t": 68,
+        "desktop": {
+          "hfov": 58,
+          "shift": 0.35
+        },
+        "phone": {
+          "hfov": 46,
+          "shift": -0.25
+        },
+        "says": "stop 2's own hold, 66 m out on the gate's axis: the desktop is the hero still; the phone keeps the film's 46 degrees and slides the frame down so the lion street's end and the double gate stand above the box at rest, the sky under a fifth (18.9 percent on the id pass)"
+      }
     },
     {
       "n": 3,
@@ -199,7 +227,15 @@
             66
           ],
           "look": "gate",
-          "kind": "walk"
+          "kind": "walk",
+          "desktop": {
+            "hfov": 58,
+            "shift": 0.35
+          },
+          "phone": {
+            "hfov": 46,
+            "shift": -0.25
+          }
         },
         {
           "t": 105,
@@ -379,6 +415,10 @@
           "phone": {
             "hfov": 58,
             "shift": 0.15
+          },
+          "desktop": {
+            "hfov": 58,
+            "shift": 0.15
           }
         },
         {
@@ -395,6 +435,10 @@
           "kind": "hold",
           "says": "the hold: the south passage's glazed jambs and its arch frame the procession street south to the far haze",
           "phone": {
+            "hfov": 58,
+            "shift": 0.15
+          },
+          "desktop": {
             "hfov": 58,
             "shift": 0.15
           }
@@ -449,6 +493,7 @@
   ],
   "speedSays": "about 1.3 m/s walking, holds of 3 to 4 s at each stop's last frame; the look eases over each leg",
   "looksSay": "an explicit look's y is in the gate's frame (1.65 = eye height over the +15.40 street); 'gate' is a level look at the face's axis; 'south' is the map's stop 4 look",
-  "stillsSay": "`stills` are the hero stills (stop 2's, kept as they are); a stop's `still` is its own hold: the key at `t`, each framing's lens, and an `at` or `look` of a framing's own over that key",
-  "phoneSays": "the film's phone lens: `phoneFilm` (46 degrees) where a key names none; a key's `phone` is its own lens and shift, eased between keys. Each hold whose phone still stands on it carries the still's lens over the keys of its stand (stop 3 from 105 s, stop 4 at 175 and 179 s), and between two such holds the lens stays; stop 2's phone still stands on stop 3's hold, so stop 2's own hold keeps 46, as does stop 4's last hold looking south"
+  "stillsSay": "`stills` are the hero stills (the arrival's first frame and the checks' cameras: the desktop's is stop 2's hold, the phone's stands on stop 3's); a stop's `still` is its own hold: the key at `t`, each framing's lens, and an `at` or `look` of a framing's own over that key",
+  "phoneSays": "the film's phone lens: `phoneFilm` (46 degrees) where a key names none; a key's `phone` is its own lens and shift, eased between keys. Each hold whose phone still stands on it carries the still's lens over the keys of its stand (stop 2 at 64 and 68 s with stop 3's first key on the same stand, stop 3 from 105 s, stop 4 at 175 and 179 s), and between two such holds the lens stays; stop 4's last hold looking south keeps 46 and no shift",
+  "desktopSays": "the film's desktop lens: the stills' 58 degrees and no shift where a key names none; a key's `desktop` is its own lens and shift, eased between keys. Each hold whose desktop still stands on it carries the still's lens and shift over the keys of its stand (stop 2 at 64 and 68 s with stop 3's first key on the same stand, stop 4 at 175 and 179 s), so the walks next to them ease into and out of it"
 }

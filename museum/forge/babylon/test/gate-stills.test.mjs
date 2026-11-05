@@ -1,4 +1,4 @@
-// The gate page's stills: every gate stop shoots its own camera (stop 2 the hero stills, stops 3 and 4 their own holds).
+// The gate page's stills: every gate stop shoots its own hold (stop 2's desktop the hero still's camera exactly).
 // GATE_STILLS=<folder of `step.sh stills 2|3|4`> also reads the page's own sidecars and pictures from that folder.
 import test from 'node:test'
 import assert from 'node:assert/strict'
@@ -38,11 +38,13 @@ test('the shooter hands the gate page the stop it shoots', () => {
   }
 })
 
-test('stop 2 keeps the hero stills exactly; stops 3 and 4 name a still of their own', () => {
-  const two = cams.stops.find((s) => s.n === 2)
-  assert.equal(two.still, undefined, 'stop 2 shoots `stills`')
-  for (const f of FRAMINGS) assert.deepEqual(stillCam(2, f), { at: cams.stills[f].at, look: cams.stills[f].look, hfov: cams.stills[f].hfov, shift: cams.stills[f].shift })
-  for (const n of GATE.filter((n) => n !== 2)) assert.ok(cams.stops.find((s) => s.n === n).still, `stop ${n} has its own still`)
+test("stop 2's desktop is the hero still exactly, its phone stands on stop 2's own hold; every gate stop names a still", () => {
+  const d = stillCam(2, 'desktop'), h = cams.stills.desktop
+  assert.deepEqual([d.at, bearing(d), d.hfov, d.shift], [h.at, bearing({ at: h.at, look: h.look }), h.hfov, h.shift], 'the desktop hero camera')
+  const two = cams.stops.find((s) => s.n === 2), hold = two.keys.find((k) => k.t === two.still.t)
+  assert.deepEqual(stillCam(2, 'phone').at, hold.at, "stop 2's phone at its own hold")
+  assert.notDeepEqual(stillCam(2, 'phone').at, cams.stills.phone.at, "not on stop 3's stand")
+  for (const n of GATE) assert.ok(cams.stops.find((s) => s.n === n).still, `stop ${n} has its own still`)
 })
 
 test('a stop\'s still is its arrival\'s hold: a hold key of that stop, right after its arrive at the same stand', () => {
