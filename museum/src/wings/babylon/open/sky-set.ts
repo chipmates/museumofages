@@ -64,6 +64,8 @@ export interface SkySetOptions {
   size?: number
   giveBack?: number
   albedo?: number
+  /** the occluders' light at least, as a share of the open sky's at the point (0 leaves the multi-bounce fit alone) */
+  floorLit?: number
   /** the mirror's share of the correction (0 leaves the environment's specular whole) and its sharpest lobe */
   specular?: number
   specularPower?: number
@@ -120,6 +122,7 @@ export function skySet(o: SkySetOptions) {
   const uPhase = uniform(0, 'int'), uStride = uniform(STRIDE, 'int'), uCount = uniform(COUNT / STRIDE, 'int')
   const uOn = uniform(0), uGive = uniform(o.giveBack ?? 1), uSpec = uniform(o.specular ?? 1), uSpecPow = uniform(o.specularPower ?? 8)
   const ALBEDO = o.albedo ?? 0.45
+  const FLOOR_LIT = o.floorLit ?? 0.5
   const FIT = o.fit ?? 0
   const buffL = 0.2126 * o.buff[0] + 0.7152 * o.buff[1] + 0.0722 * o.buff[2]
   const uBuff = uniform(new Vector3(o.buff[0] / buffL, o.buff[1] / buffL, o.buff[2] / buffL))
@@ -165,7 +168,10 @@ export function skySet(o: SkySetOptions) {
     const v = luminance(seen).div(max(lumAll, 1e-6))
     const a = 2.0404 * ALBEDO - 0.3324, bb = -4.7951 * ALBEDO + 0.6417, c = 2.7552 * ALBEDO + 0.6903
     const v2 = max(v, v.mul(a).add(bb).mul(v).add(c).mul(v)).min(1)
-    const multi = mix(vec3(uBuff), all.div(max(lumAll, 1e-6)), uHue).mul(v2.sub(v).mul(lumAll)).mul(uGive)
+    /* the fit assumes the occluders lit as the point is, so its give-back vanishes where the view is smallest (a gate
+       passage, a door's reveal); the occluders there face the open court and street: lit at least as an open vertical
+       face by the sky alone (half the open sky's light) at the same albedo */
+    const multi = mix(vec3(uBuff), all.div(max(lumAll, 1e-6)), uHue).mul(max(v2.sub(v), float(1).sub(v).mul(ALBEDO * FLOOR_LIT)).mul(lumAll)).mul(uGive)
     const back = own ? max(multi, all.sub(seen).mul(own)) : multi
     const gate = uOn.mul(open)
     const corr = seen.sub(all).add(back).mul(float(uStride)).mul(gate)
@@ -396,7 +402,7 @@ export function skySet(o: SkySetOptions) {
       if (added) uSkySet.value = uOn.value
     },
     facts: () => ({
-      mode: 'set', directions: COUNT, mapSize: SIZE, perSubFrame: COUNT / STRIDE, giveBack: uGive.value, giveHue: uHue.value, albedo: ALBEDO, fit: FIT, on, normalBias: NB, depthBias: ZB, specular: uSpec.value, specularPower: uSpecPow.value,
+      mode: 'set', directions: COUNT, mapSize: SIZE, perSubFrame: COUNT / STRIDE, giveBack: uGive.value, giveHue: uHue.value, albedo: ALBEDO, floorLit: FLOOR_LIT, fit: FIT, on, normalBias: NB, depthBias: ZB, specular: uSpec.value, specularPower: uSpecPow.value,
       region: region && { x: [+region.x0.toFixed(1), +region.x1.toFixed(1)], z: [+region.z0.toFixed(1), +region.z1.toFixed(1)] },
       texel: fits ? { min: +Math.min(...texels).toFixed(3), max: +Math.max(...texels).toFixed(3) } : null,
       fits, crossFades, film, rolling: pending ? group : null, fitMs, lastFitMs, memoryMiB: +((SIZE * SIZE * COUNT * 2) / 2 ** 20).toFixed(1),
