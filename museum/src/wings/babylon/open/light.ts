@@ -128,14 +128,14 @@ export function walkLight(o: WalkLightOptions) {
   let envSource: ((hour: number) => Texture | null) | null = null
   let envBy: 'walk' | 'source' = 'walk'
   let envBakes = 0
-  /* `?sky=set`: the sky each point sees takes the place of the open sky in the environment's diffuse (sky-set.ts); made
+  /* `?sky=set` (the default; `?sky=env` keeps the environment alone): the sky each point sees takes the place of the open sky in the environment's diffuse (sky-set.ts); made
      here, drawn at a page's first still, off while another source gives the environment */
   // WebGPU only (a depth-only target over a depth array): elsewhere the page keeps the environment as it is
-  const field: SkySet | null = q.get('sky') === 'set' && (renderer as unknown as { backend?: { isWebGPUBackend?: boolean } }).backend?.isWebGPUBackend === true
+  const field: SkySet | null = (q.get('sky') ?? 'set') === 'set' && (renderer as unknown as { backend?: { isWebGPUBackend?: boolean } }).backend?.isWebGPUBackend === true
     ? skySet({
       renderer, scene, air: AIR, envIntensity: () => scene.environmentIntensity, lobe: { toward: uToward, away: uAwayK },
       buff: LIGHT.bounce.paving.colour as [number, number, number], count: Number(q.get('skyN') ?? 128), size: Number(q.get('skyMap') ?? 1024),
-      giveBack: Number(q.get('skyGive') ?? 1), giveHue: Number(q.get('skyHue') ?? 0), fit: Number(q.get('skyFit') ?? 0), fade: q.get('skyFade') !== '0', normalBias: Number(q.get('skyNb') ?? 0.25), depthBias: Number(q.get('skyZb') ?? 0.25), specular: Number(q.get('skySpec') ?? 1),
+      giveBack: Number(q.get('skyGive') ?? 1), giveHue: Number(q.get('skyHue') ?? 1), fit: Number(q.get('skyFit') ?? 0), fade: q.get('skyFade') !== '0', normalBias: Number(q.get('skyNb') ?? 0.25), depthBias: Number(q.get('skyZb') ?? 0.25), specular: Number(q.get('skySpec') ?? 1),
     })
     : null
   function bakeEnv(): void {
