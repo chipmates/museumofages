@@ -39,8 +39,9 @@ export const PAGES = {
     html: 'src/wings/babylon/gate/gate.html',
     rig: '__gate',
     readyMs: 900000,
-    // the gate's hero still per framing (desktop: stop 2's last frame, phone: stop 3's); the class view is its switch
-    still: (r) => ({ fn: 'shoot', arg: { framing: r.framing, state: r.state ?? 'full', switch: r.view === 'classes', w: r.w, h: r.h, css: r.css, samples: r.samples, out: r.out, name: r.name, hour: r.hour, stops: r.stops, look: r.look } }),
+    // stop 2: the hero still per framing (desktop: stop 2's last frame, phone: stop 3's mouth, gate-cams.json `stills`);
+    // stops 3 and 4 their own holds (each stop's `still`); the class view is its switch
+    still: (r) => ({ fn: 'shoot', arg: { stop: Number(r.stop), framing: r.framing, state: r.state ?? 'full', switch: r.view === 'classes', w: r.w, h: r.h, css: r.css, samples: r.samples, out: r.out, name: r.name, hour: r.hour, stops: r.stops, look: r.look } }),
   },
   open: {
     html: 'src/wings/babylon/open/open.html',

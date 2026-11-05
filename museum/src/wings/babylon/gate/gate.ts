@@ -290,14 +290,27 @@ function aimTrial(t: { pos: (number | null)[]; look: (number | null)[]; hfov: nu
   const pos: V3 = [t.pos[0]!, y, t.pos[2]!], look: V3 = [t.look[0]!, t.look[1] ?? y, t.look[2]!]
   aimWorld(toWorld(pos), toWorld(look), fittedFov(t.hfov, [16, 9], w, h), w, h, t.shift ?? 0)
 }
-/* the stills' views, in the gate's frame, then the world */
-interface View { name: string; pos: V3; look: V3; hfov: number; shift: number; authored: [number, number] }
-function stillView(name: 'desktop' | 'phone'): View {
-  const v = cams.stills[name]
-  const [x, z] = v.at as [number, number]
+/* the stills' views, in the gate's frame, then the world: stop 2 (and no stop) the hero stills in `cams.stills`; a stop
+   with a `still` its own hold, the key at `still.t`, each framing's lens and any stand of its own over that key */
+interface View { name: string; stop?: number; pos: V3; look: V3; hfov: number; shift: number; authored: [number, number] }
+const AUTHORED: Record<'desktop' | 'phone', [number, number]> = { desktop: [16, 9], phone: [390, 844] }
+function stillView(name: 'desktop' | 'phone', stop?: number): View {
+  const s = stop === undefined ? undefined : cams.stops.find((x: J) => x.n === stop)
+  if (!s?.still) {
+    const v = cams.stills[name]
+    const [x, z] = v.at as [number, number]
+    const y = B.level(z) + cams.eye
+    const look: V3 = [v.look[0], v.look[1] ?? y, v.look[2]]
+    return { name, pos: [x, y, z], look, hfov: v.hfov, shift: v.shift, authored: v.authored }
+  }
+  const key = s.keys.find((k: J) => k.t === s.still.t)
+  if (!key) throw new Error(`stop ${stop}: no key at t ${s.still.t} for its still`)
+  const o = s.still[name] ?? {}
+  const [x, z] = keyAt(o.at ?? key.at)
   const y = B.level(z) + cams.eye
-  const look: V3 = [v.look[0], v.look[1] ?? y, v.look[2]]
-  return { name, pos: [x, y, z], look, hfov: v.hfov, shift: v.shift, authored: v.authored }
+  const lk = o.look ?? key.look
+  const look: V3 = lk === 'gate' ? [0, y, -20] : lk === 'south' ? [south[0], 1.65, south[1]] : [lk[0], lk[1] ?? y, lk[2]]
+  return { name, stop, pos: [x, y, z], look, hfov: o.hfov ?? cams.stills[name].hfov, shift: o.shift ?? 0, authored: o.authored ?? AUTHORED[name] }
 }
 function aimView(v: View, w: number, h: number): void {
   aimWorld(toWorld(v.pos), toWorld(v.look), fittedFov(v.hfov, v.authored, w, h), w, h, v.shift)
@@ -447,10 +460,10 @@ const rig = {
   ready: true,
   state: () => ({ planMs, counts: { ...A.counts, cityTriangles: bodies.counts.triangles }, backend: stack.backend, architecture: stack.architecture, state: U.uState.value, switch: U.uSwitch.value, duration: path.duration, record: { stop: RECORD_STOP, bodies: painted.reduce((s, p) => s + p.bodies, 0), byLetters: painted.flatMap((p) => p.byLetters) } }),
   facts: () => ({ ...B.facts, figure: { x: figure.position.x, y: figure.position.y, z: figure.position.z, height: plan.figure.height }, panels: B.panels.length, sun: Object.fromEntries(['16:40', '16:45', '17:00', '12:00'].map((h) => [h, { ...L.sunAt(hourOf(h)), toward: sunG(hourOf(h)) }])), views: { desktop: stillView('desktop'), phone: stillView('phone') }, level: (z: number) => B.level(z) }),
-  views: () => ({ desktop: stillView('desktop'), phone: stillView('phone'), keys: path.keys.map((k) => ({ t: k.t, stop: k.stop, kind: k.kind, pos: k.pos })), duration: path.duration }),
+  views: () => ({ desktop: stillView('desktop'), phone: stillView('phone'), stops: Object.fromEntries(cams.stops.map((s: J) => [s.n, { desktop: stillView('desktop', s.n), phone: stillView('phone', s.n) }])), keys: path.keys.map((k) => ({ t: k.t, stop: k.stop, kind: k.kind, pos: k.pos })), duration: path.duration }),
   /** device-pixel boxes of the crop anchors for a framing at a size */
-  crops(o: { framing: 'desktop' | 'phone'; w: number; h: number }) {
-    aimView(stillView(o.framing), o.w, o.h)
+  crops(o: { framing: 'desktop' | 'phone'; w: number; h: number; stop?: number }) {
+    aimView(stillView(o.framing, o.stop), o.w, o.h)
     const out: Record<string, unknown> = {}
     for (const [name, c] of Object.entries(cams.crops as Record<string, J>)) {
       if (c.framing !== o.framing) continue
@@ -465,9 +478,9 @@ const rig = {
     return out
   },
   /** the hero's device-pixel boxes, the front door's opening to its crown and the figure, for a framing or a trial look */
-  hero(o: { framing: 'desktop' | 'phone'; w: number; h: number; look?: { pos: (number | null)[]; look: (number | null)[]; hfov: number; shift?: number } }) {
+  hero(o: { framing: 'desktop' | 'phone'; w: number; h: number; stop?: number; look?: { pos: (number | null)[]; look: (number | null)[]; hfov: number; shift?: number } }) {
     if (o.look) aimTrial(o.look, o.w, o.h)
-    else aimView(stillView(o.framing), o.w, o.h)
+    else aimView(stillView(o.framing, o.stop), o.w, o.h)
     const box = (pts: V3[]): number[] => {
       const p = pts.map((q) => project(q, o.w, o.h))
       return [Math.min(...p.map((q) => q[0])), Math.min(...p.map((q) => q[1])), Math.max(...p.map((q) => q[0])), Math.max(...p.map((q) => q[1]))]
@@ -488,11 +501,11 @@ const rig = {
     }
   },
   /** a still: a framing, the scene state and the switch, device pixels and CSS size, sub-frames */
-  async shoot(o: { framing: 'desktop' | 'phone'; state?: 'grey' | 'flat' | 'full'; switch?: boolean; w: number; h: number; css: [number, number]; samples: number; out: string; name: string; hour?: string; stops?: number; box?: [number, number, number, number]; look?: { pos: (number | null)[]; look: (number | null)[]; hfov: number; shift?: number } }) {
+  async shoot(o: { framing: 'desktop' | 'phone'; stop?: number; state?: 'grey' | 'flat' | 'full'; switch?: boolean; w: number; h: number; css: [number, number]; samples: number; out: string; name: string; hour?: string; stops?: number; box?: [number, number, number, number]; look?: { pos: (number | null)[]; look: (number | null)[]; hfov: number; shift?: number } }) {
     setStates(o)
     const hour = o.hour ?? (U.uState.value === 1 ? '12:00' : cams.hour)
     setHour(hourOf(hour))
-    const v = stillView(o.framing)
+    const v = stillView(o.framing, o.stop)
     if (o.look) aimTrial(o.look, o.w, o.h)
     else aimView(v, o.w, o.h)
     const { bytes, ms, readBack } = await render(o.w, o.h, o.samples, o.stops ?? 0)
@@ -500,7 +513,7 @@ const rig = {
     await upload(file, await toPNG(bytes, o.w, o.h))
     const s = L.sunAt(hourOf(hour))
     const side = {
-      file, framing: o.framing, state: ['grey', 'flat', 'full'][U.uState.value as number], switch: !!U.uSwitch.value,
+      file, framing: o.framing, stop: o.stop ?? null, state: ['grey', 'flat', 'full'][U.uState.value as number], switch: !!U.uSwitch.value,
       cssSize: o.css, devicePixels: [o.w, o.h], ratio: +(o.w / o.css[0]).toFixed(3), subFramesAsked: o.samples, subFrames: readBack.subFrames,
       renderTarget: readBack.target, sampleCountReadBack: readBack.target?.samples ?? null,
       backend: stack.backend, adapter: stack.architecture, print: printNow(o.stops ?? 0),
