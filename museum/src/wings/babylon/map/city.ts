@@ -97,6 +97,53 @@ export function cityBlockMaterial(t: ClassTones, tones: DataTexture, count: numb
   return m
 }
 
+/** the houses drawn as trays (mass.ts trayHouses). Walls: mud plaster under a wash, each house its own (lime white, bare
+    mud plaster, a weathered grey), darker at the foot, worn in patches; a street door or a roof room's door a dark
+    opening with a board leaf. Parapets: their mud caps a little lighter than the roof, their roof side the roof's
+    plaster. Roofs: trodden mud plaster, lighter and greyer than the street's earth, each house and each range its own,
+    renewed in patches. Courts: baked brick laid flat. Every tone and share ours (G); the brick and plaster per
+    REC bab.houses.type. */
+export function trayMaterial(t: ClassTones, band: number, uPix: N): Material {
+  const m = new MeshStandardNodeMaterial({ roughness: 0.95, metalness: 0 })
+  const info = attribute('hinfo', 'vec4'), dr = attribute('hdoor', 'vec2')
+  const h = info.x, gy = info.z
+  const kind = mod(info.y, 16), part = floor(info.y.div(16))
+  const isK = (k: number): N => step(k - 0.5, kind).mul(step(kind, k + 0.5))
+  const p = positionWorld
+  const up = smoothstep(0.5, 0.8, normalWorld.y)
+  const a = hash(h.add(0.37)), fam = hash(h.mul(4.13).add(2.2)), r = hash(h.mul(3.1).add(part.mul(7.3)).add(1.9))
+  const blockK = hash(info.w.mul(0.917).add(6.1)).sub(0.5).mul(0.16).add(1)
+  // the wash by house: lime white about half, bare mud plaster about a third, weathered grey the rest
+  const lime = vec3(...TONES.plaster).mul(1.1), bareMud = mix(vec3(...TONES.plaster), vec3(...TONES.mud), 0.65), worn = vec3(...TONES.plaster).mul(vec3(0.84, 0.85, 0.88))
+  const wash = mix(mix(lime, bareMud, step(0.5, fam)), worn, step(0.84, fam)).mul(a.sub(0.5).mul(0.16).add(1)).mul(blockK)
+  const above = p.y.sub(gy)
+  // the wash worn through to the mud plaster in broad soft patches, more toward the foot
+  const wearN = mx_noise_float(vec3(p.x.mul(0.3), p.y.mul(0.22), p.z.mul(0.3)).add(h.mul(0.13)))
+  const fallen = smoothstep(0.2, 0.7, wearN.add(smoothstep(1.6, 0.2, above).mul(0.25))).mul(0.45)
+  let wall: N = mix(wash, mix(wash, vec3(...TONES.mud), 0.7), fallen)
+  wall = wall.mul(mix(float(0.7), float(1), smoothstep(0.1, 1.1, above))).mul(float(1).add(mx_noise_float(p.mul(vec3(0.9, 0.2, 0.9))).mul(0.05)))
+  // a court's walls take less of the sky the deeper they go (the renderer draws no such shadow of the sky)
+  wall = wall.mul(mix(float(1), mix(float(0.22), float(0.6), smoothstep(0, 3.4, above)), isK(6)))
+  // a door: the opening's board leaf, dark in its recess
+  const half = mix(float(0.55), float(0.43), step(4.5, kind))
+  const isDoor = step(abs(dr.x), half).mul(step(p.y, dr.y)).mul(float(1).sub(up))
+  wall = mix(wall, vec3(0.075, 0.056, 0.04), isDoor)
+  // the roofs: nearly half bare of any wash, each house and each range its own value, patches of fresh mud
+  const bare = step(0.55, hash(h.mul(2.3).add(8.1)))
+  const own = hash(h.mul(5.37).add(2.9)).sub(0.5).mul(0.18).add(1)
+  const roofBase = mix(vec3(...TONES.roof).mul(vec3(1.03, 1.0, 0.95)), vec3(...TONES.mud).mul(1.1), bare.mul(0.8)).mul(own).mul(r.sub(0.5).mul(0.12).add(1)).mul(blockK)
+  const patch = smoothstep(0.25, 0.55, mx_noise_float(vec3(p.x.mul(0.45), h, p.z.mul(0.45)))).mul(0.12).add(mx_noise_float(p.mul(1.6)).mul(0.04))
+  const roof = roofBase.mul(float(1).sub(patch))
+  const cap = roofBase.mul(1.12)
+  const inner = mix(wash, roofBase, 0.6).mul(0.96)
+  let c: N = mix(wall, inner, isK(2))
+  c = mix(c, roof, isK(3))
+  c = mix(c, cap, isK(1))
+  c = mix(c, brickFloor(p, uPix), isK(4))
+  m.colorNode = mix(c, classColour(t, attribute('cls', 'vec2'), gy.add(band)), uView)
+  return m
+}
+
 /** each instanced box's tone (0 mud, 1 baked) by the body it stands on: wall towers take their wall's */
 function boxTone(id: string): number {
   const k = mapTone(id.replace(/-t\d+-\d+$/, ''))
@@ -110,7 +157,8 @@ export function paintCity(group: Object3D, built: Built, tones: ClassTones, o: {
   const blocks = group.getObjectByName('blocks') as Mesh | undefined
   if (blocks) blocks.material = cityBlockMaterial(tones, cityTones(built.prisms), Math.max(1, built.prisms.length), uCityPix)
   const houses = group.getObjectByName('houses') as InstancedMesh | undefined
-  if (houses && houses.geometry.getAttribute('hinfo')) houses.material = houseMaterial(tones, o.band)
+  if (houses && houses.geometry.getAttribute('hdoor')) houses.material = trayMaterial(tones, o.band, uCityPix)
+  else if (houses && houses.geometry.getAttribute('hinfo')) houses.material = houseMaterial(tones, o.band)
   const rest = group.getObjectByName('towers-and-piers') as InstancedMesh | undefined
   if (rest) {
     const list = built.boxes.filter((b) => b.group !== 'house' && !b.hidden)

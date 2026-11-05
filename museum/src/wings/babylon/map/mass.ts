@@ -5,13 +5,14 @@
    attributes so one material serves every body. */
 
 import {
-  BoxGeometry, BufferGeometry, Color, DoubleSide, ExtrudeGeometry, Float32BufferAttribute, Group, InstancedBufferAttribute,
+  BoxGeometry, BufferAttribute, BufferGeometry, Color, DoubleSide, ExtrudeGeometry, Float32BufferAttribute, Group, InstancedBufferAttribute,
   InstancedMesh, Matrix4, Mesh, MeshBasicNodeMaterial, MeshStandardNodeMaterial, Path, Quaternion, Shape, ShapeGeometry, ShapeUtils, Vector2, Vector3,
   type Material,
 } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import type { Built, Cls, P2 } from './plan'
+import { RIM } from '../open/houses'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -357,7 +358,11 @@ export interface Bodies {
 
 /** one rebuilt house box, as the arrival's houses.ts gives it (that module is passed in: node resolves no import here) */
 export interface HouseBoxLike { house: number; part: number; butt: number; block: number; x: number; z: number; sx: number; sz: number; yaw: number; y0: number; y1: number; gy: number }
-export type HouseRebuild = (boxes: Built['boxes'], ground: (x: number, z: number) => number) => { boxes: HouseBoxLike[] }
+/** a house's roof drawn as a tray (open/houses.ts HouseTray): parapets on the `rims` sides, each side's face drawn above
+    its `hide` level, a door on side `door`; part 5 a room standing on tray `on` */
+export interface HouseTrayLike extends HouseBoxLike { rims: number; hide: [number, number, number, number]; door: number; doorAt: number; doorW: number; doorH: number; on: number }
+export type HouseRebuild = (boxes: Built['boxes'], ground: (x: number, z: number) => number) => { boxes: HouseBoxLike[]; trays?: HouseTrayLike[] }
+const TRAY_RIM = RIM
 
 /** a stop module's paint over a shared body's colour (the ground under a precinct); none leaves the map's own. `houses`
     rebuilds the generic house boxes as the arrival does (rooms of their own heights round a court of its own size), the
@@ -443,6 +448,118 @@ function settleHouses(list: HouseBoxLike[], ground: (x: number, z: number) => nu
   return list
 }
 
+/** the trays settled as the boxes are (settleHouses), the rooms on the roofs then stood on their host's settled deck; and
+    where two neighbouring houses' roofs or parapet tops meet within the bed, the later house's roof a few millimetres up */
+function settleTrays(list: HouseTrayLike[], ground: (x: number, z: number) => number, grid: { xs: number[]; zs: number[] }): HouseTrayLike[] {
+  const rooms = list.filter((t) => t.part === 5).map((t) => ({ t, host: list[t.on]!, over: t.y1 - list[t.on]!.y1 }))
+  settleHouses(list.filter((t) => t.part !== 5), ground, grid)
+  const levels = (t: HouseTrayLike): number[] => (t.part === 4 ? [t.y1] : t.rims ? [t.y1, t.y1 + TRAY_RIM.h] : [t.y1])
+  const cell = 24, near = new Map<string, HouseTrayLike[]>()
+  for (const b of list) {
+    if (b.part === 5) continue
+    const r = Math.hypot(b.sx, b.sz) / 2
+    for (let i = Math.floor((b.x - r) / cell); i <= Math.floor((b.x + r) / cell); i++) for (let j = Math.floor((b.z - r) / cell); j <= Math.floor((b.z + r) / cell); j++) {
+      const k = `${i},${j}`
+      for (const o of near.get(k) ?? []) {
+        if (o.house === b.house || Math.hypot(o.x - b.x, o.z - b.z) >= (Math.hypot(o.sx, o.sz) + Math.hypot(b.sx, b.sz)) / 2) continue
+        for (const lo of levels(o)) for (const lb of levels(b)) if (Math.abs(lo - lb) <= 0.004) b.y1 += 0.008 + lo - lb
+      }
+      ;(near.get(k) ?? near.set(k, []).get(k)!).push(b)
+    }
+  }
+  for (const { t, host, over } of rooms) { t.y0 = host.y1 - 0.05; t.y1 = host.y1 + over }
+  return list
+}
+
+/** the trays as one mesh of their faces (each a quad, outward): every side from its `hide` level (the foot under the
+    ground) to the roof or the parapet's top, the parapets' tops and inner faces, the roof's floor inside them; the
+    court only its floor. Per vertex: `hinfo` (house, kind + 16 x part, the ground's level, the block), `hdoor` (the
+    distance along a door's face from its centre, the door's top level; 1000 where no door), the class letters and band.
+    kind: 0 a range's outer face, 1 a parapet's top, 2 a parapet's inner face, 3 a roof, 4 the court, 5 a roof room's wall,
+    6 a range's face on its court */
+function trayHouses(list: HouseTrayLike[], band: number, mat: Material): Mesh {
+  const W = TRAY_RIM.w, RH = TRAY_RIM.h
+  const pos: number[] = [], nor: number[] = [], info: number[] = [], door: number[] = [], idx: number[] = []
+  let nv = 0
+  for (const t of list) {
+    const ca = [Math.cos(t.yaw), -Math.sin(t.yaw)], cb = [Math.sin(t.yaw), Math.cos(t.yaw)]
+    const hx = t.sx / 2, hz = t.sz / 2, top = t.y1
+    // rims only where the roof between them keeps 30 cm
+    let r = t.rims
+    if (t.sx - ((r & 1 ? W : 0) + (r & 2 ? W : 0)) < 0.3) r &= ~3
+    if (t.sz - ((r & 4 ? W : 0) + (r & 8 ? W : 0)) < 0.3) r &= ~12
+    const has = (s: number): boolean => (r & (1 << s)) !== 0
+    const kindOf = (k: number): number => (t.part === 5 && k === 0 ? 5 : k) + 16 * t.part
+    const W0 = (u: number, v: number): [number, number] => [t.x + ca[0]! * u + cb[0]! * v, t.z + ca[1]! * u + cb[1]! * v]
+    // a quad from local corners (u, y, v), wound so its normal points along n (local: 0 -u, 1 +u, 2 -v, 3 +v, 4 up)
+    const quad = (c: Array<[number, number, number]>, n: number, kind: number, doorAlong?: (u: number, v: number) => number, doorTop = 0): void => {
+      const nl = n === 4 ? [0, 1, 0] : n < 2 ? [ca[0]! * (n === 0 ? -1 : 1), 0, ca[1]! * (n === 0 ? -1 : 1)] : [cb[0]! * (n === 2 ? -1 : 1), 0, cb[1]! * (n === 2 ? -1 : 1)]
+      const P = c.map(([u, y, v]) => { const [x, z] = W0(u, v); return [x, y, z] as [number, number, number] })
+      const e1 = [P[1]![0] - P[0]![0], P[1]![1] - P[0]![1], P[1]![2] - P[0]![2]], e2 = [P[2]![0] - P[0]![0], P[2]![1] - P[0]![1], P[2]![2] - P[0]![2]]
+      const cr = [e1[1]! * e2[2]! - e1[2]! * e2[1]!, e1[2]! * e2[0]! - e1[0]! * e2[2]!, e1[0]! * e2[1]! - e1[1]! * e2[0]!]
+      const flip = cr[0]! * nl[0]! + cr[1]! * nl[1]! + cr[2]! * nl[2]! < 0
+      c.forEach(([u, , v], i) => {
+        pos.push(...P[i]!)
+        nor.push(...nl)
+        info.push(t.house, kindOf(kind), t.gy, t.block)
+        door.push(doorAlong ? doorAlong(u, v) : 1000, doorTop)
+      })
+      if (flip) idx.push(nv, nv + 2, nv + 1, nv, nv + 3, nv + 2)
+      else idx.push(nv, nv + 1, nv + 2, nv, nv + 2, nv + 3)
+      nv += 4
+    }
+    const u0 = -hx + (has(0) ? W : 0), u1 = hx - (has(1) ? W : 0), v0 = -hz + (has(2) ? W : 0), v1 = hz - (has(3) ? W : 0)
+    const dTop = (t.part === 5 ? t.y0 + 0.05 : t.gy) + t.doorH
+    // the sides: s 0 and 1 at u = -hx, +hx along v; 2 and 3 at v = -hz, +hz along u
+    for (let s = 0; s < 4; s++) {
+      if (t.hide[s] === Infinity) continue
+      const lo = Math.max(t.y0, t.hide[s]!), hi = has(s) ? top + RH : top
+      const alongU = s >= 2, c = s === 0 ? -hx : s === 1 ? hx : s === 2 ? -hz : hz
+      const at = (a: number, y: number): [number, number, number] => (alongU ? [a, y, c] : [c, y, a])
+      const half = alongU ? hx : hz
+      const da = t.door === s ? (u: number, v: number): number => (alongU ? u + hx : v + hz) - t.doorAt : undefined
+      // a range's face on its court (kind 6): the court's walls see less of the sky
+      const onCourt = t.part < 4 && s === [3, 2, 1, 0][t.part]
+      if (hi > lo) quad([at(-half, lo), at(half, lo), at(half, hi), at(-half, hi)], s, onCourt ? 6 : 0, da, dTop)
+      if (has(s)) continue
+      // the ends of the neighbouring sides' parapets on this face
+      const ends: Array<[number, number, boolean]> = alongU ? [[-hx, -hx + W, has(0)], [hx - W, hx, has(1)]] : [[-hz, -hz + W, has(2)], [hz - W, hz, has(3)]]
+      const cl = Math.max(lo, top)
+      for (const [a0, a1, on] of ends) if (on && top + RH > cl) quad([at(a0, cl), at(a1, cl), at(a1, top + RH), at(a0, top + RH)], s, 0)
+    }
+    // the parapets' tops (the -v and +v ones take the corners) and their inner faces
+    const T = top + RH
+    if (has(2)) quad([[-hx, T, -hz], [hx, T, -hz], [hx, T, -hz + W], [-hx, T, -hz + W]], 4, 1)
+    if (has(3)) quad([[-hx, T, hz - W], [hx, T, hz - W], [hx, T, hz], [-hx, T, hz]], 4, 1)
+    if (has(0)) quad([[-hx, T, v0], [-hx + W, T, v0], [-hx + W, T, v1], [-hx, T, v1]], 4, 1)
+    if (has(1)) quad([[hx - W, T, v0], [hx, T, v0], [hx, T, v1], [hx - W, T, v1]], 4, 1)
+    if (has(2)) quad([[u0, top, -hz + W], [u1, top, -hz + W], [u1, T, -hz + W], [u0, T, -hz + W]], 3, 2)
+    if (has(3)) quad([[u0, top, hz - W], [u1, top, hz - W], [u1, T, hz - W], [u0, T, hz - W]], 2, 2)
+    if (has(0)) quad([[-hx + W, top, v0], [-hx + W, top, v1], [-hx + W, T, v1], [-hx + W, T, v0]], 1, 2)
+    if (has(1)) quad([[hx - W, top, v0], [hx - W, top, v1], [hx - W, T, v1], [hx - W, T, v0]], 0, 2)
+    // the roof (or the court's floor, or the roof room's top) inside the parapets
+    quad([[u0, top, v0], [u1, top, v0], [u1, top, v1], [u0, top, v1]], 4, t.part === 4 ? 4 : 3)
+  }
+  const geo = new BufferGeometry()
+  geo.setAttribute('position', new Float32BufferAttribute(pos, 3))
+  geo.setAttribute('normal', new Float32BufferAttribute(nor, 3))
+  geo.setAttribute('hinfo', new Float32BufferAttribute(info, 4))
+  geo.setAttribute('hdoor', new Float32BufferAttribute(door, 2))
+  const n = pos.length / 3
+  const cls = new Float32Array(n * 2).fill(CLS.G), bd = new Float32Array(n)
+  for (let i = 0; i < n; i++) bd[i] = info[i * 4 + 2]! + band
+  geo.setAttribute('cls', new Float32BufferAttribute(cls, 2))
+  geo.setAttribute('band', new Float32BufferAttribute(bd, 1))
+  geo.setIndex(n > 65535 ? new BufferAttribute(new Uint32Array(idx), 1) : idx)
+  geo.computeBoundingSphere()
+  const mesh = new Mesh(geo, mat)
+  mesh.castShadow = true
+  mesh.receiveShadow = true
+  mesh.frustumCulled = false
+  mesh.name = 'houses'
+  return mesh
+}
+
 function rebuiltHouses(list: HouseBoxLike[], band: number, mat: Material): InstancedMesh {
   const geo = new BoxGeometry(1, 1, 1)
   geo.deleteAttribute('uv')
@@ -481,7 +598,9 @@ export function buildBodies(built: Built, tones: ClassTones, sky: Sky, sunDir: N
   group.add(prisms)
   const houses = built.boxes.filter((b) => b.group === 'house')
   const rest = built.boxes.filter((b) => b.group !== 'house' && !b.hidden)
-  if (houses.length && paint.houses) group.add(rebuiltHouses(settleHouses(paint.houses.rebuild(houses, built.ground).boxes, built.ground, groundLines(canalZ)), paint.houses.band, bodyMaterial(tones, 0.47)))
+  const rebuilt = houses.length && paint.houses ? paint.houses.rebuild(houses, built.ground) : null
+  if (rebuilt?.trays) group.add(trayHouses(settleTrays(rebuilt.trays, built.ground, groundLines(canalZ)), paint.houses!.band, bodyMaterial(tones, 0.47)))
+  else if (rebuilt) group.add(rebuiltHouses(settleHouses(rebuilt.boxes, built.ground, groundLines(canalZ)), paint.houses!.band, bodyMaterial(tones, 0.47)))
   else if (houses.length) group.add(boxMesh(houses, bodyMaterial(tones, 0.47), 'houses'))
   if (rest.length) group.add(boxMesh(rest, blockMat, 'towers-and-piers'))
 

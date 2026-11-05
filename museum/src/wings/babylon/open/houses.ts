@@ -6,11 +6,24 @@
    dug quarters are crowded and irregular, K1914 on Merkes), each house takes
    its own court size and place, its own ranges' heights, a turn of about a
    degree and a little shift on its lot, and a few lots stay open ground. Every
-   number here is ours. No imports. */
+   number here is ours. No imports.
+   The map draws the same houses as trays (`trays`, the same lots and courts): each range a flat roof with its parapet
+   round the outside and the court (House VI's 45 cm, P2021 p. 37 to 38 for the roofs), the street ranges higher than
+   the side ranges, a room on some roofs (P2021 p. 242: one storey, a possible room on the flat roof), one street door
+   a house; heights, sizes, the door's and the roof room's places Guessed, ours. */
 
 /** `butt`: the box's sides that meet another room of the same house (1 its -u side, 2 +u, 4 -v, 8 +v), where no parapet runs;
     `block`: the block of lots between streets and lanes the house stands in */
 export interface HouseBox { id: string; house: number; part: number; butt: number; block: number; x: number; z: number; sx: number; sz: number; yaw: number; y0: number; y1: number; gy: number }
+
+/** one roof of a house seen from above: `rims` the sides with a parapet (bits as `butt`), `hide` per side (-u, +u, -v, +v)
+    the level below which that side's face is not drawn (inside a neighbour), `door` the side carrying a door (-1 none)
+    and its centre along that side from the side's -u or -v end; part 0 to 3 the ranges, 4 the court (its top only), 5 a
+    room on the roof of tray `on` */
+export interface HouseTray extends HouseBox { rims: number; hide: [number, number, number, number]; door: number; doorAt: number; doorW: number; doorH: number; on: number }
+
+/** the parapet's width and its height over the roof (House VI's 45 cm wall; its height ours, House VI's is 60 cm) */
+export const RIM = { w: 0.45, h: 0.5 }
 
 interface MapBox { id: string; group: string; x: number; z: number; y0: number; y1: number; sx: number; sz: number; yaw: number }
 
@@ -25,8 +38,11 @@ function rng(seed: number): () => number {
   }
 }
 
-export function rebuildHouses(boxes: MapBox[], ground: (x: number, z: number) => number): { boxes: HouseBox[]; houses: number; open: number } {
+export function rebuildHouses(boxes: MapBox[], ground: (x: number, z: number) => number): { boxes: HouseBox[]; houses: number; open: number; trays: HouseTray[] } {
   const R = rng(5701)
+  // the trays draw from their own stream, so the arrival's rooms stay as they were
+  const R2 = rng(5702)
+  const trays: HouseTray[] = []
   const by = new Map<number, Record<string, MapBox>>()
   for (const b of boxes) {
     const m = /^house-(\d+)-([nswe])$/.exec(b.id)
@@ -98,10 +114,103 @@ export function rebuildHouses(boxes: MapBox[], ground: (x: number, z: number) =>
       }
     })
     put(4, 'court', u0 - 0.01, u1 + 0.01, v0 - 0.01, v1 + 0.01, g + 0.12)
+    houseTrays(trays, R2, k, { W, D, u0, u1, v0, v1, base, g, yaw, ox, oz })
   }
   const blockOf = blocks(lots)
   for (const b of out) b.block = blockOf.get(b.house) ?? 0
-  return { boxes: out, houses: by.size - open, open }
+  for (const t of trays) t.block = blockOf.get(t.house) ?? 0
+  streetDoors(trays, lots, blockOf, R2)
+  return { boxes: out, houses: by.size - open, open, trays }
+}
+
+const NONE = Infinity, ALL = -Infinity
+
+/** one house's trays in its lot's frame: the north and south ranges (-v and +v) full width, each cut in two at a step
+    now and then, the west and east ranges between them, lower, their ends inside the end ranges; the court's floor; a
+    room on some south roofs */
+function houseTrays(out: HouseTray[], R: () => number, k: number, h: { W: number; D: number; u0: number; u1: number; v0: number; v1: number; base: number; g: number; yaw: number; ox: number; oz: number }): void {
+  const { W, D, u0, u1, v0, v1, base, g, yaw, ox, oz } = h
+  const ca = [Math.cos(yaw), -Math.sin(yaw)], cb = [Math.sin(yaw), Math.cos(yaw)]
+  const first = out.length
+  const put = (part: number, name: string, a0: number, a1: number, b0: number, b1: number, top: number, rims: number, hide: [number, number, number, number], y0 = g - 0.8): HouseTray => {
+    const mu = (a0 + a1) / 2, mv = (b0 + b1) / 2
+    const t: HouseTray = { id: `house-${k}-${name}`, house: k, part, butt: 15 & ~rims, block: 0, x: ox + ca[0]! * mu + cb[0]! * mv, z: oz + ca[1]! * mu + cb[1]! * mv, sx: a1 - a0, sz: b1 - b0, yaw, y0, y1: top, gy: g, rims, hide, door: -1, doorAt: 0, doorW: 0, doorH: 0, on: -1 }
+    out.push(t)
+    return t
+  }
+  // the south range's parapet tops where the rooms' highest roof stood (so the city's skyline and its long shadows stay),
+  // its deck one storey about 3 m over the street; the north range a little lower, the side ranges lower still
+  const sDeck = base + 0.2 - RIM.h
+  const nDeck = sDeck - (0.1 + R() * 0.15)
+  const hW = nDeck - (0.15 + R() * 0.1), hE = nDeck - (0.15 + R() * 0.1)
+  const floorS = Math.max(hW, hE) + 0.15
+  // now and then a range cut in two, its second part a step lower
+  const endRange = (part: number, name: string, b0: number, b1: number, deck: number, outer: number, court: number): void => {
+    const lower = Math.max(floorS, deck - (0.3 + R() * 0.2))
+    if (W >= 12 && R() < 0.5 && deck - lower > 0.12) {
+      const us = -W / 2 + W * (0.35 + R() * 0.3)
+      const aHigh = R() < 0.5
+      const ha = aHigh ? deck : lower, hb = aHigh ? lower : deck
+      put(part, `${name}0`, -W / 2, us, b0, b1, g + ha, 1 | outer | court | (aHigh ? 2 : 0), [ALL, aHigh ? g + hb : NONE, ALL, ALL])
+      put(part, `${name}1`, us, W / 2, b0, b1, g + hb, 2 | outer | court | (aHigh ? 0 : 1), [aHigh ? NONE : g + ha, ALL, ALL, ALL])
+    } else put(part, name, -W / 2, W / 2, b0, b1, g + deck, 15, [ALL, ALL, ALL, ALL])
+  }
+  endRange(0, 'n', -D / 2, v0, nDeck, 4, 8)
+  endRange(1, 's', v1, D / 2, sDeck, 8, 4)
+  // the side ranges reach 2 cm into the end ranges, their ends never drawn
+  put(2, 'w', -W / 2 + 0.012, u0, v0 - 0.02, v1 + 0.02, g + hW, 1 | 2, [ALL, ALL, NONE, NONE])
+  put(3, 'e', u1, W / 2 - 0.012, v0 - 0.02, v1 + 0.02, g + hE, 1 | 2, [ALL, ALL, NONE, NONE])
+  put(4, 'court', u0 - 0.01, u1 + 0.01, v0 - 0.01, v1 + 0.01, g + 0.12, 0, [NONE, NONE, NONE, NONE])
+  // a room on the south roof of about one house in five, at one end of its longest part, inside the parapets
+  if (R() < 0.22) {
+    let host = -1
+    for (let i = first; i < out.length; i++) if (out[i]!.part === 1 && (host < 0 || out[i]!.sx > out[host]!.sx)) host = i
+    const H = out[host]!
+    const inU0 = -H.sx / 2 + (H.rims & 1 ? RIM.w : 0) + 0.08, inU1 = H.sx / 2 - (H.rims & 2 ? RIM.w : 0) - 0.08
+    const inV0 = -H.sz / 2 + RIM.w + 0.08, inV1 = H.sz / 2 - RIM.w - 0.08
+    const len = Math.min(3 + R() * 1.5, inU1 - inU0)
+    if (len > 2.4 && inV1 - inV0 > 1.8) {
+      const atEnd = R() < 0.5
+      const a0 = atEnd ? inU0 : inU1 - len, a1 = a0 + len
+      // the host's local frame: its centre is (H.x, H.z); the room sits on its deck
+      const hu = (H.x - ox) * ca[0]! + (H.z - oz) * ca[1]!, hv = (H.x - ox) * cb[0]! + (H.z - oz) * cb[1]!
+      const r = put(5, 'roofroom', hu + a0, hu + a1, hv + inV0, hv + inV1, H.y1 + 2.0 + R() * 0.4, 0, [ALL, ALL, ALL, ALL], H.y1 - 0.05)
+      r.on = host
+      // its door faces the court (-v), in its middle
+      r.door = 2; r.doorAt = len / 2; r.doorW = 0.85; r.doorH = 1.75
+    }
+  }
+}
+
+/** each house's street door, on the side of its lot no other lot of its block touches (the two rows stand back to back),
+    in the longest part of that range, a metre or more from its ends */
+function streetDoors(trays: HouseTray[], lots: Map<number, Lot>, blockOf: Map<number, number>, R: () => number): void {
+  const inBlock = new Map<number, Array<[number, Lot]>>()
+  for (const [k, l] of lots) (inBlock.get(blockOf.get(k) ?? -1) ?? inBlock.set(blockOf.get(k) ?? -1, []).get(blockOf.get(k) ?? -1)!).push([k, l])
+  const front = new Map<number, number>()
+  for (const [k, l] of lots) {
+    let minus = false, plus = false
+    for (const [j, o] of inBlock.get(blockOf.get(k) ?? -1) ?? []) {
+      if (j === k || Math.abs(o.U - l.U) >= o.hu + l.hu - 1) continue
+      if (Math.abs(o.V + o.hv - (l.V - l.hv)) < 1.5) minus = true
+      if (Math.abs(o.V - o.hv - (l.V + l.hv)) < 1.5) plus = true
+    }
+    if (!minus) front.set(k, 0)
+    else if (!plus) front.set(k, 1)
+  }
+  const best = new Map<number, HouseTray>()
+  for (const t of trays) {
+    const f = front.get(t.house)
+    if (f === undefined || t.part !== f || t.sx < 3) continue
+    const b = best.get(t.house)
+    if (!b || t.sx > b.sx) best.set(t.house, t)
+  }
+  for (const t of best.values()) {
+    t.door = t.part === 0 ? 2 : 3
+    t.doorAt = 1 + R() * (t.sx - 2)
+    t.doorW = 1 + R() * 0.2
+    t.doorH = 1.9 + R() * 0.2
+  }
 }
 
 interface Lot { U: number; V: number; hu: number; hv: number }
