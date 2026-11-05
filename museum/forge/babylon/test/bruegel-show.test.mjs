@@ -49,7 +49,26 @@ for (const body of b.bodies) {
 // the wall's own foot: the median of the base storey's facing at the ground (the spurs run out past it)
 feet.sort((x, y) => x - y)
 const reach = feet[Math.floor(feet.length / 2)]
-console.log(JSON.stringify({ ids: b.bodies.map((x) => x.id), facts: b.facts, top, reach, out, walls, tris }))`
+// the rock: its faces by part kind, and its rock faces in each band of the crag, by angle round the axis and height
+const tops = [sp.base.h]
+for (const st of sp.storeys) tops.push(tops[tops.length - 1] + st.h)
+const rockKinds = {}, crag = {}
+{
+  const g = b.bodies.find((x) => x.id === 'bruegel-show-rock').geometry
+  const p = g.getAttribute('position'), sk = g.getAttribute('sk')
+  for (let i = 0; i < p.count; i += 3) {
+    const k = sk.getX(i)
+    rockKinds[k] = (rockKinds[k] ?? 0) + 1
+    if (k !== 3) continue
+    const cx = (p.getX(i) + p.getX(i + 1) + p.getX(i + 2)) / 3 - f.x, cz = (p.getZ(i) + p.getZ(i + 1) + p.getZ(i + 2)) / 3 - f.z
+    const h = (p.getY(i) + p.getY(i + 1) + p.getY(i + 2)) / 3 - b.frame.base
+    const phi = Math.atan2(-(cx * f.s + cz * f.c), cx * f.c - cz * f.s) * 180 / Math.PI
+    for (const [n, [a0, a1]] of Object.entries(sp.rock.crag.bands)) {
+      if (phi > a0 + 2 && phi < a1 - 2 && h > tops[n - 2] - 3 && h < tops[n - 1] + 3) crag[n] = (crag[n] ?? 0) + 1
+    }
+  }
+}
+console.log(JSON.stringify({ ids: b.bodies.map((x) => x.id), facts: b.facts, top, reach, out, walls, tris, rockKinds, crag }))`
 const r = spawnSync(process.execPath, ['--experimental-strip-types', '--no-warnings', '--input-type=module', '-e', code], { encoding: 'utf8' })
 const out = r.status === 0 ? JSON.parse(r.stdout.trim().split('\n').pop()) : null
 
@@ -86,4 +105,52 @@ test('the painting is read, never copied: no image, texture or sampled colour in
     const text = readFileSync(join(dir, name), 'utf8')
     assert.doesNotMatch(text, /TextureLoader|\.jpe?g|\.png|\.webp|texture\(/i, name)
   }
+})
+
+test("the rock is the building's body: rock, its quarry's dusty treads and its caves, through the crag's bands", () => {
+  // part kinds 3 rock, 9 floor (the treads), 7 dark (the caves' backs); no stone, brick or timber in it
+  for (const k of Object.keys(out.rockKinds)) assert.ok(['3', '7', '9'].includes(k), `part kind ${k} in the rock`)
+  assert.ok(out.rockKinds['3'] > 5000, `${out.rockKinds['3']} rock faces`)
+  const sp = JSON.parse(readFileSync(join(W, 'bruegel-show/show-plan.json'), 'utf8'))
+  for (const n of Object.keys(sp.rock.crag.bands)) assert.ok((out.crag[n] ?? 0) > 100, `tier ${n}'s crag band holds ${out.crag[n] ?? 0} rock faces`)
+  // the quarry in benches of uneven height, never an even stair
+  const hs = [0, ...sp.rock.front.quarry.heights, 1], rises = hs.slice(1).map((x, i) => x - hs[i])
+  assert.ok(Math.max(...rises) - Math.min(...rises) > 0.1, `bench rises ${rises.map((x) => x.toFixed(2))}`)
+  // warm ochre-grey: red over green over blue, darker and greyer than the masonry's old cream
+  const [r, g, bl] = sp.colours.rock, [or, og, ob] = sp.colours.old
+  assert.ok(r > g && g > bl, 'the rock warm')
+  assert.ok(0.2126 * r + 0.7152 * g + 0.0722 * bl < 0.2126 * or + 0.7152 * og + 0.0722 * ob, 'the rock darker than the masonry')
+  assert.ok((r - bl) / r < (or - ob) / or, 'the rock greyer than the masonry')
+  // its shade has no course lines: the rock's block of the material draws no lines
+  const mat = readFileSync(join(W, 'bruegel-show/show-mat.ts'), 'utf8')
+  const block = mat.slice(mat.indexOf('/* ── rock:'), mat.indexOf('/* ── the rest:'))
+  assert.ok(block.length > 200, 'the rock block found')
+  const code = block.split('\n').filter((l) => !/^\s*(\/\/|\/\*|\*)/.test(l)).join('\n')
+  assert.doesNotMatch(code, /lineEvery\(|course/i)
+})
+
+test("the painter's vantage is a key the showpiece alone walks, after the hold", async () => {
+  const { keysFor, vantageTime } = await import(pathToFileURL(join(W, 'bruegel-show/show-path.ts')).href)
+  const cams = JSON.parse(readFileSync(join(W, 'map/map-cams.json'), 'utf8'))
+  const own = cams.only['bruegel-show'], v = own.filter((k) => k.vantage)
+  assert.equal(v.length, 1)
+  assert.equal(vantageTime(cams, 'bruegel-show'), v[0].t)
+  assert.equal(vantageTime(cams, 'bruegel'), null)
+  // after stop 12's still, within the stop; high, on a flight level; from the front, as the hold
+  const still = cams.path.find((k) => k.stop === 12 && k.still)
+  assert.ok(v[0].t > still.t && own.every((k) => k.stop === 12))
+  assert.equal(typeof v[0].y, 'number')
+  assert.ok(v[0].y > 60, `the vantage at level ${v[0].y}`)
+  const dir = (p) => { const x = p[0] - v[0].look[0], y = p[1] - v[0].look[1], l = Math.hypot(x, y); return [x / l, y / l] }
+  const a = dir(v[0].at), h = dir(still.at)
+  assert.ok(Math.acos(a[0] * h[0] + a[1] * h[1]) * 180 / Math.PI < 10, 'the vantage on the hold\'s side of the tower')
+  // every other state walks the shared path as it is, and the shared path holds no key of the showpiece's
+  for (const s of ['built', 'dug', 'bruegel']) assert.equal(keysFor(cams, s), cams.path)
+  assert.ok(!cams.path.some((k) => k.vantage))
+  // the showpiece's walk: its own keys in place of the shared ones their span covers, a cut back to the walk after
+  const mine = keysFor(cams, 'bruegel-show')
+  const t0 = Math.min(...own.map((k) => k.t)), t1 = Math.max(...own.map((k) => k.t))
+  assert.ok(mine.filter((k) => k.t >= t0 && k.t <= t1).every((k) => own.includes(k)))
+  assert.equal(mine.find((k) => k.t > t1).cut, true)
+  for (let i = 1; i < mine.length; i++) assert.ok(mine[i].t > mine[i - 1].t, `keys in time at ${mine[i].t}`)
 })

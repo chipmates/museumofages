@@ -14,7 +14,7 @@ type V3 = [number, number, number]
 type F1 = (s: number) => number
 
 /** what a face is, for the material */
-export const SK = { old: 0, fresh: 1, brick: 2, rock: 3, timber: 4, thatch: 5, tile: 6, dark: 7, cloth: 8, floor: 9, plaster: 10 } as const
+export const SK = { old: 0, fresh: 1, brick: 2, rock: 3, timber: 4, thatch: 5, tile: 6, dark: 7, cloth: 8, floor: 9, plaster: 10, figure: 11 } as const
 
 export interface ShowBody { id: string; geometry: BufferGeometry }
 export interface ShowFrame { x: number; z: number; c: number; s: number; base: number }
@@ -360,7 +360,8 @@ function redBay(S: Soup, F: WF, W: number, footL: number, footR: number, topL: n
   const f0 = Math.max(footL, footR)
   const ledge0 = (topL + topR) / 2
   const brick = q(SK.brick, st.tone, 1, 0, ledge0)
-  const dark = q(SK.dark, st.tone, 0, 2.4, ledge0)
+  // the arch's back read as deep in the shell, darker than its reveal
+  const dark = q(SK.dark, st.tone, 0, 3.4, ledge0)
   // three steps along the top, each down by whole courses
   const steps = [0, onGrid(W / 3), onGrid((2 * W) / 3), W]
   const drop = [0, 1, 2].map((i) => (st.drop ? Math.round(st.drop(((i + 0.5) * W) / 3) / COURSE) * COURSE : Math.round((st.broken * H * (0.15 + 0.85 * hash(st.seed, i, 3.3))) / COURSE) * COURSE))
@@ -412,16 +413,19 @@ function baseBay(S: Soup, F: WF, W: number, foot0: number, topL: number, topR: n
       // a bay rebuilt in new red brick: a lower arched door in the brick infill
       sub: st.red ? [{ s0: s0 + gw * 0.3, s1: s0 + gw * 0.7, sill: 0.75, spring: H * 0.2, head: 'round', depth: 1.2, rev: red, back: dark }] : undefined })
   }
+  // the upper openings by the bay's own height where the ramp brings its top down (the low side of the seam), so no
+  // head runs into the cornice
+  const Hu = Math.min(H, topL, topR)
   const tw = inner * 0.17
   for (const s0 of [gs[0]! + (gw - tw) / 2, gs[1]! + (gw - tw) / 2]) {
-    holes.push({ s0, s1: s0 + tw, sill: H * 0.46, spring: H * 0.79 - tw / 2, head: 'round', depth: 1.3, rev: face, back: st.v < 0.5 ? dark : q(SK.dark, st.tone, 0, 2.2, ledge0) })
+    holes.push({ s0, s1: s0 + tw, sill: Hu * 0.46, spring: Hu * 0.79 - tw / 2, head: 'round', depth: 1.3, rev: face, back: st.v < 0.5 ? dark : q(SK.dark, st.tone, 0, 2.2, ledge0) })
   }
   for (const sx of [W * 0.3, W / 2, W * 0.7]) {
-    const t0 = H * 0.86
+    const t0 = Hu * 0.86
     holes.push({ s0: sx - 0.32, s1: sx + 0.32, sill: t0, spring: t0 + 1.2, head: 'flat', depth: 0.6, rev: face, back: dark })
   }
   panel(S, F, pw / 2 - 0.05, W - pw / 2 + 0.05, () => foot0, (s) => top(s) - 0.7, holes, 0, face)
-  balcony(S, F, W / 2, H * 0.79, 1.35, face, q(SK.dark, st.tone, 0, 0.6, ledge0))
+  balcony(S, F, W / 2, Hu * 0.79, 1.35, face, q(SK.dark, st.tone, 0, 0.6, ledge0))
   ledge(S, F, W, st.tan, [topL - 0.7, topR - 0.7], [topL, topR], -0.6, 1.1, face, 'fd')
   ledge(S, F, W, st.tan, [topL, topR], [topL + 1.1, topR + 1.1], 0.5, 1.1, q(face.k, st.tone, st.fresh, 0, ledge0 + 1.2), 'ftb')
 }
@@ -473,6 +477,16 @@ function terrace(S: Soup, f: ShowFrame, a0: number, a1: number, rIn: number, rOu
     upQuad(S, A, B, C, D, fl)
   }
 }
+/** a radial cross wall at an angle, w thick, from radius d0 out to d1, its top falling from tIn at d0 to tOut at d1:
+    a vault's cross wall seen cut open, as the red side's cells are painted */
+function fin(S: Soup, f: ShowFrame, phi: number, d0: number, d1: number, foot: number, tIn: number, tOut: number, w: number, qq: Q): void {
+  const F = radialFrame(f, phi)
+  const P = (s: number, t: number, d: number): V3 => at(F, s, t, d)
+  const c: V3 = at(F, 0, (foot + Math.min(tIn, tOut)) / 2, (d0 + d1) / 2)
+  for (const s of [-w / 2, w / 2]) awayQuad(S, P(s, foot, d0), P(s, foot, d1), P(s, tOut, d1), P(s, tIn, d0), c, qq)
+  awayQuad(S, P(-w / 2, tIn, d0), P(w / 2, tIn, d0), P(w / 2, tOut, d1), P(-w / 2, tOut, d1), c, qq)
+  awayQuad(S, P(-w / 2, foot, d1), P(w / 2, foot, d1), P(w / 2, tOut, d1), P(-w / 2, tOut, d1), c, qq)
+}
 /** a quad whose face must look away from the point c, whichever way its corners were listed */
 function awayQuad(S: Soup, a: V3, b: V3, c3: V3, d: V3, c: V3, f: Q): void {
   const ux = b[0] - a[0], uy = b[1] - a[1], uz = b[2] - a[2], vx = c3[0] - a[0], vy = c3[1] - a[1], vz = c3[2] - a[2]
@@ -502,81 +516,123 @@ function ringBays(n: number, off: number): Array<{ i: number; a0: number; a1: nu
   return out
 }
 
-/** a weathered mass of rock: an irregular section whose corners each keep their own offset all the way up, so its
-    faces run upright in broad planes split by clefts; strata where it steps in; its top broken off in a tilted plane */
-function mass(S: Soup, f: ShowFrame, phi: number, r: number, w: number, dep: number, h0: number, h1: number, seed: number, tone: number, clefts = 2): void {
-  const F = radialFrame(f, phi)
-  const N = 16, M = Math.max(4, Math.round((h1 - h0) / 3))
-  const cl = Array.from({ length: clefts }, (_, i) => Math.floor(hash(seed, i, 21) * N))
-  const rock = q(SK.rock, tone, 0, 0, h1)
-  const corner = Array.from({ length: N }, (_, i) => (0.72 + 0.48 * hash(seed, i, 23)) * (cl.includes(i) ? 0.62 : 1))
-  const strata = [0.3 + 0.2 * hash(seed, 24), 0.62 + 0.2 * hash(seed, 25)]
-  const tilt = [(hash(seed, 26) - 0.5) * 1.1, (hash(seed, 27) - 0.5) * 0.7]
-  const ring = (j: number): V3[] => {
-    const u = j / M
-    const t = h0 + (h1 - h0) * u
-    const step = strata.reduce((k, z) => (u > z ? k * 0.86 : k), 1)
-    const batter = (1 - 0.16 * u) * step
-    return Array.from({ length: N }, (_, i) => {
-      const a = (2 * Math.PI * (i + 0.3 * (hash(seed, i, 28) - 0.5))) / N
-      const k = corner[i]! * (1 + 0.1 * noise3(i * 0.9, seed, u * 5.0)) * batter
-      const sx = Math.cos(a) * (w / 2) * k, dz = Math.sin(a) * (dep / 2) * k
-      // the broken top tilts within its own row, never down onto the row below (that folds a face to a sliver)
-      const row = (h1 - h0) / M
-      const tt = j === M ? Math.max(t - 0.6 * row, t - 0.12 * (h1 - h0) * (0.5 + tilt[0]! * sx / (w / 2) + tilt[1]! * dz / (dep / 2)) - 0.6 * hash(seed, i, 29)) : t
-      return at(F, sx, tt, r + dz)
+type SkinOpts = { proud: [number, number]; strata: number; cell: number; seed: number; capIn: number | null; caves?: number[][]; rag?: [number, number]; endIn?: number; capQ?: Q }
+/** the rock's own face where it takes a wall's place, between two angles from foot(phi) to top(phi): it stands a
+    little proud of the wall line r, in strata that step back as they rise, split by narrow clefts that darken toward
+    their backs; caves with a flat floor and a rounded head cut into it, with their reveals and a dark back; its ends
+    ragged by `rag` degrees and closed back to `endIn`; its top capped back to `capIn` */
+function skin(S: Soup, f: ShowFrame, a0: number, a1: number, r: number, foot: (phi: number) => number, top: (phi: number) => number, o: SkinOpts): void {
+  const arc = ((a1 - a0) * D2R) * r
+  const hMax = Math.max(...[0, 0.25, 0.5, 0.75, 1].map((u) => top(a0 + (a1 - a0) * u) - foot(a0 + (a1 - a0) * u)))
+  const nr = Math.max(2, Math.round(hMax / o.cell))
+  const [p0, p1] = o.proud
+  const nCl = Math.max(1, Math.round(arc / 6))
+  const clefts = Array.from({ length: nCl }, (_, i) => ({ u: (i + 0.2 + 0.6 * hash(o.seed, i, 31)) / nCl, w: 0.6 + 0.5 * hash(o.seed, i, 32), d: 0.6 + 0.9 * hash(o.seed, i, 33) }))
+  // the columns: an even spacing, the one nearest each cleft's floor moved onto it so the cleft cuts sharp (moved,
+  // never added, so no column lies a sliver from its neighbour)
+  const nc = Math.max(2, Math.round(arc / o.cell))
+  const cols = Array.from({ length: nc + 1 }, (_, j) => j / nc)
+  for (const c of clefts) {
+    const j = Math.round(c.u * nc)
+    if (j > 0 && j < nc && Math.abs(cols[j]! - j / nc) < 1e-9) cols[j] = c.u
+  }
+  const [ragL, ragR] = o.rag ?? [0, 0]
+  const edge = (i: number, side: number): number => Math.min(1, Math.max(0, 0.5 + 0.6 * noise3((i / nr) * hMax * 0.11, o.seed, 3.1 * side)))
+  const phiAt = (j: number, i: number): number => {
+    const L = a0 - ragL * edge(i, 1), R = a1 + ragR * edge(i, 2)
+    return L + (R - L) * cols[j]!
+  }
+  const hAt = (j: number, i: number): number => { const p = phiAt(j, i); return foot(p) + ((top(p) - foot(p)) * i) / nr }
+  const cleftAt = (u: number): number => {
+    let v = 0
+    for (const c of clefts) { const x = ((u - c.u) * arc) / c.w; v += c.d * Math.exp(-x * x) }
+    return v
+  }
+  /** how far the face stands out of the wall line: a stratum's own step, a slow swell, the step back as it rises,
+      the clefts */
+  const out = (u: number, h: number, ur: number): number => {
+    const s = Math.floor((h + 1.1 * noise3(u * arc * 0.06, o.seed, 0.5)) / o.strata)
+    let v = p0 + (p1 - p0) * (0.7 * hash(o.seed, s, 34) + 0.3 * (0.5 + 0.5 * noise3(u * arc * 0.08, h * 0.18, o.seed)))
+    v -= 0.7 * ur
+    return v - cleftAt(u)
+  }
+  const pt = (j: number, i: number, inset = 0): V3 => {
+    const p = phiAt(j, i), h = hAt(j, i)
+    const [x, z] = sceneAt(f, p, r + out(cols[j]!, h, i / nr) - inset)
+    return [x, f.base + h, z]
+  }
+  const inner = (p: number, h: number, rr: number): V3 => { const [x, z] = sceneAt(f, p, rr); return [x, f.base + h, z] }
+  const caves = o.caves ?? []
+  const inCave = (j: number, i: number): boolean => {
+    if (j < 0 || j >= nc || i < 0 || i >= nr) return false
+    const p = (phiAt(j, i) + phiAt(j + 1, i)) / 2, h = (hAt(j, i) + hAt(j + 1, i + 1)) / 2
+    return caves.some(([c0, c1, h0, h1]) => {
+      const pc = (c0! + c1!) / 2, hw = (c1! - c0!) / 2, hc = h0! + 0.45 * (h1! - h0!)
+      const dp = (p - pc) / hw, wob = 1 + 0.22 * noise3(p * 0.7, h * 0.4, o.seed)
+      if (h < h0!) return false
+      return h < hc ? Math.abs(dp) < wob : dp * dp + ((h - hc) / (h1! - hc)) ** 2 < wob
     })
   }
-  let below = ring(0)
-  for (let j = 1; j <= M; j++) {
-    const above = ring(j)
-    const [cx, cz] = sceneAt(f, phi, r)
-    const c: V3 = [cx, f.base + h0 + ((h1 - h0) * (j - 0.5)) / M, cz]
-    for (let i = 0; i < N; i++) {
-      const k = (i + 1) % N
-      awayQuad(S, below[i]!, below[k]!, above[k]!, above[i]!, c, rock)
-    }
-    below = above
-  }
-  let mx = 0, my = 0, mz = 0
-  for (const p of below) { mx += p[0] / N; my += p[1] / N; mz += p[2] / N }
-  const C: V3 = [mx, my + 0.3, mz]
-  for (let i = 0; i < N; i++) {
-    const A = below[i]!, B = below[(i + 1) % N]!
-    const ny = (B[2] - A[2]) * (C[0] - A[0]) - (B[0] - A[0]) * (C[2] - A[2])
-    if (ny > 0) S.tri(A, B, C, rock)
-    else S.tri(A, C, B, rock)
-  }
-}
-
-/** the quarried slope between the masses: steps cut from the ground up to the base storey's terrace, ochre rubble on
-    the treads, and the platform at its head that carries the arches above */
-function quarry(S: Soup, f: ShowFrame, a0: number, a1: number, rFoot: number, rTop: number, rHead: number, hTop: number, steps: number, seed: number): void {
-  const n = 4
-  const P = (phi: number, r: number, t: number): V3 => { const [x, z] = sceneAt(f, phi, r); return [x, f.base + t, z] }
-  // each step one depth across, its edge rising and falling along the slope as the stone was broken out (one height
-  // at each angle, so neighbouring pieces meet without a side between them); the faces fresh-cut (`fresh` 1)
-  const tAt = (k: number, phi: number): number => (k < 0 ? -0.4 : k + 1 === steps ? hTop : hTop * ((k + 1) / steps) + 0.55 * noise3(phi * 0.35, k * 1.7, seed * 0.1))
-  const rAt = (k: number): number => (k < 0 ? rFoot : k + 1 === steps ? rHead : rFoot + ((rTop - rFoot) * (k + 1)) / steps)
-  for (let k = 0; k < steps; k++) {
-    const u0 = k / steps
-    const w0 = a0 + (a1 - a0) * 0.06 * u0, w1 = a1 - (a1 - a0) * 0.06 * u0
-    const r0 = k ? rAt(k - 1) : rFoot, r1 = rAt(k)
-    for (let i = 0; i < n; i++) {
-      const p0 = w0 + ((w1 - w0) * i) / n, p1 = w0 + ((w1 - w0) * (i + 1)) / n
-      const t0 = tAt(k, p0), t1 = tAt(k, p1), b0 = tAt(k - 1, p0) - 0.05, b1 = tAt(k - 1, p1) - 0.05
-      const tread = q(SK.floor, hash(seed, k, i, 3), 0, 0, (t0 + t1) / 2)
-      upQuad(S, P(p0, r0, t0), P(p1, r0, t1), P(p1, r1, t1), P(p0, r1, t0), tread)
-      const [ox, oz] = sceneAt(f, (p0 + p1) / 2, r0 - 3)
-      awayQuad(S, P(p0, r0, b0), P(p1, r0, b1), P(p1, r0, t1), P(p0, r0, t0), [ox, f.base + (t0 + b0) / 2, oz], q(SK.rock, hash(seed, k, 4), 1, 0, (t0 + t1) / 2))
-      // the slope's own sides, down to the ground, so it stands as one wedge of rock between the masses
-      if (i === 0 || i === n - 1) {
-        const e = i === 0 ? p0 : p1, te = i === 0 ? t0 : t1, inward = i === 0 ? e + 2 : e - 2
-        const [sx, sz] = sceneAt(f, inward, (r0 + r1) / 2)
-        awayQuad(S, P(e, r0, -0.4), P(e, r1, -0.4), P(e, r1, te), P(e, r0, te), [sx, f.base + te / 2, sz], q(SK.rock, hash(seed, k, i, 7), 1, 0, te))
+  // a cleft's floor lies back in the rock, so the sky's light thins there as in a reveal
+  const rockQ = (j: number, i: number): Q => q(SK.rock, hash(o.seed, Math.floor(i / 3), Math.floor(j / 4)), 0, Math.min(1.6, 1.15 * cleftAt((cols[j]! + cols[j + 1]!) / 2)), top(phiAt(j, i)))
+  const DEEP = 2.8
+  for (let j = 0; j < nc; j++) {
+    for (let i = 0; i < nr; i++) {
+      const pm = (phiAt(j, i) + phiAt(j + 1, i)) / 2, hm = (hAt(j, i) + hAt(j + 1, i + 1)) / 2
+      if (!inCave(j, i)) {
+        awayQuad(S, pt(j, i), pt(j + 1, i), pt(j + 1, i + 1), pt(j, i + 1), inner(pm, hm, r - 6), rockQ(j, i))
+        continue
+      }
+      // a cave: its dark back, and a reveal on every side it shares with the rock's face
+      awayQuad(S, pt(j, i, DEEP), pt(j + 1, i, DEEP), pt(j + 1, i + 1, DEEP), pt(j, i + 1, DEEP), inner(pm, hm, r - 12), q(SK.dark, hash(o.seed, j, i), 0, DEEP, top(pm)))
+      const sides: Array<[number, number, V3, V3]> = [[j, i - 1, pt(j, i), pt(j + 1, i)], [j, i + 1, pt(j, i + 1), pt(j + 1, i + 1)], [j - 1, i, pt(j, i), pt(j, i + 1)], [j + 1, i, pt(j + 1, i), pt(j + 1, i + 1)]]
+      for (const [nj, ni, a, b] of sides) {
+        if (inCave(nj, ni)) continue
+        const ja = nj === j - 1 ? j : nj === j + 1 ? j + 1 : j, jb = nj === j - 1 ? j : nj === j + 1 ? j + 1 : j + 1
+        const ia = ni === i - 1 ? i : ni === i + 1 ? i + 1 : i, ib = ni === i - 1 ? i : ni === i + 1 ? i + 1 : i + 1
+        const cj = Math.max(0, Math.min(nc - 1, nj)), ci = Math.max(0, Math.min(nr - 1, ni))
+        const cn = inner((phiAt(cj, ci) + phiAt(cj + 1, ci)) / 2, (hAt(j, ci) + hAt(j, ci + 1)) / 2, r + 0.4)
+        awayQuad(S, a, b, pt(jb, ib, DEEP), pt(ja, ia, DEEP), cn, q(SK.rock, hash(o.seed, j, i, 2), 0, DEEP * 0.5, top(pm)))
       }
     }
   }
+  // both ends closed back past the wall's thickness, so no seam shows the sky
+  const back = o.endIn ?? r - 2.6
+  for (const [j, dir] of [[0, -1], [nc, 1]] as Array<[number, number]>) {
+    for (let i = 0; i < nr; i++) {
+      const q0 = phiAt(j, i), q1 = phiAt(j, i + 1), h0 = hAt(j, i), h1 = hAt(j, i + 1)
+      awayQuad(S, pt(j, i), pt(j, i + 1), inner(q1, h1, back), inner(q0, h0, back), inner((q0 + q1) / 2 - dir * 1.5, (h0 + h1) / 2, (r + back) / 2), rockQ(Math.min(j, nc - 1), i))
+    }
+  }
+  // the top, back to the next ring or the terrace behind
+  if (o.capIn !== null) {
+    for (let j = 0; j < nc; j++) {
+      const pa = phiAt(j, nr), pb = phiAt(j + 1, nr)
+      upQuad(S, inner(pa, top(pa), o.capIn), inner(pb, top(pb), o.capIn), pt(j + 1, nr), pt(j, nr), o.capQ ?? q(SK.rock, hash(o.seed, j, 35), 0, 0, top(pa)))
+    }
+  }
+}
+
+/** the quarried slope between the masses: benches broken out at uneven heights from the ground up to the base
+    storey's terrace, each its own rough face with a dusty tread cut back under the next, the head a platform that
+    carries the arches above */
+type Bench = { a0: number; a1: number; rOut: number; rIn: number; t: (phi: number) => number }
+function quarry(S: Soup, f: ShowFrame, a0: number, a1: number, rFoot: number, rTop: number, rHead: number, hTop: number, heights: number[], seed: number): Bench[] {
+  const n = heights.length + 1
+  const tAt = (k: number, phi: number): number => (k < 0 ? -0.4 : k + 1 === n ? hTop : hTop * heights[k]! + 0.9 * noise3(phi * 0.5, k * 1.7, seed * 0.1))
+  const rAt = (k: number): number => rFoot + ((rTop - rFoot) * k) / (n - 1)
+  const benches: Bench[] = []
+  for (let k = 0; k < n; k++) {
+    // every bench the slope's full width and a little more, its ends behind the rock either side, so no slot opens
+    // between them into the tower
+    const w = -0.3
+    skin(S, f, a0 + w, a1 - w, rAt(k), (phi) => tAt(k - 1, phi) - 0.05, (phi) => tAt(k, phi), {
+      proud: [0.0, 0.8], strata: 2.2, cell: 1.0, seed: seed + 7 * k, capIn: k + 1 === n ? rHead : rAt(k + 1) - 0.4, endIn: rHead,
+      rag: [0.5, 0.5], capQ: q(SK.floor, hash(seed, k, 3), 1, 0, tAt(k, (a0 + a1) / 2)),
+    })
+    benches.push({ a0: a0 + w + 0.6, a1: a1 - w - 0.6, rOut: rAt(k) - 0.3, rIn: k + 1 === n ? rHead + 0.5 : rAt(k + 1) + 1.0, t: (phi) => tAt(k, phi) })
+  }
+  return benches
 }
 
 /* ── the builders' works: timber, huts and the rising ramp wall ── */
@@ -675,6 +731,41 @@ function centring(S: Soup, F: WF, s0: number, s1: number, sill: number, spring: 
 }
 
 /** a hut against a wall on a terrace: its walls, a lean-to roof over them, a dark door */
+/** a person in the house's grey-figure form at the showpiece's scale: legs, trunk and head in one grey, no joints,
+    nothing thinner than 0.2 m so it holds a pixel at the vantage; `turn` its heading from facing out */
+function figure(S: Soup, f: ShowFrame, phi: number, r: number, t: number, turn: number, k: number): void {
+  const [cx, cz] = sceneAt(f, phi, r), [ox, oz] = sceneAt(f, phi, 0)
+  const nx = (cx - ox) / Math.hypot(cx - ox, cz - oz), nz = (cz - oz) / Math.hypot(cx - ox, cz - oz)
+  const fx = nx * Math.cos(turn) - nz * Math.sin(turn), fz = nz * Math.cos(turn) + nx * Math.sin(turn)
+  const F: WF = { o: [cx, f.base + t, cz], s: [fz, 0, -fx], n: [fx, 0, fz] }
+  const g = q(SK.figure, k)
+  const s = 0.94 + 0.12 * k
+  // legs into the trunk, the head sunk into its top: one closed form, no face lying on another
+  slab(S, F, -0.17 * s, 0.17 * s, [-0.06, -0.06], [0.82 * s, 0.82 * s], -0.08, 0.08, g, 'fblr')
+  slab(S, F, -0.2 * s, 0.2 * s, [0.8 * s, 0.8 * s], [1.44 * s, 1.44 * s], -0.1, 0.1, g, 'fbtlrd')
+  slab(S, F, -0.11 * s, 0.11 * s, [1.42 * s, 1.42 * s], [1.7 * s, 1.7 * s], -0.11, 0.11, g, 'fbtlr')
+}
+/** a cut block ready to be set, pale new stone, or rubble in ochre */
+function block(S: Soup, f: ShowFrame, phi: number, r: number, t: number, w: number, d: number, h: number, turn: number, qq: Q): void {
+  const [cx, cz] = sceneAt(f, phi, r), [ox, oz] = sceneAt(f, phi, 0)
+  const nx = (cx - ox) / Math.hypot(cx - ox, cz - oz), nz = (cz - oz) / Math.hypot(cx - ox, cz - oz)
+  const fx = nx * Math.cos(turn) - nz * Math.sin(turn), fz = nz * Math.cos(turn) + nx * Math.sin(turn)
+  const F: WF = { o: [cx, f.base + t, cz], s: [fz, 0, -fx], n: [fx, 0, fz] }
+  slab(S, F, -w / 2, w / 2, [-0.02, -0.02], [h, h], -d / 2, d / 2, qq, 'fbtlr')
+}
+
+/** a cloth awning on two poles, sloping off the wall behind a terrace: its top and underside, a hand apart */
+function awning(S: Soup, f: ShowFrame, phi: number, rIn: number, depth: number, w: number, t: number, cloth: Q, tm: Q): void {
+  const F = radialFrame(f, phi)
+  const P = (s: number, tt: number, d: number): V3 => at(F, s, tt, d)
+  const hi = t + 2.75, lo = t + 2.15, d0 = rIn, d1 = rIn + depth
+  const A = P(-w / 2, hi, d0), B = P(w / 2, hi, d0), C = P(w / 2, lo, d1), D = P(-w / 2, lo, d1)
+  const dn = (p: V3): V3 => [p[0], p[1] - 0.08, p[2]]
+  upQuad(S, A, B, C, D, cloth)
+  awayQuad(S, dn(A), dn(B), dn(C), dn(D), P(0, hi + 3, d0 + depth / 2), cloth)
+  for (const sx of [-w / 2 + 0.12, w / 2 - 0.12]) beam(S, P(sx, t - 0.05, d1 - 0.12), P(sx, lo - 0.1, d1 - 0.12), 0.12, tm)
+}
+
 function hut(S: Soup, f: ShowFrame, phi: number, rIn: number, depth: number, w: number, t: number, h: number, wallQ: Q, roofQ: Q, doorQ: Q): void {
   const F = radialFrame(f, phi)
   const P = (s: number, tt: number, d: number): V3 => at(F, s, tt, d)
@@ -725,6 +816,8 @@ export function buildShow(f0: { x: number; z: number; c: number; s: number }, gr
   rings.forEach((g, k) => tops.push((k ? tops[k - 1]! : 0) + g.h))
   facts['tops'] = tops.map((t) => +t.toFixed(2))
   const rockF = sp.rock.front.phi as [number, number], over = sp.overRock.phi as [number, number]
+  // where the crag takes the wall's place in tiers 2 to 4, by tier
+  const cragAt = (n: number, phi: number): boolean => { const b = (sp.rock.crag.bands as Record<string, [number, number]>)[String(n)]; return !!b && phi > b[0] && phi < b[1] }
   /* pass 1: what each bay is; a bay above open air is open too */
   type Bay = { i: number; a0: number; a1: number; plain: boolean; kind: BayKind }
   const kinds: Bay[][] = []
@@ -740,6 +833,7 @@ export function buildShow(f0: { x: number; z: number; c: number; s: number }, gr
       const mid = (b.a0 + b.a1) / 2
       let kind: BayKind
       if (k === 0) kind = mid > rockF[0] && mid < rockF[1] ? 'rock' : 'white'
+      else if (cragAt(g.n, mid)) kind = 'rock'
       else if (k === 1) kind = mid > over[0] && mid < over[1] ? 'overRock' : 'white'
       else kind = inRanges(mid, sp.white[String(g.n)]) ? 'white' : inRanges(mid, sp.red[String(g.n)]) ? 'red' : 'open'
       if (k >= 2 && kind !== 'open') for (let u = 0; u <= 4; u++) if (kindAt(k - 1, b.a0 + ((b.a1 - b.a0) * u) / 4) === 'open') kind = 'open'
@@ -774,6 +868,16 @@ export function buildShow(f0: { x: number; z: number; c: number; s: number }, gr
         whiteBay(S, F, W, fl, fr, tl, tr, g.h, { n: g.n, stacked: g.stacked, pw: W * 0.15, fresh: hash(g.n, b.i, 9.2) < 0.15 ? 1 : 0, tone, v, redBack: hash(g.n, b.i, 7.7) < 0.12, last: lastRing, tan, pierL, pierR })
       } else if (b.kind === 'red') {
         redBay(S, F, W, fl, fr, tl, tr, g.h, { tone, seed: g.n * 100 + b.i, broken: aboveOpen ? (g.n >= 5 ? 0.5 : 0.3) : 0, thick: 2.6 })
+        // its cross walls standing out of the shell and falling outward: the painted red side's deep stacked bays
+        for (const e of next.kind === 'red' ? [left] : [left, right]) {
+          const fe = footH + riseAt(e) - 0.05, te = fe + g.h * 0.72
+          fin(S, f, e, g.r - 0.5, g.r + 2.4, fe, te, fe + (te - fe) * 0.55, 0.8, q(SK.brick, hash(g.n, e, 4.4), 1, 0, te))
+        }
+        // and one between its two arches, lower, so each arch stands in its own cell
+        {
+          const fe = footH + riseAt(mid) - 0.05, te = fe + g.h * (0.5 + 0.15 * hash(g.n, b.i, 4.6))
+          fin(S, f, mid, g.r - 0.5, g.r + 1.8, fe, te, fe + (te - fe) * 0.5, 0.7, q(SK.brick, hash(g.n, mid, 4.5), 1, 0, te))
+        }
       } else if (b.kind === 'overRock') {
         // two arches spring from the rock's top; the wall above them, its cornice and parapet
         const face = q(SK.old, tone, 0, 0, (tl + tr) / 2)
@@ -784,7 +888,9 @@ export function buildShow(f0: { x: number; z: number; c: number; s: number }, gr
         ledge(S, F, W, tan, [tl, tr], [tl + 1.0, tr + 1.0], 0.35, 0.95, q(SK.old, tone, 0, 0, (tl + tr) / 2 + 1.1), 'ftb')
       }
       // the wall's back, dark inside the tower, so an opening never shows the sky through the far side
-      if (b.kind !== 'red') slab(S, F, 0, W, [fl, fr], [tl, tr], -2.6, -2.55, q(SK.dark, tone, 0, 2.6, tl), 'b')
+      // seen from above through the cutaway it is a wall's inner face in shade, never a black panel
+      // and brick above the second tier, as the facing is laid on a brick body (the painted cutaway)
+      if (b.kind !== 'red') slab(S, F, 0, W, [fl, fr], [tl, tr], -2.6, -2.55, q(k >= 2 ? SK.brick : SK.old, tone, 0, 2.6, tl), 'b')
       // the terrace this ring carries, where a ring stands on it or its own ledge stays open to the sky
       const carries = !lastRing && (b.kind !== 'red' || !aboveOpen)
       if (carries && rNext !== undefined) terrace(S, f, left, right, rNext - 2.5, g.r + (b.kind === 'red' ? 0.0 : 0.6), tl, tr, q(SK.floor, tone, 0, 0, tl))
@@ -837,6 +943,14 @@ export function buildShow(f0: { x: number; z: number; c: number; s: number }, gr
         const p0 = a0 + ((a1 - a0) * i) / n, p1 = a0 + ((a1 - a0) * (i + 1)) / n
         const { F, W, left, right } = chordFrame(f, p0, p1, c.r)
         redBay(S, F, W, foot(left), foot(right), topAt(left), topAt(right), topAt(left) - foot(left), { tone: hash(7, k, i), seed: 700 + k * 50 + i, broken: k === 0 ? 0.12 : 0.06, thick: 1.2 })
+      }
+      // the cross walls between its cells, falling outward to the row below, as the cutaway is painted; on the seen side
+      const outR = k === 0 ? rings[2]!.r - 0.8 : (cells[k - 1].r as number) - 1.2
+      for (let i = full ? 0 : 1; i < n; i++) {
+        const p = a0 + ((a1 - a0) * i) / n
+        if (p < -60 || p > 140) continue
+        const fo = foot(p) - 0.05, ti = topAt(p) - 0.05
+        fin(S, f, p, (c.r as number) - 0.4, outR, fo, ti, fo + (ti - fo) * 0.35, 0.9, q(SK.brick, hash(10, k, i), 1, 0, ti))
       }
       const rIn = k === cells.length - 1 ? 3.0 : (cells[k + 1].r as number) - 1.5
       const n2 = Math.max(4, Math.round((a1 - a0) / 6))
@@ -907,36 +1021,51 @@ export function buildShow(f0: { x: number; z: number; c: number; s: number }, gr
     bodies.push({ id: 'bruegel-show-core', geometry: S.geometry() })
     facts['coreTris'] = S.count
   }
+  let benches: Bench[] = []
   /* ── the rock the tower is built round: two weathered masses at the front's foot, the quarried slope between them
      up to the base storey's terrace, the crag in the cutaway ── */
   {
     const S = new Soup()
     const t2 = tops[0]!
-    const top = sp.rock.front.top as number
-    let seed = 1
-    // behind, under the walls' ends either side, so each wall ends against rock
-    for (const [a, h] of [[-14.0, t2 + 2.5], [13.5, t2 + 3.5]] as Array<[number, number]>) mass(S, f, a, 57.0, 9.0, 9.0, sink, h + riseAt(a), ++seed, hash(seed, 4), 1)
-    // the left mass, up to the base storey's frieze, a cleft and a ledge in it
-    mass(S, f, -9.5, 62.0, 13.0, 12.0, sink, t2 - 1.0, ++seed, 0.35, 3)
-    mass(S, f, -12.5, 66.5, 7.0, 6.0, sink, 13.0, ++seed, 0.6, 1)
-    // the right mass: the great pillar through the base storey's terrace
-    mass(S, f, 8.6, 61.0, 10.0, 11.0, sink, top, ++seed, 0.5, 2)
-    mass(S, f, 12.4, 64.5, 6.5, 6.5, sink, 18.0, ++seed, 0.7, 1)
-    // a shelf of rock at the base storey's terrace across the gap, under tier 2's walls, its face behind the masses
-    for (let a = -15; a < 15 - 1e-6; a += 3) {
-      const b = a + 3, ta = t2 + riseAt(a) - 0.05, tb = t2 + riseAt(b) - 0.05
-      const P = (phi: number, r: number, t: number): V3 => { const [x, z] = sceneAt(f, phi, r); return [x, f.base + t, z] }
-      const sh = q(SK.rock, hash(51, a), 0, 0, ta)
-      upQuad(S, P(a, 51.5, ta), P(b, 51.5, tb), P(b, 58.6, tb), P(a, 58.6, ta), sh)
-      const [ox, oz] = sceneAt(f, (a + b) / 2, 50)
-      awayQuad(S, P(a, 58.6, ta - 6), P(b, 58.6, tb - 6), P(b, 58.6, tb), P(a, 58.6, ta), [ox, f.base + ta, oz], sh)
+    const R = sp.rock, sk = R.skin, fr = R.front, qy = fr.quarry
+    const o = (seed: number, capIn: number | null, caves?: number[][]) => ({ proud: sk.proud as [number, number], strata: sk.strata as number, cell: sk.cell as number, seed, capIn, caves })
+    // the rock's face over every run of rock bays, ring by ring: at the foot either side of the quarry, up the crag
+    rings.forEach((g, k) => {
+      const list = kinds[k]!
+      const runs: Array<[number, number]> = []
+      for (const b of list) {
+        if (b.kind !== 'rock') continue
+        const last = runs[runs.length - 1]
+        if (last && Math.abs(last[1] - b.a0) < 1e-6) last[1] = b.a1
+        else runs.push([b.a0, b.a1])
+      }
+      const footAt = (phi: number): number => (k ? tops[k - 1]! + riseAt(phi) : sink)
+      const topAt = (phi: number): number => tops[k]! + riseAt(phi)
+      const capIn = rings[k + 1] ? rings[k + 1]!.r - 2.5 : null
+      for (const [a, b] of runs) {
+        // each run reaches past its bays over the walls' ends (the base storey's walls start half a spur in), and into
+        // the quarry's edges, so the rock overlaps them and leaves no slot
+        const past = k === 0 ? 1.6 : 0.8
+        const pieces: Array<[number, number]> = k === 0 ? [[a - past, qy.phi[0] + 0.3], [qy.phi[1] - 0.3, b + past]] : [[a - past, b + past]]
+        // tier 2's rock is the quarried face behind the crane: cut nearly flat
+        const oo = (seed: number, cv?: number[][]) => ({ ...o(seed, capIn, cv), ...(k === 1 ? { proud: [0.1, 1.0] as [number, number] } : {}) })
+        pieces.forEach(([p0, p1], pi) => skin(S, f, p0, p1, g.r, footAt, topAt, oo(100 + 10 * k + pi, k === 0 ? fr.caves : R.crag.caves)))
+      }
+    })
+    // the crag's head over tier 4, standing free in front of the cells
+    {
+      const [h0, h1] = R.crag.topPhi as [number, number]
+      skin(S, f, h0, h1, rings[4]!.r, (phi) => tops[3]! + riseAt(phi) - 0.3, (phi) => (R.crag.top as number) + riseAt(phi), o(150, rings[4]!.r - 6.5))
     }
-    // the slope between them, cut in steps, its head carrying tier 2's arches
-    quarry(S, f, -5.2, 5.0, 75.0, 59.0, 51.5, t2 + riseAt(0) - 0.05, 8, 41)
-    // the crag among the red walls of the cutaway
-    const [c0, c1] = sp.rock.crag.phi as [number, number]
-    mass(S, f, (c0 + c1) / 2, 45.0, 10.0, 9.0, sp.rock.crag.foot - 4.5, sp.rock.crag.top - 8.0, ++seed, 0.45, 2)
-    mass(S, f, c0 + 3, 46.5, 6.0, 6.0, sp.rock.crag.foot - 4.5, sp.rock.crag.top - 14.0, ++seed, 0.65, 1)
+    // the slope cut back into the rock in steps, its head carrying tier 2's arches
+    benches = quarry(S, f, qy.phi[0], qy.phi[1], qy.rFoot, qy.rTop, qy.rHead, t2 + riseAt(0) - 0.05, qy.heights as number[], 41)
+    // the great pillar rising in front of tier 2 on the right, its top broken, its back into tier 2's wall
+    {
+      const pl = fr.pillar, half = ((pl.w / 2) / pl.r) / D2R
+      skin(S, f, pl.phi - half, pl.phi + half, pl.r, () => sink, (phi) => (fr.top as number) + riseAt(phi) - 2.5 * Math.abs(phi - pl.phi) / half + 1.2 * noise3(phi * 0.6, 4.4, 1.1), {
+        proud: pl.proud as [number, number], strata: sk.strata as number, cell: 1.0, seed: 160, capIn: pl.capIn as number, endIn: pl.capIn as number, rag: [1.0, 1.4],
+      })
+    }
     bodies.push({ id: 'bruegel-show-rock', geometry: S.geometry() })
     facts['rockTris'] = S.count
   }
@@ -951,7 +1080,7 @@ export function buildShow(f0: { x: number; z: number; c: number; s: number }, gr
     const cTop = (sp.core as J[])[3]!, cUnder = (sp.core as J[])[2]!
     for (const [a0, a1] of [[-168, -42], [8, 122]] as Array<[number, number]>) scaffold(S, f, a0, a1, (cTop.r as number) + 1.4, cTop.r as number, () => cUnder.y1 as number, () => (cTop.y1 as number) - 2.0, tm(2), 2.0, 0.62, 0.4)
     // on the red shells
-    scaffold(S, f, 28, 40, rings[2]!.r + 1.3, rings[2]!.r, (phi) => terraceAt(1, phi), (phi) => terraceAt(2, phi) - 1.0, tm(3))
+    scaffold(S, f, 56, 68, rings[2]!.r + 1.3, rings[2]!.r, (phi) => terraceAt(1, phi), (phi) => terraceAt(2, phi) - 1.0, tm(3))
     scaffold(S, f, 60, 75, rings[3]!.r + 1.3, rings[3]!.r, (phi) => terraceAt(2, phi), (phi) => terraceAt(3, phi) - 1.0, tm(4))
     // two masts and a ladder by the top white ring's toothed end
     const r5 = rings[5]!.r + 1.3
@@ -970,7 +1099,7 @@ export function buildShow(f0: { x: number; z: number; c: number; s: number }, gr
       }
     }
     // the treadwheel crane on the base storey's terrace, at the right
-    treadwheel(S, f, 35, 57.0, terraceAt(0, 35), tm(7))
+    treadwheel(S, f, 35, 57.7, terraceAt(0, 35), tm(7))
     // shear legs on tier 3's terrace over the front, at the left
     shearLegs(S, f, -12, 51.3, terraceAt(2, -12), 11, tm(8))
     // the centrings still standing in the arches over the rock
@@ -983,17 +1112,73 @@ export function buildShow(f0: { x: number; z: number; c: number; s: number }, gr
       for (const s0 of [W * 0.07, W * 0.53]) centring(S, F, s0, s0 + aw, sill, tops[0]! + 10.7 - aw / 2, -0.7, tm(9))
     }
     // huts, sheds and small brick houses against the next wall, on the terraces
-    const huts: Array<[number, number[]]> = [[0, [-58, -71, -86, -104, -121, -137, 50, 64]], [1, [-54, -66, -93, -110, -128, 30]], [2, [-48, -62, -79, -97, -116]], [3, [-45, -70, -90]]]
+    // the sheds: the round 1 set, and a second set on the front's terraces where both cameras see them
+    const huts: Array<[number, number[]]> = [[0, [-58, -71, -86, -104, -121, -137, 50, 64, -24, -37, 17, 22]], [1, [-54, -66, -93, -110, -128, 30, -22, -37, 14]], [2, [-48, -62, -79, -97, -116, -13, -26]], [3, [-45, -70, -90, -38, -56]]]
     for (const [k, phis] of huts) {
       const rIn = rings[k + 1]!.r + 0.05, free = rings[k]!.r + 0.3 - rIn
       for (const phi of phis) {
-        if (kindAt(k, phi) === 'open' || kindAt(k + 1, phi) === 'open') continue
+        const here = kindAt(k, phi), above = kindAt(k + 1, phi)
+        if (here === 'open' || above === 'open' || here === 'rock' || above === 'rock') continue
         const sd = hash(k, phi, 6.1)
         const brickHouse = sd < 0.3
         const wallQ = brickHouse ? q(SK.brick, sd, 1, 0, 0) : q(SK.plaster, sd, 0, 0, 0)
         const roofQ = q(sd > 0.6 ? SK.thatch : SK.tile, sd)
         hut(S, f, phi, rIn, Math.min(2.6, free - 0.4), 2.8 + 1.8 * hash(k, phi, 6.2), terraceAt(k, phi), 2.3 + 0.8 * hash(k, phi, 6.3), wallQ, roofQ, q(SK.dark, sd, 0, 0.3, 0))
       }
+    }
+    // awnings on poles against the wall behind each terrace, between the sheds, on the front where the cameras see them
+    for (let k = 0; k < 4; k++) {
+      const rIn = rings[k + 1]!.r + 0.05, free = rings[k]!.r + 0.3 - rIn
+      if (free < 2.4) continue
+      for (let i = 0; i < 6; i++) {
+        const phi = -62 + 112 * ((i + 0.2 + 0.6 * hash(k, i, 8.1)) / 6)
+        const here = kindAt(k, phi), above = kindAt(k + 1, phi)
+        if (here === 'open' || above === 'open' || here === 'rock' || above === 'rock') continue
+        if (huts.some(([kk, ps]) => kk === k && ps.some((p) => Math.abs(p - phi) < 5))) continue
+        awning(S, f, phi, rIn, Math.min(2.2, free - 0.5), 2.6 + 1.2 * hash(k, i, 8.2), terraceAt(k, phi), q(SK.cloth, hash(k, i, 8.3)), tm(9))
+      }
+    }
+    // people at work, cut blocks and rubble, at the painting's density where the cameras see them: on the terraces of
+    // the seen side, at the foot by the quarry and the cave, on the quarry's head, by the crane
+    {
+      let seed = 0
+      const pick = (): number => hash(77, ++seed)
+      const walk = (kk: BayKind): boolean => kk === 'white' || kk === 'overRock' || kk === 'red'
+      for (let k = 0; k < 5; k++) {
+        const rIn = rings[k + 1]!.r + 0.75, rOut = rings[k]!.r - 0.25
+        if (rOut - rIn < 0.8) continue
+        const n = [26, 22, 18, 14, 10][k]!
+        for (let i = 0; i < n; i++) {
+          const phi = -95 + (190 * (i + pick())) / n
+          if (!walk(kindAt(k, phi)) || !walk(kindAt(k + 1, phi))) continue
+          if (huts.some(([kk, ps]) => kk === k && ps.some((p) => Math.abs(p - phi) < 3.2))) continue
+          const r = rIn + (rOut - rIn) * pick(), t = terraceAt(k, phi)
+          // a group of two or three, or one carrying, or a block being moved
+          const m = pick() < 0.35 ? 3 : pick() < 0.6 ? 2 : 1
+          for (let j = 0; j < m; j++) figure(S, f, phi + j * (0.9 + 0.6 * pick()) * (36 / rings[k]!.r), Math.min(rOut, Math.max(rIn, r + (pick() - 0.5) * 0.6)), t, pick() * 6.28, pick())
+          if (pick() < 0.4) block(S, f, phi - 1.4 * (36 / rings[k]!.r), Math.min(rOut - 0.35, Math.max(rIn + 0.35, r)), t, 1.2, 0.6, 0.6, pick() * 0.6, q(SK.fresh, pick(), 1))
+        }
+      }
+      // at the foot: on the ground in front of the rock and the quarry, between the blocks and the rubble
+      for (let i = 0; i < 30; i++) {
+        const phi = -24 + 50 * pick(), r = 64.5 + 9 * pick()
+        const [x, z] = sceneAt(f, phi, r)
+        const t = ground(x, z) - base
+        if (pick() < 0.62) figure(S, f, phi, r, t, pick() * 6.28, pick())
+        else if (pick() < 0.5) block(S, f, phi, r, t, 1.2 + 0.6 * pick(), 0.6 + 0.3 * pick(), 0.6, pick() * 1.2, q(SK.fresh, pick(), 1))
+        else block(S, f, phi, r, t, 0.5 + 0.4 * pick(), 0.5 + 0.4 * pick(), 0.35 + 0.3 * pick(), pick() * 3, q(SK.floor, pick()))
+      }
+      // on the quarry's benches, breaking stone out and moving it
+      benches.slice(0, -1).forEach((bn) => {
+        for (let i = 0; i < 4; i++) {
+          const phi = bn.a0 + (bn.a1 - bn.a0) * pick(), r = bn.rIn + (bn.rOut - bn.rIn) * pick()
+          if (pick() < 0.7) figure(S, f, phi, r, bn.t(phi) - 0.05, pick() * 6.28, pick())
+          else block(S, f, phi, r, bn.t(phi) - 0.05, 1.1, 0.6, 0.55, pick(), q(SK.fresh, pick(), 1))
+        }
+      })
+      // on the quarry's head, under tier 2's arches over the rock, and by the crane on the base terrace
+      for (let i = 0; i < 6; i++) figure(S, f, -4.4 + 8.6 * pick(), 52.6 + 1.6 * pick(), tops[0]! + riseAt(0) - 0.05, pick() * 6.28, pick())
+      for (let i = 0; i < 4; i++) figure(S, f, 30.5 + 3 * pick(), 58.0 + 0.4 * pick(), terraceAt(0, 32), pick() * 6.28, pick())
     }
     // the curved ramp wall on the right, rising from the top white ring's height to a peak, people's way up its top
     {

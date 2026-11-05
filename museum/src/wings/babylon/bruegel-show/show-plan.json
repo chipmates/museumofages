@@ -6,9 +6,9 @@
   "src": "an estimate from the painted people, a design choice, never a measure: about 2040 px from the left foot (y 2060) to the highest masonry (y 20) for about 110 m; a standing man about 35 px, so 1.9 m (D-285, the research's figure scale 0.05 to 0.06 m a pixel)"
  },
  "pitch": {
-  "perTurn": 9.0,
+  "perTurn": 13.0,
   "seam": 180,
-  "src": "ours: the terraces rise counterclockwise seen from above (left to right across the front), read from the base storey's frieze, 67 px higher at +26 than at -26; nine metres a turn, stepped nowhere, the seam at the back where no camera stands"
+  "src": "re-measured on gridded crops of the 3840 frame (READING, the ramp): the base storey's frieze about 1542 at phi -26 and 1520 at +26 (22 px), 1540 at -40.5 and 1503 at +40.5 (37 px); tier 2's frieze about 1240 at -23.5 and 1220 at +23.5 (20 px): 1.1 to 2.0 m over 47 to 81 degrees, 8 to 9 m a turn, 4 to 14 at the reading's 15 px; the first reading's 67 px was an over-read. Ours: 13 m a turn, the range's upper end, where one turn rises one mean storey (13.2 m), so the terraces join into one road that winds up, rising counterclockwise seen from above; the seam at the back"
  },
  "base": {
   "r0": 59.0,
@@ -108,23 +108,15 @@
    [
     -180,
     -31
-   ],
-   [
-    126,
-    180
    ]
   ],
   "6": [
    [
     -180,
     -40
-   ],
-   [
-    130,
-    180
    ]
   ],
-  "src": "the white facing read on the front: tier 3 to x 2275 (+18), tier 4 to x 1918 (-5), tier 5 to x 1538 (-31), the top white ring to x 1455 (-40), its end toothed (READING, the unfinished side); behind the tower not painted: ours, the red running on round the right to about +120"
+  "src": "the white facing read on the front: tier 3 to x 2275 (+18), tier 4 to x 1918 (-5), tier 5 to x 1538 (-31), the top white ring to x 1455 (-40), its end toothed (READING, the unfinished side); behind the tower not painted: ours, the red running on round the right to about +120; tiers 5 and 6 end at the seam behind, since from the painter's vantage a white stretch at the back right stood above the cells as a loose box (the right outline is the cells stepping up to the core)"
  },
  "red": {
   "3": [
@@ -155,16 +147,80 @@
     13
    ],
    "top": 39.5,
-   "src": "crop rock-front-pillar-cave-talus-moss: x 1805 to 2204 on the base storey, the main pillar to y 1333"
+   "quarry": {
+    "phi": [
+     -5.2,
+     5.0
+    ],
+    "rFoot": 63.0,
+    "rTop": 55.0,
+    "rHead": 51.5,
+    "heights": [
+     0.18,
+     0.47,
+     0.66
+    ],
+    "src": "ours, as round 1 read it on the base storey, broken out in four benches of uneven height (5.3, 8.5, 5.6 and 9.9 m) rather than eight even steps: the painted quarries are cut faces with work on their benches, and an even run read as a stair (blind pair, 5 Nov)"
+   },
+   "pillar": {
+    "phi": 9.5,
+    "r": 61.5,
+    "w": 8.5,
+    "proud": [
+     0.3,
+     2.0
+    ],
+    "capIn": 56.0,
+    "src": "the pillar of crop rock-front-pillar-cave-talus-moss, to y 1333 (39.5 m); as a rock face standing 4 m proud of the base's wall line, its back into tier 2's wall (55.4) at 56"
+   },
+   "caves": [
+    [
+     -13.4,
+     -8.8,
+     0.8,
+     8.4
+    ]
+   ],
+   "src": "crop rock-front-pillar-cave-talus-moss: x 1805 to 2204 on the base storey, the main pillar to y 1333; the rock stands in the wall's own line, a broad weathered face with a cave mouth on the left, the quarried slope cut back into it in the middle, the pillar rising in front of tier 2 on the right; the cave's mouth widened to read as a cave with a rounded head on the 1 m grid, not a door"
   },
   "crag": {
-   "phi": [
-    17,
-    36
+   "bands": {
+    "2": [
+     26,
+     64
+    ],
+    "3": [
+     24,
+     54
+    ],
+    "4": [
+     26,
+     50
+    ]
+   },
+   "top": 76.0,
+   "topPhi": [
+    30,
+    44
    ],
-   "foot": 59.4,
-   "top": 77.0,
-   "src": "crop rock-crag-in-cutaway: among the red walls from tier 4 to tier 5's top"
+   "caves": [
+    [
+     37.0,
+     41.0,
+     49.5,
+     55.0
+    ]
+   ],
+   "src": "crop z-paint-rock (3840 frame x 1500 to 3100, y 500 to 2200): the crag rises out of the right-centre flank from tier 2's top (y about 1220, 45 m) to about y 660 (76 m), x 2364 to 2716 on tier 4 (phi 24 to 53); tier 2's face on the right is cut rock behind the treadwheel crane (x 2556 to 3004, 36 to 45 m); red cells built against it on the left, red shells on the right"
+  },
+  "skin": {
+   "cell": 1.0,
+   "proud": [
+    0.5,
+    2.8
+   ],
+   "strata": 3.4,
+   "src": "ours: the rock's face stands a little proud of the wall line it takes the place of, layered in strata that step back as they rise, split by clefts; its ends close back into the wall and its top is capped where masonry stands on it; cells of 1 m so a cleft 0.6 to 1.1 m wide cuts sharp, a column at each cleft's floor"
   }
  },
  "overRock": {
@@ -263,9 +319,9 @@
    0.08
   ],
   "rock": [
-   0.7,
-   0.61,
-   0.45
+   0.68,
+   0.56,
+   0.38
   ],
   "ochre": [
    0.8,
@@ -307,6 +363,6 @@
    0.48,
    0.34
   ],
-  "src": "albedos chosen by eye against the crops (READING, colours), never sampled from the painting's pixels; warmer and more saturated than the painting's lit cream, since the scene's front stands in the sky's blue fill at 18:00 and a cream albedo read grey there; the rock greyer than the stone, its ochre in deposits"
+  "src": "albedos chosen by eye against the crops (READING, colours), never sampled from the painting's pixels; warmer and more saturated than the painting's lit cream, since the scene's front stands in the sky's blue fill at 18:00 and a cream albedo read grey there; the rock greyer than the stone, its ochre in deposits; the rock a step darker than round 1's, by eye against crop q-foot at 1:1: the painted rock reads darker than the masonry built on it at the same warmth, ours read as the same cream"
  }
 }

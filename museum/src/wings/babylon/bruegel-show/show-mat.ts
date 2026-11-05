@@ -55,9 +55,9 @@ export function showMaterial(f: ShowFrame, sp: J): Material {
   const blockLen = float(1.25).add(h1(course.mul(3.1)).mul(0.5))
   const blockId = floor(arc.div(blockLen).add(h1(course).mul(0.7))).add(course.mul(57.3))
   const blockTone = h1(blockId).sub(0.5).mul(0.075)
-  const bigPatch = mx_noise_float(vec3(arc.mul(0.045), h.mul(0.06), 1.7)).mul(0.09)
+  const bigPatch = mx_noise_float(vec3(arc.mul(0.045), h.mul(0.06), 1.7)).mul(0.13)
   const midPatch = mx_noise_float(vec3(arc.mul(0.18), h.mul(0.22), 4.1)).mul(0.05)
-  const bayTone = tone.sub(0.5).mul(0.2)
+  const bayTone = tone.sub(0.5).mul(0.3)
   // grey-blue weathering streaks running down from sills and ledges, longer and darker under the ledge
   const streakN = mx_noise_float(vec3(arc.mul(1.1), h.mul(0.045), 7.3))
   const streak = smoothstep(0.25, 0.75, streakN).mul(0.55).mul(float(1).sub(fresh.mul(0.7)))
@@ -69,7 +69,7 @@ export function showMaterial(f: ShowFrame, sp: J): Material {
   // ochre and grey in patches, as the painter laid them over the cream
   stone = mix(stone, stone.mul(vec3(1.08, 0.96, 0.76)), smoothstep(0.1, 0.6, mx_noise_float(vec3(arc.mul(0.06), h.mul(0.05), 9.4))).mul(0.85))
   stone = mix(stone, stone.mul(vec3(0.9, 0.93, 0.98)), smoothstep(0.2, 0.7, mx_noise_float(vec3(arc.mul(0.09), h.mul(0.03), 5.5))).mul(0.5))
-  stone = mix(stone, streakC.mul(stone.length().mul(0.9)), streak.mul(0.3).mul(upright))
+  stone = mix(stone, streakC.mul(stone.length().mul(0.9)), streak.mul(0.42).mul(upright))
   stone = stone.mul(float(1).sub(grime).sub(joints.mul(0.5)))
   // the corbel frieze under each cornice: a band of small round arches on corbels, their shadow under each
   const band = smoothstep(0.62, 0.7, under).mul(float(1).sub(smoothstep(1.35, 1.45, under))).mul(upright).mul(facing)
@@ -92,28 +92,35 @@ export function showMaterial(f: ShowFrame, sp: J): Material {
   // the core's top ring, still in the scaffold: its putlog holes in rows
   const ring = step(rho, float(13.0)).mul(step(float(104.4), h)).mul(upright).mul(facing)
   const putlog = step(abs(fract(arc.div(1.6)).sub(0.5)), float(0.11)).mul(step(abs(fract(h.div(1.3)).sub(0.5)), float(0.13)))
-  brick = brick.mul(float(1).sub(ring.mul(putlog).mul(0.78)))
+  // and on the brick faces where a scaffold stood, in patches of lifts, faded before a pixel spans them (a full grid
+  // of them reads as dots from the vantage); lifts of brickwork, each its own batch, so the brick reads at a distance
+  const holesSeen = max(float(1).sub(smoothstep(0.06, 0.14, fw)), ring)
+  const holesHere = max(step(float(0.55), h1(floor(h.div(1.3)).mul(7.0).add(floor(arc.div(4.8)).mul(3.0)))), ring)
+  brick = brick.mul(float(1).sub(putlog.mul(upright).mul(facing).mul(mix(float(0.45), float(0.78), ring)).mul(holesSeen).mul(holesHere)))
+  brick = brick.mul(float(1).add(h1(floor(h.div(1.3)).add(floor(arc.div(7.0)).mul(13.0))).sub(0.5).mul(0.18)))
+  // the lifts' bed joints, wide enough to hold a pixel from the hold, so the brick reads as laid work there
+  brick = brick.mul(float(1).sub(lineEvery(h, 1.3, 0.14, fw).mul(0.16).mul(upright)))
 
-  /* ── rock: pale planes, each facing its own shade, dark furrows and stains down them, ochre deposits, bedding,
+  /* ── rock: pale planes, each facing its own shade, dark furrows and stains down them, ochre deposits,
      moss on the ledges; the shade by facing only, so pieces broken out side by side read as one face ── */
-  const plane = h1(floor(n.x.mul(5.0)).add(floor(n.z.mul(5.0)).mul(11.0)).add(floor(n.y.mul(4.0)).mul(37.0)))
+  // coarse bins, softly: a small bend in the face must not jump its tone (a mosaic of facets reads as an old game)
+  const plane = h1(floor(n.x.mul(2.5)).add(floor(n.z.mul(2.5)).mul(11.0)).add(floor(n.y.mul(2.0)).mul(37.0)))
   const rN = mx_noise_float(P.mul(0.09)).mul(0.16).add(mx_noise_float(P.mul(0.45)).mul(0.07))
   // the grain close to: fine pits and chips, faded out before a pixel spans them
   const rFine = mx_noise_float(P.mul(2.6)).mul(0.07).add(mx_noise_float(P.mul(7.5)).mul(0.04)).mul(float(1).sub(smoothstep(0.04, 0.16, fw)))
   // the painter's strokes down each plane: tone that runs upright, fine across
   const stroke = mx_noise_float(vec3(P.x.mul(2.2), P.y.mul(0.09), P.z.mul(2.2))).mul(0.08)
-  // stains run down the planes (noise stretched upright), broad furrows in shade between them, the bedding faintly across
-  const rStain = smoothstep(0.3, 0.8, mx_noise_float(vec3(P.x.mul(0.7), P.y.mul(0.025), P.z.mul(0.7)))).mul(0.26)
-  const furrow = smoothstep(0.3, 0.75, mx_noise_float(vec3(P.x.mul(0.34), P.y.mul(0.016), P.z.mul(0.34)).add(vec3(11, 3, 7)))).mul(0.5)
-  const bed = lineEvery(h.add(mx_noise_float(P.mul(0.04)).mul(2.0)), 2.3, 0.06, fw).mul(0.07)
+  // stains run down the planes (noise stretched upright), broad furrows in shade between them; no course lines
+  const rStain = smoothstep(0.15, 0.7, mx_noise_float(vec3(P.x.mul(0.7), P.y.mul(0.025), P.z.mul(0.7)))).mul(0.26)
+  const furrow = smoothstep(0.2, 0.7, mx_noise_float(vec3(P.x.mul(0.34), P.y.mul(0.016), P.z.mul(0.34)).add(vec3(11, 3, 7)))).mul(0.5)
   // a quarried face (fresh 1) is cut clean: paler, half the stains and furrows, each step shaded toward its foot
   const cut = fresh
   const weather = float(1).sub(cut.mul(0.5))
-  let rock: N = V(C.rock as RGB).mul(float(1).add(plane.sub(0.5).mul(0.5)).add(rN).add(rFine).add(stroke)).mul(float(1).sub(rStain.mul(weather)).sub(furrow.mul(weather)).sub(bed))
+  let rock: N = V(C.rock as RGB).mul(float(1).add(plane.sub(0.5).mul(0.22)).add(rN).add(rFine).add(stroke)).mul(float(1).sub(rStain.mul(weather)).sub(furrow.mul(weather)))
   rock = rock.mul(mix(float(1), mix(float(1.1), float(0.74), smoothstep(0.2, 5.0, under)), cut))
   rock = mix(rock, rock.mul(vec3(1.1, 0.98, 0.78)), smoothstep(-0.1, 0.5, mx_noise_float(P.mul(0.05).add(vec3(3, 1, 2)))).mul(0.5))
   // the yellow ochre the painter laid where the stone is broken and its dust lies
-  rock = mix(rock, V(C.ochre as RGB).mul(float(1).add(rN)), smoothstep(0.05, 0.45, mx_noise_float(P.mul(0.07).add(vec3(5, 9, 1)))).mul(0.55))
+  rock = mix(rock, V(C.ochre as RGB).mul(float(1).add(rN)), smoothstep(0.05, 0.45, mx_noise_float(P.mul(0.07).add(vec3(5, 9, 1)))).mul(0.65))
   // moss on the ledges and in the shade of the clefts, olive as painted
   const mossy = max(smoothstep(0.45, 0.8, n.y), smoothstep(0.3, 0.7, mx_noise_float(P.mul(0.07).add(vec3(7, 2, 5)))).mul(0.45)).mul(smoothstep(-0.3, 0.4, mx_noise_float(P.mul(0.16))))
   rock = mix(rock, V(C.moss as RGB).mul(float(1).add(rN.mul(2))), mossy.mul(0.75))
@@ -143,7 +150,9 @@ export function showMaterial(f: ShowFrame, sp: J): Material {
   col = mix(col, cloth, is(SK.cloth))
   col = mix(col, floorC, is(SK.floor))
   col = mix(col, plaster, is(SK.plaster))
-  // deep in the wall the sky's light thins (the stack has no occlusion pass): reveals darken toward the back, a
+  // people in the house's grey-figure form: one grey, no face, no texture
+  col = mix(col, vec3(0.16, 0.16, 0.16), is(SK.figure))
+  // deep in the wall the sky's light thins (the page's contact occlusion reaches 1.2 m): reveals darken toward the back, a
   // niche's back to about two thirds of its face, as the painter shades them
   const notDark = float(1).sub(is(SK.dark))
   col = col.mul(mix(float(1), float(0.5), smoothstep(0.0, 1.4, depth).mul(notDark)))
