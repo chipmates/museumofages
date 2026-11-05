@@ -240,9 +240,16 @@ function lines(lo: number, hi: number, fine: [number, number, number], mid: [num
   return [...out].sort((a, b) => a - b)
 }
 
+/** the ground mesh's grid lines (x, z): 6 m round the stops, 20 m over the city, 250 m beyond */
+function groundLines(canalZ: number[]): { xs: number[]; zs: number[] } {
+  return {
+    xs: lines(-30000, 30000, [-560, 640, 6], [-1700, 3300, 20], 250).filter((v) => Math.abs(v) <= 9000 || v % 3000 === 0),
+    zs: lines(-30000, 30000, [-980, 860, 6], [-3500, 2100, 20], 250, canalZ).filter((v) => Math.abs(v) <= 9000 || v % 3000 === 0),
+  }
+}
+
 export function groundGeometry(built: Built, canalZ: number[]): BufferGeometry {
-  const xs = lines(-30000, 30000, [-560, 640, 6], [-1700, 3300, 20], 250).filter((v) => Math.abs(v) <= 9000 || v % 3000 === 0)
-  const zs = lines(-30000, 30000, [-980, 860, 6], [-3500, 2100, 20], 250, canalZ).filter((v) => Math.abs(v) <= 9000 || v % 3000 === 0)
+  const { xs, zs } = groundLines(canalZ)
   const nx = xs.length, nz = zs.length
   const pos = new Float32Array(nx * nz * 3)
   for (let j = 0; j < nz; j++) for (let i = 0; i < nx; i++) {
@@ -348,8 +355,118 @@ export interface Bodies {
   counts: { prisms: number; boxes: number; houses: number; triangles: number }
 }
 
-/** a stop module's paint over a shared body's colour (the ground under a precinct); none leaves the map's own */
-export interface Paint { ground?: (base: N) => N }
+/** one rebuilt house box, as the arrival's houses.ts gives it (that module is passed in: node resolves no import here) */
+export interface HouseBoxLike { house: number; part: number; butt: number; block: number; x: number; z: number; sx: number; sz: number; yaw: number; y0: number; y1: number; gy: number }
+export type HouseRebuild = (boxes: Built['boxes'], ground: (x: number, z: number) => number) => { boxes: HouseBoxLike[] }
+
+/** a stop module's paint over a shared body's colour (the ground under a precinct); none leaves the map's own. `houses`
+    rebuilds the generic house boxes as the arrival does (rooms of their own heights round a court of its own size), the
+    class band `band` metres over each house's ground */
+export interface Paint { ground?: (base: N) => N; houses?: { rebuild: HouseRebuild; band: number } }
+
+/** the rebuilt houses in one instanced mesh, packed as the arrival packs them: `hinfo` (house, range + 8 x the butted
+    sides, the ground's level, the block), `size`, the class letters (the type, G over G) and the band over the ground */
+/** the arrival's houses set on the map's ground mesh for its nearer eyes: each box's foot below the mesh under it (a
+    centimetre deeper for each box of a house, so the rooms' overlapping feet never share a plane), each court floor
+    above it, and where two rooms of one house overlap at one roof height (the side ranges reach 2 cm
+    into the end ranges) the later one cut back to butt, so no two roofs share a plane */
+function settleHouses(list: HouseBoxLike[], ground: (x: number, z: number) => number, grid: { xs: number[]; zs: number[] }): HouseBoxLike[] {
+  // the mesh between its grid nodes is their interpolation: its lowest and highest over a box lie among the nodes round it
+  const span = (a: number[], v0: number, v1: number): number[] => {
+    let i0 = 0, i1 = a.length - 1
+    while (i0 + 1 < a.length && a[i0 + 1]! <= v0) i0++
+    while (i1 - 1 >= 0 && a[i1 - 1]! >= v1) i1--
+    return a.slice(i0, i1 + 1)
+  }
+  const local = (b: HouseBoxLike): { u: number; v: number; ca: [number, number]; cb: [number, number] } => {
+    const ca: [number, number] = [Math.cos(b.yaw), -Math.sin(b.yaw)], cb: [number, number] = [Math.sin(b.yaw), Math.cos(b.yaw)]
+    return { u: b.x * ca[0] + b.z * ca[1], v: b.x * cb[0] + b.z * cb[1], ca, cb }
+  }
+  // one foot level per house (its lowest), each box a centimetre under the one before
+  const foot = new Map<number, number>()
+  for (const b of list) {
+    const { ca, cb } = local(b)
+    let lo = Infinity, hi = -Infinity, x0 = Infinity, x1 = -Infinity, z0 = Infinity, z1 = -Infinity
+    for (const [su, sv] of [[-1, -1], [1, -1], [1, 1], [-1, 1]] as const) {
+      const x = b.x + ca[0] * su * b.sx / 2 + cb[0] * sv * b.sz / 2, z = b.z + ca[1] * su * b.sx / 2 + cb[1] * sv * b.sz / 2
+      x0 = Math.min(x0, x); x1 = Math.max(x1, x); z0 = Math.min(z0, z); z1 = Math.max(z1, z)
+    }
+    for (const x of span(grid.xs, x0, x1)) for (const z of span(grid.zs, z0, z1)) {
+      const g = ground(x, z)
+      lo = Math.min(lo, g)
+      hi = Math.max(hi, g)
+    }
+    foot.set(b.house, Math.min(foot.get(b.house) ?? Infinity, b.y0, lo - 0.1))
+    if (b.part === 4) b.y1 = Math.max(b.y1, hi + 0.03)
+  }
+  const nth = new Map<number, number>()
+  for (const b of list) {
+    const k = nth.get(b.house) ?? 0
+    nth.set(b.house, k + 1)
+    b.y0 = foot.get(b.house)! - 0.01 * k
+  }
+  const byHouse = new Map<number, HouseBoxLike[]>()
+  for (const b of list) (byHouse.get(b.house) ?? byHouse.set(b.house, []).get(b.house)!).push(b)
+  for (const rooms of byHouse.values()) {
+    for (let i = 0; i < rooms.length; i++) for (let j = i + 1; j < rooms.length; j++) {
+      const A = rooms[i]!, B = rooms[j]!
+      if (Math.abs(A.y1 - B.y1) > 0.003 || A.yaw !== B.yaw) continue
+      const a = local(A), b = local(B)
+      const ou = Math.min(a.u + A.sx / 2, b.u + B.sx / 2) - Math.max(a.u - A.sx / 2, b.u - B.sx / 2)
+      const ov = Math.min(a.v + A.sz / 2, b.v + B.sz / 2) - Math.max(a.v - A.sz / 2, b.v - B.sz / 2)
+      if (ou <= 0 || ov <= 0) continue
+      let u0 = b.u - B.sx / 2, u1 = b.u + B.sx / 2, v0 = b.v - B.sz / 2, v1 = b.v + B.sz / 2
+      if (ou < ov) { if (b.u > a.u) u0 = a.u + A.sx / 2; else u1 = a.u - A.sx / 2 }
+      else { if (b.v > a.v) v0 = a.v + A.sz / 2; else v1 = a.v - A.sz / 2 }
+      const du = (u0 + u1) / 2 - b.u, dv = (v0 + v1) / 2 - b.v
+      B.x += b.ca[0] * du + b.cb[0] * dv
+      B.z += b.ca[1] * du + b.cb[1] * dv
+      B.sx = u1 - u0
+      B.sz = v1 - v0
+    }
+  }
+  // two houses of neighbouring lots whose roofs or buried feet meet within the bed: the later's roof a few millimetres up,
+  // its foot down
+  const cell = 24, near = new Map<string, HouseBoxLike[]>()
+  for (const b of list) {
+    const r = Math.hypot(b.sx, b.sz) / 2
+    for (let i = Math.floor((b.x - r) / cell); i <= Math.floor((b.x + r) / cell); i++) for (let j = Math.floor((b.z - r) / cell); j <= Math.floor((b.z + r) / cell); j++) {
+      const k = `${i},${j}`
+      for (const o of near.get(k) ?? []) {
+        if (o.house === b.house || Math.hypot(o.x - b.x, o.z - b.z) >= (Math.hypot(o.sx, o.sz) + Math.hypot(b.sx, b.sz)) / 2) continue
+        if (Math.abs(o.y1 - b.y1) <= 0.004) b.y1 = o.y1 + 0.008
+        if (Math.abs(o.y0 - b.y0) <= 0.004) b.y0 = o.y0 - 0.008
+      }
+      ;(near.get(k) ?? near.set(k, []).get(k)!).push(b)
+    }
+  }
+  return list
+}
+
+function rebuiltHouses(list: HouseBoxLike[], band: number, mat: Material): InstancedMesh {
+  const geo = new BoxGeometry(1, 1, 1)
+  geo.deleteAttribute('uv')
+  const im = new InstancedMesh(geo, mat, list.length)
+  const n = list.length
+  const info = new Float32Array(n * 4), size = new Float32Array(n * 3), cls = new Float32Array(n * 2), bd = new Float32Array(n)
+  const m4 = new Matrix4(), qq = new Quaternion(), upY = new Vector3(0, 1, 0)
+  list.forEach((b, i) => {
+    qq.setFromAxisAngle(upY, b.yaw)
+    m4.compose(new Vector3(b.x, (b.y0 + b.y1) / 2, b.z), qq, new Vector3(b.sx, b.y1 - b.y0, b.sz))
+    im.setMatrixAt(i, m4)
+    info.set([b.house, b.part + 8 * b.butt, b.gy, b.block], i * 4)
+    size.set([b.sx, b.y1 - b.y0, b.sz], i * 3)
+    cls.set([CLS.G, CLS.G], i * 2)
+    bd[i] = b.gy + band
+  })
+  for (const [k, v, w] of [['hinfo', info, 4], ['size', size, 3], ['cls', cls, 2], ['band', bd, 1]] as Array<[string, Float32Array, number]>) geo.setAttribute(k, new InstancedBufferAttribute(v, w))
+  im.instanceMatrix.needsUpdate = true
+  im.castShadow = true
+  im.receiveShadow = true
+  im.frustumCulled = false
+  im.name = 'houses'
+  return im
+}
 
 export function buildBodies(built: Built, tones: ClassTones, sky: Sky, sunDir: N, canalZ: number[], passage?: Passage, paint: Paint = {}): Bodies {
   const group = new Group()
@@ -364,7 +481,8 @@ export function buildBodies(built: Built, tones: ClassTones, sky: Sky, sunDir: N
   group.add(prisms)
   const houses = built.boxes.filter((b) => b.group === 'house')
   const rest = built.boxes.filter((b) => b.group !== 'house' && !b.hidden)
-  if (houses.length) group.add(boxMesh(houses, bodyMaterial(tones, 0.47), 'houses'))
+  if (houses.length && paint.houses) group.add(rebuiltHouses(settleHouses(paint.houses.rebuild(houses, built.ground).boxes, built.ground, groundLines(canalZ)), paint.houses.band, bodyMaterial(tones, 0.47)))
+  else if (houses.length) group.add(boxMesh(houses, bodyMaterial(tones, 0.47), 'houses'))
   if (rest.length) group.add(boxMesh(rest, blockMat, 'towers-and-piers'))
 
   const streetMat = new MeshStandardNodeMaterial({ roughness: 0.85, metalness: 0 })

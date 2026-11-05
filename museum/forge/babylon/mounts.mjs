@@ -105,7 +105,9 @@ export async function mountMap(stop, { reach = 400 } = {}) {
   const eyes = [new THREE.Vector3(...p.pos)]
   for (let t = ks[0].t; t <= ks[ks.length - 1].t + 1e-9; t += 0.1) eyes.push(new THREE.Vector3(...path.sample(t).pos))
   const gf = plan.frames.gate
-  const bodies = buildBodies(built, tonesFrom(plan), sky, TSL.uniform(new THREE.Vector3(0, 1, 0)), canalLines(plan, F), { o: F.s(gf.origin[0], gf.origin[1]), a: F.dir(gf.bearing), c: F.dir(gf.bearing + 90), len: 50, half: 2.6 })
+  // the generic houses rebuilt as the page rebuilds them (map.ts: the arrival's houses.ts)
+  const { rebuildHouses } = await import(join(OPEN, 'houses.ts'))
+  const bodies = buildBodies(built, tonesFrom(plan), sky, TSL.uniform(new THREE.Vector3(0, 1, 0)), canalLines(plan, F), { o: F.s(gf.origin[0], gf.origin[1]), a: F.dir(gf.bearing), c: F.dir(gf.bearing + 90), len: 50, half: 2.6 }, { houses: { rebuild: rebuildHouses, band: Number(plan.classes.band) } })
   const [ex, , ez] = p.pos
   const keep = (v) => { const cx = (v[0].x + v[1].x + v[2].x) / 3, cz = (v[0].z + v[1].z + v[2].z) / 3; return Math.hypot(cx - ex, cz - ez) <= reach }
   const faces = mapFaces([], bodies.group, built, new THREE.Matrix4(), keep)
