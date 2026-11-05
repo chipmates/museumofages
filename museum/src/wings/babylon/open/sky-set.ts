@@ -15,7 +15,7 @@ import { skyRadiance } from '../map/sky-sample'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
-const { Loop, cameraPosition, clamp, diffuseContribution, dot, float, int, luminance, max, mix, normalWorld, positionWorld, pow, reflect, roughness, step, texture, uniform, uniformArray, vec2, vec3, vec4 } = TSL as unknown as Record<string, N>
+const { Loop, cameraPosition, clamp, clearcoatRoughness, diffuseContribution, dot, float, int, luminance, max, mix, normalWorld, pmremTexture, positionWorld, pow, reflect, roughness, smoothstep, step, texture, uniform, uniformArray, vec2, vec3, vec4 } = TSL as unknown as Record<string, N>
 
 type RGB = [number, number, number]
 const GOLD = Math.PI * (3 - Math.sqrt(5))
@@ -127,6 +127,7 @@ export function skySet(o: SkySetOptions) {
   const buffL = 0.2126 * o.buff[0] + 0.7152 * o.buff[1] + 0.0722 * o.buff[2]
   const uBuff = uniform(new Vector3(o.buff[0] / buffL, o.buff[1] / buffL, o.buff[2] / buffL))
   const uHue = uniform(o.giveHue ?? 0)
+  const uEnvI = uniform(1)
 
   /* the correction for one material: the diffuse the hidden sky took (irradiance), and the same for the environment's
      mirror of the sky (radiance): a lobe round the reflected ray, its width by the surface's roughness and held to the
@@ -139,8 +140,13 @@ export function skySet(o: SkySetOptions) {
     // they give back, in place of the multi-bounce fit where it gives more, and the share of the mirrored hidden sky
     const own: N = builder.material?.skyBounceNode ?? null
     const mirror: N = builder.material?.skyMirrorNode ?? float(0)
+    // a material whose rooms hide the open ground names, per point, the share of the environment's ground bounce kept
+    // (x) and the share of it that is the room's own floor in shade, lit by the sky (y); none: the ground stays whole
+    const ground: N = builder.material?.skyGroundNode ?? null
+    const env: N = ground ? builder.environmentNode : null
     const n = normalWorld
     const all = vec3(0).toVar('skyAll'), seen = vec3(0).toVar('skySeen'), hid = vec3(0).toVar('skyHid'), lobeSum = float(0).toVar('skyLobe')
+    const allUp = vec3(0).toVar('skyAllUp'), lobeAll = vec3(0).toVar('skyLobeAll')
     // the environment's own lookup (EnvironmentNode): the reflected ray bent toward the normal by roughness to the fourth
     const a2 = roughness.mul(roughness).mul(roughness).mul(roughness).max(1e-3)
     const rv = mix(reflect(positionWorld.sub(cameraPosition).normalize(), n), n, a2).normalize().toVar('skyR')
@@ -160,9 +166,11 @@ export function skySet(o: SkySetOptions) {
       const wc = w.xyz.mul(max(dot(n, dn.xyz), 0))
       all.addAssign(wc)
       seen.addAssign(wc.mul(vis))
+      if (env) allUp.addAssign(w.xyz.mul(max(dn.y, 0)))
       const lob = pow(max(dot(rv, dn.xyz), 0), pw)
       lobeSum.addAssign(lob)
       hid.addAssign(w.xyz.mul(lob).mul(float(1).sub(vis)))
+      if (env) lobeAll.addAssign(w.xyz.mul(lob))
     })
     const lumAll = luminance(all)
     const v = luminance(seen).div(max(lumAll, 1e-6))
@@ -174,7 +182,32 @@ export function skySet(o: SkySetOptions) {
     const multi = mix(vec3(uBuff), all.div(max(lumAll, 1e-6)), uHue).mul(max(v2.sub(v), float(1).sub(v).mul(ALBEDO * FLOOR_LIT)).mul(lumAll)).mul(uGive)
     const back = own ? max(multi, all.sub(seen).mul(own)) : multi
     const gate = uOn.mul(open)
-    const corr = seen.sub(all).add(back).mul(float(uStride)).mul(gate)
+    /* the lower hemisphere: the environment's ground is the open forecourt's lit paving; a room's own floor is in
+       shade and lit by the sky, so there its bounce is the paving's colour in the open sky's light on a floor. The
+       ground's radiance is the environment's toward the nadir (its own lookup); a face takes it by the lower
+       hemisphere's cosine share, a mirror by the share of its reflected ray below the horizon */
+    let low: N = vec3(0)
+    if (env?.value) {
+      const lg = pmremTexture(env.value, vec3(0, -1, 0), float(1)).mul(uEnvI)
+      // the paving's colour under the open sky's light on a floor
+      const lit = vec3(uBuff).mul(allUp)
+      const hueUp = lit.div(max(luminance(lit), 1e-6))
+      const room = (c: N): N => mix(c, hueUp.mul(luminance(c)), ground.y).mul(ground.x).sub(c)
+      // a room's walls stand round its floor, so the mirror leaves its floor for the sky over a band, not at a line
+      const below = (r: N): N => float(1).sub(smoothstep(-0.2, 0.2, r.y))
+      low = room(lg.mul(Math.PI)).mul(float(1).sub(n.y).mul(0.5))
+      builder.context.radiance.addAssign(room(lg).mul(below(rv)).mul(gate))
+      /* the clear coat's mirror (the glaze): its floor as above, and its sky by the share of the lobe the field sees
+         hidden, taken from the environment's own lookup (a share, so no colour goes below nothing) */
+      const cc: N = builder.context.lightingModel?.clearcoatRadiance
+      if (cc) {
+        const r0 = reflect(positionWorld.sub(cameraPosition).normalize(), n)
+        const hidShare = luminance(hid).div(max(luminance(lobeAll), 1e-6)).min(1)
+        const sky = pmremTexture(env.value, r0, clearcoatRoughness).mul(uEnvI).mul(hidShare).mul(uSpec).mul(float(1).sub(below(r0)))
+        cc.addAssign(room(lg).mul(below(r0)).sub(sky).mul(gate))
+      }
+    }
+    const corr = seen.sub(all).add(back).mul(float(uStride)).add(low).mul(gate)
     const lm = builder.context.lightingModel
     if (FIT === 2 && builder.context.reflectedLight) builder.context.reflectedLight.directDiffuse.addAssign(corr.mul(diffuseContribution).mul(1 / Math.PI))
     else if (FIT === 1 && lm?.singleScatteringDielectric) builder.context.irradiance.addAssign(corr.div(max(vec3(1).sub(lm.singleScatteringDielectric.add(lm.multiScatteringDielectric)), 0.05)))
@@ -321,6 +354,7 @@ export function skySet(o: SkySetOptions) {
     const toward = Number(o.lobe.toward.value), away = Number(o.lobe.away.value)
     const norm = 1 + (toward - away) / Math.PI
     const k0 = solidAngle(COUNT) * o.envIntensity()
+    uEnvI.value = o.envIntensity()
     for (let k = 0; k < COUNT; k++) {
       const d = DIRS[k]!
       const L = skyRadiance(air, d)

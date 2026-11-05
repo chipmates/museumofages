@@ -13,6 +13,7 @@ import { Color, DataTexture, DataUtils, DoubleSide, HalfFloatType, LinearFilter,
 import * as TSL from 'three/tsl'
 import { REG, type Field } from './gate-relief'
 import { PAL } from './gate-colours'
+import { uSkySet } from '../open/sky-set'
 
 export { PAL }
 
@@ -161,15 +162,26 @@ const lionFrieze = (u: N, yf: N, fu: N, fy: N): { col: N; inside: N } => {
 
 /* ── the analytic sky openness of the chambers and passages (the stack has no GI; the bounce and sky are modelled) ── */
 export interface Rooms { boxes: Array<{ x0: number; x1: number; z0: number; z1: number; y1: number; open: number }> }
-const openness = (rooms: Rooms, p: N): N => {
-  let o: N = float(1)
+const openness = (rooms: Rooms, p: N): { open: N; inside: N } => {
+  let o: N = float(1), inside: N = float(0)
   for (const r of rooms.boxes) {
     // soft along the passage (1.2 m), so a room's edge never draws a line across the floor
     const inX = step(r.x0, p.x).mul(step(p.x, r.x1)), inY = step(p.y, r.y1)
     const inZ = smoothstep(r.z0 - 0.6, r.z0 + 0.6, p.z).mul(float(1).sub(smoothstep(r.z1 - 0.6, r.z1 + 0.6, p.z)))
-    o = min(o, mix(float(1), float(r.open), inX.mul(inZ).mul(inY)))
+    const w = inX.mul(inZ).mul(inY)
+    o = min(o, mix(float(1), float(r.open), w))
+    inside = max(inside, w)
   }
-  return o
+  return { open: o, inside }
+}
+
+/** the rooms' light on a material: without the sky field the openness takes sky and bounce together; under it the
+    field takes the sky a point cannot see, so the openness steps aside and stays on the ground bounce alone, which a
+    room's floor gives in the sky's hue (open/sky-set.ts, skyGroundNode) */
+export function roomLight(m: Material, rooms: Rooms, p: N): void {
+  const r = openness(rooms, p)
+  ;(m as unknown as { aoNode: N }).aoNode = mix(r.open, float(1), uSkySet)
+  ;(m as unknown as { skyGroundNode: N }).skyGroundNode = vec2(r.open, r.inside)
 }
 
 /* ── the wall material: every body of the gate's soup ── */
@@ -225,7 +237,7 @@ export function wallMaterial(U: GateUniforms, rooms: Rooms): Material {
   // the glaze is glass fired on the brick: a clear coat over it in the full state
   m.clearcoatNode = mix(select(U.uState.lessThan(1.5), float(0), glazed), float(0), U.uSwitch)
   m.clearcoatRoughnessNode = float(0.06)
-  m.aoNode = openness(rooms, p)
+  roomLight(m, rooms, p)
   return m
 }
 
@@ -393,7 +405,7 @@ export function panelMaterial(U: GateUniforms, maps: PanelMaps, schemes: Array<[
   })()
   m.receivedShadowNode = Fn(([shadow]: [N]) => shadow.mul(selfShadow))
   // the point in the gate's frame from the instance's own origin (iO), not from positionLocal, which the instancing rewrites
-  m.aoNode = openness(rooms, attribute('iO', 'vec3').add(iU.mul(u)).add(vec3(0, v, 0)))
+  roomLight(m, rooms, attribute('iO', 'vec3').add(iU.mul(u)).add(vec3(0, v, 0)))
   return m
 }
 
@@ -453,7 +465,7 @@ export function pavingMaterial(U: GateUniforms, P: PaveSpec, rooms: Rooms): Mate
   m.colorNode = mix(stateCol, cc, U.uSwitch)
   m.emissiveNode = cc.mul(U.uSwitch.mul(U.uSelf))
   m.roughnessNode = mix(select(U.uState.lessThan(1.5), float(0.85), mix(mix(float(0.82), float(0.6), worn), mix(float(0.7), float(0.5), worn), inBrec)), float(0.9), U.uSwitch)
-  m.aoNode = openness(rooms, p)
+  roomLight(m, rooms, p)
   return m
 }
 
