@@ -12,15 +12,12 @@ import { IDENTITY } from '../../../stack/grade'
 import { createTurntablePayload } from '../../vitrine/turntable'
 import { STAGE } from '../../vitrine/stage-close-view'
 import type { VitrinePayloadHost } from '../../vitrine/types'
-import { FACING } from '../objects/objects'
+import { CLAY_VIEW } from './clay-view'
 import { clayBody } from './clay-body'
 import { backFrom, pressFrom, type ClaySignFile } from './clay-data'
 import { CLAY_WORDS, PRESS_KEYS, pressKey } from './clay-words'
 import signs from './clay-signs.json'
 
-const DEG = Math.PI / 180
-/** THE EYE: the whole view on the tablet's face from the front, high enough to read its line */
-export const CLAY_VIEW = Object.freeze({ yaw: FACING, pitch: 52 * DEG })
 
 const q = new URLSearchParams(location.search)
 const lang = q.get('lang') === 'de' ? 'de' : 'en'

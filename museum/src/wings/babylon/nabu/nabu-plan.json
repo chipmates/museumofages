@@ -282,5 +282,18 @@
    0.36,
    0.28
   ]
+ },
+ "door": {
+  "feature": "clay",
+  "opens": "write in clay (feature 6): the city's name pressed into a fresh tablet on the turntable, then on paper: src/wings/babylon/clay/",
+  "wide": {
+   "right": 0.03,
+   "bottom": 0.05
+  },
+  "upright": {
+   "middle": true,
+   "bottom": 0.04
+  },
+  "src": "the stop's one press, named by what it shows and never 'Learn more' (the words are the writer's); it stands on the court's paving at the lower right of the wide frame, clear of the grey figure and the doorways, and at the foot of the upright one, so the frame at rest keeps far more than two thirds picture"
  }
 }

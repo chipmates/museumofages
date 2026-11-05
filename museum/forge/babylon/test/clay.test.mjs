@@ -139,3 +139,110 @@ test('the run\'s clock counts wedges: a press plays to the next wedge and lands 
   assert.equal(data.backFrom(5.2, total), 5, 'a wedge partly in is the one taken out')
   assert.equal(data.backFrom(0, total), 0)
 })
+
+/* ---- THE PAPER STEPS: letters to signs, a student's steps (clay-paper.ts) ---- */
+const paper = await load('clay-paper.ts')
+const words = await load('clay-words.ts')
+const placer = await import(pathToFileURL(join(APP, 'src/wings/babylon/paper/placer.ts')).href)
+const PAPER_FRAMES = { wide: [[1600, 690], [1440, 690]], upright: [[390, 498], [360, 380], [390, 330]] }
+const PAPER_PX = { wide: { ink: 15, pencil: 15, quiet: 15, count: 22, big: 18 }, upright: { ink: 14, pencil: 14, quiet: 14, count: 18, big: 16 } }
+const sayOf = (lang, say) => {
+  const L = words.CLAY_WORDS[lang]
+  return say.what === 'letter' ? L.name[say.i] : say.what === 'reading' ? L.readings[say.i] : say.what === 'step' ? L.labels.steps[say.step]
+    : say.what === 'ruler' ? L.labels.ruler : say.what === 'later' ? L.labels.later : L.labels.credit
+}
+const guess = (text, px) => ({ w: Math.ceil(text.length * px * 0.56 + 8), h: Math.ceil(px * 1.15 + 2) })
+const eachPaper = (fn) => {
+  for (const lang of ['en', 'de']) for (const [framing, sizes] of Object.entries(PAPER_FRAMES)) for (const [w, h] of sizes)
+    for (const t of [1, 1.5, 2, 2.5, 3, 4]) fn({ lang, framing, w, h, t, sc: paper.clayPaperScene(t, framing, w, h, file, words.CLAY_WORDS[lang].name.length) })
+}
+
+test('letters to signs: seven pencil boxes, then four signs in ink with their readings in order', () => {
+  for (const lang of ['en', 'de']) {
+    assert.equal(words.CLAY_WORDS[lang].name.length, 7, `${lang}: the name's letters`)
+    for (const [framing, sizes] of Object.entries(PAPER_FRAMES)) for (const [w, h] of sizes) {
+      const one = paper.clayPaperScene(1, framing, w, h, file), two = paper.clayPaperScene(2, framing, w, h, file)
+      assert.equal(one.letters, 7); assert.equal(one.signs, 0)
+      assert.deepEqual(one.anchors.map((a) => sayOf(lang, a.say)).join(''), 'BABYLON')
+      assert.equal(two.cells, 4); assert.equal(two.signs, 4); assert.equal(two.letters, 7)
+      assert.deepEqual(two.anchors.filter((a) => a.say.what === 'reading').map((a) => sayOf(lang, a.say)), ['KÁ', 'DINGIR', 'RA', 'KI'])
+      // the signs in fine ink, the boxes our pencil: the grammar's Known and the measure
+      assert.ok(two.prims.filter((p) => /^sign\d$/.test(p.id)).every((p) => p.mark === 'known'))
+      assert.ok(two.prims.filter((p) => /^cell\d$/.test(p.id) || p.id === 'fold').every((p) => p.mark === 'measure'))
+      // every wedge of each sign drawn: a head, and a tail where the wedge is longer than its head
+      for (let j = 0; j < 4; j++) {
+        const d = two.prims.find((p) => p.id === `sign${j}`).d
+        const tris = all.filter((p) => p.signIndex === j).reduce((s, p) => s + wedgeTris(p, 0.5).length, 0)
+        assert.equal((d.match(/Z/g) ?? []).length, tris, `sign ${j}: its wedges' outlines`)
+      }
+    }
+  }
+})
+
+test('the fold closes its walls onto the four cells, never onto a letter\'s edge: no letter is drawn as a sign\'s', () => {
+  const to = paper.foldTo(7, 4)
+  assert.deepEqual(to, [0.25, 0.25, 0.5, 0.5, 0.75, 0.75])
+  for (const x of to) for (let i = 1; i < 7; i++) assert.ok(Math.abs(x - i / 7) > 0.02, `a wall closes on letter edge ${i}`)
+  const mid = paper.clayPaperScene(1.5, 'wide', 1600, 690, file)
+  assert.equal(mid.prims.filter((p) => /^wall\d$/.test(p.id)).length, 6)
+  assert.equal(mid.anchors.filter((a) => a.say.what === 'reading').length, 0, 'a reading before its sign is inked')
+})
+
+test('every paper step\'s labels stand clear of the drawing and of each other, none left off (EN and DE, wide and upright)', () => {
+  const left = []
+  eachPaper(({ lang, framing, w, h, t, sc }) => {
+    const asks = sc.anchors.map((a) => ({ ...a, ...guess(sayOf(lang, a.say), PAPER_PX[framing][a.kind]) }))
+    const placed = placer.placeLabels(asks, { taken: sc.taken, walls: sc.walls, bounds: sc.bounds, clear: 3 })
+    assert.deepEqual(placer.overlaps(placed, sc.taken, sc.walls, asks), [], `${lang} ${framing} ${w}x${h} at ${t}`)
+    for (const p of placed) if (!p.box) left.push(`${lang} ${framing} ${w}x${h} at ${t}: ${p.id}`)
+  })
+  assert.deepEqual(left, [], 'labels left off')
+})
+
+test('every paper part stays on its plate', () => {
+  eachPaper(({ framing, w, h, t, sc }) => {
+    for (const p of sc.prims) {
+      const pts = p.type === 'rect' ? [[p.x, p.y], [p.x + p.w, p.y + p.h]] : p.type === 'line' ? [[p.ax, p.ay], [p.bx, p.by]]
+        : [...p.d.matchAll(/[MLC]\s*(-?\d+(?:\.\d+)?)[ ,](-?\d+(?:\.\d+)?)/g)].map((m) => [Number(m[1]), Number(m[2])])
+      for (const [x, y] of pts) assert.ok(x >= 0 && x <= w && y >= 0 && y <= h, `${framing} ${w}x${h} at ${t}: ${p.id} off the plate (${x}, ${y})`)
+    }
+    if (sc.photo) for (const k of ['l', 'r']) assert.ok(sc.photo.clip[k] >= 0 && sc.photo.clip[k] <= w)
+  })
+})
+
+test('a student\'s steps: five dashed tablets of one unit, the one real tablet solid at true size against the 10 cm ruler', () => {
+  for (const [framing, sizes] of Object.entries(PAPER_FRAMES)) for (const [w, h] of sizes) {
+    const sc = paper.clayPaperScene(3, framing, w, h, file)
+    const tabs = sc.prims.filter((p) => p.id.startsWith('tablet-'))
+    assert.equal(tabs.length, 5); assert.equal(sc.tablets, 5)
+    assert.ok(tabs.every((p) => p.mark === 'guessed'), 'a step drawn as known')
+    assert.equal(new Set(tabs.map((p) => p.d.replace(/-?\d+(\.\d+)?/g, '#'))).size, 1, 'one unit')
+    assert.equal(sc.prims.find((p) => p.id === 'photo-frame').mark, 'known')
+    // the photo's tablet, 707 px of the photo across for 9.9 cm, at the ruler's own scale
+    const [x0, , x1] = data.MET_TABLET.extent
+    const s = sc.photo.w / data.MET_TABLET.px[0]
+    assert.ok(Math.abs((x1 - x0) * s / sc.pxPerCm - 9.9) < 0.01, `${framing} ${w}x${h}: the tablet is not 9.9 cm on the ruler's scale`)
+    const ruler = sc.taken.find((b) => b.id === 'ruler')
+    assert.ok(Math.abs((ruler.r - ruler.l) - 10 * sc.pxPerCm) < 0.01)
+    assert.ok(sc.pxPerCm >= 6, `${framing} ${w}x${h}: ${sc.pxPerCm} px a cm`)
+  }
+})
+
+test('the words: no meaning for a sign, students never children, and every band line at the close look\'s length', () => {
+  for (const lang of ['en', 'de']) {
+    const L = words.CLAY_WORDS[lang]
+    const text = JSON.stringify(L)
+    assert.ok(!/\b(gate|gates|god|gods|Tor|Tore|Gott|Götter|children|Kinder|alphabet of)\b/i.test(text.replace(/In our alphabet|In unserem Alphabet/g, '')), `${lang}: a forbidden word`)
+    for (const [key, line] of Object.entries(L.band)) {
+      assert.ok(line.startsWith('DRAFT'), `${lang} ${key}: not marked DRAFT`)
+      const shown = line.replace(/^DRAFT · /, '')
+      assert.ok(shown.split(/\s+/).length <= words.LINE_WORDS_MOST, `${lang} ${key}: over ${words.LINE_WORDS_MOST} words`)
+      for (const s of shown.split(/(?<=[.!?])\s+/)) assert.ok(s.split(/\s+/).length <= words.SENTENCE_WORDS_MOST, `${lang} ${key}: "${s}"`)
+      assert.ok(line.length <= 110, `${lang} ${key}: ${line.length} characters`)
+      assert.ok(!/[–—;]/.test(shown), `${lang} ${key}: a dash or a semicolon`)
+    }
+    assert.deepEqual(Object.keys(L.steps), [...words.STEP_IDS])
+    assert.equal(new Set(Object.values(L.steps)).size, words.STEP_IDS.length)
+  }
+  assert.deepEqual(Object.keys(words.BAND_KEYS).sort(), Object.keys(words.CLAY_WORDS.en.band).sort())
+})

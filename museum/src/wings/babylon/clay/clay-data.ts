@@ -166,17 +166,15 @@ export function finished(done: number, all: readonly Press[]): { signs: number[]
   return { signs, just: last?.last ? last.signIndex : null, all: done >= all.length }
 }
 
-/** A STUDENT'S STEPS, a type (Gesche 2000 as Still summarises it, RES 1; TARGETS-W2A 7.5): each step Guessed for these
- *  tablets, drawn dashed; their order is the type's, their size not known */
-export const STUDENT_STEPS = ['stylus', 'signs', 'words', 'extracts', 'letters', 'literary'] as const
-export type StudentStep = typeof STUDENT_STEPS[number]
-
 /** THE ONE REAL TABLET: the Met's school exercise tablet, CC0, a later century's (WANTED 2) */
 export const MET_TABLET = Object.freeze({
   id: '86.11.361',
   /** the Met's size, cm: width, height, thickness */
   cm: [9.9, 9.7, 4.4] as const,
-  /** the photo's pixels (800 by 772); its file is named where the kit's assets are recorded, with its credit */
+  /** the photo's pixels (800 by 772); its file is handed in by address, named where the asset store records it */
   px: [800, 772] as const,
+  /** the tablet's own extent in the photo, px (read by eye off its light ground, about 5 px): left, top, right, bottom;
+   *  707 px across for 9.9 cm and 704 down for 9.7 cm, about 72 px a centimetre either way */
+  extent: [38, 18, 745, 722] as const,
   credit: 'Photo: The Metropolitan Museum of Art, New York, 86.11.361, Purchase 1886. Public domain (CC0).',
 })
