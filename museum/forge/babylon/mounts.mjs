@@ -138,7 +138,7 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
   const p = path.sample(time)
   const cameras = SIZES.map(([framing, w, h]) => {
     const ph = framing === 'phone'
-    return cameraFrom({ name: `stop ${stop} ${framing} ${w}x${h}`, eye: p.pos, look: ph ? p.phone.look : p.look, vfov: fittedFov(ph ? p.phone.hfov : p.hfov, w, h), w, h, shift: ph ? p.phone.shift : p.shift })
+    return cameraFrom({ name: `stop ${stop} ${framing} ${w}x${h}`, eye: ph ? p.phone.pos : p.pos, look: ph ? p.phone.look : p.look, vfov: fittedFov(ph ? p.phone.hfov : p.hfov, w, h), w, h, shift: ph ? p.phone.shift : p.shift })
   })
   // and its vantage's cameras checked beside the hold's
   const tv = towerState === 'bruegel-show' && n === 12 ? vantageTime(cams, towerState) : null
@@ -146,11 +146,17 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
     const pv = path.sample(tv + 1)
     for (const [framing, w, h] of SIZES) {
       const ph = framing === 'phone'
-      cameras.push(cameraFrom({ name: `stop ${stop} vantage ${framing} ${w}x${h}`, eye: pv.pos, look: ph ? pv.phone.look : pv.look, vfov: fittedFov(ph ? pv.phone.hfov : pv.hfov, w, h), w, h, shift: ph ? pv.phone.shift : pv.shift }))
+      cameras.push(cameraFrom({ name: `stop ${stop} vantage ${framing} ${w}x${h}`, eye: ph ? pv.phone.pos : pv.pos, look: ph ? pv.phone.look : pv.look, vfov: fittedFov(ph ? pv.phone.hfov : pv.hfov, w, h), w, h, shift: ph ? pv.phone.shift : pv.shift }))
     }
   }
+  // the phone's own stand, where a key gives one, is an eye too
   const eyes = [new THREE.Vector3(...p.pos)]
-  for (let t = ks[0].t; t <= ks[ks.length - 1].t + 1e-9; t += 0.1) eyes.push(new THREE.Vector3(...path.sample(t).pos))
+  if (p.phone.pos !== p.pos) eyes.push(new THREE.Vector3(...p.phone.pos))
+  for (let t = ks[0].t; t <= ks[ks.length - 1].t + 1e-9; t += 0.1) {
+    const q = path.sample(t)
+    eyes.push(new THREE.Vector3(...q.pos))
+    if (q.phone.pos !== q.pos) eyes.push(new THREE.Vector3(...q.phone.pos))
+  }
   const gf = plan.frames.gate
   // the generic houses rebuilt as the page rebuilds them (map.ts: the arrival's houses.ts)
   const { rebuildHouses } = await import(join(OPEN, 'houses.ts'))
@@ -237,7 +243,8 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
     houseBodies,
     page: 'map', stop: String(stop), frame: "the map's scene metres (x east, z south, y up)", faces, cameras, eyes, reach,
     ground: (x, z) => built.ground(x, z),
-    track: (dt = 0.25) => pathTrack(path, n, dt, (q) => ({ kind: q.kind, desktop: view(q.pos, q.look, q.hfov, q.shift), phone: view(q.pos, q.phone.look, q.phone.hfov, q.phone.shift) })),
+    track: (dt = 0.25) => pathTrack(path, n, dt, (q) => ({ kind: q.kind, desktop: view(q.pos, q.look, q.hfov, q.shift), phone: view(q.phone.pos, q.phone.look, q.phone.hfov, q.phone.shift) })),
+    path,
     counts: () => true,
     // the gate's relief panels are checked on the gate page (their base quads lie on the glazed skins by design)
     checks: (b) => !surface(b) && !b.startsWith('panel:'),

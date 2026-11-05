@@ -373,9 +373,10 @@ function aimFilm(time: number, framing: 'desktop' | 'phone', w: number, h: numbe
   bridge.setTime(waterAt(time))
   const ph = framing === 'phone'
   setAir(airAt(time))
-  aim(p.pos, ph ? p.phone.look : p.look, ph ? p.phone.hfov : p.hfov, w, h, ph ? p.phone.shift : p.shift)
+  aim(ph ? p.phone.pos : p.pos, ph ? p.phone.look : p.look, ph ? p.phone.hfov : p.hfov, w, h, ph ? p.phone.shift : p.shift)
   showFigure(p.stop)
-  return p
+  // the record names the camera the frame was taken from
+  return ph && p.phone.pos !== p.pos ? { ...p, pos: p.phone.pos } : p
 }
 /** the second a stop's still is taken: the film frame (8 a second) at its key marked still, else at its last
     key; on a cut key the first frame after the cut */

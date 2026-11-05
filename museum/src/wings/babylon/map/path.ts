@@ -3,7 +3,8 @@
    on foot the eye stays 1.65 m over whatever the visitor stands on; a flight
    key carries its own height. A cut starts a new run: no motion crosses it.
    Positions ease through the keys on time-spaced Hermite curves; a run's
-   ends and a held key stand still. */
+   ends and a held key stand still. A key may give the phone a stand of its
+   own (`phone.at`); the phone's position eases through its keys the same way. */
 
 export type V3 = [number, number, number]
 
@@ -18,8 +19,8 @@ export interface Key {
   hfov: number
   /** the desktop frame slid up (+) or down, a shift lens */
   shift: number
-  /** the phone's own look, lens and shift at this key */
-  phone: { look: V3; hfov: number; shift: number }
+  /** the phone's own look, lens and shift at this key, and its stand: its own `at` where the key names one, else the key's */
+  phone: { pos: V3; eye: boolean; look: V3; hfov: number; shift: number }
   stop: number
   cut: boolean
   hold: boolean
@@ -35,7 +36,7 @@ export interface PathSample {
   look: V3
   hfov: number
   shift: number
-  phone: { look: V3; hfov: number; shift: number }
+  phone: { pos: V3; look: V3; hfov: number; shift: number }
   stop: number
   hour: number
   eye: boolean
@@ -55,10 +56,15 @@ export function makePath(cams: J, toScene: (E: number, N: number) => [number, nu
     const y = eye ? stand(x, z) + EYE : (k.y as number)
     const [lx, lz] = toScene(k.look[0], k.look[1])
     const look: V3 = [lx, k.look[2] as number, lz]
+    const pos: V3 = [x, y, z]
     const ph = k.phone ?? {}
     const pl = ph.look ? toScene(ph.look[0], ph.look[1]) : null
-    const phone = { look: pl ? ([pl[0], ph.look[2] as number, pl[1]] as V3) : look, hfov: ph.hfov ?? cams.lens.phoneFilm ?? cams.lens.phone, shift: ph.shift ?? 0 }
-    return { t: k.t, pos: [x, y, z] as V3, look, eye, hfov: k.hfov ?? cams.lens.desktop, shift: k.shift ?? 0, phone, stop: k.stop, cut: !!k.cut, hold: !!k.hold, still: !!k.still, kind: k.kind ?? (eye ? 'walk' : 'fly'), say: k.say ?? '', ...(k.hour ? { hour: hhmm(k.hour) } : {}) }
+    // the phone's own stand: its eye over the ground there unless it gives a level
+    const pa = ph.at ? toScene(ph.at[0], ph.at[1]) : null
+    const peye = pa ? ph.y === undefined || ph.y === 'eye' : eye
+    const ppos: V3 = pa ? [pa[0], peye ? stand(pa[0], pa[1]) + EYE : (ph.y as number), pa[1]] : pos
+    const phone = { pos: ppos, eye: peye, look: pl ? ([pl[0], ph.look[2] as number, pl[1]] as V3) : look, hfov: ph.hfov ?? cams.lens.phoneFilm ?? cams.lens.phone, shift: ph.shift ?? 0 }
+    return { t: k.t, pos, look, eye, hfov: k.hfov ?? cams.lens.desktop, shift: k.shift ?? 0, phone, stop: k.stop, cut: !!k.cut, hold: !!k.hold, still: !!k.still, kind: k.kind ?? (eye ? 'walk' : 'fly'), say: k.say ?? '', ...(k.hour ? { hour: hhmm(k.hour) } : {}) }
   })
   const duration = keys[keys.length - 1]!.t
   /** a scalar's tangent at key i inside its run, by time: zero on a held key, the leg's own pace at a run's
@@ -84,18 +90,20 @@ export function makePath(cams: J, toScene: (E: number, N: number) => [number, nu
   const herm1 = (p0: number, m0: number, p1: number, m1: number, dt: number, u: number): number => hermite([p0, 0, 0], [m0, 0, 0], [p1, 0, 0], [m1, 0, 0], dt, u)[0]
   /* the look as a heading and a tilt from the camera, unwrapped along the film: a straight line between two
      look points sweeps past the camera and spins the view; angles turn at the pace the keys ask */
-  const angles = (pick: (k: Key) => V3) => {
+  const angles = (pick: (k: Key) => V3, from: (k: Key) => V3) => {
     let last = 0
     return keys.map((k, i) => {
-      const l = pick(k)
-      const dx = l[0] - k.pos[0], dy = l[1] - k.pos[1], dz = l[2] - k.pos[2]
+      const l = pick(k), o = from(k)
+      const dx = l[0] - o[0], dy = l[1] - o[1], dz = l[2] - o[2]
       let yaw = Math.atan2(dx, dz)
       if (i > 0) yaw = last + ((((yaw - last) % (2 * Math.PI)) + 3 * Math.PI) % (2 * Math.PI)) - Math.PI
       last = yaw
       return { yaw, tilt: Math.atan2(dy, Math.hypot(dx, dz)) }
     })
   }
-  const deskA = angles((k) => k.look), phoneA = angles((k) => k.phone.look)
+  const deskA = angles((k) => k.look, (k) => k.pos), phoneA = angles((k) => k.phone.look, (k) => k.phone.pos)
+  /** a key whose phone stands apart from the desktop: a segment eases the phone's own position only near one */
+  const apart = (i: number): boolean => i >= 0 && i < keys.length && keys[i]!.phone.pos !== keys[i]!.pos
   const lookAt = (A: Array<{ yaw: number; tilt: number }>, i: number, dt: number, u: number, pos: V3): V3 => {
     const yaw = herm1(A[i]!.yaw, slope(i, (k) => A[keys.indexOf(k)]!.yaw), A[i + 1]!.yaw, slope(i + 1, (k) => A[keys.indexOf(k)]!.yaw), dt, u)
     const tilt = herm1(A[i]!.tilt, slope(i, (k) => A[keys.indexOf(k)]!.tilt), A[i + 1]!.tilt, slope(i + 1, (k) => A[keys.indexOf(k)]!.tilt), dt, u)
@@ -147,18 +155,24 @@ export function makePath(cams: J, toScene: (E: number, N: number) => [number, nu
     const a = keys[i]!, b = keys[i + 1]!
     if (b.cut || b.t - a.t < 1e-6) {
       const k = t >= b.t ? b : a
-      return { pos: k.pos, look: k.look, hfov: k.hfov, shift: k.shift, phone: k.phone, stop: k.stop, hour: hourAt(t), eye: k.eye, kind: k.kind }
+      return { pos: k.pos, look: k.look, hfov: k.hfov, shift: k.shift, phone: { pos: k.phone.pos, look: k.phone.look, hfov: k.phone.hfov, shift: k.phone.shift }, stop: k.stop, hour: hourAt(t), eye: k.eye, kind: k.kind }
     }
     const dt = b.t - a.t, u = (t - a.t) / dt
     const pos = hermite(a.pos, tangent(i, (k) => k.pos), b.pos, tangent(i + 1, (k) => k.pos), dt, u)
     const eye = a.eye && b.eye
     if (eye) pos[1] = stand(pos[0], pos[2]) + EYE
+    // the tangents at i and i + 1 reach keys i - 1 to i + 2: with none of them apart, the phone stands where the desktop does
+    let ppos = pos
+    if (apart(i - 1) || apart(i) || apart(i + 1) || apart(i + 2)) {
+      ppos = hermite(a.phone.pos, tangent(i, (k) => k.phone.pos), b.phone.pos, tangent(i + 1, (k) => k.phone.pos), dt, u)
+      if (a.phone.eye && b.phone.eye) ppos[1] = stand(ppos[0], ppos[2]) + EYE
+    }
     const look = lookAt(deskA, i, dt, u, pos)
-    const plook = lookAt(phoneA, i, dt, u, pos)
+    const plook = lookAt(phoneA, i, dt, u, ppos)
     const mixN = (p: number, q: number): number => p + (q - p) * u
     return {
       pos, look, hfov: mixN(a.hfov, b.hfov), shift: mixN(a.shift, b.shift),
-      phone: { look: plook, hfov: mixN(a.phone.hfov, b.phone.hfov), shift: mixN(a.phone.shift, b.phone.shift) },
+      phone: { pos: ppos, look: plook, hfov: mixN(a.phone.hfov, b.phone.hfov), shift: mixN(a.phone.shift, b.phone.shift) },
       // a stop runs from its first key to the next stop's first key; a segment's kind is that of the key it runs to
       stop: a.stop, hour: hourAt(t), eye, kind: b.kind,
     }
