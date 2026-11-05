@@ -62,8 +62,8 @@ export const RIVER_WORDS: Record<RiverLang, RiverWords> = {
       title: `${DRAFT} The river, then and now`, door: `${DRAFT} See the river move`, close: `${DRAFT} Back to the bridge`,
     },
     band: {
-      then: `${DRAFT} · The river was 123 to 126${NB}m wide here. The piers stand, the deck is our guess.`,
-      dig: `${DRAFT} · The piers, 21 by 9${NB}m each, were dug out in 1910 and 1911, on dry ground.`,
+      then: `${DRAFT} · The river was 123 to 126${NB}m wide here. The deck is our guess.`,
+      dig: `${DRAFT} · Each pier 21 by 9${NB}m. They were dug out in 1910 and 1911, on dry ground.`,
       today: `${DRAFT} · The river has moved west. Its old bed is dry today, and a road runs in it.`,
       photo: `${DRAFT} · The Shatt al-Hillah in April 1927: its water and banks, not those of 570${NB}BC.`,
     },
@@ -98,8 +98,8 @@ export const RIVER_WORDS: Record<RiverLang, RiverWords> = {
       title: `${DRAFT} Der Fluss, damals und heute`, door: `${DRAFT} Den Fluss wandern sehen`, close: `${DRAFT} Zurück zur Brücke`,
     },
     band: {
-      then: `${DRAFT} · Hier war der Fluss 123 bis 126${NB}m breit. Die Pfeiler stehen, die Fahrbahn ist vermutet.`,
-      dig: `${DRAFT} · Die Pfeiler, je 21 mal 9${NB}m, wurden 1910 und 1911 auf trockenem Grund ausgegraben.`,
+      then: `${DRAFT} · Hier war der Fluss 123 bis 126${NB}m breit. Die Fahrbahn ist vermutet.`,
+      dig: `${DRAFT} · Jeder Pfeiler 21 mal 9${NB}m. Ausgegraben 1910 und 1911, auf trockenem Grund.`,
       today: `${DRAFT} · Der Fluss zog nach Westen. Sein altes Bett ist heute trocken, darin eine Straße.`,
       photo: `${DRAFT} · Der Schatt al-Hilla im April 1927: sein Wasser und seine Ufer, nicht die von 570${NB}v.${NB}Chr.`,
     },

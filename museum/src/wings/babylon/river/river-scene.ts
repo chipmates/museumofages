@@ -49,6 +49,37 @@ function offset(line: readonly P2[], d: number): P2[] {
   })
 }
 
+/** a line's E at a northing, where the line crosses it (the first crossing), or null */
+function eastAt(line: readonly P2[], n: number): number | null {
+  for (let i = 0; i + 1 < line.length; i++) {
+    const a = line[i]!, b = line[i + 1]!
+    if ((a[1] - n) * (b[1] - n) <= 0 && a[1] !== b[1]) return a[0] + ((b[0] - a[0]) * (n - a[1])) / (b[1] - a[1])
+  }
+  return null
+}
+
+/** upright, where the channel's name has most room: the northing between two given where the bare ground east of
+    the channel (to the old bed's edge or the road in it) is widest over the name's own height (`tall`, in metres),
+    and the channel's east bank there, the bank inside the frame (east of `west0`) */
+function roomBesideChannel(s: number, n: number, west0: number, tall: number): P2 {
+  const bedWest = RIVER_570.poly.slice(RIVER_570.westFrom)
+  let best: P2 = [TODAY.east[0]![0], (s + n) / 2], gap = -Infinity
+  for (let y = Math.max(s, 3599380); y <= n; y += 10) {
+    let ch = -Infinity, bed = Infinity, ok = true
+    for (let q = y - tall / 2; q <= y + tall / 2; q += 5) {
+      const c = eastAt(TODAY.east, q), bank = eastAt(bedWest, q), road = eastAt(TODAY.road, q)
+      if (c === null || bank === null) { ok = false; break }
+      ch = Math.max(ch, c); bed = Math.min(bed, bank, road ?? Infinity)
+    }
+    const at0 = eastAt(TODAY.east, y)
+    if (!ok || at0 === null || at0 < west0) continue
+    // the widest room, nearer the bridge on a tie of a few metres
+    const g = bed - ch - Math.abs(y - BRIDGE.axis[0]![1]) * 0.02
+    if (g > gap) { gap = g; best = [ch, y] }
+  }
+  return best
+}
+
 /** Sutherland-Hodgman: a polygon cut to a box (plate pixels) */
 function clipPoly(pts: readonly P2[], b: Box): P2[] {
   let out = pts.slice() as P2[]
@@ -120,10 +151,15 @@ export function riverScene(t: number, framing: PaperFraming, w: number, h: numbe
   const state = STEP_IDS[si]!
   const labels = settled !== null
 
-  /* THE MAP'S FRAME: the window fitted inside the plate, north up, one scale both ways */
+  /* THE MAP'S FRAME: the window fitted inside the plate, north up, one scale both ways. Upright the window's width
+     sets the scale on every phone, so a pier and a label read the same on a short one; a short plate shows less of
+     the north and the south, centred on the bridge as far as the window allows */
   const Wn = WINDOWS[wide ? 'wide' : 'upright']
-  const k = Math.min(bw / (Wn.e - Wn.w), bh / (Wn.n - Wn.s))
-  const Ec = (Wn.w + Wn.e) / 2, Nc = (Wn.s + Wn.n) / 2
+  const k = wide ? Math.min(bw / (Wn.e - Wn.w), bh / (Wn.n - Wn.s)) : bw / (Wn.e - Wn.w)
+  const half = bh / 2 / k
+  const Ec = (Wn.w + Wn.e) / 2
+  const Nc = half * 2 >= Wn.n - Wn.s ? (Wn.s + Wn.n) / 2 : Math.max(Wn.s + half, Math.min(Wn.n - half, A[1]))
+  const vis = { s: Nc - half, n: Nc + half }
   const cx = (box.l + box.r) / 2, cy = (box.t + box.b) / 2
   const P = (p: P2): P2 => [cx + (p[0] - Ec) * k, cy - (p[1] - Nc) * k]
   const map: Box = { l: Math.max(box.l, P([Wn.w, Wn.n])[0]), t: Math.max(box.t, P([Wn.w, Wn.n])[1]), r: Math.min(box.r, P([Wn.e, Wn.s])[0]), b: Math.min(box.b, P([Wn.e, Wn.s])[1]) }
@@ -213,7 +249,7 @@ export function riverScene(t: number, framing: PaperFraming, w: number, h: numbe
         const mid: P2 = [(a0[0] + a1[0]) / 2, (a0[1] + a1[1]) / 2]
         // the recorded width is set in ink like the map's names (text keeps 4.5:1 on the water's wash), its line is our pencil
         anchors.push({ id: 'width', x: mid[0], y: mid[1], sides: ['above', 'above-left', 'above-right'], gap: 6, kind: 'ink' })
-        const r = P(wide ? [445450, 3600020] : [445440, 3600160])
+        const r = P(wide ? [445450, 3600020] : [445440, Math.min(3600160, vis.n - 40 / k)])
         anchors.push({ id: 'river', x: r[0], y: r[1], sides: ['on'], gap: 0, kind: 'ink' })
       }
       if (state === 'dig') {
@@ -222,7 +258,7 @@ export function riverScene(t: number, framing: PaperFraming, w: number, h: numbe
       }
       if (state === 'today') {
         // the channel's name beside it where the plate has room: up the channel on a wide plate, south of the bridge upright
-        const c = P(wide ? [444960, 3600080] : [445312, 3599480])
+        const c = P(wide ? [444960, 3600080] : roomBesideChannel(vis.s + 36 / k, vis.n - 36 / k, Wn.w + 12 / k, 64 / k))
         anchors.push({ id: 'channel', x: c[0], y: c[1], sides: wide ? ['right', 'above-right', 'left', 'below-left'] : ['right', 'below-right', 'above-right'], gap: 10, kind: 'ink' })
         const rd = P(TODAY.road[2]!)
         anchors.push({ id: 'road', x: rd[0], y: rd[1], sides: ['right', 'left'], gap: 8, kind: 'ink' })
@@ -234,7 +270,7 @@ export function riverScene(t: number, framing: PaperFraming, w: number, h: numbe
   let photo: Box | null = null
   if (state === 'photo') {
     const C = PHOTO.crop, cw = C.r - C.l, ch = C.b - C.t
-    const yearRoom = 34, creditRoom = wide ? 26 : 62
+    const yearRoom = 34, creditRoom = wide ? 26 : 76
     const room = { w: bw, h: bh - yearRoom - creditRoom }
     const s = Math.min(room.w / cw, room.h / ch)
     const pw = cw * s, ph = ch * s
