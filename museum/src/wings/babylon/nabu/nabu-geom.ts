@@ -602,7 +602,8 @@ export function buildNabu(built: Built, mapPlan: J, np: J): Nabu {
   const bodies: NabuBody[] = [
     { id: 'nabu', geometry: templeAll, band: F.floor + BAND, letters: ['M', 'G'] },
     { id: 'nabu-ashratum', geometry: ashAll, band: F.floor + BAND, letters: ['M', 'G'] },
-    { id: 'nabu-altar', geometry: altarG, band: F.floor + BAND, letters: ['M', 'G'] },
+    // the altars' level is not said (the block may belong to the older floor below), so no foot band shows them as dug
+    { id: 'nabu-altar', geometry: altarG, band: F.floor - 10, letters: ['G', 'G'] },
     { id: 'nabu-doors', geometry: doorsG, band: F.floor - 10, letters: ['G', 'G'] },
     { id: 'nabu-apron', geometry: apron, band: 1e6, letters: ['G', 'G'] },
   ]
