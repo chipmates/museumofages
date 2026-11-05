@@ -291,7 +291,19 @@
           "kind": "hold"
         }
       ],
-      "ends": "the open door with the chamber and the main gate's door beyond"
+      "ends": "the open door with the chamber and the main gate's door beyond",
+      "still": {
+        "t": 108,
+        "desktop": {
+          "hfov": 58,
+          "shift": 0
+        },
+        "phone": {
+          "hfov": 58,
+          "shift": 0
+        },
+        "says": "stop 3's own hold at the forecourt's mouth (the arrival's hold, where its words open), level as the walk holds it"
+      }
     },
     {
       "n": 4,
@@ -315,20 +327,35 @@
           "kind": "walk"
         },
         {
-          "t": 192,
+          "t": 175,
           "at": [
             0,
-            -56
+            -39.5
           ],
           "look": [
             0,
             1.65,
             -200
           ],
-          "kind": "arrive"
+          "kind": "arrive",
+          "says": "through the front gate, the court and the main gate's chamber to the south passage's north mouth"
         },
         {
-          "t": 193,
+          "t": 179,
+          "at": [
+            0,
+            -39.5
+          ],
+          "look": [
+            0,
+            1.65,
+            -200
+          ],
+          "kind": "hold",
+          "says": "the hold: the south passage's glazed jambs and its arch frame the procession street south to the far haze"
+        },
+        {
+          "t": 194,
           "at": [
             0,
             -56
@@ -338,7 +365,8 @@
             1.65,
             -200
           ],
-          "kind": "hold"
+          "kind": "walk",
+          "says": "out of the south mouth onto the street"
         },
         {
           "t": 198,
@@ -359,9 +387,22 @@
           "kind": "hold"
         }
       ],
-      "ends": "outside the main gate's south door, looking along the procession street south (the map's stop 4 look, UTM 445831, 3600652), the city below and the way to the tower's precinct ahead"
+      "ends": "outside the main gate's south door, looking along the procession street south (the map's stop 4 look, UTM 445831, 3600652), the city below and the way to the tower's precinct ahead",
+      "still": {
+        "t": 179,
+        "desktop": {
+          "hfov": 58,
+          "shift": 0.15
+        },
+        "phone": {
+          "hfov": 58,
+          "shift": 0.15
+        },
+        "says": "stop 4's own hold in the south passage's north mouth, 8.4 m from the south mouth: on the desktop the glazed jambs frame the street to the far haze; on the phone the shift lifts the frame until the mouth's arch stands whole over the street, the sky kept inside the arch (24 percent of the frame on the id pass)"
+      }
     }
   ],
   "speedSays": "about 1.3 m/s walking, holds of 3 to 4 s at each stop's last frame; the look eases over each leg",
-  "looksSay": "an explicit look's y is in the gate's frame (1.65 = eye height over the +15.40 street); 'gate' is a level look at the face's axis; 'south' is the map's stop 4 look"
+  "looksSay": "an explicit look's y is in the gate's frame (1.65 = eye height over the +15.40 street); 'gate' is a level look at the face's axis; 'south' is the map's stop 4 look",
+  "stillsSay": "`stills` are the hero stills (stop 2's, kept as they are); a stop's `still` is its own hold: the key at `t`, each framing's lens, and an `at` or `look` of a framing's own over that key"
 }
