@@ -82,6 +82,14 @@ class Soup {
     if (n[0]! * out[0]! + n[1]! * out[1]! + n[2]! * out[2]! < 0) this.quad([p[0]!, p[3]!, p[2]!, p[1]!], k, [f[0]!, f[3]!, f[2]!, f[1]!])
     else this.quad(p, k, f)
   }
+  /** a triangle turned so its front faces `out` */
+  triOut(p: number[][], k: number, f: number[][], out: number[]): void {
+    const a = p[0]!, b = p[1]!, c = p[2]!
+    const u = [b[0]! - a[0]!, b[1]! - a[1]!, b[2]! - a[2]!], v = [c[0]! - a[0]!, c[1]! - a[1]!, c[2]! - a[2]!]
+    const n = [u[1]! * v[2]! - u[2]! * v[1]!, u[2]! * v[0]! - u[0]! * v[2]!, u[0]! * v[1]! - u[1]! * v[0]!]
+    if (n[0]! * out[0]! + n[1]! * out[1]! + n[2]! * out[2]! < 0) this.tri([a, c, b], k, [f[0]!, f[2]!, f[1]!])
+    else this.tri([a, b, c], k, [f[0]!, f[1]!, f[2]!])
+  }
   /** an upright box (centre x, z, yaw as the map's boxes) without its underside, every face plain */
   box(x: number, z: number, yaw: number, sx: number, sz: number, y0: number, y1: number, k: number): void {
     const c = Math.cos(yaw), s = Math.sin(yaw)
@@ -217,14 +225,16 @@ function stairBody(r: Ramp, riser: number): BufferGeometry {
     width each takes off the ramp's), their tops `above` over the flight's line, from the foot to `inset` short of the
     ramp's head (the map sinks the middle stair's head into the face); a side with no wall stands against the tower and
     draws no face. The flight carries its tread data as `stairBody`'s; a wall's outer face carries the mantle's panels. */
-function flankedStair(r: Ramp, riser: number, walls: Array<{ side: number; w: number }>, above: number, inset: number, terrace: number, pitch: number): { flight: BufferGeometry; walls: Array<{ side: number; geometry: BufferGeometry }> } {
+function flankedStair(r: Ramp, riser: number, walls: Array<{ side: number; w: number }>, above: number, inset: number, terrace: number, pitch: number, wallEnd = inset): { flight: BufferGeometry; walls: Array<{ side: number; geometry: BufferGeometry }> } {
   const d = norm(sub(r.b, r.a)), run = Math.hypot(r.b[0] - r.a[0], r.b[1] - r.a[1])
   const n: P2 = [-d[1], d[0]]
   const k = Math.max(1, Math.round((r.y1 - r.y0) / riser)) / run
   const fa = Array(4).fill([r.a[0], r.a[1], d[0] * k, d[1] * k])
   const at = (t: number, v: number, y: number): number[] => [r.a[0] + d[0] * run * t + n[0] * v, y, r.a[1] + d[1] * run * t + n[1] * v]
   const line = (t: number): number => r.y0 + (r.y1 - r.y0) * t
-  const tEnd = 1 - inset / run
+  // the walls stop `wallEnd` short of the head (inside the side stairs' landings, which then close the wall's end);
+  // their panels keep the rhythm the full wall had
+  const tEnd = 1 - wallEnd / run, tPanel = 1 - inset / run
   const ho = r.w / 2
   const edge = (side: number): number => side * (ho - (walls.find((w) => w.side === side)?.w ?? 0))
   const lo = edge(-1), hi = edge(1)
@@ -237,19 +247,106 @@ function flankedStair(r: Ramp, riser: number, walls: Array<{ side: number; w: nu
     const q = new Soup()
     const vi = edge(side), vo = side * ho
     const f0 = Array(4).fill([0, 0, 0, 0])
-    const mid = at(tEnd / 2, vo, 0)
-    const fp = Array(4).fill([mid[0]!, mid[2]!, (run * tEnd) / 2, pitch])
+    const mid = at(tPanel / 2, vo, 0)
+    const fp = Array(4).fill([mid[0]!, mid[2]!, (run * tPanel) / 2, pitch])
     const o: number[] = [n[0] * side, 0, n[1] * side], inn: number[] = [-n[0] * side, 0, -n[1] * side]
     q.quadOut([at(0, vi, line(0)), at(tEnd, vi, line(tEnd)), at(tEnd, vi, line(tEnd) + above), at(0, vi, line(0) + above)], KIND.cheek, f0, inn)
     q.quadOut([at(0, vo, r.floor), at(tEnd, vo, r.floor), at(tEnd, vo, line(tEnd) + above), at(0, vo, line(0) + above)], KIND.brick, fp, o)
     q.quadOut([at(0, vi, line(0) + above), at(tEnd, vi, line(tEnd) + above), at(tEnd, vo, line(tEnd) + above), at(0, vo, line(0) + above)], KIND.cheek, f0, [0, 1, 0])
     q.quadOut([at(0, vi, r.floor), at(0, vo, r.floor), at(0, vo, line(0) + above), at(0, vi, line(0) + above)], KIND.cheek, f0, [-d[0], 0, -d[1]])
-    // the head: over the terrace where the stair runs into the face, whole where it stands free
+    // the head: over the terrace where the stair runs into the face, whole where it stands free, none where a landing
+    // closes it
     const y0h = inset > 0 ? terrace : r.floor
-    q.quadOut([at(tEnd, vi, y0h), at(tEnd, vo, y0h), at(tEnd, vo, line(tEnd) + above), at(tEnd, vi, line(tEnd) + above)], KIND.cheek, f0, [d[0], 0, d[1]])
+    if (wallEnd === inset) q.quadOut([at(tEnd, vi, y0h), at(tEnd, vo, y0h), at(tEnd, vo, line(tEnd) + above), at(tEnd, vi, line(tEnd) + above)], KIND.cheek, f0, [d[0], 0, d[1]])
     return { side, geometry: q.geometry() }
   })
   return { flight: fl.geometry(), walls: out }
+}
+
+export interface SideStairOpts {
+  riser: number
+  /** the foot's distance beyond the ramp's start (the dug foot beyond the tower's corner) */
+  beyond: number
+  /** the outer parapet's thickness and its top over the treads' nosings */
+  wall: number
+  above: number
+  /** -1 or 1 across the run: the parapet's side, away from the tower */
+  outer: number
+  /** how far the inner edge runs into the tower's face, so no seam opens along it */
+  sink: number
+  /** the landing past the ramp's head, flat at the head's level, to the middle flight's edge */
+  landing: number
+  /** the parapet's setback from the mass's outer face (the ledge's width), and the mantle's panel pitch on that face */
+  ledge: number
+  pitch: number
+  /** the middle flight's level under a point (scene x, z), where the landing's end stands on it */
+  under: (x: number, z: number) => number
+}
+
+/** a side stair as built steps: a riser and a tread per step from the foot (`beyond` short of the ramp's start, at
+    its level) to the ramp's head, a flat landing on to the middle flight's edge, and the parapet on the outer edge with
+    its top `above` over the nosings, level over the landing. Risers stand upright (the material lays them in the bond);
+    treads and the landing carry a constant phase in the tread data, so the material paints them as treads without
+    drawing steps of its own on them. The flight's facts return the steps as built, for the checks. */
+export function sideStair(r: Ramp, o: SideStairOpts): { flight: BufferGeometry; wall: BufferGeometry; facts: { steps: number; riser: number; tread: number; run: number; foot: P2; head: P2; end: P2; y0: number; y1: number; width: number } } {
+  const d = norm(sub(r.b, r.a)), n: P2 = [-d[1], d[0]]
+  const run = Math.hypot(r.b[0] - r.a[0], r.b[1] - r.a[1]) + o.beyond
+  const foot: P2 = [r.a[0] - d[0] * o.beyond, r.a[1] - d[1] * o.beyond]
+  const N = Math.max(1, Math.round((r.y1 - r.y0) / o.riser))
+  const rr = (r.y1 - r.y0) / N, tt = run / N
+  const at = (s: number, v: number, y: number): number[] => [foot[0] + d[0] * s + n[0] * v, y, foot[1] + d[1] * s + n[1] * v]
+  const ho = r.w / 2
+  const vIn = -o.outer * (ho + o.sink), vFace = -o.outer * ho, vi = o.outer * (ho - o.wall), vo = o.outer * ho
+  const sEnd = run + o.landing
+  const up = [0, 1, 0], back = [-d[0], 0, -d[1]], fwd = [d[0], 0, d[1]], out = [n[0] * o.outer, 0, n[1] * o.outer], inn = [-n[0] * o.outer, 0, -n[1] * o.outer]
+  // the phase 0.31 the material reads as a tread's middle, held over the whole flight by a vanishing step rate
+  const K = 1e-4
+  const fT = Array(4).fill([foot[0] - (d[0] * 0.31) / K, foot[1] - (d[1] * 0.31) / K, d[0] * K, d[1] * K])
+  const f0 = Array(4).fill([0, 0, 0, 0])
+  const fl = new Soup()
+  for (let k = 0; k < N; k++) {
+    const s = k * tt, y = r.y0 + k * rr
+    fl.quadOut([at(s, vIn, k === 0 ? r.floor : y), at(s, vi, k === 0 ? r.floor : y), at(s, vi, y + rr), at(s, vIn, y + rr)], KIND.stair, fT, back)
+    // a tread level with the stage's top meets its face instead of running into it (no two planes on one level)
+    const e = k === N - 1 ? vFace : vIn
+    fl.quadOut([at(s, e, y + rr), at(s, vi, y + rr), at(s + tt, vi, y + rr), at(s + tt, e, y + rr)], KIND.stair, fT, up)
+  }
+  fl.quadOut([at(run, vFace, r.y1), at(run, vi, r.y1), at(sEnd, vi, r.y1), at(sEnd, vFace, r.y1)], KIND.stair, fT, up)
+  // the landing's end, down onto the middle flight
+  const below = (v: number): number => { const p = at(sEnd, v, 0); return o.under(p[0]!, p[2]!) - 0.05 }
+  fl.quadOut([at(sEnd, vIn, below(vIn)), at(sEnd, vi, below(vi)), at(sEnd, vi, r.y1), at(sEnd, vIn, r.y1)], KIND.cheek, f0, fwd)
+  // the stair's mass carries the mantle's panels up to its flight's line; on it, set back over a ledge, the parapet in
+  // the stair's own brick steps with the flight, `above` over each tread (its stepped edge draws the stair where the
+  // treads hide behind it), then runs level over the landing
+  const yB = r.y1 + o.above, env = (s: number): number => r.y0 + o.above + (rr / tt) * s, low = (s: number): number => r.y0 + (rr / tt) * s
+  const vo2 = vo - o.outer * o.ledge
+  const midP = at(sEnd / 2, vo, 0)
+  const fp = Array(4).fill([midP[0]!, midP[2]!, sEnd / 2, o.pitch])
+  const w = new Soup()
+  // the mass: its outer face, the ledge on it, its foot
+  w.quadOut([at(0, vo, r.floor), at(run, vo, r.floor), at(run, vo, r.y1), at(0, vo, r.y0)], KIND.brick, fp, out)
+  w.quadOut([at(run, vo, r.floor), at(sEnd, vo, r.floor), at(sEnd, vo, r.y1), at(run, vo, r.y1)], KIND.brick, fp, out)
+  w.quadOut([at(0, vo2, r.y0), at(run, vo2, r.y1), at(run, vo, r.y1), at(0, vo, r.y0)], KIND.cheek, f0, up)
+  w.quadOut([at(run, vo2, r.y1), at(sEnd, vo2, r.y1), at(sEnd, vo, r.y1), at(run, vo, r.y1)], KIND.cheek, f0, up)
+  w.quadOut([at(0, vi, r.floor), at(0, vo, r.floor), at(0, vo, r.y0), at(0, vi, r.y0)], KIND.cheek, f0, back)
+  // the parapet: inner and outer faces under the teeth, the teeth, each step's riser and top, then level
+  w.quadOut([at(0, vi, low(0) - 0.05), at(run, vi, low(run) - 0.05), at(run, vi, env(run)), at(0, vi, env(0))], KIND.cheek, f0, inn)
+  w.quadOut([at(0, vo2, low(0)), at(run, vo2, low(run)), at(run, vo2, env(run)), at(0, vo2, env(0))], KIND.cheek, f0, out)
+  for (let k = 0; k < N; k++) {
+    const s0 = k * tt, s1 = s0 + tt, y = env(s0) + rr
+    for (const [v, f] of [[vi, inn], [vo2, out]] as Array<[number, number[]]>) w.triOut([at(s0, v, env(s0)), at(s1, v, env(s1)), at(s0, v, y)], KIND.cheek, f0, f)
+    w.quadOut([at(s0, vi, env(s0)), at(s0, vo2, env(s0)), at(s0, vo2, y), at(s0, vi, y)], KIND.cheek, f0, back)
+    w.quadOut([at(s0, vi, y), at(s0, vo2, y), at(s1, vo2, y), at(s1, vi, y)], KIND.cheek, f0, up)
+  }
+  w.quadOut([at(run, vi, r.y1 - 0.05), at(sEnd, vi, r.y1 - 0.05), at(sEnd, vi, yB), at(run, vi, yB)], KIND.cheek, f0, inn)
+  w.quadOut([at(run, vo2, r.y1), at(sEnd, vo2, r.y1), at(sEnd, vo2, yB), at(run, vo2, yB)], KIND.cheek, f0, out)
+  w.quadOut([at(run, vi, yB), at(sEnd, vi, yB), at(sEnd, vo2, yB), at(run, vo2, yB)], KIND.cheek, f0, up)
+  w.quadOut([at(0, vi, r.y0), at(0, vo2, r.y0), at(0, vo2, env(0)), at(0, vi, env(0))], KIND.cheek, f0, back)
+  // the head, down onto the middle flight: the mass under the parapet, then the parapet
+  w.quadOut([at(sEnd, vi, below(vi)), at(sEnd, vo, below(vo)), at(sEnd, vo, r.y1), at(sEnd, vi, r.y1)], KIND.cheek, f0, fwd)
+  w.quadOut([at(sEnd, vi, r.y1), at(sEnd, vo2, r.y1), at(sEnd, vo2, yB), at(sEnd, vi, yB)], KIND.cheek, f0, fwd)
+  const p2 = (s: number): P2 => { const p = at(s, 0, 0); return [+p[0]!.toFixed(3), +p[2]!.toFixed(3)] }
+  return { flight: fl.geometry(), wall: w.geometry(), facts: { steps: N, riser: +rr.toFixed(4), tread: +tt.toFixed(4), run: +run.toFixed(3), foot: p2(0), head: p2(run), end: p2(sEnd), y0: r.y0, y1: r.y1, width: r.w } }
 }
 
 /** the temple on the top: its box, a door in the face toward the stairs (own +x), and the stepped battlements round its
@@ -442,22 +539,37 @@ export function buildTower(built: Built, mapPlan: J, tp: J): Tower {
   const terrace = stages[0]!.y1
   const MS = TT.stairs.middle, SS = TT.stairs.side
   const centre: P2 = [stages[0]!.x, stages[0]!.z]
+  // the middle flight: its line under any point, and the side stairs' outer edge, where its walls end in their landings
+  const mid = stairs.find((r) => r.id === 'tower-stair-middle')!
+  const dM = norm(sub(mid.b, mid.a)), runM = Math.hypot(mid.b[0] - mid.a[0], mid.b[1] - mid.a[1]), nM: P2 = [-dM[1], dM[0]]
+  const under = (x: number, z: number): number => mid.y0 + (mid.y1 - mid.y0) * Math.min(1, Math.max(0, dot(sub([x, z], mid.a), dM) / runM))
+  const sides = stairs.filter((r) => r !== mid)
+  const wallEnd = Math.max(...sides.map((r) => dot(sub(r.a, mid.b), [-dM[0], -dM[1]]) + r.w / 2))
+  const sideFacts: Record<string, unknown> = {}
   for (const r of stairs) {
-    const middle = r.id === 'tower-stair-middle'
-    const d = norm(sub(r.b, r.a)), run = Math.hypot(r.b[0] - r.a[0], r.b[1] - r.a[1]), slope = (r.y1 - r.y0) / run
-    const ramp: Ramp = middle ? r : { ...r, a: [r.a[0] - d[0] * SS.beyond, r.a[1] - d[1] * SS.beyond], y0: r.y0 - slope * SS.beyond }
-    // a side stair's wall stands on its outer edge, away from the tower
-    const n: P2 = [-d[1], d[0]], m: P2 = [(r.a[0] + r.b[0]) / 2, (r.a[1] + r.b[1]) / 2]
-    const outer = dot(sub(m, centre), n) > 0 ? 1 : -1
-    const walls = middle ? [{ side: -1, w: (r.w - MS.clear) / 2 }, { side: 1, w: (r.w - MS.clear) / 2 }] : [{ side: outer, w: SS.wall }]
-    const st = flankedStair(ramp, TT.stairs.riser, walls, middle ? MS.above : SS.above, middle ? MS.inset : 0, terrace, PN.pitch1)
-    bodies.push({ id: r.id, geometry: st.flight, band: r.band, letters: [r.plan, r.height] })
-    for (const w of st.walls) {
-      const g0 = w.geometry
-      g0.computeBoundingBox()
-      const name = middle ? ((g0.boundingBox!.min.x + g0.boundingBox!.max.x) / 2 > (r.a[0] + r.b[0]) / 2 ? 'e' : 'w') : 'outer'
-      bodies.push({ id: `${r.id}-wall-${name}`, geometry: g0, band: r.band, letters: [r.plan, r.height] })
+    const middle = r === mid
+    if (middle) {
+      const walls = [{ side: -1, w: (r.w - MS.clear) / 2 }, { side: 1, w: (r.w - MS.clear) / 2 }]
+      const st = flankedStair(r, TT.stairs.riser, walls, MS.above, MS.inset, terrace, PN.pitch1, wallEnd)
+      bodies.push({ id: r.id, geometry: st.flight, band: r.band, letters: [r.plan, r.height] })
+      for (const w of st.walls) {
+        const g0 = w.geometry
+        g0.computeBoundingBox()
+        const name = (g0.boundingBox!.min.x + g0.boundingBox!.max.x) / 2 > (r.a[0] + r.b[0]) / 2 ? 'e' : 'w'
+        bodies.push({ id: `${r.id}-wall-${name}`, geometry: g0, band: r.band, letters: [r.plan, r.height] })
+      }
+      continue
     }
+    // a side stair's parapet stands on its outer edge, away from the tower; its landing runs on to the middle flight
+    const d = norm(sub(r.b, r.a)), n: P2 = [-d[1], d[0]], m: P2 = [(r.a[0] + r.b[0]) / 2, (r.a[1] + r.b[1]) / 2]
+    const outer = dot(sub(m, centre), n) > 0 ? 1 : -1
+    const landing = Math.abs(dot(sub(r.b, mid.a), nM)) - MS.clear / 2
+    const st = sideStair(r, { riser: TT.stairs.riser, beyond: SS.beyond, wall: SS.wall, above: SS.above, outer, sink: SS.sink, ledge: SS.ledge, pitch: PN.pitch1, landing, under })
+    bodies.push({ id: r.id, geometry: st.flight, band: r.band, letters: [r.plan, r.height] })
+    bodies.push({ id: `${r.id}-wall-outer`, geometry: st.wall, band: r.band, letters: [r.plan, r.height] })
+    // in the tower's own frame: out along the middle stair's axis, across it
+    const uv = (p: P2): number[] => [+dot(sub(p, centre), [-dM[0], -dM[1]]).toFixed(3), +dot(sub(p, centre), nM).toFixed(3)]
+    sideFacts[r.id] = { ...st.facts, landing: +landing.toFixed(3), footUV: uv(st.facts.foot), headUV: uv(st.facts.head), endUV: uv(st.facts.end), outerU: +(dot(sub(m, centre), [-dM[0], -dM[1]]) + r.w / 2).toFixed(3), clear: MS.clear }
   }
 
   const facts = {
@@ -469,6 +581,8 @@ export function buildTower(built: Built, mapPlan: J, tp: J): Tower {
     stages: stages.map((b) => ({ id: b.id, side: b.sx, across: b.sz, y0: b.y0, y1: b.y1 })),
     gateToTower: +Math.hypot(stages[0]!.x - axisAt[0], stages[0]!.z - axisAt[1]).toFixed(1),
     stairs: stairs.map((r) => ({ id: r.id, w: r.w, rise: +(r.y1 - r.y0).toFixed(2), run: +Math.hypot(r.b[0] - r.a[0], r.b[1] - r.a[1]).toFixed(2) })),
+    sideStairs: sideFacts,
+    middleWallsEnd: +wallEnd.toFixed(3),
   }
   return {
     F, bodies, facts,

@@ -65,9 +65,14 @@
    },
    "side": {
     "beyond": 1.9,
-    "src": "the west side stair's foot lies 1.9 m west of the tower (P2021 p. 156); the east one's the same, ours by symmetry; a wall 1.2 m thick on each one's outer edge, 1 m over its flight, ours",
+    "src": "the west side stair's foot lies 1.9 m west of the tower (P2021 p. 156), so its first step stands there at the court's level; the east one's the same, ours by symmetry; 8 m wide and climbing along the south face to the first stage's top where the map draws them (P2021 p. 156); a wall 1.2 m thick on each one's outer edge, its top 1 m over the steps' nosings, ours",
     "wall": 1.2,
-    "above": 1.0
+    "above": 1.0,
+    "sink": 0.1,
+    "ledge": 0.3,
+    "ledgeSrc": "the stair's mass carries the mantle's panels up to its flight's line, and the parapet in the stair's brick stands on it 0.3 m back, stepping with the treads: the setback, the stepped top and the panels on the stair's side are ours",
+    "steps": "built as steps, a riser and a tread each: 110 risers of 0.3 m on treads of about 0.38 m (the risers ours, bab.tower.stairs.side.rise, guessed); the inner edge runs 0.1 m into the tower's face",
+    "landing": "where the three meet: each side stair's head runs on level at the first stage's top to the middle flight's edge (about 2.65 m), its parapet level over it, and the middle stair's walls end against the side stairs' outer face, so the middle flight climbs its last 8.5 m between the two landings; the landing's form is not known, ours"
    }
   },
   "temple": {
