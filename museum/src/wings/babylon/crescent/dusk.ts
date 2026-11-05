@@ -16,6 +16,8 @@ export interface Dusk {
   /** 0 while the sun is up, 1 once it is `full` degrees under the horizon */
   uDusk: N
   setSun: (elevationDeg: number) => void
+  /** the weight for a sun at this elevation, without setting it */
+  weight: (elevationDeg: number) => number
   /** the twilight sky along d */
   colour: (d: N) => N
   /** a sky function with the twilight mixed in, for anything that reflects or shows the sky */
@@ -37,11 +39,13 @@ export function makeDusk(A: AirUniforms, plan: J): Dusk {
     return max(blue.add(arch), 0)
   }
   const [a, b] = K.from as [number, number]
+  const weight = (el: number): number => Math.min(1, Math.max(0, (a - el) / (a - b)))
   return {
     uDusk,
     setSun: (el: number) => {
-      uDusk.value = Math.min(1, Math.max(0, (a - el) / (a - b)))
+      uDusk.value = weight(el)
     },
+    weight,
     colour,
     wrap: (base) => (d: N): N => mix(base(d), colour(d), uDusk),
   }

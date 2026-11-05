@@ -9,7 +9,7 @@
 
 import {
   BackSide, Color, DirectionalLight, Mesh, MeshBasicNodeMaterial, OrthographicCamera, PMREMGenerator, Scene, SphereGeometry, Vector3,
-  type Matrix3, type PerspectiveCamera, type WebGPURenderer,
+  type Matrix3, type PerspectiveCamera, type Texture, type WebGPURenderer,
 } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import type { Print } from '../../animals/cave/site'
@@ -112,10 +112,24 @@ export function walkLight(o: WalkLightOptions) {
   }
   const pmrem = new PMREMGenerator(renderer)
   let envTarget: N = null
+  /* this module is the page's one writer of the environment: a page may hand it a source for the hours its own sky
+     does not hold (the map's twilight); while the source gives a texture for the hour, the faces take that one and
+     this sky is not baked, so no later trigger in the frame can put it back */
+  let envSource: ((hour: number) => Texture | null) | null = null
+  let envBy: 'walk' | 'source' = 'walk'
+  let envBakes = 0
   function bakeEnv(): void {
+    const given = envSource?.(hourNow) ?? null
+    if (given) {
+      scene.environment = given
+      envBy = 'source'
+      return
+    }
     envTarget?.dispose?.()
     envTarget = pmrem.fromScene(envScene, 0.02, 1, 1000)
     scene.environment = envTarget.texture
+    envBy = 'walk'
+    envBakes++
   }
   /* the environment's strength: the gate's stated value at the street; over the open plain from the air a weaker fill, so the
      shade under the low sun keeps its depth */
@@ -242,6 +256,10 @@ export function walkLight(o: WalkLightOptions) {
   return {
     AIR, sky, dome, sunLight, SUN, ENV, PRINT, SAT, TOE, STOPS, uBounce, uWalls, uWallsNear, uAoNear, uAoFar, uAoOn,
     setHour, setNear, fitShadow, frame, stopsAt, printFor, bakeEnv,
+    /** the environment's source for the hours this sky does not hold: a texture for the hour, or null for this sky */
+    setEnvSource: (f: ((hour: number) => Texture | null) | null): void => { envSource = f },
+    /** which environment the scene holds now, and how many times this sky was baked */
+    env: () => ({ by: envBy, bakes: envBakes }),
     /** the sun at an hour, as the facts and sidecars state it */
     sunAt: (hour: number) => sunAt(hour),
     hour: () => hourNow,
