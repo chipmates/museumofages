@@ -496,15 +496,16 @@ export function houseConstruction(hp: J, f: Frame): Array<{ id: string; geometry
       const ya = yc + (y1 - yc) * at(m0 + 0.008), yb = yc + (y1 - yc) * at(m1 - 0.008)
       const ra = r + (rEnd - r) * at(m0), rb = r + (rEnd - r) * at(m1)
       lintels.cyl(P(m0 + 0.008, ya, t), P(m1 - 0.008, yb, t), ra, 16, Z.wood, { caps: [true, true], phase: ph, rb })
-      // the lap: from a skin just over the pole back onto the wall's face, its proud part easing out over LT.lap
-      const faceT = k === 0 ? 0 : D, out = k === 0 ? -1 : 1, dist = Math.abs(t - faceT)
+      // the lap: from a skin just over the pole back onto the wall's face, its proud part easing out over LT.lap; it
+      // starts 2 cm onto the pole, past the pole's cut end, so no gap between them shows the wall's face
+      const faceT = k === 0 ? 0 : D, out = k === 0 ? -1 : 1, dist = Math.abs(t - faceT), onto = 0.02
       for (const [sm, dir, rr, yy] of [[m0, -1, ra, ya], [m1, 1, rb, yb]] as Array<[number, number, number, number]>) {
         const rl = rr + 0.003
         if (rl <= dist) continue
         const fm = Math.acos(dist / rl), nf = 6, np = 10
         const at3 = (f: number, a: number): V3 => {
           const g = f * f * (3 - 2 * f)
-          return P(sm + dir * f * LT.lap, yy + rl * Math.sin(a), faceT + (t + out * rl * Math.cos(a) - faceT) * (1 - g))
+          return P(sm + dir * (f * (LT.lap + onto) - onto), yy + rl * Math.sin(a), faceT + (t + out * rl * Math.cos(a) - faceT) * (1 - g))
         }
         const nrm = (f: number, a: number): V3 => {
           const df = v3sub(at3(Math.min(1, f + 0.01), a), at3(Math.max(0, f - 0.01), a)), da = v3sub(at3(f, a + 0.01), at3(f, a - 0.01))

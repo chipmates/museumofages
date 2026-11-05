@@ -246,10 +246,30 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
   const edgeCol = mix(wallCol, mud.mul(float(0.95).add(mid.mul(0.1))), 0.3).mul(select(n.y.lessThan(-0.5), float(0.8), float(1)))
 
   /* ── one colour per point, the class view over it ── */
+  /* ── the plaster lapped over each end pole of a court door's lintel, past the jambs ── */
+  // found by place: the one court face off its wall's plane, beside a door's head; 0 on the plain face, 1 on the lap's
+  // crown, feathered to its edges where it meets the face
+  const LTe = hp.build.lintel, poleFoot = L.doorHead - 0.02, lapTo = LTe.enter * 1.2 + LTe.lap
+  let lapM: N = float(0)
+  for (const d of hp.doors as J[]) {
+    const onS = Math.abs(d.v[0] - ct.v[1]) < 1e-6, onN = Math.abs(d.v[1] - ct.v[0]) < 1e-6, onE = Math.abs(d.u[0] - ct.u[1]) < 1e-6, onW = Math.abs(d.u[1] - ct.u[0]) < 1e-6
+    if (!(onS || onN || onE || onW)) continue
+    const alongU = onS || onN
+    const sC = alongU ? u : v, tC = alongU ? v : u
+    const line = onS ? ct.v[1] : onN ? ct.v[0] : onE ? ct.u[1] : ct.u[0]
+    const past = max(float(alongU ? d.u[0] : d.v[0]).sub(sC), sC.sub(alongU ? d.u[1] : d.v[1]))
+    const beside = step(0, past).mul(step(past, lapTo + 0.01)).mul(step(poleFoot - 0.01, P.y)).mul(step(P.y, poleFoot + LTe.d * 1.25))
+    const off = abs(tC.sub(line))
+    lapM = max(lapM, beside.mul(smoothstep(0.0002, 0.004, off)).mul(step(off, LTe.proud + 0.01)))
+  }
+  lapM = lapM.mul(courtSix)
+  // mud daub, not the wash; darkest where it leaves the pole (the lap's own f, 0 at the pole), in the crevice it packs
+  const lapCrev = lapM.mul(float(1).sub(smoothstep(0.0, 1.0, loc.z)))
+  const daub = mix(mud.mul(float(0.66).add(mid.mul(0.08))), V(TONES.damp as RGB), lapCrev.mul(0.6))
+
   let c: N = wallCol
   c = mix(c, revealCol, is(Z.reveal))
-  // the plaster lapped over a lintel's end (the one court face that tilts) is mud daub, not the wash
-  c = mix(c, mud.mul(float(0.92).add(mid.mul(0.1))), smoothstep(0.1, 0.5, abs(n.y)).mul(courtSix).mul(0.7))
+  c = mix(c, daub, lapM)
   c = mix(c, roomCol, is(Z.room))
   c = mix(c, floorCol, is(Z.floor))
   // the paving's baked brick a little yellower and greyer than the court part's preset: a house court's floor under dust
@@ -264,8 +284,15 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
   const kP = kxP.add(kzP.mul(31.7))
   const smooth = smoothstep(0.35, 0.75, hash2(kP, float(6.2))).mul(0.85)
   const blot = smoothstep(0.1, 0.35, mx_noise_float(vec3(u.mul(6.5), 2.2, v.mul(6.5)).add(hash2(kP, float(1.9)).mul(9)))).mul(step(0.55, hash2(kP, float(4.8))))
+  // the fired clay's sand, its pores and its grains of lime, a few millimetres each: the paving next to the eye, where a
+  // pixel spans less than two of them and the centimetre grain above alone read soft and magnified
+  const pvFine = float(1).sub(smoothstep(0.0015, 0.004, fPv)), q = vec3(u, P.y, v)
+  const sand = mx_noise_float(q.mul(vec3(160, 9, 160))).mul(0.1)
+  const pore = smoothstep(0.36, 0.46, mx_noise_float(q.mul(vec3(140, 7, 140)).add(vec3(3.1, 0, 7.7)))).mul(0.18)
+  const limeG = smoothstep(0.42, 0.5, mx_noise_float(q.mul(vec3(110, 5, 110)).add(vec3(9.4, 0, 1.3)))).mul(0.14)
+  const pvGrain = float(1).add(sand.sub(pore).add(limeG).mul(pvFine))
   const pvFace = float(1).add(pits.mul(smooth)).mul(float(1).sub(blot.mul(0.1).mul(pvNear))).mul(float(1).add(mx_noise_float(vec3(u.mul(16), 1.1, v.mul(16))).mul(0.06).mul(pvNear)))
-  c = mix(c, mix(pv.colour, vec3(pvL).mul(vec3(1.12, 1.0, 0.78)), 0.3).mul(brickTone).mul(pvFace), is(Z.paving))
+  c = mix(c, mix(pv.colour, vec3(pvL).mul(vec3(1.12, 1.0, 0.78)), 0.3).mul(brickTone).mul(pvFace).mul(pvGrain), is(Z.paving))
   c = mix(c, courtFloorCol, is(Z.courtFloor))
   c = mix(c, rf.deck, is(Z.deck))
   c = mix(c, copeCol, is(Z.coping))
@@ -347,9 +374,14 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
     const into = tC.sub(edge).mul(sg)
     const sideIn = step(s0 - 0.02, sC).mul(step(sC, s1 + 0.02))
     contact = contact.mul(float(1).sub(float(1).sub(smoothstep(0.0, 0.08, into)).mul(step(0, into)).mul(sideIn).mul(0.45).mul(is(Z.floor))))
+    // and its court-side edge on the paving: a 40 cm row's joint lies 5 cm off the court's north and south faces, so
+    // between it and the sill's front a strip of brick a centimetre or two wide caught the light alone
+    const front = line - sg * hp.build.sill.out
+    const before = float(front).sub(tC).mul(sg)
+    contact = contact.mul(float(1).sub(float(1).sub(smoothstep(0.0, 0.04, before)).mul(step(0, before)).mul(sideIn).mul(0.5).mul(is(Z.paving))))
   }
-  // the plaster lapped over a lintel's end is the only court face that tilts: it sits in the pole's crevice
-  ao = ao.mul(contact).mul(float(1).sub(smoothstep(0.1, 0.7, abs(n.y)).mul(0.3).mul(courtSix)))
+  // the lap over a lintel's end pole sits in the pole's crevice, deepest against the pole
+  ao = ao.mul(contact).mul(float(1).sub(lapM.mul(0.32)).sub(lapCrev.mul(0.38)))
   m.aoNode = mix(ao, float(1), uView)
   m.roughnessNode = float(0.94)
   // House VI's court: the light its sunlit band and its floor throw back into the shade, which the stack does not carry;
