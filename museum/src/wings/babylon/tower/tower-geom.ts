@@ -192,12 +192,21 @@ function fixWinding(g: BufferGeometry): void {
   g.computeVertexNormals()
 }
 
-/** a slight tower: a box standing against a wall face, its back on the face, sunk below the ground */
-function slightTower(F: GateFrame, s: number, t: number, along: P2, out: P2, w: number, dep: number, y0: number, y1: number): BufferGeometry {
-  const c: P2 = [F.at(s, t)[0] + out[0] * dep / 2, F.at(s, t)[1] + out[1] * dep / 2]
+/** a slight tower: a box standing against a wall face at `at` (scene x, z), its back on the face, sunk below the ground */
+function slightTowerAt(at: P2, along: P2, out: P2, w: number, dep: number, y0: number, y1: number): BufferGeometry {
+  const c: P2 = [at[0] + out[0] * dep / 2, at[1] + out[1] * dep / 2]
   const yaw = Math.atan2(-along[1], along[0])
   return towerBox({ id: '', group: '', x: c[0], z: c[1], y0, y1, sx: w, sz: dep, yaw, plan: 'M', height: 'G', band: 0 }, KIND.wall, 0)
 }
+function slightTower(F: GateFrame, s: number, t: number, along: P2, out: P2, w: number, dep: number, y0: number, y1: number): BufferGeometry {
+  return slightTowerAt(F.at(s, t), along, out, w, dep, y0, y1)
+}
+
+/* the precinct's north wall as C6.2 draws it, inside the map's 8 m outline: a double wall, its two skins (the sheet's
+   lines, about 1.2 m) over a core 0.8 m lower (G); slight towers on both faces at the sheet's rhythm (about 6.6 m, 3.5 m
+   long, read off it to its raster's limit of half a metre; their rise round 1's); the block the sheet draws on the outer
+   face 199 m along (a tower or a gate, not told) as one tower */
+const NORTH = { skin: 1.2, walk: 0.8, pitch: 6.6, phase: 2.6, w: 3.5, out: 0.5, over: 0.6, from: 15, end: 8, block: { at: 199.3, w: 8.2, out: 5.5 } }
 
 /** a stair as the map's ramp (a sloped solid from its foot `a` to its head `b`, down to its floor), each vertex carrying
     the foot and the run direction in steps per metre, so the material draws the treads */
@@ -427,7 +436,44 @@ export function buildTower(built: Built, mapPlan: J, tp: J): Tower {
   bodies.push({ id: 'precinct-east-n', geometry: prism(north, 0, top, KIND.wall), band: wallBand, letters: wallLetters })
   bodies.push({ id: 'precinct-east-s', geometry: prism(south, 0, top, KIND.wall), band: wallBand, letters: wallLetters })
   // the precinct's other walls and rooms keep the map's outlines and heights, drawn in the same plaster
+  const minG = (pts: P2[]): number => Math.min(...pts.map((p) => g(p[0], p[1])))
+  const northWall = (p: { poly: P2[]; y0: number; y1: number; plan: Cls; height: Cls }): void => {
+    // bandPoly's order: the line's one side a0 b0, the other b1 a1
+    const [a0, b0, b1, a1] = p.poly as [P2, P2, P2, P2]
+    const lerp = (u: P2, v: P2, k: number): P2 => [u[0] + (v[0] - u[0]) * k, u[1] + (v[1] - u[1]) * k]
+    const thick = Math.hypot(a1[0] - a0[0], a1[1] - a0[1]), k = NORTH.skin / thick
+    const strip = (v0: number, v1: number): P2[] => [lerp(a0, a1, v0), lerp(b0, b1, v0), lerp(b0, b1, v1), lerp(a0, a1, v1)]
+    const letters: [Cls, Cls] = [p.plan, p.height]
+    bodies.push({ id: 'precinct-north-wall-skin-0', geometry: prism(strip(0, k), p.y0, p.y1, KIND.wall), band: wallBand, letters })
+    bodies.push({ id: 'precinct-north-wall-skin-1', geometry: prism(strip(1 - k, 1), p.y0, p.y1, KIND.wall), band: wallBand, letters })
+    bodies.push({ id: 'precinct-north-wall-core', geometry: prism(strip(k, 1 - k), p.y0, p.y1 - NORTH.walk, KIND.wall), band: wallBand, letters })
+    const L = Math.hypot(b0[0] - a0[0], b0[1] - a0[1])
+    const along: P2 = [(b0[0] - a0[0]) / L, (b0[1] - a0[1]) / L]
+    const toA1: P2 = [(a1[0] - a0[0]) / thick, (a1[1] - a0[1]) / thick]
+    const faces: Array<{ o: P2; out: P2; name: string }> = [
+      { o: a0, out: [-toA1[0], -toA1[1]], name: a0[1] < a1[1] ? 'n' : 's' },
+      { o: a1, out: toA1, name: a0[1] < a1[1] ? 's' : 'n' },
+    ]
+    let n = 0
+    const put = (f: { o: P2; out: P2 }, s: number, w: number, dep: number): void => {
+      const at: P2 = [f.o[0] + along[0] * s, f.o[1] + along[1] * s]
+      const corners: P2[] = [-1, 1].flatMap((u) => [0, 1].map((v): P2 => [at[0] + along[0] * u * w / 2 + f.out[0] * v * dep, at[1] + along[1] * u * w / 2 + f.out[1] * v * dep]))
+      bodies.push({ id: `precinct-tower-north-${++n}`, geometry: slightTowerAt(at, along, f.out, w, dep, minG(corners) - 0.4, p.y1 + NORTH.over), band: wallBand, letters: ['R', 'G'] })
+    }
+    const B = NORTH.block
+    for (const f of faces) {
+      for (let s = NORTH.phase; s < L - NORTH.end; s += NORTH.pitch) {
+        if (s < NORTH.from || (f.name === 'n' && Math.abs(s - B.at) < (B.w + NORTH.w) / 2 + 0.5)) continue
+        put(f, s, NORTH.w, NORTH.out)
+      }
+      if (f.name === 'n') put(f, B.at, B.w, B.out)
+    }
+  }
   for (const p of built.prisms.filter((q) => TAKEN_PRISM(q.id) && !/^precinct-(east-wall|ne-block|se-block)/.test(q.id))) {
+    if (p.id === 'precinct-north-wall') {
+      northWall(p)
+      continue
+    }
     // the south rooms overlap the west rooms and the east wall at their corners: their roofs 3 cm lower, so no two
     // roofs fight in depth where the flight looks down on them
     const y1 = p.id.startsWith('precinct-south-rooms') ? p.y1 - 0.03 : p.y1
@@ -436,7 +482,6 @@ export function buildTower(built: Built, mapPlan: J, tp: J): Tower {
 
   /* ── the slight towers: on the street face, and on both sides of the recess ── */
   const T = W.towers
-  const minG = (pts: P2[]): number => Math.min(...pts.map((p) => g(p[0], p[1])))
   const outward: P2 = [-F.i[0], -F.i[1]]
   let n = 0
   const tower = (s: number, t: number, along: P2, o: P2): void => {
