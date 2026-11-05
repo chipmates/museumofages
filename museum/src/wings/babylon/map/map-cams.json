@@ -3856,7 +3856,7 @@
    "kind": "fly",
    "hold": true,
    "hfov": 60.0,
-   "shift": -0.1,
+   "shift": -0.18,
    "phone": {
     "look": [
      445560.52,
@@ -3886,7 +3886,7 @@
    "hold": true,
    "still": true,
    "hfov": 60.0,
-   "shift": -0.1,
+   "shift": -0.18,
    "phone": {
     "look": [
      445560.52,
@@ -3913,7 +3913,7 @@
    "kind": "hold",
    "hold": true,
    "hfov": 60.0,
-   "shift": -0.1,
+   "shift": -0.18,
    "phone": {
     "look": [
      445560.52,
