@@ -249,14 +249,7 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
     // the gate's relief panels are checked on the gate page (their base quads lie on the glazed skins by design)
     checks: (b) => !surface(b) && !b.startsWith('panel:'),
     floats: (b) => !surface(b) && b !== 'map:ramps' && !b.startsWith('panel:'),
-    // the dug stairs' feet lie 4 cm over the ruin's ground at every one of their top points (tower-dug.test.mjs), both
-    // surfaces on the same 0.75 m step; the check takes a face's plane from the scene's origin about 400 m off, where a
-    // thousandth of tilt between the two triangulations reads as one plane
-    allowPair: [
-      ...(dug ? [{ test: (p) => p.kind === 'fight' && p.n[1] > 0.99 && [p.a, p.b].includes('map:ruin-trench') && [p.a, p.b].some((b) => b.startsWith('map:ruin-stair-')), why: "the dug stairs' feet 4 cm over the ruin's ground at every top point (tower-dug.test.mjs); the plane offsets are taken 400 m from the origin" }] : []),
-      // the last stop's eye on the deck reaches the west city's low house blocks beyond the bank (measured 5 Nov)
-      ...(n === 14 ? [{ test: (p) => p.kind === 'fight' && p.n[1] > 0.99 && [p.a, p.b].includes('map:ground') && [p.a, p.b].some((b) => b.startsWith('map:house#')), why: "the west city's low house blocks (map/city.ts), their tops within 2 mm of the plain 300 to 590 m beyond the west bank: from the deck's eye 1.45 m over the plain a top spans under half a pixel, behind the bank's thickets; open for the city's own round" }] : []),
-    ],
+    allowPair: [],
     // a curtain's sheet is foliage in faces of about 0.2 by 1 m, and at 300 to 400 m from stop 5's hold a few of them
     // fall under a device pixel wherever the planting's sequence puts them
     // the palm's mid preset (palm-date-babylon): a frond's leaflets drawn as teeth along its rib, their tips narrow
@@ -269,7 +262,6 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
       { prefix: 'map:bridge-poplar-', why: "the bank poplars' trunks and limbs, 0.11 to 0.16 m at 220 to 405 m (0.22 to 0.81 px)" },
       { prefix: 'map:bridge-willow-', why: "the bank willows' trunks and limbs, 0.17 to 0.44 m at 220 to 370 m (0.26 to 0.95 px)" },
       { prefix: 'map:bridge-tamarisk-', why: "the bank tamarisks' stems, 0.19 to 0.32 m at 225 to 365 m (0.28 to 0.99 px)" },
-      { prefix: 'map:bridge-deck-boards', why: "the deck's 8 cm board edges at 379 m from stop 14's phone frame (0.24 to 0.26 px)" },
     ],
     // a curtain hangs on a terrace's face from its lip on the terrace's top: held by the face, which the plan-view
     // support rule cannot see (as the gate's facing skins)
