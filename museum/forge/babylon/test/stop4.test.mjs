@@ -316,6 +316,24 @@ test('read-back: the two doors at rest stand as one group where the one control 
   assert.ok(seen > 0, 'no rest in the read-back')
 })
 
+test('read-back: on the map each land\'s name stands clearly nearer its own dot than any other', R, () => {
+  let seen = 0
+  // from the name's box to a dot's centre; a name about as near another dot reads as that dot's name, so its own is at
+  // most three quarters of the next (Byblos set below-right, level with Tyre's dot, was 11.2 against 13.8)
+  const reach = (b, d) => Math.hypot(Math.max(b.l - d.x, 0, d.x - b.r), Math.max(b.t - d.y, 0, d.y - b.b))
+  for (const { f, r } of readbacks()) for (const [k, ro] of Object.entries(r.readouts ?? {})) {
+    const dots = (ro.facts?.dots ?? []).filter((d) => d.lit > 0.99)
+    for (const l of ro.labels.filter((x) => x.id.startsWith('land-') && x.box)) {
+      seen++
+      const own = l.id.slice(5)
+      const mine = dots.find((d) => d.id === own)
+      const next = Math.min(...dots.filter((d) => d.id !== own).map((d) => reach(l.box, d)))
+      assert.ok(mine && reach(l.box, mine) <= 0.75 * next, `${f} ${k}: ${own}'s name ${mine ? reach(l.box, mine).toFixed(1) : '-'} from its dot, ${next.toFixed(1)} from another`)
+    }
+  }
+  assert.ok(seen > 0, 'no land name in the read-backs')
+})
+
 test('read-back: no frame carries the harness\'s marker', R, () => {
   let seen = 0
   for (const { f, r } of readbacks()) for (const [k, m] of Object.entries(r.marked ?? {})) { seen++; assert.equal(m, false, `${f} ${k}`) }
