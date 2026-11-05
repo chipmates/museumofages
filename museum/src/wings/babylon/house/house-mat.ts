@@ -422,31 +422,6 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
   const indoors = max(max(inRoomAny, is(Z.leaf)), is(Z.reveal).mul(max(step(n.y, -0.5), inCourt6)))
   // the rooms keep their own light under the sky field: it sees only their open sky's share
   ;(m as unknown as { skyOpenNode: N }).skyOpenNode = float(1).sub(inRoomAny)
-  // House VI's court shades itself: the sun's ray from a point leaves the court over its caps or not. The page's one
-  // shadow map, fitted to the whole frame, lays a few centimetres a texel: its edge on these walls steps and its bias
-  // lets the sun past a parapet's corner. Near the court's own shadow edge that edge alone; elsewhere the darker of the
-  // two, so the ladder's, the figure's and the city's shadows stay. A stand-in: it goes once fitShadow in open/light.ts
-  // fits a sun box tight enough for an eye-level hold
-  const sd = uHouseSunDir, su = sd.dot(ax), sv = sd.dot(az)
-  const cu0 = ct.u[0] + 0.04, cu1 = ct.u[1] - 0.04, cv0 = ct.v[0] + 0.04, cv1 = ct.v[1] - 0.04
-  const tU = select(su.lessThan(0), float(cu0).sub(u).div(min(su, -1e-4)), float(cu1).sub(u).div(max(su, 1e-4)))
-  const tV = select(sv.lessThan(0), float(cv0).sub(v).div(min(sv, -1e-4)), float(cv1).sub(v).div(max(sv, 1e-4)))
-  const tEx = max(min(tU, tV), 0)
-  const crown = L.top + Cp.rise, yEx = P.y.add(tEx.mul(sd.y))
-  // the sun's half degree as a penumbra
-  const pen = tEx.mul(0.0047).add(0.004)
-  const ownSun = smoothstep(float(crown).sub(pen), float(crown).add(pen), yEx)
-  const nearOwn = float(1).sub(smoothstep(0.1, 0.2, abs(yEx.sub(crown))))
-  // and the thin shade each overhang lays on the face under it (the cap's lip, the drip course): the map drew these as
-  // a row of dashes, a texel apart
-  const lipT = sd.y.div(max(sd.dot(n), 1e-3)), Eo: number = hp.build.edge.out
-  const underCap = step(P.y, L.top - Cp.drop).mul(step(L.deck - 0.01, P.y)), underDrip = step(P.y, L.ceiling)
-  const capLip = float(L.top - Cp.drop).sub(P.y).sub(lipT.mul(Cp.over)), dripLip = float(L.ceiling).sub(P.y).sub(lipT.mul(Eo))
-  const lipSun = float(1).sub(underCap.mul(float(1).sub(smoothstep(-0.005, 0.005, capLip)))).mul(float(1).sub(underDrip.mul(float(1).sub(smoothstep(-0.006, 0.006, dripLip)))))
-  const nearLip = max(underCap.mul(float(1).sub(smoothstep(0.06, 0.12, abs(capLip)))), underDrip.mul(float(1).sub(smoothstep(0.06, 0.12, abs(dripLip))))).mul(courtSix)
-  const ownAll = ownSun.mul(mix(float(1), lipSun, courtSix)), nearAll = max(nearOwn, nearLip)
-  const inOwn = inCt(0.15).mul(step(P.y, crown + 0.03)).mul(float(1).sub(max(is(Z.deck), is(Z.parapetBack))))
-  ;(m as unknown as { receivedShadowNode: (s: N) => N }).receivedShadowNode = (shadow: N): N =>
-    mix(shadow, mix(min(shadow, ownAll), ownAll, nearAll), inOwn).mul(float(1).sub(indoors))
+  ;(m as unknown as { receivedShadowNode: (s: N) => N }).receivedShadowNode = (shadow: N): N => shadow.mul(float(1).sub(indoors))
   return m
 }
