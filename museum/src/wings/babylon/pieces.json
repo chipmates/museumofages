@@ -36,6 +36,7 @@
   {"match": "^map:water-outer-east-moat$", "part": "the outer moat's water", "piece": "bab.moats.water", "surface": true},
   {"match": "^map:house6$", "part": "House VI in Merkes, after Koldewey 1913", "piece": "bab.houses.merkes", "note": "its plan P2021 Fig. 6.15, its body guessed; a House VI row of its own is wanted"},
   {"match": "^map:house6-court-paving$", "part": "House VI's court paving at +5.2", "piece": "bab.houses.merkes", "note": "the lower paving's 40 cm bricks; the floor level at 570 BC between +5.0 and +6.4 a reading (P2021 p. 250)"},
+  {"match": "^map:house6-(tops|lintels|sills|pivots|leaves|ladder)$", "part": "House VI's construction, a type: the courts' roof edges and parapet caps, the court doors' lintels, sills, pivot stones and leaves, a ladder to the roof", "piece": "bab.houses.type", "note": "Guessed: lintels of poles, baked-brick sills, pivot stones and board leaves after P2021 p. 37, 38 and 278; the roof's edge, the caps, the leaves' angles and the ladder's place ours; no beam ends, as no type in the record shows them"},
   {"match": "^map:house3$", "part": "House III in Merkes on its terrace", "piece": "bab.houses.merkes"},
   {"match": "^map:quarter-merkes-", "part": "the Merkes blocks round House VI, court houses as a type", "piece": "bab.houses.merkes"},
   {"match": "^map:merkes-lanes$", "part": "the Merkes lanes", "piece": "bab.houses.merkes", "surface": true, "note": "unpaved; their level ours"},
