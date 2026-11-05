@@ -2,7 +2,7 @@
 // own vite config: the document's status code, the console's errors, the failed requests, whether the rig came ready,
 // and one screenshot each. Writes SMOKE.md, smoke.json and the stills into --out.
 //
-//   node forge/babylon/smoke.mjs --out <abs folder> [--port 5212] [--engines chromium,webkit] [--pages map,gate,open,paper,measure]
+//   node forge/babylon/smoke.mjs --out <abs folder> [--port 5212] [--engines chromium,webkit] [--pages map,gate,open,paper,measure,oil,words]
 //        [--cap 300] (seconds a page may take to come ready)
 // Exit 0 when every page answered 200, came ready and logged no error; 1 otherwise.
 import { chromium, webkit } from 'playwright'
