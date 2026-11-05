@@ -732,8 +732,8 @@ function centring(S: Soup, F: WF, s0: number, s1: number, sill: number, spring: 
 }
 
 /** a hut against a wall on a terrace: its walls, a lean-to roof over them, a dark door */
-/** a person in the house's grey-figure form at the showpiece's scale: legs, trunk and head in one grey, no joints,
-    nothing thinner than 0.2 m so it holds a pixel at the vantage; `turn` its heading from facing out */
+/** a person after the house's grey-figure form, in boxes at the showpiece's scale: legs, trunk and head in one grey,
+    no joints, nothing thinner than 0.16 m so it holds a pixel at the vantage; `turn` its heading from facing out */
 function figure(S: Soup, f: ShowFrame, phi: number, r: number, t: number, turn: number, k: number): void {
   const [cx, cz] = sceneAt(f, phi, r), [ox, oz] = sceneAt(f, phi, 0)
   const nx = (cx - ox) / Math.hypot(cx - ox, cz - oz), nz = (cz - oz) / Math.hypot(cx - ox, cz - oz)
