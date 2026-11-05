@@ -533,7 +533,7 @@ const NIGHT = {
   swells: 1.0,
   spread: 0.008,
   /** the spread each unit of slope the footprint took off adds */
-  lostSpread: 0.08,
+  lostSpread: 0.12,
   /** the band's glints: cells a metre or so apart (k per metre across the current, stretched along it), a glint's
       size in the cell, its mean share once under a few pixels, its gain, the current's drift (m/s), the fade */
   glints: { k: 0.8, stretch: 3, angle: 0.15, size: 0.3, share: 0.2, gain: 1.15, drift: 0.6, fade: [0.25, 0.8] as [number, number] },
