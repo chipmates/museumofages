@@ -17,7 +17,7 @@ const D2R = Math.PI / 180
 /* what a plan cell is */
 export const OUT = 0, WALL = 1, ROOM = 2, COURT = 3, DOOR = 4
 /* what a face shows, the material's zones */
-export const Z = { outer: 0, court: 1, room: 2, reveal: 3, deck: 4, coping: 5, parapetBack: 6, floor: 7, paving: 8, hidden: 9, courtFloor: 10, terrace: 11 } as const
+export const Z = { outer: 0, court: 1, room: 2, reveal: 3, deck: 4, coping: 5, parapetBack: 6, floor: 7, paving: 8, hidden: 9, courtFloor: 10, terrace: 11, lanes: 12, wood: 13, sill: 14, stone: 15, edge: 16, leaf: 17 } as const
 
 export interface Frame { o: P2; a: P2; c: P2; bearing: number }
 export function frameOf(origin: number[], bearing: number, E0: number, N0: number): Frame {
@@ -131,7 +131,8 @@ export function cellFaces(cp: CellPlan, layers: Layer[], zoneOf: (side: 'side' |
     whether it is House VI's own */
 export interface Body { id: string; geometry: BufferGeometry; band: number; letters: [Cls, Cls]; floor: number; six?: boolean }
 
-/** faces in a frame turned into one geometry in the scene: position, normal, the zone and the frame's (u, v) per vertex */
+/** faces in a frame turned into one geometry in the scene: position, normal, the zone and `loc`, the frame's (u, v)
+    per vertex and a part's own (s, t) for its grain (zero on the cell bodies): one buffer, as a pipeline takes eight */
 export function faceGeometry(f: Frame, faces: Face[]): BufferGeometry {
   const pos: number[] = [], nor: number[] = [], zone: number[] = [], loc: number[] = []
   for (const fc of faces) {
@@ -149,7 +150,7 @@ export function faceGeometry(f: Frame, faces: Face[]): BufferGeometry {
         pos.push(...w[k]!)
         nor.push(...n)
         zone.push(fc.zone)
-        loc.push(fc.p[k]![0]!, fc.p[k]![2]!)
+        loc.push(fc.p[k]![0]!, fc.p[k]![2]!, 0, 0)
       }
     }
     tri(0, 1, 2)
@@ -159,7 +160,7 @@ export function faceGeometry(f: Frame, faces: Face[]): BufferGeometry {
   g.setAttribute('position', new Float32BufferAttribute(pos, 3))
   g.setAttribute('normal', new Float32BufferAttribute(nor, 3))
   g.setAttribute('zone', new Float32BufferAttribute(zone, 1))
-  g.setAttribute('loc', new Float32BufferAttribute(loc, 2))
+  g.setAttribute('loc', new Float32BufferAttribute(loc, 4))
   return g
 }
 
@@ -224,7 +225,8 @@ function zoneFor(courtFloor: number) {
   return (side: 'side' | 'up' | 'down', layer: string, k: number, own: number, rim: boolean): number => {
     if (side === 'side') {
       if (k === OUT) return Z.outer
-      if (k === COURT) return Z.court
+      // the roof's own face toward a court is the roof edge's (houseConstruction)
+      if (k === COURT) return layer === 'roof' ? Z.hidden : Z.court
       if (layer === 'parapet') return Z.parapetBack
       if (k === ROOM) return Z.room
       if (k === DOOR) return layer === 'parapet' ? Z.parapetBack : Z.reveal
@@ -272,6 +274,7 @@ export function buildHouse6(hp: J, E0: number, N0: number): { frame: Frame; bodi
   const bodies: Body[] = [
     { id: 'house6', geometry: faceGeometry(f, rest), band, letters: ['G', 'G'], floor: L.floor, six: true },
     { id: 'house6-court-paving', geometry: faceGeometry(f, paving), band: 1e6, letters: ['G', 'G'], floor: L.floor, six: true },
+    ...houseConstruction(hp, f).map((b) => ({ ...b, band, letters: ['G', 'G'] as [Cls, Cls], floor: L.floor, six: true })),
   ]
   // the area the outline covers, by its cells
   let area = 0
@@ -293,6 +296,271 @@ export function buildHouse6(hp: J, E0: number, N0: number): { frame: Frame; bodi
     faces: faces.length,
   }
   return { frame: f, bodies, facts }
+}
+
+/* ── House VI's construction (plan `build`): the courts' roof edges and parapet caps, the court doors' lintels, sills,
+   pivot stones and leaves, a ladder to the roof. Parts in the frame (u, y, v) with smooth normals; every part ends
+   inside the body it rests on, never on its plane. ── */
+type V3 = [number, number, number]
+const v3sub = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]]
+const v3cross = (a: V3, b: V3): V3 => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]
+const v3norm = (a: V3): V3 => { const l = Math.hypot(a[0], a[1], a[2]) || 1; return [a[0] / l, a[1] / l, a[2] / l] }
+const v3add = (a: V3, b: V3, s = 1): V3 => [a[0] + b[0] * s, a[1] + b[1] * s, a[2] + b[2] * s]
+
+/** triangles in a frame: position and normal per vertex, the zone, and a part-local (s, t) for the material's grain */
+class Mesher {
+  p: V3[] = []
+  n: V3[] = []
+  z: number[] = []
+  w: Array<[number, number]> = []
+  tri(p: V3[], n: V3[], zone: number, w: Array<[number, number]>): void {
+    const g = v3cross(v3sub(p[1]!, p[0]!), v3sub(p[2]!, p[0]!))
+    const m = v3add(v3add(n[0]!, n[1]!), n[2]!)
+    const order = g[0] * m[0] + g[1] * m[1] + g[2] * m[2] >= 0 ? [0, 1, 2] : [0, 2, 1]
+    for (const k of order) { this.p.push(p[k]!); this.n.push(n[k]!); this.z.push(zone); this.w.push(w[k]!) }
+  }
+  quad(p: V3[], n: V3[], zone: number, w: Array<[number, number]>): void {
+    this.tri([p[0]!, p[1]!, p[2]!], [n[0]!, n[1]!, n[2]!], zone, [w[0]!, w[1]!, w[2]!])
+    this.tri([p[0]!, p[2]!, p[3]!], [n[0]!, n[2]!, n[3]!], zone, [w[0]!, w[2]!, w[3]!])
+  }
+  /** a cylinder from a to b: smooth sides, flat caps where asked */
+  cyl(a: V3, b: V3, r: number, seg: number, zone: number, o: { caps?: [boolean, boolean]; phase?: number; rb?: number } = {}): void {
+    const ax = v3norm(v3sub(b, a)), len = Math.hypot(...v3sub(b, a))
+    const h: V3 = Math.abs(ax[1]) < 0.9 ? [0, 1, 0] : [1, 0, 0]
+    const e1 = v3norm(v3cross(ax, h)), e2 = v3cross(ax, e1)
+    const rb = o.rb ?? r, ph = o.phase ?? 0
+    const ring = (c: V3, rr: number, k: number): { p: V3; n: V3 } => {
+      const t = ph + (k / seg) * Math.PI * 2
+      const d: V3 = v3add(v3add([0, 0, 0], e1, Math.cos(t)), e2, Math.sin(t))
+      return { p: v3add(c, d, rr), n: d }
+    }
+    for (let k = 0; k < seg; k++) {
+      const A = ring(a, r, k), Bq = ring(a, r, k + 1), C = ring(b, rb, k + 1), D = ring(b, rb, k)
+      const s0 = (k / seg) * Math.PI * 2 * r, s1 = ((k + 1) / seg) * Math.PI * 2 * r
+      this.quad([A.p, Bq.p, C.p, D.p], [A.n, Bq.n, C.n, D.n], zone, [[0, s0], [0, s1], [len, s1], [len, s0]])
+    }
+    const cap = (c: V3, rr: number, nrm: V3, at: number): void => {
+      for (let k = 0; k < seg; k++) {
+        const A = ring(c, rr, k), Bq = ring(c, rr, k + 1)
+        this.tri([c, A.p, Bq.p], [nrm, nrm, nrm], zone, [[at, 0], [at, rr], [at, rr]])
+      }
+    }
+    if (o.caps?.[0]) cap(a, r, [-ax[0], -ax[1], -ax[2]], 0)
+    if (o.caps?.[1]) cap(b, rb, ax, len)
+  }
+  /** a box from its centre, three unit axes and half sizes; faces named by axis and sign may be left out */
+  box(c: V3, axes: [V3, V3, V3], hs: V3, zone: number, skip: string[] = []): void {
+    const names = ['x', 'y', 'z']
+    for (let i = 0; i < 3; i++) for (const s of [-1, 1]) {
+      if (skip.includes(`${s < 0 ? '-' : '+'}${names[i]}`)) continue
+      const n = axes[i]!.map((x) => x * s) as V3
+      const j = (i + 1) % 3, k = (i + 2) % 3
+      const ctr = v3add(c, axes[i]!, s * hs[i]!)
+      const corner = (a: number, b: number): V3 => v3add(v3add(ctr, axes[j]!, a * hs[j]!), axes[k]!, b * hs[k]!)
+      const pts = [corner(-1, -1), corner(1, -1), corner(1, 1), corner(-1, 1)]
+      // every face keeps the box's own (x, y): a leaf's boards run on across its edges, not along them
+      const w = pts.map((q) => { const d = v3sub(q, c); return [d[0] * axes[0]![0] + d[1] * axes[0]![1] + d[2] * axes[0]![2], d[0] * axes[1]![0] + d[1] * axes[1]![1] + d[2] * axes[1]![2]] as [number, number] })
+      this.quad(pts, [n, n, n, n], zone, w)
+    }
+  }
+  geometry(f: Frame): BufferGeometry {
+    const pos: number[] = [], nor: number[] = [], zone: number[] = [], loc: number[] = []
+    for (let i = 0; i < this.p.length; i++) {
+      const [u, y, v] = this.p[i]!, [nu, ny, nv] = this.n[i]!
+      const [x, z] = toScene(f, u, v)
+      pos.push(x, y, z)
+      const nn = v3norm([f.a[0] * nu + f.c[0] * nv, ny, f.a[1] * nu + f.c[1] * nv])
+      nor.push(...nn)
+      zone.push(this.z[i]!)
+      loc.push(u, v, ...this.w[i]!)
+    }
+    const g = new BufferGeometry()
+    g.setAttribute('position', new Float32BufferAttribute(pos, 3))
+    g.setAttribute('normal', new Float32BufferAttribute(nor, 3))
+    g.setAttribute('zone', new Float32BufferAttribute(zone, 1))
+    g.setAttribute('loc', new Float32BufferAttribute(loc, 4))
+    return g
+  }
+}
+
+/** a profile swept round a court's rectangle: each point (a, y) lies on the rectangle grown by a (outward from the
+    court, into its walls), its normal (na along that outward, ny); the corners mitre */
+function ringSweep(m: Mesher, r: Rect, prof: Array<{ a: number; y: number; na: number; ny: number }>, zone: number): void {
+  const sides: Array<(a: number) => { p0: [number, number]; p1: [number, number]; out: [number, number] }> = [
+    (a) => ({ p0: [r.u[0] - a, r.v[0] - a], p1: [r.u[1] + a, r.v[0] - a], out: [0, -1] }),
+    (a) => ({ p0: [r.u[1] + a, r.v[0] - a], p1: [r.u[1] + a, r.v[1] + a], out: [1, 0] }),
+    (a) => ({ p0: [r.u[1] + a, r.v[1] + a], p1: [r.u[0] - a, r.v[1] + a], out: [0, 1] }),
+    (a) => ({ p0: [r.u[0] - a, r.v[1] + a], p1: [r.u[0] - a, r.v[0] - a], out: [-1, 0] }),
+  ]
+  for (const side of sides) {
+    for (let i = 0; i + 1 < prof.length; i++) {
+      const A = prof[i]!, Bp = prof[i + 1]!
+      const sa = side(A.a), sb = side(Bp.a)
+      if (Math.abs(A.a - Bp.a) < 1e-9 && Math.abs(A.y - Bp.y) < 1e-9) continue
+      const nA: V3 = [sa.out[0] * A.na, A.ny, sa.out[1] * A.na], nB: V3 = [sb.out[0] * Bp.na, Bp.ny, sb.out[1] * Bp.na]
+      const len = Math.hypot(sa.p1[0] - sa.p0[0], sa.p1[1] - sa.p0[1])
+      m.quad([[sa.p0[0], A.y, sa.p0[1]], [sa.p1[0], A.y, sa.p1[1]], [sb.p1[0], Bp.y, sb.p1[1]], [sb.p0[0], Bp.y, sb.p0[1]]],
+        [nA, nA, nB, nB], zone, [[0, A.y], [len, A.y], [len, Bp.y], [0, Bp.y]])
+    }
+  }
+}
+
+/** a door on a court: the wall it pierces in door-local terms (s along the wall, t from the court face into the room) */
+interface CourtDoor { id: string; s: [number, number]; depth: number; map: (s: number, t: number) => [number, number]; dir: (ns: number, nt: number) => [number, number] }
+function courtDoors(hp: J): CourtDoor[] {
+  const out: CourtDoor[] = []
+  const eq = (a: number, b: number): boolean => Math.abs(a - b) < 1e-6
+  for (const d of hp.doors as Array<Rect & { id: string }>) {
+    // House VI's own court only: the doors on Court 12 lie out of every frame of the stop
+    for (const c of [hp.courts[0]] as Rect[]) {
+      const overlapU = d.u[0] >= c.u[0] - 1e-6 && d.u[1] <= c.u[1] + 1e-6, overlapV = d.v[0] >= c.v[0] - 1e-6 && d.v[1] <= c.v[1] + 1e-6
+      // the court line, the sign into the room, and which axis crosses the wall
+      let k: { axis: 'u' | 'v'; line: number; sg: number; depth: number } | null = null
+      if (overlapU && eq(d.v[0], c.v[1])) k = { axis: 'v', line: d.v[0], sg: 1, depth: d.v[1] - d.v[0] }
+      else if (overlapU && eq(d.v[1], c.v[0])) k = { axis: 'v', line: d.v[1], sg: -1, depth: d.v[1] - d.v[0] }
+      else if (overlapV && eq(d.u[0], c.u[1])) k = { axis: 'u', line: d.u[0], sg: 1, depth: d.u[1] - d.u[0] }
+      else if (overlapV && eq(d.u[1], c.u[0])) k = { axis: 'u', line: d.u[1], sg: -1, depth: d.u[1] - d.u[0] }
+      if (!k) continue
+      const K = k
+      out.push({
+        id: d.id,
+        s: K.axis === 'v' ? [d.u[0], d.u[1]] : [d.v[0], d.v[1]],
+        depth: K.depth,
+        map: (s, t) => (K.axis === 'v' ? [s, K.line + K.sg * t] : [K.line + K.sg * t, s]),
+        dir: (ns, nt) => (K.axis === 'v' ? [ns, K.sg * nt] : [K.sg * nt, ns]),
+      })
+    }
+  }
+  return out
+}
+
+export function houseConstruction(hp: J, f: Frame): Array<{ id: string; geometry: BufferGeometry }> {
+  const Bd = hp.build, L = hp.levels
+  const fl: number = L.floor, head: number = L.doorHead, top: number = L.top, pt: number = hp.outline.parapet
+  const R = rng(Bd.seed)
+  const parts: Array<{ id: string; geometry: BufferGeometry }> = []
+
+  /* the roof's edge over each court, a drip course a little proud of the wall, and the parapet's rounded mud cap */
+  const tops = new Mesher()
+  const E = Bd.edge, Cp = Bd.cap
+  for (const c of hp.courts as Rect[]) {
+    // the chamfers wide enough to stay over a pixel from the stop's eye across both courts
+    const y0 = L.ceiling, y1 = L.deck, o = -E.out, ch = 0.025
+    ringSweep(tops, c, [
+      { a: E.in, y: y0, na: 0, ny: -1 }, { a: o + ch, y: y0, na: 0, ny: -1 },
+      { a: o + ch, y: y0, na: -0.7, ny: -0.7 }, { a: o, y: y0 + ch, na: -0.7, ny: -0.7 },
+      { a: o, y: y0 + ch, na: -1, ny: 0 }, { a: o, y: y1 - ch, na: -1, ny: 0 },
+      { a: o, y: y1 - ch, na: -0.7, ny: 0.7 }, { a: o + ch, y: y1, na: -0.7, ny: 0.7 },
+      { a: o + ch, y: y1, na: 0, ny: 1 }, { a: E.in, y: y1, na: 0, ny: 1 },
+    ], Z.edge)
+    // the cap: from under the court side's overhang over the crown to under the deck side's
+    const ov: number = Cp.over, w = pt + 2 * ov, prof: Array<{ a: number; y: number; na: number; ny: number }> = []
+    prof.push({ a: 0.01, y: top - Cp.drop, na: 0, ny: -1 }, { a: -ov, y: top - Cp.drop, na: 0, ny: -1 })
+    const n = 9
+    for (let i = 0; i <= n; i++) {
+      // a flattened half round over the cap's width, its sides steep
+      const t = (i / n) * Math.PI
+      const a = -ov + (w * (1 - Math.cos(t))) / 2
+      const y = top - Cp.drop + (Cp.drop + Cp.rise) * Math.pow(Math.sin(t), 0.55)
+      const dy = (Cp.drop + Cp.rise) * 0.55 * Math.pow(Math.max(Math.sin(t), 1e-3), -0.45) * Math.cos(t), da = (w * Math.sin(t)) / 2
+      // the outward normal: the tangent (da, dy) turned a quarter
+      const nn = v3norm([-dy, da, 0])
+      prof.push({ a, y, na: nn[0], ny: nn[1] })
+    }
+    prof[2]!.na = -1; prof[2]!.ny = 0
+    prof[prof.length - 1]!.na = 1; prof[prof.length - 1]!.ny = 0
+    prof.push({ a: pt + ov, y: top - Cp.drop, na: 0, ny: -1 }, { a: pt - 0.01, y: top - Cp.drop, na: 0, ny: -1 })
+    ringSweep(tops, c, prof, Z.coping)
+  }
+  parts.push({ id: 'house6-tops', geometry: tops.geometry(f) })
+
+  /* the court doors: a lintel of poles, a baked-brick sill, a pivot stone and a leaf of boards */
+  const lintels = new Mesher(), sills = new Mesher(), pivots = new Mesher(), leaves = new Mesher()
+  const LT = Bd.lintel, SL = Bd.sill, PV = Bd.pivot
+  for (const d of courtDoors(hp)) {
+    const P = (s: number, y: number, t: number): V3 => { const [u, v] = d.map(s, t); return [u, y, v] }
+    const N = (ns: number, ny: number, nt: number): V3 => { const [u, v] = d.dir(ns, nt); return [u, ny, v] }
+    const s0 = d.s[0], s1 = d.s[1], D = d.depth
+    // poles side by side through the wall's depth, the first and last a little proud of its faces
+    const r0 = LT.d / 2, first = r0 - LT.proud, last = D - r0 + LT.proud
+    const nL = Math.max(2, Math.round((last - first) / LT.d) + 1)
+    for (let k = 0; k < nL; k++) {
+      const t = first + ((last - first) * k) / (nL - 1)
+      const r = r0 * (0.9 + 0.2 * R()), yc = head - 0.02 + r + 0.01 * (R() - 0.5)
+      const ends = k === 0 || k === nL - 1
+      lintels.cyl(P(s0 - LT.bear - 0.05 * R(), yc, t), P(s1 + LT.bear + 0.05 * R(), yc + 0.012 * (R() - 0.5), t), r, 16, Z.wood, { caps: [ends, ends], phase: R() * 6.28, rb: r * (0.9 + 0.12 * R()) })
+    }
+    // the sill: a course of baked bricks the opening's width and the wall's depth, proud of both faces
+    const sh = SL.rise, so = SL.out, ch = 0.012
+    const sp = (s: number, y: number, t: number): V3 => P(s, y, t)
+    const A0 = s0 - 0.02, A1 = s1 + 0.02, T0 = -so, T1 = D + so, yb = fl - 0.005, yt = fl + sh
+    const Nt = N(0, 1, 0), Nc = N(0, 0, -1), Nr = N(0, 0, 1), N0 = N(-1, 0, 0), N1 = N(1, 0, 0)
+    const ce = N(0, 0.7, -0.7), re = N(0, 0.7, 0.7)
+    sills.quad([sp(A0, yt, T0 + ch), sp(A1, yt, T0 + ch), sp(A1, yt, T1 - ch), sp(A0, yt, T1 - ch)], [Nt, Nt, Nt, Nt], Z.sill, [[A0, T0], [A1, T0], [A1, T1], [A0, T1]])
+    sills.quad([sp(A0, yt - ch, T0), sp(A1, yt - ch, T0), sp(A1, yt, T0 + ch), sp(A0, yt, T0 + ch)], [ce, ce, ce, ce], Z.sill, [[A0, T0], [A1, T0], [A1, T0], [A0, T0]])
+    sills.quad([sp(A0, yb, T0), sp(A1, yb, T0), sp(A1, yt - ch, T0), sp(A0, yt - ch, T0)], [Nc, Nc, Nc, Nc], Z.sill, [[A0, T0], [A1, T0], [A1, T0], [A0, T0]])
+    sills.quad([sp(A0, yt, T1 - ch), sp(A1, yt, T1 - ch), sp(A1, yt - ch, T1), sp(A0, yt - ch, T1)], [re, re, re, re], Z.sill, [[A0, T1], [A1, T1], [A1, T1], [A0, T1]])
+    sills.quad([sp(A0, yt - ch, T1), sp(A1, yt - ch, T1), sp(A1, yb, T1), sp(A0, yb, T1)], [Nr, Nr, Nr, Nr], Z.sill, [[A0, T1], [A1, T1], [A1, T1], [A0, T1]])
+    for (const [S, Nn] of [[A0, N0], [A1, N1]] as Array<[number, V3]>) {
+      sills.quad([sp(S, yb, T0), sp(S, yt - ch, T0), sp(S, yt, T0 + ch), sp(S, yt, T1 - ch)], [Nn, Nn, Nn, Nn], Z.sill, [[S, T0], [S, T0], [S, T0], [S, T1]])
+      sills.quad([sp(S, yb, T0), sp(S, yt, T1 - ch), sp(S, yt - ch, T1), sp(S, yb, T1)], [Nn, Nn, Nn, Nn], Z.sill, [[S, T0], [S, T1], [S, T1], [S, T1]])
+    }
+    const lf = (Bd.leaves as J[]).find((x) => x.door === d.id)
+    if (!lf) continue
+    // the leaf turns on a pole standing in a pivot stone just inside the room, at its hinge jamb
+    const sg = lf.hinge === 0 ? 1 : -1, sh0 = lf.hinge === 0 ? s0 + PV.inset : s1 - PV.inset, th0 = D + PV.inset
+    const pr = PV.r, seg = 11, ring: V3[] = []
+    for (let k = 0; k < seg; k++) {
+      const a = (k / seg) * Math.PI * 2 + R() * 0.3, rr = pr * (0.8 + 0.35 * R())
+      ring.push(P(sh0 + Math.cos(a) * rr, fl + PV.rise, th0 + Math.sin(a) * rr))
+    }
+    const cTop = P(sh0, fl + PV.rise + 0.004, th0), up: V3 = [0, 1, 0]
+    for (let k = 0; k < seg; k++) {
+      const a = ring[k]!, b = ring[(k + 1) % seg]!
+      pivots.tri([cTop, a, b], [up, up, up], Z.stone, [[0, 0], [a[0] - cTop[0], a[2] - cTop[2]], [b[0] - cTop[0], b[2] - cTop[2]]])
+      const a0: V3 = [a[0], fl - 0.005, a[2]], b0: V3 = [b[0], fl - 0.005, b[2]]
+      const na = v3norm([a[0] - cTop[0], 0.25, a[2] - cTop[2]]), nb = v3norm([b[0] - cTop[0], 0.25, b[2] - cTop[2]])
+      pivots.quad([a0, b0, b, a], [na, nb, nb, na], Z.stone, [[1, 0], [1, 0], [1, 0], [1, 0]])
+    }
+    const th = (lf.open * Math.PI) / 180
+    const ds = sg * Math.cos(th), dt = Math.sin(th)
+    const W = s1 - s0 - PV.inset - 0.02, Hh = head - 0.05 - (fl + 0.05), yc = fl + 0.05 + Hh / 2
+    const ax = N(ds, 0, dt), ay: V3 = [0, 1, 0], az = v3cross(ax, ay)
+    const hinge = P(sh0, yc, th0)
+    leaves.box(v3add(hinge, ax, W / 2), [ax, ay, az], [W / 2, Hh / 2, 0.022], Z.leaf)
+    for (const hb of [0.32, Hh - 0.32]) leaves.box(v3add(v3add(v3add(hinge, ax, W / 2 + 0.02), az, 0.022 + 0.012), ay, hb - Hh / 2), [ax, ay, az], [W / 2 - 0.06, 0.055, 0.013], Z.wood, ['-z'])
+    leaves.cyl(P(sh0, fl - 0.005, th0), P(sh0, head + 0.1, th0), 0.045, 10, Z.wood, { caps: [false, false], phase: R() * 6.28 })
+    // the pole's upper socket: a block fixed to the wall's room face
+    const tc = (D - 0.02 + th0 + 0.06) / 2
+    leaves.box(P(sh0, head + 0.08, tc), [N(1, 0, 0), ay, N(0, 0, 1)], [0.08, 0.06, (th0 + 0.06 - (D - 0.02)) / 2], Z.wood, ['-z'])
+  }
+  parts.push({ id: 'house6-lintels', geometry: lintels.geometry(f) }, { id: 'house6-sills', geometry: sills.geometry(f) },
+    { id: 'house6-pivots', geometry: pivots.geometry(f) }, { id: 'house6-leaves', geometry: leaves.geometry(f) })
+
+  /* a ladder of two poles and rungs leaning on a court wall's cap: `wall` the axis its face runs across (u for an
+     east or west wall, v for a north or south one), `at` the face's line, `s` the poles along the face */
+  const LD = Bd.ladder
+  if (LD) {
+    const ld = new Mesher()
+    const sgn = Math.sign(-LD.at) || 1
+    const Q = (s: number, y: number, t: number): V3 => (LD.wall === 'u' ? [t, y, s] : [s, y, t])
+    const t0 = LD.at + sgn * LD.foot, t1 = LD.at + sgn * (Cp.over + LD.r + 0.004)
+    const slope = (t1 - t0) / (top - (fl - 0.005))
+    for (const s of LD.s as number[]) {
+      const foot = Q(s, fl - 0.005, t0), rest = Q(s, top, t1)
+      const dir = v3norm(v3sub(rest, foot)), k = (top + LD.over - foot[1]) / dir[1]
+      ld.cyl(foot, v3add(foot, dir, k), LD.r * (0.95 + 0.1 * R()), 10, Z.wood, { caps: [false, true], phase: R() * 6.28, rb: LD.r * 0.8 })
+    }
+    // rungs lashed on by hand: their spacing and level a little uneven
+    const sa = (LD.s as number[])[0]!, sb = (LD.s as number[])[1]!
+    for (let y = fl + 0.32; y < top - 0.2; y += LD.step * (0.9 + 0.2 * R())) {
+      const ya = y + 0.012 * (R() - 0.5), yb = y + 0.012 * (R() - 0.5)
+      const ta = t0 + slope * (ya - (fl - 0.005)), tb = t0 + slope * (yb - (fl - 0.005))
+      ld.cyl(Q(sa + LD.r * 0.4, ya, ta), Q(sb - LD.r * 0.4, yb, tb), LD.rung * (0.85 + 0.3 * R()), 7, Z.wood, { caps: [false, false], phase: R() * 6.28 })
+    }
+    parts.push({ id: 'house6-ladder', geometry: ld.geometry(f) })
+  }
+  return parts
 }
 
 /* ── a court-house block: an outline (a quad in the frame, toothed), courts, ridges where two houses meet; no rooms ── */

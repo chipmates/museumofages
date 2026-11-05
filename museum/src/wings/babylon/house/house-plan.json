@@ -15,8 +15,8 @@
     "doorHead": 7.2,
     "ceiling": 7.85,
     "deck": 8.25,
-    "top": 8.6,
-    "src": "floor: the court's baked-brick paving of 40 cm bricks at +5.2 (P2021 p. 250, the lower paving's top; the raising to +6.4 is taken as later, a reading); the archive N10 lay at +5.0 between two floors, under this one. The street outside about +4.95, ours. Doors about 2 m, one storey of about 3 m (REC bab.houses.type; C15 S7-15); the ceiling, the roof's earth over it and the parapet are ours"
+    "top": 8.85,
+    "src": "floor: the court's baked-brick paving of 40 cm bricks at +5.2 (P2021 p. 250, the lower paving's top; the raising to +6.4 is taken as later, a reading); the archive N10 lay at +5.0 between two floors, under this one. The street outside about +4.95, ours. Doors about 2 m, one storey of about 3 m (REC bab.houses.type; C15 S7-15); the ceiling, the roof's earth over it and the parapet (0.6 m over the deck, a roof one walks on) are ours"
   },
   "outline": {
     "north": [
@@ -576,5 +576,72 @@
       0.37,
       0.3
     ]
+  },
+  "build": {
+    "seed": 7311,
+    "edge": {
+      "out": 0.09,
+      "in": 0.02
+    },
+    "cap": {
+      "over": 0.05,
+      "rise": 0.08,
+      "drop": 0.07
+    },
+    "lintel": {
+      "d": 0.19,
+      "bear": 0.24,
+      "proud": 0.03
+    },
+    "sill": {
+      "rise": 0.045,
+      "out": 0.03
+    },
+    "pivot": {
+      "r": 0.17,
+      "rise": 0.025,
+      "inset": 0.065
+    },
+    "leaves": [
+      {
+        "door": "room-4",
+        "hinge": 1,
+        "open": 99
+      },
+      {
+        "door": "room-10-court",
+        "hinge": 0,
+        "open": 58
+      },
+      {
+        "door": "room-1-court",
+        "hinge": 0,
+        "open": 20
+      },
+      {
+        "door": "room-3",
+        "hinge": 1,
+        "open": 95
+      },
+      {
+        "door": "room-8",
+        "hinge": 0,
+        "open": 55
+      }
+    ],
+    "ladder": {
+      "wall": "v",
+      "at": 3.25,
+      "s": [
+        -2.6,
+        -2.15
+      ],
+      "foot": 0.95,
+      "over": 0.4,
+      "r": 0.034,
+      "rung": 0.021,
+      "step": 0.3
+    },
+    "src": "Guessed, a type, all ours but where named: the roof over each court ends in a drip course of its mats and earth a little proud of the wall, under the parapet's rounded mud cap (P2021 p. 37 to 38: roofs of wood with straw or reed mats; ILL E06 the roof line, silent on its profile); no beam ends on the courts' faces, since no type in the record shows them; the court doors' lintels of poplar poles side by side (P2021 p. 37: poplar and palm wood for less demanding work); baked-brick sills a course high (P2021 p. 278: floors of baked brick or stamped earth); a pivot stone at each leaf's hinge, the leaf of boards turning on a pole in it (P2021 p. 278: 'the doors were of wood, moving around a pole standing on a pivot stone'; p. 38: pivot stones for all kinds of doors, often reused); each leaf open into its room, its hinge side and angle ours; a ladder to the roof against the court's south wall west of Room 4's door, its place ours (P2021 p. 242: one storey with a possible room on the flat roof)"
   }
 }
