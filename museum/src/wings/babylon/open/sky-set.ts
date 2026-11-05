@@ -15,7 +15,7 @@ import { skyRadiance } from '../map/sky-sample'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
-const { Fn, Loop, dot, float, int, luminance, max, mix, normalWorld, positionWorld, step, texture, uniform, uniformArray, vec2, vec3, vec4 } = TSL as unknown as Record<string, N>
+const { Loop, cameraPosition, clamp, dot, float, int, luminance, max, mix, normalWorld, positionWorld, pow, reflect, roughness, step, texture, uniform, uniformArray, vec2, vec3, vec4 } = TSL as unknown as Record<string, N>
 
 type RGB = [number, number, number]
 const GOLD = Math.PI * (3 - Math.sqrt(5))
@@ -62,6 +62,12 @@ export interface SkySetOptions {
   size?: number
   giveBack?: number
   albedo?: number
+  /** the mirror's share of the correction (0 leaves the environment's specular whole) and its sharpest lobe */
+  specular?: number
+  specularPower?: number
+  /** the receiver's offset along its normal and the depth bias, in texels of each map */
+  normalBias?: number
+  depthBias?: number
 }
 
 export type SkySet = ReturnType<typeof skySet>
@@ -69,13 +75,12 @@ export type SkySet = ReturnType<typeof skySet>
 /* the light whose node adds the correction; it carries the field's nodes, so one class serves every page */
 class SkySetLight extends Light {
   readonly isSkySetLight = true
-  field: { irradiance: (builder: N) => N } | null = null
+  field: { light: (builder: N) => void } | null = null
 }
 class SkySetLightNode extends (AnalyticLightNode as unknown as new (light: N) => N) {
   static get type(): string { return 'SkySetLightNode' }
   setup(builder: N): void {
-    const field = (this as N).light.field
-    if (field) builder.context.irradiance.addAssign(field.irradiance(builder))
+    ;(this as N).light.field?.light(builder)
   }
 }
 ;(SkySetLight as unknown as { registerNode: (c: unknown) => void }).registerNode(SkySetLightNode)
@@ -88,6 +93,7 @@ export function skySet(o: SkySetOptions) {
   const STRIDE = COUNT % 4 === 0 ? 4 : 1
   // how far upstream an occluder is still held (m), and the region's heights
   const UPSTREAM = 3000
+  const NB = o.normalBias ?? 0.25, ZB = o.depthBias ?? 0.25
   const DIRS = skyDirections(COUNT).map((d) => new Vector3(...d))
 
   const depth = new DepthTexture(SIZE, SIZE, UnsignedShortType, undefined, undefined, undefined, LinearFilter, LinearFilter, undefined, DepthFormat, COUNT)
@@ -100,44 +106,56 @@ export function skySet(o: SkySetOptions) {
   const table = Array.from({ length: COUNT * 5 }, () => new Vector4())
   const uTable = uniformArray(table, 'vec4')
   const uPhase = uniform(0, 'int'), uStride = uniform(STRIDE, 'int'), uCount = uniform(COUNT / STRIDE, 'int')
-  const uOn = uniform(0), uGive = uniform(o.giveBack ?? 1)
+  const uOn = uniform(0), uGive = uniform(o.giveBack ?? 1), uSpec = uniform(o.specular ?? 1), uSpecPow = uniform(o.specularPower ?? 8)
   const ALBEDO = o.albedo ?? 0.45
   const buffL = 0.2126 * o.buff[0] + 0.7152 * o.buff[1] + 0.0722 * o.buff[2]
   const uBuff = uniform(new Vector3(o.buff[0] / buffL, o.buff[1] / buffL, o.buff[2] / buffL))
 
-  function irradiance(builder: N): N {
+  /* the correction for one material: the diffuse the hidden sky took (irradiance), and the same for the environment's
+     mirror of the sky (radiance): a lobe round the reflected ray, its width by the surface's roughness and held to the
+     directions' spacing, reads the same maps, so a grazing look at the court's floor toward a wall no longer mirrors
+     the open sky the wall hides */
+  function lightFor(builder: N): void {
     // a material that lights its own rooms names where the field applies (1 open, 0 its rooms); none: everywhere
     const open: N = builder.material?.skyOpenNode ?? float(1)
-    return Fn(() => {
-      const n = normalWorld
-      const all = vec3(0).toVar(), seen = vec3(0).toVar()
-      Loop({ start: int(0), end: uCount, type: 'int', condition: '<' }, ({ i }: { i: N }) => {
-        const k = i.mul(uStride).add(uPhase)
-        const b = k.mul(5)
-        const r0 = uTable.element(b), r1 = uTable.element(b.add(1)), r2 = uTable.element(b.add(2)), dn = uTable.element(b.add(3)), w = uTable.element(b.add(4))
-        // the receiver moved out along its normal by the map's texel, so a face does not shade itself
-        const p = positionWorld.add(n.mul(dn.w))
-        const uv = vec2(dot(r0.xyz, p).add(r0.w), dot(r1.xyz, p).add(r1.w))
-        const z = dot(r2.xyz, p).add(r2.w)
-        const hit = texture(depth, uv).depth(k).compare(z)
-        // outside the map's box nothing is known: the open sky
-        const inside = step(0, uv.x).mul(step(uv.x, 1)).mul(step(0, uv.y)).mul(step(uv.y, 1)).mul(step(z, 1))
-        const vis = mix(float(1), hit, inside)
-        const wc = w.xyz.mul(max(dot(n, dn.xyz), 0))
-        all.addAssign(wc)
-        seen.addAssign(wc.mul(vis))
-      })
-      const lumAll = luminance(all)
-      const v = luminance(seen).div(max(lumAll, 1e-6))
-      const a = 2.0404 * ALBEDO - 0.3324, bb = -4.7951 * ALBEDO + 0.6417, c = 2.7552 * ALBEDO + 0.6903
-      const v2 = max(v, v.mul(a).add(bb).mul(v).add(c).mul(v)).min(1)
-      const back = vec3(uBuff).mul(v2.sub(v).mul(lumAll)).mul(uGive)
-      return seen.sub(all).add(back).mul(float(uStride)).mul(uOn).mul(open)
-    })()
+    const n = normalWorld
+    const all = vec3(0).toVar('skyAll'), seen = vec3(0).toVar('skySeen'), hid = vec3(0).toVar('skyHid'), lobeSum = float(0).toVar('skyLobe')
+    // the environment's own lookup (EnvironmentNode): the reflected ray bent toward the normal by roughness to the fourth
+    const a2 = roughness.mul(roughness).mul(roughness).mul(roughness).max(1e-3)
+    const rv = mix(reflect(positionWorld.sub(cameraPosition).normalize(), n), n, a2).normalize().toVar('skyR')
+    const pw = clamp(float(2).div(a2).sub(2), 1, uSpecPow).toVar('skyPow')
+    Loop({ start: int(0), end: uCount, type: 'int', condition: '<' }, ({ i }: { i: N }) => {
+      const k = i.mul(uStride).add(uPhase)
+      const b = k.mul(5)
+      const r0 = uTable.element(b), r1 = uTable.element(b.add(1)), r2 = uTable.element(b.add(2)), dn = uTable.element(b.add(3)), w = uTable.element(b.add(4))
+      // the receiver moved out along its normal by a share of the map's texel, so a face does not shade itself
+      const p = positionWorld.add(n.mul(dn.w))
+      const uv = vec2(dot(r0.xyz, p).add(r0.w), dot(r1.xyz, p).add(r1.w))
+      const z = dot(r2.xyz, p).add(r2.w)
+      const hit = texture(depth, uv).depth(k).compare(z)
+      // outside the map's box nothing is known: the open sky
+      const inside = step(0, uv.x).mul(step(uv.x, 1)).mul(step(0, uv.y)).mul(step(uv.y, 1)).mul(step(z, 1))
+      const vis = mix(float(1), hit, inside)
+      const wc = w.xyz.mul(max(dot(n, dn.xyz), 0))
+      all.addAssign(wc)
+      seen.addAssign(wc.mul(vis))
+      const lob = pow(max(dot(rv, dn.xyz), 0), pw)
+      lobeSum.addAssign(lob)
+      hid.addAssign(w.xyz.mul(lob).mul(float(1).sub(vis)))
+    })
+    const lumAll = luminance(all)
+    const v = luminance(seen).div(max(lumAll, 1e-6))
+    const a = 2.0404 * ALBEDO - 0.3324, bb = -4.7951 * ALBEDO + 0.6417, c = 2.7552 * ALBEDO + 0.6903
+    const v2 = max(v, v.mul(a).add(bb).mul(v).add(c).mul(v)).min(1)
+    const back = vec3(uBuff).mul(v2.sub(v).mul(lumAll)).mul(uGive)
+    const gate = uOn.mul(open)
+    builder.context.irradiance.addAssign(seen.sub(all).add(back).mul(float(uStride)).mul(gate))
+    // the lobe's mean of the hidden sky's radiance (each weight is a radiance times its solid angle)
+    builder.context.radiance.addAssign(hid.div(max(lobeSum, 1e-6).mul(solidAngle(COUNT))).mul(uSpec).mul(gate).negate())
   }
 
   const light = new SkySetLight(0xffffff, 1)
-  light.field = { irradiance }
+  light.field = { light: lightFor }
   light.name = 'sky-set'
 
   const depthMat = new NodeMaterial()
@@ -178,10 +196,8 @@ export function skySet(o: SkySetOptions) {
   function covered(cam: PerspectiveCamera): boolean {
     if (!region) return false
     const { x0, x1, z0, z1 } = region
-    const p = cam.position
-    // the camera inside the region's inner 60 percent, and every point the frame sees inside the region
-    const ix = (x1 - x0) * 0.2, iz = (z1 - z0) * 0.2
-    if (p.x < x0 + ix || p.x > x1 - ix || p.z < z0 + iz || p.z > z1 - iz) return false
+    // every point the frame sees (the camera's own place among them) inside the region: the camera stands at the
+    // region's near edge by construction, so a test on its inner part would refit at every framing
     return seenPoints(cam).every((q) => q.x >= x0 && q.x <= x1 && q.z >= z0 && q.z <= z1)
   }
 
@@ -229,11 +245,11 @@ export function skySet(o: SkySetOptions) {
       const m = lightCam.projectionMatrix.clone().multiply(view).elements
       const row = (r: number): [number, number, number, number] => [m[r]!, m[4 + r]!, m[8 + r]!, m[12 + r]!]
       const [x, y, z] = [row(0), row(1), row(2)]
-      const bias = Math.max(0.05, texel * 1.0) / (lightCam.far - lightCam.near)
+      const bias = Math.max(0.02, texel * ZB) / (lightCam.far - lightCam.near)
       table[k * 5]!.set(x[0] * 0.5, x[1] * 0.5, x[2] * 0.5, x[3] * 0.5 + 0.5)
       table[k * 5 + 1]!.set(-y[0] * 0.5, -y[1] * 0.5, -y[2] * 0.5, -y[3] * 0.5 + 0.5)
       table[k * 5 + 2]!.set(z[0], z[1], z[2], z[3] - bias)
-      table[k * 5 + 3]!.set(d.x, d.y, d.z, Math.max(0.05, texel * 1.0))
+      table[k * 5 + 3]!.set(d.x, d.y, d.z, Math.max(0.02, texel * NB))
     }
     renderer.setRenderTarget(was.target)
     ;(renderer as N).setRenderObjectFunction(was.fn)
@@ -294,7 +310,7 @@ export function skySet(o: SkySetOptions) {
       uOn.value = v ? 1 : 0
     },
     facts: () => ({
-      mode: 'set', directions: COUNT, mapSize: SIZE, perSubFrame: COUNT / STRIDE, giveBack: uGive.value, albedo: ALBEDO, on,
+      mode: 'set', directions: COUNT, mapSize: SIZE, perSubFrame: COUNT / STRIDE, giveBack: uGive.value, albedo: ALBEDO, on, normalBias: NB, depthBias: ZB, specular: uSpec.value, specularPower: uSpecPow.value,
       region: region && { x: [+region.x0.toFixed(1), +region.x1.toFixed(1)], z: [+region.z0.toFixed(1), +region.z1.toFixed(1)] },
       texel: texels.length ? { min: +Math.min(...texels).toFixed(3), max: +Math.max(...texels).toFixed(3) } : null,
       fits, fitMs, lastFitMs, memoryMiB: +((SIZE * SIZE * COUNT * 2) / 2 ** 20).toFixed(1),
