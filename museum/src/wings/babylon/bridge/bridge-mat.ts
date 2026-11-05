@@ -81,14 +81,24 @@ export function bridgeMaterial(F: BridgeFrame, bp: J, waterLevel: number, tones:
   /* ── 0 the piers' brick: 31 cm square, courses of bitumen; the land piers' faces and their paved tops ── */
   const onPier = step(-0.5, fa.z)
   const uB = mix(uFace, fa.x, onPier)
-  const b0 = bondOf(uB, P.y, bp.brick.size, bp.brick.course, 0.0065, fu, fy)
-  const firing = b0.cell.sub(0.5).mul(0.22).mul(seen(fw, 0.4))
+  // laid by hand: the bed joints wander a few millimetres, the head joints a centimetre or so along the course
+  const yW = P.y.add(mx_noise_float(vec3(uB.mul(1.3), P.y.mul(0.5), fa.z.mul(2.3))).mul(0.004))
+  const uW = uB.add(mx_noise_float(vec3(uB.mul(0.9), P.y.mul(11.6), fa.z.mul(1.7).add(5.5))).mul(0.012))
+  const b0 = bondOf(uW, yW, bp.brick.size, bp.brick.course, 0.0065, fu.mul(1.4), fy.mul(1.4))
+  const near = seen(fw, 0.4)
+  const firing = b0.cell.sub(0.5).mul(0.3).mul(near)
   const batch = mx_noise_float(vec3(uB.mul(0.05), P.y.mul(0.6), fa.z.mul(3.1).add(1.3)))
   const courses = mx_noise_float(vec3(uB.mul(0.02), P.y.mul(2.2), 4.4)).mul(0.06)
   let brick: N = mix(V(col.brick), V(PAL.redBrown as RGB), clamp(float(0.18).add(batch.mul(0.2)).add(firing), 0, 0.65)).mul(float(1).add(batch.mul(0.05)).add(courses))
-  // bitumen in the joints, a little earth strewn on it before the next course went on
-  const jointC = mix(asphalt.mul(1.6), dust.mul(0.5), 0.25)
-  brick = mix(brick, jointC, b0.joint.mul(0.85))
+  // each brick its own firing: a tone of its own, a few burnt dark and a few pale ones
+  const own = hash2(b0.cell.mul(91.7), float(3.1)), odd = hash2(b0.cell.mul(53.3), float(7.7))
+  const fired = float(1).add(own.sub(0.5).mul(0.34)).mul(mix(float(1), float(0.72), step(odd, 0.06))).mul(mix(float(1), float(1.18), step(0.94, odd)))
+  brick = brick.mul(mix(float(1), fired, near))
+  // bitumen in the joints with earth strewn on it before the next course went on, weathered grey; some joints full,
+  // some worn back
+  const jointC = mix(asphalt.mul(1.6), dust.mul(0.6), 0.42)
+  const fill = float(0.55).add(smoothstep(-0.4, 0.6, mx_noise_float(P.mul(2.3))).mul(0.3))
+  brick = mix(brick, jointC, b0.joint.mul(fill))
   brick = waterMarks(brick)
   // the land piers' tops: brick laid flat in bitumen under a film of dust, the walked middle a little cleaner
   const kT = floor(tA.div(bp.brick.size)), tB = cA.add(fract(kT.mul(0.5)).mul(bp.brick.size))
@@ -108,10 +118,19 @@ export function bridgeMaterial(F: BridgeFrame, bp: J, waterLevel: number, tones:
     lines(fa.x, slab[0], 0.008, fu), side)
   const sCell = mix(hash2(floor(fa.x.div(slab[0])), floor(fa.y.div(slab[1])).add(fa.z.mul(7))), hash2(floor(fa.x.div(slab[0])), fa.z.add(3)), side)
   const stoneN = mx_noise_float(P.mul(1.7)).mul(0.05).add(mx_noise_float(P.mul(0.3)).mul(0.05))
-  let stone: N = V(col.stone).mul(float(1).add(sCell.sub(0.5).mul(0.26).mul(seen(fw, 0.6))).add(stoneN))
+  const sSeen = seen(fw, 0.6)
+  let stone: N = V(col.stone).mul(float(1).add(sCell.sub(0.5).mul(0.5).mul(sSeen)).add(stoneN))
   // weathered: darker mottling from rain, soot and bitumen dripped where the deck's timbers lay
   const mottle = smoothstep(0.05, 0.45, mx_noise_float(P.mul(0.9)).add(mx_noise_float(P.mul(3.1)).mul(0.35)))
   stone = mix(stone, stone.mul(vec3(0.72, 0.68, 0.64)), mottle.mul(0.5))
+  // worn: each slab's edges and corners rounded and chipped darker next to its joints, its face pitted
+  const nearJoint = clamp(lines(fa.x, slab[0], 0.08, fFlat.add(0.05)).add(lines(fa.y.add(fract(floor(fa.x.div(slab[0])).mul(0.5)).mul(slab[1])), slab[1], 0.08, fFlat.add(0.05)).mul(float(1).sub(side))), 0, 1)
+  const chips = smoothstep(0.1, 0.55, mx_noise_float(P.mul(4.3)))
+  stone = mix(stone, stone.mul(0.62), nearJoint.mul(chips).mul(sSeen))
+  // stains where water stood and ran: broad darker blotches, a few paler worn patches
+  const stain = mx_noise_float(P.mul(0.75).add(vec3(3.3, 0, 1.1)))
+  stone = stone.mul(float(1).sub(smoothstep(0.1, 0.5, stain).mul(0.2)).add(smoothstep(0.35, 0.7, stain.negate()).mul(0.1)))
+  stone = stone.mul(float(1).sub(smoothstep(0.35, 0.75, mx_noise_float(P.mul(9.7))).mul(0.1).mul(seen(fw, 0.1))))
   stone = mix(stone, stone.mul(0.5), sj.mul(0.75))
   stone = mix(stone, mix(stone, dust.mul(1.1), 0.3), up)
 
@@ -125,7 +144,7 @@ export function bridgeMaterial(F: BridgeFrame, bp: J, waterLevel: number, tones:
   const bw: number = bp.deck.board
   const bIdx = floor(fa.x.div(bw))
   const bJoint = lines(fa.x, bw, 0.007, max(fFlat, fu))
-  const bTone = hash2(bIdx, float(11)).sub(0.5).mul(0.22).add(hash2(bIdx, float(23)).sub(0.5).mul(0.08))
+  const bTone = hash2(bIdx, float(11)).sub(0.5).mul(0.32).add(hash2(bIdx, float(23)).sub(0.5).mul(0.1))
   const bGrain = mx_noise_float(vec3(fa.x.mul(6), 0.7, fa.y.mul(0.5))).mul(0.07).mul(seen(fFlat, 0.03))
   let board: N = V(col.boards).mul(float(1).add(bTone).add(bGrain))
   // planks weathered silver at their ends and edges, darker where they meet the beams below

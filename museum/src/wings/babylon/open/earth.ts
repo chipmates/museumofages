@@ -532,6 +532,15 @@ export interface WaterLook {
 const NIGHT = {
   swells: 1.0,
   spread: 0.008,
+  /** the spread each unit of slope the footprint took off adds */
+  lostSpread: 0.12,
+  /** the band's glints: cells a metre or so apart (k per metre across the current, stretched along it), a glint's
+      size in the cell, its mean share once under a few pixels, its gain, the current's drift (m/s), the fade */
+  glints: { k: 0.8, stretch: 3, angle: 0.15, size: 0.3, share: 0.2, gain: 1.15, drift: 0.6, fade: [0.25, 0.8] as [number, number] },
+  /** the breeze's share while the sun is still up (the bridge's sunset): the same ripples, a little calmer */
+  day: 1.0,
+  /** a ripple fades between these footprints times its wavelength over 2 pi: kept until its crests are a few pixels apart */
+  fade: [0.3, 1.0] as [number, number],
   /** the body's light at night: a blue-white of luminance 1 and its strength (as the stone's, crescent-plan dusk.light) */
   bodyTint: [0.9, 1.0, 1.1] as [number, number, number],
   bodyGain: 2.0,
@@ -539,6 +548,7 @@ const NIGHT = {
     { k: 0.8, speed: 0.7, amp: 0.07, stretch: 3.5, angle: 0.15 },
     { k: 2.4, speed: 1.4, amp: 0.08, stretch: 2.8, angle: -0.3 },
     { k: 6.5, speed: 2.4, amp: 0.1, stretch: 2.2, angle: 0.4 },
+    { k: 13, speed: 3.4, amp: 0.16, stretch: 1.8, angle: -0.2 },
   ],
 }
 /** a device pixel's angle for the ripples' footprint (radians; the phone's, the coarser of the two framings) */
@@ -572,13 +582,18 @@ export function waterMaterial(A: AirUniforms, sky: (d: N) => N, uTime: N, mirror
   const dist = p.distance(cameraPosition)
   const grazing = max(abs(p.y.sub(cameraPosition.y)).div(max(dist, 1e-3)), 0.03)
   const foot = dist.mul(PIX_RAD).div(grazing)
+  const breeze = mix(float(NIGHT.day), float(1), night)
+  // the slope the footprint took off the breeze's ripples: it widens the mirrored image's spread (below)
+  let lost: N = float(0)
   const ripple = (k: number, s: number, amp: number, stretch: number, ang: number): N => {
     const ca = Math.cos(ang), sa = Math.sin(ang), e = 0.35
     const u = p.x.mul(ca).add(p.z.mul(sa)), v = p.z.mul(ca).sub(p.x.mul(sa))
     const q = vec3(u.mul(k), t.mul(s), v.mul(k / stretch))
     const h0 = mx_noise_float(q), hu = mx_noise_float(q.add(vec3(e, 0, 0))), hv = mx_noise_float(q.add(vec3(0, 0, e)))
     const su = hu.sub(h0).mul(amp / e), sv = hv.sub(h0).mul(amp / e / stretch)
-    const keep = float(1).sub(smoothstep(0.12 / k, 0.45 / k, foot)).mul(night)
+    const seen = float(1).sub(smoothstep(NIGHT.fade[0] / k, NIGHT.fade[1] / k, foot))
+    lost = lost.add(float(1).sub(seen).mul(amp))
+    const keep = seen.mul(breeze)
     return vec2(su.mul(ca).sub(sv.mul(sa)), su.mul(sa).add(sv.mul(ca))).mul(keep)
   }
   // built only for a river seen from near (a bridge's look), the one water that is ever seen after sunset
@@ -617,13 +632,22 @@ export function waterMaterial(A: AirUniforms, sky: (d: N) => N, uTime: N, mirror
   }
   let refl: N = sky(normalize(rUp)).mul(vec3(0.92, 0.96, 1.0))
   if (look.reflect && look.wakes) {
-    // at night the banks' mirrored edge is spread over the ripples finer than a pixel: the reflected ray taken a little
-    // lower and higher as well and the three averaged, so the far bank's image breaks into streaks, not hard patches
-    const sp = night.mul(NIGHT.spread)
+    // at night the banks' mirrored edge is spread over the ripples finer than a pixel (the more, the more of them the
+    // footprint took off): the reflected ray taken a little lower and higher as well and the three averaged, so the
+    // band of sky over the far bank shows as a soft rim, never as a drawn line round each dark patch
+    const sp = night.mul(lost.mul(NIGHT.lostSpread).add(NIGHT.spread))
     const lo = normalize(rUp.sub(vec3(0, sp, 0))), hi = normalize(rUp.add(vec3(0, sp, 0)))
     const r0 = look.reflect(p, normalize(rUp), refl)
     const skyC = refl
-    refl = mix(r0, r0.mul(0.5).add(look.reflect(p, lo, skyC).add(look.reflect(p, hi, skyC)).mul(0.25)), night)
+    const soft = r0.mul(0.5).add(look.reflect(p, lo, skyC).add(look.reflect(p, hi, skyC)).mul(0.25))
+    // and the facets that catch the band whole: short glints along the current, where the sharp image shows; under a
+    // few pixels they fade to their mean share
+    const G = NIGHT.glints, ga = Math.cos(G.angle), gb = Math.sin(G.angle)
+    const gq = vec2(p.x.mul(ga).add(p.z.mul(gb)).mul(G.k), p.z.mul(ga).sub(p.x.mul(gb)).mul(G.k / G.stretch).add(t.mul(G.drift)))
+    const cell = mx_worley_noise_vec2(gq).x
+    const gSeen = float(1).sub(smoothstep(G.fade[0] / G.k, G.fade[1] / G.k, foot))
+    const glint = mix(float(G.share), float(1).sub(smoothstep(G.size * 0.6, G.size, cell)), gSeen)
+    refl = mix(r0, mix(soft, r0.mul(G.gain), glint), night)
   } else if (look.reflect) refl = look.reflect(p, normalize(rUp), refl)
   if (mirror) {
     // the mirrored scene, its lookup bent by the ripples' slope; distance thins the bend so far walls stay whole
