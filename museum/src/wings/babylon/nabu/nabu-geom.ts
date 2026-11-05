@@ -546,7 +546,7 @@ export function buildNabu(built: Built, mapPlan: J, np: J): Nabu {
   const altarG = join(F.altar.map((a) => slab([[a.x0, a.z0], [a.x1, a.z0], [a.x1, a.z1], [a.x0, a.z1]], F.pave - 0.03, a.top, SURF.altar)))
   // round each court a coping course standing proud of the wall's face, and stepped merlons on it (Guessed, after the
   // temples' battlements, K1914 ch. IX); the north and south runs take the corners, the east and west runs sit 5 mm
-  // lower where they overlap them
+  // lower where they overlap them and keep the runs' own gap from each corner merlon
   const CP = np.coping, cope: Boxes = [], cm: Boxes = []
   for (const c of [F.court, F.small]) {
     const y0 = F.top - CP.h, y1 = F.top + CP.lift, back = CP.back, out = CP.proj
@@ -555,8 +555,9 @@ export function buildNabu(built: Built, mapPlan: J, np: J): Nabu {
     const ym = y1 - 0.005, pitch: number = CP.pitch
     merlonRun(cm, 'z', c.z0, -1, c.x0 - back + 0.05, c.x1 + back - 0.05, ym, M, pitch)
     merlonRun(cm, 'z', c.z1, 1, c.x0 - back + 0.05, c.x1 + back - 0.05, ym, M, pitch)
-    merlonRun(cm, 'x', c.x0, -1, c.z0 + 0.1, c.z1 - 0.1, ym, M, pitch)
-    merlonRun(cm, 'x', c.x1, 1, c.z0 + 0.1, c.z1 - 0.1, ym, M, pitch)
+    const endGap = pitch - M.low[0] - 0.05
+    merlonRun(cm, 'x', c.x0, -1, c.z0 + endGap - 0.05, c.z1 - endGap + 0.05, ym, M, pitch)
+    merlonRun(cm, 'x', c.x1, 1, c.z0 + endGap - 0.05, c.z1 - endGap + 0.05, ym, M, pitch)
   }
   const templeAll = join([temple, boxesGeometry(mt, SURF.merlon), boxesGeometry(cope, SURF.coping), boxesGeometry(cm, SURF.merlon), pedestalG])
 
@@ -635,6 +636,8 @@ export function buildNabu(built: Built, mapPlan: J, np: J): Nabu {
     towers: F.towers.map(size),
     pedestal: { size: size(pd), top: +(pd.top - F.floor).toFixed(2), niche: +(F.niche.sill - F.floor).toFixed(2) },
     altar: F.altar.map((a) => ({ size: size(a), top: +(a.top - F.floor).toFixed(2) })),
+    // the courts' merlons' broad tiers in plan: [x0, x1, z0, z1]
+    courtMerlons: cm.filter((_, i) => i % 2 === 0).map((m) => [m.c[0]! - m.s[0]! / 2, m.c[0]! + m.s[0]! / 2, m.c[2]! - m.s[2]! / 2, m.c[2]! + m.s[2]! / 2].map((v) => +v.toFixed(3))),
     triangles: bodies.reduce((t, b) => t + b.geometry.getAttribute('position').count / 3, 0),
     cells: g.nx * g.nz,
   }
