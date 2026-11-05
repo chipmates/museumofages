@@ -2,26 +2,10 @@
  "about": "Stop 15 in code, the city from the top: what the map page adds for the view from the tower's platform. The plain round the walls is the arrival's (open/plain.ts, open/green.ts), built from the map's own plan so its banks follow the map's river; every canal, field, grove and plant place is ours (GREEN rows); the kinds and the mass are the record's.",
  "plain": {
   "reach": 3600,
-  "src": "the arrival's palm reach from the city's centre (open.ts palmReach): beyond it the groves are the plain's painted grove floors only, which the haze carries from the top as it does from the flight"
- },
- "courts": {
-  "every": 14,
-  "reach": 1600,
-  "mid": 450,
-  "minCourt": 3.5,
-  "eastOf": 445570,
-  "eye": [
-   445623.13,
-   3600047.5
+  "src": "the arrival's palm reach from the city's centre (open.ts palmReach): beyond it the groves are the plain's painted grove floors only, which the haze carries from the top as it does from the flight",
+  "inside": [
+   "city"
   ],
-  "keepOut": [
-   [
-    445500,
-    3599860,
-    446020,
-    3600270
-   ]
-  ],
-  "src": "single crowns over house walls (bab.green.court.house, Guessed): one court in fourteen, ours; the east bank only, so the bridge's view of the west city keeps its look; none in the precinct (its bounding box, keepOut, UTM E0 N0 E1 N1); beyond 1.6 km a crown is under 3 px from the top"
+  "insideSrc": "the plain's rows that stand inside the walls, left off the map page in this round (the palms by the canal, bab.green.palm.city): seen with their shadows from the street stops"
  }
 }

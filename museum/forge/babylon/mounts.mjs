@@ -101,11 +101,10 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
   const { plantShape, plantMatrix } = await import(join(BRIDGE, 'bridge-green.ts'))
   const bridge = buildBridge(esagila.built, plan, json(join(BRIDGE, 'bridge-plan.json')))
   const built = bridge.built
-  // stop 15's plants (the plain round the walls and the courts' crowns), as map.ts mounts them at the chain's end
+  // stop 15's plants (the plain round the walls), as map.ts mounts them at the chain's end
   const { topPlants } = await import(join(TOP, 'top-plants.ts'))
   const { buildPlain } = await import(join(OPEN, 'plain.ts'))
-  const { rebuildHouses: rebuild } = await import(join(OPEN, 'houses.ts'))
-  const top = topPlants(built, plan, json(join(TOP, 'top-plan.json')), { buildPlain, rebuildHouses: rebuild })
+  const top = topPlants(plan, json(join(TOP, 'top-plan.json')), { buildPlain })
   // the switch's third state at the end of the chain, as map.ts mounts it
   const { buildBruegel } = await import(join(APP, 'src/wings/babylon/bruegel/bruegel-geom.ts'))
   const bruegel = towerState === 'bruegel' ? buildBruegel(towerAxis, built.ground, json(join(APP, 'src/wings/babylon/bruegel/bruegel-plan.json'))) : null
@@ -190,15 +189,15 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
     facesFrom(faces, shapes.get(key).clone().applyMatrix4(plantMatrix(q)), null, () => `map:${q.id}`)
   }
   // stop 15's palms whole where the foot lies within the reach (at most 1.2 km: the plain holds some 21,000, and past that a
-  // far palm is a few pixels of a grove's mass), each at its preset (open/green.ts palmMesh), and each row's first palm
-  // wherever it stands, so every row is named; the bank trees grow from a canvas atlas on the page only, none in the city
+  // far palm is a few pixels of a grove's mass), each at its preset (open/green.ts palmMesh), and on a whole-page mount
+  // (the switch's) each row's first palm wherever it stands, so every row is named; the bank trees grow from a canvas atlas on the page only, none in the city
   const { PALM_FAR } = await import(join(GATE, 'gate-life.ts'))
   const presets = { far: palmGeometry(12, PALM_FAR), mid: palmGeometry(12, PALM_MID) }
   const nthTop = new Map()
   for (const q of top.all) {
     const i = nthTop.get(q.row) ?? 0
     nthTop.set(q.row, i + 1)
-    if (['reed', 'tamarisk', 'poplar', 'willow'].includes(q.row) || q.detail === 'near' || (i > 0 && Math.hypot(q.x - ex, q.z - ez) > Math.min(reach, 1200))) continue
+    if (['reed', 'tamarisk', 'poplar', 'willow'].includes(q.row) || q.detail === 'near' || ((i > 0 || reach <= 1200) && Math.hypot(q.x - ex, q.z - ez) > Math.min(reach, 1200))) continue
     const m = new THREE.Matrix4().compose(new THREE.Vector3(q.x, built.ground(q.x, q.z), q.z), new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(Math.cos(q.yaw), 0, Math.sin(q.yaw)).normalize(), q.lean), new THREE.Vector3(q.s, q.s, q.s))
     facesFrom(faces, presets[q.detail ?? 'far'].clone().applyMatrix4(m), null, () => `map:top-palm-${q.row}-${i}`)
   }
@@ -230,7 +229,6 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
       { prefix: 'map:bridge-willow-', why: "the bank willows' trunks and limbs, 0.17 to 0.44 m at 220 to 370 m (0.26 to 0.95 px)" },
       { prefix: 'map:bridge-tamarisk-', why: "the bank tamarisks' stems, 0.19 to 0.32 m at 225 to 365 m (0.28 to 0.99 px)" },
       { prefix: 'map:bridge-deck-boards', why: "the deck's 8 cm board edges at 379 m from stop 14's phone frame (0.24 to 0.26 px)" },
-      { prefix: 'map:top-palm-', why: "the mid preset's frond tips over a house court, 0.10 to 0.17 m at 344 m from stop 15's hold (0.56 to 0.67 px, measured 5 Nov), as the garden's and the bridge's palms; the far preset is thinner there (0.08 px)" },
     ],
     // a curtain hangs on a terrace's face from its lip on the terrace's top: held by the face, which the plan-view
     // support rule cannot see (as the gate's facing skins)

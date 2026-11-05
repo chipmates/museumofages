@@ -2,13 +2,10 @@
    field strips, the river's grove belt and the outer city's garden plots painted into the ground's recipe; the groves'
    date palms, the reed and the bank trees instanced on it. Built from the map's own plan, so the banks follow the map's
    river and nothing stands inside the inner city but the few palms by its canal (open/plain.ts keeps the rest out).
-   Inside the walls, a single palm crown over a few house courts on the east bank near the tower (bab.green.court.house),
-   placed in the court the arrival's house type gives each lot. Kinds and mass are the record's, every line and place
-   ours (bab.green.palm.plain, .field.plain, .water.channels, .outercity, .palm.city, .court.house). Scene frame:
-   x = E - E0, z = N0 - N. */
+   Kinds and mass are the record's, every line and place ours (bab.green.palm.plain, .field.plain, .water.channels,
+   .outercity, .palm.city). Scene frame: x = E - E0, z = N0 - N. */
 import type { InstancedMesh, Mesh, MeshStandardNodeMaterial } from 'three/webgpu'
 import { buildPlain } from '../open/plain'
-import { rebuildHouses } from '../open/houses'
 import { topPlants } from './top-plants'
 import { paintPlain, palmMesh } from '../open/green'
 import { groundMaterial, palmMaterial } from '../open/earth'
@@ -28,7 +25,7 @@ export interface TopMount {
 }
 
 export function mountTop(built: Built, plan: J, tp: J, tones: ClassTones): TopMount {
-  const { plain, all } = topPlants(built, plan, tp, { buildPlain, rebuildHouses })
+  const { plain, all } = topPlants(plan, tp, { buildPlain })
   const look = paintPlain(plain)
   const palms = palmMesh(all, built.ground, palmMaterial(tones))
   const rows: Record<string, number> = {}
