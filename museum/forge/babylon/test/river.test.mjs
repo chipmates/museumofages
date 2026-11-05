@@ -96,6 +96,20 @@ test('today\'s channel runs west of the 570 quay and of the bridge\'s west end, 
   }
 })
 
+test('the road in the old bed passes beside the piers, never over one', () => {
+  for (const [framing, sizes] of Object.entries(SIZES)) for (const [w, h] of sizes) {
+    const sc = at(2, framing, w, h)
+    const boxes = sc.facts.piers.map((p) => p.box)
+    // every road path sampled along its segments, a point a pixel
+    const pts = sc.prims.filter((p) => p.id.startsWith('road-')).flatMap((p) => {
+      const v = [...p.d.matchAll(/(-?[\d.]+) (-?[\d.]+)/g)].map((m) => [Number(m[1]), Number(m[2])])
+      return v.slice(1).flatMap((q, i) => { const a = v[i], n = Math.max(1, Math.ceil(Math.hypot(q[0] - a[0], q[1] - a[1]))); return Array.from({ length: n }, (_, k) => [a[0] + ((q[0] - a[0]) * k) / n, a[1] + ((q[1] - a[1]) * k) / n]) })
+    })
+    assert.ok(pts.length > 4, `${framing} ${w}x${h}: no road`)
+    for (const [x, y] of pts) for (const b of boxes) assert.ok(!(x > b.l && x < b.r && y > b.t && y < b.b), `${framing} ${w}x${h}: the road at ${x}, ${y} over a pier`)
+  }
+})
+
 test('the states jump, never morph: at every point of the slider every part stands whole', () => {
   for (const t of [0.25, 0.49, 0.51, 1.5, 2.5, 2.75]) {
     const sc = at(t, 'wide', 1600, 648)

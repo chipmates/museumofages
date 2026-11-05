@@ -80,6 +80,32 @@ function roomBesideChannel(s: number, n: number, west0: number, tall: number): P
   return best
 }
 
+/** the parts of runs outside a box (Liang-Barsky per segment): a line that meets a drawn part stops at it */
+function outside(runs: readonly P2[][], b: Box): P2[][] {
+  const out: P2[][] = []
+  for (const run of runs) {
+    let cur: P2[] = []
+    const flush = (): void => { if (cur.length >= 2) out.push(cur); cur = [] }
+    for (let i = 0; i + 1 < run.length; i++) {
+      const a = run[i]!, c = run[i + 1]!
+      const dx = c[0] - a[0], dy = c[1] - a[1]
+      let t0 = 0, t1 = 1, hit = true
+      for (const [pp, q] of [[-dx, a[0] - b.l], [dx, b.r - a[0]], [-dy, a[1] - b.t], [dy, b.b - a[1]]] as const) {
+        if (pp === 0) { if (q < 0) { hit = false; break } continue }
+        const r = q / pp
+        if (pp < 0) { if (r > t1) { hit = false; break } if (r > t0) t0 = r } else { if (r < t0) { hit = false; break } if (r < t1) t1 = r }
+      }
+      if (!cur.length) cur.push(a)
+      if (!hit) { cur.push(c); continue }
+      if (t0 > 0) cur.push([a[0] + dx * t0, a[1] + dy * t0])
+      flush()
+      if (t1 < 1) cur.push([a[0] + dx * t1, a[1] + dy * t1], c)
+    }
+    flush()
+  }
+  return out
+}
+
 const f = (n: number): string => (Math.round(n * 10) / 10).toString()
 const pathOf = (pts: readonly P2[], close = false): string => `M${pts.map((p) => `${f(p[0])} ${f(p[1])}`).join('L')}${close ? 'Z' : ''}`
 const boxOf = (pts: readonly P2[]): Box => ({ l: Math.min(...pts.map((p) => p[0])), t: Math.min(...pts.map((p) => p[1])), r: Math.max(...pts.map((p) => p[0])), b: Math.max(...pts.map((p) => p[1])) })
@@ -155,7 +181,10 @@ export function riverScene(t: number, framing: PaperFraming, w: number, h: numbe
       for (const side of ['west', 'east'] as const) for (const run of clipLine(TODAY[side].map(P), map)) wallsOf(run)
       const west = RIVER_570.poly.slice(RIVER_570.westFrom).filter((p) => p[1] >= RIVER_570.westBank.from && p[1] <= RIVER_570.westBank.to)
       line('bed-570', 'guessed', west, 'paper-open river-bed')
-      line('road', 'known', TODAY.road, 'river-road')
+      // the road passes beside the bridge (P2021 Fig. 1.8): from a picture of 15 m a pixel it may not be drawn over a pier
+      const keep = Object.values(pierOutlines()).map((o) => boxOf(o.map(P))).map((b) => ({ l: b.l - 3, t: b.t - 3, r: b.r + 3, b: b.b + 3 }))
+      const road = keep.reduce((runs, b) => outside(runs, b), clipLine(TODAY.road.map(P), map) as P2[][])
+      for (const [j, run] of road.entries()) { prims.push({ type: 'path', id: `road-${j}`, mark: 'known', d: pathOf(run), cls: 'river-road' }); wallsOf(run) }
       bridgeToday = crossAxis(TODAY.east)
     }
     /* THE QUAY of about 570 BC: the wall's band in a fine plain outline, in every map state */
