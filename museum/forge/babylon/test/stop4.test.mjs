@@ -179,6 +179,25 @@ test('the first step of feature 3 shows the stop\'s colour whole; the paper\'s d
   }
 })
 
+test('feature 3 opens on the held frame itself: at the first step the colour stands in the window\'s box, cut by the plate', () => {
+  const stages = { wide: [[1600, 648, 1600, 900], [1440, 600, 1440, 900]], upright: [[390, 605, 390, 844], [390, 425, 390, 664], [360, 391, 360, 640], [360, 214, 360, 640]] }
+  const focus = { wide: [0.56, 0.36], upright: [0.5, 0.32] }, zoom = { wide: 1.4, upright: 1 }
+  for (const [framing, list] of Object.entries(stages)) for (const [w, h, W, H] of list) {
+    const stage = { l: 0, t: 0, r: W, b: H }
+    const at = (t) => gwScene.gardenWordsScene(t, framing, w, h, { inset: sceneKit.insetFor(framing, 0), focus: focus[framing], zoom: zoom[framing], stage })
+    const c0 = at(0).prims.find((p) => p.id === 'colour')
+    assert.deepEqual([c0.x, c0.y, c0.w, c0.h], [0, 0, W, H], `${framing} ${w}x${h}: the colour is not the held frame at the first step`)
+    assert.deepEqual(c0.clip, { l: 0, t: 0, r: w, b: h })
+    for (const t of [0.25, 0.5, 1, 2, 3]) {
+      const { colour, frame } = at(t).facts
+      // the frame keeps the window's shape and always covers its panel: never a gap, never stretched
+      assert.ok(Math.abs((frame.r - frame.l) / (frame.b - frame.t) - W / H) < 1e-6, `${framing} t ${t}: the frame's shape`)
+      assert.ok(frame.l <= colour.l + 1e-6 && frame.t <= colour.t + 1e-6 && frame.r >= colour.r - 1e-6 && frame.b >= colour.b - 1e-6, `${framing} ${w}x${h} t ${t}: the frame leaves its panel bare`)
+      assert.ok(frame.r - frame.l <= W * zoom[framing] + 1e-6, `${framing} t ${t}: enlarged past its zoom`)
+    }
+  }
+})
+
 test('the words: DRAFT lines at the line\'s length, no sentence over 14 words, no dash, no semicolon', () => {
   const sets = LANGS.flatMap((lang) => [['oil', lang, oilWords.OIL_WORDS[lang]], ['words', lang, gwWords.GARDEN_WORDS[lang]]])
   for (const [kind, lang, W] of sets) {
@@ -197,6 +216,12 @@ test('the words: DRAFT lines at the line\'s length, no sentence over 14 words, n
   // a number and its unit never part at a line's end
   for (const lang of LANGS) for (const line of Object.values(oilWords.OIL_WORDS[lang].band)) assert.doesNotMatch(line, /\d (cm|sila|Sila|BC|v\.)/)
   for (const lang of LANGS) for (const line of Object.values(gwWords.GARDEN_WORDS[lang].band)) assert.doesNotMatch(line, /\d (BC|v\.)/)
+  // each garden names its text and time (RULES-W2A F3.1): the letter of 597 to 587 or 586 BC on its line
+  assert.match(gwWords.GARDEN_WORDS.en.band.jeremiah, /597 to 587 or 586/)
+  assert.match(gwWords.GARDEN_WORDS.de.band.jeremiah, /597 bis 587 oder 586/)
+  assert.match(gwWords.GARDEN_WORDS.en.band.ea, /680 to 669/)
+  // the lines are the lists', never this tablet's own; never that he lived in the building
+  for (const lang of LANGS) for (const s of Object.values(oilWords.OIL_WORDS[lang].list).flat()) assert.doesNotMatch(s, /on the tablet|auf der Tafel|lived there|dort lebte/, s)
   // the doors are named by what they show, never "Learn more"
   for (const lang of LANGS) for (const d of [oilWords.OIL_WORDS[lang].ui.door, gwWords.GARDEN_WORDS[lang].ui.door]) assert.doesNotMatch(d, /learn more|mehr erfahren/i)
 })
@@ -253,13 +278,13 @@ test('read-back: no label on anything and none left off, at every step shot', R,
   assert.ok(steps > 0, 'no read-back in the folder')
 })
 
-test('read-back: the band in two rows on the desktop, at most four on the phone (feature 7\'s own); the mark never gold', R, () => {
+test('read-back: the band in two rows on the desktop, at most three on every phone (the line\'s length); the mark never gold', R, () => {
   let seen = 0
   const grey = (c) => { const v = (c.match(/\d+/g) ?? []).slice(0, 3).map(Number); return v.length === 3 && Math.max(...v) - Math.min(...v) <= 40 }
   for (const { f, r } of readbacks()) for (const [k, c] of Object.entries(r.chrome ?? {})) {
     seen++
     if (c.form === 'desk') assert.ok(c.line.rows <= 2 && c.line.w <= 860, `${f} ${k}: ${c.line.rows} rows`)
-    else assert.ok(c.line.rows <= 4, `${f} ${k}: ${c.line.rows} rows`)
+    else assert.ok(c.line.rows <= 3, `${f} ${k}: ${c.line.rows} rows`)
     assert.ok(grey(c.mark.colour), `${f} ${k}: the certainty mark is ${c.mark.colour}`)
     if (c.mark.phoneColour) assert.ok(grey(c.mark.phoneColour), `${f} ${k}: the certainty mark is ${c.mark.phoneColour}`)
   }

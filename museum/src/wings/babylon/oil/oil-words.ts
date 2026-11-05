@@ -45,15 +45,15 @@ export const BAND_KEYS: Record<StepId, { carries: string; pointer: string }> = {
   },
   king: {
     carries: 'the list names 10 sila for Ya\'u-kin, king of Judah; the palace\'s scribes wrote it down (never "the king fed"); one square a sila, ours',
-    pointer: 'TARGETS-W2A F2 "The numbers" 1, "What its words must carry"; RULES-W2A F2.2, F2.5; CS5 J2-03, J2-04',
+    pointer: 'TARGETS-W2A F2 "The numbers" 1, "What its words must carry"; RULES-W2A F2.2, F2.5; CS5 J2-03, J2-04; D-058: told from the Judeans\' side too, never the king\'s voice',
   },
   sons: {
     carries: '2½ sila for his five sons together, one total, a quarter of his share ("five sons" restored in list 2, whole in list 3)',
-    pointer: 'TARGETS-W2A F2 "The numbers" 2 and "As things"; HF 3.2 new catch; STATUS-W2A disagreement 14',
+    pointer: 'TARGETS-W2A F2 "The numbers" 2 and "As things"; HF 3.2 new catch; STATUS-W2A disagreement 14; D-058',
   },
   men: {
     carries: '4 sila for eight men from Judah; the lists hold captives and craftsmen at once, not all captive',
-    pointer: 'TARGETS-W2A F2 "The numbers" 3, "What it may not claim" 6; CS5 J2-04 TRANSFER',
+    pointer: 'TARGETS-W2A F2 "The numbers" 3, "What it may not claim" 6; CS5 J2-04 TRANSFER; D-058',
   },
   carpenter: {
     carries: '½ sila each for carpenters from Arvad; twenty such halves make the king\'s 10 sila (our arithmetic on the text\'s numbers)',
@@ -92,14 +92,14 @@ export const OIL_WORDS: Record<OilLang, OilWords> = {
       ],
       king: [
         `${DRAFT} 10${NB}sila for Ya'u-kin, king of Judah: ten squares, one sila each. The square is ours, never a jar.`,
-        `${DRAFT} The captive king kept his title in the palace's own accounts. How freely he lived there is read two ways.`,
+        `${DRAFT} The captive king kept his title in the palace's own accounts. How he was held is read two ways: confined, or with some freedom.`,
       ],
       sons: [`${DRAFT} 2½${NB}sila for his five sons together: the list gives one total, never a share each.`],
       men: [`${DRAFT} 4${NB}sila for eight men from Judah.`],
       carpenter: [`${DRAFT} ½${NB}sila for a carpenter from Arvad. 20 such halves stand in a row as long as the king's 10${NB}sila.`],
       lands: [
         `${DRAFT} A dot for each land the lists name: Judah, Tyre, Arvad, Byblos, Lydia and Egypt. And Babylon, where they were written.`,
-        `${DRAFT} Lydia is an open dashed ring: the name is restored on the tablet.`,
+        `${DRAFT} Lydia is an open dashed ring: the name is partly restored in the list.`,
         `${DRAFT} The lists say where people came from, never a route or a date. Coasts and rivers are today's (Natural Earth).`,
       ],
     },
@@ -120,8 +120,8 @@ export const OIL_WORDS: Record<OilLang, OilWords> = {
       king: `${DRAFT} · Palastschreiber notieren 10${NB}Sila Öl für den König von Juda. Ein Quadrat je Sila.`,
       sons: `${DRAFT} · 2½${NB}Sila für seine fünf Söhne zusammen, ein Viertel. Die Liste teilt es nicht.`,
       men: `${DRAFT} · 4${NB}Sila für acht Männer aus Juda. Die Listen nennen Gefangene und Handwerker.`,
-      carpenter: `${DRAFT} · ½${NB}Sila für einen Zimmermann aus Arwad. 20 Hälften füllen die 10${NB}Sila des Königs.`,
-      lands: `${DRAFT} · Die Listen nennen Menschen aus diesen Ländern. Lydien ist ergänzt. Küsten von heute.`,
+      carpenter: `${DRAFT} · ½${NB}Sila je Zimmermann aus Arwad. 20 Hälften füllen die 10${NB}Sila des Königs.`,
+      lands: `${DRAFT} · Die Listen nennen Menschen dieser Länder. Lydien ergänzt. Küsten von heute.`,
     },
     list: {
       tablet: [
@@ -130,14 +130,14 @@ export const OIL_WORDS: Record<OilLang, OilWords> = {
       ],
       king: [
         `${DRAFT} 10${NB}Sila für Ja'u-kin, König von Juda: zehn Quadrate, je ein Sila. Das Quadrat ist unseres, nie ein Krug.`,
-        `${DRAFT} Der gefangene König behielt in den Abrechnungen des Palasts seinen Titel. Wie frei er dort lebte, wird zweifach gelesen.`,
+        `${DRAFT} Der gefangene König behielt in den Abrechnungen des Palasts seinen Titel. Wie er gehalten wurde, wird zweifach gelesen: in Gewahrsam oder mit etwas Freiheit.`,
       ],
       sons: [`${DRAFT} 2½${NB}Sila für seine fünf Söhne zusammen: Die Liste nennt eine Summe, keinen Anteil je Sohn.`],
       men: [`${DRAFT} 4${NB}Sila für acht Männer aus Juda.`],
       carpenter: [`${DRAFT} ½${NB}Sila für einen Zimmermann aus Arwad. 20 solche Hälften stehen in einer Reihe so lang wie die 10${NB}Sila des Königs.`],
       lands: [
         `${DRAFT} Ein Punkt für jedes Land, das die Listen nennen: Juda, Tyros, Arwad, Byblos, Lydien und Ägypten. Dazu Babylon, wo sie geschrieben wurden.`,
-        `${DRAFT} Lydien ist ein offener, gestrichelter Ring: Der Name ist auf der Tafel ergänzt.`,
+        `${DRAFT} Lydien ist ein offener, gestrichelter Ring: Der Name ist in der Liste teils ergänzt.`,
         `${DRAFT} Die Listen sagen, woher Menschen kamen, nie einen Weg oder ein Datum. Küsten und Flüsse sind die von heute (Natural Earth).`,
       ],
     },

@@ -34,7 +34,7 @@ export const BAND_KEYS: Record<StepId, { carries: string; pointer: string }> = {
     pointer: 'TARGETS-W2A F3 "Three texts" 1; REC bab.green.ekarzaginna; RULES-W2A F3.1, F3.2; CAD K p. 414',
   },
   jeremiah: {
-    carries: 'Jeremiah 29:5, a letter from Jerusalem to the people taken in 597 (sent 597 to 587 or 586 BC): build houses, plant gardens; words to the exiles, not by them; the sketch is Guessed',
+    carries: 'Jeremiah 29:5, a letter from Jerusalem to the people taken in 597, sent 597 to 587 or 586 BC (its time on the line, F3.1): build houses, plant gardens; words to the exiles, not by them; the sketch is Guessed (the mark and the list say it)',
     pointer: 'TARGETS-W2A F3 "Three texts" 2; CS5 J4-03; RULES-W2A F3.1, F3.4; D-058',
   },
   where: {
@@ -55,9 +55,9 @@ export const GARDEN_WORDS: Record<WordsLang, GardenWords> = {
       title: `${DRAFT} Gardens in words of their time`, door: `${DRAFT} Gardens in words`, close: `${DRAFT} Back to the gardens`,
     },
     band: {
-      terraces: `${DRAFT} · In colour, the terraces as we guess them. Then, on paper, gardens texts of their time name.`,
+      terraces: `${DRAFT} · The terraces in colour are our guess. On paper, gardens from texts of their time.`,
       ea: `${DRAFT} · Esarhaddon, about 680 to 669${NB}BC, names Ea's temple garden. Our sketch is a guess.`,
-      jeremiah: `${DRAFT} · From Jerusalem, Jeremiah wrote to the exiles: plant gardens. Our sketch is a guess.`,
+      jeremiah: `${DRAFT} · Jeremiah's letter to the exiles, 597 to 587 or 586${NB}BC: plant gardens.`,
       where: `${DRAFT} · Ea's temple lay in the Esagila complex by the river, far from here. Its spot is a guess.`,
     },
     list: {
@@ -73,7 +73,7 @@ export const GARDEN_WORDS: Record<WordsLang, GardenWords> = {
       jeremiah: [
         `${DRAFT} Jeremiah 29:5, a letter from Jerusalem to the people taken in 597${NB}BC: build houses, plant gardens and eat their fruit.`,
         `${DRAFT} Words to the exiles, not by them. The exiles lived in villages by the canals, not in the city.`,
-        `${DRAFT} One house and one bed: our sketch of the letter's words.`,
+        `${DRAFT} It was sent between 597 and 587 or 586${NB}BC. One house and one bed: our guess at its words.`,
       ],
       where: [
         `${DRAFT} Ea's temple lay in the Esagila complex on the river bank, as the city text Tintir says.`,
@@ -92,9 +92,9 @@ export const GARDEN_WORDS: Record<WordsLang, GardenWords> = {
       title: `${DRAFT} Gärten in Worten ihrer Zeit`, door: `${DRAFT} Gärten in Worten`, close: `${DRAFT} Zurück zu den Gärten`,
     },
     band: {
-      terraces: `${DRAFT} · In Farbe die Terrassen, wie wir sie vermuten. Dann auf Papier Gärten aus Texten ihrer Zeit.`,
-      ea: `${DRAFT} · Asarhaddon nennt um 680 bis 669${NB}v.${NB}Chr. Eas Tempelgarten. Unsere Skizze ist vermutet.`,
-      jeremiah: `${DRAFT} · Aus Jerusalem schrieb Jeremia den Verbannten: Legt Gärten an. Die Skizze ist vermutet.`,
+      terraces: `${DRAFT} · Die farbigen Terrassen vermuten wir. Auf Papier Gärten aus Texten ihrer Zeit.`,
+      ea: `${DRAFT} · Asarhaddon nennt um 680 bis 669${NB}v.${NB}Chr. Eas Tempelgarten, hier vermutet.`,
+      jeremiah: `${DRAFT} · Jeremia an die Verbannten, 597 bis 587 oder 586${NB}v.${NB}Chr.: Legt Gärten an.`,
       where: `${DRAFT} · Eas Tempel lag im Bezirk Esagila am Fluss, fern von hier. Der Ort ist vermutet.`,
     },
     list: {
@@ -110,7 +110,7 @@ export const GARDEN_WORDS: Record<WordsLang, GardenWords> = {
       jeremiah: [
         `${DRAFT} Jeremia 29,5, ein Brief aus Jerusalem an die 597${NB}v.${NB}Chr. Verschleppten: Baut Häuser, legt Gärten an und esst ihre Früchte.`,
         `${DRAFT} Worte an die Verbannten, nicht von ihnen. Die Verbannten lebten in Dörfern an den Kanälen, nicht in der Stadt.`,
-        `${DRAFT} Ein Haus und ein Beet: unsere Skizze der Worte des Briefs.`,
+        `${DRAFT} Er ging zwischen 597 und 587 oder 586${NB}v.${NB}Chr. ab. Ein Haus und ein Beet: unsere Vermutung zu seinen Worten.`,
       ],
       where: [
         `${DRAFT} Eas Tempel lag im Bezirk von Esagila am Flussufer, so sagt es der Stadttext Tintir.`,
