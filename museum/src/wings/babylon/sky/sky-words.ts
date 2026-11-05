@@ -7,7 +7,7 @@
    The sky's numbers are printed from the computed files (`printed` in sky-data.ts); a test holds every number these
    words carry equal to them, and every number of the edition to "about". */
 
-import { DIARY, PHOTO, type Good } from './sky-data'
+import { DIARY, PHOTO, SHEKEL_G, litresOf, printed, type Evening, type Good } from './sky-data'
 
 export type SkyLang = 'en' | 'de'
 export const STEP_IDS = ['evenings', 'shekel', 'rise'] as const
@@ -76,7 +76,7 @@ export const SKY_WORDS: Record<SkyLang, SkyWords> = {
     band: {
       evenings: `${DRAFT} · Computed: on 14 April too thin to see, on 15 April easy. With it the new year began.`,
       shekel: `${DRAFT} · Two years later a watcher noted what one shekel of silver bought. About this much.`,
-      rise: `${DRAFT} · The same diary: in one spring the river rose about 1.65${NB}m, almost this figure's height.`,
+      rise: `${DRAFT} · The same diary: in one spring the river rose about 1.65${NB}m. Almost the figure's height.`,
     },
     list: {
       evenings: [
@@ -92,7 +92,7 @@ export const SKY_WORDS: Record<SkyLang, SkyWords> = {
         `${DRAFT} One shekel of silver, about 8.3${NB}g, bought about 180 litres of barley, about 240 of dates or about 24 of sesame.`,
         `${DRAFT} Silver was weighed, not coined. The numbers are read in the 1915 edition.`,
         `${DRAFT} It also prices kasû, most likely a plant used to season date beer.`,
-        `${DRAFT} The picture shows another diary of the same kind, ${PHOTO.name}, from ${PHOTO.date.en}. No open photograph of ${DIARY.name} was found.`,
+        `${DRAFT} The picture shows another diary of the same kind, ${PHOTO.name}, from ${PHOTO.date.en}. No open photograph of the Berlin tablet was found.`,
         `${DRAFT} The heaps are made to the edition's numbers at one slope of ours, beside our 1.70${NB}m figure.`,
       ],
       rise: [
@@ -117,9 +117,9 @@ export const SKY_WORDS: Record<SkyLang, SkyWords> = {
       title: `${DRAFT} Der Abendhimmel und die Tafel des Beobachters`, door: `${DRAFT} Die erste Sichel sehen`, close: `${DRAFT} Zurück zur Brücke`,
     },
     band: {
-      evenings: `${DRAFT} · Berechnet: am 14. April zu schmal, am 15. April gut zu sehen. Mit ihr begann das neue Jahr.`,
-      shekel: `${DRAFT} · Zwei Jahre später notierte ein Beobachter, was ein Schekel Silber kaufte. Etwa so viel.`,
-      rise: `${DRAFT} · Dieselbe Tafel: In einem Frühjahr stieg der Fluss um etwa 1,65${NB}m, fast so hoch wie die Figur.`,
+      evenings: `${DRAFT} · Berechnet: am 14. zu schmal, am 15. April gut sichtbar. Mit ihr begann das neue Jahr.`,
+      shekel: `${DRAFT} · Zwei Jahre später notierte ein Beobachter, was ein Schekel kaufte. Etwa so viel.`,
+      rise: `${DRAFT} · Dieselbe Tafel: In einem Frühjahr stieg der Fluss um etwa 1,65${NB}m. Fast die Größe der Figur.`,
     },
     list: {
       evenings: [
@@ -135,7 +135,7 @@ export const SKY_WORDS: Record<SkyLang, SkyWords> = {
         `${DRAFT} Ein Schekel Silber, etwa 8,3${NB}g, kaufte etwa 180 Liter Gerste, etwa 240 Liter Datteln oder etwa 24 Liter Sesam.`,
         `${DRAFT} Silber wurde gewogen, nicht geprägt. Die Zahlen sind in der Ausgabe von 1915 gelesen.`,
         `${DRAFT} Sie nennt auch einen Preis für kasû, wohl eine Pflanze zum Würzen von Dattelbier.`,
-        `${DRAFT} Das Bild zeigt eine andere Tafel derselben Art, ${PHOTO.name}, aus ${PHOTO.date.de}. Ein freies Foto von ${DIARY.name} fand sich nicht.`,
+        `${DRAFT} Das Bild zeigt eine andere Tafel derselben Art, ${PHOTO.name}, aus ${PHOTO.date.de}. Ein freies Foto der Berliner Tafel fand sich nicht.`,
         `${DRAFT} Die Haufen folgen den Zahlen der Ausgabe, mit einem Böschungswinkel von uns, neben unserer Figur von 1,70${NB}m.`,
       ],
       rise: [
@@ -157,4 +157,26 @@ export function skyLabel(lang: SkyLang, id: string): string {
     'date-0414': L.date['0414'], 'date-0415': L.date['0415'],
   }
   return flat[id] ?? id
+}
+
+/** a label's words: the sky's numbers from the computation, the heaps' from the edition, the rest from the words */
+export function skyText(lang: SkyLang, evenings: readonly Evening[], id: string): string | readonly [string, string] {
+  const W = SKY_WORDS[lang], L = W.labels, NB = ' '
+  const m = /^(height|lit|moonset|sun|west|date)-(\d{4})$/.exec(id)
+  if (m) {
+    const e = evenings.find((x) => x.id === m[2])!
+    const p = printed(e)
+    if (m[1] === 'height') return `${num(lang, p.height)}°`
+    if (m[1] === 'lit') return `${num(lang, p.lit)}${NB}%`
+    if (m[1] === 'moonset') return [`+${p.lag}${NB}min`, L.moonset]
+    if (m[1] === 'sun') return L.sun
+    if (m[1] === 'west') return L.west
+    return L.date[e.id]
+  }
+  const g = /^good-(\w+)$/.exec(id)
+  if (g) return [`${Math.round(litresOf(g[1] as 'barley'))}${NB}${L.litres}`, L.good[g[1] as 'barley']]
+  if (id === 'silver') return [`${num(lang, SHEKEL_G)}${NB}g`, L.silver]
+  if (id === 'tablet') return [L.tablet, L.tabletDate]
+  if (id === 'rise') return [L.rise, L.riseOld]
+  return skyLabel(lang, id)
 }

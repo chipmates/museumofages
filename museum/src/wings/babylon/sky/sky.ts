@@ -7,9 +7,11 @@
 import css from './sky.css?inline'
 import { createPaperFeature, type PaperFeaturePayload, type PaperFeatureStep } from '../paper/feature'
 import type { SkyFile } from '../crescent/sky'
-import { EVENING_IDS, eveningOf, heaps, litresOf, printed, SHEKEL_G, type Evening } from './sky-data'
+import { EVENING_IDS, eveningOf } from './sky-data'
 import { skyScene, type SkyData } from './sky-scene'
-import { SKY_WORDS, STEP_IDS, num, skyLabel, type SkyLang } from './sky-words'
+import { SKY_WORDS, STEP_IDS, skyText, type SkyLang } from './sky-words'
+
+export { skyText }
 
 export interface SkyOptions {
   lang: SkyLang
@@ -33,34 +35,11 @@ export function srgbOf(lin: readonly [number, number, number]): string {
   return `rgb(${lin.map(enc).join(' ')})`
 }
 
-/** a label's words: the sky's numbers from the computation, the heaps' from the edition, the rest from the words */
-export function skyText(lang: SkyLang, evenings: readonly Evening[], id: string): string | readonly [string, string] {
-  const W = SKY_WORDS[lang], L = W.labels, NB = ' '
-  const m = /^(height|lit|moonset|sun|west|date)-(\d{4})$/.exec(id)
-  if (m) {
-    const e = evenings.find((x) => x.id === m[2])!
-    const p = printed(e)
-    if (m[1] === 'height') return `${num(lang, p.height)}°`
-    if (m[1] === 'lit') return `${num(lang, p.lit)}${NB}%`
-    if (m[1] === 'moonset') return [`+${p.lag}${NB}min`, L.moonset]
-    if (m[1] === 'sun') return L.sun
-    if (m[1] === 'west') return L.west
-    return L.date[e.id]
-  }
-  const g = /^good-(\w+)$/.exec(id)
-  if (g) return [`${Math.round(litresOf(g[1] as 'barley'))}${NB}${L.litres}`, L.good[g[1] as 'barley']]
-  if (id === 'silver') return [`${num(lang, SHEKEL_G)}${NB}g`, L.silver]
-  if (id === 'tablet') return [L.tablet, L.tabletDate]
-  if (id === 'rise') return [L.rise, L.riseOld]
-  return skyLabel(lang, id)
-}
-
 export function createSkyPayload(o: SkyOptions): PaperFeaturePayload {
   const W = SKY_WORDS[o.lang]
   const evenings = EVENING_IDS.map((id) => eveningOf(id, o.skies[id]))
   const data: SkyData = { evenings }
   const steps: PaperFeatureStep[] = STEP_IDS.map((id, i) => ({ id, name: W.steps[id], line: W.band[id], certainty: CERTAINTY[i]! }))
-  void heaps
   return createPaperFeature({
     kind: 'paper',
     lang: o.lang,

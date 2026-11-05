@@ -279,36 +279,39 @@ export function skyScene(t: number, framing: PaperFraming, w: number, h: number,
   }
 
   if (state === 'rise') {
-    /* THE RIVER'S RISE: a pencil gauge of two metres, the rise of the diary beside it as water filling up, the figure
+    /* THE RIVER'S RISE: the rise of the diary as water filling up, a pencil gauge of two metres at its edge, the figure
        on the same base and scale */
     const top = box.t + (wide ? 64 : 56), base = box.b - (wide ? 24 : 20)
     const pxPerM = Math.min((base - top) / 2.05, (bw - 20) / 1.55)
     const cx = (box.l + box.r) / 2
-    // the group (the staff's ticks, the water's half metre, the gap, the figure's half width) centred on the plate
-    const gx = cx - pxPerM * 1.46 / 2 + 7
+    // the group (the water's half metre, the staff at its right, the gap, the figure's half width) centred on the
+    // plate; the rise's name stands over the water and leftward of it, clear of the staff and the figure
     const colW = pxPerM * 0.5
+    const gx = cx - pxPerM * 1.26 / 2
+    const sx = gx + colW + 1
     const fill = settled !== null ? 1 : ease(span(t, 1.5, 2))
     const riseTop = base - riseM() * pxPerM * fill
     // the base: a fine plain line, the river's level at the rise's start (its height not known)
-    prims.push({ type: 'line', id: 'base', mark: 'known', ax: gx - pxPerM * 0.35, ay: base, bx: cx + pxPerM * 0.85, by: base, width: 1.5 })
-    walls.push({ ax: gx - pxPerM * 0.35, ay: base, bx: cx + pxPerM * 0.85, by: base })
-    // the gauge: a pencil staff, a tick each 10 cm, longer each half metre
-    let staff = `M${f(gx)} ${f(base)}L${f(gx)} ${f(base - 2 * pxPerM)}`
-    for (let i = 1; i <= 20; i++) staff += `M${f(gx)} ${f(base - i * 0.1 * pxPerM)}h${i % 5 === 0 ? -12 : -6}`
-    prims.push({ type: 'path', id: 'gauge', mark: 'pencil', d: staff, width: 1.25 })
-    take({ l: gx - 14, t: base - 2 * pxPerM - 2, r: gx + 2, b: base }, 'gauge')
+    const fx = sx + pxPerM * 0.55
+    const baseL = gx - 12, baseR = fx + pxPerM * 0.21 + 12
+    prims.push({ type: 'line', id: 'base', mark: 'known', ax: baseL, ay: base, bx: baseR, by: base, width: 1.5 })
+    walls.push({ ax: baseL, ay: base, bx: baseR, by: base })
     // the rise: the water's wash from the base to the diary's height, its top a fine ink line
     if (fill > 0) {
-      prims.push({ type: 'rect', id: 'rise', mark: 'known', x: gx + 1, y: riseTop, w: colW, h: base - riseTop, cls: 'sky-water' })
-      prims.push({ type: 'line', id: 'rise-top', mark: 'known', ax: gx, ay: riseTop, bx: gx + 1 + colW, by: riseTop, width: 1.5 })
-      take({ l: gx, t: riseTop - 2, r: gx + 1 + colW, b: base }, 'rise')
+      prims.push({ type: 'rect', id: 'rise', mark: 'known', x: gx, y: riseTop, w: colW, h: base - riseTop, cls: 'sky-water' })
+      prims.push({ type: 'line', id: 'rise-top', mark: 'known', ax: gx, ay: riseTop, bx: sx, by: riseTop, width: 1.5 })
+      take({ l: gx, t: riseTop - 2, r: sx, b: base }, 'rise')
     }
+    // the gauge: a pencil staff at the water's right edge, a tick each 10 cm into the water, longer each half metre
+    let staff = `M${f(sx)} ${f(base)}L${f(sx)} ${f(base - 2 * pxPerM)}`
+    for (let i = 1; i <= 20; i++) staff += `M${f(sx)} ${f(base - i * 0.1 * pxPerM)}h${i % 5 === 0 ? -12 : -6}`
+    prims.push({ type: 'path', id: 'gauge', mark: 'pencil', d: staff, width: 1.25 })
+    take({ l: sx - 13, t: base - 2 * pxPerM - 2, r: sx + 2, b: base }, 'gauge')
     // the figure, pencil, on the same base at the same scale
-    const fx = gx + colW + pxPerM * 0.75
     prims.push({ type: 'path', id: 'figure', mark: 'measure', d: figurePath(fx, base, pxPerM), width: 1 })
     take({ l: fx - pxPerM * 0.25, t: base - FIGURE_M * pxPerM - 2, r: fx + pxPerM * 0.25, b: base }, 'figure')
     if (labels) {
-      anchors.push({ id: 'rise', x: gx + 1 + colW / 2, y: riseTop, sides: ['above', 'above-right'], gap: 6, kind: 'pair' })
+      anchors.push({ id: 'rise', x: sx - 14, y: riseTop, sides: ['above-left', 'above'], gap: 6, kind: 'pair' })
       anchors.push({ id: 'figure', x: fx, y: base - FIGURE_M * pxPerM, sides: ['above', 'above-right', 'right'], gap: 6, kind: 'pencil' })
     }
     facts.rise = { pxPerM, drawn: (base - riseTop) / pxPerM, figure: FIGURE_M, fill }
