@@ -67,9 +67,9 @@ export function showMaterial(f: ShowFrame, sp: J): Material {
   let stone: N = mix(oldC, newC, fresh)
   stone = stone.mul(float(1).add(blockTone).add(bigPatch).add(midPatch).add(bayTone))
   // ochre and grey in patches, as the painter laid them over the cream
-  stone = mix(stone, stone.mul(vec3(1.06, 0.97, 0.82)), smoothstep(0.1, 0.6, mx_noise_float(vec3(arc.mul(0.06), h.mul(0.05), 9.4))).mul(0.6))
+  stone = mix(stone, stone.mul(vec3(1.08, 0.96, 0.76)), smoothstep(0.1, 0.6, mx_noise_float(vec3(arc.mul(0.06), h.mul(0.05), 9.4))).mul(0.85))
   stone = mix(stone, stone.mul(vec3(0.9, 0.93, 0.98)), smoothstep(0.2, 0.7, mx_noise_float(vec3(arc.mul(0.09), h.mul(0.03), 5.5))).mul(0.5))
-  stone = mix(stone, streakC.mul(stone.length().mul(0.9)), streak.mul(0.22).mul(upright))
+  stone = mix(stone, streakC.mul(stone.length().mul(0.9)), streak.mul(0.3).mul(upright))
   stone = stone.mul(float(1).sub(grime).sub(joints.mul(0.5)))
   // the corbel frieze under each cornice: a band of small round arches on corbels, their shadow under each
   const band = smoothstep(0.62, 0.7, under).mul(float(1).sub(smoothstep(1.35, 1.45, under))).mul(upright).mul(facing)
@@ -94,16 +94,24 @@ export function showMaterial(f: ShowFrame, sp: J): Material {
   const putlog = step(abs(fract(arc.div(1.6)).sub(0.5)), float(0.11)).mul(step(abs(fract(h.div(1.3)).sub(0.5)), float(0.13)))
   brick = brick.mul(float(1).sub(ring.mul(putlog).mul(0.78)))
 
-  /* ── rock: pale planes, each plane its own shade, cracks, bedding, moss on the ledges ── */
-  const plane = h1(floor(n.x.mul(5.0)).add(floor(n.z.mul(5.0)).mul(11.0)).add(floor(n.y.mul(4.0)).mul(37.0)).add(tone.mul(91.0)))
+  /* ── rock: pale planes, each facing its own shade, dark furrows and stains down them, ochre deposits, bedding,
+     moss on the ledges; the shade by facing only, so pieces broken out side by side read as one face ── */
+  const plane = h1(floor(n.x.mul(5.0)).add(floor(n.z.mul(5.0)).mul(11.0)).add(floor(n.y.mul(4.0)).mul(37.0)))
   const rN = mx_noise_float(P.mul(0.09)).mul(0.16).add(mx_noise_float(P.mul(0.45)).mul(0.07))
   // the painter's strokes down each plane: tone that runs upright, fine across
   const stroke = mx_noise_float(vec3(P.x.mul(2.2), P.y.mul(0.09), P.z.mul(2.2))).mul(0.08)
-  // stains run down the planes (noise stretched upright), the bedding shows faintly across them
-  const rStain = smoothstep(0.3, 0.8, mx_noise_float(vec3(P.x.mul(0.7), P.y.mul(0.025), P.z.mul(0.7)))).mul(0.14)
+  // stains run down the planes (noise stretched upright), broad furrows in shade between them, the bedding faintly across
+  const rStain = smoothstep(0.3, 0.8, mx_noise_float(vec3(P.x.mul(0.7), P.y.mul(0.025), P.z.mul(0.7)))).mul(0.26)
+  const furrow = smoothstep(0.3, 0.75, mx_noise_float(vec3(P.x.mul(0.34), P.y.mul(0.016), P.z.mul(0.34)).add(vec3(11, 3, 7)))).mul(0.5)
   const bed = lineEvery(h.add(mx_noise_float(P.mul(0.04)).mul(2.0)), 2.3, 0.06, fw).mul(0.07)
-  let rock: N = V(C.rock as RGB).mul(float(1).add(plane.sub(0.5).mul(0.3)).add(rN).add(stroke)).mul(float(1).sub(rStain).sub(bed))
-  rock = mix(rock, rock.mul(vec3(1.1, 0.98, 0.78)), smoothstep(-0.1, 0.5, mx_noise_float(P.mul(0.05).add(vec3(3, 1, 2)))).mul(0.65))
+  // a quarried face (fresh 1) is cut clean: paler, half the stains and furrows, each step shaded toward its foot
+  const cut = fresh
+  const weather = float(1).sub(cut.mul(0.5))
+  let rock: N = V(C.rock as RGB).mul(float(1).add(plane.sub(0.5).mul(0.5)).add(rN).add(stroke)).mul(float(1).sub(rStain.mul(weather)).sub(furrow.mul(weather)).sub(bed))
+  rock = rock.mul(mix(float(1), mix(float(1.1), float(0.74), smoothstep(0.2, 5.0, under)), cut))
+  rock = mix(rock, rock.mul(vec3(1.1, 0.98, 0.78)), smoothstep(-0.1, 0.5, mx_noise_float(P.mul(0.05).add(vec3(3, 1, 2)))).mul(0.5))
+  // the yellow ochre the painter laid where the stone is broken and its dust lies
+  rock = mix(rock, V(C.ochre as RGB).mul(float(1).add(rN)), smoothstep(0.05, 0.45, mx_noise_float(P.mul(0.07).add(vec3(5, 9, 1)))).mul(0.55))
   // moss on the ledges and in the shade of the clefts, olive as painted
   const mossy = max(smoothstep(0.45, 0.8, n.y), smoothstep(0.3, 0.7, mx_noise_float(P.mul(0.07).add(vec3(7, 2, 5)))).mul(0.45)).mul(smoothstep(-0.3, 0.4, mx_noise_float(P.mul(0.16))))
   rock = mix(rock, V(C.moss as RGB).mul(float(1).add(rN.mul(2))), mossy.mul(0.75))
@@ -111,7 +119,7 @@ export function showMaterial(f: ShowFrame, sp: J): Material {
   // a face turned sideways (along the ring) looks into a cleft between two masses: darker, as the painter laid them
   const radOut = vec3(u.mul(f.c).add(v.mul(f.s)), 0, u.mul(f.s).negate().add(v.mul(f.c))).div(max(rho, 0.01))
   const outward = n.x.mul(radOut.x).add(n.z.mul(radOut.z))
-  rock = rock.mul(mix(float(0.58), float(1.05), smoothstep(-0.2, 0.75, outward)).mul(upright).add(float(1).sub(upright)))
+  rock = rock.mul(mix(float(0.45), float(1.05), smoothstep(-0.2, 0.75, outward)).mul(upright).add(float(1).sub(upright)))
 
   /* ── the rest: timber, thatch, tiles, cloth, openings, floors ── */
   const grain = mx_noise_float(vec3(P.x.mul(0.6), P.y.mul(4.0), P.z.mul(0.6))).mul(0.12)
@@ -133,9 +141,10 @@ export function showMaterial(f: ShowFrame, sp: J): Material {
   col = mix(col, cloth, is(SK.cloth))
   col = mix(col, floorC, is(SK.floor))
   col = mix(col, plaster, is(SK.plaster))
-  // deep in the wall the light thins: reveals darken toward the back, a niche's back more than its mouth
+  // deep in the wall the sky's light thins (the stack has no occlusion pass): reveals darken toward the back, a
+  // niche's back to about two thirds of its face, as the painter shades them
   const notDark = float(1).sub(is(SK.dark))
-  col = col.mul(mix(float(1), float(0.62), smoothstep(0.0, 2.2, depth).mul(notDark)))
+  col = col.mul(mix(float(1), float(0.5), smoothstep(0.0, 1.4, depth).mul(notDark)))
   // tops and ledges dusted lighter, the foot darker with splash and soil
   col = mix(col, col.mul(vec3(1.05, 1.02, 0.96)), smoothstep(0.6, 0.95, n.y).mul(float(1).sub(is(SK.rock))).mul(0.5))
   col = col.mul(mix(float(0.86), float(1), smoothstep(0.0, 3.0, h)))

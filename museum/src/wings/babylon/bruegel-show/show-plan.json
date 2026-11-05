@@ -238,14 +238,14 @@
  ],
  "colours": {
   "old": [
-   0.72,
+   0.76,
    0.58,
-   0.4
+   0.31
   ],
   "new": [
-   0.83,
-   0.75,
-   0.6
+   0.86,
+   0.74,
+   0.5
   ],
   "streak": [
    0.4,
@@ -263,9 +263,14 @@
    0.08
   ],
   "rock": [
-   0.66,
-   0.58,
-   0.43
+   0.7,
+   0.61,
+   0.45
+  ],
+  "ochre": [
+   0.8,
+   0.55,
+   0.2
   ],
   "moss": [
    0.46,
@@ -302,6 +307,6 @@
    0.48,
    0.34
   ],
-  "src": "albedos chosen by eye against the crops (READING, colours), never sampled from the painting's pixels; warmer than the painting's lit cream, since the scene's front stands in the sky's blue fill at 18:00"
+  "src": "albedos chosen by eye against the crops (READING, colours), never sampled from the painting's pixels; warmer and more saturated than the painting's lit cream, since the scene's front stands in the sky's blue fill at 18:00 and a cream albedo read grey there; the rock greyer than the stone, its ochre in deposits"
  }
 }

@@ -187,7 +187,8 @@ function cut(S: Soup, F: WF, h: Hole, d: number): void {
     S.quad(at(F, p[0], p[1], d), at(F, p[0], p[1], d - h.depth), at(F, r[0], r[1], d - h.depth), at(F, r[0], r[1], d), h.rev, [d0, d1, d1, d0])
   }
   if (h.open) return
-  panel(S, F, h.s0, h.s1, () => h.sill, (s) => headAt(h, s), h.sub ?? [], d - h.depth, h.back)
+  // the back broken at the head's own points, so it fills the arch up to the crown
+  panel(S, F, h.s0, h.s1, () => h.sill, (s) => headAt(h, s), h.sub ?? [], d - h.depth, h.back, o.map(([s]) => s))
 }
 
 /** a box in a plane's frame: s0..s1 along, t0..t1 up (each end its own heights), d0..d1 out; faces listed by name */
@@ -551,34 +552,26 @@ function mass(S: Soup, f: ShowFrame, phi: number, r: number, w: number, dep: num
 function quarry(S: Soup, f: ShowFrame, a0: number, a1: number, rFoot: number, rTop: number, rHead: number, hTop: number, steps: number, seed: number): void {
   const n = 4
   const P = (phi: number, r: number, t: number): V3 => { const [x, z] = sceneAt(f, phi, r); return [x, f.base + t, z] }
-  // each step one depth across, each piece of it a little off the step's height, as the stone was broken out
-  const tAt = (k: number, i: number): number => (k < 0 ? -0.4 : k + 1 === steps ? hTop : hTop * ((k + 1) / steps) + (hash(seed, k, i, 1) - 0.5) * 0.5)
-  const rAt = (k: number, _i: number): number => (k < 0 ? rFoot : k + 1 === steps ? rHead : rFoot + ((rTop - rFoot) * (k + 1)) / steps)
+  // each step one depth across, its edge rising and falling along the slope as the stone was broken out (one height
+  // at each angle, so neighbouring pieces meet without a side between them); the faces fresh-cut (`fresh` 1)
+  const tAt = (k: number, phi: number): number => (k < 0 ? -0.4 : k + 1 === steps ? hTop : hTop * ((k + 1) / steps) + 0.55 * noise3(phi * 0.35, k * 1.7, seed * 0.1))
+  const rAt = (k: number): number => (k < 0 ? rFoot : k + 1 === steps ? rHead : rFoot + ((rTop - rFoot) * (k + 1)) / steps)
   for (let k = 0; k < steps; k++) {
     const u0 = k / steps
     const w0 = a0 + (a1 - a0) * 0.06 * u0, w1 = a1 - (a1 - a0) * 0.06 * u0
+    const r0 = k ? rAt(k - 1) : rFoot, r1 = rAt(k)
     for (let i = 0; i < n; i++) {
       const p0 = w0 + ((w1 - w0) * i) / n, p1 = w0 + ((w1 - w0) * (i + 1)) / n
-      const t = tAt(k, i), tb = tAt(k - 1, i)
-      const r0 = k ? rAt(k - 1, i) : rFoot, r1 = rAt(k, i)
-      const tread = q(SK.floor, hash(seed, k, i, 3), 0, 0, t)
-      upQuad(S, P(p0, r0, t), P(p1, r0, t), P(p1, r1, t), P(p0, r1, t), tread)
+      const t0 = tAt(k, p0), t1 = tAt(k, p1), b0 = tAt(k - 1, p0) - 0.05, b1 = tAt(k - 1, p1) - 0.05
+      const tread = q(SK.floor, hash(seed, k, i, 3), 0, 0, (t0 + t1) / 2)
+      upQuad(S, P(p0, r0, t0), P(p1, r0, t1), P(p1, r1, t1), P(p0, r1, t0), tread)
       const [ox, oz] = sceneAt(f, (p0 + p1) / 2, r0 - 3)
-      awayQuad(S, P(p0, r0, Math.min(tb, t) - 0.05), P(p1, r0, Math.min(tb, t) - 0.05), P(p1, r0, t), P(p0, r0, t), [ox, f.base + (t + tb) / 2, oz], q(SK.rock, hash(seed, k, i, 4), 0, 0, t))
+      awayQuad(S, P(p0, r0, b0), P(p1, r0, b1), P(p1, r0, t1), P(p0, r0, t0), [ox, f.base + (t0 + b0) / 2, oz], q(SK.rock, hash(seed, k, 4), 1, 0, (t0 + t1) / 2))
       // the slope's own sides, down to the ground, so it stands as one wedge of rock between the masses
       if (i === 0 || i === n - 1) {
-        const e = i === 0 ? p0 : p1, inward = i === 0 ? e + 2 : e - 2
+        const e = i === 0 ? p0 : p1, te = i === 0 ? t0 : t1, inward = i === 0 ? e + 2 : e - 2
         const [sx, sz] = sceneAt(f, inward, (r0 + r1) / 2)
-        awayQuad(S, P(e, r0, -0.4), P(e, r1, -0.4), P(e, r1, t), P(e, r0, t), [sx, f.base + t / 2, sz], q(SK.rock, hash(seed, k, i, 7), 0, 0, t))
-      }
-      // where a neighbouring piece stands higher, the step's side shows
-      if (i + 1 < n) {
-        const tn = tAt(k, i + 1)
-        if (Math.abs(tn - t) > 0.05) {
-          const lo = Math.min(t, tn), hi = Math.max(t, tn), r1n = Math.min(r1, rAt(k, i + 1))
-          const [sx, sz] = sceneAt(f, tn > t ? p1 - 1 : p1 + 1, (r0 + r1) / 2)
-          awayQuad(S, P(p1, r0, lo), P(p1, r1n, lo), P(p1, r1n, hi), P(p1, r0, hi), [sx, f.base + hi + 3, sz], q(SK.rock, hash(seed, k, i, 5), 0, 0, hi))
-        }
+        awayQuad(S, P(e, r0, -0.4), P(e, r1, -0.4), P(e, r1, te), P(e, r0, te), [sx, f.base + te / 2, sz], q(SK.rock, hash(seed, k, i, 7), 1, 0, te))
       }
     }
   }
@@ -877,8 +870,8 @@ export function buildShow(f0: { x: number; z: number; c: number; s: number }, gr
           // the drop runs on from bay to bay, so the top falls and climbs in long steps of courses, never in merlons
           const dropAt = (sl: number): number => {
             const phi = a0 + ((a1 - a0) * sl) / W
-            const n1 = noise3(phi / 55, 3.7, 1.3), n2 = noise3(phi / 17, 8.1, 2.9)
-            return H * Math.min(0.72, Math.max(0, 0.32 + 0.38 * n1 + 0.12 * n2))
+            const n1 = noise3(phi / 80, 3.7, 1.3), n2 = noise3(phi / 17, 8.1, 2.9)
+            return H * Math.min(0.85, Math.max(0, 0.15 + 0.7 * n1 + 0.1 * n2))
           }
           redBay(S, F, W, c.y0, c.y0, c.y1, c.y1, H, { tone, seed: 1100 + i, broken: 0.75, thick: 1.4, drop: dropAt })
           continue
@@ -888,8 +881,9 @@ export function buildShow(f0: { x: number; z: number; c: number; s: number }, gr
           const w = W * 0.5
           holes.push({ s0: (W - w) / 2, s1: (W + w) / 2, sill: c.y0 + 0.3, spring: c.y0 + H * 0.82 - w / 2, head: 'round', depth: 1.8, rev: brick, back: dark })
         } else if (c.kind === 'marked') {
+          // the outlines marked on its face are arches, recessed a little
           const w = W * 0.62
-          holes.push({ s0: (W - w) / 2, s1: (W + w) / 2, sill: c.y0 + H * 0.12, spring: c.y0 + H * 0.82, head: 'flat', depth: 0.25, rev: brick, back: q(SK.brick, tone, 1, 0.25, c.y1) })
+          holes.push({ s0: (W - w) / 2, s1: (W + w) / 2, sill: c.y0 + H * 0.12, spring: c.y0 + H * 0.84 - w / 2, head: 'round', depth: 0.25, rev: brick, back: q(SK.brick, tone, 1, 0.25, c.y1) })
         } else {
           const w = W * 0.3
           holes.push({ s0: (W - w) / 2, s1: (W + w) / 2, sill: c.y0 + H * 0.3, spring: c.y0 + H * 0.78 - w / 2, head: 'round', depth: 1.2, rev: brick, back: dark })
