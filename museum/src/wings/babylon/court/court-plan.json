@@ -51,7 +51,7 @@
   "src": "linear albedo; white, yellow and black are the gate's (COLOURS 9 at the saturated end); the dark blue ground is ours inside the cobalt range (hue 276, chroma 20, 0.18 of the white, so it stays blue, not blue-black, in the court's shade; each brick fired lighter or darker round it), read against the original fragments of the Berlin lion panel (hue 286 to 295 as shot); the light blue is ours at the blue end of the turquoise range (hue 230, chroma 24, 0.48 of the white); no red, since where it sat is not found",
   "ground": [0.0812, 0.1206, 0.2209],
   "light": [0.1119, 0.3633, 0.4853],
-  "plaster": [0.62, 0.6, 0.55],
+  "plaster": [0.63, 0.62, 0.59],
   "jointGlaze": [0.035, 0.036, 0.04]
  }
 }
