@@ -197,13 +197,13 @@ export function skySet(o: SkySetOptions) {
       const below = (r: N): N => float(1).sub(smoothstep(-0.2, 0.2, r.y))
       low = room(lg.mul(Math.PI)).mul(float(1).sub(n.y).mul(0.5))
       builder.context.radiance.addAssign(room(lg).mul(below(rv)).mul(gate))
-      /* the clear coat's mirror (the glaze): its floor as above, and its sky by the share of the lobe the field sees
-         hidden, taken from the environment's own lookup (a share, so no colour goes below nothing) */
+      /* the clear coat's mirror (the glaze): its floor as above, and in the rooms its sky by the share of the lobe the
+         field sees hidden, from the environment's own lookup (a share, so no colour goes below nothing) */
       const cc: N = builder.context.lightingModel?.clearcoatRadiance
       if (cc) {
         const r0 = reflect(positionWorld.sub(cameraPosition).normalize(), n)
         const hidShare = luminance(hid).div(max(luminance(lobeAll), 1e-6)).min(1)
-        const sky = pmremTexture(env.value, r0, clearcoatRoughness).mul(uEnvI).mul(hidShare).mul(uSpec).mul(float(1).sub(below(r0)))
+        const sky = pmremTexture(env.value, r0, clearcoatRoughness).mul(uEnvI).mul(hidShare).mul(uSpec).mul(float(1).sub(below(r0))).mul(ground.y)
         cc.addAssign(room(lg).mul(below(r0)).sub(sky).mul(gate))
       }
     }
