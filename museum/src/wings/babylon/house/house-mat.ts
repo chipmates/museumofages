@@ -227,6 +227,8 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
   // a room's own faces, and whatever stands inside a room (a leaf, its pole, a pivot stone), by place
   let inRooms: N = float(0)
   for (const r of hp.rooms as J[]) inRooms = max(inRooms, inRoom(r, -0.01))
+  // under the ceiling only: the roofs over the rooms are out in the sun
+  inRooms = inRooms.mul(step(P.y, L.ceiling - 0.01))
   const inRoomAny = max(max(is(Z.room), is(Z.floor)), inRooms.mul(float(1).sub(is(Z.sill))))
   ao = mix(ao, roomAO, inRoomAny)
   ao = mix(ao, pavingAO, is(Z.paving))
