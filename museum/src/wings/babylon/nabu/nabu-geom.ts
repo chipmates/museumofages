@@ -14,7 +14,8 @@ type J = any
 /** what a face shows, by the space it looks into: the material branches on this code */
 export const SURF = {
   exterior: 0, courtWall: 1, bandedRoom: 2, room: 3, smallCourt: 4, black: 5, reveal: 6, soffit: 7, ceiling: 8,
-  paving: 9, deck: 10, coping: 11, parapet: 12, earth: 13, ashratum: 14, merlon: 15,
+  paving: 9, deck: 10, coping: 11, parapet: 12, earth: 13, ashratum: 14, merlon: 15, altar: 16, pedestal: 17, leaf: 18,
+  sill: 19,
 } as const
 
 /** the space an empty span of a cell belongs to */
@@ -35,7 +36,13 @@ export interface NabuFrame {
   small: Box2
   rooms: Record<string, Box2>
   doors: DoorF[]
-  niche: Box2 & { top: number }
+  niche: Box2 & { top: number; sill: number }
+  /** the god's pedestal in the cella: its plan box, its top, the cut of its front corners */
+  pedestal: Box2 & { top: number; chamfer: number }
+  /** the court's altar block as tiers (each a plan box and a top) and the two low blocks beside the cella's door */
+  altar: Array<Box2 & { top: number }>
+  /** the lamps' places in the scene, [x, y, z] */
+  lamps: number[][]
   towers: Box2[]
   ash: Box2
   ashCourt: Box2
@@ -59,7 +66,18 @@ export function nabuFrame(np: J, E0: number, N0: number): NabuFrame {
   const rooms: Record<string, Box2> = {}
   for (const [k, r] of Object.entries<J>(np.rooms)) rooms[k] = box(r.box)
   const N = np.niche
-  const niche = { ...box([N.e[0], N.e[1], np.rooms.cella.box[2] - N.depth, np.rooms.cella.box[2]]), top: floor + N.h }
+  const PD = np.pedestal
+  const pedestal = { ...box(PD.box), top: D(pave + PD.h), chamfer: PD.chamfer }
+  const niche = { ...box([N.e[0], N.e[1], np.rooms.cella.box[2] - N.depth, np.rooms.cella.box[2]]), top: floor + N.h, sill: D(pave + PD.h + 0.02) }
+  // the altar block's tiers, and a low block either side of the cella's door, its back sunk 5 cm into the court's wall
+  const AL = np.altar
+  const altar: Array<Box2 & { top: number }> = AL.tiers.map((t: J) => ({ ...box([AL.box[0], AL.box[1], t.n[0], t.n[1]]), top: D(pave + t.h) }))
+  const cd = np.doors.find((d: J) => d.id === 'cella'), wallN = np.courts.nabu.box[2], by = AL.by
+  for (const s of [-1, 1]) {
+    const e0 = s < 0 ? cd.at - cd.w / 2 - by.gap - by.w : cd.at + cd.w / 2 + by.gap
+    altar.push({ ...box([e0, e0 + by.w, wallN - 0.05, wallN + by.d]), top: D(pave + by.h) })
+  }
+  const lamps = np.lamp.at.map((a: number[]) => [x(a[0]!), D(pave + a[2]!), z(a[1]!)])
   // the two gate towers on the street side, either side of the gate's opening
   const gate = np.doors.find((d: J) => d.id === 'gate')
   const T = np.towers, east = np.outline.box[1]
@@ -70,7 +88,7 @@ export function nabuFrame(np: J, E0: number, N0: number): NabuFrame {
   const A = np.ashratum
   return {
     floor, pave, ceiling: np.heights.ceiling, deck: np.heights.deck, top: np.heights.top, towerTop: np.heights.towerTop,
-    outline, court: box(np.courts.nabu.box), small: box(np.courts.small.box), rooms, doors, niche, towers,
+    outline, court: box(np.courts.nabu.box), small: box(np.courts.small.box), rooms, doors, niche, pedestal, altar, lamps, towers,
     ash: box(A.box), ashCourt: box(A.court), ashTop: A.top, apronTop: np.apron.top,
   }
 }
@@ -189,7 +207,7 @@ function gridQuads(g: Grid, F: NabuFrame, kindTop: (k: number, y: number) => num
     const t = toward < 0 ? SPACE.outside : g.tag[toward]!
     if (t === SPACE.door) return SURF.reveal
     if (body === 1) return SURF.ashratum
-    if (toward >= 0 && g.solidAbove(toward, yb)) return t === SPACE.cella || t === SPACE.smallCella ? SURF.bandedRoom : SURF.room
+    if (toward >= 0 && g.solidAbove(toward, yb)) return t === SPACE.cella || t === SPACE.smallCella || t === SPACE.side ? SURF.bandedRoom : SURF.room
     if (t === SPACE.court) return SURF.courtWall
     // the smaller court's south wall: its face looking north into the court is the black wall
     if (t === SPACE.small) return axis === 2 && sgn < 0 ? SURF.black : SURF.smallCourt
@@ -363,6 +381,36 @@ function prism(poly: P2[], y0: number, y1: number, code: number): BufferGeometry
   return g
 }
 
+/** a plastered block: a vertical prism from a plan outline whose arrises are rounded by a bevel `r` (the outline is
+    inset by it, so the block keeps its size), y0 to y1 */
+function slab(poly: P2[], y0: number, y1: number, code: number, r = 0.04): BufferGeometry {
+  // inset each vertex along its corner's bisector; the outlines here are convex and wound either way
+  const n = poly.length
+  let area = 0
+  for (let i = 0; i < n; i++) { const a = poly[i]!, b = poly[(i + 1) % n]!; area += a[0] * b[1] - b[0] * a[1] }
+  const sg = area > 0 ? 1 : -1
+  const inset: P2[] = poly.map((p, i) => {
+    const a = poly[(i + n - 1) % n]!, b = poly[(i + 1) % n]!
+    const e1 = [p[0] - a[0], p[1] - a[1]], e2 = [b[0] - p[0], b[1] - p[1]]
+    const l1 = Math.hypot(e1[0]!, e1[1]!), l2 = Math.hypot(e2[0]!, e2[1]!)
+    // inward normals of the two edges (left of the edge for a counter-clockwise outline)
+    const n1 = [-e1[1]! / l1 * sg, e1[0]! / l1 * sg], n2 = [-e2[1]! / l2 * sg, e2[0]! / l2 * sg]
+    const m = [n1[0]! + n2[0]!, n1[1]! + n2[1]!], k = r / Math.max(0.2, (m[0]! * n1[0]! + m[1]! * n1[1]!))
+    return [p[0] + m[0]! * k, p[1] + m[1]! * k]
+  })
+  const sh = new Shape()
+  sh.moveTo(inset[0]![0], -inset[0]![1])
+  for (const [px, pz] of inset.slice(1)) sh.lineTo(px, -pz)
+  sh.closePath()
+  const g0 = new ExtrudeGeometry(sh, { depth: y1 - y0 - 2 * r, bevelEnabled: true, bevelThickness: r, bevelSize: r, bevelOffset: 0, bevelSegments: 2, steps: 1 })
+  g0.rotateX(-Math.PI / 2)
+  g0.translate(0, y0 + r, 0)
+  g0.deleteAttribute('uv')
+  const g = g0.index ? g0.toNonIndexed() : g0
+  g.setAttribute('surf', new Float32BufferAttribute(new Array(g.getAttribute('position').count).fill(code), 1))
+  return g
+}
+
 /** the map prisms this module draws on the map page instead of the map */
 export const TAKEN_NABU = (id: string): boolean => id === 'nabu'
 
@@ -402,7 +450,7 @@ export function buildNabu(built: Built, mapPlan: J, np: J): Nabu {
     return { x0: p.x1 - PG.d, x1: p.x1 + 0.01, z0: cz - PG.w / 2, z1: cz + PG.w / 2 }
   })
   // the roof's parapet ring round the outside, and a coping ring round each court
-  const ring = 1.0, curb = 0.5
+  const ring = 1.0, curb: number = np.coping.curb
   const deckBox: Box2 = { x0: O.x0 + ring, x1: O.x1 - ring, z0: O.z0 + ring, z1: O.z1 - ring }
   const grow = (b: Box2, d: number): Box2 => ({ x0: b.x0 - d, x1: b.x1 + d, z0: b.z0 - d, z1: b.z1 + d })
   const ashDeck: Box2 = { x0: F.ash.x0 + ring, x1: F.ash.x1 - ring, z0: F.ash.z0 + ring, z1: F.ash.z1 - ring }
@@ -419,7 +467,7 @@ export function buildNabu(built: Built, mapPlan: J, np: J): Nabu {
   for (const p of pil) g.fill(p, base, F.top, 0)
   for (const c of [F.court, F.small]) g.carve(c, F.pave, SKY)
   for (const r of Object.values(F.rooms)) g.carve(r, F.pave, F.ceiling)
-  g.carve(F.niche, F.pave, F.niche.top)
+  g.carve(F.niche, F.niche.sill, F.niche.top)
   for (const d of F.doors) g.carve(d.box, F.pave, d.top)
   // between the towers the gate's mouth lies open to the sky, at the ground's level before it
   g.carve({ x0: O.x1, x1: F.towers[0]!.x1, z0: gateD.box.z0, z1: gateD.box.z1 }, base, SKY)
@@ -491,7 +539,52 @@ export function buildNabu(built: Built, mapPlan: J, np: J): Nabu {
   // on each tower a merlon over each fin between its grooves
   for (const [i, t] of F.towers.entries()) for (const z of fins[i]!) merlon(mt, 'x', t.x1, -1, z, F.towerTop, M, Math.min(M.low[0], (t.z1 - t.z0) / 3 - T.grooves.w))
   merlonRing(ma, F.ash, F.ashTop, M, P.pitch / 2)
-  const templeAll = join([temple, boxesGeometry(mt, SURF.merlon)])
+  // the god's pedestal: C6.2's outline with its front corners cut, standing 3 cm in the paving, its back 5 cm in the wall
+  const pd = F.pedestal, ch = pd.chamfer, zb = D(pd.z1 + 0.05)
+  const pedestalG = slab([[pd.x0 + ch, pd.z0], [pd.x1 - ch, pd.z0], [pd.x1, pd.z0 + ch], [pd.x1, zb], [pd.x0, zb], [pd.x0, pd.z0 + ch]], F.pave - 0.03, pd.top, SURF.pedestal)
+  // the court's altars: plastered blocks standing 3 cm in the paving; the block's tiers overlap 5 cm, so no face is shared
+  const altarG = join(F.altar.map((a) => slab([[a.x0, a.z0], [a.x1, a.z0], [a.x1, a.z1], [a.x0, a.z1]], F.pave - 0.03, a.top, SURF.altar)))
+  // round each court a coping course standing proud of the wall's face, and stepped merlons on it (Guessed, after the
+  // temples' battlements, K1914 ch. IX); the north and south runs take the corners, the east and west runs sit 5 mm
+  // lower where they overlap them
+  const CP = np.coping, cope: Boxes = [], cm: Boxes = []
+  for (const c of [F.court, F.small]) {
+    const y0 = F.top - CP.h, y1 = F.top + CP.lift, back = CP.back, out = CP.proj
+    for (const [zA, zB] of [[c.z0 - back, c.z0 + out], [c.z1 - out, c.z1 + back]] as Array<[number, number]>) cope.push({ c: [(c.x0 + c.x1) / 2, (y0 + y1) / 2, (zA + zB) / 2], s: [c.x1 - c.x0 + 2 * back, y1 - y0, zB - zA] })
+    for (const [xA, xB] of [[c.x0 - back, c.x0 + out], [c.x1 - out, c.x1 + back]] as Array<[number, number]>) cope.push({ c: [(xA + xB) / 2, (y0 + y1 - 0.005) / 2, (c.z0 + c.z1) / 2], s: [xB - xA, y1 - 0.005 - y0, c.z1 - c.z0 + 2 * back - 0.04] })
+    const ym = y1 - 0.005, pitch: number = CP.pitch
+    merlonRun(cm, 'z', c.z0, -1, c.x0 - back + 0.05, c.x1 + back - 0.05, ym, M, pitch)
+    merlonRun(cm, 'z', c.z1, 1, c.x0 - back + 0.05, c.x1 + back - 0.05, ym, M, pitch)
+    merlonRun(cm, 'x', c.x0, -1, c.z0 + 0.1, c.z1 - 0.1, ym, M, pitch)
+    merlonRun(cm, 'x', c.x1, 1, c.z0 + 0.1, c.z1 - 0.1, ym, M, pitch)
+  }
+  const templeAll = join([temple, boxesGeometry(mt, SURF.merlon), boxesGeometry(cope, SURF.coping), boxesGeometry(cm, SURF.merlon), pedestalG])
+
+  // every door: a sill across it, proud of both faces, its ends in the jambs; the leaves (Guessed: wood, hung at the
+  // end that opens into a room) standing open against the reveal, 1 cm off it; a door under 1.9 m takes one leaf, on
+  // its south side
+  const LV = np.leaves, sill: Boxes = [], leaf: Boxes = []
+  const sillTop = F.pave + LV.sill
+  const inRoom = (x: number, z: number): boolean => Object.values(F.rooms).some((r) => x > r.x0 && x < r.x1 && z > r.z0 && z < r.z1)
+  for (const d of F.doors) {
+    const b = d.box, alongX = d.wall === 'x'
+    const a0 = alongX ? b.x0 : b.z0, a1 = alongX ? (d.id === 'gate' ? O.x1 : b.x1) : b.z1
+    const half = d.w / 2
+    const sA = a0 - 0.06, sB = a1 + 0.06
+    sill.push(alongX ? { c: [(sA + sB) / 2, (F.pave - 0.03 + sillTop) / 2, d.c], s: [sB - sA, sillTop - F.pave + 0.03, d.w + 0.1] } : { c: [d.c, (F.pave - 0.03 + sillTop) / 2, (sA + sB) / 2], s: [d.w + 0.1, sillTop - F.pave + 0.03, sB - sA] })
+    // the end that opens into a room hangs the leaves
+    const at0 = alongX ? inRoom(a0 - 0.1, d.c) : inRoom(d.c, a0 - 0.1)
+    const hinge = at0 ? a0 + 0.03 : a1 - 0.03, dir = at0 ? 1 : -1
+    const two = d.w >= 1.9
+    const L = Math.min(two ? half - 0.02 : d.w - 0.04, a1 - a0 - 0.06)
+    const y0 = sillTop - 0.01, y1 = d.top - 0.06, t: number = LV.t
+    for (const side of two ? [-1, 1] : [1]) {
+      const across = d.c + side * (half - 0.01 - t / 2)
+      const along = hinge + (dir * L) / 2
+      leaf.push(alongX ? { c: [along, (y0 + y1) / 2, across], s: [L, y1 - y0, t] } : { c: [across, (y0 + y1) / 2, along], s: [t, y1 - y0, L] })
+    }
+  }
+  const doorsG = join([boxesGeometry(sill, SURF.sill), boxesGeometry(leaf, SURF.leaf)])
   const ashAll = join([ash, boxesGeometry(ma, SURF.merlon)])
 
   // the open ground before the gate: from the temple's street face to the street's west edge, the Ashratum on it
@@ -509,6 +602,9 @@ export function buildNabu(built: Built, mapPlan: J, np: J): Nabu {
   const bodies: NabuBody[] = [
     { id: 'nabu', geometry: templeAll, band: F.floor + BAND, letters: ['M', 'G'] },
     { id: 'nabu-ashratum', geometry: ashAll, band: F.floor + BAND, letters: ['M', 'G'] },
+    // the altars' level is not said (the block may belong to the older floor below), so no foot band shows them as dug
+    { id: 'nabu-altar', geometry: altarG, band: F.floor - 10, letters: ['G', 'G'] },
+    { id: 'nabu-doors', geometry: doorsG, band: F.floor - 10, letters: ['G', 'G'] },
     { id: 'nabu-apron', geometry: apron, band: 1e6, letters: ['G', 'G'] },
   ]
 
@@ -537,7 +633,9 @@ export function buildNabu(built: Built, mapPlan: J, np: J): Nabu {
     merlonTop: +Math.max(...mt.map((m) => m.c[1]! + m.s[1]! / 2)).toFixed(3),
     doors: F.doors.map((d) => ({ id: d.id, w: d.w, h: +(d.top - F.floor).toFixed(2), flat: true })),
     towers: F.towers.map(size),
-    triangles: (templeAll.getAttribute('position').count + ashAll.getAttribute('position').count + apron.getAttribute('position').count) / 3,
+    pedestal: { size: size(pd), top: +(pd.top - F.floor).toFixed(2), niche: +(F.niche.sill - F.floor).toFixed(2) },
+    altar: F.altar.map((a) => ({ size: size(a), top: +(a.top - F.floor).toFixed(2) })),
+    triangles: bodies.reduce((t, b) => t + b.geometry.getAttribute('position').count / 3, 0),
     cells: g.nx * g.nz,
   }
   return {

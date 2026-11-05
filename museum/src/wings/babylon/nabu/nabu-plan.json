@@ -13,7 +13,15 @@
  "floorSrc": "the rebuilt temple 'constructed on the remains of the mudbrick walls at +8.0 m' (P2021 p. 168)",
  "paving": {
   "top": 0.03,
-  "src": "baked brick covered with bitumen, guessed: Koldewey found an asphalt covering on the Ninmah court's pavement (K1914 ch. IX), Pedersen's model gives this court bricks covered with asphalt (P2021 fig. 4.24)"
+  "brick": 0.33,
+  "joint": {
+   "cover": 0.85,
+   "dust": 0.12
+  },
+  "coat": 0.55,
+  "coatWear": 0.45,
+  "sheen": 0.45,
+  "src": "baked brick covered with bitumen, guessed: Koldewey found an asphalt covering on the Ninmah court's pavement (K1914 ch. IX), Pedersen's model gives this court bricks covered with asphalt (P2021 fig. 4.24); the king's common brick about 33 cm square (P2021 p. 20); the coat's thickness and its wear ours: a thin coat over the whole court, every joint full, worn thinner on the walked ways"
  },
  "wall": 1.8,
  "wallSrc": "walls 1.8 m thick (P2021 p. 170)",
@@ -106,8 +114,8 @@
    445854.4
   ],
   "depth": 0.9,
-  "h": 3.2,
-  "src": "guessed: the cult niche in the cella's back wall (the type, P2021 p. 180)"
+  "h": 4.1,
+  "src": "guessed: the cult niche in the cella's back wall (the type, P2021 p. 180), its sill 2 cm over the pedestal's top, 4.1 m over the floor at its head"
  },
  "doors": [
   {
@@ -235,7 +243,15 @@
    0.38,
    0.48
   ],
-  "src": "plain black bitumen bands on white lime-gypsum plaster, recorded on the older temple below (P2021 p. 167, fig. 4.23) and carried up as a transfer (Guessed); the layout after Pedersen's model of this court (P2021 fig. 4.24): a dado of black piers under two bands, black frames round the doors; no motif drawn as found"
+  "src": "plain black bitumen bands on white lime-gypsum plaster, recorded on the older temple below (P2021 p. 167, fig. 4.23) and carried up as a transfer (Guessed); the layout after Pedersen's model of this court (P2021 fig. 4.24): a dado of black piers under two bands, black frames round the doors; no motif drawn as found; the side rooms off Nabu's court banded as the cella (P2021 p. 168: 'some other rooms nearby' had the same white walls with black bands), guessed",
+  "coat": {
+   "fringe": 0.009,
+   "sheen": [
+    0.28,
+    0.55
+   ],
+   "src": "the bands as a coat of bitumen paint on the plaster: it thins at its edge to a brown fringe of about a centimetre, it lies a little proud (a lit lip over each band, a shade under it), and its gloss varies with its thickness; plain bands only (SET-C1 G-C1-9)"
+  }
  },
  "black": {
   "src": "the court wall before the goddess's cella all black with bitumen (P2021 p. 170)"
@@ -273,14 +289,24 @@
    0.026
   ],
   "paving": [
-   0.12,
-   0.105,
-   0.09
+   0.13,
+   0.1,
+   0.075
   ],
   "apron": [
    0.42,
    0.36,
    0.28
+  ],
+  "cedar": [
+   0.2,
+   0.12,
+   0.07
+  ],
+  "sill": [
+   0.44,
+   0.34,
+   0.24
   ]
  },
  "door": {
@@ -295,5 +321,83 @@
    "bottom": 0.04
   },
   "src": "the stop's one press, named by what it shows and never 'Learn more' (the words are the writer's); it stands on the court's paving at the lower right of the wide frame, clear of the grey figure and the doorways, and at the foot of the upright one, so the frame at rest keeps far more than two thirds picture"
+ },
+ "pedestal": {
+  "box": [
+   445850.65,
+   445855.35,
+   3600400.35,
+   3600402.95
+  ],
+  "h": 1.2,
+  "chamfer": 0.35,
+  "src": "the god's pedestal against the cella's back wall, its outline as drawn on C6.2 (In place: 4.7 x 2.6 m, the front corners cut, centred on the court's axis); its height ours (Guessed, 1.2 m: its face reads over the altar from the court); no statue: the statue waits for its rights row"
+ },
+ "altar": {
+  "box": [
+   445851.3,
+   445854.7,
+   3600407.95,
+   3600410.75
+  ],
+  "tiers": [
+   {
+    "n": [
+     3600409.4,
+     3600410.75
+    ],
+    "h": 0.35
+   },
+   {
+    "n": [
+     3600407.95,
+     3600409.45
+    ],
+    "h": 0.95
+   }
+  ],
+  "by": {
+   "w": 1.6,
+   "d": 0.65,
+   "h": 0.6,
+   "gap": 0.05
+  },
+  "src": "the court's altars before the cella's door: the block drawn on C6.2 in the court (In place as drawn: 3.4 x 2.8 m, 0.9 m off the court's south wall, centred on the axis), two low blocks drawn against the wall beside the door (In place as drawn, moved out to clear the door's guessed 2.6 m, their use not said); P2021 fig. 4.24 names them altars ('behind the altars is the door to the cella'); plastered mud brick like the double altars at the Nabu and Ninurta temples' entrances (P2021 p. 172, 175); the block as two tiers after Pedersen's model, every height and the level (on the +8.0 paving) ours (Guessed)"
+ },
+ "lamp": {
+  "at": [
+   [
+    445850.0,
+    3600403.5,
+    1.35
+   ],
+   [
+    445856.0,
+    3600403.5,
+    1.35
+   ]
+  ],
+  "colour": [
+   1.0,
+   0.66,
+   0.36
+  ],
+  "gain": 0.85,
+  "r": 1.6,
+  "src": "guessed: two oil lamps on stands either side of the pedestal, out of the court's sight behind the door's jambs; only their warm light is drawn"
+ },
+ "coping": {
+  "curb": 0.85,
+  "h": 0.22,
+  "lift": 0.05,
+  "proj": 0.06,
+  "back": 0.72,
+  "pitch": 1.45,
+  "src": "guessed: a coping course standing 6 cm proud of each court's wall top, and on it the stepped battlements the temples were crowned with (K1914 ch. IX; the front's, ILL E05) carried round both courts; sizes and pitch ours"
+ },
+ "leaves": {
+  "t": 0.07,
+  "sill": 0.05,
+  "src": "guessed: wooden leaves standing open against each door's reveal, hung at the end that opens into a room, after Pedersen's model (P2021 fig. 4.24); a sill of baked brick across each door, 5 cm over the paving, 6 cm proud of each face; the doors plain, never arched (P2021 p. 168)"
  }
 }
