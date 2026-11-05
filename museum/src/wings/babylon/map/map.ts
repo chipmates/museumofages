@@ -38,6 +38,7 @@ import { mountNabu } from '../nabu/nabu'
 import { mountHouse } from '../house/house'
 import { mountBruegel } from '../bruegel/bruegel'
 import { mountShow } from '../bruegel-show/show'
+import { keysFor } from '../bruegel-show/show-path'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -307,7 +308,10 @@ function aim(pos: V3, look: V3, hfov: number, w: number, h: number, shift = 0): 
   fitShadow(camera)
 }
 
-const path = makePath(cams, F.s, stand)
+// the walk each tower state takes: the shared keys, or the showpiece's with its vantage beat (show-path.ts)
+const paths = { shared: makePath(cams, F.s, stand), show: makePath({ ...cams, path: keysFor(cams, 'bruegel-show') }, F.s, stand) }
+const walkNow = (): ReturnType<typeof makePath> => (towerNow === 'bruegel-show' ? paths.show : paths.shared)
+const path = { get keys() { return walkNow().keys }, get duration() { return walkNow().duration }, sample: (t: number): PathSample => walkNow().sample(t) }
 
 /* one pipeline: the scene pass, the contact occlusion, output linear; the print on the CPU */
 setHour(hourOf(cams.stops[0].hour))

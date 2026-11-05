@@ -5078,5 +5078,56 @@
     "shift": -0.3
    }
   }
- ]
+ ],
+ "only": {
+  "about": "keys one tower state walks alone (bruegel-show/show-path.ts merges them into that state's path in place of the shared keys their span covers; every other state and tool reads `path` as it is)",
+  "bruegel-show": [
+   {
+    "t": 393.03,
+    "at": [
+     445740.0,
+     3599648.6
+    ],
+    "y": 88.4,
+    "look": [
+     445640.5,
+     3600036.0,
+     88.4
+    ],
+    "stop": 12,
+    "kind": "hold",
+    "hold": true,
+    "hfov": 40.0,
+    "shift": -0.35,
+    "phone": {
+     "hfov": 21.0,
+     "shift": -0.23
+    },
+    "vantage": true,
+    "say": "the showpiece only: up and back to the painter's own vantage, high and from the front, where his terraces, ramp and crowd show"
+   },
+   {
+    "t": 396.03,
+    "at": [
+     445740.0,
+     3599648.6
+    ],
+    "y": 88.4,
+    "look": [
+     445640.5,
+     3600036.0,
+     88.4
+    ],
+    "stop": 12,
+    "kind": "hold",
+    "hold": true,
+    "hfov": 40.0,
+    "shift": -0.35,
+    "phone": {
+     "hfov": 21.0,
+     "shift": -0.23
+    }
+   }
+  ]
+ }
 }

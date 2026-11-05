@@ -101,7 +101,9 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
   const bruegelShow = towerState === 'bruegel-show' ? buildShow(towerAxis, built.ground, json(join(APP, 'src/wings/babylon/bruegel-show/show-plan.json'))) : null
   const F = makeFrame(plan)
   const stand = (x, z) => built.stand(x, z)
-  const path = makePath(cams, F.s, stand)
+  // the showpiece walks its own vantage beat too (show-path.ts); every other state the shared path
+  const { keysFor, vantageTime } = await import(join(APP, 'src/wings/babylon/bruegel-show/show-path.ts'))
+  const path = makePath(towerState === 'bruegel-show' ? { ...cams, path: keysFor(cams, towerState) } : cams, F.s, stand)
   const n = Number(stop)
   const ks = path.keys.filter((k) => k.stop === n)
   if (!ks.length) throw new Error(`the map has no keys for stop ${stop}`)
@@ -113,6 +115,15 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
     const ph = framing === 'phone'
     return cameraFrom({ name: `stop ${stop} ${framing} ${w}x${h}`, eye: p.pos, look: ph ? p.phone.look : p.look, vfov: fittedFov(ph ? p.phone.hfov : p.hfov, w, h), w, h, shift: ph ? p.phone.shift : p.shift })
   })
+  // and its vantage's cameras checked beside the hold's
+  const tv = towerState === 'bruegel-show' && n === 12 ? vantageTime(cams, towerState) : null
+  if (tv !== null) {
+    const pv = path.sample(tv + 1)
+    for (const [framing, w, h] of SIZES) {
+      const ph = framing === 'phone'
+      cameras.push(cameraFrom({ name: `stop ${stop} vantage ${framing} ${w}x${h}`, eye: pv.pos, look: ph ? pv.phone.look : pv.look, vfov: fittedFov(ph ? pv.phone.hfov : pv.hfov, w, h), w, h, shift: ph ? pv.phone.shift : pv.shift }))
+    }
+  }
   const eyes = [new THREE.Vector3(...p.pos)]
   for (let t = ks[0].t; t <= ks[ks.length - 1].t + 1e-9; t += 0.1) eyes.push(new THREE.Vector3(...path.sample(t).pos))
   const gf = plan.frames.gate
