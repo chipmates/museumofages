@@ -11,7 +11,7 @@ import { uView } from './mass'
 import { buildGate, gateFrame, gateOwnParts, gateRooms, isGateMassing, type Kind } from '../gate/gate-geom'
 import { animalField } from '../gate/gate-relief'
 import { assemble, panelGrid } from '../gate/gate-mesh'
-import { bakePanel, makeUniforms, panelMaterial, wallMaterial, C as COURSE } from '../gate/gate-mat'
+import { bakePanel, BR, footprint, hash2, makeUniforms, panelMaterial, wallMaterial, C as COURSE, type GateUniforms } from '../gate/gate-mat'
 import type { Namer } from '../record'
 import { panelTones, toneGateWalls, type Painted } from '../record-tones'
 
@@ -19,7 +19,27 @@ import { panelTones, toneGateWalls, type Painted } from '../record-tones'
 type J = any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
-const { uniform } = TSL as unknown as Record<string, N>
+const { uniform, attribute, positionLocal, normalize, vec3, select, abs, step, max, floor, fract, log2, exp2, mix, float, smoothstep } = TSL as unknown as Record<string, N>
+
+/** the glaze from far off. Past a brick a pixel the gate's material lets its brick-to-brick tone go (right on its own page,
+    where a pixel never spans one); a pixel's mean over n bricks keeps 1/sqrt(n) of it, drawn here on cells of 2^j bricks
+    blended like mip levels so it neither shimmers nor swims; and the courses laid from one firing in bands of six courses and stretches of 8 m
+    (a guess, as the tower's baked brick has it). Only on the glazed brick, only where the material's own detail faded */
+function distantGlaze(m: N, U: GateUniforms): N {
+  const gU = attribute('gU', 'float'), gInfo = attribute('gInfo', 'vec4')
+  const y = positionLocal.y
+  const nW = normalize(U.uRot.mul(attribute('normal', 'vec3')))
+  const tU = normalize(select(abs(nW.y).greaterThan(0.7), vec3(1, 0, 0), vec3(nW.z.negate(), 0, nW.x)))
+  const fu = footprint(U, tU, nW), fy = footprint(U, vec3(0, 1, 0), nW)
+  const far = smoothstep(0.08, 0.3, fu).mul(step(abs(gInfo.z), 0.5))
+  const lv = log2(max(fu.div(BR), 1).mul(max(fy.div(COURSE), 1))).mul(0.5)
+  const j0 = floor(lv)
+  const cell = (j: N): N => hash2(floor(gU.div(exp2(j).mul(BR))), floor(y.div(exp2(j).mul(COURSE)))).sub(0.5).div(exp2(j))
+  const speckle = mix(cell(j0), cell(j0.add(1)), fract(lv)).mul(0.09)
+  const batch = hash2(floor(y.div(6 * COURSE)).add(17), floor(gU.div(8))).sub(0.5).mul(0.12).mul(float(1).sub(smoothstep(3 * COURSE, 6 * COURSE, fy)))
+  m.colorNode = m.colorNode.mul(float(1).add(speckle.add(batch).mul(far).mul(float(1).sub(U.uSwitch))))
+  return m
+}
 
 /** the map's build without the massings, and the gate's own parts assembled as the gate page assembles them */
 export function buildGateOnMap(built: MapBuilt, gatePlan: J) {
@@ -67,7 +87,7 @@ export function mountGateOnMap(built: MapBuilt, mapPlan: J, gatePlan: J): GateOn
     gate.name = 'ishtar-gate'
     gate.matrixAutoUpdate = false
     gate.matrix.copy(G2W)
-    const walls = new Mesh(A.walls, wallMaterial(U, rooms))
+    const walls = new Mesh(A.walls, distantGlaze(wallMaterial(U, rooms), U))
     walls.name = 'gate-walls'
     walls.castShadow = true
     walls.receiveShadow = true

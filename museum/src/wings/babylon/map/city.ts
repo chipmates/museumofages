@@ -36,6 +36,8 @@ export function mapTone(id: string): MapTone {
   // the circuits' embankments and moat walls are baked brick, their main and front walls mud brick
   if (/^(inner-east|outer-east|west-city)-(karu|walk)-/.test(id)) return 'baked'
   if (/^(inner-east|outer-east|west-city)-(main|front)-/.test(id)) return 'mud'
+  // the South Palace's range roofs: earth and mud plaster inside their parapets, as the houses' (REC bab.houses.type)
+  if (/^south-palace-deck-/.test(id)) return 'mud'
   return toneOf(id)
 }
 
