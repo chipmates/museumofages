@@ -39,7 +39,8 @@ test('the kit keeps to its ports', () => {
   assert.equal(checkPort(5221, own), 5221)
   for (const p of [5214, 5230]) assert.throws(() => checkPort(p, own))
   assert.deepEqual(portRange('5300-5309'), [5300, 5309])
-  for (const bad of ['5190-5199', '5390-5400', '5229-5220', 'x']) assert.throws(() => portRange(bad))
+  assert.deepEqual(portRange('5420-5429'), [5420, 5429])
+  for (const bad of ['5190-5199', '5390-5400', '5398-5405', '5400-5402', '5495-5505', '5229-5220', 'x']) assert.throws(() => portRange(bad))
 })
 
 test('the writer takes files inside its folder only', () => {
