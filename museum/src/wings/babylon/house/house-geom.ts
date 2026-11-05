@@ -444,7 +444,8 @@ export function houseConstruction(hp: J, f: Frame): Array<{ id: string; geometry
   const tops = new Mesher()
   const E = Bd.edge, Cp = Bd.cap
   for (const c of hp.courts as Rect[]) {
-    const y0 = L.ceiling, y1 = L.deck, o = -E.out, ch = 0.012
+    // the chamfers wide enough to stay over a pixel from the stop's eye across both courts
+    const y0 = L.ceiling, y1 = L.deck, o = -E.out, ch = 0.025
     ringSweep(tops, c, [
       { a: E.in, y: y0, na: 0, ny: -1 }, { a: o + ch, y: y0, na: 0, ny: -1 },
       { a: o + ch, y: y0, na: -0.7, ny: -0.7 }, { a: o, y: y0 + ch, na: -0.7, ny: -0.7 },
