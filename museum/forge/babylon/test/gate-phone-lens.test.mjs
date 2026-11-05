@@ -31,7 +31,7 @@ test('gate.ts hands the keys their phone lens and films the phone with it', () =
   assert.match(src, /phoneFilm: cams\.phoneFilm/)
   assert.match(src, /\.\.\.\(k\.phone \? \{ phone: k\.phone \} : \{\}\)/)
   assert.match(src, /const hfov = o\.framing === 'phone' \? p\.phone\.hfov : p\.hfov/)
-  assert.match(src, /const shift = o\.framing === 'phone' \? p\.phone\.shift : 0/)
+  assert.match(src, /const shift = o\.framing === 'phone' \? p\.phone\.shift : p\.shift/)
   assert.doesNotMatch(src, /framing === 'phone' \? 46/)
 })
 

@@ -438,7 +438,7 @@ const pathCams = {
     // a stop's first key repeats the last stop's last key at the same second, so each stop starts at its own key; the
     // walk's first key is the arrival's landing, so its clock starts at the landing's hour (one clock across the cut)
     const first = s === cams.stops[0] && i === 0
-    return { t: k.t + (i === 0 && !first ? 1e-4 : 0), at: [E, N], y: 'eye', look: [lE, lN, look[1] + L0], stop: s.n, hold: k.kind === 'hold' || i === 0, kind: k.kind, cut: false, ...(k.phone ? { phone: k.phone } : {}), ...(first ? { hour: openCams.hour } : {}) }
+    return { t: k.t + (i === 0 && !first ? 1e-4 : 0), at: [E, N], y: 'eye', look: [lE, lN, look[1] + L0], stop: s.n, hold: k.kind === 'hold' || i === 0, kind: k.kind, cut: false, ...(k.phone ? { phone: k.phone } : {}), ...(k.desktop ? { hfov: k.desktop.hfov, shift: k.desktop.shift } : {}), ...(first ? { hour: openCams.hour } : {}) }
   })),
 }
 const standMap = (x: number, z: number): number => {
@@ -633,9 +633,9 @@ const rig = {
       const time = from + i / o.fps
       const p: PathSample = path.sample(time)
       setHour(p.hour)
-      // the phone's lens and shift from the path (a hold's from its still), eased between keys; the desktop's as before
+      // each framing's lens and shift from the path (a hold's from its still), eased between keys
       const hfov = o.framing === 'phone' ? p.phone.hfov : p.hfov
-      const shift = o.framing === 'phone' ? p.phone.shift : 0
+      const shift = o.framing === 'phone' ? p.phone.shift : p.shift
       const vfov = fittedFov(hfov, o.framing === 'phone' ? [390, 844] : [16, 9], o.w, o.h)
       aimWorld(new Vector3(...(p.pos as MV3)), new Vector3(...(p.look as MV3)), vfov, o.w, o.h, shift)
       const { bytes } = await render(o.w, o.h, o.samples, 0)
