@@ -27,7 +27,7 @@ test('the hand terms\' switch is one uniform, off at load', () => {
 for (const [file, terms] of [
   ['court/court-mat.ts', ['skyAO']],
   ['house/house-mat.ts', ['pavingAO', 'courtWallAO', 'Z.courtFloor']],
-  ['nabu/nabu-mat.ts', ['floorAO', 'courtWallAO', 'wallShare', 'occluded']],
+  ['nabu/nabu-mat.ts', ['floorAO']],
 ]) {
   test(`${file} names its rooms for the field and steps its view factors aside by uSkySet`, () => {
     const s = src(file)
@@ -39,3 +39,18 @@ for (const [file, terms] of [
     }
   })
 }
+
+// the temple's white court keeps its walls' bounce terms beside the field and names the share of the hidden sky its
+// walls give back, so the field's sky and the walls' light are each counted once
+test('nabu/nabu-mat.ts names its court\'s bounce for the field', () => {
+  const s = src('nabu/nabu-mat.ts')
+  assert.match(s, /skyBounceNode = /)
+  assert.match(s, /skyMirrorNode = /)
+  for (const t of ['const courtWallAO', 'const topTint', 'const occluded']) {
+    const line = s.split('\n').find((l) => l.includes(t))
+    assert.ok(line && !line.includes('uSkySet'), `${t} stays beside the field`)
+  }
+  const f = readFileSync(join(APP, 'src/wings/babylon/open/sky-set.ts'), 'utf8')
+  assert.match(f, /material\?\.skyBounceNode/)
+  assert.match(f, /material\?\.skyMirrorNode/)
+})
