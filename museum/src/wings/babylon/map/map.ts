@@ -483,6 +483,8 @@ const rig = {
     const t = performance.now()
     const framing = o.framing ?? 'desktop'
     let baked = envNow().bakes
+    // the sky field's refits cross-fade over 8 frames on the film (open/sky-set.ts)
+    L.field?.setFilm(true)
     for (let i = 0; i < n; i++) {
       const time = from + i / o.fps
       const p = aimFilm(time, framing, o.w, o.h)
@@ -500,10 +502,16 @@ const rig = {
         ndc.set(wx, stand(wx, wz), wz).project(camera)
         watch = [+(((ndc.x + 1) / 2) * o.w).toFixed(1), +(((1 - ndc.y) / 2) * o.h).toFixed(1), ndc.z < 1 ? 1 : 0]
       }
-      log.push({ i: g, t: +time.toFixed(3), stop: p.stop, kind: p.kind, utm: F.utm(p.pos[0], p.pos[2]).map((v) => +v.toFixed(2)), y: +p.pos[1].toFixed(2), eyeOverStand: +(p.pos[1] - stand(p.pos[0], p.pos[2])).toFixed(2), hour: +p.hour.toFixed(3), ev: +ev.toFixed(3), figuresInFrame: figuresInFrame(), env, ...(watch ? { watch } : {}) })
+      log.push({ i: g, t: +time.toFixed(3), stop: p.stop, kind: p.kind, utm: F.utm(p.pos[0], p.pos[2]).map((v) => +v.toFixed(2)), y: +p.pos[1].toFixed(2), eyeOverStand: +(p.pos[1] - stand(p.pos[0], p.pos[2])).toFixed(2), hour: +p.hour.toFixed(3), ev: +ev.toFixed(3), figuresInFrame: figuresInFrame(), env, ...(watch ? { watch } : {}), ...(L.field ? { sky: (({ fits, crossFades, rolling, lastFitMs }) => ({ fits, crossFades, rolling, lastFitMs }))(L.field.facts()) } : {}) })
     }
+    L.field?.setFilm(false)
     await upload(`${o.out}/frames-${String(Math.round(from * o.fps)).padStart(5, '0')}.json`, JSON.stringify({ fps: o.fps, w: o.w, h: o.h, samples: o.samples, from, to, frames: log }, null, 0))
     return { frames: n, ms: Math.round(performance.now() - t) }
+  },
+  /** the sky field's next film frame starts a refit (sky-clip.mjs `--refit`) */
+  skyRefit: () => {
+    L.field?.refit()
+    return L.field ? L.field.facts() : null
   },
   /** the path sampled for the motion check, no rendering */
   pathSamples(dt = 0.1) {

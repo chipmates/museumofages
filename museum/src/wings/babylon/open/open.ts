@@ -317,6 +317,8 @@ figure.position.set(plan.figure.x, B.level(plan.figure.z), plan.figure.z)
 figure.rotation.y = plan.figure.turn ?? -Math.PI / 2
 figure.name = 'figure'
 gate.add(figure)
+// the figure keeps the stack's contact shade: the sky field's maps leave it out
+L.field?.setHidden(() => [figure])
 // a probe only, never in the film (?figure=s,t): the figure on the street s metres out on its line, t across (+ west)
 if (q.get('figure')) {
   const [fs, ft] = q.get('figure')!.split(',').map(Number) as [number, number]
@@ -410,7 +412,9 @@ function brightness(bytes: Uint8ClampedArray): { median: number; p1: number; p99
 }
 async function render(w: number, h: number, samples: number, stops: number): Promise<{ bytes: Uint8ClampedArray; ms: number }> {
   const t = performance.now()
-  const rgb = await accumulate(renderer, camera, linear!.post, w, h, samples)
+  // the sky field (`?sky=set`, open/sky-set.ts): its maps for this camera, a quarter of its directions a sub-frame
+  L.field?.prepare(camera)
+  const rgb = await accumulate(renderer, camera, linear!.post, w, h, samples, L.field ? (i: number) => L.field!.each(i) : undefined)
   const bytes = printFrame(rgb, w, h, L.printFor(camera.position.y, stops), 0)
   return { bytes, ms: Math.round(performance.now() - t) }
 }

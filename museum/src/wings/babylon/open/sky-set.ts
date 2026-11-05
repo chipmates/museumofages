@@ -71,6 +71,8 @@ export interface SkySetOptions {
       material's occlusion and three's 1 - E at the view), 1 the same divided by 1 - E, 2 the direct diffuse (as a
       light's: past the occlusion and the 1 - E) */
   fit?: number
+  /** the film's refits cross-fade over 8 frames (false: drawn at once, as a still's) */
+  fade?: boolean
   /** the receiver's offset along its normal and the depth bias, in texels of each map */
   normalBias?: number
   depthBias?: number
@@ -185,11 +187,18 @@ export function skySet(o: SkySetOptions) {
   }
 
   const lightCam = new OrthographicCamera()
-  // the region of the last fit (world x and z, with the camera's place) and the counts for the sidecar
-  let region: { x0: number; x1: number; z0: number; z1: number } | null = null
+  /* the region the maps cover (world x and z, padded, with the pad and the box's top) and the counts for the sidecar */
+  type Region = { x0: number; x1: number; z0: number; z1: number; px: number; pz: number; top: number }
+  let region: Region | null = null
   let fits = 0, fitMs = 0, lastFitMs = 0, added = false, on = true
   let hidden = o.hidden ?? ((): Object3D[] => [])
-  const texels: number[] = []
+  const texels: number[] = new Array(COUNT).fill(0)
+  /* the film: a refit draws the new region's maps an eighth of the directions a frame (k mod 8), the others keep the
+     old region's, so the shade moves over 8 frames instead of in one */
+  const GROUPS = 8
+  const ALL = Array.from({ length: COUNT }, (_, k) => k)
+  let film = false, force = false, pending: Region | null = null, group = 0, crossFades = 0
+  const lastAt = new Vector3(Infinity, 0, 0)
 
   /** the ground the frame sees, out to fitShadow's reach (light.ts), as points at three heights */
   function seenPoints(cam: PerspectiveCamera): Vector3[] {
@@ -209,26 +218,35 @@ export function skySet(o: SkySetOptions) {
     return pts
   }
 
-  function covered(cam: PerspectiveCamera): boolean {
+  /** every point the frame sees (the camera's own place among them) inside the region, less a share of its pad: the
+      camera stands at the region's near edge by construction, so a test on its inner part would refit at every framing */
+  function covered(cam: PerspectiveCamera, inset = 0): boolean {
     if (!region) return false
-    const { x0, x1, z0, z1 } = region
-    // every point the frame sees (the camera's own place among them) inside the region: the camera stands at the
-    // region's near edge by construction, so a test on its inner part would refit at every framing
-    return seenPoints(cam).every((q) => q.x >= x0 && q.x <= x1 && q.z >= z0 && q.z <= z1)
+    const { x0, x1, z0, z1 } = region, ix = region.px * inset, iz = region.pz * inset
+    return seenPoints(cam).every((q) => q.x >= x0 + ix && q.x <= x1 - ix && q.z >= z0 + iz && q.z <= z1 - iz)
+  }
+
+  /** the region for this frame: its seen points, padded so the other framing and a small move keep the same maps */
+  function regionFor(cam: PerspectiveCamera): Region {
+    let x0 = Infinity, x1 = -Infinity, z0 = Infinity, z1 = -Infinity
+    for (const p of seenPoints(cam)) { x0 = Math.min(x0, p.x); x1 = Math.max(x1, p.x); z0 = Math.min(z0, p.z); z1 = Math.max(z1, p.z) }
+    const px = Math.max(30, (x1 - x0) * 0.15), pz = Math.max(30, (z1 - z0) * 0.15)
+    return { x0: x0 - px, x1: x1 + px, z0: z0 - pz, z1: z1 + pz, px, pz, top: Math.max(100, cam.position.y + 5) }
   }
 
   function fit(cam: PerspectiveCamera): void {
+    region = regionFor(cam)
+    draw(region, ALL)
+    fits++
+  }
+
+  /** the maps of the directions ks for a region, and their rows in the table */
+  function draw(r: Region, ks: number[]): void {
     const t0 = performance.now()
-    const pts = seenPoints(cam)
-    let x0 = Infinity, x1 = -Infinity, z0 = Infinity, z1 = -Infinity
-    for (const p of pts) { x0 = Math.min(x0, p.x); x1 = Math.max(x1, p.x); z0 = Math.min(z0, p.z); z1 = Math.max(z1, p.z) }
-    // padded so the other framing and a small move keep the same maps; the camera always in the inner part
-    const px = Math.max(30, (x1 - x0) * 0.15), pz = Math.max(30, (z1 - z0) * 0.15)
-    region = { x0: x0 - px, x1: x1 + px, z0: z0 - pz, z1: z1 + pz }
-    const top = Math.max(100, cam.position.y + 5)
+    const top = r.top
     const corners: Vector3[] = []
-    for (const x of [region.x0, region.x1]) for (const z of [region.z0, region.z1]) for (const y of [0, top]) corners.push(new Vector3(x, y, z))
-    const centre = new Vector3((region.x0 + region.x1) / 2, top / 2, (region.z0 + region.z1) / 2)
+    for (const x of [r.x0, r.x1]) for (const z of [r.z0, r.z1]) for (const y of [0, top]) corners.push(new Vector3(x, y, z))
+    const centre = new Vector3((r.x0 + r.x1) / 2, top / 2, (r.z0 + r.z1) / 2)
 
     const hide = hidden().filter((x) => x.visible)
     for (const x of hide) x.visible = false
@@ -237,8 +255,7 @@ export function skySet(o: SkySetOptions) {
     ;(renderer as N).setRenderObjectFunction(onlyCasters)
     renderer.autoClear = true
     lightCam.coordinateSystem = (renderer as N).coordinateSystem
-    texels.length = 0
-    for (let k = 0; k < COUNT; k++) {
+    for (const k of ks) {
       const d = DIRS[k]!
       lightCam.position.copy(centre).addScaledVector(d, 6000)
       lightCam.lookAt(centre)
@@ -254,7 +271,7 @@ export function skySet(o: SkySetOptions) {
       lightCam.near = Math.max(1, zn - UPSTREAM); lightCam.far = zf + 5
       lightCam.updateProjectionMatrix()
       const texel = Math.max(a1 - a0, b1 - b0) / SIZE
-      texels.push(texel)
+      texels[k] = texel
       renderer.setRenderTarget(target, k)
       renderer.render(scene, lightCam)
       // world to the map: x and y to uv (y down in the texture), z to the stored depth less a bias of a texel or so
@@ -274,6 +291,14 @@ export function skySet(o: SkySetOptions) {
     for (const x of hide) x.visible = true
     lastFitMs = Math.round(performance.now() - t0)
     fitMs += lastFitMs
+  }
+
+  /** the film's refit in progress drawn to its end at once (a still never takes two regions' maps) */
+  function finish(): void {
+    if (!pending) return
+    draw(pending, ALL.filter((k) => k % GROUPS >= group))
+    region = pending
+    pending = null
     fits++
   }
 
@@ -300,7 +325,34 @@ export function skySet(o: SkySetOptions) {
     /** before a still: the maps for the camera's region (drawn once while the camera stays in it) and the weights */
     prepare(cam: PerspectiveCamera): void {
       // under another source's environment (the twilight) the field is off: no maps are drawn for it
-      if (on && !covered(cam)) fit(cam)
+      // a cut on the film (the camera further from its last frame than the region's pad) is a still's fit
+      const jump = region !== null && cam.position.distanceTo(lastAt) > Math.max(region.px, region.pz)
+      lastAt.copy(cam.position)
+      if (on && (!film || !region || jump)) {
+        if (jump) pending = null
+        finish()
+        if (!covered(cam)) fit(cam)
+      } else if (on) {
+        // once the frame's seen ground nears the region's edge (half its pad), the next region rolls in
+        if (!pending && (force || !covered(cam, 0.5))) {
+          pending = regionFor(cam)
+          group = 0
+          force = false
+        }
+        if (pending && !covered(cam)) {
+          // the frame left the old maps before the new ones were all drawn: the rest at once, never open sky
+          finish()
+          if (!covered(cam)) fit(cam)
+        } else if (pending) {
+          draw(pending, ALL.filter((k) => k % GROUPS === group))
+          if (++group === GROUPS) {
+            region = pending
+            pending = null
+            fits++
+            crossFades++
+          }
+        }
+      }
       if (!added) {
         scene.add(light)
         added = true
@@ -321,6 +373,16 @@ export function skySet(o: SkySetOptions) {
     /** the geometry changed (the tower switch, the garden): the next still draws the maps again */
     invalidate(): void {
       region = null
+      pending = null
+    },
+    /** the film's frames (map.ts clip): a refit cross-fades over 8 frames; off again, a refit in progress is finished */
+    setFilm(v: boolean): void {
+      if (!v) finish()
+      film = v && o.fade !== false
+    },
+    /** the film's next frame starts a refit wherever the camera stands (the refit clip's check) */
+    refit(): void {
+      force = true
     },
     /** off while the environment comes from another source (the twilight's) */
     setOn(v: boolean): void {
@@ -331,8 +393,8 @@ export function skySet(o: SkySetOptions) {
     facts: () => ({
       mode: 'set', directions: COUNT, mapSize: SIZE, perSubFrame: COUNT / STRIDE, giveBack: uGive.value, giveHue: uHue.value, albedo: ALBEDO, fit: FIT, on, normalBias: NB, depthBias: ZB, specular: uSpec.value, specularPower: uSpecPow.value,
       region: region && { x: [+region.x0.toFixed(1), +region.x1.toFixed(1)], z: [+region.z0.toFixed(1), +region.z1.toFixed(1)] },
-      texel: texels.length ? { min: +Math.min(...texels).toFixed(3), max: +Math.max(...texels).toFixed(3) } : null,
-      fits, fitMs, lastFitMs, memoryMiB: +((SIZE * SIZE * COUNT * 2) / 2 ** 20).toFixed(1),
+      texel: fits ? { min: +Math.min(...texels).toFixed(3), max: +Math.max(...texels).toFixed(3) } : null,
+      fits, crossFades, film, rolling: pending ? group : null, fitMs, lastFitMs, memoryMiB: +((SIZE * SIZE * COUNT * 2) / 2 ** 20).toFixed(1),
     }),
   }
 }
