@@ -16,7 +16,7 @@
 
 import { MeshStandardNodeMaterial, Vector3, type Material } from 'three/webgpu'
 import * as TSL from 'three/tsl'
-import { PAL, footprint, hash2, lines } from '../gate/gate-mat'
+import { PAL, band, footprint, hash2, lines } from '../gate/gate-mat'
 import { classColour, uView, type ClassTones } from '../map/mass'
 import { TONES } from '../open/earth'
 import { PRESETS as PAVING, pavingBrickCourt } from '../parts/paving-brick-court-babylon'
@@ -40,6 +40,8 @@ export const uHousePix = uniform(0.0003)
 export const uHouseSun = uniform(new Vector3(0, 0, 0))
 /** the share of the court's light a room's door passes in */
 export const uHouseIn = uniform(0.42)
+/** toward the page's sun (world, unit), read before each draw: House VI's court draws its own walls' shade */
+export const uHouseSunDir = uniform(new Vector3(0, 1, 0))
 export function setHousePixel(vfovDeg: number, heightPx: number): void {
   uHousePix.value = (2 * Math.tan(((vfovDeg / 2) * Math.PI) / 180)) / heightPx
 }
@@ -66,6 +68,7 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
   const along = select(nU.greaterThan(0.5), v, u)
   const fAlong = footprint(U, select(nU.greaterThan(0.5), az, ax), n), fUp = footprint(U, vec3(0, 1, 0), n)
   const fw = max(fAlong, fUp)
+  const seenAt = (f: N, size: number): N => float(1).sub(smoothstep(size * 0.25, size, f))
 
   /* ── the walls: a white gypsum wash over mud plaster ── */
   const wash = V(TONES.plaster as RGB), mud = V(TONES.mud as RGB)
@@ -86,11 +89,57 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
   const flake = smoothstep(0.52, 0.58, chipN).mul(aged).mul(mix(float(0.35), float(0.8), outer)).mul(float(1).sub(smoothstep(0.006, 0.03, fw)))
   // faint runs down from the parapets' tops
   const runs = smoothstep(0.55, 0.9, mx_noise_float(vec3(along.mul(3.1), P.y.mul(0.25), 1.7)).add(0.5)).mul(smoothstep(0.5, 3.0, yF)).mul(0.07)
-  let wallCol: N = mix(coat, mud.mul(float(0.95).add(mid.mul(0.1))), max(worn.mul(0.6), flake.mul(0.7)))
-  wallCol = wallCol.mul(float(1).sub(runs))
+  /* House VI's court (its walls' faces and its doors' reveals): the damp foot placed by exposure and the runs by sites */
+  const ct = hp.courts[0], Cp = hp.build.cap
+  const inCt = (g: number): N => step(ct.u[0] - g, u).mul(step(u, ct.u[1] + g)).mul(step(ct.v[0] - g, v)).mul(step(v, ct.v[1] + g)).mul(six)
+  const courtSix = is(Z.court).mul(inCt(0.05))
+  // the faces' outlook (scene x east, z south): the court's north-facing wall is in shade all day and stays damp highest,
+  // its south-facing one dries in the sun; the west-facing takes the evening sun, the east-facing the morning's
+  const nN = clamp(n.z.negate(), 0, 1), nS = clamp(n.z, 0, 1), nE = clamp(n.x, 0, 1), nW = clamp(n.x.negate(), 0, 1)
+  const expo = float(1).add(nN.mul(0.75)).add(nE.mul(0.25)).sub(nS.mul(0.4)).sub(nW.mul(0.12))
+  const dCorner = max(min(u.sub(ct.u[0]), float(ct.u[1]).sub(u)), min(v.sub(ct.v[0]), float(ct.v[1]).sub(v)))
+  // each court door's jambs on the court line, as points in the frame
+  let dJamb: N = float(9)
+  for (const d of hp.doors as J[]) {
+    const onS = Math.abs(d.v[0] - ct.v[1]) < 1e-6, onN = Math.abs(d.v[1] - ct.v[0]) < 1e-6, onE = Math.abs(d.u[0] - ct.u[1]) < 1e-6, onW = Math.abs(d.u[1] - ct.u[0]) < 1e-6
+    if (!(onS || onN || onE || onW)) continue
+    const pts: Array<[number, number]> = onS || onN ? [[d.u[0], onS ? ct.v[1] : ct.v[0]], [d.u[1], onS ? ct.v[1] : ct.v[0]]] : [[onE ? ct.u[1] : ct.u[0], d.v[0]], [onE ? ct.u[1] : ct.u[0], d.v[1]]]
+    for (const [pu, pv] of pts) dJamb = min(dJamb, length(vec2(u.sub(pu), v.sub(pv))))
+  }
+  const wav = mx_noise_float(vec3(along.mul(0.55), 4.4, u.add(v).mul(0.13)))
+  // higher by a corner and beside a jamb (the threshold's splash), low on the reveals over the sill: each door breaks it
+  const onReveal = is(Z.reveal).mul(inCt(1.7))
+  const dampH = float(0.15).mul(expo).mul(float(1).add(float(1).sub(smoothstep(0.1, 0.7, dCorner)).mul(0.3)))
+    .mul(float(1).add(float(1).sub(smoothstep(0.05, 0.45, dJamb)).mul(0.35).mul(float(1).sub(onReveal))))
+    .mul(float(1).add(wav.mul(0.7))).mul(mix(float(1), float(0.3), onReveal))
+    .add(mx_noise_float(vec3(along.mul(4.3), 2.9, 5.1)).mul(0.035)).add(mx_noise_float(vec3(along.mul(13), 1.3, 7.1)).mul(0.012).mul(seenAt(fw, 0.02)))
+  // its top soft in one stretch (the capillary fringe), crisp with a salt line in the next
+  const crisp = smoothstep(-0.15, 0.25, mx_noise_float(vec3(along.mul(0.45), 7.7, 1.3)))
+  const dampE = mix(float(0.07), float(0.012), crisp).add(fUp)
+  const damp6 = float(1).sub(smoothstep(dampH.sub(dampE), dampH.add(dampE.mul(0.3)), yF))
+  const salt = band(yF, dampH.add(0.006), dampH.add(0.026), fUp).mul(crisp).mul(seenAt(fw, 0.03)).mul(float(1).sub(onReveal))
+  const six6 = max(courtSix, onReveal)
+  const wornAll = mix(worn, damp6, six6)
+  // runs down from the overhangs (the drip course's underside, the cap's): one run or none per site, the sites jittered
+  // along the wall at two spacings and warped, so no period shows; each run its own width, length and depth
+  const downO = select(P.y.lessThan(L.ceiling + 0.01), float(L.ceiling).sub(P.y), float(L.top - Cp.drop).sub(P.y))
+  const runAt = (cell: number, seed: number): N => {
+    const a2 = along.add(mx_noise_float(vec3(along.mul(0.37), seed, 1.1)).mul(cell * 0.9))
+    const k = floor(a2.div(cell)), f = a2.div(cell).sub(k)
+    const h1 = hash2(k, float(seed)), h2 = hash2(k.add(3.7), float(seed + 1)), h3 = hash2(k.add(9.1), float(seed + 2)), h4 = hash2(k.add(5.3), float(seed + 3))
+    const len = h4.mul(h4).mul(0.75).add(0.1)
+    const taper = clamp(float(1).sub(downO.div(len)), 0, 1)
+    const w = h3.mul(0.05).add(0.015).mul(taper.mul(0.6).add(0.4)).div(cell)
+    const dx = abs(f.sub(h2.mul(0.7).add(0.15)))
+    return step(h1, 0.45).mul(float(1).sub(smoothstep(w.mul(0.4), w, dx))).mul(smoothstep(0.0, 0.25, taper)).mul(step(0, downO)).mul(hash2(k.add(1.3), float(seed + 4)).mul(0.6).add(0.4))
+  }
+  const runs6 = max(runAt(0.57, 11), runAt(1.37, 23)).mul(0.085).mul(seenAt(fw, 0.015))
+  let wallCol: N = mix(coat, mud.mul(float(0.95).add(mid.mul(0.1))), max(wornAll.mul(0.6), flake.mul(0.7)))
+  wallCol = wallCol.mul(float(1).sub(mix(runs, runs6, courtSix)))
+  wallCol = mix(wallCol, coat.mul(1.04), salt.mul(0.3).mul(courtSix))
 
   /* ── the door reveals and soffits: the wash rubbed darker toward the arrises, mud low down ── */
-  const revealCol = mix(coat.mul(0.9), mud, max(worn, float(0.25).mul(smoothstep(0.2, 0.6, mid.add(0.5)))))
+  const revealCol = mix(coat.mul(0.9), mud, max(wornAll, float(0.25).mul(smoothstep(0.2, 0.6, mid.add(0.5)))))
 
   /* ── inside the rooms and their floors ── */
   const roomCol = plasterWash(P, n, WASH.house.colour)
@@ -107,13 +156,28 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
   const dWall4 = min(min(u.sub(r4.u[0]), float(r4.u[1]).sub(u)), min(v.sub(r4.v[0]), float(r4.v[1]).sub(v)))
   const dust4 = float(1).sub(smoothstep(0.1, 0.9, dWall4)).mul(0.45).add(0.2).add(big.mul(0.1))
   const brick4 = mix(mix(fBrick, V(PAL.dust as RGB), clamp(dust4, 0, 1)), V(PAL.dust as RGB).mul(0.78), fJoint.mul(0.8))
-  // the other rooms: beaten earth, mottled, trodden darker and smoother from the door inward
-  const earthN = mx_noise_float(vec3(u.mul(1.3), 2.1, v.mul(1.3))).mul(0.08).add(mx_noise_float(vec3(u.mul(7), 5.3, v.mul(7))).mul(0.04).mul(float(1).sub(smoothstep(0.004, 0.02, fAlong))))
-  const earth = V(TONES.mud as RGB).mul(float(0.86).add(earthN).add(big.mul(0.06)))
+  // the other rooms: beaten earth, mottled in patches, its clay's grain and a sparse grit of mixed size, trodden darker
+  // and smoother from the court door inward, hairline cracks where nobody walks
+  // a grazing look stretches a pixel along the view: details fade by the mean of the two footprints, and the ones that
+  // carry the earth (patches, trodden smooth, stones, cracks) are a few centimetres or more
+  const fFl = sqrt(fAlong.mul(footprint(U, az, n))), nearFl = float(1).sub(smoothstep(0.003, 0.012, fFl)), midFl = float(1).sub(smoothstep(0.01, 0.04, fFl))
+  let dCourtDoor: N = float(99)
+  for (const id of ['room-4', 'room-3', 'room-8', 'room-1-court', 'room-10-court']) {
+    const d = hp.doors.find((x: J) => x.id === id)
+    dCourtDoor = min(dCourtDoor, length(vec2(u.sub((d.u[0] + d.u[1]) / 2), v.sub((d.v[0] + d.v[1]) / 2))))
+  }
+  const trod = exp(dCourtDoor.div(1.6).mul(dCourtDoor.div(1.6)).negate())
+  const ePatch = mx_noise_float(vec3(u.mul(0.9), 3.3, v.mul(0.9))).mul(0.16).add(mx_noise_float(vec3(u.mul(2.6), 2.1, v.mul(2.6))).mul(0.12))
+  const eMid = mx_noise_float(vec3(u.mul(7.5), 5.9, v.mul(7.5))).mul(0.14).add(mx_noise_float(vec3(u.mul(15), 0.7, v.mul(15))).mul(0.1)).mul(midFl).mul(float(1).sub(trod.mul(0.5)))
+  const eGrain = mx_noise_float(vec3(u.mul(31), 1.7, v.mul(31))).mul(0.12).mul(nearFl)
+  // stones and crumbs of two to four centimetres, sparse
+  const eGrit = smoothstep(0.34, 0.4, mx_noise_float(vec3(u.mul(19), 8.1, v.mul(19)))).mul(0.22).sub(smoothstep(0.35, 0.41, mx_noise_float(vec3(u.mul(13), 2.6, v.mul(13)))).mul(0.18)).mul(midFl).mul(float(1).sub(trod.mul(0.7)))
+  const eCrack = float(1).sub(smoothstep(0.006, fFl.mul(1.5).add(0.014), abs(mx_noise_float(vec3(u.mul(2.4), 6.6, v.mul(2.4)))))).mul(midFl).mul(float(1).sub(smoothstep(0.1, 0.5, trod)))
+  const earth = mix(V(TONES.mud as RGB), V(PAL.dust as RGB), clamp(ePatch.add(0.3), 0, 1).mul(0.5)).mul(float(0.85).add(ePatch).add(eMid).add(big.mul(0.04)))
+    .mul(float(1).add(eGrain).add(eGrit)).mul(float(1).sub(trod.mul(0.14))).mul(float(1).sub(eCrack.mul(0.3)))
   const floorCol = mix(mix(earth, brick4, inR4), V(PAL.asphalt as RGB).mul(3), inR7)
 
   /* ── House VI's court: the lower paving's 40 cm bricks ── */
-  const ct = hp.courts[0]
   const dr = (id: string): J => hp.doors.find((d: J) => d.id === id)
   const d4 = dr('room-4')
   const cx = (r: J): number => (r.u[0] + r.u[1]) / 2, cz = (r: J): number => (r.v[0] + r.v[1]) / 2
@@ -122,7 +186,8 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
     p: vec3(u, P.y, v), U, ax, az, brick: PAVING.house.brick,
     court: { x0: ct.u[0], x1: ct.u[1], z0: ct.v[0], z1: ct.v[1] }, front: ct.v[1],
     doors: [{ c: cx(d4), x0: d4.u[0], x1: d4.u[1], r: (d4.u[1] - d4.u[0]) / 2 }],
-    way: { x: ct.u[1], z: cz(dr('room-1-court')) }, inDoorX, joint: PAVING.house.joint,
+    // the joints fuller of bitumen than the preset: a dust-filled joint between the arrises' shade read as two lines
+    way: { x: ct.u[1], z: cz(dr('room-1-court')) }, inDoorX, joint: { cover: 0.62, dust: 0.4 },
     more: [
       { x: ct.u[1], z: cz(dr('room-10-court')), r: 2.2 },
       { x: ct.u[0], z: cz(dr('room-8')), r: 2.2 },
@@ -182,6 +247,8 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
   /* ── one colour per point, the class view over it ── */
   let c: N = wallCol
   c = mix(c, revealCol, is(Z.reveal))
+  // the plaster lapped over a lintel's end (the one court face that tilts) is mud daub, not the wash
+  c = mix(c, mud.mul(float(0.92).add(mid.mul(0.1))), smoothstep(0.1, 0.5, abs(n.y)).mul(courtSix).mul(0.7))
   c = mix(c, roomCol, is(Z.room))
   c = mix(c, floorCol, is(Z.floor))
   // the paving's baked brick a little yellower and greyer than the court part's preset: a house court's floor under dust
@@ -189,7 +256,15 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
   // each brick its own firing a little lighter or darker, drifting over the court
   const kzP = floor(v.div(PAVING.house.brick)), kxP = floor(u.add(kzP.sub(floor(kzP.div(2)).mul(2)).mul(PAVING.house.brick / 2)).div(PAVING.house.brick))
   const brickTone = float(0.92).add(hash2(kxP.add(3.3), kzP.add(1.7)).mul(0.16)).add(mx_noise_float(vec3(u.mul(0.6), 3.7, v.mul(0.6))).mul(0.08))
-  c = mix(c, mix(pv.colour, vec3(pvL).mul(vec3(1.12, 1.0, 0.78)), 0.3).mul(brickTone), is(Z.paving))
+  // the part's pits on every brick read as one stamp near: on about half the bricks they are worn smooth again; a
+  // hand-sized blotch of stain or of paler wear on some, so no two bricks near the eye repeat
+  const fPv = max(fAlong, footprint(U, az, n)), pvNear = float(1).sub(smoothstep(0.012, 0.05, fPv))
+  const pits = smoothstep(0.32, 0.5, mx_noise_float(vec3(u, P.y, v).mul(vec3(70, 5, 70)))).mul(0.22).mul(pvNear)
+  const kP = kxP.add(kzP.mul(31.7))
+  const smooth = smoothstep(0.35, 0.75, hash2(kP, float(6.2))).mul(0.85)
+  const blot = smoothstep(0.1, 0.35, mx_noise_float(vec3(u.mul(6.5), 2.2, v.mul(6.5)).add(hash2(kP, float(1.9)).mul(9)))).mul(step(0.55, hash2(kP, float(4.8))))
+  const pvFace = float(1).add(pits.mul(smooth)).mul(float(1).sub(blot.mul(0.1).mul(pvNear))).mul(float(1).add(mx_noise_float(vec3(u.mul(16), 1.1, v.mul(16))).mul(0.06).mul(pvNear)))
+  c = mix(c, mix(pv.colour, vec3(pvL).mul(vec3(1.12, 1.0, 0.78)), 0.3).mul(brickTone).mul(pvFace), is(Z.paving))
   c = mix(c, courtFloorCol, is(Z.courtFloor))
   c = mix(c, rf.deck, is(Z.deck))
   c = mix(c, copeCol, is(Z.coping))
@@ -239,6 +314,40 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
   ao = mix(ao, courtWallAO, max(is(Z.wood), is(Z.edge)).mul(float(1).sub(inRooms)))
   ao = mix(ao, float(0.42), is(Z.sill))
   ao = mix(ao, float(0.72), is(Z.courtFloor))
+  /* contact shade the stack's occlusion does not resolve at these sizes: the ladder's feet on the paving, the lintel
+     poles' bearing ends over the court walls, the sills' room-side edge on the room floors */
+  let contact: N = float(1)
+  const LD = hp.build.ladder
+  if (LD && LD.wall === 'v') {
+    const ft = LD.at - Math.sign(LD.at) * LD.foot, toWall = Math.sign(LD.at)
+    for (const s0 of LD.s as number[]) {
+      const du = u.sub(s0).div(0.07), dv = v.sub(ft + toWall * 0.03).div(0.11)
+      contact = contact.mul(float(1).sub(exp(du.mul(du).add(dv.mul(dv)).negate()).mul(0.72).mul(is(Z.paving))))
+    }
+  }
+  const LT = hp.build.lintel, poleLow = L.doorHead - 0.02
+  for (const d of hp.doors as J[]) {
+    const onS = Math.abs(d.v[0] - ct.v[1]) < 1e-6, onN = Math.abs(d.v[1] - ct.v[0]) < 1e-6, onE = Math.abs(d.u[0] - ct.u[1]) < 1e-6, onW = Math.abs(d.u[1] - ct.u[0]) < 1e-6
+    if (!(onS || onN || onE || onW)) continue
+    const alongU = onS || onN
+    const sC = alongU ? u : v, tC = alongU ? v : u
+    const line = onS ? ct.v[1] : onN ? ct.v[0] : onE ? ct.u[1] : ct.u[0]
+    const s0 = alongU ? d.u[0] : d.v[0], s1 = alongU ? d.u[1] : d.v[1]
+    // on the court face beside the opening, under the pole's end and the plaster lapped over it
+    const past = max(float(s0).sub(sC), sC.sub(s1))
+    const under = float(1).sub(smoothstep(0.0, 0.07, float(poleLow).sub(P.y))).mul(step(P.y, poleLow + 0.01))
+    const reach = float(1).sub(smoothstep(LT.enter * 0.8, LT.enter + LT.lap, past)).mul(step(0, past))
+    contact = contact.mul(float(1).sub(under.mul(reach).mul(0.5).mul(step(abs(tC.sub(line)), 0.03)).mul(is(Z.court))))
+    // the sill's room-side edge, three centimetres onto the room's floor
+    const sg = onS || onE ? 1 : -1
+    const depth = alongU ? d.v[1] - d.v[0] : d.u[1] - d.u[0]
+    const edge = line + sg * (depth + hp.build.sill.out)
+    const into = tC.sub(edge).mul(sg)
+    const sideIn = step(s0 - 0.02, sC).mul(step(sC, s1 + 0.02))
+    contact = contact.mul(float(1).sub(float(1).sub(smoothstep(0.0, 0.08, into)).mul(step(0, into)).mul(sideIn).mul(0.45).mul(is(Z.floor))))
+  }
+  // the plaster lapped over a lintel's end is the only court face that tilts: it sits in the pole's crevice
+  ao = ao.mul(contact).mul(float(1).sub(smoothstep(0.1, 0.7, abs(n.y)).mul(0.3).mul(courtSix)))
   m.aoNode = mix(ao, float(1), uView)
   m.roughnessNode = float(0.94)
   // House VI's court: the light its sunlit band and its floor throw back into the shade, which the stack does not carry;
@@ -273,10 +382,34 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
   }
   // a floor near a door sees the court's floor and sky through it, lower than the door's middle: seven tenths as much again
   const roomLight = uHouseSun.mul(vec3(1.0, 0.9, 0.76)).mul(inLight).mul(uHouseIn).mul(inRoomAny).mul(mix(float(1), float(1.7), step(0.5, n.y)))
-  m.emissiveNode = c.mul(bounce.mul(bounceZ).add(roomLight)).mul(float(1).sub(uView))
+  m.emissiveNode = c.mul(bounce.mul(bounceZ).add(roomLight)).mul(contact).mul(float(1).sub(uView))
   // no sun reaches inside the rooms or under a door's head; the shadow map's contact edges leaked it, and leaked it onto
   // the jambs of the doors round House VI's court, which lie in the court's shade at the stop's low sun
   const indoors = max(max(inRoomAny, is(Z.leaf)), is(Z.reveal).mul(max(step(n.y, -0.5), inCourt6)))
-  ;(m as unknown as { receivedShadowNode: (s: N) => N }).receivedShadowNode = (shadow: N): N => shadow.mul(float(1).sub(indoors))
+  // House VI's court shades itself: the sun's ray from a point leaves the court over its caps or not. The page's one
+  // shadow map, fitted to the whole frame, lays a few centimetres a texel: its edge on these walls steps and its bias
+  // lets the sun past a parapet's corner. Near the court's own shadow edge that edge alone; elsewhere the darker of the
+  // two, so the ladder's, the figure's and the city's shadows stay
+  const sd = uHouseSunDir, su = sd.dot(ax), sv = sd.dot(az)
+  const cu0 = ct.u[0] + 0.04, cu1 = ct.u[1] - 0.04, cv0 = ct.v[0] + 0.04, cv1 = ct.v[1] - 0.04
+  const tU = select(su.lessThan(0), float(cu0).sub(u).div(min(su, -1e-4)), float(cu1).sub(u).div(max(su, 1e-4)))
+  const tV = select(sv.lessThan(0), float(cv0).sub(v).div(min(sv, -1e-4)), float(cv1).sub(v).div(max(sv, 1e-4)))
+  const tEx = max(min(tU, tV), 0)
+  const crown = L.top + Cp.rise, yEx = P.y.add(tEx.mul(sd.y))
+  // the sun's half degree as a penumbra
+  const pen = tEx.mul(0.0047).add(0.004)
+  const ownSun = smoothstep(float(crown).sub(pen), float(crown).add(pen), yEx)
+  const nearOwn = float(1).sub(smoothstep(0.1, 0.2, abs(yEx.sub(crown))))
+  // and the thin shade each overhang lays on the face under it (the cap's lip, the drip course): the map drew these as
+  // a row of dashes, a texel apart
+  const lipT = sd.y.div(max(sd.dot(n), 1e-3)), Eo: number = hp.build.edge.out
+  const underCap = step(P.y, L.top - Cp.drop).mul(step(L.deck - 0.01, P.y)), underDrip = step(P.y, L.ceiling)
+  const capLip = float(L.top - Cp.drop).sub(P.y).sub(lipT.mul(Cp.over)), dripLip = float(L.ceiling).sub(P.y).sub(lipT.mul(Eo))
+  const lipSun = float(1).sub(underCap.mul(float(1).sub(smoothstep(-0.005, 0.005, capLip)))).mul(float(1).sub(underDrip.mul(float(1).sub(smoothstep(-0.006, 0.006, dripLip)))))
+  const nearLip = max(underCap.mul(float(1).sub(smoothstep(0.06, 0.12, abs(capLip)))), underDrip.mul(float(1).sub(smoothstep(0.06, 0.12, abs(dripLip))))).mul(courtSix)
+  const ownAll = ownSun.mul(mix(float(1), lipSun, courtSix)), nearAll = max(nearOwn, nearLip)
+  const inOwn = inCt(0.15).mul(step(P.y, crown + 0.03)).mul(float(1).sub(max(is(Z.deck), is(Z.parapetBack))))
+  ;(m as unknown as { receivedShadowNode: (s: N) => N }).receivedShadowNode = (shadow: N): N =>
+    mix(shadow, mix(min(shadow, ownAll), ownAll, nearAll), inOwn).mul(float(1).sub(indoors))
   return m
 }

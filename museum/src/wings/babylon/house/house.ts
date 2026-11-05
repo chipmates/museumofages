@@ -9,18 +9,20 @@ import type { ClassTones } from '../map/mass'
 import { TONE, type Namer } from '../record'
 import type { Painted } from '../record-tones'
 import { buildHouse, lanesBody, type Body, type House } from './house-geom'
-import { houseMaterial, setHousePixel, uHouseSun } from './house-mat'
+import { houseMaterial, setHousePixel, uHouseSun, uHouseSunDir } from './house-mat'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
 
 const TONE_OF: Record<Cls, number> = { M: 0, R: 1, G: 2 }
 
-/* the court's bounce follows the page's own sun, read before each draw */
+/* the court's bounce and its own shade follow the page's own sun, read before each draw */
 let sun: DirectionalLight | null = null
 function readSun(scene: Object3D): void {
   if (!sun) scene.traverse((o) => { if ((o as DirectionalLight).isDirectionalLight && !sun) sun = o as DirectionalLight })
   if (sun) (uHouseSun.value as Vector3).set(sun.color.r, sun.color.g, sun.color.b).multiplyScalar(sun.intensity)
+  // toward the sun: the court's own walls shade it in the material (house-mat.ts)
+  if (sun) (uHouseSunDir.value as Vector3).copy(sun.position).sub(sun.target.position).normalize()
 }
 
 export interface HouseMount {
