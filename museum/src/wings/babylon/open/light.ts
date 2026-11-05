@@ -20,7 +20,7 @@ import { makeAirUniforms, skyColour, type AirUniforms } from './air'
 type N = any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
-const { asin, atan, clamp, mix, normalize, positionLocal, smoothstep, uniform, vec3, vec4 } = TSL as unknown as Record<string, N>
+const { asin, atan, clamp, dot, float, max, mix, normalize, positionLocal, smoothstep, uniform, vec3, vec4 } = TSL as unknown as Record<string, N>
 const D2R = Math.PI / 180
 
 export interface WalkLightOptions {
@@ -97,17 +97,26 @@ export function walkLight(o: WalkLightOptions) {
   const wallsOn = Number(q.get('walls') ?? 1)
   const uWalls = uniform(new Color(0, 0, 0))
   const uWallsNear = uniform(0)
+  /* the shade's light (gate-plan `light.shade`; its values keep the walk as it was): a lobe by bearing to the sun on the
+     sky as light, so faces turned apart in shade can take different light, and a gain on the ground's bounce */
+  const SH = LIGHT.shade ?? {}
+  const uToward = uniform(Number(q.get('envToward') ?? SH.toward ?? 0))
+  const uAwayK = uniform(Number(q.get('envAway') ?? SH.away ?? 0))
+  const uGround = uniform(Number(q.get('ground') ?? SH.ground ?? 1))
   const envScene = new Scene()
   {
     const m = new MeshBasicNodeMaterial({ side: BackSide, depthWrite: false })
     const d = normalize(positionLocal)
-    const ground = vec3(...(LIGHT.bounce.paving.colour as [number, number, number])).mul(uBounce).mul(AIR.uDay)
+    const ground = vec3(...(LIGHT.bounce.paving.colour as [number, number, number])).mul(uBounce).mul(AIR.uDay).mul(uGround)
+    const c = dot(normalize(vec3(d.x, 0.0001, d.z)), normalize(vec3(AIR.uSun.x, 0.0001, AIR.uSun.z)))
+    // divided by its mean round the horizon (max(c, 0) averages 1/pi there), so the lobe moves light, it does not add or take it
+    const lobe = float(1).add(uToward.mul(max(c, 0))).sub(uAwayK.mul(max(c.negate(), 0))).div(float(1).add(uToward.sub(uAwayK).div(Math.PI)))
     const dg = o.uW2G.mul(vec4(d, 0)).xyz
     const az = atan(dg.x.negate(), dg.z).mul(180 / Math.PI)
     const el = asin(clamp(dg.y, -1, 1)).mul(180 / Math.PI)
     const [a0, a1] = WALLS.azimuth as [number, number], [e0, e1] = WALLS.elevation as [number, number]
     const band = smoothstep(a0 - 6, a0, az).mul(smoothstep(a1 + 6, a1, az)).mul(smoothstep(e0 - 3, e0, el)).mul(smoothstep(e1 + 3, e1, el)).mul(uWallsNear)
-    m.colorNode = mix(ground, sky(d), smoothstep(-0.05, 0.02, d.y)).mul(band.oneMinus()).add(vec3(uWalls).mul(band))
+    m.colorNode = mix(ground, sky(d).mul(lobe), smoothstep(-0.05, 0.02, d.y)).mul(band.oneMinus()).add(vec3(uWalls).mul(band))
     envScene.add(new Mesh(new SphereGeometry(100, 64, 32), m))
   }
   const pmrem = new PMREMGenerator(renderer)
@@ -221,17 +230,18 @@ export function walkLight(o: WalkLightOptions) {
   }
 
   /* the contact occlusion's fade (its reach set by the page's pipeline), by the camera's height */
-  const uAoNear = uniform(250), uAoFar = uniform(900), uAoOn = uniform(Number(q.get('ao') ?? 0.75))
+  const AO = { reach: Number(q.get('aoR') ?? SH.aoRadius ?? 1.2), near: Number(q.get('aoNear') ?? SH.aoNear ?? 250), far: Number(q.get('aoFar') ?? SH.aoFar ?? 900) }
+  const uAoNear = uniform(AO.near), uAoFar = uniform(AO.far), uAoOn = uniform(Number(q.get('ao') ?? SH.ao ?? 0.75))
   /** everything that follows the camera: the environment's strength, the occlusion's fade, the band, the shadow; the shadow's texel back */
   function frame(cam: PerspectiveCamera): { texel: number; aoRadius: number } {
     const y = cam.position.y
     const over = Math.max(1.5, y - 5)
     if (setSky(aloft(y))) bakeEnv()
     scene.environmentIntensity = ENV.street + (ENV.aloft - ENV.street) * Math.min(1, Math.max(0, y - 15) / 120)
-    uAoNear.value = 250 + over * 1.2
-    uAoFar.value = 900 + over * 3.5
+    uAoNear.value = AO.near + over * 1.2
+    uAoFar.value = AO.far + over * 3.5
     setNear(cam.position.distanceTo(o.gateAt))
-    return { texel: fitShadow(cam), aoRadius: Math.min(6, 1.2 + Math.max(0, y - 15) * 0.012) }
+    return { texel: fitShadow(cam), aoRadius: Math.min(Math.max(6, AO.reach), AO.reach + Math.max(0, y - 15) * 0.012) }
   }
 
   /* the print: the gate's own at the street; over the city a little lower, less saturated and with a deeper toe */
@@ -254,7 +264,7 @@ export function walkLight(o: WalkLightOptions) {
   }
 
   return {
-    AIR, sky, dome, sunLight, SUN, ENV, PRINT, SAT, TOE, STOPS, uBounce, uWalls, uWallsNear, uAoNear, uAoFar, uAoOn,
+    AIR, sky, dome, sunLight, SUN, ENV, PRINT, SAT, TOE, STOPS, uBounce, uWalls, uWallsNear, uAoNear, uAoFar, uAoOn, uToward, uAwayK, uGround,
     setHour, setNear, fitShadow, frame, stopsAt, printFor, bakeEnv,
     /** the environment's source for the hours this sky does not hold: a texture for the hour, or null for this sky */
     setEnvSource: (f: ((hour: number) => Texture | null) | null): void => { envSource = f },
