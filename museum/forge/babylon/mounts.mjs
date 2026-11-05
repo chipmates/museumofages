@@ -242,6 +242,7 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
     house, esagila, bridge, top, towerState, dug, bruegel, bruegelShow,
     houseBodies,
     page: 'map', stop: String(stop), frame: "the map's scene metres (x east, z south, y up)", faces, cameras, eyes, reach,
+    cut: `the bodies within ${reach} m of the stop's eye in plan (faces by their centres; stop 5's bodies whole, plants by their foot)`,
     ground: (x, z) => built.ground(x, z),
     track: (dt = 0.25) => pathTrack(path, n, dt, (q) => ({ kind: q.kind, desktop: view(q.pos, q.look, q.hfov, q.shift), phone: view(q.phone.pos, q.phone.look, q.phone.hfov, q.phone.shift) })),
     path,
@@ -335,6 +336,7 @@ export async function mountGate(stop, { eyesFile = null, cityReach = 'near', cit
     track: (dt = 0.25) => pathTrack(gatePath(plan, cams, B, GF, MF), Number(stop), dt, (q) => ({ kind: q.kind, desktop: view(gv(q.pos), gv(q.look), q.hfov, 0, [16, 9]), phone: view(gv(q.pos), gv(q.look), 46, 0, [390, 844]) })),
     G2W, W2G, MF, GF, B, plan,
     page: 'gate', stop: String(stop), frame: "the gate's frame (x west, z north out of the face, y up from the +15.40 street)", faces, cameras, eyes,
+    cut: cityAll ? "the gate's bodies and every body of the city" : `the gate's bodies and the map's with a corner inside x ${REACH.x.join('..')}, z ${REACH.z.join('..')} m of the gate's frame`,
     ground: (x, z) => { const w = toG(x, 0, z); return new THREE.Vector3(w.x, city.ground(w.x, w.z), w.z).applyMatrix4(W2G).y },
     // two of the map's bodies are the map's to answer; only pairs touching the gate are this page's
     counts: (a, b) => !(a.startsWith('map:') && b.startsWith('map:')),
@@ -446,6 +448,9 @@ export async function mountOpen(stop = '1', opts = {}) {
   })
   return {
     ...G, page: 'open', stop: String(stop), cameras, openLetters, extraBodies,
+    cut: "the gate page's bodies, the north entry, the houses rebuilt per lot and every body of the city",
+    // the first frame's eyes decide what its stills see (a fight they all stand behind is culled from them)
+    eyes: [...G.eyes, ...cameras.map((c) => c.eye.clone())],
     // the map's street and ground are masked on the page under the north paving too
     masked: (p, a, b) => G.masked(p, a, b) || ((/^map:(street|ground)$/.test(a) || /^map:(street|ground)$/.test(b)) && (() => { const w = new THREE.Vector3(p.x, 0, p.z).applyMatrix4(G.G2W); return NP.inside(w.x, w.z) })()),
     frame: "the gate's frame (x west, z north out of the face, y up from the +15.40 street); the flight's cameras moved into it",

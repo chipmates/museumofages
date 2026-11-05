@@ -76,8 +76,9 @@ export function frameOf(n) {
     a cell the page hides; `clip` ([u0, v0, u1, v1] in frameOf(n)) keeps the grid inside a box. A cell counts only where
     the two sets' own planes lie within `bedM` of each other along `n` there (the local gap): a plane's offset from
     the origin matches a long, slightly tilted face to a level one far above it. `gapMm` is the local gap's median over
-    the counted cells, `gapMinMm` its least over every shared cell, `overlap` the area of every shared cell. */
-export function sharedArea(a, b, n, { cover = [], masked = null, bedM = Infinity, coverBedM = null, clip = null, keepGaps = false } = {}) {
+    the counted cells, `gapMinMm` its least over every shared cell, `overlap` the area of every shared cell.
+    `cellOf(box, e1, e2, n, d0)` may coarsen the grid's cell for that box (a stop's pixel scale; see pixelCell). */
+export function sharedArea(a, b, n, { cover = [], masked = null, bedM = Infinity, coverBedM = null, clip = null, keepGaps = false, cellOf = null } = {}) {
   const [e1, e2] = frameOf(n)
   const flat = (set) => set.map((f) => f.v.map((q) => [q.dot(e1), q.dot(e2)]))
   const FA = flat(a), FB = flat(b), FC = flat(cover)
@@ -86,7 +87,7 @@ export function sharedArea(a, b, n, { cover = [], masked = null, bedM = Infinity
   const box = [Math.max(ba[0], bq[0]), Math.max(ba[1], bq[1]), Math.min(ba[2], bq[2]), Math.min(ba[3], bq[3])]
   if (clip) for (let k = 0; k < 4; k++) box[k] = k < 2 ? Math.max(box[k], clip[k]) : Math.min(box[k], clip[k])
   if (box[2] <= box[0] || box[3] <= box[1]) return null
-  const CELL = Math.min(0.05, Math.max(0.01, Math.sqrt(((box[2] - box[0]) * (box[3] - box[1])) / 2e6)))
+  const CELL = Math.max(Math.min(0.05, Math.max(0.01, Math.sqrt(((box[2] - box[0]) * (box[3] - box[1])) / 2e6))), cellOf ? cellOf(box, e1, e2, n, a[0].d) : 0)
   // samples off the cell's middle: two bodies meeting edge to edge share an edge at a whole or half cell from the corner
   const F = 0.537
   const cols = Math.ceil((box[2] - box[0]) / CELL) + 1, rows = Math.ceil((box[3] - box[1]) / CELL) + 1
@@ -156,13 +157,62 @@ export function sharedArea(a, b, n, { cover = [], masked = null, bedM = Infinity
   }
 }
 
+/** each face's box in the plane frame (e1, e2), as sharedArea measures it: [u0, v0, u1, v1] per face */
+function planeBoxes(set, e1, e2) {
+  const B = new Float64Array(4 * set.length)
+  for (let t = 0; t < set.length; t++) {
+    let u0 = Infinity, v0 = Infinity, u1 = -Infinity, v1 = -Infinity
+    for (const q of set[t].v) { const u = q.dot(e1), v = q.dot(e2); if (u < u0) u0 = u; if (u > u1) u1 = u; if (v < v0) v0 = v; if (v > v1) v1 = v }
+    B.set([u0, v0, u1, v1], 4 * t)
+  }
+  return B
+}
+/** the pairs i < j of n boxes that overlap with some area (sharedArea's test), as i * n + j, ascending */
+function overlapPairs(B, n) {
+  const order = Array.from({ length: n }, (_, i) => i).sort((p, q) => B[4 * p] - B[4 * q])
+  const out = []
+  let open = []
+  for (const i of order) {
+    open = open.filter((j) => B[4 * j + 2] > B[4 * i])
+    for (const j of open) if (B[4 * i + 1] < B[4 * j + 3] && B[4 * j + 1] < B[4 * i + 3]) out.push(i < j ? i * n + j : j * n + i)
+    open.push(i)
+  }
+  return out.sort((p, q) => p - q)
+}
+/** a query for the boxes (of planeBoxes) that meet a box [u0, v0, u1, v1], edges included: a grid of up to 512 cells
+    a side over their extent; a box over 64 cells is checked on every query */
+function boxIndex(B, n) {
+  const E = [Infinity, Infinity, -Infinity, -Infinity]
+  for (let t = 0; t < n; t++) for (let k = 0; k < 2; k++) { E[k] = Math.min(E[k], B[4 * t + k]); E[2 + k] = Math.max(E[2 + k], B[4 * t + 2 + k]) }
+  const S = Math.max(1e-6, (E[2] - E[0]) / 512, (E[3] - E[1]) / 512)
+  const at = (x, k) => Math.min(512, Math.max(0, Math.floor((x - E[k]) / S)))
+  const cells = new Map(), wide = []
+  for (let t = 0; t < n; t++) {
+    const i0 = at(B[4 * t], 0), i1 = at(B[4 * t + 2], 0), j0 = at(B[4 * t + 1], 1), j1 = at(B[4 * t + 3], 1)
+    if ((i1 - i0 + 1) * (j1 - j0 + 1) > 64) { wide.push(t); continue }
+    for (let i = i0; i <= i1; i++) for (let j = j0; j <= j1; j++) { const c = i * 1024 + j, l = cells.get(c); if (l) l.push(t); else cells.set(c, [t]) }
+  }
+  const seen = new Uint32Array(n)
+  let stamp = 0
+  const EPS = 1e-6
+  const meets = (t, q) => B[4 * t] <= q[2] + EPS && B[4 * t + 2] >= q[0] - EPS && B[4 * t + 1] <= q[3] + EPS && B[4 * t + 3] >= q[1] - EPS
+  return (q) => {
+    const i0 = at(q[0] - EPS, 0), i1 = at(q[2] + EPS, 0), j0 = at(q[1] - EPS, 1), j1 = at(q[3] + EPS, 1)
+    if ((i1 - i0 + 1) * (j1 - j0 + 1) > 4096) return Array.from({ length: n }, (_, t) => t).filter((t) => meets(t, q))
+    stamp++
+    const out = wide.filter((t) => meets(t, q))
+    for (let i = i0; i <= i1; i++) for (let j = j0; j <= j1; j++) for (const t of cells.get(i * 1024 + j) ?? []) if (seen[t] !== stamp) { seen[t] = stamp; if (meets(t, q)) out.push(t) }
+    return out
+  }
+}
+
 /** pairs of bodies sharing a plane (normal to a hundredth, offsets within the bed) and some area where their own
     planes lie within the bed of each other (sharedArea's local gap; `local: false` counts every shared cell, as
     before the local gap). kinds: fight (both look one way), butt (opposite ways: two closed bodies face to face),
     unseen (a fight every eye stands behind). `counts(a, b)` says whether a pair is this check's to report.
     The offsets group faces into runs; `across` (on with the local gap) then finds the pairs no run holds together
     (acrossRuns), each such row marked with the number of run pairs it joins and `where` it fights. */
-export function coplanar(faces, { bedM = 0.002, areaMin = 0.01, eyes = [], counts = () => true, masked = null, local = true, across = local } = {}) {
+export function coplanar(faces, { bedM = 0.002, areaMin = 0.01, eyes = [], counts = () => true, masked = null, local = true, across = local, cellOf = null } = {}) {
   const groups = new Map()
   for (const f of faces) {
     const key = [f.n.x, f.n.y, f.n.z].map((c) => (Math.round(c * 100) / 100).toFixed(2)).join(',')
@@ -182,15 +232,28 @@ export function coplanar(faces, { bedM = 0.002, areaMin = 0.01, eyes = [], count
         const by = new Map()
         for (const f of run) { if (!by.has(f.body)) by.set(f.body, []); by.get(f.body).push(f) }
         const names = [...by.keys()]
-        for (let i = 0; i < names.length; i++) for (let j = i + 1; j < names.length; j++) {
+        // only pairs whose boxes in the run's plane overlap (sharedArea returns null for the rest), in the nested
+        // loop's order; the cover only from faces whose box meets the pair's (a city's house feet share one run)
+        const FB = planeBoxes(run, ...frameOf(run[0].n))
+        const NB = new Float64Array(4 * names.length)
+        for (let i = 0; i < names.length; i++) NB.set([Infinity, Infinity, -Infinity, -Infinity], 4 * i)
+        const slot = new Map(names.map((b, i) => [b, i]))
+        for (let t = 0; t < run.length; t++) {
+          const o = 4 * slot.get(run[t].body)
+          for (let k = 0; k < 2; k++) { NB[o + k] = Math.min(NB[o + k], FB[4 * t + k]); NB[o + 2 + k] = Math.max(NB[o + 2 + k], FB[4 * t + 2 + k]) }
+        }
+        const near = boxIndex(FB, run.length)
+        for (const ij of overlapPairs(NB, names.length)) {
+          const i = Math.floor(ij / names.length), j = ij - i * names.length
           const an = names[i], bn = names[j]
           if (!counts(an, bn)) continue
+          const q = [Math.max(NB[4 * i], NB[4 * j]), Math.max(NB[4 * i + 1], NB[4 * j + 1]), Math.min(NB[4 * i + 2], NB[4 * j + 2]), Math.min(NB[4 * i + 3], NB[4 * j + 3])]
           for (const [fa, fb, k0] of [[1, 1, 'fight'], [-1, -1, 'fight'], [1, -1, 'butt'], [-1, 1, 'butt']]) {
             const sa = by.get(an).filter((f) => f.facing === fa), sb = by.get(bn).filter((f) => f.facing === fb)
             if (!sa.length || !sb.length) continue
             const kind = k0 === 'fight' && eyes.length && eyes.every((e) => fa * (run[0].n.dot(e) - run[0].d) < 0.001) ? 'unseen' : k0
-            const cover = k0 === 'fight' ? run.filter((f) => f.facing === -fa && f.body !== an && f.body !== bn) : []
-            const o = sharedArea(sa, sb, run[0].n, { cover, masked: masked ? (p) => masked(p, an, bn) : null, bedM: local ? bedM : Infinity })
+            const cover = k0 === 'fight' ? near(q).filter((t) => run[t].facing === -fa && run[t].body !== an && run[t].body !== bn).sort((s, t) => s - t).map((t) => run[t]) : []
+            const o = sharedArea(sa, sb, run[0].n, { cover, masked: masked ? (p) => masked(p, an, bn) : null, bedM: local ? bedM : Infinity, cellOf })
             if (!o || o.area < areaMin) continue
             const pts = [...sa, ...sb].flatMap((f) => f.v)
             const span = (k) => [+minOf(pts.map((p) => p[k])).toFixed(2), +maxOf(pts.map((p) => p[k])).toFixed(2)]
@@ -206,12 +269,13 @@ export function coplanar(faces, { bedM = 0.002, areaMin = 0.01, eyes = [], count
     }
     close()
   }
-  if (across) pairs.push(...acrossRuns(faces, runOf, { bedM, areaMin, eyes, counts, masked }))
+  if (across) pairs.push(...acrossRuns(faces, runOf, { bedM, areaMin, eyes, counts, masked, cellOf }))
   return pairs
 }
 
 const HASH_M = 4 // the search's cell, metres across a bucket's plane
 const TILE_M = 64 // sharedArea's grid kept to tiles of this size
+const WIDE = 4096, COARSE_M = 256 // a face over this many hash cells is hashed on the coarse grid instead
 
 /** the pairs the runs never compare: two bodies' faces with normals within a hundredth, either way round, whose own
     planes come within the bed where they overlap, but which no run holds together: tilted against each other far
@@ -222,7 +286,7 @@ const TILE_M = 64 // sharedArea's grid kept to tiles of this size
     bed somewhere has such a point inside that box, so the bound cuts no true pair. */
 /** the last search's size and time: face pairs kept by the bound, run pairs measured, grid tiles, milliseconds */
 export const acrossCost = { pairs: 0, runPairs: 0, tiles: 0, ms: 0 }
-function acrossRuns(faces, runOf, { bedM, areaMin, eyes, counts, masked }) {
+function acrossRuns(faces, runOf, { bedM, areaMin, eyes, counts, masked, cellOf = null }) {
   const t0 = Date.now()
   const keyOf = (x, y, z) => ((x + 101) * 203 + (y + 101)) * 203 + (z + 101)
   const buckets = new Map()
@@ -261,10 +325,12 @@ function acrossRuns(faces, runOf, { bedM, areaMin, eyes, counts, masked }) {
     const nB = new THREE.Vector3(...kv).normalize()
     const [e1, e2] = frameOf(nB)
     const box = new Float64Array(7 * L.length), run = new Int32Array(L.length), side = new Int8Array(L.length)
-    const cells = new Map()
+    const cells = new Map(), wide = []
+    const span = (b, o, m) => (Math.floor(b[o + 2] / m) - Math.floor(b[o] / m) + 1) * (Math.floor(b[o + 3] / m) - Math.floor(b[o + 1] / m) + 1)
     for (let t = 0; t < L.length; t++) {
       run[t] = runOf.get(faces[L[t]]); side[t] = faces[L[t]].facing
       place(faces[L[t]], e1, e2, nB, box, 7 * t)
+      if (span(box, 7 * t, HASH_M) > WIDE) { wide.push(t); continue }
       for (let cu = Math.floor(box[7 * t] / HASH_M); cu <= Math.floor(box[7 * t + 2] / HASH_M); cu++)
         for (let cv = Math.floor(box[7 * t + 1] / HASH_M); cv <= Math.floor(box[7 * t + 3] / HASH_M); cv++) {
           const c = (cu + OFF) * W + cv + OFF
@@ -283,6 +349,38 @@ function acrossRuns(faces, runOf, { bedM, areaMin, eyes, counts, masked }) {
         test(L[p], L[q], box, 7 * p, box, 7 * q, cu, cv)
       }
     }
+    // the wide faces (a whole city's ground or water) on a coarse grid instead: each pair once, in the coarse cell
+    // holding its overlap's low corner, and tested in the hash cell holding it, as above
+    const coarse = (list) => {
+      const g = new Map()
+      for (const t of list) for (let cu = Math.floor(box[7 * t] / COARSE_M); cu <= Math.floor(box[7 * t + 2] / COARSE_M); cu++)
+        for (let cv = Math.floor(box[7 * t + 1] / COARSE_M); cv <= Math.floor(box[7 * t + 3] / COARSE_M); cv++) {
+          const c = (cu + OFF) * W + cv + OFF, l = g.get(c)
+          if (l) l.push(t); else g.set(c, [t])
+        }
+      return g
+    }
+    let all = null
+    const allOf = () => (all ??= coarse(Array.from({ length: L.length }, (_, t) => t)))
+    const wideG = wide.length ? coarse(wide) : null
+    const isWide = new Uint8Array(L.length)
+    for (const t of wide) isWide[t] = 1
+    // the pairs of `b` (at b[o]) with the listed faces whose low overlap corner lies in its coarse cells: (t, cu, cv)
+    const meet = (g, b, o, fn) => {
+      for (let CU = Math.floor(b[o] / COARSE_M); CU <= Math.floor(b[o + 2] / COARSE_M); CU++)
+        for (let CV = Math.floor(b[o + 1] / COARSE_M); CV <= Math.floor(b[o + 3] / COARSE_M); CV++)
+          for (const t of g.get((CU + OFF) * W + CV + OFF) ?? []) {
+            const U0 = Math.max(box[7 * t], b[o]), V0 = Math.max(box[7 * t + 1], b[o + 1])
+            if (Math.min(box[7 * t + 2], b[o + 2]) < U0 || Math.min(box[7 * t + 3], b[o + 3]) < V0) continue
+            if (Math.floor(U0 / COARSE_M) !== CU || Math.floor(V0 / COARSE_M) !== CV) continue
+            fn(t, Math.floor(U0 / HASH_M), Math.floor(V0 / HASH_M))
+          }
+    }
+    for (const w of wide) meet(allOf(), box, 7 * w, (t, cu, cv) => {
+      if (t === w || (isWide[t] && t < w) || (run[t] === run[w] && side[t] === side[w])) return
+      const [p, q] = t < w ? [t, w] : [w, t]
+      test(L[p], L[q], box, 7 * p, box, 7 * q, cu, cv)
+    })
     // the neighbouring buckets (each bucket pair once), their faces placed in this bucket's frame
     const near = new Set()
     for (const sg of [1, -1]) for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) for (let dz = -1; dz <= 1; dz++) {
@@ -294,11 +392,13 @@ function acrossRuns(faces, runOf, { bedM, areaMin, eyes, counts, masked }) {
     const one = new Float64Array(7)
     for (const K2 of near) for (const j of buckets.get(K2)) {
       place(faces[j], e1, e2, nB, one, 0)
+      if (span(one, 0, HASH_M) > WIDE) { meet(allOf(), one, 0, (t, cu, cv) => test(L[t], j, box, 7 * t, one, 0, cu, cv)); continue }
       for (let cu = Math.floor(one[0] / HASH_M); cu <= Math.floor(one[2] / HASH_M); cu++)
         for (let cv = Math.floor(one[1] / HASH_M); cv <= Math.floor(one[3] / HASH_M); cv++) {
           const list = cells.get((cu + OFF) * W + cv + OFF)
           if (list) for (const t of list) test(L[t], j, box, 7 * t, one, 0, cu, cv)
         }
+      if (wideG) meet(wideG, one, 0, (t, cu, cv) => test(L[t], j, box, 7 * t, one, 0, cu, cv))
     }
   }
   // the kept pairs: those across two runs into run pairs; every kept pair is a neighbour for the cover faces
@@ -358,7 +458,7 @@ function acrossRuns(faces, runOf, { bedM, areaMin, eyes, counts, masked }) {
     for (const t of tiles.values()) {
       nTiles++
       const clip = [t.tu * TILE_M, t.tv * TILE_M, (t.tu + 1) * TILE_M, (t.tv + 1) * TILE_M]
-      const o = sharedArea([...t.a].map((i) => faces[i]), [...t.b].map((i) => faces[i]), n, { cover, coverBedM: bedM, masked: masked ? (p) => masked(p, c.A, c.B) : null, bedM, clip, keepGaps: true })
+      const o = sharedArea([...t.a].map((i) => faces[i]), [...t.b].map((i) => faces[i]), n, { cover, coverBedM: bedM, masked: masked ? (p) => masked(p, c.A, c.B) : null, bedM, clip, keepGaps: true, cellOf })
       if (!o) continue
       if (o.gapMinMm !== null && o.gapMinMm < least) least = o.gapMinMm
       if (o.area > 0) { area += o.area; gaps.push(o.gaps); where.push(...o.where); if (o.area > best) { best = o.area; cell = o.cell } }
@@ -407,6 +507,41 @@ export function fittedFov(hfov, w, h, authored = null) {
   if (!authored) return vKeepH / D2R
   const vAuth = 2 * Math.atan(Math.tan((hfov / 2) * D2R) * (authored[1] / authored[0]))
   return (w / h >= authored[0] / authored[1] ? vKeepH : Math.max(vKeepH, vAuth)) / D2R
+}
+/** a sharedArea cell at the cameras' pixel scale: 1/perPx of a device pixel where the box comes nearest to an eye, by
+    the finest of the cameras (their pixel at the frame's centre); `used` keeps the least and the most it gave */
+export function pixelCell(cameras, { perPx = 4 } = {}) {
+  const used = { calls: 0, least: Infinity, most: 0 }
+  const cellOf = (box, e1, e2, n, d0) => {
+    let c = Infinity
+    for (const e of cameras) {
+      const u = e.eye.dot(e1), v = e.eye.dot(e2)
+      const du = Math.max(box[0] - u, 0, u - box[2]), dv = Math.max(box[1] - v, 0, v - box[3]), dn = e.eye.dot(n) - d0
+      c = Math.min(c, Math.hypot(du, dv, dn) / (e.reach * perPx))
+    }
+    used.calls++; used.least = Math.min(used.least, c); used.most = Math.max(used.most, c)
+    return c
+  }
+  return { cellOf, used, perPx }
+}
+/** whether a face can show in any of the cameras: it is dropped only where all three corners lie past one side of a
+    camera's frustum (onStage's frame, `margin` times each half width; the near side at 0.25 m), for every camera */
+export function frameKeep(cameras, { margin = 1.1 } = {}) {
+  const to = new THREE.Vector3()
+  const past = (f, e) => {
+    let near = 0, right = 0, left = 0, top = 0, bottom = 0
+    for (const p of f.v) {
+      to.subVectors(p, e.eye)
+      const d = to.dot(e.forward), x = to.dot(e.right), y = to.dot(e.up), w = margin * e.half * e.aspect * d
+      if (d <= 0.25) near++
+      if (x > w) right++
+      if (x < -w) left++
+      if (y > (e.shift + margin) * e.half * d) top++
+      if (y < (e.shift - margin) * e.half * d) bottom++
+    }
+    return near === 3 || right === 3 || left === 3 || top === 3 || bottom === 3
+  }
+  return (f) => cameras.some((e) => !past(f, e))
 }
 function onStage(e, p) {
   const to = p.clone().sub(e.eye)
