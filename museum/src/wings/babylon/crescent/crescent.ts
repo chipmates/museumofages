@@ -9,13 +9,13 @@ import * as TSL from 'three/tsl'
 import { transmittance, type AirUniforms } from '../open/air'
 import { sunAt } from '../map/sun'
 import { makeDusk } from './dusk'
-import { moonAtSun, moonFrame, type MoonNow, type SkyFile } from './sky'
+import { litShare, moonAtSun, moonFrame, type MoonNow, type SkyFile } from './sky'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
-const { cameraPosition, cos, dot, float, max, mix, normalize, positionLocal, sin, smoothstep, sqrt, step, uniform, vec2, vec3 } = TSL as unknown as Record<string, N>
+const { cameraPosition, cos, dot, float, max, mix, normalize, positionLocal, pow, sin, smoothstep, sqrt, step, uniform, vec2, vec3 } = TSL as unknown as Record<string, N>
 
 const D2R = Math.PI / 180
 /** the quad's half size in disc radii: room for the pixel footprint round the limb */
@@ -54,6 +54,11 @@ export async function mountCrescent(A: AirUniforms, dome: Object3D, renderer: We
   const uSinEl = uniform(0.2)
   const uRad = uniform(new Vector3(...(plan.radiance.value as [number, number, number])))
   const uEarth = uniform(Number(plan.earthshine.value))
+  // the crescent's light on the water: its direction, and its lit part's light over the glints' lobe (setHour)
+  const uMoonDir = uniform(new Vector3(0, 1, 0))
+  const uGlitter = uniform(0)
+  const glitW = Number(plan.glitter.width) * D2R
+  const glitK = 2 / (glitW * glitW)
   const S: number = Math.max(1, Math.round(Number(plan.samples.value)))
 
   /* the disc in its own frame: x toward the bright limb, y across, 1 the Moon's radius */
@@ -150,6 +155,7 @@ export async function mountCrescent(A: AirUniforms, dome: Object3D, renderer: We
     // never before sunset; in as the sun sinks under the horizon
     fade = moon ? Math.min(1, Math.max(0, (f0 - moon.sunEl) / (f0 - f1))) : 0
     mesh.visible = !!moon && fade > 0 && moon.elR > -1
+    uGlitter.value = 0
     if (!moon || !mesh.visible) return
     frame = moonFrame(sky, moon)
     const z = new Vector3(...frame.dir).negate(), x = new Vector3(...frame.limb), y = new Vector3(...frame.side)
@@ -161,6 +167,10 @@ export async function mountCrescent(A: AirUniforms, dome: Object3D, renderer: We
     uSto.value = moon.sto * D2R
     uSinEl.value = Math.max(0.02, Math.sin(moon.elR * D2R))
     uFade.value = fade
+    uMoonDir.value.set(...frame.dir)
+    // the lit part's solid angle (sky.ts' lit share of the disc) over the lobe's (pi w^2), times its mean brightness
+    const disc = Math.PI * Math.pow(Math.tan((moon.diam / 2) * D2R), 2)
+    uGlitter.value = fade * Number(plan.glitter.gain) * litShare(moon.sto) * disc / (Math.PI * glitW * glitW)
     footprint()
   }
   const setPixel = (vfovDeg: number, heightPx: number): void => {
@@ -182,5 +192,11 @@ export async function mountCrescent(A: AirUniforms, dome: Object3D, renderer: We
     const r3 = (x: number): number => +x.toFixed(3)
     return { ut: r3(moon.ut), az: r3(moon.az), elR: r3(moon.elR), diam: +moon.diam.toFixed(5), sto: r3(moon.sto), fade: r3(fade), centre: [r3(c[0]), r3(c[1])] as [number, number], radius: r3(rad), limb: [r3(l[0] / rad), r3(l[1] / rad)] as [number, number] }
   }
-  return { mesh, sky: dusk.wrap, setHour, env, bakes: () => bakes, duskWeight: () => dusk.uDusk.value as number, setPixel, now, inFrame }
+  /* the water's sky: the twilight, and the crescent as a small lobe the rippled water's facets catch. The lobe holds
+     the crescent's lit light spread over its own solid angle, so a glint is as bright as the ripples' share allows */
+  const waterSky = (base: (d: N) => N) => {
+    const w = dusk.wrap(base)
+    return (d: N): N => w(d).add(vec3(uRad).mul(pow(max(dot(d, uMoonDir), 0), glitK)).mul(uGlitter))
+  }
+  return { mesh, sky: waterSky, setHour, env, bakes: () => bakes, duskWeight: () => dusk.uDusk.value as number, setPixel, now, inFrame }
 }

@@ -27,6 +27,11 @@
   "value": 4,
   "src": "ours: a 4 by 4 grid of samples across each pixel, because the lit edge is about 1.2 arcminutes wide at its middle, one to two pixels on the desktop and under one on the phone"
  },
+ "glitter": {
+  "width": 0.35,
+  "gain": 0.5,
+  "src": "ours: the crescent on the water, a lobe 0.35 degrees wide in the river's sky (the water's rippled facets catch it where their reflection meets the Moon) holding the lit part's light (sky.ts' lit share of the disc, the drawn radiance, gain the Lommel-Seeliger mean on a thin crescent, about half) spread over the lobe's solid angle: a narrower lobe gives fewer, brighter glints of the same total, as the eye sees sparkles where the print would average them"
+ },
  "dusk": {
   "from": [
    -1.0,
