@@ -8,7 +8,8 @@
    `light` (gate-plan.json) or the arrival's own, ours (G for the method). */
 
 import {
-  BackSide, Color, DirectionalLight, Mesh, MeshBasicNodeMaterial, OrthographicCamera, PMREMGenerator, Scene, SphereGeometry, Vector3,
+  BackSide, Color, DepthTexture, DirectionalLight, GreaterEqualCompare, LessEqualCompare, Matrix4, Mesh, MeshBasicNodeMaterial, Object3D, OrthographicCamera,
+  PMREMGenerator, Scene, ShadowBaseNode, ShadowNode, SphereGeometry, Vector3,
   type Matrix3, type PerspectiveCamera, type Texture, type WebGPURenderer,
 } from 'three/webgpu'
 import * as TSL from 'three/tsl'
@@ -21,7 +22,7 @@ import { skySet, type SkySet } from './sky-set'
 type N = any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
-const { asin, atan, clamp, dot, float, max, mix, normalize, positionLocal, smoothstep, uniform, vec3, vec4 } = TSL as unknown as Record<string, N>
+const { Fn, If, asin, atan, clamp, dot, float, max, min, mix, normalize, positionLocal, shadowPositionWorld, smoothstep, uniform, vec3, vec4 } = TSL as unknown as Record<string, N>
 const D2R = Math.PI / 180
 
 export interface WalkLightOptions {
@@ -43,6 +44,45 @@ export type WalkLight = ReturnType<typeof walkLight>
 
 /** the street's level band of the print and the environment: from 15 m over the German zero to 135 m the air from above wins */
 export const aloft = (y: number): number => Math.min(1, Math.max(0, y - 15) / 120)
+
+/* the sun's shadow maps carry depth only: three's ShadowNode also allocates a colour target the size of the map, read only
+   for transmitted shadows, which the walk never turns on */
+class DepthShadowNode extends (ShadowNode as unknown as new (light: N, shadow?: N) => N) {
+  setupRenderTarget(shadow: N, builder: N): { shadowMap: N; depthTexture: N } {
+    const depthTexture = new DepthTexture(shadow.mapSize.width, shadow.mapSize.height)
+    depthTexture.name = 'ShadowDepthTexture'
+    depthTexture.compareFunction = builder.renderer.reversedDepthBuffer ? GreaterEqualCompare : LessEqualCompare
+    const shadowMap = builder.createRenderTarget(shadow.mapSize.width, shadow.mapSize.height, { count: 0 })
+    shadowMap.depthTexture = depthTexture
+    return { shadowMap, depthTexture }
+  }
+}
+
+/* the sun's two maps: the far one fitted to all the frame sees, the near one to the frame's first metres; a point takes
+   the near map wherever its light ray falls inside the near box (a ray's casters all lie in the box that holds it), the
+   far map elsewhere, blended across the near box's border band */
+class SunShadowNode extends (ShadowBaseNode as unknown as new (light: N) => N) {
+  far: N
+  near: N
+  constructor(light: N, holder: N, private uNearM: N, private uNearOn: N, private band: number) {
+    super(light)
+    this.far = new DepthShadowNode(light, light.shadow)
+    this.near = new DepthShadowNode(holder, holder.shadow)
+  }
+  setup(): N {
+    return Fn((b: N) => {
+      this.setupShadowPosition(b)
+      const c = this.uNearM.mul(vec4(shadowPositionWorld, 1)).xyz
+      const e = min(min(c.x, c.x.oneMinus()), min(c.y, c.y.oneMinus()))
+      const w = smoothstep(0, this.band, e).mul(this.uNearOn).toVar()
+      const ret = float(1).toVar()
+      If(w.greaterThan(0.999), () => { ret.assign(this.near) })
+        .ElseIf(w.greaterThan(0.001), () => { ret.assign(mix(this.far, this.near, w)) })
+        .Else(() => { ret.assign(this.far) })
+      return ret
+    })()
+  }
+}
 
 export function walkLight(o: WalkLightOptions) {
   const { renderer, scene, light: LIGHT, q } = o
@@ -91,6 +131,15 @@ export function walkLight(o: WalkLightOptions) {
   sunLight.shadow.bias = -0.0002
   sunLight.shadow.normalBias = 0.03
   scene.add(sunLight, sunLight.target)
+  /* the near map (`?near=0` the far map alone): its own light holder and shadow, fitted in fitShadow below */
+  const NEAR = { on: q.get('near') !== '0', size: Number(q.get('nearMap') ?? 8192), band: 0.06, bias: Number(q.get('nearB') ?? 1), normal: Number(q.get('nearN') ?? 0.5), floor: Number(q.get('nearF') ?? 0.003) }
+  const holder = new Object3D() as Object3D & { target: Object3D; shadow: N; castShadow: boolean }
+  holder.target = new Object3D()
+  holder.castShadow = true
+  holder.shadow = sunLight.shadow.clone()
+  holder.shadow.mapSize.set(NEAR.size, NEAR.size)
+  const uNearM = uniform(new Matrix4()), uNearOn = uniform(NEAR.on ? 1 : 0)
+  ;(sunLight.shadow as unknown as { shadowNode: N }).shadowNode = new SunShadowNode(sunLight, holder, uNearM, uNearOn, NEAR.band)
 
   /* the environment: the sky above, the plain's or the street's warm bounce below, near the gate the sunlit east walls' band */
   const uBounce = uniform(Number(q.get('bounce') ?? LIGHT.bounce.paving.value))
@@ -191,6 +240,59 @@ export function walkLight(o: WalkLightOptions) {
   /* the shadow: an orthographic box in the sun's frame round the ground the frame sees, out to a reach that grows with height */
   const lightCam = new OrthographicCamera()
   const tmp = new Vector3()
+  /** the box in the light's frame round these points, a share and a few metres of margin */
+  function boxOf(pts: Vector3[], centre: Vector3, sun: Vector3, share: number, pad: number): { x0: number; x1: number; y0: number; y1: number } {
+    lightCam.position.copy(centre).addScaledVector(sun, 6000)
+    lightCam.lookAt(centre)
+    lightCam.updateMatrixWorld(true)
+    const view = lightCam.matrixWorldInverse
+    let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity
+    for (const p of pts) {
+      const v = p.clone().applyMatrix4(view)
+      x0 = Math.min(x0, v.x); x1 = Math.max(x1, v.x); y0 = Math.min(y0, v.y); y1 = Math.max(y1, v.y)
+    }
+    const mx = (x1 - x0) * share + pad, my = (y1 - y0) * share + pad
+    return { x0: x0 - mx, x1: x1 + mx, y0: y0 - my, y1: y1 + my }
+  }
+  /** the near slice's view depth by the camera's height: the court round an eye at the street, the near quarters from the air */
+  const nearDepth = (h: number, reach: number): number => Math.min(reach, Number(q.get('nearD') ?? 24) + h * Number(q.get('nearK') ?? 6))
+  const nearFacts = { depth: 0, w: 0, h: 0, texel: 0 }
+  function fitNear(cam: PerspectiveCamera, sun: Vector3, h: number, reach: number): void {
+    const depth = nearDepth(h, reach)
+    const inv = cam.projectionMatrixInverse, world = cam.matrixWorld, origin = cam.position.clone()
+    const fwd = tmp.set(0, 0, -1).transformDirection(world).clone()
+    // nothing stands above 100 m to take a shadow; the ground under an eye can lie under the plain's 5 m (the stair's foot)
+    const ground = Math.min(5, origin.y - 2)
+    const clampY = (y: number): number => Math.min(100, Math.max(ground, y))
+    const pts: Vector3[] = [new Vector3(origin.x, clampY(origin.y), origin.z)]
+    for (let i = 0; i <= 4; i++) for (let k = 0; k <= 4; k++) {
+      const dir = tmp.set(i / 2 - 1, k / 2 - 1, 0.5).applyMatrix4(inv).applyMatrix4(world).sub(origin).normalize().clone()
+      let t = depth / Math.max(1e-3, dir.dot(fwd))
+      if (dir.y < -1e-4) t = Math.min(t, (ground - origin.y) / dir.y)
+      if (dir.y > 1e-4 && origin.y < 100) t = Math.min(t, (100 - origin.y) / dir.y)
+      const p = origin.clone().addScaledVector(dir, Math.max(0, t))
+      p.y = clampY(p.y)
+      pts.push(p)
+    }
+    const centre = pts.reduce((a, p) => a.add(p), new Vector3()).multiplyScalar(1 / pts.length)
+    const b = boxOf(pts, centre, sun, 0.02, 0.5)
+    holder.position.copy(lightCam.position)
+    holder.target.position.copy(centre)
+    holder.updateMatrixWorld(true)
+    holder.target.updateMatrixWorld(true)
+    const sh = holder.shadow, sc = sh.camera as OrthographicCamera
+    sc.left = b.x0; sc.right = b.x1; sc.bottom = b.y0; sc.top = b.y1
+    sc.near = 1000
+    sc.far = 12000
+    sc.updateProjectionMatrix()
+    sh.updateMatrices(holder)
+    ;(uNearM.value as Matrix4).copy(sh.matrix)
+    const texel = Math.max(b.x1 - b.x0, b.y1 - b.y0) / NEAR.size
+    // the near map's biases follow its own texel: the lips' shades are a centimetre or two tall, under the far map's floors
+    sh.normalBias = Math.max(0.002, texel * NEAR.normal)
+    sh.bias = -Math.max(NEAR.floor, texel * NEAR.bias) / (sc.far - sc.near)
+    Object.assign(nearFacts, { depth: +depth.toFixed(1), w: +(b.x1 - b.x0).toFixed(1), h: +(b.y1 - b.y0).toFixed(1), texel: +texel.toFixed(4) })
+  }
   function fitShadow(cam: PerspectiveCamera): number {
     const sun = (AIR.uSun.value as Vector3).clone().normalize()
     const h = Math.max(2, cam.position.y - 5)
@@ -211,25 +313,16 @@ export function walkLight(o: WalkLightOptions) {
     }
     for (const y0 of [0, 40]) pts.push(new Vector3(origin.x, y0, origin.z))
     const centre = pts.reduce((a, p) => a.add(p), new Vector3()).multiplyScalar(1 / pts.length)
-    lightCam.position.copy(centre).addScaledVector(sun, 6000)
-    lightCam.lookAt(centre)
-    lightCam.updateMatrixWorld(true)
-    const view = lightCam.matrixWorldInverse
-    let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity
-    for (const p of pts) {
-      const v = p.clone().applyMatrix4(view)
-      x0 = Math.min(x0, v.x); x1 = Math.max(x1, v.x); y0 = Math.min(y0, v.y); y1 = Math.max(y1, v.y)
-    }
-    const mx = (x1 - x0) * 0.03 + 2, my = (y1 - y0) * 0.03 + 2
+    const { x0, x1, y0, y1 } = boxOf(pts, centre, sun, 0.03, 2)
     sunLight.position.copy(lightCam.position)
     sunLight.target.position.copy(centre)
     sunLight.target.updateMatrixWorld()
     sunLight.updateMatrixWorld()
     const sc = sunLight.shadow.camera
-    sc.left = x0 - mx
-    sc.right = x1 + mx
-    sc.bottom = y0 - my
-    sc.top = y1 + my
+    sc.left = x0
+    sc.right = x1
+    sc.bottom = y0
+    sc.top = y1
     sc.near = 1000
     sc.far = 12000
     sc.updateProjectionMatrix()
@@ -238,6 +331,7 @@ export function walkLight(o: WalkLightOptions) {
     // the depth bias is a share of the box's 11 km depth: a fixed -0.0002 let the sun 2.2 m past every caster (sunlit
     // strips at the lion walls' feet in their shade); held to a few texels in metres instead
     sunLight.shadow.bias = -Math.max(0.08, texel * 4) / (sc.far - sc.near)
+    if (NEAR.on) fitNear(cam, sun, h, reach)
     return texel
   }
 
@@ -278,6 +372,8 @@ export function walkLight(o: WalkLightOptions) {
   return {
     AIR, sky, dome, sunLight, SUN, ENV, PRINT, SAT, TOE, STOPS, uBounce, uWalls, uWallsNear, uAoNear, uAoFar, uAoOn, uToward, uAwayK, uGround, field,
     setHour, setNear, fitShadow, frame, stopsAt, printFor, bakeEnv,
+    /** the near map's slice depth, its box in metres and its texel, as last fitted */
+    nearShadow: () => ({ on: NEAR.on, size: NEAR.size, ...nearFacts }),
     /** the environment's source for the hours this sky does not hold: a texture for the hour, or null for this sky */
     setEnvSource: (f: ((hour: number) => Texture | null) | null): void => { envSource = f },
     /** an offline still's own environment for its accumulation (the sampled sky's ground-only one); bakeEnv puts the walk's back */
