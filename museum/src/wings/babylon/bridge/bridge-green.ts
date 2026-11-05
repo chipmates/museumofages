@@ -126,19 +126,20 @@ export function treeGeometry(kind: TreeKind, h: number, seed: number): BufferGeo
       lobe(s, [Math.cos(b) * out, h * (0.4 + R() * 0.25), Math.sin(b) * out], [h * 0.12, h * (0.17 + R() * 0.06), h * 0.12], leaf, R, 0.7)
     }
   } else if (kind === 'reed') {
-    // a clump of reed as the deck sees it across 100 to 400 m of water: many narrow blades and stems from one foot, each
-    // about a pixel wide there and turned its own way, so the clump reads as a fine mass with a ragged top and not as a
-    // few lit wedges; a standing blade's face is near vertical, so its normal lies near the horizontal. Last year's straw
-    // among the new green, a dark plume on some of the straw
-    const n = 20 + Math.floor(R() * 9)
+    // a clump of reed as the deck sees it across 100 to 400 m of water: many sheaves of blades from one foot, each a
+    // quarter metre across (two to three pixels at that range: a narrower one falls under a pixel), facing across the
+    // local x axis as the instance turns it to the bridge, each leaning and turned a little its own way, so the clump
+    // reads as a mass with a ragged top and not as a few lit wedges; a standing sheaf's face is near vertical, so its
+    // normal lies near the horizontal. Last year's straw among the new green, a dark plume on some of the straw
+    const n = 16 + Math.floor(R() * 7)
     for (let j = 0; j < n; j++) {
       const b = R() * Math.PI * 2, lean = 0.04 + R() * 0.2, hh = h * (0.5 + R() * 0.5)
       const foot: V3 = [(R() - 0.5) * 0.6, -0.2, (R() - 0.5) * 0.6]
       const tip: V3 = [foot[0] + Math.cos(b) * lean * hh, hh, foot[2] + Math.sin(b) * lean * hh]
       // the blade bows outward a little at its middle
       const mid: V3 = [foot[0] + (tip[0] - foot[0]) * 0.55 + Math.cos(b) * lean * hh * 0.12, hh * 0.55, foot[2] + (tip[2] - foot[2]) * 0.55 + Math.sin(b) * lean * hh * 0.12]
-      const a = R() * Math.PI, ax = Math.cos(a), az = Math.sin(a)
-      const w = 0.045 + R() * 0.04
+      const a = Math.PI / 2 + (R() - 0.5) * 0.9, ax = Math.cos(a), az = Math.sin(a)
+      const w = 0.12 + R() * 0.06
       const side = (p: V3, k: number): V3 => [p[0] + ax * k, p[1], p[2] + az * k]
       const nrm: V3 = [-az * 0.94, 0.34, ax * 0.94]
       const straw = R() < 0.35
@@ -149,8 +150,8 @@ export function treeGeometry(kind: TreeKind, h: number, seed: number): BufferGeo
       if (straw && R() < 0.6) {
         // the plume: a small dark tuft hanging from the stem's top
         const pl: V3 = [0.16, 0.12, 0.08]
-        const t1: V3 = [tip[0] + Math.cos(b) * 0.1, tip[1] - 0.32, tip[2] + Math.sin(b) * 0.1]
-        for (const p of [side(tip, -0.07), side(tip, 0.07), t1] as V3[]) s.push(p, nrm, pl)
+        const t1: V3 = [tip[0] + Math.cos(b) * 0.1, tip[1] - 0.4, tip[2] + Math.sin(b) * 0.1]
+        for (const p of [side(tip, -0.13), side(tip, 0.13), t1] as V3[]) s.push(p, nrm, pl)
       }
     }
   } else {
