@@ -4064,11 +4064,11 @@
    ],
    "stop": 12,
    "kind": "walk",
-   "hfov": 66.49,
-   "shift": 0.72,
+   "hfov": 70.74,
+   "shift": 0.734,
    "phone": {
     "hfov": 44.96,
-    "shift": 0.326
+    "shift": 0.365
    }
   },
   {
@@ -4085,11 +4085,11 @@
    ],
    "stop": 12,
    "kind": "walk",
-   "hfov": 71.11,
-   "shift": 0.756,
+   "hfov": 83.26,
+   "shift": 0.798,
    "phone": {
     "hfov": 43.04,
-    "shift": 0.374
+    "shift": 0.485
    }
   },
   {
@@ -4106,11 +4106,11 @@
    ],
    "stop": 12,
    "kind": "walk",
-   "hfov": 73.6,
-   "shift": 0.776,
+   "hfov": 90.0,
+   "shift": 0.832,
    "phone": {
     "hfov": 42.0,
-    "shift": 0.4
+    "shift": 0.55
    },
    "hold": true,
    "hour": "18:00",
@@ -4132,11 +4132,11 @@
    "kind": "hold",
    "hold": true,
    "still": true,
-   "hfov": 73.6,
-   "shift": 0.776,
+   "hfov": 90.0,
+   "shift": 0.832,
    "phone": {
     "hfov": 42.0,
-    "shift": 0.4
+    "shift": 0.55
    }
   },
   {
@@ -4155,11 +4155,11 @@
    "kind": "hold",
    "hold": true,
    "hour": "18:00",
-   "hfov": 73.6,
-   "shift": 0.776,
+   "hfov": 90.0,
+   "shift": 0.832,
    "phone": {
     "hfov": 42.0,
-    "shift": 0.4
+    "shift": 0.55
    }
   },
   {
@@ -4176,11 +4176,11 @@
    ],
    "stop": 12,
    "kind": "walk",
-   "hfov": 70.59,
-   "shift": 0.575,
+   "hfov": 82.74,
+   "shift": 0.616,
    "phone": {
     "hfov": 43.04,
-    "shift": 0.296
+    "shift": 0.407
    }
   },
   {
@@ -4197,11 +4197,11 @@
    ],
    "stop": 12,
    "kind": "walk",
-   "hfov": 65.01,
-   "shift": 0.201,
+   "hfov": 69.26,
+   "shift": 0.216,
    "phone": {
     "hfov": 44.96,
-    "shift": 0.104
+    "shift": 0.143
    }
   },
   {
