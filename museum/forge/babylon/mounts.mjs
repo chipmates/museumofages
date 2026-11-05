@@ -122,6 +122,18 @@ export async function mountMap(stop, { reach = 400 } = {}) {
   for (const b of nabu.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
   for (const b of esagila.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
   for (const b of bridge.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
+  // the river's water as the page draws it: the map's outline at its level, under the bridge's own name for it
+  const river = esagila.built.water.find((w) => w.id === 'euphrates')
+  if (river) {
+    const sh = new THREE.Shape()
+    sh.moveTo(river.poly[0][0], -river.poly[0][1])
+    for (const [x, z] of river.poly.slice(1)) sh.lineTo(x, -z)
+    sh.closePath()
+    const g = new THREE.ShapeGeometry(sh)
+    g.rotateX(-Math.PI / 2)
+    g.translate(0, river.level, 0)
+    facesFrom(faces, g, null, () => 'map:water-euphrates', keep)
+  }
   // the bank's plants whole where the foot lies within the reach, each kind's two shapes in turn as the page instances them
   const shapes = new Map()
   const nth = new Map()

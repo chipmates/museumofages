@@ -4,12 +4,12 @@
    classes in the evidence view come from the record like the map's (record.ts): each body by its name, its plan row in
    the band at its foot, its body row above; the plants and the water by their kind's row. */
 
-import { InstancedBufferAttribute, InstancedMesh, Mesh, Shape, ShapeGeometry, Float32BufferAttribute, type BufferGeometry, type Material } from 'three/webgpu'
+import { InstancedBufferAttribute, InstancedMesh, Mesh, Shape, ShapeGeometry, Float32BufferAttribute, Vector3, type BufferGeometry, type Material } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import type { Built, Cls, P2 } from '../map/plan'
 import { uView, type ClassTones } from '../map/mass'
-import { TONE, type Namer, type Shown } from '../record'
+import { LETTER_OF_TONE, TONE, type Namer, type Shown } from '../record'
 import type { Painted } from '../record-tones'
 import { palmGeometry } from '../gate/gate-life'
 import { makeAirUniforms } from '../open/air'
@@ -124,6 +124,7 @@ export function mountBridge(built0: Built, mapPlan: J, bp: J, tones: ClassTones)
 
   /* ── the river: the map's Euphrates outline at its level, the opening's water as seen from the deck ── */
   const uTime = uniform(0)
+  const uRiverTone = uniform(new Vector3(...tones.G))
   const W = bp.water
   const river = (sky: (d: N) => N, uSun: N, uDay: N): Mesh => {
     const w = built0.water.find((x) => x.id === 'euphrates')!
@@ -161,6 +162,10 @@ export function mountBridge(built0: Built, mapPlan: J, bp: J, tones: ClassTones)
       return c
     }
     const riverMat = waterMaterial(A, sky, uTime, undefined, { body: W.body, flow, fine: W.fine, wakes, glint: W.glint, fog: true, swell: W.swell, reflect })
+    // the switch on: the water takes its record row's tone (its colour and level are a guess), a slow mottle so the
+    // river still reads as one wide surface
+    const rm = riverMat as Material & { colorNode: N }
+    rm.colorNode = mix(rm.colorNode, uRiverTone.mul(float(0.94).add(mx_noise_float(positionWorld.mul(vec3(0.02, 0, 0.006))).mul(0.06))), uView)
     const m = new Mesh(g, riverMat)
     m.name = 'water-euphrates'
     m.receiveShadow = false
@@ -223,6 +228,9 @@ export function mountBridge(built0: Built, mapPlan: J, bp: J, tones: ClassTones)
     }
     a.needsUpdate = true
     let missing = bridge.bodies.filter((_, i) => each[i]!.missing.length).map((b) => b.id)
+    const w = name('map:water-euphrates', ['R', 'G'])
+    uRiverTone.value.set(...tones[LETTER_OF_TONE[TONE[w.above]] as keyof ClassTones])
+    if (w.missing.length) missing = [...missing, 'water-euphrates']
     for (const { kind, mesh: im } of plantMeshes) {
       const c = name(`map:bridge-${kind}-0`, ['G', 'G'])
       const ia = im.geometry.getAttribute('cls') as InstancedBufferAttribute

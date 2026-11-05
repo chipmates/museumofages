@@ -23,7 +23,7 @@ const mapPlan = json(join(APP, 'src/wings/babylon/map/map-plan.json'))
 
 const M = await mountMap(STOP, { reach: 1e7 })
 const names = [...new Set(M.faces.map((f) => f.body.replace(/#\d+$/, '')))]
-const courtLetters = new Map([...M.court.bodies, ...(M.houseBodies ?? [])].map((b) => [`map:${b.id}`, b.letters]))
+const courtLetters = new Map([...M.court.bodies, ...(M.houseBodies ?? []), ...(M.bridge?.bodies ?? [])].map((b) => [`map:${b.id}`, b.letters]))
 
 /** the plans' letters for a map body: [plan, height], or null when the plans do not give them (as switch.mjs) */
 function letters(body) {
