@@ -1,0 +1,53 @@
+/* A stop's paper bench: the held frame, its doors as one group, and the walk's own chrome at the foot (its style
+   sheets are read by bench.ts). This file lays only what the bench adds to them. No colour value here. */
+html, body { margin: 0; height: 100%; overflow: hidden; background: var(--paper-ink); }
+#stage { position: fixed; inset: 0; background: var(--paper-solid); }
+#held { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+#held[hidden] { display: none; }
+
+/* THE DOORS: one group where the frozen designs put the one control; each a press of its own, 44 px at least */
+#doors { position: fixed; z-index: 2; display: flex; gap: 12px; align-items: stretch; }
+#doors[hidden] { display: none; }
+#doors[data-form='upright'] { justify-content: center; }
+#doors[data-form='upright'] .look-door { flex: 1 1 0; max-width: 220px; min-height: 60px; }
+.look-door {
+  min-height: 44px; min-width: 44px; padding: 10px 18px;
+  font: 600 1rem/1.2 var(--sans, system-ui, sans-serif); letter-spacing: 0.01em;
+  color: var(--paper-ink); background: color-mix(in srgb, var(--paper) 94%, transparent);
+  border: 1.5px solid var(--paper-ink); border-radius: 3px; cursor: pointer;
+}
+.look-door:focus-visible { outline: 3px solid var(--paper); outline-offset: 2px; }
+
+#look { position: fixed; inset: 0; z-index: 3; color: var(--ui-text); }
+#look[hidden] { display: none; }
+#look[data-open='true'] { background-color: var(--paper); background-image: var(--paper-grain); background-size: 240px 240px; }
+#view { position: absolute; left: 0; top: 0; right: 0; }
+
+#look[data-form='phone'] .desk-clb, #look[data-form='desk'] .film-box { display: none; }
+#look :is(.desk-clb, .film-box) { opacity: 0; transition: opacity 0.35s; }
+#look[data-open='true'] :is(.desk-clb, .film-box) { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { #look :is(.desk-clb, .film-box) { transition: none; } }
+
+/* THE DESKTOP: the line takes the design's whole measure, 860, and the steps the right column over the two ways */
+#wing[data-desk~='closelook'] #look .desk-clb { --desk-clb-read: 860px; }
+#look .desk-clb-inst { align-self: stretch; justify-content: stretch; }
+#look .desk-clb-inst .look-tools { flex: 1 1 auto; min-width: 0; }
+#wing[data-desk~='closelook'] #look .desk-clb-line[data-fit='24'] { font-size: 1.5rem; line-height: 2.0625rem; min-height: 4.125rem; }
+#wing[data-desk~='closelook'] #look .desk-clb-line[data-fit='22'] { font-size: 1.375rem; line-height: 1.875rem; min-height: 3.75rem; }
+
+/* THE CERTAINTY MARK, never gold: the band's own text tone, its shape the only difference */
+#look .look-mark { color: inherit; }
+#look .look-mark :is(.desk-mark-full, .desk-mark-half) { fill: currentColor; stroke: none; }
+#look .look-mark :is(.desk-mark-ring, .desk-mark-open) { fill: none; stroke: currentColor; }
+#look .look-mark .desk-mark-broken { fill: none; stroke: currentColor; }
+#look .film-name .look-mark[data-certainty] { color: inherit; }
+
+/* THE PHONE: three seats in a close look, the round seat, the book 16 px after it, gold */
+#wing[data-film='upright'] #look .film-box[data-look='true'] .film-foot > .film-book { left: 76px; }
+#look :is(.desk-clb, .film-box):focus { outline: none; }
+.look-sheet-steps { display: none; background: var(--plate); padding: 8px 16px 2px; }
+.film-box[data-raised='true'] > .look-sheet-steps { display: block; }
+
+.unseen { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+#says { position: fixed; left: 8px; bottom: 2px; margin: 0; z-index: 9; font: 11px/1.3 system-ui, sans-serif; color: var(--paper); opacity: 0.5; pointer-events: none; }
+#says[hidden], #look:not([hidden]) ~ #says { display: none; }
