@@ -13,6 +13,8 @@ export { STEP_IDS, type StepId }
 
 const DRAFT = 'DRAFT'
 const NB = ' '
+/** a hyphen a name never breaks at: upright the channel's name wraps at its space only */
+const NBH = '‑'
 
 export interface RiverWords {
   steps: Record<StepId, string>
@@ -54,7 +56,7 @@ export const RIVER_WORDS: Record<RiverLang, RiverWords> = {
   en: {
     steps: { then: `570${NB}BC`, dig: '1910 to 1911', today: 'today', photo: '1927' },
     labels: {
-      river: 'Euphrates', width: `123${NB}to 126${NB}m`, pier: `21${NB}×${NB}9${NB}m`, channel: 'Shatt al-Hillah', road: 'road', north: 'N',
+      river: 'Euphrates', width: `123${NB}to 126${NB}m`, pier: `21${NB}×${NB}9${NB}m`, channel: `Shatt al${NBH}Hillah`, road: 'road', north: 'N',
       year: String(PHOTO.year), credit: PHOTO.credit,
     },
     ui: {
@@ -90,7 +92,7 @@ export const RIVER_WORDS: Record<RiverLang, RiverWords> = {
   de: {
     steps: { then: `570${NB}v.${NB}Chr.`, dig: '1910 bis 1911', today: 'heute', photo: '1927' },
     labels: {
-      river: 'Euphrat', width: `123${NB}bis 126${NB}m`, pier: `21${NB}×${NB}9${NB}m`, channel: 'Schatt al-Hilla', road: 'Straße', north: 'N',
+      river: 'Euphrat', width: `123${NB}bis 126${NB}m`, pier: `21${NB}×${NB}9${NB}m`, channel: `Schatt al${NBH}Hilla`, road: 'Straße', north: 'N',
       year: String(PHOTO.year), credit: PHOTO.credit,
     },
     ui: {
