@@ -4,7 +4,7 @@
    transmittance); the lit edge is integrated over each pixel, because it is narrower than a pixel on the phone. It
    stays out of the evidence view's classes: the sky and the crescent are not pieces. */
 
-import { AdditiveBlending, BackSide, DoubleSide, Matrix4, Mesh, MeshBasicNodeMaterial, PlaneGeometry, PMREMGenerator, Scene, SphereGeometry, Vector3, type Camera, type Object3D, type WebGPURenderer } from 'three/webgpu'
+import { AdditiveBlending, BackSide, DoubleSide, Matrix4, Mesh, MeshBasicNodeMaterial, PlaneGeometry, PMREMGenerator, Scene, SphereGeometry, Vector3, type Camera, type Object3D, type Texture, type WebGPURenderer } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import { transmittance, type AirUniforms } from '../open/air'
 import { sunAt } from '../map/sun'
@@ -28,6 +28,13 @@ export interface CrescentMount {
   /** a sky function with the twilight mixed in once the sun is under the horizon (dusk.ts), for the water */
   sky: (base: (d: N) => N) => (d: N) => N
   setHour: (hour: number) => void
+  /** the faces' environment for an hour once the sun is under the horizon, null while it is up: handed to the walk's
+      light as its source (open/light.ts setEnvSource), which is the page's one writer of the environment */
+  env: (hour: number) => Texture | null
+  /** how many times the twilight's environment was baked */
+  bakes: () => number
+  /** the dusk weight at the hour set: 0 while the sun is up */
+  duskWeight: () => number
   /** the camera's vertical field (degrees) and the frame's height in pixels, for the pixel footprint */
   setPixel: (vfovDeg: number, heightPx: number) => void
   /** the Moon the page draws now, or null when it is not drawn */
@@ -36,7 +43,7 @@ export interface CrescentMount {
   inFrame: (camera: Camera, w: number, h: number) => { ut: number; az: number; elR: number; diam: number; sto: number; fade: number; centre: [number, number]; radius: number; limb: [number, number] } | null
 }
 
-export async function mountCrescent(A: AirUniforms, dome: Object3D, renderer: WebGPURenderer, scene: Scene): Promise<CrescentMount> {
+export async function mountCrescent(A: AirUniforms, dome: Object3D, renderer: WebGPURenderer): Promise<CrescentMount> {
   const [sky, plan]: [SkyFile, J] = await Promise.all([
     fetch(new URL('./sky-570.json', import.meta.url)).then((r) => r.json()),
     fetch(new URL('./crescent-plan.json', import.meta.url)).then((r) => r.json()),
@@ -102,6 +109,18 @@ export async function mountCrescent(A: AirUniforms, dome: Object3D, renderer: We
   const pmrem = new PMREMGenerator(renderer)
   let envTarget: N = null
   let envHour = -1
+  let bakes = 0
+  // once an hour: the twilight's sky depends on the hour alone (the sun's bearing in A.uSun, set by the light's setHour)
+  const env = (hour: number): Texture | null => {
+    if (dusk.weight(sunAt(hour).elevation) <= 0) return null
+    if (envTarget === null || Math.abs(hour - envHour) > 1e-4) {
+      envHour = hour
+      envTarget?.dispose?.()
+      envTarget = pmrem.fromScene(envScene, 0.02, 1, 1000)
+      bakes++
+    }
+    return envTarget.texture
+  }
 
   const dist: number = Number(plan.distance.value)
   const [f0, f1] = plan.fade.value as [number, number]
@@ -117,13 +136,6 @@ export async function mountCrescent(A: AirUniforms, dome: Object3D, renderer: We
   const setHour = (hour: number): void => {
     const sunEl = sunAt(hour).elevation
     dusk.setSun(sunEl)
-    // the walk's light re-bakes its environment on every new hour: the twilight's replaces it once the sun is down
-    if ((dusk.uDusk.value as number) > 0 && Math.abs(hour - envHour) > 1e-4) {
-      envHour = hour
-      envTarget?.dispose?.()
-      envTarget = pmrem.fromScene(envScene, 0.02, 1, 1000)
-      scene.environment = envTarget.texture
-    } else if ((dusk.uDusk.value as number) === 0) envHour = -1
     moon = moonAtSun(sky, sunEl)
     // never before sunset; in as the sun sinks under the horizon
     fade = moon ? Math.min(1, Math.max(0, (f0 - moon.sunEl) / (f0 - f1))) : 0
@@ -160,5 +172,5 @@ export async function mountCrescent(A: AirUniforms, dome: Object3D, renderer: We
     const r3 = (x: number): number => +x.toFixed(3)
     return { ut: r3(moon.ut), az: r3(moon.az), elR: r3(moon.elR), diam: +moon.diam.toFixed(5), sto: r3(moon.sto), fade: r3(fade), centre: [r3(c[0]), r3(c[1])] as [number, number], radius: r3(rad), limb: [r3(l[0] / rad), r3(l[1] / rad)] as [number, number] }
   }
-  return { mesh, sky: dusk.wrap, setHour, setPixel, now, inFrame }
+  return { mesh, sky: dusk.wrap, setHour, env, bakes: () => bakes, duskWeight: () => dusk.uDusk.value as number, setPixel, now, inFrame }
 }

@@ -143,7 +143,11 @@ const L = walkLight({ renderer, scene, light: gatePlan.light, rot: new Matrix3()
 const sky: Sky = { colour: L.sky }
 const skyDome = L.dome
 // the last stop's crescent on the dome, at the minute the page's sun stands at (crescent/crescent.ts)
-const crescent = await mountCrescent(L.AIR, skyDome, renderer, scene)
+const crescent = await mountCrescent(L.AIR, skyDome, renderer)
+// under the horizon the faces take the twilight's environment, in every frame: the walk's light stays its one writer
+L.setEnvSource(crescent.env)
+/** the environment the frame is drawn with, and the bakes so far (both skies) */
+const envNow = () => ({ owner: L.env().by === 'source' ? 'twilight' : 'walk', dusk: +crescent.duskWeight().toFixed(3), bakes: L.env().bakes + crescent.bakes() })
 /* a stop may set its own air (`air`, extinction a metre at the plain): it thickens the walk's haze there, never thins it */
 const SIGMA = L.AIR.uSigma.value as number
 const setAir = (a: number): void => { L.AIR.uSigma.value = Math.max(SIGMA, a) }
@@ -408,6 +412,7 @@ const rig = {
     const time = o.t ?? stillTime(o.stop)
     gardens.setGarden(o.garden ?? gardenState)
     uView.value = o.view === 'classes' ? 1 : 0
+    const baked = envNow().bakes
     const p = aimFilm(time, o.framing, o.w, o.h)
     const ev = expAt(time)
     const { bytes, ms } = await render(o.w, o.h, o.samples, ev)
@@ -420,7 +425,7 @@ const rig = {
       cssSize: o.css ?? [o.w, o.h], devicePixels: [o.w, o.h], ratio: o.css ? o.w / o.css[0] : 1, subFrames: o.samples,
       sampleCountReadBack: 'one sample a sub-frame: the linear target is allocated without multisampling (render.ts)',
       backend: stack.backend, adapter: stack.architecture, exposureStops: +ev.toFixed(3), heightStops: +L.stopsAt(camera.position.y).toFixed(3), print: printAt(ev),
-      air: { sigma: L.AIR.uSigma.value, scale: L.AIR.uScale.value, on: L.AIR.uOn.value }, env: { intensity: scene.environmentIntensity, sun: L.sunLight.intensity },
+      air: { sigma: L.AIR.uSigma.value, scale: L.AIR.uScale.value, on: L.AIR.uOn.value }, env: { intensity: scene.environmentIntensity, sun: L.sunLight.intensity, ...envNow(), bakes: envNow().bakes - baked },
       hour: +p.hour.toFixed(3), sun: { azimuth: +sun.azimuth.toFixed(1), elevation: +sun.elevation.toFixed(1) }, moon: crescent.inFrame(camera, o.w, o.h),
       camera: { utm: F.utm(p.pos[0], p.pos[2]), y: +p.pos[1].toFixed(2), eyeOverStand: +(p.pos[1] - stand(p.pos[0], p.pos[2])).toFixed(3), hfov: +camera.fov.toFixed(2), kind: p.kind, near: camera.near, far: camera.far },
       figures: figuresInFrame().filter((n) => n === p.stop),
@@ -457,9 +462,13 @@ const rig = {
     const log: Array<Record<string, unknown>> = []
     const t = performance.now()
     const framing = o.framing ?? 'desktop'
+    let baked = envNow().bakes
     for (let i = 0; i < n; i++) {
       const time = from + i / o.fps
       const p = aimFilm(time, framing, o.w, o.h)
+      const e = envNow()
+      const env = { owner: e.owner, dusk: e.dusk, bakes: e.bakes - baked }
+      baked = e.bakes
       const ev = expAt(time)
       const { bytes } = await render(o.w, o.h, o.samples, ev)
       const g = Math.round(time * o.fps)
@@ -471,7 +480,7 @@ const rig = {
         ndc.set(wx, stand(wx, wz), wz).project(camera)
         watch = [+(((ndc.x + 1) / 2) * o.w).toFixed(1), +(((1 - ndc.y) / 2) * o.h).toFixed(1), ndc.z < 1 ? 1 : 0]
       }
-      log.push({ i: g, t: +time.toFixed(3), stop: p.stop, kind: p.kind, utm: F.utm(p.pos[0], p.pos[2]).map((v) => +v.toFixed(2)), y: +p.pos[1].toFixed(2), eyeOverStand: +(p.pos[1] - stand(p.pos[0], p.pos[2])).toFixed(2), hour: +p.hour.toFixed(3), ev: +ev.toFixed(3), figuresInFrame: figuresInFrame(), ...(watch ? { watch } : {}) })
+      log.push({ i: g, t: +time.toFixed(3), stop: p.stop, kind: p.kind, utm: F.utm(p.pos[0], p.pos[2]).map((v) => +v.toFixed(2)), y: +p.pos[1].toFixed(2), eyeOverStand: +(p.pos[1] - stand(p.pos[0], p.pos[2])).toFixed(2), hour: +p.hour.toFixed(3), ev: +ev.toFixed(3), figuresInFrame: figuresInFrame(), env, ...(watch ? { watch } : {}) })
     }
     await upload(`${o.out}/frames-${String(Math.round(from * o.fps)).padStart(5, '0')}.json`, JSON.stringify({ fps: o.fps, w: o.w, h: o.h, samples: o.samples, from, to, frames: log }, null, 0))
     return { frames: n, ms: Math.round(performance.now() - t) }
