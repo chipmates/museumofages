@@ -114,3 +114,22 @@ test('every door has a sill and open leaves standing against its reveal, never a
 test("both courts' tops carry a coping and merlons", () => {
   for (const k of ['coping', 'merlon', 'altar', 'leaf', 'sill']) assert.ok(Object.values(out.surf).flat().includes(out.SURF[k]), `no ${k} surface`)
 })
+
+test("the courts' corner merlons keep the runs' own gap, and no two merlons meet", () => {
+  const ms = out.facts.courtMerlons
+  const sep = (a, b, i) => Math.max(b[i] - a[i + 1], a[i] - b[i + 1])
+  for (let i = 0; i < ms.length; i++) for (let k = i + 1; k < ms.length; k++) {
+    assert.ok(sep(ms[i], ms[k], 0) > 0.01 || sep(ms[i], ms[k], 2) > 0.01, `merlons meet: ${ms[i]} and ${ms[k]}`)
+  }
+  // a run's own gap, from the east and west runs' (lying along z) neighbours in Nabu's court
+  const c = out.court, alongZ = ms.filter((m) => m[1] - m[0] < m[3] - m[2] && m[0] < c.x0 + 0.1 && m[2] > c.z0 - 0.1 && m[3] < c.z1 + 0.1).sort((p, q) => p[2] - q[2])
+  const own = Math.min(...alongZ.slice(1).map((m, i) => m[2] - alongZ[i][3]))
+  assert.ok(own > 0.4, `the west run's own gap ${own}`)
+  for (const zc of [c.z0, c.z1]) {
+    const corner = ms.find((m) => m[1] - m[0] > m[3] - m[2] && m[0] < c.x0 && Math.abs((m[2] + m[3]) / 2 - zc) < 0.8)
+    const next = alongZ.reduce((b, m) => (Math.abs((m[2] + m[3]) / 2 - zc) < Math.abs((b[2] + b[3]) / 2 - zc) ? m : b))
+    assert.ok(corner, `no corner merlon at z ${zc}`)
+    const gap = Math.max(next[2] - corner[3], corner[2] - next[3])
+    assert.ok(gap >= own - 0.1, `the corner at z ${zc}: gap ${gap.toFixed(2)} against the run's ${own.toFixed(2)}`)
+  }
+})

@@ -11,7 +11,7 @@
    Every line is box-filtered over one device pixel's footprint. The stack carries no bounce: the rooms are lit only
    through their doors and the court's floor sees the sky its walls leave, both modelled here from the plan. */
 
-import { MeshStandardNodeMaterial, Vector3, type Material } from 'three/webgpu'
+import { MeshPhysicalNodeMaterial, Vector3, type Material } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import { band, footprint, hash2, lines } from '../gate/gate-mat'
 import { classColour, uView, type ClassTones } from '../map/mass'
@@ -24,7 +24,7 @@ type N = any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
 const T = TSL as unknown as Record<string, N>
-const { abs, attribute, clamp, dot, float, floor, fract, length, max, min, mix, mx_noise_float, normalize, positionWorld, select, smoothstep, sqrt, step, uniform, vec2, vec3 } = T
+const { abs, atan, attribute, cameraPosition, clamp, dot, float, floor, fract, length, max, min, mix, mx_noise_float, normalize, positionWorld, reflect, select, smoothstep, sqrt, step, uniform, vec2, vec3 } = T
 
 type RGB = [number, number, number]
 const V = (c: RGB): N => vec3(...c)
@@ -43,7 +43,8 @@ export const uNabuLight = {
 }
 
 export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
-  const m = new MeshStandardNodeMaterial({ roughness: 0.92, metalness: 0 })
+  // physical only for its specular intensity (the court's specular occlusion below); no other physical lobe is on
+  const m = new MeshPhysicalNodeMaterial({ roughness: 0.92, metalness: 0 })
   const P = positionWorld
   const n = normalize(attribute('normal', 'vec3'))
   const surf = attribute('surf', 'float')
@@ -126,11 +127,14 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const CO = B.coat, fr: number = CO.fringe
   const nearC = float(1).sub(smoothstep(0.003, 0.012, fw))
   const edgeIn = (v: N, a: number, b: number): N => step(a, v).mul(step(v, b)).mul(float(1).sub(smoothstep(0, fr, min(v.sub(a), float(b).sub(v)))))
-  let fringe: N = max(edgeIn(y, B.foot[0], B.foot[1]), max(edgeIn(y, B.low[0], B.low[1]), edgeIn(y, B.high[0], B.high[1])))
-  fringe = max(fringe, edgeIn(pierAt, 0, pier).mul(step(y, B.low[0])))
+  // the dado's edges stop where its bands stop, at a frame's outer band; a frame band is painted over everything under it
+  const dadoKeep = float(1).sub(clear.mul(step(B.foot[1] + 0.02, y)))
+  let fringe: N = max(edgeIn(y, B.foot[0], B.foot[1]), max(edgeIn(y, B.low[0], B.low[1]), edgeIn(y, B.high[0], B.high[1])).mul(dadoKeep))
+  fringe = max(fringe, edgeIn(pierAt, 0, pier).mul(step(y, B.low[0])).mul(float(1).sub(clear)))
+  fringe = fringe.mul(float(1).sub(frames))
   // the lip: just over each band's top edge a lit line, just under its foot a shade
   const lipAt = (v: N, a: number, b: number): N => band(v, b, b + 0.006, fy).sub(band(v, a - 0.006, a, fy).mul(0.8))
-  const lip = lipAt(y, B.low[0], B.low[1]).add(lipAt(y, B.high[0], B.high[1])).add(lipAt(y, B.foot[1] - 1, B.foot[1])).mul(banded).mul(nearC)
+  const lip = lipAt(y, B.low[0], B.low[1]).add(lipAt(y, B.high[0], B.high[1])).mul(dadoKeep).add(lipAt(y, B.foot[1] - 1, B.foot[1])).mul(banded).mul(nearC)
   const coatVar = mx_noise_float(vec3(u.mul(1.7), P.y.mul(2.3), 5.1)).mul(0.5).add(0.5)
   const bitCoat = mix(bitumen, plaster.mul(vec3(0.34, 0.26, 0.19)), fringe.mul(0.55).mul(nearC)).mul(mix(float(0.85), float(1.35), coatVar))
   let wall: N = mix(plaster, bitCoat, inked)
@@ -256,12 +260,48 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   for (const a of F.altar) dAltar = min(dAltar, length(vec2(max(max(float(a.x0).sub(P.x), P.x.sub(a.x1)), 0), max(max(float(a.z0).sub(P.z), P.z.sub(a.z1)), 0))))
   const altarContact = float(1).sub(float(1).sub(smoothstep(0.0, 0.5, dAltar)).mul(0.35))
   ao = mix(ao, floorAO.mul(altarContact), is(SURF.paving).mul(inCourt))
-  ao = mix(ao, footAO, isAltar)
+  // and a contact shade on the block's own foot, the last 10 cm
+  ao = mix(ao, footAO.mul(float(1).sub(float(1).sub(smoothstep(0.0, 0.1, footY)).mul(0.25))), isAltar)
   ao = mix(ao, passAO, reveal)
   ao = mix(ao, roomAO.mul(ceilingK), indoors)
+  /* ── a top in the court sees mostly walls: by the view factor the floor's shade uses, the four walls hide about two
+     thirds of an altar top's sky, yet the stack lights an up-facing face with the open sky's colour alone (the
+     blue-grey tops). White walls give back about what the sky would have given (as for the floor), so on the court's
+     tops that share of the light takes the walls' colour: their plaster lit by half the sky and by the sun on the
+     part of each face the opposite wall leaves lit ── */
+  const upH = max(float(F.top + 0.5).sub(P.y), 0.05)
+  const vfTop = (d: N): N => float(0.5).mul(float(1).sub(d.div(sqrt(d.mul(d).add(upH.mul(upH))))))
+  const sunY = max(uNabuLight.sun.y, 0)
+  const walls: Array<[N, [number, number], number]> = [
+    [P.z.sub(c.z0), [0, 1], c.x1 - c.x0], [float(c.z1).sub(P.z), [0, -1], c.x1 - c.x0],
+    [P.x.sub(c.x0), [1, 0], c.z1 - c.z0], [float(c.x1).sub(P.x), [-1, 0], c.z1 - c.z0],
+  ]
+  let hiddenTop: N = float(0), wallLight: N = vec3(0)
+  for (const [d, [nx, nz], across] of walls) {
+    const vf = vfTop(max(d, 0.05))
+    const onFace = min(max(dot(uNabuLight.sun, vec3(nx, 0, nz)), 0), sunY.mul(across / HW))
+    hiddenTop = hiddenTop.add(vf)
+    wallLight = wallLight.add(uNabuLight.sky.mul(0.5).add(uNabuLight.sunIrr.mul(onFace)).mul(vf))
+  }
+  const Y3 = vec3(0.2126, 0.7152, 0.0722)
+  const hue = (v: N): N => v.div(max(dot(v, Y3), 1e-4))
+  const wallShare = min(hiddenTop, 0.85).mul(isAltar).mul(smoothstep(0.2, 0.7, n.y)).mul(inBox(c, 0.1))
+  const topTint = mix(vec3(1), hue(wallLight.mul(V(col.plaster))).div(hue(uNabuLight.sky)), wallShare)
   m.aoNode = mix(ao, float(1), uView)
+  /* ── the court's specular occlusion: the environment holds only the open sky, so a surface seen at a grazing angle
+     reflects sky where the court's walls stand in front of it (the blue-grey tops). Its specular keeps the share of
+     the reflected lobe that clears the walls' tops ── */
+  const Rv = reflect(normalize(P.sub(cameraPosition)), n)
+  const rh = max(length(vec2(Rv.x, Rv.z)), 1e-3)
+  const rtx = select(Rv.x.greaterThan(0), float(c.x1).sub(P.x), P.x.sub(c.x0)).div(max(abs(Rv.x).div(rh), 1e-3))
+  const rtz = select(Rv.z.greaterThan(0), float(c.z1).sub(P.z), P.z.sub(c.z0)).div(max(abs(Rv.z).div(rh), 1e-3))
+  const wallUp = max(float(F.top + 0.5).sub(P.y), 0.05)
+  const skyShare = smoothstep(-0.45, 0.45, atan(Rv.y.div(rh)).sub(atan(wallUp.div(max(min(rtx, rtz), 0.05)))))
+  const occluded = isAltar.mul(smoothstep(0.5, 0.9, n.y)).mul(inBox(c, 0.1))
+  ;(m as unknown as { specularIntensityNode: N }).specularIntensityNode = mix(float(1), mix(float(0.2), float(1), skyShare), occluded.mul(float(1).sub(uView)))
   // indoors the light is the court's, thrown back by warm-white walls and brick, warmer than the sky's
   stateCol = stateCol.mul(mix(vec3(1), vec3(1.07, 1.0, 0.88), indoors))
+  stateCol = stateCol.mul(topTint)
   m.colorNode = mix(stateCol, classColour(tones, attribute('cls', 'vec2'), attribute('band', 'float')), uView)
   /* ── the lamps' warm light in the cella (guessed): Lambert from each flame, falling off past its reach, on every face
      of the room, its niche and the pedestal; the stack carries no light of its own here ── */
