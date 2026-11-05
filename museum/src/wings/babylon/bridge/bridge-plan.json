@@ -10,7 +10,7 @@
    "h": 0.45,
    "gap": 0.02
   },
-  "lap": 0.3,
+  "lap": 0.8,
   "src": "not found (P2021 p. 206): the least form that carries a walk, timber over the gaps on a stone capping (Herodotus 1.186, Diodorus 2.8.3: tradition; stone 'very probable', K1914 ch. XXXI); 9 m wide (Diodorus' thirty feet, the narrower reading; Pedersén's sheet draws 13.6 m); plain boards on beams, no parapet, no rail, no night timbers; its sizes ours"
  },
  "capping": {
@@ -28,7 +28,7 @@
   "src": "baked brick 31 x 31 cm, unstamped, in bitumen (P2021 p. 204 to 205; K1914 ch. XXXI); the course height ours (as the gate's, 8.6 cm)"
  },
  "landPiers": {
-  "src": "as map-plan.json bridge.abutments; their river faces lean with the piers' batter, their tops paved in brick at the street's level, the deck's boards lapping 0.3 m over the edge"
+  "src": "as map-plan.json bridge.abutments; their river faces lean with the piers' batter, their tops paved in brick at the street's level, the deck's boards lapping 0.8 m onto them"
  },
  "quay": {
   "walkway": 1.65,
@@ -111,8 +111,8 @@
    "step": 8.5,
    "keep": 0.72,
    "h": [
-    9,
-    15
+    7,
+    17
    ]
   },
   "trees": {
@@ -136,16 +136,16 @@
   "streetClear": 9,
   "houseClear": 3,
   "reeds": {
-   "near": 2.6,
-   "far": 4.6,
-   "step": 1.4,
-   "keep": 0.7,
+   "near": 1.8,
+   "far": 5.0,
+   "step": 1.1,
+   "keep": 0.8,
    "h": [
-    1.8,
-    3.0
+    2.6,
+    4.2
    ]
   },
-  "src": "date-palm groves on the west bank, Known as a mass, each tree's place ours (bab.green.palm.plain); poplar and willow along the bank, Guessed (bab.green.poplar); tamarisk on the bank as a type, Guessed (bab.green.tamarisk); reeds in clumps at the earth bank's foot, Guessed, none against the brick quay (bab.green.reed); the tamarisks along the bank's top"
+  "src": "date-palm groves on the west bank, Known as a mass, each tree's place ours (bab.green.palm.plain); poplar and willow along the bank, Guessed (bab.green.poplar); tamarisk on the bank as a type, Guessed (bab.green.tamarisk); reeds in clumps at the earth bank's foot, 2.6 to 4.2 m high (ours, a type), Guessed, none against the brick quay (bab.green.reed); the tamarisks along the bank's top in thickets"
  },
  "colours": {
   "src": "linear albedo, ours: the piers' and the quay's baked brick the yellow-buff of Babylon's unglazed brick (as Esagila's casing), a little warmer where it is new; the river's silt film as the plain's silt (open/earth.ts TONES); the capping a pale stone (no colour source); the timber weathered cedar and palm wood, the boards greyer from sun and feet",

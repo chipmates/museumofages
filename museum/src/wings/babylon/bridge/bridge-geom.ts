@@ -37,6 +37,10 @@ export const TAKEN_PRISM = (id: string): boolean => /^bridge-pier-\d+$/.test(id)
 export const TAKEN_BOX = (id: string): boolean => /^bridge-(abutment|pier)-/.test(id)
 export const TAKEN_RAMP = (id: string): boolean => id === 'bridge-deck'
 export const TAKEN_WATER = (id: string): boolean => id === 'euphrates'
+/** each kind's foot (its trunk, stems or sheaves) as a share of its height, and the most the ground may fall under a
+    foot (a share of the height) before the spot is left bare */
+const FOOT: Record<PlantKind, number> = { palm: 0.04, poplar: 0.035, willow: 0.04, tamarisk: 0.11, reed: 0.15 }
+const STEEP: Record<PlantKind, number> = { palm: 0.15, poplar: 0.15, willow: 0.15, tamarisk: 0.15, reed: 0.4 }
 
 const sub = (a: P2, b: P2): P2 => [a[0] - b[0], a[1] - b[1]]
 const add = (a: P2, b: P2): P2 => [a[0] + b[0], a[1] + b[1]]
@@ -220,6 +224,8 @@ export function buildBridge(built: Built, mapPlan: J, bp: J): Bridge {
     const rings = [inset(foot, batter * (P.base - WL)), foot, inset(foot, batter * (brickTop - WL))]
     const q = new Soup()
     loftSides(q, rings, [P.base, WL, brickTop], batter, KIND.brick, (u, y) => [u, brickTop, i, 0])
+    // the brick's top under the capping: the course the slabs are bedded on
+    q.cap(rings[2]!, brickTop, true, KIND.brick, () => [0, brickTop, i, 0])
     body(`bridge-pier-${i + 1}`, q, P.base + BAND, [P.plan, 'M'])
     const cap = new Soup()
     const top = inset(foot, batter * (brickTop - WL) - CP.over)
@@ -351,10 +357,13 @@ export function buildBridge(built: Built, mapPlan: J, bp: J): Bridge {
   const houses = built.boxes.filter((b) => b.group === 'house')
   const nearHouse = (p: P2, clear: number): boolean => houses.some((h) => Math.abs(h.x - p[0]) < h.sx / 2 + h.sz / 2 + clear && Math.abs(h.z - p[1]) < h.sx / 2 + h.sz / 2 + clear && Math.hypot(h.x - p[0], h.z - p[1]) < Math.max(h.sx, h.sz) / 2 + clear)
   const plants: PlantSpot[] = []
+  const mid = at(length / 2, 0)
   const place = (kind: PlantKind, near: number, far: number, step: number, keep: number, hr: [number, number]): void => {
     for (let z = zN; z <= zS; z += step) {
       for (let o = near; o <= far; o += step) {
         if (R() > keep) continue
+        // tamarisks stand in thickets along the bank with gaps between, never as one even row
+        if (kind === 'tamarisk' && Math.sin(z * 0.021 + 1.3) + Math.sin(z * 0.057 + 0.4) * 0.6 < 0.1) continue
         const zz = z + (R() - 0.5) * step * 0.8
         // the edge's x at this z, then o metres west of it
         const ex = edgeX(zz)
@@ -364,11 +373,23 @@ export function buildBridge(built: Built, mapPlan: J, bp: J): Bridge {
         const st = built.streetAt(p[0], p[1])
         if (st.d < st.w / 2 + G.streetClear) continue
         if (nearHouse(p, G.houseClear + (kind === 'palm' ? 2 : 1))) continue
-        const y = built.ground(p[0], p[1])
+        const h = hr[0] + R() * (hr[1] - hr[0])
+        // the foot sits at the lowest ground under it, so no side of it hangs over a falling bank
+        const r = FOOT[kind] * h
+        const y0 = built.ground(p[0], p[1])
+        let y = y0, hi = y0
+        for (let k = 0; k < 8; k++) {
+          const g = built.ground(p[0] + Math.cos((k * Math.PI) / 4) * r, p[1] + Math.sin((k * Math.PI) / 4) * r)
+          y = Math.min(y, g)
+          hi = Math.max(hi, g)
+        }
+        if (hi - y > STEEP[kind] * h) continue
         // the bank's own plants keep to it: tamarisks above the water, reeds at its foot on the earth, never in the water
-        if (kind === 'tamarisk' && y < WL + 0.15) continue
-        if (kind === 'reed' && (y < WL - 0.1 || y > WL + 1.2)) continue
-        plants.push({ id: `bridge-${kind}-${plants.length}`, kind, x: p[0], z: p[1], y, h: hr[0] + R() * (hr[1] - hr[0]), yaw: R() * Math.PI * 2, lean: (R() - 0.5) * 0.12, seed: Math.floor(R() * 1e6) })
+        if (kind === 'tamarisk' && y0 < WL + 0.15) continue
+        if (kind === 'reed' && (y0 < WL - 0.1 || y0 > WL + 1.2)) continue
+        // a reed clump's sheaves fan across its local x: turned to face the bridge's middle, where it is seen from
+        const yaw = kind === 'reed' ? Math.atan2(-(mid[1] - p[1]), mid[0] - p[0]) + (R() - 0.5) * 0.5 : R() * Math.PI * 2
+        plants.push({ id: `bridge-${kind}-${plants.length}`, kind, x: p[0], z: p[1], y, h, yaw, lean: (R() - 0.5) * 0.12, seed: Math.floor(R() * 1e6) })
       }
     }
   }

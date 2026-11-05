@@ -22,7 +22,7 @@ const ICO: V3[] = ([[-1, PHI, 0], [1, PHI, 0], [-1, -PHI, 0], [1, -PHI, 0], [0, 
 const FACES = [[0, 11, 5], [0, 5, 1], [0, 1, 7], [0, 7, 10], [0, 10, 11], [1, 5, 9], [5, 11, 4], [11, 10, 2], [10, 7, 6], [7, 1, 8], [3, 9, 4], [3, 4, 2], [3, 2, 6], [3, 6, 8], [3, 8, 9], [4, 9, 5], [2, 4, 11], [6, 2, 10], [8, 6, 7], [9, 8, 1]]
 
 /** linear albedo of each kind's leaves (a grey-green; the tamarisk's finer, bluer), its wood */
-const LEAF: Record<TreeKind, V3> = { poplar: [0.085, 0.098, 0.062], willow: [0.092, 0.115, 0.05], tamarisk: [0.1, 0.11, 0.09], reed: [0.15, 0.15, 0.075] }
+const LEAF: Record<TreeKind, V3> = { poplar: [0.095, 0.11, 0.05], willow: [0.1, 0.125, 0.045], tamarisk: [0.115, 0.118, 0.07], reed: [0.15, 0.15, 0.075] }
 const WOOD: V3 = [0.12, 0.1, 0.08]
 
 class Soup {
@@ -68,13 +68,13 @@ const ICO1 = (() => {
 
 /** a rough lobe of leaves: the split icosahedron pushed in and out by a smooth wobble of its own, so its outline breaks
     like a crown's; its normals from its middle so it shades soft; darker underneath and inside, lighter toward the sky */
-function lobe(s: Soup, c: V3, r: V3, col: V3, R: () => number, droop = 0): void {
+function lobe(s: Soup, c: V3, r: V3, col: V3, R: () => number, droop = 0, floor = -Infinity): void {
   const ph = [R() * 6.28, R() * 6.28, R() * 6.28, R() * 6.28]
   const k = ICO1.pts.map((v) => 0.8 + 0.14 * Math.sin(v[0] * 3.1 + ph[0]!) * Math.cos(v[2] * 2.7 + ph[1]!) + 0.1 * Math.sin(v[1] * 4.3 + v[0] * 2.2 + ph[2]!) + 0.06 * Math.sin(v[2] * 6.1 + ph[3]!))
   const P = ICO1.pts.map((v, i): V3 => {
     // a hanging lobe: its lower half drawn down and its sides in
     const y = v[1] < 0 ? v[1] * (1 + droop) : v[1]
-    return [c[0] + v[0] * r[0] * k[i]!, c[1] + y * r[1] * k[i]!, c[2] + v[2] * r[2] * k[i]!]
+    return [c[0] + v[0] * r[0] * k[i]!, Math.max(floor, c[1] + y * r[1] * k[i]!), c[2] + v[2] * r[2] * k[i]!]
   })
   const tone = ICO1.pts.map((v) => 0.6 + 0.5 * Math.max(0, v[1] * 0.6 + 0.4) + (R() - 0.5) * 0.14)
   for (const f of ICO1.faces) {
@@ -109,11 +109,12 @@ export function treeGeometry(kind: TreeKind, h: number, seed: number): BufferGeo
     const top: V3 = [Math.cos(a) * lean * h, h * 0.62, Math.sin(a) * lean * h]
     trunk(s, [0, -0.3, 0], mid, 0.26, 0.2)
     trunk(s, mid, top, 0.2, 0.12)
+    // lobes held close and overlapping, so the crown reads as one ragged mass and never as loose balls
     const n = 11 + Math.floor(R() * 4)
     for (let j = 0; j < n; j++) {
-      const b = (j / n) * Math.PI * 2 + R() * 0.6, out = h * (0.06 + R() * 0.2)
-      const y = h * (0.56 + R() * 0.36)
-      const rr = h * (0.065 + R() * 0.05)
+      const b = (j / n) * Math.PI * 2 + R() * 0.6, out = h * (0.04 + R() * 0.12)
+      const y = h * (0.58 + R() * 0.3)
+      const rr = h * (0.09 + R() * 0.05)
       lobe(s, [top[0] + Math.cos(b) * out, y, top[2] + Math.sin(b) * out], [rr, rr * (0.8 + R() * 0.3), rr], leaf, R)
     }
   } else if (kind === 'willow') {
@@ -125,29 +126,34 @@ export function treeGeometry(kind: TreeKind, h: number, seed: number): BufferGeo
       lobe(s, [Math.cos(b) * out, h * (0.4 + R() * 0.25), Math.sin(b) * out], [h * 0.12, h * (0.17 + R() * 0.06), h * 0.12], leaf, R, 0.7)
     }
   } else if (kind === 'reed') {
-    // a clump of reed: thin blades from one foot, leaning out, last year's straw among the new green
-    const n = 18 + Math.floor(R() * 10)
+    // a clump of reed as the deck sees it across 100 to 400 m of water: sheaves of blades fanning up from one foot,
+    // each a wedge half a metre across under its tip (one blade is far under a pixel there), fanned across the local
+    // x axis (the instance turns it to face the bridge), last year's straw among the new green
+    const n = 9 + Math.floor(R() * 5)
     for (let j = 0; j < n; j++) {
-      // each blade a narrow strip (a few leaves seen together at 100 m and more), wide enough to stay a pixel
-      const b = R() * Math.PI * 2, lean = 0.1 + R() * 0.35, hh = h * (0.55 + R() * 0.45), w = 0.06 + R() * 0.02
-      const foot: V3 = [Math.cos(b) * R() * 0.35, -0.2, Math.sin(b) * R() * 0.35]
-      const tip: V3 = [foot[0] + Math.cos(b) * lean * hh, hh, foot[2] + Math.sin(b) * lean * hh]
-      const sx = -Math.sin(b) * w, sz = Math.cos(b) * w
+      const b = (R() < 0.5 ? 0 : Math.PI) + (R() - 0.5) * 1.2, lean = 0.06 + R() * 0.2, hh = h * (0.55 + R() * 0.45)
+      const tx = -Math.sin(b), tz = Math.cos(b), side = (R() < 0.5 ? -1 : 1) * (0.38 + R() * 0.14), fan = (R() - 0.5) * 0.25 * hh
+      const foot: V3 = [(R() - 0.5) * 0.16, -0.2, (R() - 0.5) * 0.16]
+      const tip: V3 = [foot[0] + Math.cos(b) * lean * hh + tx * fan, hh, foot[2] + Math.sin(b) * lean * hh + tz * fan]
+      const lo = 0.6 + R() * 0.2
+      const wing: V3 = [foot[0] + (tip[0] - foot[0]) * lo + tx * side, hh * lo, foot[2] + (tip[2] - foot[2]) * lo + tz * side]
       const nrm: V3 = [Math.cos(b) * 0.3, 0.9, Math.sin(b) * 0.3]
       const straw = R() < 0.35
       const c0: V3 = straw ? [0.2, 0.17, 0.1] : leaf
       const c1: V3 = [c0[0] * 1.25, c0[1] * 1.25, c0[2] * 1.2]
-      const q: V3[] = [[foot[0] - sx, foot[1], foot[2] - sz], [foot[0] + sx, foot[1], foot[2] + sz], [tip[0] + sx * 0.7, tip[1], tip[2] + sz * 0.7], [tip[0] - sx * 0.7, tip[1], tip[2] - sz * 0.7]]
-      const qc = [c0, c0, c1, c1]
-      for (const i of [0, 1, 2, 0, 2, 3]) s.push(q[i]!, nrm, qc[i]!)
+      s.push(foot, nrm, [c0[0] * 0.8, c0[1] * 0.8, c0[2] * 0.8])
+      s.push(wing, nrm, c1)
+      s.push(tip, nrm, c1)
     }
   } else {
     // a dense, upright, feathery shrub-tree from the ground, wider than high, in a few columns (the athel on the sheet)
+    // its stems gathered in one thick foot inside the crown: the plant stands on it, the lobes' hems stop above it
+    trunk(s, [0, -0.3, 0], [0, h * 0.28, 0], 0.4, 0.25)
     const n = 9 + Math.floor(R() * 4)
     for (let j = 0; j < n; j++) {
       const b = R() * Math.PI * 2, out = h * (0.1 + R() * 0.45)
       const rr = h * (0.15 + R() * 0.08)
-      lobe(s, [Math.cos(b) * out, h * (0.25 + R() * 0.42), Math.sin(b) * out], [rr, h * (0.24 + R() * 0.1), rr], leaf, R, 0.4)
+      lobe(s, [Math.cos(b) * out, h * (0.25 + R() * 0.42), Math.sin(b) * out], [rr, h * (0.24 + R() * 0.1), rr], leaf, R, 0.4, -0.15)
     }
   }
   return s.geometry()
