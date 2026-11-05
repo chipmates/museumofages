@@ -15,7 +15,7 @@ import { skyRadiance } from '../map/sky-sample'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
-const { Loop, cameraPosition, clamp, dot, float, int, luminance, max, mix, normalWorld, positionWorld, pow, reflect, roughness, step, texture, uniform, uniformArray, vec2, vec3, vec4 } = TSL as unknown as Record<string, N>
+const { Loop, cameraPosition, clamp, diffuseContribution, dot, float, int, luminance, max, mix, normalWorld, positionWorld, pow, reflect, roughness, step, texture, uniform, uniformArray, vec2, vec3, vec4 } = TSL as unknown as Record<string, N>
 
 type RGB = [number, number, number]
 const GOLD = Math.PI * (3 - Math.sqrt(5))
@@ -56,6 +56,8 @@ export interface SkySetOptions {
   lobe: { toward: N; away: N }
   /** the warm light the court's walls bounce: the paving's colour, its hue only */
   buff: RGB
+  /** the give-back's hue between the paving's (0) and the open sky's at the point (1) */
+  giveHue?: number
   /** objects a still holds that must not take sky from the city (the figures: their contact stays the stack's) */
   hidden?: () => Object3D[]
   count?: number
@@ -65,6 +67,10 @@ export interface SkySetOptions {
   /** the mirror's share of the correction (0 leaves the environment's specular whole) and its sharpest lobe */
   specular?: number
   specularPower?: number
+  /** where the diffuse correction enters three's split: 0 the indirect diffuse as the environment's own (times the
+      material's occlusion and three's 1 - E at the view), 1 the same divided by 1 - E, 2 the direct diffuse (as a
+      light's: past the occlusion and the 1 - E) */
+  fit?: number
   /** the receiver's offset along its normal and the depth bias, in texels of each map */
   normalBias?: number
   depthBias?: number
@@ -112,8 +118,10 @@ export function skySet(o: SkySetOptions) {
   const uPhase = uniform(0, 'int'), uStride = uniform(STRIDE, 'int'), uCount = uniform(COUNT / STRIDE, 'int')
   const uOn = uniform(0), uGive = uniform(o.giveBack ?? 1), uSpec = uniform(o.specular ?? 1), uSpecPow = uniform(o.specularPower ?? 8)
   const ALBEDO = o.albedo ?? 0.45
+  const FIT = o.fit ?? 0
   const buffL = 0.2126 * o.buff[0] + 0.7152 * o.buff[1] + 0.0722 * o.buff[2]
   const uBuff = uniform(new Vector3(o.buff[0] / buffL, o.buff[1] / buffL, o.buff[2] / buffL))
+  const uHue = uniform(o.giveHue ?? 0)
 
   /* the correction for one material: the diffuse the hidden sky took (irradiance), and the same for the environment's
      mirror of the sky (radiance): a lobe round the reflected ray, its width by the surface's roughness and held to the
@@ -151,9 +159,13 @@ export function skySet(o: SkySetOptions) {
     const v = luminance(seen).div(max(lumAll, 1e-6))
     const a = 2.0404 * ALBEDO - 0.3324, bb = -4.7951 * ALBEDO + 0.6417, c = 2.7552 * ALBEDO + 0.6903
     const v2 = max(v, v.mul(a).add(bb).mul(v).add(c).mul(v)).min(1)
-    const back = vec3(uBuff).mul(v2.sub(v).mul(lumAll)).mul(uGive)
+    const back = mix(vec3(uBuff), all.div(max(lumAll, 1e-6)), uHue).mul(v2.sub(v).mul(lumAll)).mul(uGive)
     const gate = uOn.mul(open)
-    builder.context.irradiance.addAssign(seen.sub(all).add(back).mul(float(uStride)).mul(gate))
+    const corr = seen.sub(all).add(back).mul(float(uStride)).mul(gate)
+    const lm = builder.context.lightingModel
+    if (FIT === 2 && builder.context.reflectedLight) builder.context.reflectedLight.directDiffuse.addAssign(corr.mul(diffuseContribution).mul(1 / Math.PI))
+    else if (FIT === 1 && lm?.singleScatteringDielectric) builder.context.irradiance.addAssign(corr.div(max(vec3(1).sub(lm.singleScatteringDielectric.add(lm.multiScatteringDielectric)), 0.05)))
+    else builder.context.irradiance.addAssign(corr)
     // the lobe's mean of the hidden sky's radiance (each weight is a radiance times its solid angle)
     builder.context.radiance.addAssign(hid.div(max(lobeSum, 1e-6).mul(solidAngle(COUNT))).mul(uSpec).mul(gate).negate())
   }
@@ -317,7 +329,7 @@ export function skySet(o: SkySetOptions) {
       if (added) uSkySet.value = uOn.value
     },
     facts: () => ({
-      mode: 'set', directions: COUNT, mapSize: SIZE, perSubFrame: COUNT / STRIDE, giveBack: uGive.value, albedo: ALBEDO, on, normalBias: NB, depthBias: ZB, specular: uSpec.value, specularPower: uSpecPow.value,
+      mode: 'set', directions: COUNT, mapSize: SIZE, perSubFrame: COUNT / STRIDE, giveBack: uGive.value, giveHue: uHue.value, albedo: ALBEDO, fit: FIT, on, normalBias: NB, depthBias: ZB, specular: uSpec.value, specularPower: uSpecPow.value,
       region: region && { x: [+region.x0.toFixed(1), +region.x1.toFixed(1)], z: [+region.z0.toFixed(1), +region.z1.toFixed(1)] },
       texel: texels.length ? { min: +Math.min(...texels).toFixed(3), max: +Math.max(...texels).toFixed(3) } : null,
       fits, fitMs, lastFitMs, memoryMiB: +((SIZE * SIZE * COUNT * 2) / 2 ** 20).toFixed(1),
