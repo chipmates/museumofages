@@ -114,8 +114,8 @@
    445854.4
   ],
   "depth": 0.9,
-  "h": 3.2,
-  "src": "guessed: the cult niche in the cella's back wall (the type, P2021 p. 180)"
+  "h": 4.1,
+  "src": "guessed: the cult niche in the cella's back wall (the type, P2021 p. 180), its sill 2 cm over the pedestal's top, 4.1 m over the floor at its head"
  },
  "doors": [
   {
@@ -303,5 +303,69 @@
    "bottom": 0.04
   },
   "src": "the stop's one press, named by what it shows and never 'Learn more' (the words are the writer's); it stands on the court's paving at the lower right of the wide frame, clear of the grey figure and the doorways, and at the foot of the upright one, so the frame at rest keeps far more than two thirds picture"
+ },
+ "pedestal": {
+  "box": [
+   445850.65,
+   445855.35,
+   3600400.35,
+   3600402.95
+  ],
+  "h": 1.2,
+  "chamfer": 0.35,
+  "src": "the god's pedestal against the cella's back wall, its outline as drawn on C6.2 (In place: 4.7 x 2.6 m, the front corners cut, centred on the court's axis); its height ours (Guessed, 1.2 m: its face reads over the altar from the court); no statue: the statue waits for its rights row"
+ },
+ "altar": {
+  "box": [
+   445851.3,
+   445854.7,
+   3600407.95,
+   3600410.75
+  ],
+  "tiers": [
+   {
+    "n": [
+     3600409.4,
+     3600410.75
+    ],
+    "h": 0.35
+   },
+   {
+    "n": [
+     3600407.95,
+     3600409.45
+    ],
+    "h": 0.95
+   }
+  ],
+  "by": {
+   "w": 1.6,
+   "d": 0.65,
+   "h": 0.6,
+   "gap": 0.05
+  },
+  "src": "the court's altars before the cella's door: the block drawn on C6.2 in the court (In place as drawn: 3.4 x 2.8 m, 0.9 m off the court's south wall, centred on the axis), two low blocks drawn against the wall beside the door (In place as drawn, moved out to clear the door's guessed 2.6 m, their use not said); P2021 fig. 4.24 names them altars ('behind the altars is the door to the cella'); plastered mud brick like the double altars at the Nabu and Ninurta temples' entrances (P2021 p. 172, 175); the block as two tiers after Pedersen's model, every height and the level (on the +8.0 paving) ours (Guessed)"
+ },
+ "lamp": {
+  "at": [
+   [
+    445850.0,
+    3600403.5,
+    1.35
+   ],
+   [
+    445856.0,
+    3600403.5,
+    1.35
+   ]
+  ],
+  "colour": [
+   1.0,
+   0.66,
+   0.36
+  ],
+  "gain": 0.85,
+  "r": 1.6,
+  "src": "guessed: two oil lamps on stands either side of the pedestal, out of the court's sight behind the door's jambs; only their warm light is drawn"
  }
 }

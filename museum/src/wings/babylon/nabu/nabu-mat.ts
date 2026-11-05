@@ -24,7 +24,7 @@ type N = any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
 const T = TSL as unknown as Record<string, N>
-const { abs, attribute, clamp, exp, float, floor, fract, length, max, min, mix, mx_noise_float, normalize, positionWorld, select, smoothstep, sqrt, step, uniform, vec2, vec3 } = T
+const { abs, attribute, clamp, dot, float, floor, fract, length, max, min, mix, mx_noise_float, normalize, positionWorld, select, smoothstep, sqrt, step, uniform, vec2, vec3 } = T
 
 type RGB = [number, number, number]
 const V = (c: RGB): N => vec3(...c)
@@ -113,7 +113,8 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const banded = any(SURF.courtWall, SURF.bandedRoom)
   // a painted edge is never ruler-straight: a few millimetres of wander, seen only close
   const wander = mx_noise_float(P.mul(6)).mul(0.5).add(0.5).mul(near)
-  const inked = smoothstep(0.35, 0.65, ink.add(wander.sub(0.5).mul(0.15))).mul(banded)
+  // the niche, the god's place, stays plain white
+  const inked = smoothstep(0.35, 0.65, ink.add(wander.sub(0.5).mul(0.15))).mul(banded).mul(float(1).sub(inBox(F.niche, 0.02)))
   let wall: N = mix(plaster, bitumen, inked)
   wall = mix(wall, bitumen.mul(1.1), is(SURF.black))
 
@@ -147,6 +148,15 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   stateCol = mix(stateCol, floorCol, is(SURF.paving))
   stateCol = mix(stateCol, deckCol, is(SURF.deck))
   stateCol = mix(stateCol, ground, is(SURF.earth))
+  /* ── the court's altars and the god's pedestal: plastered mud brick under the same white coat; an altar's top
+     darkened by what was laid and burnt on it ── */
+  const isAltar = is(SURF.altar), isPed = is(SURF.pedestal)
+  let block: N = plaster.mul(vec3(0.97, 0.95, 0.92))
+  // an altar's wash worn thin over its mud plaster in patches, earth splashed at its foot, its top stained dark
+  const worn = smoothstep(0.1, 0.45, mx_noise_float(P.mul(vec3(2.2, 3.0, 2.2))).add(mx_noise_float(P.mul(7.0)).mul(0.25)))
+  block = mix(block, V(col.apron).mul(1.2), isAltar.mul(worn.mul(0.3).add(float(1).sub(smoothstep(0.0, 0.25, footY)).mul(0.45))))
+  block = mix(block, mix(block, earth, 0.35).mul(0.88), isAltar.mul(smoothstep(0.5, 0.9, n.y)))
+  stateCol = mix(stateCol, block, max(isAltar, isPed))
   m.colorNode = mix(stateCol, classColour(tones, attribute('cls', 'vec2'), attribute('band', 'float')), uView)
   // bitumen keeps a dull sheen; plaster and earth are matte
   const shiny = max(inked, is(SURF.black)).add(is(SURF.paving).mul(float(PV.sheen).sub(pv.wear.mul(0.25))))
@@ -156,6 +166,7 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
      off with depth; its ceiling darker. The court's floor and the feet of its walls see less sky than the open street
      (the view factor of four walls round a court); a contact shade where a wall meets a floor ── */
   const R = F.rooms
+  const BOUNCE: number = np.lamp.bounce ?? 0.3
   const roomDoors: Array<[Box2, string[]]> = [
     [R['vestibule']!, ['gate', 'court']], [R['cella']!, ['cella']], [R['smallCella']!, ['smallCella']],
     [R['west1']!, ['west1']], [R['west2']!, ['west2']], [R['east1']!, ['east1']],
@@ -165,16 +176,19 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   for (const [box, ids] of roomDoors) {
     // the cella's niche is part of its room
     const inside = (box === R['cella'] ? max(inBox(box, 0.03), inBox(F.niche, 0.03)) : inBox(box, 0.03)).mul(below)
-    let through: N = float(0)
+    let through: N = float(0), facing: N = float(0)
     for (const id of ids) {
       const d = F.doors.find((q) => q.id === id)!
       const dx = d.wall === 'x' ? P.x.sub((d.box.x0 + d.box.x1) / 2) : P.x.sub(d.c)
       const dz = d.wall === 'x' ? P.z.sub(d.c) : P.z.sub((d.box.z0 + d.box.z1) / 2)
       const r = d.w / 2
-      through = through.add(float(r * 1.3).div(length(vec2(dx, dz)).mul(0.8).add(r)))
+      const dd = length(vec2(dx, dz))
+      through = through.add(float(r * 1.3).div(dd.mul(0.8).add(r)))
+      // a face turned toward the door sees the lit court through it
+      facing = max(facing, max(dot(vec2(n.x, n.z), vec2(dx, dz).div(max(dd, 0.05)).negate()), 0))
     }
     // white plaster passes the doors' light round a room: its far corners stay readable
-    const lit = clamp(float(0.24).add(min(through, 1.2).mul(0.45)), 0.2, 0.78)
+    const lit = clamp(float(0.24).add(min(through, 1.2).mul(0.45)).add(facing.mul(min(through, 1)).mul(BOUNCE)), 0.2, 0.86)
     roomAO = mix(roomAO, lit, inside)
     indoors = max(indoors, inside)
   }
@@ -202,10 +216,25 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   ao = mix(ao, footAO, max(outer, any(SURF.smallCourt, SURF.black)))
   ao = mix(ao, footAO.mul(1.2), is(SURF.smallCourt))
   ao = mix(ao, courtWallAO.mul(footAO), is(SURF.courtWall))
-  ao = mix(ao, floorAO, is(SURF.paving).mul(inCourt))
+  // the altars' feet and the paving round them: a contact shade
+  let dAltar: N = float(9)
+  for (const a of F.altar) dAltar = min(dAltar, length(vec2(max(max(float(a.x0).sub(P.x), P.x.sub(a.x1)), 0), max(max(float(a.z0).sub(P.z), P.z.sub(a.z1)), 0))))
+  const altarContact = float(1).sub(float(1).sub(smoothstep(0.0, 0.5, dAltar)).mul(0.35))
+  ao = mix(ao, floorAO.mul(altarContact), is(SURF.paving).mul(inCourt))
+  ao = mix(ao, footAO, isAltar)
   ao = mix(ao, passAO, reveal)
   ao = mix(ao, roomAO.mul(ceilingK), indoors)
   m.aoNode = mix(ao, float(1), uView)
+  /* ── the lamps' warm light in the cella (guessed): Lambert from each flame, falling off past its reach, on every face
+     of the room, its niche and the pedestal; the stack carries no light of its own here ── */
+  const LA = np.lamp
+  let lampE: N = float(0)
+  for (const a of F.lamps) {
+    const d = vec3(a[0]!, a[1]!, a[2]!).sub(P), dist = max(length(d), 0.05)
+    lampE = lampE.add(max(dot(n, d.div(dist)), 0).div(float(1).add(dist.div(LA.r).mul(dist.div(LA.r)))))
+  }
+  const inCella = max(inBox(R['cella']!, 0.03), inBox(F.niche, 0.03)).mul(below)
+  m.emissiveNode = stateCol.mul(V(LA.colour)).mul(lampE.mul(LA.gain)).mul(inCella).mul(ceilingK).mul(float(1).sub(uView))
   // no sun reaches into a room under its roof; the shadow map's contact edges leak it
   // the temple's floors: lit only where the ray toward the sun clears the court's walls (the shadow map leaks at their
   // feet); a passage's or a room's floor never sees the sun over them
