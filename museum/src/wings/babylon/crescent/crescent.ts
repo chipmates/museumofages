@@ -15,7 +15,7 @@ import { moonAtSun, moonFrame, type MoonNow, type SkyFile } from './sky'
 type N = any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
-const { cameraPosition, cos, float, max, mix, normalize, positionLocal, sin, smoothstep, sqrt, step, uniform, vec2, vec3 } = TSL as unknown as Record<string, N>
+const { cameraPosition, cos, dot, float, max, mix, normalize, positionLocal, sin, smoothstep, sqrt, step, uniform, vec2, vec3 } = TSL as unknown as Record<string, N>
 
 const D2R = Math.PI / 180
 /** the quad's half size in disc radii: room for the pixel footprint round the limb */
@@ -103,7 +103,17 @@ export async function mountCrescent(A: AirUniforms, dome: Object3D, renderer: We
     const d = normalize(positionLocal)
     // the ground under it lit by the whole sky, not by the glow's side: the blue between the zenith and the far horizon
     const ground = dusk.colour(vec3(0, 1, 0)).add(dusk.colour(normalize(vec3(0, 0.3, 1)))).mul(Number(plan.dusk.ground) / 2)
-    m.colorNode = mix(ground, dusk.colour(d), smoothstep(-0.05, 0.02, d.y))
+    const c = mix(ground, dusk.colour(d), smoothstep(-0.05, 0.02, d.y))
+    // the print's tone curve takes the smallest channel off a dark, so a dark face prints its tint alone: the faces'
+    // light paler and stronger than the dome's (plan.dusk.light), the dome itself untouched
+    const Lf = plan.dusk.light
+    const y = c.dot(vec3(0.2126, 0.7152, 0.0722))
+    const t = vec3(...(Lf.tint as [number, number, number]))
+    const tint = t.div(t.dot(vec3(0.2126, 0.7152, 0.0722)))
+    // the Earth's shadow: the low sky away from the set sun is the twilight's darkest, so faces turned east take less
+    const away = float(1).sub(dot(normalize(vec3(d.x, 0.0001, d.z)), normalize(vec3(A.uSun.x, 0.0001, A.uSun.z))).mul(0.5).add(0.5))
+    const shadow = mix(float(1), float(Number(Lf.shadow)), away.mul(float(1).sub(smoothstep(0.0, 0.45, d.y))))
+    m.colorNode = mix(tint.mul(y), c, Number(Lf.saturation)).mul(shadow).mul(Number(Lf.gain))
     envScene.add(new Mesh(new SphereGeometry(100, 64, 32), m))
   }
   const pmrem = new PMREMGenerator(renderer)

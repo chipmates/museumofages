@@ -66,6 +66,17 @@
   "height": 0.1,
   "width": 3.0,
   "ground": 0.25,
+  "light": {
+   "saturation": 0.4,
+   "gain": 2.6,
+   "tint": [
+    0.88,
+    1.0,
+    1.12
+   ],
+   "shadow": 0.5,
+   "src": "ours: the faces' light under the twilight (the environment they take), its tint toward its own luminance and its strength over the dome's. The print's tone curve takes a dark's smallest channel off, so at the dome's level the deck and copings printed as their tint alone, a navy; paler and stronger, as the eye adapted to the dusk sees near stone a blue-grey (colour fades in the failing light), while the sky keeps its own colours and level; the tint a twilight's daylight-white turned blue (ours, toward a very high colour temperature, not measured), so warm stone prints blue-grey and not lilac; the low sky away from the set sun darkened for the faces only (shadow, the Earth's shadow on the eastern horizon, the twilight's darkest part; ours), so faces turned to the eye across the river stay dark while the deck's top takes the sky overhead"
+  },
   "src": "ours: the twilight sky once the sun is 1 to 4 degrees under the horizon (sky.ts's minute; never at a stop with the sun up). The order of its colours is the clear twilight's: the glow over the set sun low and wide, orange at the horizon, yellow by about 5 degrees (bands, sine of the elevation), pale and then blue by about 14, the rest of the sky blue darkening to the zenith; the open dusk reference (EveningSkyHDRI042B) for the air's blue above the glow; the levels in the page's linear units, beside the walk's air at the same hour (open/air.ts, its sky's strength 0.18 after sunset), the glow a little duller than a clean sky's for the plain's dust; the faces' light baked from it over a ground a quarter of the sky at its horizon (ground)"
  }
 }
