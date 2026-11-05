@@ -117,6 +117,7 @@
   {"match": "^map:bridge-palm-", "part": "the date palms on the west bank", "piece": "bab.green.palm.plain"},
   {"match": "^map:bridge-(poplar|willow)-", "part": "the poplars and willows along the west bank", "piece": "bab.green.poplar"},
   {"match": "^map:bridge-tamarisk-", "part": "the tamarisks on the west bank", "piece": "bab.green.tamarisk"},
+  {"match": "^map:bridge-westbank$", "part": "the west bank's earth (paint on the map's ground, toned by the stop)", "piece": "bab.river.westbank", "surface": true},
   {"match": "^map:bridge-reed-", "part": "the reeds at the west bank's earth foot", "piece": "bab.green.reed"},
   {"match": "^map:bridge-abutment-west", "part": "the bridge's west land pier", "piece": "bab.bridge.landpier.west"},
   {"match": "^map:bridge-abutment-east", "part": "the bridge's east end", "piece": "bab.bridge.landpier.east"},
