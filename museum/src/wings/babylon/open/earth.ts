@@ -551,8 +551,18 @@ const NIGHT = {
     { k: 13, speed: 3.4, amp: 0.16, stretch: 1.8, angle: -0.2 },
   ],
 }
-/** a device pixel's angle for the ripples' footprint (radians; the phone's, the coarser of the two framings) */
-const PIX_RAD = 0.00057
+/** the ripples' footprint floor: a device pixel's angle at the stills' sizes (radians; the phone's, the coarser of the
+    two framings), so every still at those sizes keeps its water */
+export const PIX_RAD = 0.00057
+/** the pixel drawn, the camera's vertical field over the drawing height (the field's mean angle a pixel), never finer
+    than the floor: a coarser rendition (the 1x film) fades the ripples where they would fall under a pixel */
+export const waterPixel = (vfovDeg: number, heightPx: number): number =>
+  Math.max(PIX_RAD, (vfovDeg * Math.PI) / 180 / Math.max(1, heightPx))
+export const uWaterPix = uniform(PIX_RAD)
+/** each frame, from the camera (map.ts aim) */
+export function setWaterPixel(vfovDeg: number, heightPx: number): void {
+  uWaterPix.value = waterPixel(vfovDeg, heightPx)
+}
 
 export function waterMaterial(A: AirUniforms, sky: (d: N) => N, uTime: N, mirror?: N, look: WaterLook = {}): Material {
   const m = new MeshBasicNodeMaterial({ side: DoubleSide })
@@ -581,7 +591,7 @@ export function waterMaterial(A: AirUniforms, sky: (d: N) => N, uTime: N, mirror
   const night = float(1).sub(smoothstep(-0.7, -0.3, A.uSun.y))
   const dist = p.distance(cameraPosition)
   const grazing = max(abs(p.y.sub(cameraPosition.y)).div(max(dist, 1e-3)), 0.03)
-  const foot = dist.mul(PIX_RAD).div(grazing)
+  const foot = dist.mul(uWaterPix).div(grazing)
   const breeze = mix(float(NIGHT.day), float(1), night)
   // the slope the footprint took off the breeze's ripples: it widens the mirrored image's spread (below)
   let lost: N = float(0)
