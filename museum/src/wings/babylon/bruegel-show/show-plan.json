@@ -1,0 +1,368 @@
+{
+ "about": "Bruegel's Tower of Babel as a showpiece (Vienna, Kunsthistorisches Museum GG 1026, 1563): a painter's invention, outside the evidence classes (record bab.bruegel.tower). Every form and colour is read off the painting by eye on crops of the Commons original and drawn in code, never its pixels. Lengths in metres over the tower's foot; angles in degrees round its axis, 0 toward the stairs (the camera's side), positive to the viewer's right. Pixel numbers are on the 3840 px frame of the painting.",
+ "scale": {
+  "mPerPx": 0.054,
+  "height": 110,
+  "src": "an estimate from the painted people, a design choice, never a measure: about 2040 px from the left foot (y 2060) to the highest masonry (y 20) for about 110 m; a standing man about 35 px, so 1.9 m (D-285, the research's figure scale 0.05 to 0.06 m a pixel)"
+ },
+ "pitch": {
+  "perTurn": 13.0,
+  "seam": 180,
+  "src": "re-measured on gridded crops of the 3840 frame (READING, the ramp): the base storey's frieze about 1542 at phi -26 and 1520 at +26 (22 px), 1540 at -40.5 and 1503 at +40.5 (37 px); tier 2's frieze about 1240 at -23.5 and 1220 at +23.5 (20 px): 1.1 to 2.0 m over 47 to 81 degrees, 8 to 9 m a turn, 4 to 14 at the reading's 15 px; the first reading's 67 px was an over-read. Ours: 13 m a turn, the range's upper end, where one turn rises one mean storey (13.2 m), so the terraces join into one road that winds up, rising counterclockwise seen from above; the seam at the back"
+ },
+ "base": {
+  "r0": 59.0,
+  "r1": 57.6,
+  "h": 29.3,
+  "bays": 24,
+  "spur": {
+   "w": 0.17,
+   "out0": 7.5,
+   "out1": 1.6,
+   "rise": 0.62,
+   "big": [
+    [
+     -130,
+     -48
+    ]
+   ],
+   "bigOut": 12.0,
+   "bigRise": 0.46
+  },
+  "src": "left silhouette x 900 (the wall) and 860 (the spurs), ledge y 1517 to 1525; the spurs on the left run down to the ground with stairs on their faces, the right ones faceted (crops base-left-spurs-stair-red-bay-scaffold, base-right-big-arches-treadwheel-crane-buttresses)"
+ },
+ "storeys": [
+  {
+   "n": 2,
+   "r": 55.4,
+   "h": 15.7,
+   "bays": 26,
+   "src": "x 965, ledge y 1227"
+  },
+  {
+   "n": 3,
+   "r": 51.7,
+   "h": 14.4,
+   "bays": 26,
+   "src": "x 1033, ledge y 960"
+  },
+  {
+   "n": 4,
+   "r": 48.9,
+   "h": 11.6,
+   "bays": 24,
+   "src": "x 1085, ledge y 745"
+  },
+  {
+   "n": 5,
+   "r": 46.5,
+   "h": 13.2,
+   "bays": 24,
+   "stacked": true,
+   "src": "x 1128, ledge y 500; its niches hold two two-light windows stacked"
+  },
+  {
+   "n": 6,
+   "r": 44.7,
+   "h": 11.1,
+   "bays": 24,
+   "stacked": true,
+   "broken": true,
+   "src": "x 1163, the top white ring broken at y 295"
+  }
+ ],
+ "white": {
+  "1": [
+   [
+    -180,
+    180
+   ]
+  ],
+  "2": [
+   [
+    -180,
+    180
+   ]
+  ],
+  "3": [
+   [
+    -180,
+    18
+   ],
+   [
+    118,
+    180
+   ]
+  ],
+  "4": [
+   [
+    -180,
+    -5
+   ],
+   [
+    122,
+    180
+   ]
+  ],
+  "5": [
+   [
+    -180,
+    -31
+   ]
+  ],
+  "6": [
+   [
+    -180,
+    -40
+   ]
+  ],
+  "src": "the white facing read on the front: tier 3 to x 2275 (+18), tier 4 to x 1918 (-5), tier 5 to x 1538 (-31), the top white ring to x 1455 (-40), its end toothed (READING, the unfinished side); behind the tower not painted: ours, the red running on round the right to about +120; tiers 5 and 6 end at the seam behind, since from the painter's vantage a white stretch at the back right stood above the cells as a loose box (the right outline is the cells stepping up to the core)"
+ },
+ "red": {
+  "3": [
+   [
+    18,
+    118
+   ]
+  ],
+  "4": [
+   [
+    46,
+    122
+   ]
+  ],
+  "5": [
+   [
+    100,
+    126
+   ]
+  ],
+  "6": [],
+  "src": "the red shells on the right (crop red-shells-right-broken-tops-curved-ramp-wall); the unfinished side falls away from the core to the right (crop whole-tower-light-left-shade-right): tiers 5 and 6 have no outer shell there, only a stretch of tier 5's at the back, so the cells stepping up to the core make the right side's outline; between the white's end and the shells the outer ring is open and the cells show"
+ },
+ "rock": {
+  "front": {
+   "phi": [
+    -15,
+    13
+   ],
+   "top": 39.5,
+   "quarry": {
+    "phi": [
+     -5.2,
+     5.0
+    ],
+    "rFoot": 63.0,
+    "rTop": 55.0,
+    "rHead": 51.5,
+    "heights": [
+     0.18,
+     0.47,
+     0.66
+    ],
+    "src": "ours, as round 1 read it on the base storey, broken out in four benches of uneven height (5.3, 8.5, 5.6 and 9.9 m) rather than eight even steps: the painted quarries are cut faces with work on their benches, and an even run read as a stair (blind pair, 5 Nov)"
+   },
+   "pillar": {
+    "phi": 9.5,
+    "r": 61.5,
+    "w": 8.5,
+    "proud": [
+     0.3,
+     2.0
+    ],
+    "capIn": 56.0,
+    "src": "the pillar of crop rock-front-pillar-cave-talus-moss, to y 1333 (39.5 m); as a rock face standing 4 m proud of the base's wall line, its back into tier 2's wall (55.4) at 56"
+   },
+   "caves": [
+    [
+     -13.4,
+     -8.8,
+     0.8,
+     8.4
+    ]
+   ],
+   "src": "crop rock-front-pillar-cave-talus-moss: x 1805 to 2204 on the base storey, the main pillar to y 1333; the rock stands in the wall's own line, a broad weathered face with a cave mouth on the left, the quarried slope cut back into it in the middle, the pillar rising in front of tier 2 on the right; the cave's mouth widened to read as a cave with a rounded head on the 1 m grid, not a door"
+  },
+  "crag": {
+   "bands": {
+    "2": [
+     26,
+     64
+    ],
+    "3": [
+     24,
+     54
+    ],
+    "4": [
+     26,
+     50
+    ]
+   },
+   "top": 76.0,
+   "topPhi": [
+    30,
+    44
+   ],
+   "caves": [
+    [
+     37.0,
+     41.0,
+     49.5,
+     55.0
+    ]
+   ],
+   "src": "crop z-paint-rock (3840 frame x 1500 to 3100, y 500 to 2200): the crag rises out of the right-centre flank from tier 2's top (y about 1220, 45 m) to about y 660 (76 m), x 2364 to 2716 on tier 4 (phi 24 to 53); tier 2's face on the right is cut rock behind the treadwheel crane (x 2556 to 3004, 36 to 45 m); red cells built against it on the left, red shells on the right"
+  },
+  "skin": {
+   "cell": 1.0,
+   "proud": [
+    0.5,
+    2.8
+   ],
+   "strata": 3.4,
+   "src": "ours: the rock's face stands a little proud of the wall line it takes the place of, layered in strata that step back as they rise, split by clefts; its ends close back into the wall and its top is capped where masonry stands on it; cells of 1 m so a cleft 0.6 to 1.1 m wide cuts sharp, a column at each cleft's floor"
+  }
+ },
+ "overRock": {
+  "phi": [
+   -6,
+   11
+  ],
+  "src": "on tier 2's top two arches on wooden centring over the rock (crop tier2-top-arches-on-centring-over-rock-tier3-red-infill-hoist)"
+ },
+ "cells": [
+  {
+   "r": 48.0,
+   "top": 64.0,
+   "bays": 24
+  },
+  {
+   "r": 39.0,
+   "top": 69.5,
+   "bays": 22
+  },
+  {
+   "r": 33.0,
+   "top": 74.5,
+   "bays": 20
+  },
+  {
+   "r": 27.0,
+   "top": 79.0,
+   "bays": 18
+  },
+  {
+   "r": 21.0,
+   "top": 82.6,
+   "bays": 16
+  }
+ ],
+ "cellsSrc": "the red cells stepping back toward the core in the cutaway, radial walls with sloping tops between them (crop cutaway-red-cells-radial-ramps-vault-centring); radii and heights ours within the read storeys; the first row stands on tier 3's terrace where tier 4's ring is open, the rows above on the row below, all on the spiral",
+ "core": [
+  {
+   "r": 16.2,
+   "y0": 82.6,
+   "y1": 89.6,
+   "bays": 32,
+   "kind": "arcade",
+   "src": "ring A, y 530 to 400, R 300 px: tall arched openings with brick voussoirs"
+  },
+  {
+   "r": 13.9,
+   "y0": 89.6,
+   "y1": 98.8,
+   "bays": 30,
+   "kind": "marked",
+   "src": "ring B, y 400 to 230, R 257 px: blind panels and arch outlines marked on its face (crop red-core-marked-arch-outlines)"
+  },
+  {
+   "r": 12.2,
+   "y0": 98.8,
+   "y1": 104.2,
+   "bays": 28,
+   "kind": "arcade",
+   "src": "behind the cloud: ours, a second arcade like ring A"
+  },
+  {
+   "r": 10.5,
+   "y0": 104.2,
+   "y1": 110.0,
+   "bays": 24,
+   "kind": "broken",
+   "src": "the top ring, y 130 to 22, R 195 px, broken in steps, putlog holes in rows"
+  }
+ ],
+ "colours": {
+  "old": [
+   0.76,
+   0.58,
+   0.31
+  ],
+  "new": [
+   0.86,
+   0.74,
+   0.5
+  ],
+  "streak": [
+   0.4,
+   0.42,
+   0.44
+  ],
+  "brick": [
+   0.62,
+   0.26,
+   0.16
+  ],
+  "brickShade": [
+   0.4,
+   0.13,
+   0.08
+  ],
+  "rock": [
+   0.68,
+   0.56,
+   0.38
+  ],
+  "ochre": [
+   0.8,
+   0.55,
+   0.2
+  ],
+  "moss": [
+   0.46,
+   0.42,
+   0.18
+  ],
+  "timber": [
+   0.18,
+   0.15,
+   0.1
+  ],
+  "thatch": [
+   0.42,
+   0.36,
+   0.24
+  ],
+  "tile": [
+   0.56,
+   0.22,
+   0.13
+  ],
+  "cloth": [
+   0.3,
+   0.38,
+   0.44
+  ],
+  "dark": [
+   0.035,
+   0.028,
+   0.022
+  ],
+  "floor": [
+   0.55,
+   0.48,
+   0.34
+  ],
+  "src": "albedos chosen by eye against the crops (READING, colours), never sampled from the painting's pixels; warmer and more saturated than the painting's lit cream, since the scene's front stands in the sky's blue fill at 18:00 and a cream albedo read grey there; the rock greyer than the stone, its ochre in deposits; the rock a step darker than round 1's: the direction read by eye on crop q-foot at 1:1 (the painted rock reads darker than the masonry built on it, at the same warmth; ours read as the same cream), the amount ours"
+ }
+}

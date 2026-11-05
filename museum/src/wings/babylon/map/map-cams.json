@@ -3433,10 +3433,15 @@
    ],
    "stop": 12,
    "kind": "walk",
-   "hfov": 66.49,
-   "shift": 0.72,
+   "hfov": 70.74,
+   "shift": 0.734,
    "phone": {
-    "hfov": 44.96,
+    "look": [
+     445639.12,
+     3600043.09,
+     4.45
+    ],
+    "hfov": 46.52,
     "shift": 0.326
    }
   },
@@ -3454,10 +3459,15 @@
    ],
    "stop": 12,
    "kind": "walk",
-   "hfov": 71.11,
-   "shift": 0.756,
+   "hfov": 83.26,
+   "shift": 0.798,
    "phone": {
-    "hfov": 43.04,
+    "look": [
+     445636.88,
+     3600055.28,
+     4.54
+    ],
+    "hfov": 47.48,
     "shift": 0.374
    }
   },
@@ -3475,10 +3485,15 @@
    ],
    "stop": 12,
    "kind": "walk",
-   "hfov": 73.6,
-   "shift": 0.776,
+   "hfov": 90.0,
+   "shift": 0.832,
    "phone": {
-    "hfov": 42.0,
+    "look": [
+     445635.67,
+     3600061.84,
+     4.6
+    ],
+    "hfov": 48.0,
     "shift": 0.4
    },
    "hold": true,
@@ -3501,10 +3516,15 @@
    "kind": "hold",
    "hold": true,
    "still": true,
-   "hfov": 73.6,
-   "shift": 0.776,
+   "hfov": 90.0,
+   "shift": 0.832,
    "phone": {
-    "hfov": 42.0,
+    "look": [
+     445635.67,
+     3600061.84,
+     4.59
+    ],
+    "hfov": 48.0,
     "shift": 0.4
    }
   },
@@ -3524,10 +3544,15 @@
    "kind": "hold",
    "hold": true,
    "hour": "18:00",
-   "hfov": 73.6,
-   "shift": 0.776,
+   "hfov": 90.0,
+   "shift": 0.832,
    "phone": {
-    "hfov": 42.0,
+    "look": [
+     445635.67,
+     3600061.84,
+     4.59
+    ],
+    "hfov": 48.0,
     "shift": 0.4
    }
   },
@@ -3545,10 +3570,10 @@
    ],
    "stop": 12,
    "kind": "walk",
-   "hfov": 70.59,
-   "shift": 0.575,
+   "hfov": 82.74,
+   "shift": 0.616,
    "phone": {
-    "hfov": 43.04,
+    "hfov": 47.48,
     "shift": 0.296
    }
   },
@@ -3566,10 +3591,10 @@
    ],
    "stop": 12,
    "kind": "walk",
-   "hfov": 65.01,
-   "shift": 0.201,
+   "hfov": 69.26,
+   "shift": 0.216,
    "phone": {
-    "hfov": 44.96,
+    "hfov": 46.52,
     "shift": 0.104
    }
   },
@@ -4447,5 +4472,56 @@
     "shift": -0.3
    }
   }
- ]
+ ],
+ "only": {
+  "about": "keys one tower state walks alone (bruegel-show/show-path.ts merges them into that state's path in place of the shared keys their span covers; every other state and tool reads `path` as it is)",
+  "bruegel-show": [
+   {
+    "t": 393.03,
+    "at": [
+     445740.0,
+     3599648.6
+    ],
+    "y": 88.4,
+    "look": [
+     445640.5,
+     3600036.0,
+     88.4
+    ],
+    "stop": 12,
+    "kind": "hold",
+    "hold": true,
+    "hfov": 40.0,
+    "shift": -0.35,
+    "phone": {
+     "hfov": 21.0,
+     "shift": -0.23
+    },
+    "vantage": true,
+    "say": "the showpiece only: up and back to the painter's own vantage, high and from the front, where his terraces, ramp and crowd show"
+   },
+   {
+    "t": 396.03,
+    "at": [
+     445740.0,
+     3599648.6
+    ],
+    "y": 88.4,
+    "look": [
+     445640.5,
+     3600036.0,
+     88.4
+    ],
+    "stop": 12,
+    "kind": "hold",
+    "hold": true,
+    "hfov": 40.0,
+    "shift": -0.35,
+    "phone": {
+     "hfov": 21.0,
+     "shift": -0.23
+    }
+   }
+  ]
+ }
 }
