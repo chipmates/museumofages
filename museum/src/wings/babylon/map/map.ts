@@ -43,6 +43,7 @@ import { mountBruegel } from '../bruegel/bruegel'
 import { mountShow } from '../bruegel-show/show'
 import { keysFor } from '../bruegel-show/show-path'
 import { mountBridge } from '../bridge/bridge'
+import { mountTop } from '../top/top'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -59,7 +60,7 @@ const say = (s: string): void => {
 const D2R = Math.PI / 180
 
 say('reading the plan')
-const [plan, cams, pieces, recordClasses, courtPlan, towerPlan, gardensPlan, nabuPlan, housePlan, esagilaPlan, gatePlan, bruegelPlan, showPlan, bridgePlan]: [J, J, Pieces, ClassFile, J, J, J, J, J, J, J, J, J, J] = await Promise.all([
+const [plan, cams, pieces, recordClasses, courtPlan, towerPlan, gardensPlan, nabuPlan, housePlan, esagilaPlan, gatePlan, bruegelPlan, showPlan, bridgePlan, topPlan]: [J, J, Pieces, ClassFile, J, J, J, J, J, J, J, J, J, J, J] = await Promise.all([
   fetch(new URL('./map-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('./map-cams.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../pieces.json', import.meta.url)).then((r) => r.json()),
@@ -75,6 +76,7 @@ const [plan, cams, pieces, recordClasses, courtPlan, towerPlan, gardensPlan, nab
   fetch(new URL('../bruegel/bruegel-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../bruegel-show/show-plan.json', import.meta.url)).then((r) => r.json()),
   fetch(new URL('../bridge/bridge-plan.json', import.meta.url)).then((r) => r.json()),
+  fetch(new URL('../top/top-plan.json', import.meta.url)).then((r) => r.json()),
 ])
 const F = makeFrame(plan)
 const t0 = performance.now()
@@ -94,6 +96,8 @@ const esagila = mountEsagila(house.built, plan, esagilaPlan, tones)
 // stop 12's bridge, its quay, the river and the west bank's green (the old stop 13)
 const bridge = mountBridge(esagila.built, plan, bridgePlan, tones)
 const built = bridge.built
+// stop 15's plain round the walls, the arrival's, on the map's ground (the city from the top)
+const top = mountTop(built, plan, topPlan, tones)
 // the tower switch's third state, Bruegel's tower, on the real tower's centre (outside the record's classes)
 const bruegel = mountBruegel(tower.dug.frame, built.ground, bruegelPlan)
 // and its fourth, the showpiece, the same way
@@ -161,6 +165,7 @@ paintCity(bodies.group, built, tones, {
   street: { o: F.s(lion.origin[0], lion.origin[1]), a: F.dir(lion.bearing), c: F.dir(lion.bearing + 90), pavedTo: NORTH_PAVED.a1 },
 })
 cityOnCourtRooms(court.mesh as Mesh, court.court.F.court, uCityPix)
+top.paintGround(bodies.group.getObjectByName('ground') as Mesh, L.sky, uCityPix, (b: N) => bridge.ground(esagila.ground(tower.ground(b))))
 scene.add(bodies.group)
 scene.add(court.mesh)
 scene.add(tower.mesh, tower.towerMesh, ...tower.dugMeshes)
@@ -183,6 +188,7 @@ scene.add(nabu.mesh)
 scene.add(house.mesh)
 scene.add(esagila.mesh)
 scene.add(...bridge.meshes, bridge.river(L.sky, L.AIR))
+scene.add(...top.meshes)
 uView.value = q.get('view') === 'classes' ? 1 : 0
 /* the class view from the record at the camera's stop: some rows hold at certain stops only (the street's) */
 let tonedAt = '', painted: Painted = { bodies: 0, byLetters: [] }
@@ -370,7 +376,7 @@ const rig = {
     duration: path.duration,
   }),
   /** what the scene holds, from the bodies the page built */
-  facts: () => ({ ...built.facts, court: court.court.facts, etemenanki: tower.tower.facts, gardens: gardens.facts, nabu: nabu.nabu.facts, house: house.house.facts, esagila: esagila.esagila.facts, bruegel: bruegel.bruegel.facts, bruegelShow: bruegelShow.show.facts, bridge: bridge.bridge.facts, streetLevelAtS: undefined, sunAt: Object.fromEntries(cams.stops.map((s: J) => [s.n, sunAt(hourOf(s.hour))])) }),
+  facts: () => ({ ...built.facts, court: court.court.facts, etemenanki: tower.tower.facts, gardens: gardens.facts, nabu: nabu.nabu.facts, house: house.house.facts, esagila: esagila.esagila.facts, bruegel: bruegel.bruegel.facts, bruegelShow: bruegelShow.show.facts, bridge: bridge.bridge.facts, top: top.facts, streetLevelAtS: undefined, sunAt: Object.fromEntries(cams.stops.map((s: J) => [s.n, sunAt(hourOf(s.hour))])) }),
   stand: (E: number, N: number) => {
     const [x, z] = F.s(E, N)
     return { stand: stand(x, z), ground: built.ground(x, z), street: built.streetAt(x, z) }
