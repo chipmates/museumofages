@@ -309,9 +309,11 @@ export function buildEsagila(built: Built, mapPlan: J, ep: J): Esagila {
     const centre = archBlock(FN, c0! + side, c1! - side, p0!, p1!, U.foot, G.centreTop, G.arch, back, centreT - R.depth + 0.1, G.archSlices, fc)
     const front = archBlock(FN, c0! + side + 0.05, c1! - side - 0.05, p0! - R.w, p1! + R.w, U.foot, G.centreTop - 0.05, G.arch + R.w, centreT - R.depth, centreT, G.archSlices, fc)
     bodies.push({ id: 'esagila-gate-n', geometry: join([...flankW, ...flankE, ...centre, ...front]), band: -1, letters: ['M', 'G'] })
-    // the door leaf closes the arch 2.6 m in from the centre block's face: nothing of the inside is shown
-    const dt: number = G.door.at
-    const door = join(archLeaf(FN, p0! - 0.15, p1! + 0.15, ep.main.floor - 0.1, G.arch + 0.15, dt - G.door.thick, dt, G.archSlices, KIND.door, [pc, 0, 0, 0]))
+    // the door leaf closes the arch 2.6 m in from the centre block's face: nothing of the inside is shown. Its ends stop
+    // 1 cm inside the landing's sides and its crown takes one slice more than the arch's (two even counts share the
+    // middle seam), so none of its faces lies in a plane of the landing or the arch; the springing stays the arch's
+    const dt: number = G.door.at, dIn = 0.14
+    const door = join(archLeaf(FN, p0! - dIn, p1! + dIn, ep.main.floor - 0.1, G.arch + dIn, dt - G.door.thick, dt, G.archSlices + 1, KIND.door, [pc, 0, 0, 0]))
     bodies.push({ id: 'esagila-door-n', geometry: door, band: -1, letters: ['G', 'G'] })
   }
 
