@@ -4,19 +4,19 @@
    classes in the evidence view come from the record like the map's (record.ts): each body by its name, its plan row in
    the band at its foot, its body row above; the plants and the water by their kind's row. */
 
-import { InstancedBufferAttribute, InstancedMesh, Matrix4, Mesh, Quaternion, Shape, ShapeGeometry, Vector3, Float32BufferAttribute, type BufferGeometry, type Material } from 'three/webgpu'
+import { InstancedBufferAttribute, InstancedMesh, Mesh, Shape, ShapeGeometry, Float32BufferAttribute, type BufferGeometry, type Material } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import type { Built, Cls, P2 } from '../map/plan'
 import { uView, type ClassTones } from '../map/mass'
 import { TONE, type Namer, type Shown } from '../record'
 import type { Painted } from '../record-tones'
-import { palmGeometry, type PalmDetail } from '../gate/gate-life'
+import { palmGeometry } from '../gate/gate-life'
 import { makeAirUniforms } from '../open/air'
 import { palmMaterial, waterMaterial } from '../open/earth'
 import { buildBridge, inPoly, type Bridge, type PlantKind } from './bridge-geom'
 import { bridgeMaterial, setBridgePixel } from './bridge-mat'
-import { treeGeometry } from './bridge-green'
+import { plantMatrix, plantShape } from './bridge-green'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
@@ -25,10 +25,6 @@ type N = any
 const { abs, float, max, mix, mx_noise_float, positionWorld, select, smoothstep, step, uniform, vec3 } = TSL as unknown as Record<string, N>
 
 const TONE_OF: Record<Cls, number> = { M: 0, R: 1, G: 2 }
-/** the palms across the river: between the garden's middle palm and the plain's far one, seen at 100 to 400 m */
-const PALM_BANK: PalmDetail = { seg: 3, sides: 5, fronds: 14, steps: 3 }
-/** each kind's base height (an instance scales it) and the record row its bodies take */
-const BASE_H: Record<PlantKind, number> = { palm: 12, poplar: 11, willow: 9, tamarisk: 4, reed: 2 }
 
 export interface BridgeMount {
   bridge: Bridge
@@ -79,15 +75,11 @@ export function mountBridge(built0: Built, mapPlan: J, bp: J, tones: ClassTones)
     for (let v = 0; v < 2; v++) {
       const mine = list.filter((_, i) => i % 2 === v)
       if (!mine.length) continue
-      const g = kind === 'palm' ? palmGeometry(BASE_H.palm, PALM_BANK, 17 + v * 31) : treeGeometry(kind, BASE_H[kind], 5 + v * 97 + kind.length)
+      const g = plantShape(kind, v, palmGeometry)
       const im = new InstancedMesh(g, plantMat, mine.length)
       const cls = new Float32Array(mine.length * 2).fill(2), band = new Float32Array(mine.length)
-      const m4 = new Matrix4(), q = new Quaternion(), ax = new Vector3()
       mine.forEach((p, i) => {
-        q.setFromAxisAngle(ax.set(Math.cos(p.yaw), 0, Math.sin(p.yaw)).normalize(), p.lean)
-        const s = p.h / BASE_H[kind]
-        m4.compose(new Vector3(p.x, p.y, p.z), q.multiply(new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), p.yaw)), new Vector3(s, s, s))
-        im.setMatrixAt(i, m4)
+        im.setMatrixAt(i, plantMatrix(p))
         band[i] = p.y + 0.5
       })
       g.setAttribute('cls', new InstancedBufferAttribute(cls, 2))

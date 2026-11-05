@@ -4,7 +4,8 @@
    (the poplar tall and open, the willow broad with its outer lobes hanging, the tamarisk low and feathery from the
    ground). The date palm is the gate's part (gate-life.ts palmGeometry). Sizes and colours ours. */
 
-import { BufferGeometry, Float32BufferAttribute } from 'three/webgpu'
+import { BufferGeometry, Float32BufferAttribute, Matrix4, Quaternion, Vector3 } from 'three/webgpu'
+import type { PlantKind, PlantSpot } from './bridge-geom'
 
 type V3 = [number, number, number]
 export type TreeKind = 'poplar' | 'willow' | 'tamarisk' | 'reed'
@@ -127,7 +128,8 @@ export function treeGeometry(kind: TreeKind, h: number, seed: number): BufferGeo
     // a clump of reed: thin blades from one foot, leaning out, last year's straw among the new green
     const n = 18 + Math.floor(R() * 10)
     for (let j = 0; j < n; j++) {
-      const b = R() * Math.PI * 2, lean = 0.1 + R() * 0.35, hh = h * (0.55 + R() * 0.45), w = 0.025 + R() * 0.02
+      // each blade a narrow strip (a few leaves seen together at 100 m and more), wide enough to stay a pixel
+      const b = R() * Math.PI * 2, lean = 0.1 + R() * 0.35, hh = h * (0.55 + R() * 0.45), w = 0.06 + R() * 0.02
       const foot: V3 = [Math.cos(b) * R() * 0.35, -0.2, Math.sin(b) * R() * 0.35]
       const tip: V3 = [foot[0] + Math.cos(b) * lean * hh, hh, foot[2] + Math.sin(b) * lean * hh]
       const sx = -Math.sin(b) * w, sz = Math.cos(b) * w
@@ -135,9 +137,9 @@ export function treeGeometry(kind: TreeKind, h: number, seed: number): BufferGeo
       const straw = R() < 0.35
       const c0: V3 = straw ? [0.2, 0.17, 0.1] : leaf
       const c1: V3 = [c0[0] * 1.25, c0[1] * 1.25, c0[2] * 1.2]
-      s.push([foot[0] - sx, foot[1], foot[2] - sz], nrm, c0)
-      s.push([foot[0] + sx, foot[1], foot[2] + sz], nrm, c0)
-      s.push(tip, nrm, c1)
+      const q: V3[] = [[foot[0] - sx, foot[1], foot[2] - sz], [foot[0] + sx, foot[1], foot[2] + sz], [tip[0] + sx * 0.7, tip[1], tip[2] + sz * 0.7], [tip[0] - sx * 0.7, tip[1], tip[2] - sz * 0.7]]
+      const qc = [c0, c0, c1, c1]
+      for (const i of [0, 1, 2, 0, 2, 3]) s.push(q[i]!, nrm, qc[i]!)
     }
   } else {
     // a dense, upright, feathery shrub-tree from the ground, wider than high, in a few columns (the athel on the sheet)
@@ -149,4 +151,22 @@ export function treeGeometry(kind: TreeKind, h: number, seed: number): BufferGeo
     }
   }
   return s.geometry()
+}
+
+/** the palm part's builder (gate-life.ts palmGeometry), passed in so this module keeps no relative import for node */
+export type PalmBuilder = (h: number, detail: { seg: number; sides: number; fronds: number; steps: number }, seed: number) => BufferGeometry
+/** the palms across the river: between the garden's middle palm and the plain's far one, seen at 100 to 400 m */
+export const PALM_BANK = { seg: 3, sides: 5, fronds: 14, steps: 3 }
+/** each kind's base height; an instance scales it */
+export const PLANT_BASE_H: Record<PlantKind, number> = { palm: 12, poplar: 11, willow: 9, tamarisk: 4, reed: 2 }
+/** a kind's two shapes, v 0 or 1 (the plants of a kind take them in turn) */
+export function plantShape(kind: PlantKind, v: number, palm: PalmBuilder): BufferGeometry {
+  return kind === 'palm' ? palm(PLANT_BASE_H.palm, PALM_BANK, 17 + v * 31) : treeGeometry(kind, PLANT_BASE_H[kind], 5 + v * 97 + kind.length)
+}
+/** a plant's place: turned about its yaw, leaning, scaled to its height */
+export function plantMatrix(p: PlantSpot): Matrix4 {
+  const lean = new Quaternion().setFromAxisAngle(new Vector3(Math.cos(p.yaw), 0, Math.sin(p.yaw)).normalize(), p.lean)
+  const q = lean.multiply(new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), p.yaw))
+  const s = p.h / PLANT_BASE_H[p.kind]
+  return new Matrix4().compose(new Vector3(p.x, p.y, p.z), q, new Vector3(s, s, s))
 }

@@ -11,7 +11,7 @@ import * as TSL from 'three/tsl'
 import { APP } from './pages.mjs'
 import { cameraFrom, facesFrom, fittedFov } from './geometry.mjs'
 
-const COURT = join(APP, 'src/wings/babylon/court'), TOWER = join(APP, 'src/wings/babylon/tower'), GARDENS = join(APP, 'src/wings/babylon/gardens'), NABU = join(APP, 'src/wings/babylon/nabu'), HOUSE = join(APP, 'src/wings/babylon/house'), ESAGILA = join(APP, 'src/wings/babylon/esagila')
+const COURT = join(APP, 'src/wings/babylon/court'), TOWER = join(APP, 'src/wings/babylon/tower'), GARDENS = join(APP, 'src/wings/babylon/gardens'), NABU = join(APP, 'src/wings/babylon/nabu'), HOUSE = join(APP, 'src/wings/babylon/house'), ESAGILA = join(APP, 'src/wings/babylon/esagila'), BRIDGE = join(APP, 'src/wings/babylon/bridge')
 /** the garden's palms as the map page builds them (map.ts PALM_MID) */
 const PALM_MID = { seg: 4, sides: 5, fronds: 16, steps: 4 }
 const MAP = join(APP, 'src/wings/babylon/map'), GATE = join(APP, 'src/wings/babylon/gate'), OPEN = join(APP, 'src/wings/babylon/open')
@@ -87,7 +87,11 @@ export async function mountMap(stop, { reach = 400 } = {}) {
   // stop 9's Esagila, its ground, the wall before Gate 8 and the street round the precinct's corner
   const { buildEsagila } = await import(join(ESAGILA, 'esagila-geom.ts'))
   const esagila = buildEsagila(house.built, plan, json(join(ESAGILA, 'esagila-plan.json')))
-  const built = esagila.built
+  // stop 12's bridge, its quay and the west bank's plants (the old stop 13)
+  const { buildBridge } = await import(join(BRIDGE, 'bridge-geom.ts'))
+  const { plantShape, plantMatrix } = await import(join(BRIDGE, 'bridge-green.ts'))
+  const bridge = buildBridge(esagila.built, plan, json(join(BRIDGE, 'bridge-plan.json')))
+  const built = bridge.built
   const F = makeFrame(plan)
   const stand = (x, z) => built.stand(x, z)
   const path = makePath(cams, F.s, stand)
@@ -117,10 +121,22 @@ export async function mountMap(stop, { reach = 400 } = {}) {
   for (const p of planting.plants) if (Math.hypot(p.x - ex, p.z - ez) <= reach) facesFrom(faces, p.geometry, null, () => `map:${p.id}`)
   for (const b of nabu.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
   for (const b of esagila.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
+  for (const b of bridge.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
+  // the bank's plants whole where the foot lies within the reach, each kind's two shapes in turn as the page instances them
+  const shapes = new Map()
+  const nth = new Map()
+  for (const q of bridge.plants) {
+    const i = nth.get(q.kind) ?? 0
+    nth.set(q.kind, i + 1)
+    if (Math.hypot(q.x - ex, q.z - ez) > reach) continue
+    const key = `${q.kind}-${i % 2}`
+    if (!shapes.has(key)) shapes.set(key, plantShape(q.kind, i % 2, palmGeometry))
+    facesFrom(faces, shapes.get(key).clone().applyMatrix4(plantMatrix(q)), null, () => `map:${q.id}`)
+  }
   const surface = (b) => /^map:(street|ground|water-|gate5-street-|merkes-lanes$|esagila-street-|esagila-ground-)/.test(b)
   return {
     court, tower, gardens, planting, nabu,
-    house, esagila,
+    house, esagila, bridge,
     houseBodies,
     page: 'map', stop: String(stop), frame: "the map's scene metres (x east, z south, y up)", faces, cameras, eyes, reach,
     ground: (x, z) => built.ground(x, z),
@@ -131,7 +147,7 @@ export async function mountMap(stop, { reach = 400 } = {}) {
     allowPair: [],
     // the gate's own palm (palm-date-babylon, reused as it is): its frond tips stay 16 cm wide for 86 m, and the garden's
     // stand 300 to 430 m from stop 5's hold; a far preset of the part is the fix
-    allowThin: [{ prefix: 'map:garden-palm-', why: "the reused gate palm's frond tips, 6 to 8 cm faces at 330 to 390 m (0.06 to 0.07 px of the 1600 px desktop, measured 4 Nov); a far preset of palm-date-babylon is open" }],
+    allowThin: [{ prefix: 'map:garden-palm-', why: "the reused gate palm's frond tips, 6 to 8 cm faces at 330 to 390 m (0.06 to 0.07 px of the 1600 px desktop, measured 4 Nov); a far preset of palm-date-babylon is open" }, { prefix: 'map:bridge-palm-', why: "the same reused gate palm on the west bank, its frond tips at 100 to 400 m from the bridge's hold; a far preset of palm-date-babylon is open" }],
     // a curtain hangs on a terrace's face from its lip on the terrace's top: held by the face, which the plan-view
     // support rule cannot see (as the gate's facing skins)
     allowFloat: [{ prefix: 'map:garden-vine-', why: "a curtain hung on a terrace's face from its lip on the top: held by the face behind it" }, { prefix: 'map:garden-caper-', why: "a caper curtain hung on a terrace's face from its lip on the top: held by the face behind it" }],
