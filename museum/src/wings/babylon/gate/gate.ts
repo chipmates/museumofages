@@ -135,18 +135,18 @@ painted.push(toneMapBodies(bodies.group, city, named))
 scene.add(bodies.group)
 uView.value = U.uSwitch.value
 
-/* the south paving's line (built below the gate's paving): from the paving's end 20 m along the gate's axis, then through
-   the map's street points (its ribbon south of the gate) on a Catmull-Rom curve, sampled every 2 m, to the palace's south-east corner */
+/* the south paving's line (built below the gate's paving): from the paving's end, where the map's street line leaves the
+   gate's axis, through the map's street points (its ribbon south of the gate) on a Catmull-Rom curve, sampled every 2 m,
+   to the palace's south-east corner */
 const PAVE_END = -60 // the gate's paving's south edge (gate-mesh.ts pavingGeometry)
 const SOUTH = (() => {
   const half = (plan.street.paving.limestone * plan.street.paving.limestoneN) / 2 + plan.street.paving.breccia * plan.street.paving.brecciaN
   const ctl: Array<[number, number, number]> = [[0, PAVE_END + 20, B.level(PAVE_END)], [0, PAVE_END, B.level(PAVE_END)]]
+  // the map's points past the paving's end (its point at the end is ctl[1]: a run on the axis past it bent the paving in an S)
   for (const p of mapPlan.street.points as Array<{ at: [number, number]; level: number }>) {
     const [x, z] = GF.fromUtm(p.at[0], p.at[1])
-    if (z < PAVE_END - 40 && z > -230) ctl.push([x, z, p.level - L0])
+    if (z < PAVE_END - 0.5 && z > -230) ctl.push([x, z, p.level - L0])
   }
-  // 20 m on the axis first, so the curve leaves the gate's paving square to it; its level on the map line's grade
-  ctl.splice(2, 0, [0, PAVE_END - 20, ctl[1]![2] + ((ctl[2]![2] - ctl[1]![2]) * 20) / (ctl[1]![1] - ctl[2]![1])])
   ctl.push(ctl[ctl.length - 1]!.map((v, i) => 2 * v - ctl[ctl.length - 2]![i]!) as [number, number, number])
   const cr = (a: number, b: number, c: number, d: number, t: number): number =>
     0.5 * (2 * b + (c - a) * t + (2 * a - 5 * b + 4 * c - d) * t * t + (3 * b - a - 3 * c + d) * t * t * t)
@@ -645,6 +645,8 @@ const rig = {
     await upload(`${o.out}/${o.framing ?? 'desktop'}-frames-${String(Math.round(from * o.fps)).padStart(5, '0')}.json`, JSON.stringify({ fps: o.fps, w: o.w, h: o.h, samples: o.samples, from, to, frames: log }))
     return { frames: n, ms: Math.round(performance.now() - t) }
   },
+  /** the south paving's centre line in the gate's frame, [x, z, y] every 2 m (a probe for its line against the map's) */
+  south: () => SOUTH.line,
   /** the path in the gate's frame, no rendering (the leg numbers) */
   pathSamples(dt = 0.1) {
     const out: Array<Record<string, unknown>> = []
