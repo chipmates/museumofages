@@ -125,6 +125,7 @@ export function mountBridge(built0: Built, mapPlan: J, bp: J, tones: ClassTones)
   /* ── the river: the map's Euphrates outline at its level, the opening's water as seen from the deck ── */
   const uTime = uniform(0)
   const uRiverTone = uniform(new Vector3(...tones.G))
+  const uBankTone = uniform(new Vector3(...tones.G))
   const W = bp.water
   const river = (sky: (d: N) => N, uSun: N, uDay: N): Mesh => {
     const w = built0.water.find((x) => x.id === 'euphrates')!
@@ -200,7 +201,8 @@ export function mountBridge(built0: Built, mapPlan: J, bp: J, tones: ClassTones)
     const t = rx.mul(F.d[0]).add(rz.mul(F.d[1])), c = abs(rx.mul(F.n[0]).add(rz.mul(F.n[1])))
     const head = smoothstep(-14, -8, t).mul(float(1).sub(smoothstep(4, 9, t))).mul(smoothstep(6.5, 7.5, c)).mul(float(1).sub(smoothstep(17, 22, c)))
     const painted = mix(mix(base, westC, bank), earth, head)
-    return mix(painted, base, uView)
+    // the switch on: the west bank's earth takes its own row's tone (the map's ground round it keeps its grey)
+    return mix(painted, mix(base, uBankTone, bank.mul(float(1).sub(head))), uView)
   }
 
   /* ── standing on the stop's own tops: the piers' capping and the land piers (the deck is the map's street) ── */
@@ -231,6 +233,9 @@ export function mountBridge(built0: Built, mapPlan: J, bp: J, tones: ClassTones)
     const w = name('map:water-euphrates', ['R', 'G'])
     uRiverTone.value.set(...tones[LETTER_OF_TONE[TONE[w.above]] as keyof ClassTones])
     if (w.missing.length) missing = [...missing, 'water-euphrates']
+    const wb = name('map:bridge-westbank', ['G', 'G'])
+    uBankTone.value.set(...tones[LETTER_OF_TONE[TONE[wb.above]] as keyof ClassTones])
+    if (wb.missing.length) missing = [...missing, 'bridge-westbank']
     for (const { kind, mesh: im } of plantMeshes) {
       const c = name(`map:bridge-${kind}-0`, ['G', 'G'])
       const ia = im.geometry.getAttribute('cls') as InstancedBufferAttribute
