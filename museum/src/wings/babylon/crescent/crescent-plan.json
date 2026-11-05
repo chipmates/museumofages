@@ -1,0 +1,71 @@
+{
+ "about": "The walk's last stop: the year's first crescent over the river at dusk on 15 April 570 BC. Its place, size, phase and the tilt of its lit edge come from sky-570.json (JPL Horizons, DE441) at the minute the page's own sun (map/sun.ts) stands at; this file holds how it is drawn, each value with where it comes from.",
+ "distance": {
+  "value": 0.75,
+  "src": "ours: the disc's distance as a fraction of the sky dome's radius (open/light.ts, 20 km), inside the far plane and behind every body, so the west bank's palms and the deck's edge stand in front of it"
+ },
+ "radiance": {
+  "value": [
+   4.2,
+   3.95,
+   3.5
+  ],
+  "src": "ours: the lit edge's linear radiance before the air, set so the crescent prints a pale warm white at the stop's exposure without bloom; the real ratio to the dusk sky is far larger (Horizons gives 6.4 mag per square arcsecond on the lit part), which the print cannot hold anyway"
+ },
+ "earthshine": {
+  "value": 0.0,
+  "src": "ours: the ashen light on the dark part as a fraction of the lit edge's radiance; the brief allows it at most faint"
+ },
+ "fade": {
+  "value": [
+   -1.5,
+   -5.0
+  ],
+  "src": "ours: the crescent comes in as the sun sinks from 1.5 to 5 degrees under the horizon (sunset itself at -0.83, the upper limb on the horizon with 34 minutes of refraction); never before sunset (RULES F11.1, 13.4)"
+ },
+ "samples": {
+  "value": 4,
+  "src": "ours: a 4 by 4 grid of samples across each pixel, because the lit edge is about 1.2 arcminutes wide at its middle, one to two pixels on the desktop and under one on the phone"
+ },
+ "dusk": {
+  "from": [
+   -1.0,
+   -4.0
+  ],
+  "zenith": [
+   0.008,
+   0.016,
+   0.042
+  ],
+  "away": [
+   0.028,
+   0.033,
+   0.05
+  ],
+  "arch": [
+   [
+    0.26,
+    0.12,
+    0.045
+   ],
+   [
+    0.2,
+    0.14,
+    0.07
+   ],
+   [
+    0.05,
+    0.065,
+    0.08
+   ]
+  ],
+  "bands": [
+   0.07,
+   0.2
+  ],
+  "height": 0.1,
+  "width": 3.0,
+  "ground": 0.25,
+  "src": "ours: the twilight sky once the sun is 1 to 4 degrees under the horizon (sky.ts's minute; never at a stop with the sun up). The order of its colours is the clear twilight's: the glow over the set sun low and wide, orange at the horizon, yellow by about 5 degrees (bands, sine of the elevation), pale and then blue by about 14, the rest of the sky blue darkening to the zenith; the open dusk reference (EveningSkyHDRI042B) for the air's blue above the glow; the levels in the page's linear units, beside the walk's air at the same hour (open/air.ts, its sky's strength 0.18 after sunset), the glow a little duller than a clean sky's for the plain's dust; the faces' light baked from it over a ground a quarter of the sky at its horizon (ground)"
+ }
+}

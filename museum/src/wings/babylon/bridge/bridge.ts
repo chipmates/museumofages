@@ -25,6 +25,8 @@ type N = any
 const { abs, float, max, mix, mx_noise_float, positionWorld, select, smoothstep, step, uniform, vec3 } = TSL as unknown as Record<string, N>
 
 const TONE_OF: Record<Cls, number> = { M: 0, R: 1, G: 2 }
+/** the river's body under the twilight, as a share of its light under the walk's air (the walk's last stop only) */
+const DUSK_BODY = 0.35
 
 export interface BridgeMount {
   bridge: Bridge
@@ -161,7 +163,12 @@ export function mountBridge(built0: Built, mapPlan: J, bp: J, tones: ClassTones)
       c = mix(c, vec3(...R.east.wallTone).mul(lit), wallE)
       return c
     }
-    const riverMat = waterMaterial(A, sky, uTime, undefined, { body: W.body, flow, fine: W.fine, wakes, glint: W.glint, fog: true, swell: W.swell, reflect })
+    // once the sun is under the horizon it gives no glint and no sheen (the water's sun turns down), and the body takes
+    // the twilight's light, about a third of the walk's air at that hour (ours, the two skies' light beside each other);
+    // `set` is 0 while the sun is up
+    const set = float(1).sub(smoothstep(-0.07, -0.017, A.uSun.y))
+    const Aw: AirUniforms = { ...A, uSun: mix(A.uSun, vec3(0, -1, 0), set), uDay: A.uDay.mul(mix(float(1), float(DUSK_BODY), set)) }
+    const riverMat = waterMaterial(Aw, sky, uTime, undefined, { body: W.body, flow, fine: W.fine, wakes, glint: W.glint, fog: true, swell: W.swell, reflect })
     // the switch on: the water takes its record row's tone (its colour and level are a guess), a slow mottle so the
     // river still reads as one wide surface
     const rm = riverMat as Material & { colorNode: N }
