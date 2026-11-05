@@ -62,7 +62,7 @@ function mapFaces(faces, group, built, matrix, keep) {
 /** the map page at one stop: the bodies within `reach` metres of the stop's eye, its still cameras at the kit's sizes;
     `tower` (or BABYLON_TOWER) the tower switch's state, as `?tower=` on the page */
 export async function mountMap(stop, { reach = 400, tower: towerState = process.env.BABYLON_TOWER || 'built' } = {}) {
-  if (!['built', 'dug', 'bruegel'].includes(towerState)) throw new Error(`no tower state ${towerState}`)
+  if (!['built', 'dug', 'bruegel', 'bruegel-show'].includes(towerState)) throw new Error(`no tower state ${towerState}`)
   const { buildPlan, makeFrame } = await import(join(MAP, 'plan.ts'))
   const { buildBodies, tonesFrom } = await import(join(MAP, 'mass.ts'))
   const { makePath } = await import(join(MAP, 'path.ts'))
@@ -96,6 +96,9 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
   // the switch's third state at the end of the chain, as map.ts mounts it
   const { buildBruegel } = await import(join(APP, 'src/wings/babylon/bruegel/bruegel-geom.ts'))
   const bruegel = towerState === 'bruegel' ? buildBruegel(towerAxis, built.ground, json(join(APP, 'src/wings/babylon/bruegel/bruegel-plan.json'))) : null
+  // and its fourth, the showpiece
+  const { buildShow } = await import(join(APP, 'src/wings/babylon/bruegel-show/show-geom.ts'))
+  const bruegelShow = towerState === 'bruegel-show' ? buildShow(towerAxis, built.ground, json(join(APP, 'src/wings/babylon/bruegel-show/show-plan.json'))) : null
   const F = makeFrame(plan)
   const stand = (x, z) => built.stand(x, z)
   const path = makePath(cams, F.s, stand)
@@ -129,6 +132,7 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
   for (const b of towerBodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
   for (const b of dug?.bodies ?? []) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
   for (const b of bruegel?.bodies ?? []) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
+  for (const b of bruegelShow?.bodies ?? []) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
   // stop 5's bodies whole (an edge terrace's top is a few long triangles whose middles lie past the reach), and each
   // plant whole where its foot lies within the reach
   for (const b of gardens.bodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`)
@@ -137,7 +141,7 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
   const surface = (b) => /^map:(street|ground|water-|gate5-street-|merkes-lanes$|ruin-trench$|ruin-water$)/.test(b)
   return {
     court, tower, gardens, planting, nabu,
-    house, towerState, dug, bruegel,
+    house, towerState, dug, bruegel, bruegelShow,
     houseBodies,
     page: 'map', stop: String(stop), frame: "the map's scene metres (x east, z south, y up)", faces, cameras, eyes, reach,
     ground: (x, z) => built.ground(x, z),
