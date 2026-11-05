@@ -271,8 +271,8 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
     const cosD = max(wu.mul(-nd[0]).add(wv.mul(-nd[1])).div(dl), 0)
     inLight = inLight.add(cosS.mul(cosD).mul(A).div(d2.mul(Math.PI).add(A)).mul(inRoom(r, 0.05)))
   }
-  // a floor near a door sees the court's floor and sky through it, lower than the door's middle: half as much again
-  const roomLight = uHouseSun.mul(vec3(1.0, 0.9, 0.76)).mul(inLight).mul(uHouseIn).mul(inRoomAny).mul(mix(float(1), float(1.5), step(0.5, n.y)))
+  // a floor near a door sees the court's floor and sky through it, lower than the door's middle: seven tenths as much again
+  const roomLight = uHouseSun.mul(vec3(1.0, 0.9, 0.76)).mul(inLight).mul(uHouseIn).mul(inRoomAny).mul(mix(float(1), float(1.7), step(0.5, n.y)))
   m.emissiveNode = c.mul(bounce.mul(bounceZ).add(roomLight)).mul(float(1).sub(uView))
   // no sun reaches inside the rooms or under a door's head; the shadow map's contact edges leaked it, and leaked it onto
   // the jambs of the doors round House VI's court, which lie in the court's shade at the stop's low sun
