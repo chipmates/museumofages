@@ -18,6 +18,7 @@ import { classColour, uView, type ClassTones } from '../map/mass'
 import { TONES } from '../open/earth'
 import { pavingBrickCourt } from '../parts/paving-brick-court-babylon'
 import { SURF, type Box2, type NabuFrame } from './nabu-geom'
+import { uSkySet } from '../open/sky-set'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -248,8 +249,10 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const hidden = wallView(max(P.z.sub(c.z0), 0.05)).add(wallView(max(float(c.z1).sub(P.z), 0.05))).add(wallView(max(P.x.sub(c.x0), 0.05))).add(wallView(max(float(c.x1).sub(P.x), 0.05)))
   // the walls hide half their share of sky, and their white plaster gives back more than they hide: the stack carries no
   // bounce, and in a white court the walls light the floor about as much as the sky does
-  const floorAO = float(1).add(hidden.mul(0.6)).mul(float(1).sub(float(1).sub(smoothstep(0.0, 0.9, dWall)).mul(0.3)))
+  // under the sky field (open/sky-set.ts) the walls' hidden sky and its give-back are the field's: these step aside
+  const floorAO = float(1).add(hidden.mul(0.6).mul(float(1).sub(uSkySet))).mul(float(1).sub(float(1).sub(smoothstep(0.0, 0.9, dWall)).mul(0.3)))
   const footAO = float(1).sub(float(1).sub(smoothstep(0.0, 0.8, footY)).mul(0.25))
+  // a wall's upper part takes the opposite white walls' light: bounce, kept beside the field
   const courtWallAO = mix(float(1.0), float(1.25), smoothstep(0, HW, y))
   let ao: N = float(1)
   ao = mix(ao, footAO, max(outer, any(SURF.smallCourt, SURF.black)))
@@ -285,8 +288,10 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   }
   const Y3 = vec3(0.2126, 0.7152, 0.0722)
   const hue = (v: N): N => v.div(max(dot(v, Y3), 1e-4))
-  const wallShare = min(hiddenTop, 0.85).mul(isAltar).mul(smoothstep(0.2, 0.7, n.y)).mul(inBox(c, 0.1))
-  const topTint = mix(vec3(1), hue(wallLight.mul(V(col.plaster))).div(hue(uNabuLight.sky)), wallShare)
+  const topShare = min(hiddenTop, 0.85).mul(isAltar).mul(smoothstep(0.2, 0.7, n.y)).mul(inBox(c, 0.1))
+  const wallHue = hue(wallLight.mul(V(col.plaster))).div(hue(uNabuLight.sky))
+  // the tops' light takes the walls' colour for their hidden share: the walls' bounce, kept beside the field
+  const topTint = mix(vec3(1), wallHue, topShare)
   m.aoNode = mix(ao, float(1), uView)
   /* ── the court's specular occlusion: the environment holds only the open sky, so a surface seen at a grazing angle
      reflects sky where the court's walls stand in front of it (the blue-grey tops). Its specular keeps the share of
@@ -297,6 +302,7 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const rtz = select(Rv.z.greaterThan(0), float(c.z1).sub(P.z), P.z.sub(c.z0)).div(max(abs(Rv.z).div(rh), 1e-3))
   const wallUp = max(float(F.top + 0.5).sub(P.y), 0.05)
   const skyShare = smoothstep(-0.45, 0.45, atan(Rv.y.div(rh)).sub(atan(wallUp.div(max(min(rtx, rtz), 0.05)))))
+  // kept beside the sky field: it stands for the walls in the mirror being dimmer than the sky they hide
   const occluded = isAltar.mul(smoothstep(0.5, 0.9, n.y)).mul(inBox(c, 0.1))
   ;(m as unknown as { specularIntensityNode: N }).specularIntensityNode = mix(float(1), mix(float(0.2), float(1), skyShare), occluded.mul(float(1).sub(uView)))
   // indoors the light is the court's, thrown back by warm-white walls and brick, warmer than the sky's
@@ -324,6 +330,17 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const tz = select(uNabuLight.sun.z.greaterThan(0), float(c.z1).sub(P.z), P.z.sub(c.z0)).div(max(abs(uNabuLight.sun.z).div(sH), 1e-4))
   const clearH = min(tx, tz).mul(uNabuLight.sun.y.div(sH))
   const courtSun = select(is(SURF.paving).mul(inBox(F.outline, -0.01)).greaterThan(0.5), smoothstep(HW - 0.05, HW + 0.05, clearH), float(1))
+  // the rooms keep their own light under the sky field: it sees only their open sky's share
+  ;(m as unknown as { skyOpenNode: N }).skyOpenNode = float(1).sub(indoors)
+  /* under the sky field the court's white walls give back the sky they hide (sky-set.ts: a share of the hidden sky's
+     light in place of the field's multi-bounce fit, and of the mirrored sky): the walls and the altar in full, as their
+     bounce terms above assume (the walls' rise, the tops' tint and held-back specular); the paving, whose view factor
+     the field's own sky replaces, at 1 + 0.9 x hidden: the field hides about three times the sky the floor term's
+     view factor did, and the walls' gain (+0.6 x hidden on the whole light) is fitted to the hidden share alone */
+  const onPave = is(SURF.paving).mul(inCourt)
+  const ownCourt = max(is(SURF.courtWall), isAltar)
+  ;(m as unknown as { skyBounceNode: N }).skyBounceNode = vec3(float(1).add(hidden.mul(0.9)).mul(onPave).add(ownCourt))
+  ;(m as unknown as { skyMirrorNode: N }).skyMirrorNode = max(onPave, ownCourt)
   ;(m as unknown as { receivedShadowNode: (s: N) => N }).receivedShadowNode = (shadow: N): N => shadow.mul(float(1).sub(indoors)).mul(courtSun)
   return m
 }

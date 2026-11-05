@@ -23,6 +23,7 @@ import { PRESETS as PAVING, pavingBrickCourt } from '../parts/paving-brick-court
 import { PRESETS as WASH, plasterWash } from '../parts/plaster-wash-babylon'
 import { PRESETS as ROOF, roofEarth } from '../parts/roof-earth-throneroom-babylon'
 import { Z } from './house-geom'
+import { uSkySet } from '../open/sky-set'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -294,9 +295,10 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
   const HW = L.top - L.floor
   const hide = (d: N): N => float(0.5).mul(float(1).sub(d.div(sqrt(d.mul(d).add(HW * HW)))))
   const hidden = hide(max(u.sub(ct.u[0]), 0.05)).add(hide(max(float(ct.u[1]).sub(u), 0.05))).add(hide(max(v.sub(ct.v[0]), 0.05))).add(hide(max(float(ct.v[1]).sub(v), 0.05)))
-  const pavingAO = float(1).sub(hidden.mul(0.5)).mul(float(1).sub(float(1).sub(smoothstep(0.0, 1.0, pv.dWall)).mul(0.35)))
+  // under the sky field (open/sky-set.ts) the court's hidden sky is the field's: these view factors step aside
+  const pavingAO = float(1).sub(hidden.mul(0.5).mul(float(1).sub(uSkySet))).mul(float(1).sub(float(1).sub(smoothstep(0.0, 1.0, pv.dWall)).mul(0.35)))
   // a court's walls see less sky toward their feet
-  const courtWallAO = mix(float(0.7), float(1), smoothstep(0.0, HW, yF))
+  const courtWallAO = mix(mix(float(0.7), float(1), smoothstep(0.0, HW, yF)), float(1), uSkySet)
   const footAO = float(1).sub(float(1).sub(smoothstep(0.0, 0.6, yF)).mul(0.25))
   let ao: N = float(1)
   ao = mix(ao, footAO, is(Z.outer))
@@ -313,7 +315,7 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
   // the court's parts see the court's sky as its walls do; the sills as its floor near a wall
   ao = mix(ao, courtWallAO, max(is(Z.wood), is(Z.edge)).mul(float(1).sub(inRooms)))
   ao = mix(ao, float(0.42), is(Z.sill))
-  ao = mix(ao, float(0.72), is(Z.courtFloor))
+  ao = mix(ao, mix(float(0.72), float(1), uSkySet), is(Z.courtFloor))
   /* contact shade the stack's occlusion does not resolve at these sizes: the ladder's feet on the paving, the lintel
      poles' bearing ends over the court walls, the sills' room-side edge on the room floors */
   let contact: N = float(1)
@@ -386,6 +388,8 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
   // no sun reaches inside the rooms or under a door's head; the shadow map's contact edges leaked it, and leaked it onto
   // the jambs of the doors round House VI's court, which lie in the court's shade at the stop's low sun
   const indoors = max(max(inRoomAny, is(Z.leaf)), is(Z.reveal).mul(max(step(n.y, -0.5), inCourt6)))
+  // the rooms keep their own light under the sky field: it sees only their open sky's share
+  ;(m as unknown as { skyOpenNode: N }).skyOpenNode = float(1).sub(inRoomAny)
   // House VI's court shades itself: the sun's ray from a point leaves the court over its caps or not. The page's one
   // shadow map, fitted to the whole frame, lays a few centimetres a texel: its edge on these walls steps and its bias
   // lets the sun past a parapet's corner. Near the court's own shadow edge that edge alone; elsewhere the darker of the

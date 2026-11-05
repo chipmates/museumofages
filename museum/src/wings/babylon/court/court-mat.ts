@@ -21,6 +21,7 @@ import { PRESETS as PAVING, pavingBrickCourt } from '../parts/paving-brick-court
 import { plasterWash } from '../parts/plaster-wash-babylon'
 import { PRESETS as ROOF, roofEarth } from '../parts/roof-earth-throneroom-babylon'
 import type { CourtFrame } from './court-geom'
+import { uSkySet } from '../open/sky-set'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -534,7 +535,8 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   const HW = F.top - F.pave
   const wallView = (d: N): N => float(0.5).mul(float(1).sub(d.div(sqrt(d.mul(d).add(HW * HW)))))
   const hidden = wallView(max(P.z.sub(c.z0), 0.05)).add(wallView(max(float(F.zF).sub(P.z), 0.05))).add(wallView(max(P.x.sub(c.x0), 0.05)))
-  const skyAO = float(1).sub(hidden.mul(0.6))
+  // under the sky field (open/sky-set.ts) the fronts' hidden sky is the field's
+  const skyAO = mix(float(1).sub(hidden.mul(0.6)), float(1), uSkySet)
   const footAO = float(1).sub(float(1).sub(smoothstep(0.0, 0.7, y)).mul(0.3))
   const deckAO = float(1).sub(float(1).sub(smoothstep(0.0, 0.7, dPar)).mul(0.35))
   let ao: N = float(1)
@@ -547,6 +549,8 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   m.emissiveNode = sheen.add(stateCol.mul(roomLight).mul(inRoom.mul(float(1).sub(onFloor))).mul(float(1).sub(uView)))
   // no sun reaches into the room or its passages through doors that face north; the shadow map's contact edges leaked it
   const indoors = max(room, reveal)
+  // the room and its passages keep their own light under the sky field: it sees only their open sky's share
+  ;(m as unknown as { skyOpenNode: N }).skyOpenNode = float(1).sub(indoors)
   ;(m as unknown as { receivedShadowNode: (s: N) => N }).receivedShadowNode = (shadow: N): N => shadow.mul(float(1).sub(indoors))
   return m
 }

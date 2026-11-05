@@ -338,6 +338,8 @@ figure.position.set(plan.figure.x, B.level(plan.figure.z), plan.figure.z)
 figure.rotation.y = plan.figure.turn ?? -Math.PI / 2
 figure.name = 'figure'
 gate.add(figure)
+// the figure keeps the stack's contact shade: the sky field's maps leave it out
+L.field?.setHidden(() => [figure])
 // a probe only, never in the film (?figure=s,t): the figure on the street s metres out on its line, t across (+ west)
 if (q.get('figure')) {
   const [fs, ft] = q.get('figure')!.split(',').map(Number) as [number, number]
@@ -530,8 +532,10 @@ async function render(w: number, h: number, samples: number, stops = 0): Promise
     return (read as J)(rt, ...rest)
   }) as typeof renderer.readRenderTargetPixelsAsync
   let rgb: Float32Array
+  // the sky field (`?sky=set`, open/sky-set.ts): its maps for this camera, a quarter of its directions a sub-frame
+  L.field?.prepare(camera)
   try {
-    rgb = await accumulate(renderer, camera, linear!.post, w, h, samples)
+    rgb = await accumulate(renderer, camera, linear!.post, w, h, samples, L.field ? (i: number) => L.field!.each(i) : undefined)
   } finally {
     renderer.readRenderTargetPixelsAsync = read
   }
