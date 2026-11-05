@@ -592,3 +592,82 @@ function separate(boxes: GBox[], arches: GArch[], prisms: GPrism[]): void {
     if (over(ea.x0, ea.x1, eb.x0, eb.x1) && over(ea.y0, ea.y1, eb.y0, eb.y1) && over(ea.z0, ea.z1, eb.z0, eb.z1) && Math.abs(ea.y0 - eb.y0) < 1e-4) (vol(ea) <= vol(eb) ? prisms[i]! : prisms[j]!).y0 -= STEP
   }
 }
+
+/* ── the rooms' sky openness, in the gate's frame: the chambers and passages as gate.ts lights them, for a page that
+   mounts the gate's walls elsewhere (the map's); the stack has no GI, so the bounce and sky are modelled ── */
+export function gateRooms(plan: J): { boxes: Array<{ x0: number; x1: number; z0: number; z1: number; y1: number; open: number }> } {
+  const FG = plan.front, MG = plan.main
+  const fw: number = FG.frontWall, chD: number = FG.chamber[1], ow: number = FG.walls
+  const zCh0 = -fw, zCh1 = -(fw + chD), zBack = -(fw + chD + ow), zMT = zBack - plan.court.depth, zM0 = zMT - MG.towers.proj
+  const zMch0 = zM0 - MG.walls, zMch1 = zMch0 - MG.chamber[0], zMS = zMch1 - MG.walls
+  const hd = FG.door / 2
+  return {
+    boxes: [
+      { x0: -hd - 0.05, x1: hd + 0.05, z0: zCh0 + 0.6, z1: -0.65, y1: FG.arch.crown + 0.05, open: 0.62 },
+      { x0: -FG.chamber[0] / 2 - 0.05, x1: FG.chamber[0] / 2 + 0.05, z0: zCh1 - 0.05, z1: zCh0 + 0.05, y1: FG.wallTop.value - 0.6, open: 0.28 },
+      { x0: -hd - 0.05, x1: hd + 0.05, z0: zBack + 0.65, z1: zCh1, y1: FG.arch.crown + 0.05, open: 0.42 },
+      { x0: -FG.across / 2, x1: FG.across / 2, z0: zMT - 0.05, z1: zBack, y1: 30, open: 0.55 },
+      { x0: -hd - 0.05, x1: hd + 0.05, z0: zMch0, z1: zM0 - 0.65, y1: MG.arch.crown + 0.05, open: 0.42 },
+      { x0: -MG.chamber[1] / 2 - 0.05, x1: MG.chamber[1] / 2 + 0.05, z0: zMch1 - 0.05, z1: zMch0 + 0.05, y1: MG.wallTop.value - 0.6, open: 0.22 },
+      { x0: -hd - 0.05, x1: hd + 0.05, z0: zMS + 0.65, z1: zMch1, y1: MG.arch.crown + 0.05, open: 0.5 },
+    ],
+  }
+}
+
+/* ── the gate on another page (the map's): the map's massings of the two gates, which a page drawing this build leaves
+   out, and the build's own parts there, the two gates and the court; the forecourt, the lion walls and the inner walls'
+   ends have that page's own bodies ── */
+export const isGateMassing = (id: string): boolean => /^gate-(front|main)(-|$)/.test(id)
+const OWN_PARTS = new Set(['front gate', 'court', 'main gate'])
+const OWN_RUNS = /^(m?guard-|front-top-|main-top-)/
+export function gateOwnParts(B: Built): Built {
+  const faces = B.faces.filter((f) => OWN_PARTS.has(f.part))
+  const fid = new Set(faces.map((f) => f.id))
+  const boxes = B.boxes.filter((b) => OWN_PARTS.has(b.part)).map((b) => ({ ...b }))
+  const arches = B.arches.filter((a) => OWN_PARTS.has(a.part)).map((a) => ({ ...a }))
+  // seen from above, two overlapping bodies' equal tops would fight: the second (an arch, else the smaller) rises by the
+  // separation pass's step
+  const STEP = 0.012
+  const items = [
+    ...boxes.map((b) => ({ x0: b.x0, x1: b.x1, z0: b.z0, z1: b.z1, arch: false, vol: (b.x1 - b.x0) * (b.y1 - b.y0) * (b.z1 - b.z0), top: () => b.y1, lift: () => { b.y1 += STEP } })),
+    ...arches.map((a) => ({ x0: a.x0, x1: a.x1, z0: a.z0, z1: a.z1, arch: true, vol: (a.x1 - a.x0) * (a.top - a.springing) * (a.z1 - a.z0), top: () => a.top, lift: () => { a.top += STEP } })),
+  ]
+  const over = (a0: number, a1: number, b0: number, b1: number): boolean => Math.min(a1, b1) - Math.max(a0, b0) > 1e-3
+  const was = items.map((t) => t.top())
+  for (let i = 0; i < items.length; i++) for (let j = i + 1; j < items.length; j++) {
+    const p = items[i]!, q = items[j]!
+    if (!over(p.x0, p.x1, q.x0, q.x1) || !over(p.z0, p.z1, q.z0, q.z1) || Math.abs(p.top() - q.top()) >= 1e-4) continue
+    ;(q.arch && !p.arch ? q : p.arch && !q.arch ? p : p.vol <= q.vol ? p : q).lift()
+  }
+  // a battlement run rises with the highest top under it, so its faces never overlap its wall's; of two runs crossing
+  // at a corner on one level the shorter rises by the step too
+  const foot = (r: Run) => {
+    const xs = [r.a[0], r.b[0], r.a[0] - r.out[0] * r.thick, r.b[0] - r.out[0] * r.thick]
+    const zs = [r.a[1], r.b[1], r.a[1] - r.out[1] * r.thick, r.b[1] - r.out[1] * r.thick]
+    return { x0: Math.min(...xs), x1: Math.max(...xs), z0: Math.min(...zs), z1: Math.max(...zs) }
+  }
+  const runs = B.runs.filter((r) => OWN_RUNS.test(r.id)).map((r) => ({ ...r }))
+  for (const r of runs) {
+    const f = foot(r)
+    const under = items.filter((t, k) => over(f.x0, f.x1, t.x0, t.x1) && over(f.z0, f.z1, t.z0, t.z1) && Math.abs(was[k]! - r.y) < 1e-4)
+    if (under.length) r.y = Math.max(...under.map((t) => t.top()))
+  }
+  const len = (r: Run): number => Math.hypot(r.b[0] - r.a[0], r.b[1] - r.a[1])
+  for (let i = 0; i < runs.length; i++) for (let j = i + 1; j < runs.length; j++) {
+    const p = runs[i]!, q = runs[j]!, fp = foot(p), fq = foot(q)
+    if (!over(fp.x0, fp.x1, fq.x0, fq.x1) || !over(fp.z0, fp.z1, fq.z0, fq.z1) || Math.abs(p.y - q.y) >= 1e-4) continue
+    ;(len(p) <= len(q) ? p : q).y += STEP
+  }
+  return {
+    ...B,
+    boxes,
+    prisms: B.prisms.filter((p) => OWN_PARTS.has(p.part)),
+    arches,
+    beams: B.beams.filter((b) => OWN_PARTS.has(b.part)),
+    faces,
+    panels: B.panels.filter((p) => fid.has(p.face)),
+    runs,
+    // the bronze animals' pedestals stand in the forecourt
+    pedestals: B.pedestals.filter((p) => !p.animal),
+  }
+}

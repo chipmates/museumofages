@@ -100,7 +100,16 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
   const { buildBridge } = await import(join(BRIDGE, 'bridge-geom.ts'))
   const { plantShape, plantMatrix } = await import(join(BRIDGE, 'bridge-green.ts'))
   const bridge = buildBridge(esagila.built, plan, json(join(BRIDGE, 'bridge-plan.json')))
-  const built = bridge.built
+  // the Ishtar Gate's own build (its two gates and the court) in place of the map's massings, as map.ts mounts it
+  // (gate-on-map.ts), at the gate's frame in the map's scene
+  const { buildGate, gateFrame, gateOwnParts, isGateMassing } = await import(join(GATE, 'gate-geom.ts'))
+  const { animalField } = await import(join(GATE, 'gate-relief.ts'))
+  const { assemble } = await import(join(GATE, 'gate-mesh.ts'))
+  const gatePlan = json(join(GATE, 'gate-plan.json'))
+  const gateB = gateOwnParts(buildGate(gatePlan))
+  const gateFields = { bull: animalField('bull'), dragon: animalField('dragon'), lion: animalField('lion') }
+  const gateA = assemble(gateB, gatePlan, gateFields)
+  const built = { ...bridge.built, prisms: bridge.built.prisms.filter((q) => !isGateMassing(q.id)) }
   // stop 15's plants (the plain round the walls), as map.ts mounts them at the chain's end
   const { topPlants } = await import(join(TOP, 'top-plants.ts'))
   const { buildPlain } = await import(join(OPEN, 'plain.ts'))
@@ -153,6 +162,22 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
     }
   }
   const faces = mapFaces([], bodies.group, built, new THREE.Matrix4(), keep)
+  { // the gate's walls split at their body marks and each panel's base quad, as mountGate names them, in the map's scene
+    const MF = makeFrame(plan), G2W = new THREE.Matrix4().fromArray(gateFrame(gatePlan).toMap(MF.E0, MF.N0))
+    let m = 0
+    facesFrom(faces, gateA.walls, G2W, (i) => { while (m + 1 < gateA.marks.length && gateA.marks[m + 1].from <= i) m++; return `gate:${gateA.marks[m].id}` }, keep)
+    const C = gatePlan.course
+    for (const set of gateA.panels) {
+      const L = gateFields[set.kind].L
+      const quad = new THREE.PlaneGeometry(1, 1)
+      quad.translate(0.5, 0.5, 0)
+      const list = gateB.panels.filter((q) => q.kind === set.kind)
+      for (let i = 0; i < set.count; i++) {
+        const local = new THREE.Matrix4().makeScale(L + 0.04, 15 * C, 1).premultiply(new THREE.Matrix4().makeTranslation(-0.02, -C, 0))
+        facesFrom(faces, quad, G2W.clone().multiply(new THREE.Matrix4().fromArray(set.matrices, i * 16)).multiply(local), () => `panel:${list[i].id}`, keep)
+      }
+    }
+  }
   for (const b of [...court.bodies, ...houseBodies]) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
   for (const b of towerBodies) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
   for (const b of dug?.bodies ?? []) facesFrom(faces, b.geometry, null, () => `map:${b.id}`, keep)
@@ -210,8 +235,9 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
     ground: (x, z) => built.ground(x, z),
     track: (dt = 0.25) => pathTrack(path, n, dt, (q) => ({ kind: q.kind, desktop: view(q.pos, q.look, q.hfov, q.shift), phone: view(q.pos, q.phone.look, q.phone.hfov, q.phone.shift) })),
     counts: () => true,
-    checks: (b) => !surface(b),
-    floats: (b) => !surface(b) && b !== 'map:ramps',
+    // the gate's relief panels are checked on the gate page (their base quads lie on the glazed skins by design)
+    checks: (b) => !surface(b) && !b.startsWith('panel:'),
+    floats: (b) => !surface(b) && b !== 'map:ramps' && !b.startsWith('panel:'),
     // the dug stairs' feet lie 4 cm over the ruin's ground at every one of their top points (tower-dug.test.mjs), both
     // surfaces on the same 0.75 m step; the check takes a face's plane from the scene's origin about 400 m off, where a
     // thousandth of tilt between the two triangulations reads as one plane
@@ -236,7 +262,7 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
     ],
     // a curtain hangs on a terrace's face from its lip on the terrace's top: held by the face, which the plan-view
     // support rule cannot see (as the gate's facing skins)
-    allowFloat: [{ prefix: 'map:garden-vine-', why: "a curtain hung on a terrace's face from its lip on the top: held by the face behind it" }, { prefix: 'map:garden-caper-', why: "a caper curtain hung on a terrace's face from its lip on the top: held by the face behind it" }],
+    allowFloat: [{ prefix: 'gate:skin:', why: "a facing skin laid on a wall's face over the door: held by the wall behind it, which the plan-view support rule cannot see (as on the gate page)" }, { prefix: 'map:garden-vine-', why: "a curtain hung on a terrace's face from its lip on the top: held by the face behind it" }, { prefix: 'map:garden-caper-', why: "a caper curtain hung on a terrace's face from its lip on the top: held by the face behind it" }],
   }
 }
 

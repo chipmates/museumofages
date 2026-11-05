@@ -45,6 +45,7 @@ import { keysFor } from '../bruegel-show/show-path'
 import { mountBridge } from '../bridge/bridge'
 import { mountTop } from '../top/top'
 import { mountCrescent } from '../crescent/crescent'
+import { mountGateOnMap } from './gate-on-map'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -96,7 +97,9 @@ const house = mountHouse(nabu.built, plan, housePlan, tones)
 const esagila = mountEsagila(house.built, plan, esagilaPlan, tones)
 // stop 12's bridge, its quay, the river and the west bank's green (the old stop 13)
 const bridge = mountBridge(esagila.built, plan, bridgePlan, tones)
-const built = bridge.built
+// the Ishtar Gate's own model (the gate page's build) in place of the map's massings of its two gates
+const ishtar = mountGateOnMap(bridge.built, plan, gatePlan)
+const built = ishtar.built
 // stop 15's plain round the walls, the arrival's, on the map's ground (the city from the top)
 const top = mountTop(built, plan, topPlan, tones)
 // the tower switch's third state, Bruegel's tower, on the real tower's centre (outside the record's classes)
@@ -192,6 +195,7 @@ scene.add(house.mesh)
 scene.add(esagila.mesh)
 scene.add(...bridge.meshes, bridge.river(crescent.sky(L.sky), L.AIR))
 scene.add(...top.meshes)
+scene.add(ishtar.meshes(L.AIR.uSun))
 uView.value = q.get('view') === 'classes' ? 1 : 0
 /* the class view from the record at the camera's stop: some rows hold at certain stops only (the street's) */
 let tonedAt = '', painted: Painted = { bodies: 0, byLetters: [] }
@@ -199,8 +203,8 @@ function toneAt(stop: number): void {
   if (String(stop) === tonedAt) return
   tonedAt = String(stop)
   const name = recordNamer(pieces, recordClasses, tonedAt)
-  const city = toneMapBodies(bodies.group, built, name), own = court.tone(name), five = gardens.tone(name), six = house.tone(name), nine = tower.tone(name), temple = nabu.tone(name), marduk = esagila.tone(name), river = bridge.tone(name)
-  painted = { bodies: city.bodies + own.bodies + five.bodies + six.bodies + nine.bodies + temple.bodies + marduk.bodies + river.bodies, byLetters: [...city.byLetters, ...own.byLetters, ...five.byLetters, ...six.byLetters, ...nine.byLetters, ...temple.byLetters, ...marduk.byLetters, ...river.byLetters] }
+  const city = toneMapBodies(bodies.group, built, name), gate = ishtar.tone(name), own = court.tone(name), five = gardens.tone(name), six = house.tone(name), nine = tower.tone(name), temple = nabu.tone(name), marduk = esagila.tone(name), river = bridge.tone(name)
+  painted = { bodies: city.bodies + gate.bodies + own.bodies + five.bodies + six.bodies + nine.bodies + temple.bodies + marduk.bodies + river.bodies, byLetters: [...city.byLetters, ...gate.byLetters, ...own.byLetters, ...five.byLetters, ...six.byLetters, ...nine.byLetters, ...temple.byLetters, ...marduk.byLetters, ...river.byLetters] }
 }
 
 /* the person for size, at each stop's place for one */
@@ -274,6 +278,7 @@ function aim(pos: V3, look: V3, hfov: number, w: number, h: number, shift = 0): 
   setCityPixel(camera.fov, h)
   bridge.setPixel(camera.fov, h)
   crescent.setPixel(camera.fov, h)
+  ishtar.setPixel(camera.fov, h)
   camera.updateMatrixWorld(true)
   skyDome.position.copy(camera.position)
   skyDome.updateMatrixWorld(true)
