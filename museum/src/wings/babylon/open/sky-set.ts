@@ -72,6 +72,10 @@ export interface SkySetOptions {
 
 export type SkySet = ReturnType<typeof skySet>
 
+/** 1 while a field lights the still, else 0: a material's hand sky terms step aside by it (mix(term, 1, uSkySet)),
+    so the sky a point cannot see is taken away once */
+export const uSkySet: N = uniform(0)
+
 /* the light whose node adds the correction; it carries the field's nodes, so one class serves every page */
 class SkySetLight extends Light {
   readonly isSkySetLight = true
@@ -291,6 +295,7 @@ export function skySet(o: SkySetOptions) {
       }
       weigh()
       uOn.value = on ? 1 : 0
+      uSkySet.value = uOn.value
       ;(uTable as N).needsUpdate = true
     },
     /** the page's objects kept out of the maps */
@@ -309,6 +314,7 @@ export function skySet(o: SkySetOptions) {
     setOn(v: boolean): void {
       on = v
       uOn.value = v ? 1 : 0
+      if (added) uSkySet.value = uOn.value
     },
     facts: () => ({
       mode: 'set', directions: COUNT, mapSize: SIZE, perSubFrame: COUNT / STRIDE, giveBack: uGive.value, albedo: ALBEDO, on, normalBias: NB, depthBias: ZB, specular: uSpec.value, specularPower: uSpecPow.value,
