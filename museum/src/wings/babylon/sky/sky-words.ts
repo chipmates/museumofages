@@ -14,7 +14,7 @@ export const STEP_IDS = ['evenings', 'shekel', 'rise'] as const
 export type StepId = typeof STEP_IDS[number]
 
 const DRAFT = 'DRAFT'
-const NB = ' '
+const NB = '\u00a0'
 
 /** a number as each language writes it */
 export function num(lang: SkyLang, n: number, digits = 1): string {
@@ -27,6 +27,9 @@ export interface SkyWords {
   labels: {
     date: Record<'0414' | '0415', string>
     sun: string; west: string; moonset: string
+    /** under each lit share, Yallop's class in words: A and B to the eye, C found with optical aid, D only with it,
+        E and F not at all */
+    sight: { eye: string; hard: string; aid: string; none: string }
     good: Record<Good, string>; litres: string; silver: string
     tablet: string; tabletDate: string; credit: string
     rise: string; riseOld: string; figure: string
@@ -37,7 +40,10 @@ export interface SkyWords {
 }
 
 /** THE WRITER'S WORDS STILL TO WRITE, by their place in `SkyWords` */
-export const DRAFT_WORDS = ['steps', 'band', 'list', 'ui.title', 'ui.door', 'ui.close'] as const
+export const DRAFT_WORDS = ['steps', 'band', 'list', 'labels.sight', 'ui.title', 'ui.door', 'ui.close'] as const
+
+/** the phone sheet shows the title in one row, cut at its edge: about 36 characters fit at 360 px */
+export const TITLE_CHARS = 36
 
 /** THE BAND'S LINE AT THE CLOSE LOOK'S LENGTH (STORY-SYSTEM, THE LINE), as feature 10's */
 export const LINE_CHARS = 100
@@ -65,18 +71,19 @@ export const SKY_WORDS: Record<SkyLang, SkyWords> = {
     labels: {
       date: { '0414': '14 April', '0415': '15 April' },
       sun: 'sun', west: 'W', moonset: 'moonset',
+      sight: { eye: 'easy to see', hard: 'hard to see', aid: 'too thin to see', none: 'not to be seen' },
       good: { barley: 'barley', dates: 'dates', sesame: 'sesame' }, litres: 'litres', silver: 'silver',
       tablet: PHOTO.name, tabletDate: PHOTO.date.en, credit: PHOTO.credit,
       rise: `1.65${NB}m`, riseOld: `3 cubits 8 fingers`, figure: `1.70${NB}m`,
     },
     ui: {
       play: 'Play', pause: 'Pause', track: 'The evening and the tablet, step by step', between: (a, b) => `between the steps ${a} and ${b}`,
-      title: `${DRAFT} The evening sky and the watcher's tablet`, door: `${DRAFT} See the first crescent`, close: `${DRAFT} Back to the bridge`,
+      title: `${DRAFT} The evening sky, the tablet`, door: `${DRAFT} See the first crescent`, close: `${DRAFT} Back to the bridge`,
     },
     band: {
       evenings: `${DRAFT} · Computed: on 14 April too thin to see, on 15 April easy. With it the new year began.`,
       shekel: `${DRAFT} · Two years later a watcher noted what one shekel of silver bought. About this much.`,
-      rise: `${DRAFT} · The same diary: in one spring the river rose about 1.65${NB}m. Almost the figure's height.`,
+      rise: `${DRAFT} · The same diary: in one spring the river rose about 1.65${NB}m. Almost the figure.`,
     },
     list: {
       evenings: [
@@ -108,13 +115,14 @@ export const SKY_WORDS: Record<SkyLang, SkyWords> = {
     labels: {
       date: { '0414': '14. April', '0415': '15. April' },
       sun: 'Sonne', west: 'W', moonset: 'Monduntergang',
+      sight: { eye: 'gut sichtbar', hard: 'schwer zu sehen', aid: 'zu schmal fürs Auge', none: 'nicht zu sehen' },
       good: { barley: 'Gerste', dates: 'Datteln', sesame: 'Sesam' }, litres: 'Liter', silver: 'Silber',
       tablet: PHOTO.name, tabletDate: PHOTO.date.de, credit: PHOTO.credit,
       rise: `1,65${NB}m`, riseOld: `3 Ellen 8 Finger`, figure: `1,70${NB}m`,
     },
     ui: {
       play: 'Abspielen', pause: 'Anhalten', track: 'Der Abend und die Tafel, Schritt für Schritt', between: (a, b) => `zwischen den Schritten ${a} und ${b}`,
-      title: `${DRAFT} Der Abendhimmel und die Tafel des Beobachters`, door: `${DRAFT} Die erste Sichel sehen`, close: `${DRAFT} Zurück zur Brücke`,
+      title: `${DRAFT} Der Abendhimmel, die Tafel`, door: `${DRAFT} Die erste Sichel sehen`, close: `${DRAFT} Zurück zur Brücke`,
     },
     band: {
       evenings: `${DRAFT} · Berechnet: am 14. zu schmal, am 15. April gut sichtbar. Mit ihr begann das neue Jahr.`,
@@ -159,15 +167,19 @@ export function skyLabel(lang: SkyLang, id: string): string {
   return flat[id] ?? id
 }
 
+const SIGHT = { A: 'eye', B: 'eye', C: 'hard', D: 'aid', E: 'none', F: 'none' } as const
+
 /** a label's words: the sky's numbers from the computation, the heaps' from the edition, the rest from the words */
 export function skyText(lang: SkyLang, evenings: readonly Evening[], id: string): string | readonly [string, string] {
-  const W = SKY_WORDS[lang], L = W.labels, NB = ' '
-  const m = /^(height|lit|moonset|sun|west|date)-(\d{4})$/.exec(id)
+  const W = SKY_WORDS[lang], L = W.labels, NB = '\u00a0'
+  const m = /^(height|lit|share|sight|moonset|sun|west|date)-(\d{4})$/.exec(id)
   if (m) {
     const e = evenings.find((x) => x.id === m[2])!
     const p = printed(e)
     if (m[1] === 'height') return `${num(lang, p.height)}°`
-    if (m[1] === 'lit') return `${num(lang, p.lit)}${NB}%`
+    if (m[1] === 'lit') return [`${num(lang, p.lit)}${NB}%`, L.sight[SIGHT[e.cls]]]
+    if (m[1] === 'share') return `${num(lang, p.lit)}${NB}%`
+    if (m[1] === 'sight') return L.sight[SIGHT[e.cls]]
     if (m[1] === 'moonset') return [`+${p.lag}${NB}min`, L.moonset]
     if (m[1] === 'sun') return L.sun
     if (m[1] === 'west') return L.west

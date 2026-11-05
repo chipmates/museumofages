@@ -49,7 +49,9 @@ export function meshVolume(mesh: Mesh): number {
 function heapMesh(R: number, mat: MeshStandardNodeMaterial, name: string): Mesh {
   const prof = heapProfile(R, undefined, 64)
   // from the foot up to the top, so the lathe's faces look out
-  const pts = [new Vector2(0, 0), ...[...prof].reverse().map(([r, y]) => new Vector2(r, y))]
+  // the foot's point twice: the closing disc and the slope share no vertex, so the foot's ring keeps the slope's normal
+  const foot = prof[prof.length - 1]!
+  const pts = [new Vector2(0, 0), new Vector2(foot[0], foot[1]), ...[...prof].reverse().map(([r, y]) => new Vector2(r, y))]
   const g = new LatheGeometry(pts, 128)
   g.computeVertexNormals()
   const m = new Mesh(g, mat)
@@ -143,7 +145,8 @@ export function buildHeaps(): HeapsBuild {
   const Rs = { barley: heapRadius(litresOf('barley')), dates: core.R, sesame: heapRadius(litresOf('sesame')) }
   const meshes = {} as Record<Good | 'silver', Mesh>
   for (const id of ['barley', 'dates', 'sesame'] as const) {
-    const m = heapMesh(Rs[id], grainMaterial(L[id]), `sky/heaps/${id}`)
+    const look = id === 'dates' ? { ...L.dates, albedo: L.dates.albedo.map((c) => c * L.dates.core.shade) as unknown as typeof L.dates.albedo, roughness: L.dates.core.roughness } : L[id]
+    const m = heapMesh(Rs[id], grainMaterial(look), `sky/heaps/${id}`)
     m.position.set(P[id][0], 0, P[id][1])
     group.add(m)
     meshes[id] = m

@@ -181,7 +181,8 @@ export const HEAPS_PLAN = {
   silver: [0.86, 1.18] as P2,
   views: {
     wide: { eye: [0.05, 1.95, 5.6] as const, target: [-0.25, 0.62, 0.15] as const, fov: 25, aspect: 1.6 },
-    upright: { eye: [0.0, 3.2, 6.3] as const, target: [-0.1, 0.48, 0.2] as const, fov: 37, aspect: 1.0 },
+    // the figure whole inside the plate's lower share, about the wide eye's 14 degrees down
+    upright: { eye: [-0.9, 2.7, 5.5] as const, target: [-0.3, 1.3, 0.2] as const, fov: 38, aspect: 1.0 },
     silver: { eye: [0.86, 0.05, 1.3] as const, target: [0.86, 0.004, 1.18] as const, fov: 22, aspect: 1.0 },
   },
 } as const
@@ -224,7 +225,9 @@ export const riseM = (): number => (RISE.cubits + RISE.fingers / RISE.fingersPer
     under them is made smaller by the shell they add, so the whole holds the edition's litres */
 export const HEAPS_LOOK = {
   barley: { albedo: [0.56, 0.4, 0.17] as const, grain: 0.008, roughness: 0.85 },
-  dates: { albedo: [0.075, 0.03, 0.016] as const, grain: 0.03, roughness: 0.55, fruit: { long: 0.035, wide: 0.018 }, proud: 0.006 },
+  dates: { albedo: [0.075, 0.03, 0.016] as const, grain: 0.03, roughness: 0.55, fruit: { long: 0.035, wide: 0.018 }, proud: 0.006,
+    /** the heap under the fruits, seen only in their gaps: darker and dull */
+    core: { shade: 0.55, roughness: 0.92 } },
   sesame: { albedo: [0.72, 0.6, 0.36] as const, grain: 0.003, roughness: 0.8 },
   silver: { albedo: [0.78, 0.77, 0.74] as const, roughness: 0.42 },
 } as const

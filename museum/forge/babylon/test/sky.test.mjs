@@ -70,7 +70,7 @@ test('every sky number the words carry is the computation\'s (P2)', () => {
     const L = words.SKY_WORDS[lang].list.evenings.join(' ')
     for (const e of evenings) {
       const p = data.printed(e)
-      for (const n of [`${words.num(lang, p.height)}°`, `${words.num(lang, p.lit)} %`, ` ${p.lag} `]) assert.ok(L.includes(n), `${lang} ${e.id}: ${n}`)
+      for (const n of [`${words.num(lang, p.height)}°`, `${words.num(lang, p.lit)}\u00a0%`, ` ${p.lag} `]) assert.ok(L.includes(n), `${lang} ${e.id}: ${n}`)
     }
   }
 })
@@ -170,6 +170,18 @@ test('the band\'s lines: about 90 characters, no sentence over 14 words, every d
     for (const s of shown(lang)) assert.ok(s.startsWith('DRAFT'), `${lang}: ${s}`)
     assert.deepEqual(Object.keys(W.band), [...words.STEP_IDS])
     for (const id of words.STEP_IDS) assert.ok(words.BAND_KEYS[id].carries && words.BAND_KEYS[id].pointer, id)
+  }
+})
+
+test('the title fits the phone sheet\'s one row, and each lit share carries its class in words', () => {
+  for (const lang of LANGS) {
+    const W = words.SKY_WORDS[lang]
+    assert.ok(W.ui.title.length <= words.TITLE_CHARS, `${lang} ${W.ui.title.length}: ${W.ui.title}`)
+    const [a, b] = ['0414', '0415'].map((id) => words.skyText(lang, evenings, `lit-${id}`))
+    assert.deepEqual(a, [`${words.num(lang, 0.7)}\u00a0%`, W.labels.sight.aid])
+    assert.deepEqual(b, [`${words.num(lang, 3.7)}\u00a0%`, W.labels.sight.eye])
+    assert.equal(words.skyText(lang, evenings, 'sight-0414'), W.labels.sight.aid)
+    assert.equal(words.skyText(lang, evenings, 'share-0415'), `${words.num(lang, 3.7)}\u00a0%`)
   }
 })
 

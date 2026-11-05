@@ -44,6 +44,8 @@ export interface SkyFacts {
   photo: Box | null
   heaps: Box | null
   silver: Box | null
+  /** the ring round the lump at its true size on the heaps' picture, and whether a leader joins it to its close picture */
+  silverMark: { x: number; y: number; r: number; lead: boolean } | null
   /** px a metre on the heaps' picture at the figure's depth, and each heap's drawn foot width and top in metres */
   heapsDrawn: { id: string; x: number; foot: number; top: number }[]
   rise: { pxPerM: number; drawn: number; figure: number; fill: number } | null
@@ -74,7 +76,7 @@ export function skyScene(t: number, framing: PaperFraming, w: number, h: number,
   const si = Math.max(0, Math.min(STEP_IDS.length - 1, Math.round(t)))
   const state = STEP_IDS[si]!
   const labels = settled !== null
-  const facts: SkyFacts = { step: settled ?? -1, state, panels: [], photo: null, heaps: null, silver: null, heapsDrawn: [], rise: null }
+  const facts: SkyFacts = { step: settled ?? -1, state, panels: [], photo: null, heaps: null, silver: null, silverMark: null, heapsDrawn: [], rise: null }
   const take = (b: Box, id: string, pad = 0): void => { taken.push({ l: b.l - pad, t: b.t - pad, r: b.r + pad, b: b.b + pad, id }) }
 
   if (state === 'evenings') {
@@ -92,6 +94,8 @@ export function skyScene(t: number, framing: PaperFraming, w: number, h: number,
     const k = stacked ? kStack : kSide
     const pw = stacked ? bw : (bw - gap) / 2
     let cellT = box.t
+    // the setting's pair is two rows, about 37 px on a phone (its read-back box)
+    const PAIR_H = 37, sight: Anchor[] = []
     E.forEach((e, i) => {
       const [elLo, elHi] = elOf(e.id) as [number, number]
       const drawW = azSpan * k, drawH = (elHi - elLo) * k
@@ -163,13 +167,17 @@ export function skyScene(t: number, framing: PaperFraming, w: number, h: number,
         const sunRight = sx > setAt[0]
         anchors.push({ id: `date-${id}`, x: panel.l, y: top - 6, sides: ['above-right'], gap: 0, kind: 'big' })
         anchors.push({ id: `height-${id}`, x: hx, y: (horizon + my) / 2, sides: ['left', 'right', 'above-left', 'below-left'], gap: 6, kind: 'ink' })
-        anchors.push({ id: `lit-${id}`, x: dx, y: dy + R, sides: ['below', 'below-left', 'left', 'below-right', 'right'], gap: 6, kind: 'ink' })
+        // the lit share and Yallop's class in words under the disc; side by side on a phone the disc has no room for
+        // the words, so they stand under the evening, level with the other's
+        const beside = !wide && !stacked
+        anchors.push({ id: `${beside ? 'share' : 'lit'}-${id}`, x: dx, y: dy + R, sides: ['below', 'below-left', 'left', 'below-right', 'right'], gap: 6, kind: beside ? 'ink' : 'pair' })
         // each name may stand against its own mark's margin, never on another's
         if (wide || i === 0) anchors.push({ id: `sun-${id}`, x: sx, y: sy + sr, sides: sunRight ? ['below-right', 'right', 'below'] : ['below-left', 'left', 'below'], gap: 4, kind: 'ink', over: [`sun-${id}`] })
         // under the set Sun's ring, so the pair may pass beside it
         // side by side on a phone the Sun's name and the setting's pair may meet: the pair takes a second row
         const second = !wide && !stacked && i === 0 && Math.abs(sx - setAt[0]) < 70 ? 22 : 0
         anchors.push({ id: `moonset-${id}`, x: setAt[0], y: Math.max(horizon + 6, sy + sr + 4) + second, sides: sunRight ? ['below-left', 'below'] : ['below-right', 'below', 'below-left'], gap: 4, kind: 'pair', over: [`moonset-${id}`] })
+        if (beside) sight.push({ id: `sight-${id}`, x: (panel.l + panel.r) / 2, y: Math.max(horizon + 6, sy + sr + 4) + second + PAIR_H, sides: ['below', 'below-right', 'below-left'], gap: 8, kind: 'ink' })
         if (wide) anchors.push({ id: `west-${id}`, x: wx, y: horizon + 10, sides: ['below-left', 'below'], gap: 2, kind: 'pencil' })
       }
       facts.panels.push({
@@ -179,6 +187,8 @@ export function skyScene(t: number, framing: PaperFraming, w: number, h: number,
         box: panel,
       })
     })
+    const sightY = Math.max(...sight.map((a) => a.y))
+    for (const a of sight) anchors.push({ ...a, y: sightY })
   }
 
   if (state === 'shekel') {
@@ -248,6 +258,23 @@ export function skyScene(t: number, framing: PaperFraming, w: number, h: number,
     const rulerH = Math.max(10, pxPerCm * 0.9)
     take({ l: ruler.ends[0] - 1, t: rulerY - 1, r: ruler.ends[1] + 1, b: rulerY + rulerH + 1 }, 'ruler')
     void sv
+    // the lump on the stage at its true size is a speck: a ring round it in the paper's own colour, and where its close
+    // picture stands beside the heaps' a leader to it, in the paper's colour over the stage and in pencil past its edge
+    const pvL: 'wide' | 'upright' = wide ? 'wide' : 'upright'
+    const fullW = pic.r - pic.l, fullH = fullW * P.h / P.w, fullY = pic.b - fullH
+    const sp = project(pvL, [lump[0], 0.003, lump[1]])
+    const sx = pic.l + sp.x * fullW, sy = fullY + sp.y * fullH, rr = wide ? 10 : 7
+    if (sx - rr > pic.l && sx + rr < pic.r && sy - rr > pic.t && sy + rr < pic.b) {
+      prims.push({ type: 'path', id: 'silver-ring', mark: 'pencil', d: circlePath(sx, sy, rr), width: 1.25, cls: 'sky-callout' })
+      const besideIt = silver.l >= pic.r + 4
+      if (besideIt) {
+        const gx = (pic.r + silver.l) / 2, ty = Math.min(silver.b - 6, Math.max(silver.t + 6, sy))
+        prims.push({ type: 'path', id: 'silver-lead', mark: 'pencil', d: `M${f(sx + rr)} ${f(sy)}H${f(pic.r)}`, width: 1, cls: 'sky-callout' })
+        prims.push({ type: 'path', id: 'silver-lead-out', mark: 'pencil', d: `M${f(pic.r)} ${f(sy)}H${f(gx)}V${f(ty)}H${f(silver.l)}`, width: 1 })
+        walls.push({ ax: pic.r, ay: sy, bx: gx, by: sy }, { ax: gx, ay: sy, bx: gx, by: ty }, { ax: gx, ay: ty, bx: silver.l, by: ty })
+      }
+      facts.silverMark = { x: sx, y: sy, r: rr, lead: besideIt }
+    }
     // each heap's name under the picture, below its own foot; the figure's at its feet
     const pv: 'wide' | 'upright' = wide ? 'wide' : 'upright'
     const pw = full.w, phh = full.h
@@ -284,10 +311,12 @@ export function skyScene(t: number, framing: PaperFraming, w: number, h: number,
     const top = box.t + (wide ? 64 : 56), base = box.b - (wide ? 24 : 20)
     const pxPerM = Math.min((base - top) / 2.05, (bw - 20) / 1.55)
     const cx = (box.l + box.r) / 2
-    // the group (the water's half metre, the staff at its right, the gap, the figure's half width) centred on the
-    // plate; the rise's name stands over the water and leftward of it, clear of the staff and the figure
-    const colW = pxPerM * 0.5
-    const gx = cx - pxPerM * 1.26 / 2
+    // the group (the water, the staff at its right, the gap, the figure's half width) centred on the plate; a wide
+    // plate draws the water two metres across, so it reads as the river and not a post; the rise's name stands over
+    // the water and leftward of it, clear of the staff and the figure
+    const waterM = wide ? 2 : 0.5
+    const colW = pxPerM * waterM
+    const gx = cx - pxPerM * (waterM + 0.76) / 2
     const sx = gx + colW + 1
     const fill = settled !== null ? 1 : ease(span(t, 1.5, 2))
     const riseTop = base - riseM() * pxPerM * fill
@@ -301,6 +330,18 @@ export function skyScene(t: number, framing: PaperFraming, w: number, h: number,
       prims.push({ type: 'rect', id: 'rise', mark: 'known', x: gx, y: riseTop, w: colW, h: base - riseTop, cls: 'sky-water' })
       prims.push({ type: 'line', id: 'rise-top', mark: 'known', ax: gx, ay: riseTop, bx: sx, by: riseTop, width: 1.5 })
       take({ l: gx, t: riseTop - 2, r: sx, b: base }, 'rise')
+      // the drawings' water-level mark on both levels, a small triangle on the line (the risen one with two short
+      // strokes under it): the old in the water, the risen on its line between the staff and the figure, where the
+      // rise's name above the water never meets it
+      const u = wide ? 8 : 6
+      for (const [id, y, lx] of [['level-old', base, gx + Math.min(colW * 0.3, pxPerM * 0.3)], ['level-new', riseTop, sx + pxPerM * 0.14]] as const) {
+        if (id === 'level-new' && base - riseTop < 3 * u) continue
+        prims.push({ type: 'path', id, mark: 'pencil', d: `M${f(lx - u)} ${f(y - 1.6 * u)}L${f(lx + u)} ${f(y - 1.6 * u)}L${f(lx)} ${f(y)}Z` })
+        take({ l: lx - u, t: y - 1.6 * u, r: lx + u, b: y }, id, 3)
+        if (id === 'level-new') prims.push({ type: 'path', id: `${id}-strokes`, mark: 'pencil', d: `M${f(lx - 0.8 * u)} ${f(y + 0.8 * u)}h${f(1.6 * u)}M${f(lx - 0.4 * u)} ${f(y + 1.5 * u)}h${f(0.8 * u)}`, width: 1 })
+      }
+      // the risen level carried across to the figure, dashed, so the two heights meet on one line
+      prims.push({ type: 'line', id: 'level-across', mark: 'pencil', ax: sx + 2, ay: riseTop, bx: fx + pxPerM * 0.3, by: riseTop, width: 0.75, cls: 'sky-leader' })
     }
     // the gauge: a pencil staff at the water's right edge, a tick each 10 cm into the water, longer each half metre
     let staff = `M${f(sx)} ${f(base)}L${f(sx)} ${f(base - 2 * pxPerM)}`
