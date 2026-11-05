@@ -38,11 +38,11 @@ test('House VI at the plan sizes (P2021 Fig. 6.15): court 6.5 by 6.5 m, Room 4 8
   assert.ok(f.area > 330 && f.area < 330 * 1.15, `area ${f.area}`)
 })
 
-test('one storey: the paving at +5.2, doors 2 m, about 3 m to the roof, the parapet top +8.6', () => {
+test('one storey: the paving at +5.2, doors 2 m, about 3 m to the roof, the parapet top +8.85', () => {
   const f = out.facts
   near(f.floor, 5.2, 1e-6, 'floor'); near(f.doorHead, 2.0, 0.01, 'door head'); near(f.room4Door[0], 1.5, 0.01, "Room 4's door")
   assert.ok(f.wallToDeck >= 2.8 && f.wallToDeck <= 3.4, `floor to deck ${f.wallToDeck}`)
-  near(out.heights.house6[1], 8.6, 1e-3, 'house top'); near(out.heights['house6-court-paving'][0], 5.2, 1e-3, 'paving')
+  near(out.heights.house6[1], 8.85, 1e-3, 'house top'); near(out.heights['house6-court-paving'][0], 5.2, 1e-3, 'paving')
   near(out.stand, 5.2, 1e-3, 'the stand in the court'); assert.ok(out.ground < 5.2, `ground ${out.ground} under the floor`)
 })
 
@@ -53,4 +53,17 @@ test('the house stop replaces the generic Merkes blocks and draws its neighbours
   // every face of House VI knows what it shows: walls to the street and the court, rooms, reveals, deck, coping, floors, paving
   for (const z of [0, 1, 2, 3, 4, 5, 6, 7]) assert.ok(out.zones.includes(z), `zone ${z}`)
   near(out.heights['merkes-lanes'][1], 5.0, 1e-3, 'lanes top')
+})
+
+test("the court's construction: caps over the parapets, lintels at the door heads, sills a course high, a leaf per court door", () => {
+  const H = out.heights, top = 8.85, head = 7.2, floor = 5.2
+  for (const id of ['house6-tops', 'house6-lintels', 'house6-sills', 'house6-pivots', 'house6-leaves', 'house6-ladder']) assert.ok(out.ids.includes(id), id)
+  // the cap's crown a few centimetres over the parapet's top, its overhang's underside under it; the roof's edge under the deck
+  near(H['house6-tops'][1], top + 0.07, 0.01, 'cap crown'); near(H['house6-tops'][0], 7.85, 1e-3, "roof edge's underside")
+  // the poles' undersides just under the door head, so the opening stays about 2 m
+  near(H['house6-lintels'][0], head - 0.02, 0.01, 'lintel underside'); assert.ok(H['house6-lintels'][0] - floor >= 1.95, 'clear height')
+  near(H['house6-sills'][1], floor + 0.045, 1e-3, 'sill top'); assert.ok(H['house6-sills'][0] < floor, 'sill set into the floor')
+  assert.ok(H['house6-pivots'][1] < H['house6-sills'][1], 'pivot stones under the sill top')
+  assert.ok(H['house6-leaves'][1] < 7.85 && H['house6-leaves'][0] < floor + 0.01, 'leaves stand on their pivots under the ceiling')
+  assert.ok(H['house6-ladder'][0] < floor && H['house6-ladder'][1] > top, 'the ladder from the paving over the parapet')
 })
