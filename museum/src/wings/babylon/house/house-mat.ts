@@ -389,7 +389,8 @@ export function houseMaterial(S: HouseShade, tones: ClassTones): Material {
   // House VI's court shades itself: the sun's ray from a point leaves the court over its caps or not. The page's one
   // shadow map, fitted to the whole frame, lays a few centimetres a texel: its edge on these walls steps and its bias
   // lets the sun past a parapet's corner. Near the court's own shadow edge that edge alone; elsewhere the darker of the
-  // two, so the ladder's, the figure's and the city's shadows stay
+  // two, so the ladder's, the figure's and the city's shadows stay. A stand-in: it goes once fitShadow in open/light.ts
+  // fits a sun box tight enough for an eye-level hold
   const sd = uHouseSunDir, su = sd.dot(ax), sv = sd.dot(az)
   const cu0 = ct.u[0] + 0.04, cu1 = ct.u[1] - 0.04, cv0 = ct.v[0] + 0.04, cv1 = ct.v[1] - 0.04
   const tU = select(su.lessThan(0), float(cu0).sub(u).div(min(su, -1e-4)), float(cu1).sub(u).div(max(su, 1e-4)))
