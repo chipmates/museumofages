@@ -41,13 +41,21 @@ export function facesFrom(faces, geo, matrix, bodyAt, keep = null) {
 }
 
 /** the shared area of two face sets in one plane, on a grid; `cover` faces (a third body's, looking the other way)
-    close the cells they lie on; `masked(point)` drops a cell the page hides */
-export function sharedArea(a, b, n, { cover = [], masked = null } = {}) {
+    close the cells they lie on; `masked(point)` drops a cell the page hides. A cell counts only where the two sets'
+    own planes lie within `bedM` of each other along `n` there (the local gap): a plane's offset from the origin
+    matches a long, slightly tilted face to a level one far above it. `gapMm` is the local gap's median over the
+    counted cells, `gapMinMm` its least over every shared cell; `overlap` and `overlapGapMm` the area and median of
+    every shared cell, counted or not. */
+export function sharedArea(a, b, n, { cover = [], masked = null, bedM = Infinity } = {}) {
   const helper = Math.abs(n.y) < 0.9 ? new THREE.Vector3(0, 1, 0) : new THREE.Vector3(1, 0, 0)
   const e1 = new THREE.Vector3().crossVectors(n, helper).normalize()
   const e2 = new THREE.Vector3().crossVectors(n, e1)
   const flat = (set) => set.map((f) => f.v.map((q) => [q.dot(e1), q.dot(e2)]))
   const FA = flat(a), FB = flat(b), FC = flat(cover)
+  const d0 = a[0].d
+  // a face's height over the plane `d0` along n at (u, v): t = c - pu * u - pv * v, from its own normal and offset
+  const height = (set) => set.map((f) => { const k = f.n.dot(n); return [f.n.dot(e1) / k, f.n.dot(e2) / k, f.d / k - d0] })
+  const HA = height(a), HB = height(b)
   const bb = (F) => { const p = F.flat(); return [minOf(p.map((x) => x[0])), minOf(p.map((x) => x[1])), maxOf(p.map((x) => x[0])), maxOf(p.map((x) => x[1]))] }
   const ba = bb(FA), bq = bb(FB)
   const box = [Math.max(ba[0], bq[0]), Math.max(ba[1], bq[1]), Math.min(ba[2], bq[2]), Math.min(ba[3], bq[3])]
@@ -57,39 +65,59 @@ export function sharedArea(a, b, n, { cover = [], masked = null } = {}) {
   const F = 0.537
   const cols = Math.ceil((box[2] - box[0]) / CELL) + 1, rows = Math.ceil((box[3] - box[1]) / CELL) + 1
   const grid = new Uint8Array(cols * rows)
+  // per cell: the lowest and highest of a's heights, then the least gap from any of b's faces to either of them
+  // (exact where a lays at most two faces on a cell)
+  const aLo = new Float32Array(cols * rows), aHi = new Float32Array(cols * rows), gap = new Float32Array(cols * rows).fill(Infinity)
   const side = (p, q, r) => (q[0] - p[0]) * (r[1] - p[1]) - (q[1] - p[1]) * (r[0] - p[0])
-  const paint = (set, bit) => {
-    for (const tri of set) {
+  const paint = (set, bit, H = null) => {
+    for (let t = 0; t < set.length; t++) {
+      const tri = set[t], h = H && H[t]
       const lo = [Math.min(...tri.map((p) => p[0])), Math.min(...tri.map((p) => p[1]))], hi = [Math.max(...tri.map((p) => p[0])), Math.max(...tri.map((p) => p[1]))]
       const i0 = Math.max(0, Math.floor((lo[0] - box[0]) / CELL)), i1 = Math.min(cols - 1, Math.ceil((hi[0] - box[0]) / CELL))
       const j0 = Math.max(0, Math.floor((lo[1] - box[1]) / CELL)), j1 = Math.min(rows - 1, Math.ceil((hi[1] - box[1]) / CELL))
       for (let j = j0; j <= j1; j++) for (let i = i0; i <= i1; i++) {
         const P = [box[0] + (i + F) * CELL, box[1] + (j + F) * CELL]
         const d1 = side(tri[0], tri[1], P), d2 = side(tri[1], tri[2], P), d3 = side(tri[2], tri[0], P)
-        if (!((d1 < 0 || d2 < 0 || d3 < 0) && (d1 > 0 || d2 > 0 || d3 > 0))) grid[j * cols + i] |= bit
+        if ((d1 < 0 || d2 < 0 || d3 < 0) && (d1 > 0 || d2 > 0 || d3 > 0)) continue
+        const k = j * cols + i
+        if (bit === 1) {
+          const y = h[2] - h[0] * P[0] - h[1] * P[1]
+          if (!(grid[k] & 1)) { aLo[k] = y; aHi[k] = y } else if (y < aLo[k]) aLo[k] = y; else if (y > aHi[k]) aHi[k] = y
+        } else if (bit === 2 && grid[k] & 1) {
+          const y = h[2] - h[0] * P[0] - h[1] * P[1]
+          gap[k] = Math.min(gap[k], Math.abs(y - aLo[k]), Math.abs(y - aHi[k]))
+        }
+        grid[k] |= bit
       }
     }
   }
-  paint(FA, 1)
-  paint(FB, 2)
+  paint(FA, 1, HA)
+  paint(FB, 2, HB)
   paint(FC, 4)
-  const d0 = a[0].d
-  let both = 0
+  const shared = []
   for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
     if (grid[j * cols + i] !== 3) continue
     if (masked) {
       const p = e1.clone().multiplyScalar(box[0] + (i + F) * CELL).addScaledVector(e2, box[1] + (j + F) * CELL).addScaledVector(n, d0)
       if (masked(p)) continue
     }
-    both++
+    shared.push(gap[j * cols + i])
   }
-  return { area: both * CELL * CELL, cell: +CELL.toFixed(3) }
+  const gaps = Float32Array.from(shared).sort()
+  let both = 0
+  while (both < gaps.length && gaps[both] <= bedM) both++
+  const mm = (x) => (x === undefined ? null : +(x * 1000).toFixed(1))
+  return {
+    area: both * CELL * CELL, cell: +CELL.toFixed(3), gapMm: mm(gaps[(both - 1) >> 1]), gapMinMm: mm(gaps[0]),
+    overlap: +(gaps.length * CELL * CELL).toFixed(3), overlapGapMm: mm(gaps[(gaps.length - 1) >> 1]),
+  }
 }
 
-/** pairs of bodies sharing a plane (normal to a hundredth, offsets within the bed) and some area.
-    kinds: fight (both look one way), butt (opposite ways: two closed bodies face to face), unseen (a fight every eye
-    stands behind). `counts(a, b)` says whether a pair is this check's to report. */
-export function coplanar(faces, { bedM = 0.002, areaMin = 0.01, eyes = [], counts = () => true, masked = null } = {}) {
+/** pairs of bodies sharing a plane (normal to a hundredth, offsets within the bed) and some area where their own
+    planes lie within the bed of each other (sharedArea's local gap; `local: false` counts every shared cell, as
+    before the local gap). kinds: fight (both look one way), butt (opposite ways: two closed bodies face to face),
+    unseen (a fight every eye stands behind). `counts(a, b)` says whether a pair is this check's to report. */
+export function coplanar(faces, { bedM = 0.002, areaMin = 0.01, eyes = [], counts = () => true, masked = null, local = true } = {}) {
   const groups = new Map()
   for (const f of faces) {
     const key = [f.n.x, f.n.y, f.n.z].map((c) => (Math.round(c * 100) / 100).toFixed(2)).join(',')
@@ -113,11 +141,11 @@ export function coplanar(faces, { bedM = 0.002, areaMin = 0.01, eyes = [], count
             if (!sa.length || !sb.length) continue
             const kind = k0 === 'fight' && eyes.length && eyes.every((e) => fa * (run[0].n.dot(e) - run[0].d) < 0.001) ? 'unseen' : k0
             const cover = k0 === 'fight' ? run.filter((f) => f.facing === -fa && f.body !== an && f.body !== bn) : []
-            const o = sharedArea(sa, sb, run[0].n, { cover, masked: masked ? (p) => masked(p, an, bn) : null })
+            const o = sharedArea(sa, sb, run[0].n, { cover, masked: masked ? (p) => masked(p, an, bn) : null, bedM: local ? bedM : Infinity })
             if (!o || o.area < areaMin) continue
             const pts = [...sa, ...sb].flatMap((f) => f.v)
             const span = (k) => [+minOf(pts.map((p) => p[k])).toFixed(2), +maxOf(pts.map((p) => p[k])).toFixed(2)]
-            pairs.push({ a: an, b: bn, kind, facing: fa, area: +o.area.toFixed(3), cell: o.cell, gapMm: +(Math.abs(sa[0].d - sb[0].d) * 1000).toFixed(1), n: [run[0].n.x, run[0].n.y, run[0].n.z].map((c) => +c.toFixed(3)), d: +run[0].d.toFixed(3), x: span('x'), y: span('y'), z: span('z') })
+            pairs.push({ a: an, b: bn, kind, facing: fa, area: +o.area.toFixed(3), cell: o.cell, gapMm: o.gapMm, gapMinMm: o.gapMinMm, n: [run[0].n.x, run[0].n.y, run[0].n.z].map((c) => +c.toFixed(3)), d: +run[0].d.toFixed(3), x: span('x'), y: span('y'), z: span('z') })
           }
         }
       }
