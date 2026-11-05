@@ -1,6 +1,6 @@
 """The evening of 15 April 570 BC at Babylon from JPL Horizons' observer tables (DE441), for the walk's last stop.
 
-  python3 -I crescent-sky.py <folder with the six tables> --out <sky json> [--hold 16:09]
+  python3 -I crescent-sky.py <folder with the six tables> --out <sky json> [--hold 16:09] [--evening "14 April 570 BC"]
 
 The tables (text, CSV, ANG_FORMAT=DEG, one-minute steps, site 44.421 E, 32.536 N, 0.035 km): sun-topo-airless
 (quantities 2,4,7,13,20,23,24), moon-topo-airless (2,4,7,9,10,13,20,23,24), sun-topo-refracted and moon-topo-refracted
@@ -81,6 +81,8 @@ def main():
     ap.add_argument('folder')
     ap.add_argument('--out', required=True)
     ap.add_argument('--hold', default='16:09')
+    # the evening's name in the file's own words; the tables' date is the folder's
+    ap.add_argument('--evening', default='15 April 570 BC')
     a = ap.parse_args()
     T = {n: table(os.path.join(a.folder, n + '.txt')) for n in ('sun-topo-airless', 'moon-topo-airless', 'sun-topo-refracted', 'moon-topo-refracted', 'sun-geo', 'moon-geo')}
     keys = sorted(T['moon-topo-airless'], key=mins)
@@ -146,7 +148,7 @@ def main():
     hold = next(r for r in out if r['ut'] == a.hold)
     chi, q, z = limb_meeus(hold['sun']['ra'], hold['sun']['dec'], hold['moon']['ra'], hold['moon']['dec'], hold['last'])
     doc = {
-        'about': "The Sun and the Moon over Babylon on the evening of 15 April 570 BC (Julian), one row a minute from ten minutes before sunset to ten after moonset: JPL Horizons observer tables, ephemeris DE441, topocentric (44.421 E, 32.536 N, 35 m), apparent, airless (az, el) and with Horizons' refraction (elR); illu the Moon's lit percent, diam its apparent diameter (degrees), sto the phase angle, sot the elongation, last the local apparent sidereal time (hours); limbCw the bright limb's direction from the zenith's, clockwise as seen, from the two airless positions (ours, from Horizons' numbers). Sunset and moonset: the upper limb on the horizon with 34 minutes of refraction. Written by forge/babylon/crescent-sky.py.",
+        'about': f"The Sun and the Moon over Babylon on the evening of {a.evening} (Julian), one row a minute from ten minutes before sunset to ten after moonset: JPL Horizons observer tables, ephemeris DE441, topocentric (44.421 E, 32.536 N, 35 m), apparent, airless (az, el) and with Horizons' refraction (elR); illu the Moon's lit percent, diam its apparent diameter (degrees), sto the phase angle, sot the elongation, last the local apparent sidereal time (hours); limbCw the bright limb's direction from the zenith's, clockwise as seen, from the two airless positions (ours, from Horizons' numbers). Sunset and moonset: the upper limb on the horizon with 34 minutes of refraction. Written by forge/babylon/crescent-sky.py.",
         'site': [LON, LAT, 35],
         'convergence': round(CONVERGENCE, 4),
         'events': ev,
