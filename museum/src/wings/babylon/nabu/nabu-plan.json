@@ -243,7 +243,15 @@
    0.38,
    0.48
   ],
-  "src": "plain black bitumen bands on white lime-gypsum plaster, recorded on the older temple below (P2021 p. 167, fig. 4.23) and carried up as a transfer (Guessed); the layout after Pedersen's model of this court (P2021 fig. 4.24): a dado of black piers under two bands, black frames round the doors; no motif drawn as found"
+  "src": "plain black bitumen bands on white lime-gypsum plaster, recorded on the older temple below (P2021 p. 167, fig. 4.23) and carried up as a transfer (Guessed); the layout after Pedersen's model of this court (P2021 fig. 4.24): a dado of black piers under two bands, black frames round the doors; no motif drawn as found; the side rooms off Nabu's court banded as the cella (P2021 p. 168: 'some other rooms nearby' had the same white walls with black bands), guessed",
+  "coat": {
+   "fringe": 0.009,
+   "sheen": [
+    0.28,
+    0.55
+   ],
+   "src": "the bands as a coat of bitumen paint on the plaster: it thins at its edge to a brown fringe of about a centimetre, it lies a little proud (a lit lip over each band, a shade under it), and its gloss varies with its thickness; plain bands only (SET-C1 G-C1-9)"
+  }
  },
  "black": {
   "src": "the court wall before the goddess's cella all black with bitumen (P2021 p. 170)"
@@ -289,6 +297,16 @@
    0.42,
    0.36,
    0.28
+  ],
+  "cedar": [
+   0.2,
+   0.12,
+   0.07
+  ],
+  "sill": [
+   0.44,
+   0.34,
+   0.24
   ]
  },
  "door": {
@@ -367,5 +385,19 @@
   "gain": 0.85,
   "r": 1.6,
   "src": "guessed: two oil lamps on stands either side of the pedestal, out of the court's sight behind the door's jambs; only their warm light is drawn"
+ },
+ "coping": {
+  "curb": 0.85,
+  "h": 0.22,
+  "lift": 0.05,
+  "proj": 0.06,
+  "back": 0.72,
+  "pitch": 1.45,
+  "src": "guessed: a coping course standing 6 cm proud of each court's wall top, and on it the stepped battlements the temples were crowned with (K1914 ch. IX; the front's, ILL E05) carried round both courts; sizes and pitch ours"
+ },
+ "leaves": {
+  "t": 0.07,
+  "sill": 0.05,
+  "src": "guessed: wooden leaves standing open against each door's reveal, hung at the end that opens into a room, after Pedersen's model (P2021 fig. 4.24); a sill of baked brick across each door, 5 cm over the paving, 6 cm proud of each face; the doors plain, never arched (P2021 p. 168)"
  }
 }

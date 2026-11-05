@@ -13,7 +13,7 @@
 
 import { MeshStandardNodeMaterial, Vector3, type Material } from 'three/webgpu'
 import * as TSL from 'three/tsl'
-import { band, footprint, hash2 } from '../gate/gate-mat'
+import { band, footprint, hash2, lines } from '../gate/gate-mat'
 import { classColour, uView, type ClassTones } from '../map/mass'
 import { TONES } from '../open/earth'
 import { pavingBrickCourt } from '../parts/paving-brick-court-babylon'
@@ -84,11 +84,17 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   plaster = mix(plaster, plaster.mul(vec3(0.94, 0.93, 0.9)), is(SURF.ashratum))
 
   /* ── the black bands: plain bitumen, painted on the court's walls and in the cellas ── */
+  const banded = any(SURF.courtWall, SURF.bandedRoom)
   const bitumen = V(col.bitumen).mul(float(1).add(mx_noise_float(P.mul(9)).mul(0.25).mul(near)))
   const pitch: number = B.pitch, pier: number = B.pier
   // u from the court's corner on each face, so a pier stands in each corner
   const uc = select(alongZ, P.z.sub(F.court.z0), P.x.sub(F.court.x0))
-  const ucR = select(alongZ, P.z.sub(F.rooms['cella']!.z0), P.x.sub(F.rooms['cella']!.x0))
+  // in a banded room, u from that room's own corner
+  let ucR: N = select(alongZ, P.z.sub(F.rooms['cella']!.z0), P.x.sub(F.rooms['cella']!.x0))
+  for (const k of ['west1', 'west2', 'east1', 'smallCella']) {
+    const r = F.rooms[k]!
+    ucR = select(inBox(r, 0.05).greaterThan(0.5), select(alongZ, P.z.sub(r.z0), P.x.sub(r.x0)), ucR)
+  }
   const uLocal = mix(uc, ucR, any(SURF.bandedRoom))
   const pierAt = fract(uLocal.add(pier / 2).div(pitch)).mul(pitch)
   const piers = band(pierAt, 0, pier, fu).mul(step(y, B.low[0]))
@@ -110,12 +116,25 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   ink = max(max(ink, piers.mul(float(1).sub(clear))), frames)
   // the dado bands stop at a frame's outer band
   ink = max(ink.mul(float(1).sub(clear.mul(step(B.foot[1] + 0.02, y)))), frames)
-  const banded = any(SURF.courtWall, SURF.bandedRoom)
   // a painted edge is never ruler-straight: a few millimetres of wander, seen only close
   const wander = mx_noise_float(P.mul(6)).mul(0.5).add(0.5).mul(near)
   // the niche, the god's place, stays plain white
   const inked = smoothstep(0.35, 0.65, ink.add(wander.sub(0.5).mul(0.15))).mul(banded).mul(float(1).sub(inBox(F.niche, 0.02)))
-  let wall: N = mix(plaster, bitumen, inked)
+  /* ── the bands as a coat of bitumen paint: thinner and browner at its edge (a fringe of about a centimetre where the
+     plaster shows through), a little proud of the plaster (a lit lip over a band, a shade under it), its gloss with its
+     thickness. The dado's three bands carry the lip; all of it seen only close ── */
+  const CO = B.coat, fr: number = CO.fringe
+  const nearC = float(1).sub(smoothstep(0.003, 0.012, fw))
+  const edgeIn = (v: N, a: number, b: number): N => step(a, v).mul(step(v, b)).mul(float(1).sub(smoothstep(0, fr, min(v.sub(a), float(b).sub(v)))))
+  let fringe: N = max(edgeIn(y, B.foot[0], B.foot[1]), max(edgeIn(y, B.low[0], B.low[1]), edgeIn(y, B.high[0], B.high[1])))
+  fringe = max(fringe, edgeIn(pierAt, 0, pier).mul(step(y, B.low[0])))
+  // the lip: just over each band's top edge a lit line, just under its foot a shade
+  const lipAt = (v: N, a: number, b: number): N => band(v, b, b + 0.006, fy).sub(band(v, a - 0.006, a, fy).mul(0.8))
+  const lip = lipAt(y, B.low[0], B.low[1]).add(lipAt(y, B.high[0], B.high[1])).add(lipAt(y, B.foot[1] - 1, B.foot[1])).mul(banded).mul(nearC)
+  const coatVar = mx_noise_float(vec3(u.mul(1.7), P.y.mul(2.3), 5.1)).mul(0.5).add(0.5)
+  const bitCoat = mix(bitumen, plaster.mul(vec3(0.34, 0.26, 0.19)), fringe.mul(0.55).mul(nearC)).mul(mix(float(0.85), float(1.35), coatVar))
+  let wall: N = mix(plaster, bitCoat, inked)
+  wall = wall.mul(float(1).add(lip.mul(0.16).mul(float(1).sub(inked))))
   wall = mix(wall, bitumen.mul(1.1), is(SURF.black))
 
   /* ── the floors: the court's square baked bricks laid in bitumen (part paving-brick-court-babylon), under a thin
@@ -157,10 +176,26 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   block = mix(block, V(col.apron).mul(1.2), isAltar.mul(worn.mul(0.3).add(float(1).sub(smoothstep(0.0, 0.25, footY)).mul(0.45))))
   block = mix(block, mix(block, earth, 0.35).mul(0.88), isAltar.mul(smoothstep(0.5, 0.9, n.y)))
   stateCol = mix(stateCol, block, max(isAltar, isPed))
-  m.colorNode = mix(stateCol, classColour(tones, attribute('cls', 'vec2'), attribute('band', 'float')), uView)
+  /* ── the doors: cedar leaves, boards about 22 cm wide down their length, the grain long, weathered grey toward the
+     foot; a sill of plain baked brick, worn ── */
+  const isLeaf = is(SURF.leaf), isSill = is(SURF.sill)
+  const flat = abs(n.y).lessThan(0.5)
+  const across = select(flat, select(alongZ, P.z, P.x), P.x)
+  const board = floor(across.div(0.22))
+  const boardJ = lines(across, 0.22, 0.004, fu)
+  const grainW = mx_noise_float(vec3(across.mul(40), P.y.mul(1.5), board.mul(3.1))).mul(0.12).add(hash2(board, float(7)).sub(0.5).mul(0.18))
+  let wood: N = V(col.cedar).mul(float(1).add(grainW))
+  wood = mix(wood, vec3(0.3, 0.27, 0.23), float(1).sub(smoothstep(0.0, 1.2, y)).mul(0.35))
+  wood = mix(wood, wood.mul(0.45), boardJ)
+  const sillCol = V(col.sill).mul(float(1).add(mx_noise_float(P.mul(3.3)).mul(0.12)).add(hash2(floor(P.x.div(0.33)), floor(P.z.div(0.33))).sub(0.5).mul(0.1)))
+  stateCol = mix(stateCol, wood, isLeaf)
+  stateCol = mix(stateCol, sillCol, isSill)
   // bitumen keeps a dull sheen; plaster and earth are matte
   const shiny = max(inked, is(SURF.black)).add(is(SURF.paving).mul(float(PV.sheen).sub(pv.wear.mul(0.25))))
-  m.roughnessNode = mix(mix(float(0.92), float(0.42), clamp(shiny, 0, 1)), float(0.92), uView)
+  // the coat's gloss with its thickness; the leaves' wood oiled to a faint sheen
+  const coatRough = mix(float(CO.sheen[0]), float(CO.sheen[1]), float(1).sub(coatVar).add(fringe.mul(0.5)))
+  const rough0 = mix(float(0.92), mix(float(0.42), coatRough, max(inked, is(SURF.black))), clamp(shiny, 0, 1))
+  m.roughnessNode = mix(mix(rough0, float(0.7), is(SURF.leaf)), float(0.92), uView)
 
   /* ── the light the stack does not carry. A room is lit only through its doors: strongest in front of each, falling
      off with depth; its ceiling darker. The court's floor and the feet of its walls see less sky than the open street
@@ -225,6 +260,9 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   ao = mix(ao, passAO, reveal)
   ao = mix(ao, roomAO.mul(ceilingK), indoors)
   m.aoNode = mix(ao, float(1), uView)
+  // indoors the light is the court's, thrown back by warm-white walls and brick, warmer than the sky's
+  stateCol = stateCol.mul(mix(vec3(1), vec3(1.07, 1.0, 0.88), indoors))
+  m.colorNode = mix(stateCol, classColour(tones, attribute('cls', 'vec2'), attribute('band', 'float')), uView)
   /* ── the lamps' warm light in the cella (guessed): Lambert from each flame, falling off past its reach, on every face
      of the room, its niche and the pedestal; the stack carries no light of its own here ── */
   const LA = np.lamp

@@ -207,7 +207,7 @@ function gridQuads(g: Grid, F: NabuFrame, kindTop: (k: number, y: number) => num
     const t = toward < 0 ? SPACE.outside : g.tag[toward]!
     if (t === SPACE.door) return SURF.reveal
     if (body === 1) return SURF.ashratum
-    if (toward >= 0 && g.solidAbove(toward, yb)) return t === SPACE.cella || t === SPACE.smallCella ? SURF.bandedRoom : SURF.room
+    if (toward >= 0 && g.solidAbove(toward, yb)) return t === SPACE.cella || t === SPACE.smallCella || t === SPACE.side ? SURF.bandedRoom : SURF.room
     if (t === SPACE.court) return SURF.courtWall
     // the smaller court's south wall: its face looking north into the court is the black wall
     if (t === SPACE.small) return axis === 2 && sgn < 0 ? SURF.black : SURF.smallCourt
@@ -450,7 +450,7 @@ export function buildNabu(built: Built, mapPlan: J, np: J): Nabu {
     return { x0: p.x1 - PG.d, x1: p.x1 + 0.01, z0: cz - PG.w / 2, z1: cz + PG.w / 2 }
   })
   // the roof's parapet ring round the outside, and a coping ring round each court
-  const ring = 1.0, curb = 0.5
+  const ring = 1.0, curb: number = np.coping.curb
   const deckBox: Box2 = { x0: O.x0 + ring, x1: O.x1 - ring, z0: O.z0 + ring, z1: O.z1 - ring }
   const grow = (b: Box2, d: number): Box2 => ({ x0: b.x0 - d, x1: b.x1 + d, z0: b.z0 - d, z1: b.z1 + d })
   const ashDeck: Box2 = { x0: F.ash.x0 + ring, x1: F.ash.x1 - ring, z0: F.ash.z0 + ring, z1: F.ash.z1 - ring }
@@ -544,7 +544,47 @@ export function buildNabu(built: Built, mapPlan: J, np: J): Nabu {
   const pedestalG = slab([[pd.x0 + ch, pd.z0], [pd.x1 - ch, pd.z0], [pd.x1, pd.z0 + ch], [pd.x1, zb], [pd.x0, zb], [pd.x0, pd.z0 + ch]], F.pave - 0.03, pd.top, SURF.pedestal)
   // the court's altars: plastered blocks standing 3 cm in the paving; the block's tiers overlap 5 cm, so no face is shared
   const altarG = join(F.altar.map((a) => slab([[a.x0, a.z0], [a.x1, a.z0], [a.x1, a.z1], [a.x0, a.z1]], F.pave - 0.03, a.top, SURF.altar)))
-  const templeAll = join([temple, boxesGeometry(mt, SURF.merlon), pedestalG])
+  // round each court a coping course standing proud of the wall's face, and stepped merlons on it (Guessed, after the
+  // temples' battlements, K1914 ch. IX); the north and south runs take the corners, the east and west runs sit 5 mm
+  // lower where they overlap them
+  const CP = np.coping, cope: Boxes = [], cm: Boxes = []
+  for (const c of [F.court, F.small]) {
+    const y0 = F.top - CP.h, y1 = F.top + CP.lift, back = CP.back, out = CP.proj
+    for (const [zA, zB] of [[c.z0 - back, c.z0 + out], [c.z1 - out, c.z1 + back]] as Array<[number, number]>) cope.push({ c: [(c.x0 + c.x1) / 2, (y0 + y1) / 2, (zA + zB) / 2], s: [c.x1 - c.x0 + 2 * back, y1 - y0, zB - zA] })
+    for (const [xA, xB] of [[c.x0 - back, c.x0 + out], [c.x1 - out, c.x1 + back]] as Array<[number, number]>) cope.push({ c: [(xA + xB) / 2, (y0 + y1 - 0.005) / 2, (c.z0 + c.z1) / 2], s: [xB - xA, y1 - 0.005 - y0, c.z1 - c.z0 + 2 * back - 0.04] })
+    const ym = y1 - 0.005, pitch: number = CP.pitch
+    merlonRun(cm, 'z', c.z0, -1, c.x0 - back + 0.05, c.x1 + back - 0.05, ym, M, pitch)
+    merlonRun(cm, 'z', c.z1, 1, c.x0 - back + 0.05, c.x1 + back - 0.05, ym, M, pitch)
+    merlonRun(cm, 'x', c.x0, -1, c.z0 + 0.1, c.z1 - 0.1, ym, M, pitch)
+    merlonRun(cm, 'x', c.x1, 1, c.z0 + 0.1, c.z1 - 0.1, ym, M, pitch)
+  }
+  const templeAll = join([temple, boxesGeometry(mt, SURF.merlon), boxesGeometry(cope, SURF.coping), boxesGeometry(cm, SURF.merlon), pedestalG])
+
+  // every door: a sill across it, proud of both faces, its ends in the jambs; the leaves (Guessed: wood, hung at the
+  // end that opens into a room) standing open against the reveal, 1 cm off it; a door under 1.9 m takes one leaf, on
+  // its south side
+  const LV = np.leaves, sill: Boxes = [], leaf: Boxes = []
+  const sillTop = F.pave + LV.sill
+  const inRoom = (x: number, z: number): boolean => Object.values(F.rooms).some((r) => x > r.x0 && x < r.x1 && z > r.z0 && z < r.z1)
+  for (const d of F.doors) {
+    const b = d.box, alongX = d.wall === 'x'
+    const a0 = alongX ? b.x0 : b.z0, a1 = alongX ? (d.id === 'gate' ? O.x1 : b.x1) : b.z1
+    const half = d.w / 2
+    const sA = a0 - 0.06, sB = a1 + 0.06
+    sill.push(alongX ? { c: [(sA + sB) / 2, (F.pave - 0.03 + sillTop) / 2, d.c], s: [sB - sA, sillTop - F.pave + 0.03, d.w + 0.1] } : { c: [d.c, (F.pave - 0.03 + sillTop) / 2, (sA + sB) / 2], s: [d.w + 0.1, sillTop - F.pave + 0.03, sB - sA] })
+    // the end that opens into a room hangs the leaves
+    const at0 = alongX ? inRoom(a0 - 0.1, d.c) : inRoom(d.c, a0 - 0.1)
+    const hinge = at0 ? a0 + 0.03 : a1 - 0.03, dir = at0 ? 1 : -1
+    const two = d.w >= 1.9
+    const L = Math.min(two ? half - 0.02 : d.w - 0.04, a1 - a0 - 0.06)
+    const y0 = sillTop - 0.01, y1 = d.top - 0.06, t: number = LV.t
+    for (const side of two ? [-1, 1] : [1]) {
+      const across = d.c + side * (half - 0.01 - t / 2)
+      const along = hinge + (dir * L) / 2
+      leaf.push(alongX ? { c: [along, (y0 + y1) / 2, across], s: [L, y1 - y0, t] } : { c: [across, (y0 + y1) / 2, along], s: [t, y1 - y0, L] })
+    }
+  }
+  const doorsG = join([boxesGeometry(sill, SURF.sill), boxesGeometry(leaf, SURF.leaf)])
   const ashAll = join([ash, boxesGeometry(ma, SURF.merlon)])
 
   // the open ground before the gate: from the temple's street face to the street's west edge, the Ashratum on it
@@ -563,6 +603,7 @@ export function buildNabu(built: Built, mapPlan: J, np: J): Nabu {
     { id: 'nabu', geometry: templeAll, band: F.floor + BAND, letters: ['M', 'G'] },
     { id: 'nabu-ashratum', geometry: ashAll, band: F.floor + BAND, letters: ['M', 'G'] },
     { id: 'nabu-altar', geometry: altarG, band: F.floor + BAND, letters: ['M', 'G'] },
+    { id: 'nabu-doors', geometry: doorsG, band: F.floor - 10, letters: ['G', 'G'] },
     { id: 'nabu-apron', geometry: apron, band: 1e6, letters: ['G', 'G'] },
   ]
 
