@@ -1,8 +1,8 @@
 /* THE WEST BANK'S TREES BESIDE THE PALMS, pure (three's buffers, no DOM): the Euphrates poplar and the willow along the
    bank and the tamarisk on its slope, each a type (Guessed: bab.green.poplar, bab.green.tamarisk). Built in code with
-   vertex colours, seen across 100 to 300 m of water: a trunk and a crown of a few rough lobes, its shape the kind's
-   (the poplar tall and open, the willow broad with its outer lobes hanging, the tamarisk low and feathery from the
-   ground). The date palm is the gate's part (gate-life.ts palmGeometry). Sizes and colours ours. */
+   vertex colours, seen across 100 to 300 m of water: a trunk and a crown of a few rough lobes under small leaf blades,
+   its shape the kind's (the poplar tall and open, the willow broad with its outer lobes hanging, the tamarisk low and
+   feathery from the ground). The date palm is the gate's part (gate-life.ts palmGeometry). Sizes and colours ours. */
 
 import { BufferGeometry, Float32BufferAttribute, Matrix4, Quaternion, Vector3 } from 'three/webgpu'
 import type { PlantKind, PlantSpot } from './bridge-geom'
@@ -24,6 +24,12 @@ const FACES = [[0, 11, 5], [0, 5, 1], [0, 1, 7], [0, 7, 10], [0, 10, 11], [1, 5,
 /** linear albedo of each kind's leaves (a grey-green; the tamarisk's finer, bluer), its wood */
 const LEAF: Record<TreeKind, V3> = { poplar: [0.095, 0.11, 0.05], willow: [0.1, 0.125, 0.045], tamarisk: [0.115, 0.118, 0.07], reed: [0.15, 0.15, 0.075] }
 const WOOD: V3 = [0.12, 0.1, 0.08]
+/** each kind's leaf blades: the poplar's broad, the willow's long, narrow and hanging, the tamarisk's fine scale-leaved sprays */
+const CUT: Record<Exclude<TreeKind, 'reed'>, LeafCut> = {
+  poplar: { gap: 0.21, len: 0.32, width: 0.19, tilt: 0.35, hang: 0, under: -0.9 },
+  willow: { gap: 0.25, len: 0.36, width: 0.14, tilt: 0.3, hang: 0.5, under: -2 },
+  tamarisk: { gap: 0.24, len: 0.32, width: 0.17, tilt: 0.35, hang: 0, under: -0.75 },
+}
 
 class Soup {
   pos: number[] = []
@@ -43,44 +49,75 @@ class Soup {
   }
 }
 
-/** the icosahedron split once (42 points, 80 faces): a lobe's outline stays round enough not to read as facets */
-const ICO1 = (() => {
-  const pts: V3[] = ICO.map((v) => [...v] as V3)
-  const mid = new Map<string, number>()
-  const half = (i: number, j: number): number => {
-    const key = i < j ? `${i}-${j}` : `${j}-${i}`
-    const got = mid.get(key)
-    if (got !== undefined) return got
-    const p = pts[i]!, q = pts[j]!
-    const m: V3 = [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2, (p[2] + q[2]) / 2]
-    const l = Math.hypot(...m)
-    pts.push([m[0] / l, m[1] / l, m[2] / l])
-    mid.set(key, pts.length - 1)
-    return pts.length - 1
-  }
-  const faces: number[][] = []
-  for (const [a, b, c] of FACES as [number, number, number][]) {
-    const ab = half(a, b), bc = half(b, c), ca = half(c, a)
-    faces.push([a, ab, ca], [b, bc, ab], [c, ca, bc], [ab, bc, ca])
-  }
-  return { pts, faces }
-})()
+/** the points of the icosahedron split once, the lobe's old shape: one draw each keeps every lobe where it stood */
+const SPLIT_POINTS = 42
 
-/** a rough lobe of leaves: the split icosahedron pushed in and out by a smooth wobble of its own, so its outline breaks
-    like a crown's; its normals from its middle so it shades soft; darker underneath and inside, lighter toward the sky */
-function lobe(s: Soup, c: V3, r: V3, col: V3, R: () => number, droop = 0, floor = -Infinity): void {
-  const ph = [R() * 6.28, R() * 6.28, R() * 6.28, R() * 6.28]
-  const k = ICO1.pts.map((v) => 0.8 + 0.14 * Math.sin(v[0] * 3.1 + ph[0]!) * Math.cos(v[2] * 2.7 + ph[1]!) + 0.1 * Math.sin(v[1] * 4.3 + v[0] * 2.2 + ph[2]!) + 0.06 * Math.sin(v[2] * 6.1 + ph[3]!))
-  const P = ICO1.pts.map((v, i): V3 => {
-    // a hanging lobe: its lower half drawn down and its sides in
-    const y = v[1] < 0 ? v[1] * (1 + droop) : v[1]
-    return [c[0] + v[0] * r[0] * k[i]!, Math.max(floor, c[1] + y * r[1] * k[i]!), c[2] + v[2] * r[2] * k[i]!]
-  })
-  const tone = ICO1.pts.map((v) => 0.6 + 0.5 * Math.max(0, v[1] * 0.6 + 0.4) + (R() - 0.5) * 0.14)
-  for (const f of ICO1.faces) {
+/** a lobe of the crown: its middle and radii, how far its lower half hangs, the floor its hem keeps above, its wobble */
+interface Lobe { c: V3; r: V3; droop: number; floor: number; ph: number[]; col: V3 }
+/** a leaf blade's size: the gap between blades on a lobe's face, its length and half width (m), how far it tilts out of
+    the face, how far it hangs (the willow's) */
+export interface LeafCut { gap: number; len: number; width: number; tilt: number; hang: number; under: number }
+const wobble = (v: V3, ph: number[]): number => 0.8 + 0.14 * Math.sin(v[0] * 3.1 + ph[0]!) * Math.cos(v[2] * 2.7 + ph[1]!) + 0.1 * Math.sin(v[1] * 4.3 + v[0] * 2.2 + ph[2]!) + 0.06 * Math.sin(v[2] * 6.1 + ph[3]!)
+const onLobe = (L: Lobe, v: V3, scale: number): V3 => {
+  const k = wobble(v, L.ph) * scale
+  const y = v[1] < 0 ? v[1] * (1 + L.droop) : v[1]
+  return [L.c[0] + v[0] * L.r[0] * k, Math.max(L.floor, L.c[1] + y * L.r[1] * k), L.c[2] + v[2] * L.r[2] * k]
+}
+/** darker underneath and inside, lighter toward the sky */
+const shade = (v: V3): number => 0.6 + 0.5 * Math.max(0, v[1] * 0.6 + 0.4)
+/** the core sits inside the blades' shell, so its facets never make the outline */
+const CORE = 0.95
+
+/** a lobe's core: an icosahedron pushed in and out by the lobe's smooth wobble, its normals from its middle so it shades
+    soft, a little inside the blades that make its face and outline; the lobe kept in the list for the blades */
+function lobe(s: Soup, c: V3, r: V3, col: V3, R: () => number, list: Lobe[], droop = 0, floor = -Infinity): void {
+  const L: Lobe = { c, r, droop, floor, ph: [R() * 6.28, R() * 6.28, R() * 6.28, R() * 6.28], col }
+  list.push(L)
+  const P = ICO.map((v) => onLobe(L, v, CORE))
+  for (let i = 0; i < SPLIT_POINTS; i++) R()
+  for (const f of FACES) {
     for (const i of f) {
-      const v = ICO1.pts[i]!
-      s.push(P[i]!, v, [col[0] * tone[i]!, col[1] * tone[i]!, col[2] * tone[i]!])
+      const v = ICO[i]!, t = shade(v) * 0.8
+      s.push(P[i]!, v, [col[0] * t, col[1] * t, col[2] * t])
+    }
+  }
+}
+
+const cross = (a: V3, b: V3): V3 => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]
+const unit = (a: V3): V3 => {
+  const l = Math.hypot(...a) || 1
+  return [a[0] / l, a[1] / l, a[2] / l]
+}
+/** the crown's leaves: blades over every lobe's face that no other lobe hides, each tilted a little out of the face and
+    turned its own way, so the outline breaks into leaf clusters a few centimetres across and not into facets */
+function blades(s: Soup, lobes: Lobe[], cut: LeafCut, R: () => number): void {
+  const hidden = (p: V3, L: Lobe): boolean => lobes.some((M) => M !== L && Math.hypot((p[0] - M.c[0]) / M.r[0], (p[1] - M.c[1]) / (M.r[1] * (p[1] < M.c[1] ? 1 + M.droop : 1)), (p[2] - M.c[2]) / M.r[2]) < 0.78)
+  for (const L of lobes) {
+    const area = 4 * Math.PI * ((L.r[0] * L.r[1] * (1 + L.droop / 2) + L.r[1] * (1 + L.droop / 2) * L.r[2] + L.r[0] * L.r[2]) / 3) * 0.64
+    const n = Math.max(12, Math.round(area / (cut.gap * cut.gap)))
+    for (let i = 0; i < n; i++) {
+      const yy = 1 - (2 * (i + 0.5)) / n, rr = Math.sqrt(Math.max(0, 1 - yy * yy)), th = i * 2.39996 + R() * 0.6
+      const v: V3 = [rr * Math.cos(th), yy, rr * Math.sin(th)]
+      const p = onLobe(L, v, 0.97 + R() * 0.06)
+      if (hidden(p, L)) continue
+      // the underside, in the crown's own shade and seen against the bank, keeps its core alone (not the hanging willow's)
+      if (v[1] < cut.under) continue
+      const t1 = unit(cross(v, Math.abs(v[1]) > 0.9 ? [1, 0, 0] : [0, 1, 0])), t2 = cross(v, t1)
+      const a = R() * Math.PI * 2, tilt = cut.tilt * (0.5 + R())
+      const u = unit([t1[0] * Math.cos(a) + t2[0] * Math.sin(a) + v[0] * tilt, t1[1] * Math.cos(a) + t2[1] * Math.sin(a) + v[1] * tilt - cut.hang, t1[2] * Math.cos(a) + t2[2] * Math.sin(a) + v[2] * tilt])
+      const b0 = unit(cross(u, v)), b1 = cross(u, b0), roll = (R() - 0.5) * 1.4
+      const b: V3 = [b0[0] * Math.cos(roll) + b1[0] * Math.sin(roll), b0[1] * Math.cos(roll) + b1[1] * Math.sin(roll), b0[2] * Math.cos(roll) + b1[2] * Math.sin(roll)]
+      const len = cut.len * (0.75 + R() * 0.5), w = cut.width * (0.75 + R() * 0.5)
+      const base: V3 = [p[0] - u[0] * len * 0.45, p[1] - u[1] * len * 0.45, p[2] - u[2] * len * 0.45]
+      const tip: V3 = [p[0] + u[0] * len * 0.55, Math.max(L.floor, p[1] + u[1] * len * 0.55), p[2] + u[2] * len * 0.55]
+      const t = shade(v) * (0.62 + R() * 0.22)
+      const c: V3 = [L.col[0] * t, L.col[1] * t, L.col[2] * t]
+      const q0: V3 = [base[0] + b[0] * w, base[1] + b[1] * w, base[2] + b[2] * w], q1: V3 = [base[0] - b[0] * w, base[1] - b[1] * w, base[2] - b[2] * w]
+      // wound to face out of the lobe: a double-sided blade seen from its back takes its normal flipped, toward the sun
+      // behind the crown, and would light up
+      const fn = cross([q1[0] - q0[0], q1[1] - q0[1], q1[2] - q0[2]], [tip[0] - q0[0], tip[1] - q0[1], tip[2] - q0[2]])
+      const out = fn[0] * v[0] + fn[1] * v[1] + fn[2] * v[2] >= 0
+      for (const q of (out ? [q0, q1, tip] : [q1, q0, tip]) as V3[]) s.push(q, v, c)
     }
   }
 }
@@ -102,6 +139,7 @@ export function treeGeometry(kind: TreeKind, h: number, seed: number): BufferGeo
   const s = new Soup()
   const R = rnd(seed)
   const leaf = LEAF[kind]
+  const crown: Lobe[] = []
   if (kind === 'poplar') {
     // one trunk, often leaning and bent, an open crown of several lobes in its upper half (the Gobi stand on the sheet)
     const a = R() * Math.PI * 2, lean = 0.06 + R() * 0.1
@@ -115,15 +153,15 @@ export function treeGeometry(kind: TreeKind, h: number, seed: number): BufferGeo
       const b = (j / n) * Math.PI * 2 + R() * 0.6, out = h * (0.04 + R() * 0.12)
       const y = h * (0.58 + R() * 0.3)
       const rr = h * (0.09 + R() * 0.05)
-      lobe(s, [top[0] + Math.cos(b) * out, y, top[2] + Math.sin(b) * out], [rr, rr * (0.8 + R() * 0.3), rr], leaf, R)
+      lobe(s, [top[0] + Math.cos(b) * out, y, top[2] + Math.sin(b) * out], [rr, rr * (0.8 + R() * 0.3), rr], leaf, R, crown)
     }
   } else if (kind === 'willow') {
     // a short trunk under a low dome of narrow leaves hanging almost to the ground (the willow on the sheet)
     trunk(s, [0, -0.3, 0], [0, h * 0.35, 0], 0.3, 0.2)
-    lobe(s, [0, h * 0.64, 0], [h * 0.28, h * 0.24, h * 0.28], leaf, R)
+    lobe(s, [0, h * 0.64, 0], [h * 0.28, h * 0.24, h * 0.28], leaf, R, crown)
     for (let j = 0; j < 13; j++) {
       const b = (j / 13) * Math.PI * 2 + R() * 0.5, out = h * (0.24 + R() * 0.16)
-      lobe(s, [Math.cos(b) * out, h * (0.4 + R() * 0.25), Math.sin(b) * out], [h * 0.12, h * (0.17 + R() * 0.06), h * 0.12], leaf, R, 0.7)
+      lobe(s, [Math.cos(b) * out, h * (0.4 + R() * 0.25), Math.sin(b) * out], [h * 0.12, h * (0.17 + R() * 0.06), h * 0.12], leaf, R, crown, 0.7)
     }
   } else if (kind === 'reed') {
     // a clump of reed as the deck sees it across 100 to 400 m of water: many sheaves of blades from one foot, each a
@@ -162,9 +200,11 @@ export function treeGeometry(kind: TreeKind, h: number, seed: number): BufferGeo
     for (let j = 0; j < n; j++) {
       const b = R() * Math.PI * 2, out = h * (0.1 + R() * 0.45)
       const rr = h * (0.15 + R() * 0.08)
-      lobe(s, [Math.cos(b) * out, h * (0.25 + R() * 0.42), Math.sin(b) * out], [rr, h * (0.24 + R() * 0.1), rr], leaf, R, 0.4, -0.15)
+      lobe(s, [Math.cos(b) * out, h * (0.25 + R() * 0.42), Math.sin(b) * out], [rr, h * (0.24 + R() * 0.1), rr], leaf, R, crown, 0.4, -0.15)
     }
   }
+  // the blades draw from their own stream, so the lobes keep their places
+  if (crown.length) blades(s, crown, CUT[kind as Exclude<TreeKind, 'reed'>], rnd(seed * 7 + 3))
   return s.geometry()
 }
 
