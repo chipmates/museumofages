@@ -27,5 +27,6 @@ export const WINDOW = { w: 445470, e: 445830, s: 3599610, n: 3600840 } as const
     Ours: a patch between Esagila's west side and the bank, about 50 by 90 m; its spot and size are a guess */
 export const EKARZAGINNA = { e: 445592, n: 3599722, w: 50, h: 90 } as const
 
-/** the stop's colour panel: its share of the plate beside (wide) or above (upright) the paper */
-export const COLOUR = { wide: 0.4, upright: 0.36 } as const
+/** the stop's colour panel: its share of the plate beside (wide) or above (upright) the paper; on a low upright plate
+    (the sheet raised) less, so the sketches keep room for their names */
+export const COLOUR = { wide: 0.4, upright: 0.36, low: 0.24, lowUnder: 300 } as const

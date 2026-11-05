@@ -10,7 +10,7 @@
 
 import type { PaperFraming } from '../paper/framing'
 import type { Box, Seg, Taken } from '../paper/placer'
-import { circlePath, ease, settledAt, type Anchor, type Inset, type PaperScene, type Prim } from '../paper/scene'
+import { circlePath, ease, lerp, settledAt, type Anchor, type Inset, type PaperScene, type Prim } from '../paper/scene'
 import { COLOUR, EKARZAGINNA, PLAN, WINDOW, type Pt } from './garden-words-data'
 
 export type WordsLabel = 'orchard' | 'canals' | 'beds' | 'house' | 'garden' | 'esagila' | 'ekarzaginna' | 'river' | 'palace'
@@ -25,22 +25,43 @@ const rectPath = (x: number, y: number, w: number, h: number, ccw = false): stri
 export interface WordsFacts {
   step: number
   colour: Box
+  /** the held frame's box under the panel's cut */
+  frame: Box
   paper: Box
   shown: { ea: number; jeremiah: number; where: number }
 }
 
-export function gardenWordsScene(t: number, framing: PaperFraming, w: number, h: number, o: { inset: Inset; focus?: readonly [number, number] }): PaperScene {
+/** where the frame stands once the panel has settled: the window's aspect kept, covering the panel at `zoom`, the focus
+    (fractions of the frame) as near the panel's centre as covering allows */
+function settledFrame(panel: Box, stage: Box, focus: readonly [number, number], zoom: number): Box {
+  const A = (stage.r - stage.l) / (stage.b - stage.t)
+  const pw = panel.r - panel.l, ph = panel.b - panel.t
+  const hb = Math.max(ph, pw / A) * Math.max(1, zoom), wb = hb * A
+  const l = Math.min(panel.l, Math.max(panel.r - wb, (panel.l + panel.r) / 2 - focus[0] * wb))
+  const t = Math.min(panel.t, Math.max(panel.b - hb, (panel.t + panel.b) / 2 - focus[1] * hb))
+  return { l, t, r: l + wb, b: t + hb }
+}
+
+export function gardenWordsScene(t: number, framing: PaperFraming, w: number, h: number,
+  o: { inset: Inset; focus?: readonly [number, number]; zoom?: number; stage?: Box }): PaperScene {
   const prims: Prim[] = [], anchors: Anchor[] = [], taken: Taken[] = [], walls: Seg[] = []
   const wide = framing === 'wide'
   const I = o.inset
   const step = settledAt(t)
-  // THE STOP'S COLOUR: the held frame round the terraces; whole at the first step, then on its side as the paper comes in
+  /* THE STOP'S COLOUR: at the first step the held frame itself, standing where the frame behind the look stands (the
+     window's box), so the crossfade lays nothing over it but the band; then it narrows to its side and settles on the
+     terraces, the panel cutting it (never a second copy of the frame) */
   const open = ease(Math.min(1, Math.max(0, t * 2)))
-  const side = (share: number): number => 1 - (1 - share) * open
-  const colour: Box = wide ? { l: 0, t: 0, r: Math.round(w * side(COLOUR.wide)), b: h } : { l: 0, t: 0, r: w, b: Math.round(h * side(COLOUR.upright)) }
-  prims.push({ type: 'image', id: 'colour', key: 'colour', x: colour.l, y: colour.t, w: colour.r - colour.l, h: colour.b - colour.t, fit: 'cover', focus: o.focus ?? [0.5, 0.3] })
+  const share = wide ? COLOUR.wide : h < COLOUR.lowUnder ? COLOUR.low : COLOUR.upright
+  const side = 1 - (1 - share) * open
+  const colour: Box = wide ? { l: 0, t: 0, r: Math.round(w * side), b: h } : { l: 0, t: 0, r: w, b: Math.round(h * side) }
+  const stage = o.stage ?? { l: 0, t: 0, r: w, b: h }
+  const settled: Box = wide ? { l: 0, t: 0, r: Math.round(w * share), b: h } : { l: 0, t: 0, r: w, b: Math.round(h * share) }
+  const end = settledFrame(settled, stage, o.focus ?? [0.5, 0.3], o.zoom ?? 1)
+  const frame: Box = { l: lerp(stage.l, end.l, open), t: lerp(stage.t, end.t, open), r: lerp(stage.r, end.r, open), b: lerp(stage.b, end.b, open) }
+  prims.push({ type: 'image', id: 'colour', key: 'colour', x: frame.l, y: frame.t, w: frame.r - frame.l, h: frame.b - frame.t, fit: 'cover', clip: colour })
   // the paper's place is where it settles, so its drawings never move while the colour slides
-  const paper: Box = wide ? { l: Math.round(w * COLOUR.wide) + Math.max(36, I.l), t: I.t, r: w - I.r, b: h - I.b } : { l: I.l, t: Math.round(h * COLOUR.upright) + 16, r: w - I.r, b: h - I.b }
+  const paper: Box = wide ? { l: Math.round(w * share) + Math.max(36, I.l), t: I.t, r: w - I.r, b: h - I.b } : { l: I.l, t: Math.round(h * share) + 16, r: w - I.r, b: h - I.b }
   const pw = paper.r - paper.l, ph = paper.b - paper.t
   const G = (id: string, d: string, alpha: number, cls?: string): void => { prims.push({ type: 'path', id, mark: 'guessed', d, alpha, ...(cls ? { cls } : {}) }) }
   const GL = (id: string, ax: number, ay: number, bx: number, by: number, alpha: number): void => {
@@ -66,9 +87,9 @@ export function gardenWordsScene(t: number, framing: PaperFraming, w: number, h:
       const s = Math.min(c.r - c.l - 20, c.b - c.t - LABEL - 16, wide ? 230 : 150)
       return { cx: (c.l + c.r) / 2, cy: c.t + (c.b - c.t - LABEL) / 2, s }
     }
-    { // the orchard: three trees, a crown on a trunk, side-on on their ground
+    { // the orchard: three trees, a crown on a trunk, side-on on their ground, each crown clear of the next
       const { cx, cy, s } = fit(cells[0]!)
-      const r = s * 0.16, foot = cy + s * 0.32
+      const r = s * 0.13, foot = cy + s * 0.32
       GL('orchardGround', cx - s * 0.48, foot, cx + s * 0.48, foot, ea)
       for (const [i, dx] of [-0.3, 0, 0.3].entries()) {
         const x = cx + dx * s, crown = foot - r * 1.5 - r
@@ -111,8 +132,9 @@ export function gardenWordsScene(t: number, framing: PaperFraming, w: number, h:
     for (let i = 0; i < 5; i++) { const x = bx + bw * (0.1 + i * 0.2); GL(`sprout${i}`, x, foot - bh, x, foot - bh - s * 0.07, jer) }
     taken.push({ l: bx - 2, t: foot - bh - s * 0.07 - 2, r: bx + bw + 2, b: foot + 2, id: 'bedJ' })
     if (step === 2) {
-      anchors.push({ id: 'house', x: hx + hw / 2, y: foot + 1, sides: ['below'], gap: 8, kind: 'ink' })
-      anchors.push({ id: 'garden', x: bx + bw / 2, y: foot + 1, sides: ['below'], gap: 8, kind: 'ink' })
+      // under its drawing; on a small plate, where the two names would meet, each steps out to its own side
+      anchors.push({ id: 'house', x: hx + hw / 2, y: foot + 1, sides: ['below', 'below-left'], gap: 8, kind: 'ink' })
+      anchors.push({ id: 'garden', x: bx + bw / 2, y: foot + 1, sides: ['below', 'below-right', 'right'], gap: 8, kind: 'ink' })
     }
   }
 
@@ -177,7 +199,7 @@ export function gardenWordsScene(t: number, framing: PaperFraming, w: number, h:
 
   return {
     prims, anchors, taken, walls, bounds: { l: wide ? paper.l : I.l, t: paper.t, r: paper.r, b: paper.b },
-    facts: { step: step ?? -1, colour, paper, shown: { ea: Math.round(ea * 1000) / 1000, jeremiah: Math.round(at(t, 2) * 1000) / 1000, where: Math.round(at(t, 3) * 1000) / 1000 } } as unknown as Record<string, unknown>,
+    facts: { step: step ?? -1, colour, frame, paper, shown: { ea: Math.round(ea * 1000) / 1000, jeremiah: Math.round(at(t, 2) * 1000) / 1000, where: Math.round(at(t, 3) * 1000) / 1000 } } as unknown as Record<string, unknown>,
   }
 }
 

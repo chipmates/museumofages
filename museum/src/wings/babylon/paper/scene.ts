@@ -13,8 +13,9 @@ export type Prim =
   | PrimBase & { type: 'line'; mark: PrimMark; ax: number; ay: number; bx: number; by: number; width?: number }
   | PrimBase & { type: 'path'; mark: PrimMark; d: string; width?: number }
   /** a picture the feature hands in by key: `fill` keeps the box the scene computed from the file's own size, `cover`
-      fills the box and crops round `focus` (fractions of the picture) */
-  | PrimBase & { type: 'image'; key: string; x: number; y: number; w: number; h: number; fit: 'fill' | 'cover'; focus?: readonly [number, number] }
+      fills the box and crops round `focus` (fractions of the picture); `clip` shows only its part inside that box of
+      the plate, so a picture may stand larger than its panel */
+  | PrimBase & { type: 'image'; key: string; x: number; y: number; w: number; h: number; fit: 'fill' | 'cover'; focus?: readonly [number, number]; clip?: Box }
 
 export type AnchorKind = 'ink' | 'pencil' | 'quiet' | 'count' | 'big' | 'pair' | 'credit'
 export interface Anchor {

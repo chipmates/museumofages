@@ -17,7 +17,7 @@ export interface GardenWordsOptions {
   /** the stop's held frame per framing: the colour beside the paper */
   colour: { wide: string; upright: string } | null
   /** where the colour is centred, per framing (fractions of the frame) */
-  focus?: { wide: readonly [number, number]; upright: readonly [number, number] }
+  focus?: { wide: readonly [number, number]; upright: readonly [number, number]; zoom?: { wide: number; upright: number } }
 }
 
 /** the terraces' colour is the stop's own guess, and every sketch on the paper is Guessed */
@@ -35,7 +35,7 @@ export function createGardenWordsPayload(o: GardenWordsOptions): PaperFeaturePay
     steps,
     css,
     images: o.colour ? { colour: o.colour } : {},
-    scene: (t, framing, w, h, x) => gardenWordsScene(t, framing, w, h, { inset: x.inset, focus: o.focus?.[framing] }),
+    scene: (t, framing, w, h, x) => gardenWordsScene(t, framing, w, h, { inset: x.inset, focus: o.focus?.[framing], zoom: o.focus?.zoom?.[framing], stage: x.stage }),
     text: (id) => W.labels[id as WordsLabel],
     list: (step) => W.list[STEP_IDS[step]!],
   })

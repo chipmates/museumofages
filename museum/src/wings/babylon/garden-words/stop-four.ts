@@ -10,7 +10,7 @@ import { GARDEN_WORDS } from './garden-words-words'
 export async function stopFourBench(first: 'oil' | 'garden-words'): Promise<void> {
   const q = new URLSearchParams(location.search)
   const lang = q.get('lang') === 'de' ? 'de' : 'en'
-  const plan = await fetch(new URL('../gardens/gardens-plan.json', import.meta.url)).then((r) => r.json()) as { door: DoorHook & { colour: { wide: [number, number]; upright: [number, number] } } }
+  const plan = await fetch(new URL('../gardens/gardens-plan.json', import.meta.url)).then((r) => r.json()) as { door: DoorHook & { colour: { wide: [number, number]; upright: [number, number]; zoom?: { wide: number; upright: number } } } }
   const coastsAt = q.get('coasts')
   const coasts = coastsAt ? await fetch(coastsAt).then((r) => (r.ok ? r.json() as Promise<Coasts> : null)).catch(() => null) : null
   const photo = q.get('photo') ?? ''

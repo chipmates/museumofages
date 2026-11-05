@@ -13,7 +13,7 @@ import { createPaperPlate, type PaperPlate } from './plate'
 import { framingOf, type PaperFraming } from './framing'
 import { createPaperSteps, type PaperSteps } from './steps'
 import { grainTile, markLine, markPath, markRect, svg } from './marks'
-import { overlaps, placeElements, type LabelAsk, type Placed } from './placer'
+import { overlaps, placeElements, type Box, type LabelAsk, type Placed } from './placer'
 import { paperStyle } from './tokens'
 import { insetFor, type Anchor, type Inset, type PaperScene } from './scene'
 
@@ -30,7 +30,7 @@ export interface PaperFeatureOptions {
   words: { play: string; pause: string; track: string; between(a: string, b: string): string }
   steps: readonly PaperFeatureStep[]
   /** the drawing at a point of the slider, in the plate's pixels */
-  scene(t: number, framing: PaperFraming, w: number, h: number, o: { dpr: number; inset: Inset; data: Record<string, unknown> }): PaperScene
+  scene(t: number, framing: PaperFraming, w: number, h: number, o: { dpr: number; inset: Inset; data: Record<string, unknown>; stage: Box }): PaperScene
   /** a label's words: one line, or a count over its name */
   text(id: string, scene: PaperScene): string | readonly [string, string]
   /** the sentences beside the drawing at a settled step: what a reader without the drawing reads */
@@ -132,7 +132,10 @@ export function createPaperFeature(o: PaperFeatureOptions): PaperFeaturePayload 
     drawnAt = t
     const { w, h } = plate.size()
     const doc = host.element.ownerDocument
-    const sc = o.scene(t, framing, w, h, { dpr: doc.defaultView?.devicePixelRatio ?? 1, inset, data: o.data ?? {} })
+    // the window in the plate's pixels: where the held frame stands behind the look
+    const win = doc.defaultView
+    const stage: Box = { l: -r.left, t: -r.top, r: -r.left + (win?.innerWidth ?? r.width), b: -r.top + (win?.innerHeight ?? r.height) }
+    const sc = o.scene(t, framing, w, h, { dpr: win?.devicePixelRatio ?? 1, inset, data: o.data ?? {}, stage })
     scene = sc
     const g = plate.layer('drawing')
     g.replaceChildren()
@@ -152,6 +155,8 @@ export function createPaperFeature(o: PaperFeatureOptions): PaperFeaturePayload 
         img.style.objectFit = p.fit === 'cover' ? 'cover' : 'fill'
         img.style.objectPosition = p.focus ? `${p.focus[0] * 100}% ${p.focus[1] * 100}%` : '50% 50%'
         img.style.opacity = String(p.alpha ?? 1)
+        const c = p.clip
+        img.style.clipPath = c ? `inset(${[c.t - p.y, p.x + p.w - c.r, p.y + p.h - c.b, c.l - p.x].map((v) => `${Math.max(0, v).toFixed(2)}px`).join(' ')})` : ''
         seen.add(p.id)
         continue
       }
@@ -284,7 +289,9 @@ export function createPaperFeature(o: PaperFeatureOptions): PaperFeaturePayload 
       const labels = placed.map((p) => ({ id: p.id, text: scene ? textOf(p.id) : '', box: p.box, side: p.side }))
       const drawn = (scene?.prims ?? []).filter((p) => (p.alpha ?? 1) > 0.05).map((p) => ({
         id: p.id, type: p.type, mark: 'mark' in p ? p.mark : undefined, alpha: Math.round((p.alpha ?? 1) * 1000) / 1000,
-        box: p.type === 'path' ? null : p.type === 'line' ? { l: Math.min(p.ax, p.bx), t: Math.min(p.ay, p.by), r: Math.max(p.ax, p.bx), b: Math.max(p.ay, p.by) } : { l: p.x, t: p.y, r: p.x + p.w, b: p.y + p.h },
+        box: p.type === 'path' ? null : p.type === 'line' ? { l: Math.min(p.ax, p.bx), t: Math.min(p.ay, p.by), r: Math.max(p.ax, p.bx), b: Math.max(p.ay, p.by) }
+          : p.type === 'image' && p.clip ? { l: Math.max(p.x, p.clip.l), t: Math.max(p.y, p.clip.t), r: Math.min(p.x + p.w, p.clip.r), b: Math.min(p.y + p.h, p.clip.b) }
+          : { l: p.x, t: p.y, r: p.x + p.w, b: p.y + p.h },
       }))
       return {
         phase, t, step: Math.round(t), framing, size, inset, labels,
