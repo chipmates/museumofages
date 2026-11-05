@@ -3863,8 +3863,8 @@
      3600442.61,
      79.15
     ],
-    "hfov": 10.0,
-    "shift": -0.668
+    "hfov": 22.0,
+    "shift": -0.5
    },
    "hour": "18:05",
    "say": "on the top's platform at its west corner: the street north to the double gate, the river west",
@@ -3947,8 +3947,8 @@
      3600330.37,
      79.15
     ],
-    "hfov": 27.0,
-    "shift": -0.51
+    "hfov": 21.0,
+    "shift": -0.5
    },
    "say": "the turn west over the river",
    "stop": 15
