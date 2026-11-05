@@ -77,8 +77,13 @@ export function printed(e: Evening): { height: number; lit: number; lag: number 
   return { height: Math.round(e.moon.el * 10) / 10, lit: Math.round(e.moon.illu * 10) / 10, lag: Math.round(e.lag) }
 }
 
-/** the window of sky both panels show, true azimuth and airless altitude, degrees: the same for the two evenings */
-export const SKY_WINDOW = { az: [261, 287] as const, el: [-2.5, 22] as const }
+/** the window of sky the panels show, true azimuth and airless altitude, degrees, on one scale for the two evenings:
+    wide the same window for both; upright narrower across (the Moons, the set Sun and both settings inside it), and
+    stacked each evening only as high as its own Moon and drawn disc need */
+export const SKY_WINDOW = {
+  wide: { az: [261, 287] as const, el: { '0414': [-2.5, 22], '0415': [-2.5, 22] } },
+  upright: { az: [264, 284.5] as const, el: { '0414': [-2.5, 14], '0415': [-2.5, 22] } },
+} as const
 
 /* ───────────── the tablet and what a shekel bought ───────────── */
 
@@ -99,7 +104,9 @@ export const PHOTO = {
   file: { w: 1280, h: 1346 },
   /** the tablet with a margin; the museum's clips and the cloth's far corners cut away */
   crop: { l: 96, t: 70, r: 1236, b: 1250 },
-  credit: 'Zunkir, 9 March 2020, commons.wikimedia.org/wiki/File:Astronomical_Diary_331_330_BC_BM_36761.jpg, CC BY-SA 4.0',
+  /** as feature 10 prints its photograph's: the author, the date, the source's host, the licence (the file page:
+      commons.wikimedia.org/wiki/File:Astronomical_Diary_331_330_BC_BM_36761.jpg) */
+  credit: 'Zunkir, 9 March 2020, commons.wikimedia.org, CC BY-SA 4.0',
   src: 'PHOTOS.md row N3; the credit file beside the photograph',
 } as const
 
@@ -123,11 +130,13 @@ export const litresOf = (g: Good): number => GOODS[g].gur * UNITS.kurru + GOODS[
 export const REPOSE_DEG = 28
 
 /** a heap's profile: a cone at the slope with its top rounded over the inner `CAP` share of its radius (a parabola
-    meeting the slope), so it reads as poured; [radius, height] pairs in metres from the axis out to the foot */
-export const CAP = 0.16
+    meeting the slope) and its foot easing out over the outer `TOE` share, so it reads as poured; [radius, height]
+    pairs in metres from the axis out to the foot */
+export const CAP = 0.16, TOE = 0.12
 export function heapProfile(R: number, deg = REPOSE_DEG, n = 48): P2[] {
   const k = Math.tan(deg * Math.PI / 180), a = CAP * R
-  const y = (r: number): number => (r >= a ? k * (R - r) : k * (R - a) + k * (a * a - r * r) / (2 * a))
+  const toe = (r: number): number => { const u = (R - r) / (TOE * R); return u >= 1 ? 1 : 1 - 0.35 * (1 - u) ** 2 }
+  const y = (r: number): number => (r >= a ? k * (R - r) * toe(r) : k * (R - a) + k * (a * a - r * r) / (2 * a))
   const pts: P2[] = []
   for (let i = 0; i <= n; i++) { const r = R * i / n; pts.push([r, y(r)]) }
   return pts
@@ -165,15 +174,15 @@ export const FIGURE_HEIGHT = 1.7
 /** THE STAGE'S PLAN for the heaps: their places on the floor (x right, z toward the eye, metres), the figure's, the
     lump's; and the eye per framing (position, target, vertical field of view, the picture's aspect) */
 export const HEAPS_PLAN = {
-  barley: [-0.82, -0.15] as P2,
-  dates: [0.88, -0.32] as P2,
-  sesame: [0.18, 0.92] as P2,
-  figure: [-2.02, -0.42] as P2,
+  barley: [-0.72, -0.1] as P2,
+  dates: [0.92, -0.3] as P2,
+  sesame: [0.2, 0.9] as P2,
+  figure: [-1.78, -0.38] as P2,
   silver: [0.86, 1.18] as P2,
   views: {
-    wide: { eye: [0.15, 2.65, 6.9] as const, target: [-0.05, 0.42, 0.05] as const, fov: 26, aspect: 1.6 },
-    upright: { eye: [0.05, 3.3, 7.4] as const, target: [-0.2, 0.45, 0.1] as const, fov: 33, aspect: 1.0 },
-    silver: { eye: [0.86, 0.075, 1.36] as const, target: [0.86, 0.004, 1.18] as const, fov: 22, aspect: 1.0 },
+    wide: { eye: [0.05, 1.95, 5.6] as const, target: [-0.25, 0.62, 0.15] as const, fov: 25, aspect: 1.6 },
+    upright: { eye: [0.0, 3.2, 6.3] as const, target: [-0.1, 0.48, 0.2] as const, fov: 37, aspect: 1.0 },
+    silver: { eye: [0.86, 0.05, 1.3] as const, target: [0.86, 0.004, 1.18] as const, fov: 22, aspect: 1.0 },
   },
 } as const
 export type HeapView = keyof typeof HEAPS_PLAN.views
@@ -208,3 +217,35 @@ export function heaps(): { id: Good; R: number; H: number; litres: number; at: P
     28. Nisan"); the commentary's cubit 0.495 m of 24 fingers */
 export const RISE = { cubits: 3, fingers: 8, cubitM: 0.495, fingersPerCubit: 24, src: 'Neugebauer and Weidner 1915 via RES section 3' } as const
 export const riseM = (): number => (RISE.cubits + RISE.fingers / RISE.fingersPerCubit) * RISE.cubitM
+
+/** THE GOODS' LOOK on the stage, ours: linear albedos from each good's usual colour (hulled barley straw-pale, dried
+    dates a dark red brown, hulled sesame cream), the grain's size for the surface's grain, and the dates as fruits
+    laid over their heap (a dried date about 35 by 18 mm, ours), standing `proud` mm out of the heap's surface; the heap
+    under them is made smaller by the shell they add, so the whole holds the edition's litres */
+export const HEAPS_LOOK = {
+  barley: { albedo: [0.56, 0.4, 0.17] as const, grain: 0.008, roughness: 0.85 },
+  dates: { albedo: [0.075, 0.03, 0.016] as const, grain: 0.03, roughness: 0.55, fruit: { long: 0.035, wide: 0.018 }, proud: 0.006 },
+  sesame: { albedo: [0.72, 0.6, 0.36] as const, grain: 0.003, roughness: 0.8 },
+  silver: { albedo: [0.78, 0.77, 0.74] as const, roughness: 0.42 },
+} as const
+
+/** a profile's slant area, square metres (the fruits' shell) */
+export function profileArea(p: readonly P2[]): number {
+  let a = 0
+  for (let i = 0; i + 1 < p.length; i++) {
+    const [r0, y0] = p[i]!, [r1, y1] = p[i + 1]!
+    a += Math.PI * (r0 + r1) * Math.hypot(r1 - r0, y1 - y0)
+  }
+  return a
+}
+
+/** the dates' heap under its fruits: the bulk to the fruits' mean outer face (half their proud height) is the edition's */
+export function datesCore(): { R: number; shell: number } {
+  const L = litresOf('dates'), proud = HEAPS_LOOK.dates.proud
+  let R = heapRadius(L)
+  for (let i = 0; i < 4; i++) {
+    const shell = profileArea(heapProfile(R)) * proud / 2 * 1000
+    R = heapRadius(L - shell)
+  }
+  return { R, shell: profileArea(heapProfile(R)) * proud / 2 * 1000 }
+}

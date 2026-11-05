@@ -103,6 +103,13 @@ export const PAGES = {
     readyMs: 60000,
     still: () => { throw new Error('feature 10: shoot it with forge/babylon/paper-shoot.mjs --page river') },
   },
+  // feature 11 at the bridge: the two evenings, one shekel and the river's rise through the stop's ink still
+  sky: {
+    html: 'src/wings/babylon/sky/sky.html',
+    rig: '__look',
+    readyMs: 60000,
+    still: () => { throw new Error('feature 11: shoot it with forge/babylon/paper-shoot.mjs --page sky') },
+  },
 }
 
 /** the walk's stops in its order (map-cams.json; a number is not a place in the walk) and the page that shows each today; stop 1 folds into the opening flight */
