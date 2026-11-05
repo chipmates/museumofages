@@ -46,6 +46,7 @@ import { mountBridge } from '../bridge/bridge'
 import { mountTop } from '../top/top'
 import { mountCrescent } from '../crescent/crescent'
 import { mountGateOnMap } from './gate-on-map'
+import { skySampler } from './sky-sample'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -141,6 +142,11 @@ if (!lq.has('exp')) lq.set('exp', String(MAP_EXPOSURE))
 if (!lq.has('env')) lq.set('env', String(MAP_ENV))
 const L = walkLight({ renderer, scene, light: gatePlan.light, rot: new Matrix3(), uW2G: uniform(new Matrix4()), uSunG: uniform(new Vector3()), gateAt: new Vector3(1e7, 0, 0), q: lq })
 const sky: Sky = { colour: L.sky }
+/* `?sky=sampled`: an offline still takes the sky's light as shadowed samples over its sub-frames (sky-sample.ts), the
+   reference the field (`?sky=set`, open/sky-set.ts) is measured against */
+const skyS = q.get('sky') === 'sampled'
+  ? skySampler({ renderer, scene, camera, air: L.AIR, sun: L.sunLight, uBounce: L.uBounce, groundColour: gatePlan.light.bounce.paving.colour, restoreEnv: () => L.bakeEnv(), mapSize: Number(q.get('skymap') ?? 8192) })
+  : null
 const skyDome = L.dome
 // the last stop's crescent on the dome, at the minute the page's sun stands at (crescent/crescent.ts)
 const crescent = await mountCrescent(L.AIR, skyDome, renderer)
@@ -187,6 +193,7 @@ const mapTower = (s: string | null | undefined): MapTower => (s === 'bruegel-sho
 let towerNow: MapTower = 'built'
 /** the tower switch: the tower as the record reads it, as dug, or Bruegel's; one camera, one light */
 const setTower = (s: MapTower): void => {
+  if (s !== towerNow) L.field?.invalidate()
   towerNow = s
   tower.state(s === 'bruegel-show' ? 'bruegel' : s)
   bruegel.show(s === 'bruegel')
@@ -341,9 +348,22 @@ function brightness(bytes: Uint8ClampedArray): { median: number; p1: number; p99
   return { median: at(0.5), p1: at(0.01), p99: at(0.99) }
 }
 
+/** the garden's state for the field: a change of planting is a change of what shades the terraces */
+let gardenLit: GardenState = gardenState
+const gardenFor = (g: GardenState): GardenState => {
+  if (g !== gardenLit) L.field?.invalidate()
+  gardenLit = g
+  return g
+}
+L.field?.setHidden(() => figures)
+
 async function render(w: number, h: number, samples: number, stops = 0): Promise<{ bytes: Uint8ClampedArray; ms: number }> {
   const t = performance.now()
-  const rgb = await accumulate(renderer, camera, linear!.post, w, h, samples)
+  L.field?.prepare(camera)
+  skyS?.begin()
+  const each = skyS ? (i: number) => skyS.each(i, samples) : L.field ? (i: number) => L.field!.each(i) : undefined
+  const rgb = await accumulate(renderer, camera, linear!.post, w, h, samples, each)
+  skyS?.end()
   const bytes = printFrame(rgb, w, h, printAt(stops), 0)
   return { bytes, ms: Math.round(performance.now() - t) }
 }
@@ -402,7 +422,7 @@ const rig = {
     return { stand: stand(x, z), ground: built.ground(x, z), street: built.streetAt(x, z) }
   },
   /** stop 5's garden: planted, its terraces bare, or the dug plans only */
-  garden: (state: GardenState) => gardens.setGarden(state),
+  garden: (state: GardenState) => gardens.setGarden(gardenFor(state)),
   /** the tower switch: built, dug, bruegel or bruegel-show */
   tower: (s: MapTower) => setTower(mapTower(s)),
   /** a still of one stop: the film's own frame at the stop's still second, full size, either framing */
@@ -410,7 +430,7 @@ const rig = {
     const s = cams.stops.find((x: J) => x.n === o.stop)
     if (!s) throw new Error(`no stop ${o.stop}`)
     const time = o.t ?? stillTime(o.stop)
-    gardens.setGarden(o.garden ?? gardenState)
+    gardens.setGarden(gardenFor(o.garden ?? gardenState))
     uView.value = o.view === 'classes' ? 1 : 0
     const baked = envNow().bakes
     const p = aimFilm(time, o.framing, o.w, o.h)
@@ -429,7 +449,7 @@ const rig = {
       hour: +p.hour.toFixed(3), sun: { azimuth: +sun.azimuth.toFixed(1), elevation: +sun.elevation.toFixed(1) }, moon: crescent.inFrame(camera, o.w, o.h),
       camera: { utm: F.utm(p.pos[0], p.pos[2]), y: +p.pos[1].toFixed(2), eyeOverStand: +(p.pos[1] - stand(p.pos[0], p.pos[2])).toFixed(3), hfov: +camera.fov.toFixed(2), kind: p.kind, near: camera.near, far: camera.far },
       figures: figuresInFrame().filter((n) => n === p.stop),
-      brightness: brightness(bytes), ms,
+      brightness: brightness(bytes), ms, sky: skyS ? skyS.facts() : L.field ? L.field.facts() : { mode: 'environment' },
     }
     await upload(file.replace(/\.png$/, '.json'), JSON.stringify(side, null, 1))
     return side
@@ -439,7 +459,7 @@ const rig = {
     const [x, z] = F.s(o.at[0], o.at[1])
     if (o.tower) setTower(mapTower(o.tower))
     setAir(o.air ?? (o.figure ? airOf(o.figure) : 0))
-    gardens.setGarden(o.garden ?? gardenState)
+    gardens.setGarden(gardenFor(o.garden ?? gardenState))
     if (o.figure) {
       toneAt(o.figure)
       showFigure(o.figure)

@@ -15,6 +15,7 @@ import * as TSL from 'three/tsl'
 import type { Print } from '../../animals/cave/site'
 import { sunAt, sunVector } from '../map/sun'
 import { makeAirUniforms, skyColour, type AirUniforms } from './air'
+import { skySet, type SkySet } from './sky-set'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -127,8 +128,18 @@ export function walkLight(o: WalkLightOptions) {
   let envSource: ((hour: number) => Texture | null) | null = null
   let envBy: 'walk' | 'source' = 'walk'
   let envBakes = 0
+  /* `?sky=set`: the sky each point sees takes the place of the open sky in the environment's diffuse (sky-set.ts); made
+     here, drawn at a page's first still, off while another source gives the environment */
+  const field: SkySet | null = q.get('sky') === 'set'
+    ? skySet({
+      renderer, scene, air: AIR, envIntensity: () => scene.environmentIntensity, lobe: { toward: uToward, away: uAwayK },
+      buff: LIGHT.bounce.paving.colour as [number, number, number], count: Number(q.get('skyN') ?? 128), size: Number(q.get('skyMap') ?? 1024),
+      giveBack: Number(q.get('skyGive') ?? 1),
+    })
+    : null
   function bakeEnv(): void {
     const given = envSource?.(hourNow) ?? null
+    field?.setOn(!given)
     if (given) {
       scene.environment = given
       envBy = 'source'
@@ -264,7 +275,7 @@ export function walkLight(o: WalkLightOptions) {
   }
 
   return {
-    AIR, sky, dome, sunLight, SUN, ENV, PRINT, SAT, TOE, STOPS, uBounce, uWalls, uWallsNear, uAoNear, uAoFar, uAoOn, uToward, uAwayK, uGround,
+    AIR, sky, dome, sunLight, SUN, ENV, PRINT, SAT, TOE, STOPS, uBounce, uWalls, uWallsNear, uAoNear, uAoFar, uAoOn, uToward, uAwayK, uGround, field,
     setHour, setNear, fitShadow, frame, stopsAt, printFor, bakeEnv,
     /** the environment's source for the hours this sky does not hold: a texture for the hour, or null for this sky */
     setEnvSource: (f: ((hour: number) => Texture | null) | null): void => { envSource = f },

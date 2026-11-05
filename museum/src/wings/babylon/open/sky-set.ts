@@ -1,0 +1,303 @@
+/* THE SKY A POINT CAN SEE (`?sky=set`, the film's stills only): a fixed set of sky directions, each an orthographic
+   depth map of the region the camera stands in, drawn by the engine at the first still and kept while the camera stays
+   inside the region; one light node reads them per pixel and takes away the open sky's light a point cannot see, in the
+   sky's own colours at the hour, plus a give-back for the light the hidden share would bounce back. The environment
+   stays whole (its specular, its ground bounce); only its open-sky diffuse is corrected, so a face that sees the whole
+   sky keeps exactly the environment's light. The live draw never calls `prepare`, so nothing here runs on a phone. */
+
+import {
+  AnalyticLightNode, DepthFormat, DepthTexture, LessEqualCompare, Light, LinearFilter, NodeMaterial, NoBlending, OrthographicCamera, RenderTarget, UnsignedShortType, Vector3, Vector4,
+  type Object3D, type PerspectiveCamera, type Scene, type WebGPURenderer,
+} from 'three/webgpu'
+import * as TSL from 'three/tsl'
+import type { AirUniforms } from './air'
+import { skyRadiance } from '../map/sky-sample'
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type N = any
+const { Fn, Loop, dot, float, int, luminance, max, mix, normalWorld, positionWorld, step, texture, uniform, uniformArray, vec2, vec3, vec4 } = TSL as unknown as Record<string, N>
+
+type RGB = [number, number, number]
+const GOLD = Math.PI * (3 - Math.sqrt(5))
+const ss = (a: number, b: number, x: number): number => {
+  const t = Math.min(1, Math.max(0, (x - a) / (b - a)))
+  return t * t * (3 - 2 * t)
+}
+
+/** the fixed directions: a Fibonacci set over the upper hemisphere, even in solid angle, the same every load (the
+    sampled sky's own order, so its k-th sub-frame and the k-th map look the same way) */
+export function skyDirections(n: number): Array<[number, number, number]> {
+  const out: Array<[number, number, number]> = []
+  for (let k = 0; k < n; k++) {
+    const cz = 1 - (k + 0.5) / n
+    const sz = Math.sqrt(Math.max(0, 1 - cz * cz))
+    out.push([sz * Math.cos(k * GOLD), cz, sz * Math.sin(k * GOLD)])
+  }
+  return out
+}
+
+/** each direction's solid angle: the hemisphere's 2 pi shared evenly */
+export const solidAngle = (n: number): number => (2 * Math.PI) / n
+
+/** the multi-bounce fit for ambient occlusion (Jimenez et al. 2016): the visibility a surface of this albedo shows
+    once the light the hidden share bounces back is counted */
+export function multiBounce(v: number, albedo: number): number {
+  const a = 2.0404 * albedo - 0.3324, b = -4.7951 * albedo + 0.6417, c = 2.7552 * albedo + 0.6903
+  return Math.max(v, ((v * a + b) * v + c) * v)
+}
+
+export interface SkySetOptions {
+  renderer: WebGPURenderer
+  scene: Scene
+  air: AirUniforms
+  /** the walk's environment strength now (light.ts sets it by the camera's height) */
+  envIntensity: () => number
+  /** the shade lobe by bearing to the sun (gate-plan `light.shade`): the environment's sky carries it, so the field does */
+  lobe: { toward: N; away: N }
+  /** the warm light the court's walls bounce: the paving's colour, its hue only */
+  buff: RGB
+  /** objects a still holds that must not take sky from the city (the figures: their contact stays the stack's) */
+  hidden?: () => Object3D[]
+  count?: number
+  size?: number
+  giveBack?: number
+  albedo?: number
+}
+
+export type SkySet = ReturnType<typeof skySet>
+
+/* the light whose node adds the correction; it carries the field's nodes, so one class serves every page */
+class SkySetLight extends Light {
+  readonly isSkySetLight = true
+  field: { irradiance: (builder: N) => N } | null = null
+}
+class SkySetLightNode extends (AnalyticLightNode as unknown as new (light: N) => N) {
+  static get type(): string { return 'SkySetLightNode' }
+  setup(builder: N): void {
+    const field = (this as N).light.field
+    if (field) builder.context.irradiance.addAssign(field.irradiance(builder))
+  }
+}
+;(SkySetLight as unknown as { registerNode: (c: unknown) => void }).registerNode(SkySetLightNode)
+
+export function skySet(o: SkySetOptions) {
+  const { renderer, scene, air } = o
+  const COUNT = o.count ?? 128
+  const SIZE = o.size ?? 1024
+  // sub-frame s reads the directions k with k mod STRIDE = s mod STRIDE, each weighted STRIDE times
+  const STRIDE = COUNT % 4 === 0 ? 4 : 1
+  // how far upstream an occluder is still held (m), and the region's heights
+  const UPSTREAM = 3000
+  const DIRS = skyDirections(COUNT).map((d) => new Vector3(...d))
+
+  const depth = new DepthTexture(SIZE, SIZE, UnsignedShortType, undefined, undefined, undefined, LinearFilter, LinearFilter, undefined, DepthFormat, COUNT)
+  depth.compareFunction = LessEqualCompare
+  depth.name = 'SkySetDepth'
+  const target = new RenderTarget(SIZE, SIZE, { count: 0, depth: COUNT, depthTexture: depth, depthBuffer: true, useArrayDepthTexture: true } as N)
+
+  /* per direction five vec4: the map's x and y rows (uv), its depth row, the direction with its normal offset, the
+     weight (the sky's radiance there times its solid angle, the environment's strength, the horizon share and the lobe) */
+  const table = Array.from({ length: COUNT * 5 }, () => new Vector4())
+  const uTable = uniformArray(table, 'vec4')
+  const uPhase = uniform(0, 'int'), uStride = uniform(STRIDE, 'int'), uCount = uniform(COUNT / STRIDE, 'int')
+  const uOn = uniform(0), uGive = uniform(o.giveBack ?? 1)
+  const ALBEDO = o.albedo ?? 0.45
+  const buffL = 0.2126 * o.buff[0] + 0.7152 * o.buff[1] + 0.0722 * o.buff[2]
+  const uBuff = uniform(new Vector3(o.buff[0] / buffL, o.buff[1] / buffL, o.buff[2] / buffL))
+
+  function irradiance(builder: N): N {
+    // a material that lights its own rooms names where the field applies (1 open, 0 its rooms); none: everywhere
+    const open: N = builder.material?.skyOpenNode ?? float(1)
+    return Fn(() => {
+      const n = normalWorld
+      const all = vec3(0).toVar(), seen = vec3(0).toVar()
+      Loop({ start: int(0), end: uCount, type: 'int', condition: '<' }, ({ i }: { i: N }) => {
+        const k = i.mul(uStride).add(uPhase)
+        const b = k.mul(5)
+        const r0 = uTable.element(b), r1 = uTable.element(b.add(1)), r2 = uTable.element(b.add(2)), dn = uTable.element(b.add(3)), w = uTable.element(b.add(4))
+        // the receiver moved out along its normal by the map's texel, so a face does not shade itself
+        const p = positionWorld.add(n.mul(dn.w))
+        const uv = vec2(dot(r0.xyz, p).add(r0.w), dot(r1.xyz, p).add(r1.w))
+        const z = dot(r2.xyz, p).add(r2.w)
+        const hit = texture(depth, uv).depth(k).compare(z)
+        // outside the map's box nothing is known: the open sky
+        const inside = step(0, uv.x).mul(step(uv.x, 1)).mul(step(0, uv.y)).mul(step(uv.y, 1)).mul(step(z, 1))
+        const vis = mix(float(1), hit, inside)
+        const wc = w.xyz.mul(max(dot(n, dn.xyz), 0))
+        all.addAssign(wc)
+        seen.addAssign(wc.mul(vis))
+      })
+      const lumAll = luminance(all)
+      const v = luminance(seen).div(max(lumAll, 1e-6))
+      const a = 2.0404 * ALBEDO - 0.3324, bb = -4.7951 * ALBEDO + 0.6417, c = 2.7552 * ALBEDO + 0.6903
+      const v2 = max(v, v.mul(a).add(bb).mul(v).add(c).mul(v)).min(1)
+      const back = vec3(uBuff).mul(v2.sub(v).mul(lumAll)).mul(uGive)
+      return seen.sub(all).add(back).mul(float(uStride)).mul(uOn).mul(open)
+    })()
+  }
+
+  const light = new SkySetLight(0xffffff, 1)
+  light.field = { irradiance }
+  light.name = 'sky-set'
+
+  const depthMat = new NodeMaterial()
+  depthMat.colorNode = vec4(0, 0, 0, 1)
+  ;(depthMat as N).isShadowPassMaterial = true
+  depthMat.blending = NoBlending
+  depthMat.fog = false
+  depthMat.name = 'SkySetDepthMaterial'
+  const onlyCasters = (object: N, sc: N, cam: N, geometry: N, material: N, group: N, lightsNode: N, clipping: N, passId: N): void => {
+    if (object.castShadow === true) renderer.renderObject(object, sc, cam, geometry, material, group, lightsNode, clipping, passId)
+  }
+
+  const lightCam = new OrthographicCamera()
+  // the region of the last fit (world x and z, with the camera's place) and the counts for the sidecar
+  let region: { x0: number; x1: number; z0: number; z1: number } | null = null
+  let fits = 0, fitMs = 0, lastFitMs = 0, added = false, on = true
+  let hidden = o.hidden ?? ((): Object3D[] => [])
+  const texels: number[] = []
+
+  /** the ground the frame sees, out to fitShadow's reach (light.ts), as points at three heights */
+  function seenPoints(cam: PerspectiveCamera): Vector3[] {
+    const h = Math.max(2, cam.position.y - 5)
+    const reach = Math.min(4200, 260 + h * 9)
+    cam.updateMatrixWorld(true)
+    const inv = cam.projectionMatrixInverse, world = cam.matrixWorld, origin = cam.position.clone()
+    const pts: Vector3[] = []
+    for (const [x, y] of [[-1, -1], [1, -1], [1, 1], [-1, 1], [0, -1], [0, 1], [-1, 0], [1, 0], [0, 0]]) {
+      const r = new Vector3(x!, y!, 0.5).applyMatrix4(inv).applyMatrix4(world).sub(origin).normalize()
+      let t = r.y < -1e-3 ? (5 - origin.y) / r.y : reach
+      const flat = Math.hypot(r.x, r.z) * t
+      if (flat > reach) t *= reach / flat
+      pts.push(origin.clone().addScaledVector(r, t))
+    }
+    pts.push(origin.clone())
+    return pts
+  }
+
+  function covered(cam: PerspectiveCamera): boolean {
+    if (!region) return false
+    const { x0, x1, z0, z1 } = region
+    const p = cam.position
+    // the camera inside the region's inner 60 percent, and every point the frame sees inside the region
+    const ix = (x1 - x0) * 0.2, iz = (z1 - z0) * 0.2
+    if (p.x < x0 + ix || p.x > x1 - ix || p.z < z0 + iz || p.z > z1 - iz) return false
+    return seenPoints(cam).every((q) => q.x >= x0 && q.x <= x1 && q.z >= z0 && q.z <= z1)
+  }
+
+  function fit(cam: PerspectiveCamera): void {
+    const t0 = performance.now()
+    const pts = seenPoints(cam)
+    let x0 = Infinity, x1 = -Infinity, z0 = Infinity, z1 = -Infinity
+    for (const p of pts) { x0 = Math.min(x0, p.x); x1 = Math.max(x1, p.x); z0 = Math.min(z0, p.z); z1 = Math.max(z1, p.z) }
+    // padded so the other framing and a small move keep the same maps; the camera always in the inner part
+    const px = Math.max(30, (x1 - x0) * 0.15), pz = Math.max(30, (z1 - z0) * 0.15)
+    region = { x0: x0 - px, x1: x1 + px, z0: z0 - pz, z1: z1 + pz }
+    const top = Math.max(100, cam.position.y + 5)
+    const corners: Vector3[] = []
+    for (const x of [region.x0, region.x1]) for (const z of [region.z0, region.z1]) for (const y of [0, top]) corners.push(new Vector3(x, y, z))
+    const centre = new Vector3((region.x0 + region.x1) / 2, top / 2, (region.z0 + region.z1) / 2)
+
+    const hide = hidden().filter((x) => x.visible)
+    for (const x of hide) x.visible = false
+    const was = { target: renderer.getRenderTarget(), override: scene.overrideMaterial, fn: (renderer as N).getRenderObjectFunction(), auto: renderer.autoClear }
+    scene.overrideMaterial = depthMat
+    ;(renderer as N).setRenderObjectFunction(onlyCasters)
+    renderer.autoClear = true
+    lightCam.coordinateSystem = (renderer as N).coordinateSystem
+    texels.length = 0
+    for (let k = 0; k < COUNT; k++) {
+      const d = DIRS[k]!
+      lightCam.position.copy(centre).addScaledVector(d, 6000)
+      lightCam.lookAt(centre)
+      lightCam.updateMatrixWorld(true)
+      const view = lightCam.matrixWorldInverse
+      let a0 = Infinity, a1 = -Infinity, b0 = Infinity, b1 = -Infinity, zn = Infinity, zf = -Infinity
+      for (const c of corners) {
+        const v = c.clone().applyMatrix4(view)
+        a0 = Math.min(a0, v.x); a1 = Math.max(a1, v.x); b0 = Math.min(b0, v.y); b1 = Math.max(b1, v.y)
+        zn = Math.min(zn, -v.z); zf = Math.max(zf, -v.z)
+      }
+      lightCam.left = a0; lightCam.right = a1; lightCam.bottom = b0; lightCam.top = b1
+      lightCam.near = Math.max(1, zn - UPSTREAM); lightCam.far = zf + 5
+      lightCam.updateProjectionMatrix()
+      const texel = Math.max(a1 - a0, b1 - b0) / SIZE
+      texels.push(texel)
+      renderer.setRenderTarget(target, k)
+      renderer.render(scene, lightCam)
+      // world to the map: x and y to uv (y down in the texture), z to the stored depth less a bias of a texel or so
+      const m = lightCam.projectionMatrix.clone().multiply(view).elements
+      const row = (r: number): [number, number, number, number] => [m[r]!, m[4 + r]!, m[8 + r]!, m[12 + r]!]
+      const [x, y, z] = [row(0), row(1), row(2)]
+      const bias = Math.max(0.05, texel * 1.0) / (lightCam.far - lightCam.near)
+      table[k * 5]!.set(x[0] * 0.5, x[1] * 0.5, x[2] * 0.5, x[3] * 0.5 + 0.5)
+      table[k * 5 + 1]!.set(-y[0] * 0.5, -y[1] * 0.5, -y[2] * 0.5, -y[3] * 0.5 + 0.5)
+      table[k * 5 + 2]!.set(z[0], z[1], z[2], z[3] - bias)
+      table[k * 5 + 3]!.set(d.x, d.y, d.z, Math.max(0.05, texel * 1.0))
+    }
+    renderer.setRenderTarget(was.target)
+    ;(renderer as N).setRenderObjectFunction(was.fn)
+    scene.overrideMaterial = was.override
+    renderer.autoClear = was.auto
+    for (const x of hide) x.visible = true
+    lastFitMs = Math.round(performance.now() - t0)
+    fitMs += lastFitMs
+    fits++
+  }
+
+  /** the weights from the sky now: its radiance per direction (air.ts on the CPU), the share the environment gives the
+      sky at the horizon, the shade lobe, the solid angle and the environment's strength */
+  function weigh(): void {
+    const sun = (air.uSun.value as Vector3).clone().normalize()
+    const sunFlat = new Vector3(sun.x, 0.0001, sun.z).normalize()
+    const toward = Number(o.lobe.toward.value), away = Number(o.lobe.away.value)
+    const norm = 1 + (toward - away) / Math.PI
+    const k0 = solidAngle(COUNT) * o.envIntensity()
+    for (let k = 0; k < COUNT; k++) {
+      const d = DIRS[k]!
+      const L = skyRadiance(air, d)
+      const c = new Vector3(d.x, 0.0001, d.z).normalize().dot(sunFlat)
+      const lobe = (1 + toward * Math.max(c, 0) - away * Math.max(-c, 0)) / norm
+      const s = ss(-0.05, 0.02, d.y) * lobe * k0
+      table[k * 5 + 4]!.set(L[0] * s, L[1] * s, L[2] * s, 0)
+    }
+  }
+
+  return {
+    light,
+    /** before a still: the maps for the camera's region (drawn once while the camera stays in it) and the weights */
+    prepare(cam: PerspectiveCamera): void {
+      if (!covered(cam)) fit(cam)
+      if (!added) {
+        scene.add(light)
+        added = true
+      }
+      weigh()
+      uOn.value = on ? 1 : 0
+      ;(uTable as N).needsUpdate = true
+    },
+    /** the page's objects kept out of the maps */
+    setHidden(f: () => Object3D[]): void {
+      hidden = f
+    },
+    /** sub-frame s: which quarter of the directions it reads */
+    each(s: number): void {
+      uPhase.value = s % STRIDE
+    },
+    /** the geometry changed (the tower switch, the garden): the next still draws the maps again */
+    invalidate(): void {
+      region = null
+    },
+    /** off while the environment comes from another source (the twilight's) */
+    setOn(v: boolean): void {
+      on = v
+      uOn.value = v ? 1 : 0
+    },
+    facts: () => ({
+      mode: 'set', directions: COUNT, mapSize: SIZE, perSubFrame: COUNT / STRIDE, giveBack: uGive.value, albedo: ALBEDO, on,
+      region: region && { x: [+region.x0.toFixed(1), +region.x1.toFixed(1)], z: [+region.z0.toFixed(1), +region.z1.toFixed(1)] },
+      texel: texels.length ? { min: +Math.min(...texels).toFixed(3), max: +Math.max(...texels).toFixed(3) } : null,
+      fits, fitMs, lastFitMs, memoryMiB: +((SIZE * SIZE * COUNT * 2) / 2 ** 20).toFixed(1),
+    }),
+  }
+}
