@@ -131,6 +131,25 @@ export function nearSlice(cam: PerspectiveCamera, depth: number): Vector3[] {
   return pts
 }
 
+/** A still's sub-frames differ by the camera's sub-pixel jitter alone, and three redraws a map on every render while its
+    `autoUpdate` is on: these maps draw on sub-frame 0 and are held for the rest of the call; each one's two flags are put
+    back after it (a throw too), so the walk's live frames draw every frame. A page's `each` runs after the hold. */
+export async function holdSunMaps<T>(
+  shadows: { autoUpdate: boolean; needsUpdate: boolean }[],
+  each: ((i: number) => void) | undefined,
+  run: (each: (i: number) => void) => Promise<T>,
+): Promise<T> {
+  const was = shadows.map((s) => [s.autoUpdate, s.needsUpdate] as const)
+  try {
+    return await run((i) => {
+      if (i > 0) for (const s of shadows) { s.autoUpdate = false; s.needsUpdate = false }
+      each?.(i)
+    })
+  } finally {
+    shadows.forEach((s, k) => { [s.autoUpdate, s.needsUpdate] = was[k]! })
+  }
+}
+
 export function walkLight(o: WalkLightOptions) {
   const { renderer, scene, light: LIGHT, q } = o
 
@@ -395,6 +414,10 @@ export function walkLight(o: WalkLightOptions) {
     setHour, setNear, fitShadow, frame, stopsAt, printFor, bakeEnv,
     /** the near map's slice depth, its box in metres and its texel, as last fitted */
     nearShadow: () => ({ on: NEAR.on, size: NEAR.size, ...nearFacts }),
+    /** an offline still's accumulation with both sun maps drawn once (holdSunMaps); `run` hands its hook to accumulate.
+        The near box's matrix is set by frame() alone, so the held near map keeps the one it was drawn with. */
+    still: <T>(each: ((i: number) => void) | undefined, run: (each: (i: number) => void) => Promise<T>): Promise<T> =>
+      holdSunMaps([sunLight.shadow, holder.shadow], each, run),
     /** the environment's source for the hours this sky does not hold: a texture for the hour, or null for this sky */
     setEnvSource: (f: ((hour: number) => Texture | null) | null): void => { envSource = f },
     /** an offline still's own environment for its accumulation (the sampled sky's ground-only one); bakeEnv puts the walk's back */

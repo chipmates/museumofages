@@ -535,7 +535,7 @@ async function render(w: number, h: number, samples: number, stops = 0): Promise
   // the sky field (`?sky=set`, open/sky-set.ts): its maps for this camera, a quarter of its directions a sub-frame
   L.field?.prepare(camera)
   try {
-    rgb = await accumulate(renderer, camera, linear!.post, w, h, samples, L.field ? (i: number) => L.field!.each(i) : undefined)
+    rgb = await L.still(L.field ? (i: number) => L.field!.each(i) : undefined, (each) => accumulate(renderer, camera, linear!.post, w, h, samples, each))
   } finally {
     renderer.readRenderTargetPixelsAsync = read
   }

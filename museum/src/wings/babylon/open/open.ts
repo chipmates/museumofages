@@ -414,7 +414,7 @@ async function render(w: number, h: number, samples: number, stops: number): Pro
   const t = performance.now()
   // the sky field (`?sky=set`, open/sky-set.ts): its maps for this camera, a quarter of its directions a sub-frame
   L.field?.prepare(camera)
-  const rgb = await accumulate(renderer, camera, linear!.post, w, h, samples, L.field ? (i: number) => L.field!.each(i) : undefined)
+  const rgb = await L.still(L.field ? (i: number) => L.field!.each(i) : undefined, (each) => accumulate(renderer, camera, linear!.post, w, h, samples, each))
   const bytes = printFrame(rgb, w, h, L.printFor(camera.position.y, stops), 0)
   return { bytes, ms: Math.round(performance.now() - t) }
 }

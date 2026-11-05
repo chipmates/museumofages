@@ -364,7 +364,10 @@ async function render(w: number, h: number, samples: number, stops = 0): Promise
   L.field?.prepare(camera)
   skyS?.begin()
   const each = skyS ? (i: number) => skyS.each(i, samples) : L.field ? (i: number) => L.field!.each(i) : undefined
-  const rgb = await accumulate(renderer, camera, linear!.post, w, h, samples, each)
+  // the sampled sky jitters the sun over its disc each sub-frame, so there the sun's maps draw on every one
+  const rgb = skyS
+    ? await accumulate(renderer, camera, linear!.post, w, h, samples, each)
+    : await L.still(each, (e) => accumulate(renderer, camera, linear!.post, w, h, samples, e))
   skyS?.end()
   const bytes = printFrame(rgb, w, h, printAt(stops), 0)
   return { bytes, ms: Math.round(performance.now() - t) }
