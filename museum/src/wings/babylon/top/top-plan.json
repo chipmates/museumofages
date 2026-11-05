@@ -1,0 +1,11 @@
+{
+ "about": "Stop 15 in code, the city from the top: what the map page adds for the view from the tower's platform. The plain round the walls is the arrival's (open/plain.ts, open/green.ts), built from the map's own plan so its banks follow the map's river; every canal, field, grove and plant place is ours (GREEN rows); the kinds and the mass are the record's.",
+ "plain": {
+  "reach": 3600,
+  "src": "the arrival's palm reach from the city's centre (open.ts palmReach): beyond it the groves are the plain's painted grove floors only, which the haze carries from the top as it does from the flight",
+  "inside": [
+   "city"
+  ],
+  "insideSrc": "the plain's rows that stand inside the walls, left off the map page in this round (the palms by the canal, bab.green.palm.city): seen with their shadows from the street stops"
+ }
+}

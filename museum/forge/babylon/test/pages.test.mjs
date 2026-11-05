@@ -20,7 +20,7 @@ test('a stop resolves by number, id, page prefix and page name', () => {
   assert.equal(resolveStop('3').owner, 'gate')
   assert.equal(resolveStop('9').page, 'map')
   assert.equal(resolveStop('open').page, 'open')
-  assert.throws(() => resolveStop('15'), /no stop/)
+  assert.throws(() => resolveStop('16'), /no stop/)
   assert.throws(() => resolveStop('gate:9'), /not on the gate page/)
   assert.throws(() => resolveStop('nowhere:1'), /no Babylon page/)
 })

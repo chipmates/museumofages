@@ -12,7 +12,7 @@ import { APP } from './pages.mjs'
 import { cameraFrom, facesFrom, fittedFov } from './geometry.mjs'
 
 const COURT = join(APP, 'src/wings/babylon/court'), TOWER = join(APP, 'src/wings/babylon/tower'), GARDENS = join(APP, 'src/wings/babylon/gardens'), NABU = join(APP, 'src/wings/babylon/nabu'), HOUSE = join(APP, 'src/wings/babylon/house'), ESAGILA = join(APP, 'src/wings/babylon/esagila'), BRIDGE = join(APP, 'src/wings/babylon/bridge')
-const MAP = join(APP, 'src/wings/babylon/map'), GATE = join(APP, 'src/wings/babylon/gate'), OPEN = join(APP, 'src/wings/babylon/open')
+const TOP = join(APP, 'src/wings/babylon/top'), MAP = join(APP, 'src/wings/babylon/map'), GATE = join(APP, 'src/wings/babylon/gate'), OPEN = join(APP, 'src/wings/babylon/open')
 const json = (p) => JSON.parse(readFileSync(p, 'utf8'))
 /** the kit's still sizes, device pixels: both framings at the shooter's defaults, and the smaller desktop */
 export const SIZES = [['desktop', 3200, 1800], ['desktop', 1600, 900], ['phone', 1170, 2532], ['phone', 1080, 1920]]
@@ -28,7 +28,9 @@ const view = (eye, look, hfov, shift = 0, authored = null) => ({ eye: [...eye], 
 /** a page's path from its first key of a stop to the next stop's first key, every dt seconds (the end included) */
 function pathTrack(path, n, dt, pick) {
   const ks = path.keys.filter((k) => k.stop === n)
-  const t0 = ks[0].t, nxt = path.keys.find((k) => k.t > t0 && k.stop !== n && k.stop > n)
+  // the next stop is the next to start in time: a stop's number is not its place in the walk
+  const startOf = (m) => path.keys.find((k) => k.stop === m).t
+  const t0 = ks[0].t, nxt = path.keys.find((k) => k.t > t0 && k.stop !== n && startOf(k.stop) > t0)
   const t1 = nxt ? nxt.t : ks[ks.length - 1].t
   const out = []
   for (let i = 0; t0 + i * dt <= t1 + 1e-9; i++) { const t = t0 + i * dt; out.push({ t: +t.toFixed(3), ...pick(path.sample(t)) }) }
@@ -99,6 +101,10 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
   const { plantShape, plantMatrix } = await import(join(BRIDGE, 'bridge-green.ts'))
   const bridge = buildBridge(esagila.built, plan, json(join(BRIDGE, 'bridge-plan.json')))
   const built = bridge.built
+  // stop 15's plants (the plain round the walls), as map.ts mounts them at the chain's end
+  const { topPlants } = await import(join(TOP, 'top-plants.ts'))
+  const { buildPlain } = await import(join(OPEN, 'plain.ts'))
+  const top = topPlants(plan, json(join(TOP, 'top-plan.json')), { buildPlain })
   // the switch's third state at the end of the chain, as map.ts mounts it
   const { buildBruegel } = await import(join(APP, 'src/wings/babylon/bruegel/bruegel-geom.ts'))
   const bruegel = towerState === 'bruegel' ? buildBruegel(towerAxis, built.ground, json(join(APP, 'src/wings/babylon/bruegel/bruegel-plan.json'))) : null
@@ -182,10 +188,23 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
     if (!shapes.has(key)) shapes.set(key, plantShape(q.kind, i % 2, palmGeometry))
     facesFrom(faces, shapes.get(key).clone().applyMatrix4(plantMatrix(q)), null, () => `map:${q.id}`)
   }
+  // stop 15's palms whole where the foot lies within the reach (at most 1.2 km: the plain holds some 21,000, and past that a
+  // far palm is a few pixels of a grove's mass), each at its preset (open/green.ts palmMesh), and on a whole-page mount
+  // (the switch's) each row's first palm wherever it stands, so every row is named; the bank trees grow from a canvas atlas on the page only, none in the city
+  const { PALM_FAR } = await import(join(GATE, 'gate-life.ts'))
+  const presets = { far: palmGeometry(12, PALM_FAR), mid: palmGeometry(12, PALM_MID) }
+  const nthTop = new Map()
+  for (const q of top.all) {
+    const i = nthTop.get(q.row) ?? 0
+    nthTop.set(q.row, i + 1)
+    if (['reed', 'tamarisk', 'poplar', 'willow'].includes(q.row) || q.detail === 'near' || ((i > 0 || reach <= 1200) && Math.hypot(q.x - ex, q.z - ez) > Math.min(reach, 1200))) continue
+    const m = new THREE.Matrix4().compose(new THREE.Vector3(q.x, built.ground(q.x, q.z), q.z), new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(Math.cos(q.yaw), 0, Math.sin(q.yaw)).normalize(), q.lean), new THREE.Vector3(q.s, q.s, q.s))
+    facesFrom(faces, presets[q.detail ?? 'far'].clone().applyMatrix4(m), null, () => `map:top-palm-${q.row}-${i}`)
+  }
   const surface = (b) => /^map:(street|ground|water-|gate5-street-|merkes-lanes$|esagila-street-|esagila-ground-|ruin-trench$|ruin-water$)/.test(b)
   return {
     court, tower, gardens, planting, nabu,
-    house, esagila, bridge, towerState, dug, bruegel, bruegelShow,
+    house, esagila, bridge, top, towerState, dug, bruegel, bruegelShow,
     houseBodies,
     page: 'map', stop: String(stop), frame: "the map's scene metres (x east, z south, y up)", faces, cameras, eyes, reach,
     ground: (x, z) => built.ground(x, z),
