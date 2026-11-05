@@ -2653,7 +2653,7 @@
    "hfov": 57.96,
    "shift": 0.001,
    "phone": {
-    "hfov": 29.98,
+    "hfov": 29.965,
     "shift": 0.2
    }
   },
@@ -2674,8 +2674,8 @@
    "hfov": 57.01,
    "shift": 0.03,
    "phone": {
-    "hfov": 29.5,
-    "shift": 0.208
+    "hfov": 29.125,
+    "shift": 0.217
    }
   },
   {
@@ -2695,8 +2695,8 @@
    "hfov": 55.08,
    "shift": 0.088,
    "phone": {
-    "hfov": 28.54,
-    "shift": 0.224
+    "hfov": 27.445,
+    "shift": 0.251
    }
   },
   {
@@ -2716,8 +2716,8 @@
    "hfov": 52.51,
    "shift": 0.165,
    "phone": {
-    "hfov": 27.25,
-    "shift": 0.245
+    "hfov": 25.188,
+    "shift": 0.296
    }
   },
   {
@@ -2737,8 +2737,8 @@
    "hfov": 49.64,
    "shift": 0.251,
    "phone": {
-    "hfov": 25.82,
-    "shift": 0.268
+    "hfov": 22.685,
+    "shift": 0.345
    }
   },
   {
@@ -2758,8 +2758,8 @@
    "hfov": 46.81,
    "shift": 0.336,
    "phone": {
-    "hfov": 24.4,
-    "shift": 0.291
+    "hfov": 20.2,
+    "shift": 0.395
    }
   },
   {
@@ -2779,8 +2779,8 @@
    "hfov": 44.37,
    "shift": 0.409,
    "phone": {
-    "hfov": 23.18,
-    "shift": 0.311
+    "hfov": 18.065,
+    "shift": 0.437
    }
   },
   {
@@ -2800,8 +2800,8 @@
    "hfov": 42.65,
    "shift": 0.461,
    "phone": {
-    "hfov": 22.32,
-    "shift": 0.325
+    "hfov": 16.56,
+    "shift": 0.467
    }
   },
   {
@@ -2821,8 +2821,8 @@
    "hfov": 42.0,
    "shift": 0.48,
    "phone": {
-    "hfov": 22.0,
-    "shift": 0.33
+    "hfov": 16.0,
+    "shift": 0.478
    },
    "hold": true,
    "say": "to Gate 5, turning right toward the tower"
@@ -2844,8 +2844,8 @@
    "hfov": 42.0,
    "shift": 0.48,
    "phone": {
-    "hfov": 22.0,
-    "shift": 0.33
+    "hfov": 16.0,
+    "shift": 0.478
    },
    "hold": true,
    "still": true,
@@ -3859,12 +3859,12 @@
    "shift": -0.18,
    "phone": {
     "look": [
-     445609.13,
-     3600447.29,
+     445560.52,
+     3600442.61,
      79.15
     ],
-    "hfov": 44.0,
-    "shift": -0.28
+    "hfov": 22.0,
+    "shift": -0.5
    },
    "hour": "18:05",
    "say": "on the top's platform at its west corner: the street north to the double gate, the river west",
@@ -3889,12 +3889,12 @@
    "shift": -0.18,
    "phone": {
     "look": [
-     445609.13,
-     3600447.29,
+     445560.52,
+     3600442.61,
      79.15
     ],
-    "hfov": 44.0,
-    "shift": -0.28
+    "hfov": 10.0,
+    "shift": -0.668
    },
    "stop": 15
   },
@@ -3916,12 +3916,12 @@
    "shift": -0.18,
    "phone": {
     "look": [
-     445609.13,
-     3600447.29,
+     445560.52,
+     3600442.61,
      79.15
     ],
-    "hfov": 44.0,
-    "shift": -0.28
+    "hfov": 10.0,
+    "shift": -0.668
    },
    "hour": "18:05",
    "stop": 15
@@ -3947,8 +3947,8 @@
      3600330.37,
      79.15
     ],
-    "hfov": 44.0,
-    "shift": -0.35
+    "hfov": 21.0,
+    "shift": -0.5
    },
    "say": "the turn west over the river",
    "stop": 15
