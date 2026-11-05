@@ -51,8 +51,8 @@ const report = {
 }
 if (JSON_OUT) writeFileSync(JSON_OUT, JSON.stringify(report, null, 1))
 console.log(`stop ${st.stop} (${st.id}) on the ${M.page} page${st.page === 'open' ? ' (the opening mounted as the gate page)' : ''}: ${M.faces.length} faces in ${bodies} bodies, ${M.cameras.length} cameras, ${M.eyes.length} eyes, ${report.seconds} s`)
-console.log(`coplanar (bed ${BED * 1000} mm, area over ${AREA} m2): ${pairs.length} pairs (${['fight', 'unseen', 'butt'].map((k) => `${k} ${pairs.filter((p) => p.kind === k).length}`).join(', ')}), ${pairOff.length} not allowed`)
-for (const p of (ALL ? pairs : pairOff).slice(0, 30)) console.log(`  [${p.kind} ${p.facing > 0 ? '+' : '-'}] ${p.a} | ${p.b}: ${p.area} m2, gap ${p.gapMm} mm, n ${p.n.join(',')}, x ${p.x.join('..')} y ${p.y.join('..')} z ${p.z.join('..')}`)
+console.log(`coplanar (bed ${BED * 1000} mm where the faces overlap, area over ${AREA} m2; gap: the median where they do): ${pairs.length} pairs (${['fight', 'unseen', 'butt'].map((k) => `${k} ${pairs.filter((p) => p.kind === k).length}`).join(', ')}), ${pairOff.length} not allowed`)
+for (const p of (ALL ? pairs : pairOff).slice(0, 30)) console.log(`  [${p.kind} ${p.facing > 0 ? '+' : '-'}] ${p.a} | ${p.b}: ${p.area} m2, gap ${p.gapMm} mm (least ${p.gapMinMm}), n ${p.n.join(',')}, x ${p.x.join('..')} y ${p.y.join('..')} z ${p.z.join('..')}`)
 console.log(`sub-pixel (under 1 device px over 4 px; ${thin.slivers} slivers of triangulated planes set aside): ${thin.rows.length} rows, ${thinOff.length} not allowed`)
 for (const r of (ALL ? thin.rows : thinOff).slice(0, 30)) console.log(`  ${r.body} at ${r.camera}: ${r.faces} faces, thinnest ${r.thinnestPx} px (${r.thickM} m at ${r.atM} m, run ${r.runPx} px)`)
 console.log(`floating (the map's rule: a grounded body's corner over the ground by more than 1 cm, a raised body with nothing under its centre or its ends): ${floatRows.length} rows, ${floats.length} not allowed`)
