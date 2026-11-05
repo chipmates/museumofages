@@ -1082,6 +1082,14 @@ export function buildShow(f0: { x: number; z: number; c: number; s: number }, gr
     // on the red shells
     scaffold(S, f, 56, 68, rings[2]!.r + 1.3, rings[2]!.r, (phi) => terraceAt(1, phi), (phi) => terraceAt(2, phi) - 1.0, tm(3))
     scaffold(S, f, 60, 75, rings[3]!.r + 1.3, rings[3]!.r, (phi) => terraceAt(2, phi), (phi) => terraceAt(3, phi) - 1.0, tm(4))
+    // and on the red side where both cameras see it: tier 3's red bays left of the crag, tier 4's red at the right,
+    // the second row of cells in the cutaway
+    scaffold(S, f, 18.4, 23.6, rings[2]!.r + 1.3, rings[2]!.r, (phi) => terraceAt(1, phi), (phi) => terraceAt(2, phi) - 1.0, tm(10))
+    scaffold(S, f, 84, 98, rings[3]!.r + 1.3, rings[3]!.r, (phi) => terraceAt(2, phi), (phi) => terraceAt(3, phi) - 1.0, tm(11))
+    {
+      const cl = sp.cells as J[]
+      scaffold(S, f, 4, 22, (cl[1].r as number) + 1.3, cl[1].r as number, (phi) => (cl[0].top as number) + riseAt(phi), (phi) => (cl[1].top as number) + riseAt(phi) - 0.8, tm(12))
+    }
     // two masts and a ladder by the top white ring's toothed end
     const r5 = rings[5]!.r + 1.3
     for (const [phi, h] of [[-37.6, 100.6], [-35.2, 99.2]] as Array<[number, number]>) {
