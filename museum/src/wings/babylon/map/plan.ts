@@ -156,17 +156,19 @@ function centroid(poly: P2[]): P2 {
   return [x / poly.length, z / poly.length]
 }
 
-/** the South Palace's ranges (map-plan.json `ranges`: UTM rects on C6.2's walls, clipped to the outline): each range's
+/** the South Palace's ranges (map-plan.json `ranges`: UTM rects on C6.2's walls, or a convex UTM `poly` where a range
+    lies on another bearing, clipped to the outline): each range's
     roof a deck inside a parapet `parapet.t` thick (the outer walls `parapet.outer`), so the rooms body keeps its walls' top as the parapets and loses each
     deck's well. Returns the wells (wound as the block's rect holes) and the decks, sunk 0.1 m into the floor body */
 function palaceRanges(b: J, poly: P2[], s: (E: number, N: number) => P2): { wells: P2[][]; decks: Array<{ id: string; poly: P2[]; y0: number; y1: number }> } {
   const t: number = b.parapet.t
-  const halves = poly.map((a, i) => {
-    const c = poly[(i + 1) % poly.length]!, mid = mul(add(a, c), 0.5)
+  const inward = (pts: P2[]): Array<{ a: P2; n: P2 }> => pts.map((a, i) => {
+    const c = pts[(i + 1) % pts.length]!, mid = mul(add(a, c), 0.5)
     let n = leftOf(norm(sub(c, a)))
-    if (!pointInPoly(add(mid, mul(n, 0.05)), poly)) n = mul(n, -1)
+    if (!pointInPoly(add(mid, mul(n, 0.05)), pts)) n = mul(n, -1)
     return { a, n }
   })
+  const halves = inward(poly)
   const clip = (pts: P2[], a: P2, n: P2, off: number): P2[] => {
     const f = (p: P2): number => (p[0] - a[0]) * n[0] + (p[1] - a[1]) * n[1] - off
     const out: P2[] = []
@@ -179,8 +181,16 @@ function palaceRanges(b: J, poly: P2[], s: (E: number, N: number) => P2): { well
   }
   const wells: P2[][] = [], decks: Array<{ id: string; poly: P2[]; y0: number; y1: number }> = []
   for (const r of b.ranges) {
-    const [e0, e1, n0, n1] = r.rect as number[]
-    let w: P2[] = [s(e0! + t, n0! + t), s(e1! - t, n0! + t), s(e1! - t, n1! - t), s(e0! + t, n1! - t)]
+    let w: P2[]
+    if (r.poly) {
+      const q: P2[] = r.poly.map((p: number[]) => s(p[0]!, p[1]!))
+      w = q
+      for (const h of inward(q)) w = clip(w, h.a, h.n, t)
+      if (polyArea(w) > 0) w.reverse() // wound as the rect wells (negative in scene x, z)
+    } else {
+      const [e0, e1, n0, n1] = r.rect as number[]
+      w = [s(e0! + t, n0! + t), s(e1! - t, n0! + t), s(e1! - t, n1! - t), s(e0! + t, n1! - t)]
+    }
     for (const h of halves) w = clip(w, h.a, h.n, b.parapet.outer ?? t)
     if (w.length < 3 || Math.abs(polyArea(w)) < 4) continue
     wells.push(w)
