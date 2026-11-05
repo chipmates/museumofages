@@ -179,7 +179,7 @@ export function walkLight(o: WalkLightOptions) {
   sunLight.shadow.normalBias = 0.03
   scene.add(sunLight, sunLight.target)
   /* the near map (`?near=0` the far map alone): its own light holder and shadow, fitted in fitShadow below */
-  const NEAR = { on: q.get('near') !== '0', size: Number(q.get('nearMap') ?? 8192), band: 0.06, bias: Number(q.get('nearB') ?? 0.25), normal: Number(q.get('nearN') ?? 0.5), floor: Number(q.get('nearF') ?? 0.001) }
+  const NEAR = { on: q.get('near') !== '0', size: Number(q.get('nearMap') ?? 8192), band: 0.06, bias: Number(q.get('nearB') ?? 0), normal: Number(q.get('nearN') ?? 0.5), floor: Number(q.get('nearF') ?? 0.001) }
   const holder = new Object3D() as Object3D & { target: Object3D; shadow: N; castShadow: boolean }
   holder.target = new Object3D()
   holder.castShadow = true
@@ -308,8 +308,8 @@ export function walkLight(o: WalkLightOptions) {
     sh.updateMatrices(holder)
     ;(uNearM.value as Matrix4).copy(sh.matrix)
     const texel = Math.max(b.x1 - b.x0, b.y1 - b.y0) / NEAR.size
-    // the near map's biases follow its own texel: the lips' shades are a centimetre or two tall, under the far map's floors;
-    // a quarter texel of depth, since a whole one let the sun past a wall's corner onto the grazing face beside it
+    // the normal bias follows the near texel (the lips' shades are a centimetre or two tall); the depth bias is the 1 mm floor
+    // alone: the map holds the faces turned from the sun, and any texel share lets the sun onto the ground at such a face's foot
     sh.normalBias = Math.max(0.002, texel * NEAR.normal)
     sh.bias = -Math.max(NEAR.floor, texel * NEAR.bias) / (sc.far - sc.near)
     Object.assign(nearFacts, { depth: +depth.toFixed(1), w: +(b.x1 - b.x0).toFixed(1), h: +(b.y1 - b.y0).toFixed(1), texel: +texel.toFixed(4) })
