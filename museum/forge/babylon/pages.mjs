@@ -68,6 +68,13 @@ export const PAGES = {
     readyMs: 120000,
     still: () => { throw new Error('feature 1, hidden words: shoot it with forge/babylon/objects-shoot.mjs') },
   },
+  // feature 6's fresh tablet on the turntable, pressed wedge by wedge: its beats come from clay-shoot.mjs
+  clay: {
+    html: 'src/wings/babylon/clay/clay.html',
+    rig: '__clay',
+    readyMs: 120000,
+    still: () => { throw new Error('feature 6, write in clay: shoot it with forge/babylon/clay-shoot.mjs') },
+  },
 }
 
 /** the walk's fourteen stops (map-cams.json) and the page that shows each today; stop 1 folds into the opening flight */

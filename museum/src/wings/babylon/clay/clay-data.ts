@@ -129,11 +129,33 @@ export function asInscription(file: ClaySignFile, placed: readonly PlacedSign[])
   }
 }
 
-/** WHERE THE PRESSES STAND at a clock of the run: the clock counts wedges, its fraction the one sinking now */
+/** THE RUN'S PACE, seconds of its clock: one wedge a second, each sinking over the first share of its second; the
+ *  whole name held a while before the run comes round to fresh clay */
+export const PACE = Object.freeze({ sink: 0.45, hold: 3 })
+export const period = (total: number): number => total + PACE.hold
+
+/** WHERE THE PRESSES STAND at a clock of the run (seconds, one a wedge): wedges in whole, and the next one's share */
 export function pressState(clock: number, total: number): { done: number; sinking: number; sink: number } {
   const c = Math.max(0, Math.min(total, clock))
-  const done = Math.floor(c + 1e-6)
-  return { done, sinking: done < total ? done : -1, sink: done < total ? c - done : 0 }
+  const k = Math.floor(c + 1e-6), f = c - k
+  if (k >= total) return { done: total, sinking: -1, sink: 0 }
+  if (f >= PACE.sink - 1e-6) return { done: k + 1, sinking: k + 1 < total ? k + 1 : -1, sink: 0 }
+  return { done: k, sinking: k, sink: f / PACE.sink }
+}
+
+/** ONE PRESS from a clock: where the run plays from, where it stops (the wedge in) and the clock it is set to there;
+ *  null at the end. A wedge already sinking is the one the press finishes. */
+export function pressFrom(clock: number, total: number): { from: number; stop: number; land: number } | null {
+  const { done, sink } = pressState(clock, total)
+  if (done >= total) return null
+  const from = sink > 0 ? clock : done
+  return { from, stop: done + PACE.sink, land: done + 1 }
+}
+
+/** BACK ONE: the last wedge out again (one partly in is taken out first) */
+export function backFrom(clock: number, total: number): number {
+  const { done, sink } = pressState(clock, total)
+  return sink > 0 ? done : Math.max(0, done - 1)
 }
 
 /** THE SIGNS FINISHED at a count of pressed wedges, and the one that just finished (lit until the next press) */

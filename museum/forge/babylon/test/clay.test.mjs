@@ -119,3 +119,23 @@ test('nothing in the feature glows: no emissive colour and no additive light in 
     assert.doesNotMatch(text, /emissive|AdditiveBlending|bloom|glow\s*\(|text-shadow|box-shadow:\s*0 0/i, name)
   }
 })
+
+test('the run\'s clock counts wedges: a press plays to the next wedge and lands one more, back takes one out', () => {
+  const total = all.length, P = data.period(total)
+  assert.equal(P, total + data.PACE.hold)
+  let clock = 0
+  for (let k = 0; k < total; k++) {
+    assert.equal(data.pressState(clock, total).done, k)
+    const p = data.pressFrom(clock, total)
+    assert.ok(p && p.from === clock && p.stop > clock && p.stop < clock + 1, `press ${k}`)
+    // half-way to the stop only the one wedge is sinking
+    const mid = data.pressState((p.from + p.stop) / 2, total)
+    assert.equal(mid.done, k); assert.ok(mid.sink > 0 && mid.sink < 1)
+    assert.equal(data.pressState(p.stop, total).done, k + 1)
+    clock = p.land
+  }
+  assert.equal(data.pressFrom(clock, total), null, 'nothing presses past the whole name')
+  assert.equal(data.backFrom(clock, total), total - 1)
+  assert.equal(data.backFrom(5.2, total), 5, 'a wedge partly in is the one taken out')
+  assert.equal(data.backFrom(0, total), 0)
+})
