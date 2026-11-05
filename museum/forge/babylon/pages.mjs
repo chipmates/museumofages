@@ -114,7 +114,7 @@ export const STOPS = [
   { stop: '12', id: 'great-stair', page: 'map' },
   { stop: '15', id: 'city-from-top', page: 'map' },
   { stop: '13', id: 'bridge', page: 'map' },
-  { stop: '14', id: 'city-and-sky', page: 'map' },
+  { stop: '14', id: 'crescent', page: 'map' },
 ]
 
 /** a stop by number or id, `<page>:<stop>` to take it from another page, or a page name for its own first view */

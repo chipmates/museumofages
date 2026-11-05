@@ -25,6 +25,10 @@ type N = any
 const { abs, float, max, mix, mx_noise_float, positionWorld, select, smoothstep, step, uniform, vec3 } = TSL as unknown as Record<string, N>
 
 const TONE_OF: Record<Cls, number> = { M: 0, R: 1, G: 2 }
+/** the river's body under the twilight, per channel a share of its light under the walk's air (the walk's last stop only) */
+const DUSK_BODY: [number, number, number] = [0.25, 0.3, 0.45]
+/** and the banks' mirrored tones under the twilight (ours) */
+const DUSK_BANK: [number, number, number] = [0.45, 0.55, 0.85]
 
 export interface BridgeMount {
   bridge: Bridge
@@ -141,6 +145,8 @@ export function mountBridge(built0: Built, mapPlan: J, bp: J, tones: ClassTones)
     const wakes = bridge.piers.map((p) => ({ x: p.c[0], z: p.c[1], r: mapPlan.bridge.piers.across / 2, h: mapPlan.bridge.piers.along / 2, len: W.wake }))
     // the evidence view greys it as the map's water stays untoned
     const R = W.reflect
+    // 0 while the sun is up, 1 once it is 4 degrees under the horizon (the walk's last stop)
+    const set = float(1).sub(smoothstep(-0.07, -0.017, A.uSun.y))
     // a reflected ray meets the west bank (in shadow, its groves above it) or the quay's lit face (the city above it)
     // before the sky; their heights over the water and their tones in the light of the hour
     const reflect = (p: N, r: N, skyC: N): N => {
@@ -153,7 +159,8 @@ export function mountBridge(built0: Built, mapPlan: J, bp: J, tones: ClassTones)
       const groveW = float(1).sub(smoothstep(R.west.grove * 0.6, R.west.grove, dW.add(25).mul(tanE))).mul(westward).mul(R.west.cover)
       const wallE = float(1).sub(step(R.east.wall, dE.mul(tanE))).mul(eastward)
       const cityE = float(1).sub(smoothstep(R.east.city * 0.6, R.east.city, dE.add(30).mul(tanE))).mul(eastward).mul(R.east.cover)
-      const day = A.uDay
+      // after sunset the banks are lit by the twilight's blue only: their mirrored tones darker and cooler
+      const day = A.uDay.mul(mix(vec3(1), vec3(...DUSK_BANK), set))
       const lit = max(A.uSun.y, 0).mul(4).add(0.35).mul(day)
       let c: N = mix(skyC, vec3(...R.west.groveTone).mul(day), groveW)
       c = mix(c, vec3(...R.west.bankTone).mul(day), bankW)
@@ -161,7 +168,11 @@ export function mountBridge(built0: Built, mapPlan: J, bp: J, tones: ClassTones)
       c = mix(c, vec3(...R.east.wallTone).mul(lit), wallE)
       return c
     }
-    const riverMat = waterMaterial(A, sky, uTime, undefined, { body: W.body, flow, fine: W.fine, wakes, glint: W.glint, fog: true, swell: W.swell, reflect })
+    // once the sun is under the horizon it gives no glint and no sheen (the water's sun turns down), and the body takes
+    // the twilight's light, darker and bluer than the walk's air at that hour (ours, the two skies' light beside each
+    // other)
+    const Aw: AirUniforms = { ...A, uSun: mix(A.uSun, vec3(0, -1, 0), set), uDay: A.uDay.mul(mix(vec3(1), vec3(...DUSK_BODY), set)) }
+    const riverMat = waterMaterial(Aw, sky, uTime, undefined, { body: W.body, flow, fine: W.fine, wakes, glint: W.glint, fog: true, swell: W.swell, reflect })
     // the switch on: the water takes its record row's tone (its colour and level are a guess), a slow mottle so the
     // river still reads as one wide surface
     const rm = riverMat as Material & { colorNode: N }

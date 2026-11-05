@@ -215,7 +215,11 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
     // the dug stairs' feet lie 4 cm over the ruin's ground at every one of their top points (tower-dug.test.mjs), both
     // surfaces on the same 0.75 m step; the check takes a face's plane from the scene's origin about 400 m off, where a
     // thousandth of tilt between the two triangulations reads as one plane
-    allowPair: dug ? [{ test: (p) => p.kind === 'fight' && p.n[1] > 0.99 && [p.a, p.b].includes('map:ruin-trench') && [p.a, p.b].some((b) => b.startsWith('map:ruin-stair-')), why: "the dug stairs' feet 4 cm over the ruin's ground at every top point (tower-dug.test.mjs); the plane offsets are taken 400 m from the origin" }] : [],
+    allowPair: [
+      ...(dug ? [{ test: (p) => p.kind === 'fight' && p.n[1] > 0.99 && [p.a, p.b].includes('map:ruin-trench') && [p.a, p.b].some((b) => b.startsWith('map:ruin-stair-')), why: "the dug stairs' feet 4 cm over the ruin's ground at every top point (tower-dug.test.mjs); the plane offsets are taken 400 m from the origin" }] : []),
+      // the last stop's eye on the deck reaches the west city's low house blocks beyond the bank (measured 5 Nov)
+      ...(n === 14 ? [{ test: (p) => p.kind === 'fight' && p.n[1] > 0.99 && [p.a, p.b].includes('map:ground') && [p.a, p.b].some((b) => b.startsWith('map:house#')), why: "the west city's low house blocks (map/city.ts), their tops within 2 mm of the plain 300 to 590 m beyond the west bank: from the deck's eye 1.45 m over the plain a top spans under half a pixel, behind the bank's thickets; open for the city's own round" }] : []),
+    ],
     // a curtain's sheet is foliage in faces of about 0.2 by 1 m, and at 300 to 400 m from stop 5's hold a few of them
     // fall under a device pixel wherever the planting's sequence puts them
     // the palm's mid preset (palm-date-babylon): a frond's leaflets drawn as teeth along its rib, their tips narrow

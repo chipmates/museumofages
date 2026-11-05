@@ -44,6 +44,7 @@ import { mountShow } from '../bruegel-show/show'
 import { keysFor } from '../bruegel-show/show-path'
 import { mountBridge } from '../bridge/bridge'
 import { mountTop } from '../top/top'
+import { mountCrescent } from '../crescent/crescent'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -138,6 +139,8 @@ if (!lq.has('env')) lq.set('env', String(MAP_ENV))
 const L = walkLight({ renderer, scene, light: gatePlan.light, rot: new Matrix3(), uW2G: uniform(new Matrix4()), uSunG: uniform(new Vector3()), gateAt: new Vector3(1e7, 0, 0), q: lq })
 const sky: Sky = { colour: L.sky }
 const skyDome = L.dome
+// the last stop's crescent on the dome, at the minute the page's sun stands at (crescent/crescent.ts)
+const crescent = await mountCrescent(L.AIR, skyDome, renderer, scene)
 /* a stop may set its own air (`air`, extinction a metre at the plain): it thickens the walk's haze there, never thins it */
 const SIGMA = L.AIR.uSigma.value as number
 const setAir = (a: number): void => { L.AIR.uSigma.value = Math.max(SIGMA, a) }
@@ -187,7 +190,7 @@ scene.add(...gardens.meshes)
 scene.add(nabu.mesh)
 scene.add(house.mesh)
 scene.add(esagila.mesh)
-scene.add(...bridge.meshes, bridge.river(L.sky, L.AIR))
+scene.add(...bridge.meshes, bridge.river(crescent.sky(L.sky), L.AIR))
 scene.add(...top.meshes)
 uView.value = q.get('view') === 'classes' ? 1 : 0
 /* the class view from the record at the camera's stop: some rows hold at certain stops only (the street's) */
@@ -239,7 +242,10 @@ function figuresInFrame(): number[] {
   return seen
 }
 
-const setHour = (hour: number): void => L.setHour(hour)
+const setHour = (hour: number): void => {
+  L.setHour(hour)
+  crescent.setHour(hour)
+}
 
 /* the camera: a level look with the frame slid up or down (a shift lens) where a view asks */
 let shiftNow = 0
@@ -267,6 +273,7 @@ function aim(pos: V3, look: V3, hfov: number, w: number, h: number, shift = 0): 
   esagila.setPixel(camera.fov, h)
   setCityPixel(camera.fov, h)
   bridge.setPixel(camera.fov, h)
+  crescent.setPixel(camera.fov, h)
   camera.updateMatrixWorld(true)
   skyDome.position.copy(camera.position)
   skyDome.updateMatrixWorld(true)
@@ -409,7 +416,7 @@ const rig = {
       sampleCountReadBack: 'one sample a sub-frame: the linear target is allocated without multisampling (render.ts)',
       backend: stack.backend, adapter: stack.architecture, exposureStops: +ev.toFixed(3), heightStops: +L.stopsAt(camera.position.y).toFixed(3), print: printAt(ev),
       air: { sigma: L.AIR.uSigma.value, scale: L.AIR.uScale.value, on: L.AIR.uOn.value }, env: { intensity: scene.environmentIntensity, sun: L.sunLight.intensity },
-      hour: +p.hour.toFixed(3), sun: { azimuth: +sun.azimuth.toFixed(1), elevation: +sun.elevation.toFixed(1) },
+      hour: +p.hour.toFixed(3), sun: { azimuth: +sun.azimuth.toFixed(1), elevation: +sun.elevation.toFixed(1) }, moon: crescent.inFrame(camera, o.w, o.h),
       camera: { utm: F.utm(p.pos[0], p.pos[2]), y: +p.pos[1].toFixed(2), eyeOverStand: +(p.pos[1] - stand(p.pos[0], p.pos[2])).toFixed(3), hfov: +camera.fov.toFixed(2), kind: p.kind, near: camera.near, far: camera.far },
       figures: figuresInFrame().filter((n) => n === p.stop),
       brightness: brightness(bytes), ms,

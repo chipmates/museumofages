@@ -6,7 +6,7 @@
   "phone": 44,
   "phoneFilm": 46
  },
- "endHour": "18:19",
+ "endHour": "19:07",
  "stops": [
   {
    "n": 1,
@@ -163,10 +163,10 @@
   },
   {
    "n": 14,
-   "id": "city-and-sky",
-   "name": "The city and the sky",
-   "hour": "18:14",
-   "stops": 1.2
+   "id": "crescent",
+   "name": "The river and the year's first crescent",
+   "hour": "19:07",
+   "stops": 2.1
   }
  ],
  "path": [
@@ -4501,158 +4501,116 @@
    "hold": true
   },
   {
-   "t": 541.03,
+   "t": 532.53,
    "at": [
-    445380,
-    3599700
+    445491.48,
+    3599839.84
    ],
-   "y": 170,
+   "y": "eye",
    "look": [
-    445800,
-    3600250,
-    0
+    445201.7,
+    3599917.49,
+    4.53
    ],
    "stop": 14,
-   "kind": "crane",
-   "say": "rises up and back, a crane, the one backward move (WALK stop 14)",
+   "kind": "walk",
+   "hfov": 58,
+   "shift": -0.05,
    "phone": {
     "hfov": 44,
-    "shift": -0.3
-   }
+    "shift": -0.25,
+    "look": [
+     445206.16,
+     3599932.55,
+     4.53
+    ]
+   },
+   "cut": true,
+   "hour": "18:13.5211",
+   "say": "cut: on the deck an hour later, the sun gone, the river and the young crescent ahead over the west bank"
   },
   {
+   "t": 538.03,
    "at": [
-    445368.57,
-    3599687.14
+    445485.51,
+    3599839.32
    ],
-   "y": 182.14,
+   "y": "eye",
    "look": [
-    445810.06,
-    3600265.67,
-    0.0
+    445195.73,
+    3599916.97,
+    4.55
    ],
    "stop": 14,
-   "kind": "crane",
-   "t": 542.46,
+   "kind": "walk",
+   "hfov": 58,
+   "shift": -0.05,
    "phone": {
-    "hfov": 44.0,
-    "shift": -0.3
-   }
+    "hfov": 44,
+    "shift": -0.25,
+    "look": [
+     445200.19,
+     3599932.03,
+     4.55
+    ]
+   },
+   "hold": true,
+   "say": "the hold: the crescent low over the west bank, a little right of the deck, the water under the sky's last light"
   },
   {
+   "t": 540.53,
    "at": [
-    445357.14,
-    3599674.29
+    445485.51,
+    3599839.32
    ],
-   "y": 194.29,
+   "y": "eye",
    "look": [
-    445820.09,
-    3600281.36,
-    0.0
+    445195.73,
+    3599916.97,
+    4.55
    ],
    "stop": 14,
-   "kind": "crane",
-   "t": 543.89,
+   "kind": "hold",
+   "hfov": 58,
+   "shift": -0.05,
    "phone": {
-    "hfov": 44.0,
-    "shift": -0.3
-   }
-  },
-  {
-   "at": [
-    445345.71,
-    3599661.43
-   ],
-   "y": 206.43,
-   "look": [
-    445830.11,
-    3600297.06,
-    0.0
-   ],
-   "stop": 14,
-   "kind": "crane",
-   "t": 545.32,
-   "phone": {
-    "hfov": 44.0,
-    "shift": -0.3
-   }
-  },
-  {
-   "at": [
-    445334.29,
-    3599648.57
-   ],
-   "y": 218.57,
-   "look": [
-    445840.11,
-    3600312.77,
-    0.0
-   ],
-   "stop": 14,
-   "kind": "crane",
-   "t": 546.74,
-   "phone": {
-    "hfov": 44.0,
-    "shift": -0.3
-   }
-  },
-  {
-   "at": [
-    445322.86,
-    3599635.71
-   ],
-   "y": 230.71,
-   "look": [
-    445850.09,
-    3600328.5,
-    0.0
-   ],
-   "stop": 14,
-   "kind": "crane",
-   "t": 548.17,
-   "phone": {
-    "hfov": 44.0,
-    "shift": -0.3
-   }
-  },
-  {
-   "at": [
-    445311.43,
-    3599622.86
-   ],
-   "y": 242.86,
-   "look": [
-    445860.06,
-    3600344.24,
-    0.0
-   ],
-   "stop": 14,
-   "kind": "crane",
-   "t": 549.6,
-   "phone": {
-    "hfov": 44.0,
-    "shift": -0.3
-   }
+    "hfov": 44,
+    "shift": -0.25,
+    "look": [
+     445200.19,
+     3599932.03,
+     4.55
+    ]
+   },
+   "hold": true,
+   "still": true
   },
   {
    "t": 551.03,
    "at": [
-    445300,
-    3599610
+    445485.51,
+    3599839.32
    ],
-   "y": 255,
+   "y": "eye",
    "look": [
-    445870,
-    3600360,
-    0
+    445195.73,
+    3599916.97,
+    4.55
    ],
    "stop": 14,
-   "kind": "crane",
-   "still": true,
+   "kind": "hold",
+   "hfov": 58,
+   "shift": -0.05,
    "phone": {
     "hfov": 44,
-    "shift": -0.3
-   }
+    "shift": -0.25,
+    "look": [
+     445200.19,
+     3599932.03,
+     4.55
+    ]
+   },
+   "hold": true
   }
  ],
  "only": {
