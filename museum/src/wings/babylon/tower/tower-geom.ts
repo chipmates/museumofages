@@ -296,7 +296,7 @@ export function sideStair(r: Ramp, o: SideStairOpts): { flight: BufferGeometry; 
   const rr = (r.y1 - r.y0) / N, tt = run / N
   const at = (s: number, v: number, y: number): number[] => [foot[0] + d[0] * s + n[0] * v, y, foot[1] + d[1] * s + n[1] * v]
   const ho = r.w / 2
-  const vIn = -o.outer * (ho + o.sink), vi = o.outer * (ho - o.wall), vo = o.outer * ho
+  const vIn = -o.outer * (ho + o.sink), vFace = -o.outer * ho, vi = o.outer * (ho - o.wall), vo = o.outer * ho
   const sEnd = run + o.landing
   const up = [0, 1, 0], back = [-d[0], 0, -d[1]], fwd = [d[0], 0, d[1]], out = [n[0] * o.outer, 0, n[1] * o.outer], inn = [-n[0] * o.outer, 0, -n[1] * o.outer]
   // the phase 0.31 the material reads as a tread's middle, held over the whole flight by a vanishing step rate
@@ -307,9 +307,11 @@ export function sideStair(r: Ramp, o: SideStairOpts): { flight: BufferGeometry; 
   for (let k = 0; k < N; k++) {
     const s = k * tt, y = r.y0 + k * rr
     fl.quadOut([at(s, vIn, k === 0 ? r.floor : y), at(s, vi, k === 0 ? r.floor : y), at(s, vi, y + rr), at(s, vIn, y + rr)], KIND.stair, fT, back)
-    fl.quadOut([at(s, vIn, y + rr), at(s, vi, y + rr), at(s + tt, vi, y + rr), at(s + tt, vIn, y + rr)], KIND.stair, fT, up)
+    // a tread level with the stage's top meets its face instead of running into it (no two planes on one level)
+    const e = k === N - 1 ? vFace : vIn
+    fl.quadOut([at(s, e, y + rr), at(s, vi, y + rr), at(s + tt, vi, y + rr), at(s + tt, e, y + rr)], KIND.stair, fT, up)
   }
-  fl.quadOut([at(run, vIn, r.y1), at(run, vi, r.y1), at(sEnd, vi, r.y1), at(sEnd, vIn, r.y1)], KIND.stair, fT, up)
+  fl.quadOut([at(run, vFace, r.y1), at(run, vi, r.y1), at(sEnd, vi, r.y1), at(sEnd, vFace, r.y1)], KIND.stair, fT, up)
   // the landing's end, down onto the middle flight
   const below = (v: number): number => { const p = at(sEnd, v, 0); return o.under(p[0]!, p[2]!) - 0.05 }
   fl.quadOut([at(sEnd, vIn, below(vIn)), at(sEnd, vi, below(vi)), at(sEnd, vi, r.y1), at(sEnd, vIn, r.y1)], KIND.cheek, f0, fwd)
@@ -565,7 +567,9 @@ export function buildTower(built: Built, mapPlan: J, tp: J): Tower {
     const st = sideStair(r, { riser: TT.stairs.riser, beyond: SS.beyond, wall: SS.wall, above: SS.above, outer, sink: SS.sink, ledge: SS.ledge, pitch: PN.pitch1, landing, under })
     bodies.push({ id: r.id, geometry: st.flight, band: r.band, letters: [r.plan, r.height] })
     bodies.push({ id: `${r.id}-wall-outer`, geometry: st.wall, band: r.band, letters: [r.plan, r.height] })
-    sideFacts[r.id] = { ...st.facts, landing: +landing.toFixed(3) }
+    // in the tower's own frame: out along the middle stair's axis, across it
+    const uv = (p: P2): number[] => [+dot(sub(p, centre), [-dM[0], -dM[1]]).toFixed(3), +dot(sub(p, centre), nM).toFixed(3)]
+    sideFacts[r.id] = { ...st.facts, landing: +landing.toFixed(3), footUV: uv(st.facts.foot), headUV: uv(st.facts.head), endUV: uv(st.facts.end), outerU: +(dot(sub(m, centre), [-dM[0], -dM[1]]) + r.w / 2).toFixed(3), clear: MS.clear }
   }
 
   const facts = {
