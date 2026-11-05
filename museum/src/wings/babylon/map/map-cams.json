@@ -2080,11 +2080,11 @@
    "shift": 0,
    "say": "down into House VI's court, eye 1.65 m over its paving, back in its north-west corner",
    "phone": {
-    "hfov": 50,
-    "shift": -0.36,
+    "hfov": 45.5,
+    "shift": -0.26,
     "look": [
-     446073.78,
-     3600427.48,
+     446073.72,
+     3600427.41,
      6.85
     ]
    }
@@ -2109,11 +2109,11 @@
    "hfov": 74,
    "shift": 0,
    "phone": {
-    "hfov": 50,
-    "shift": -0.36,
+    "hfov": 45.5,
+    "shift": -0.26,
     "look": [
-     446073.78,
-     3600427.48,
+     446073.72,
+     3600427.41,
      6.85
     ]
    }
@@ -2137,11 +2137,11 @@
    "hfov": 74,
    "shift": 0,
    "phone": {
-    "hfov": 50,
-    "shift": -0.36,
+    "hfov": 45.5,
+    "shift": -0.26,
     "look": [
-     446073.78,
-     3600427.48,
+     446073.72,
+     3600427.41,
      6.85
     ]
    }

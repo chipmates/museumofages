@@ -437,7 +437,7 @@ function courtDoors(hp: J): CourtDoor[] {
 export function houseConstruction(hp: J, f: Frame): Array<{ id: string; geometry: BufferGeometry }> {
   const Bd = hp.build, L = hp.levels
   const fl: number = L.floor, head: number = L.doorHead, top: number = L.top, pt: number = hp.outline.parapet
-  const R = rng(Bd.seed)
+  const R = rng(Bd.seed), R2 = rng(Bd.seed + 1)
   const parts: Array<{ id: string; geometry: BufferGeometry }> = []
 
   /* the roof's edge over each court, a drip course a little proud of the wall, and the parapet's rounded mud cap */
@@ -481,14 +481,42 @@ export function houseConstruction(hp: J, f: Frame): Array<{ id: string; geometry
     const P = (s: number, y: number, t: number): V3 => { const [u, v] = d.map(s, t); return [u, y, v] }
     const N = (ns: number, ny: number, nt: number): V3 => { const [u, v] = d.dir(ns, nt); return [u, ny, v] }
     const s0 = d.s[0], s1 = d.s[1], D = d.depth
-    // poles side by side through the wall's depth, the first and last a little proud of its faces
+    // poles side by side through the wall's depth, the first and last a little proud of its faces; a hand's width past
+    // each jamb the wall's plaster laps over those two, so their bearing ends lie inside the wall, not on its face
     const r0 = LT.d / 2, first = r0 - LT.proud, last = D - r0 + LT.proud
     const nL = Math.max(2, Math.round((last - first) / LT.d) + 1)
     for (let k = 0; k < nL; k++) {
       const t = first + ((last - first) * k) / (nL - 1)
       const r = r0 * (0.9 + 0.2 * R()), yc = head - 0.02 + r + 0.01 * (R() - 0.5)
       const ends = k === 0 || k === nL - 1
-      lintels.cyl(P(s0 - LT.bear - 0.05 * R(), yc, t), P(s1 + LT.bear + 0.05 * R(), yc + 0.012 * (R() - 0.5), t), r, 16, Z.wood, { caps: [ends, ends], phase: R() * 6.28, rb: r * (0.9 + 0.12 * R()) })
+      const e0 = s0 - LT.bear - 0.05 * R(), e1 = s1 + LT.bear + 0.05 * R(), y1 = yc + 0.012 * (R() - 0.5), ph = R() * 6.28, rEnd = r * (0.9 + 0.12 * R())
+      if (!ends) { lintels.cyl(P(e0, yc, t), P(e1, y1, t), r, 16, Z.wood, { caps: [false, false], phase: ph, rb: rEnd }); continue }
+      const at = (q: number): number => (q - e0) / (e1 - e0)
+      const m0 = s0 - LT.enter * (0.8 + 0.4 * R2()), m1 = s1 + LT.enter * (0.8 + 0.4 * R2())
+      const ya = yc + (y1 - yc) * at(m0 + 0.008), yb = yc + (y1 - yc) * at(m1 - 0.008)
+      const ra = r + (rEnd - r) * at(m0), rb = r + (rEnd - r) * at(m1)
+      lintels.cyl(P(m0 + 0.008, ya, t), P(m1 - 0.008, yb, t), ra, 16, Z.wood, { caps: [true, true], phase: ph, rb })
+      // the lap: from a skin just over the pole back onto the wall's face, its proud part easing out over LT.lap
+      const faceT = k === 0 ? 0 : D, out = k === 0 ? -1 : 1, dist = Math.abs(t - faceT)
+      for (const [sm, dir, rr, yy] of [[m0, -1, ra, ya], [m1, 1, rb, yb]] as Array<[number, number, number, number]>) {
+        const rl = rr + 0.003
+        if (rl <= dist) continue
+        const fm = Math.acos(dist / rl), nf = 6, np = 10
+        const at3 = (f: number, a: number): V3 => {
+          const g = f * f * (3 - 2 * f)
+          return P(sm + dir * f * LT.lap, yy + rl * Math.sin(a), faceT + (t + out * rl * Math.cos(a) - faceT) * (1 - g))
+        }
+        const nrm = (f: number, a: number): V3 => {
+          const df = v3sub(at3(Math.min(1, f + 0.01), a), at3(Math.max(0, f - 0.01), a)), da = v3sub(at3(f, a + 0.01), at3(f, a - 0.01))
+          const c = v3norm(v3cross(df, da)), o = N(0, 0, out)
+          return c[0] * o[0] + c[1] * o[1] + c[2] * o[2] >= 0 ? c : [-c[0], -c[1], -c[2]]
+        }
+        const grid = (i: number, j: number): [number, number] => [i / nf, -fm + (2 * fm * j) / np]
+        for (let i = 0; i < nf; i++) for (let j = 0; j < np; j++) {
+          const q = [grid(i, j), grid(i + 1, j), grid(i + 1, j + 1), grid(i, j + 1)]
+          lintels.quad(q.map(([f, a]) => at3(f, a)), q.map(([f, a]) => nrm(f, a)), k === 0 ? Z.court : Z.room, q.map(([f, a]) => [f, a] as [number, number]))
+        }
+      }
     }
     // the sill: a course of baked bricks the opening's width and the wall's depth, proud of both faces
     const sh = SL.rise, so = SL.out, ch = 0.012
