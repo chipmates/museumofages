@@ -609,9 +609,16 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
     return Math.max(y0, lo) + BAND
   }
   for (const p of prisms) p.band = bandFor(p.poly, p.y0)
+  // a body standing on another body's top (a range's rooms on its floor, a deck sunk 0.1 m into it) keeps its foot
+  // even where the ground at a corner rises past that top: sunk, its sides would lie in the lower body's side planes
+  const onBody = (p: Prism): boolean => {
+    const c = centroid(p.poly)
+    return prisms.some((q) => q !== p && q.y0 < p.y0 && q.y1 >= p.y0 && q.y1 <= p.y0 + 0.15 && pointInPoly(c, q.poly) && !q.holes.some((h) => pointInPoly(c, h)))
+  }
+  const standing = new Set(prisms.filter(onBody))
   // a body standing on the ground (not on another body) reaches down under every corner, so no slope shows a gap under it
   for (const p of prisms) {
-    if (p.band === p.y0 - 1) continue
+    if (p.band === p.y0 - 1 || standing.has(p)) continue
     let lo = Infinity, hi = -Infinity
     for (const q of p.poly) { const g = ground(q[0], q[1]); lo = Math.min(lo, g); hi = Math.max(hi, g) }
     if (p.y0 <= hi + 0.5) p.y0 = Math.min(p.y0, lo - 0.3)
