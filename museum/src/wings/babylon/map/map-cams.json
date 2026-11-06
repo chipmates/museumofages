@@ -3375,7 +3375,7 @@
    "hour": "17:54.75"
   },
   {
-   "t": 355.03,
+   "t": 347.56,
    "at": [
     445660.0,
     3599870.0
@@ -3389,11 +3389,12 @@
    "stop": 12,
    "kind": "fly",
    "hold": true,
-   "say": "on the street where Esagila was seen, turning east along the precinct's south rooms",
+   "say": "cut: on the street where Esagila was seen, turning east along the precinct's south rooms",
    "phone": {
     "hfov": 46.0,
     "shift": 0.0
-   }
+   },
+   "cut": true
   },
   {
    "t": 357.03,
@@ -3932,6 +3933,30 @@
    "hour": "14:00"
   },
   {
+   "t": 441.0,
+   "at": [
+    445616.81,
+    3600023.72
+   ],
+   "y": 84.0,
+   "look": [
+    445219.79,
+    3600072.47,
+    82.0
+   ],
+   "stop": 12,
+   "kind": "fly",
+   "hold": true,
+   "hfov": 62.0,
+   "shift": 0.0,
+   "say": "the hold on the top's west side, then the cut",
+   "phone": {
+    "hfov": 46.0,
+    "shift": 0.0
+   },
+   "hour": "14:00"
+  },
+  {
    "t": 441.03,
    "at": [
     445623.09,
@@ -3957,8 +3982,9 @@
     "shift": -0.5
    },
    "hour": "18:05",
-   "say": "on the top's platform at its west corner: the street north to the double gate, the river west",
-   "stop": 15
+   "say": "cut: on the top's platform at its west corner: the street north to the double gate, the river west",
+   "stop": 15,
+   "cut": true
   },
   {
    "t": 446.03,

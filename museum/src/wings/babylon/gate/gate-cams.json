@@ -388,7 +388,7 @@
           "t": 139,
           "at": [
             0,
-            7.5
+            -10.5
           ],
           "look": [
             0,
@@ -399,7 +399,9 @@
           "phone": {
             "hfov": 58,
             "shift": 0
-          }
+          },
+          "cut": true,
+          "says": "cut: at the front gate's south mouth, the court and the main gate's north door ahead"
         },
         {
           "t": 175,

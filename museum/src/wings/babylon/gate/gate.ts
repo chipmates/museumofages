@@ -512,10 +512,11 @@ const pathCams = {
     else if (k.look === 'south') look = [south[0], 1.65, south[1]]
     else look = [k.look[0], k.look[1], k.look[2]]
     const [lE, lN] = GF.utm(look[0], look[2])
-    // a stop's first key repeats the last stop's last key at the same second, so each stop starts at its own key; a key
-    // may hold the clock at its own `hour`, else the walk's first key takes the arrival's landing hour
+    // a stop's first key repeats the last stop's last key at the same second (or cuts to its own stand), so each stop
+    // starts at its own key; a key may hold the clock at its own `hour`, else the walk's first key takes the arrival's
+    // landing hour
     const first = s === cams.stops[0] && i === 0
-    return { t: k.t + (i === 0 && !first ? 1e-4 : 0), at: [E, N], y: 'eye', look: [lE, lN, look[1] + L0], stop: s.n, hold: k.kind === 'hold' || i === 0, kind: k.kind, cut: false, ...(k.phone ? { phone: phoneKey(k.phone) } : {}), ...(k.desktop ? { hfov: k.desktop.hfov, shift: k.desktop.shift } : {}), ...(k.hour ? { hour: k.hour } : first ? { hour: openCams.hour } : {}) }
+    return { t: k.t + (i === 0 && !first ? 1e-4 : 0), at: [E, N], y: 'eye', look: [lE, lN, look[1] + L0], stop: s.n, hold: k.kind === 'hold' || i === 0, kind: k.kind, cut: !!k.cut, ...(k.phone ? { phone: phoneKey(k.phone) } : {}), ...(k.desktop ? { hfov: k.desktop.hfov, shift: k.desktop.shift } : {}), ...(k.hour ? { hour: k.hour } : first ? { hour: openCams.hour } : {}) }
   })),
 }
 const standMap = (x: number, z: number): number => {
