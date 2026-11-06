@@ -583,12 +583,18 @@ export function subPixel(faces, cameras, { runPx = 4, facing = 0.15, thickCap = 
     const u = (d11 * d02 - d01 * d12) * inv, w = (d00 * d12 - d01 * d02) * inv
     return u >= -1e-6 && w >= -1e-6 && u + w <= 1 + 1e-6 && Math.abs(p.clone().sub(a).dot(f.n)) < 2e-4
   }
+  // a thin face's normal from float32 corners far out is off by up to 1e-4, which moves its offset d by millimetres, so
+  // the rounded key can split one plane; across the shared long edge the neighbour's plane is measured at the thin
+  // face's own far corner instead: within 0.5 mm, about four float32 half-steps of a corner at the pages' 2 km
+  const FLAT_M = 5e-4
+  const flatOn = (g, top) => Math.abs(top.clone().sub(g.v[0]).dot(g.n)) < FLAT_M
   const goesOn = (f, foot, top, along) => {
     const across = edges.get(ekey(along[0], along[1])) ?? []
     // a neighbour turned up to 30 degrees continues a curved surface; a neighbour in the same plane only counts where
     // the probe lands in it, so a thin quad split on its diagonal is not taken for a sliver of a larger plane
     if (across.some((g) => g !== f && g.body === f.body && g.n.dot(f.n) > 0.866 && g.n.dot(f.n) < 0.99999)) return true
     const probe = along[0].clone().add(along[1]).multiplyScalar(0.5).addScaledVector(foot.clone().sub(top).normalize(), 0.002)
+    if (across.some((g) => g !== f && flatOn(g, top) && inTri(probe, g))) return true
     return (planes.get(pkey(f)) ?? []).some((g) => g !== f && inTri(probe, g))
   }
   let slivers = 0
