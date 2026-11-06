@@ -576,6 +576,71 @@ linear = createOpenLinear(renderer, scene, camera, L.AIR, { ao: { on: q.get('ao'
 /** the print for the camera where it stands, with extra stops (the brighter state) */
 const printNow = (stops = 0) => L.printFor(camera.position.y, L.stopsAt(camera.position.y) + stops)
 
+/** the eye's adaptation inside the gate (gate-plan.json light.adapt); `?adapt=0` prints without it */
+interface Adapt { contrast: number; mid: number; cap: number; radius: number; eps: number }
+const AD = plan.light.adapt
+const ADAPT: Adapt = { ...AD, contrast: Number(q.get('adaptC') ?? AD.contrast), eps: Number(q.get('adaptEps') ?? AD.eps) }
+/** how far in the camera stands: 0 outside the gate, 1 between its front face (z 0) and its south mouth, soft over
+    `edge` metres (outside, inside) at both ends; the open court between the gates is shade between high walls */
+function adaptHere(): number {
+  const p = camera.position.clone().applyMatrix4(W2G)
+  const d = Math.min(-p.z, p.z - zMS), [e0, e1] = AD.edge as [number, number]
+  const t = Math.min(Math.max((d - e0) / (e1 - e0), 0), 1)
+  const under = p.y - B.level(p.z) < FG.wallTop.value && Math.abs(p.x) < MG.across / 2 ? 1 : 0
+  return t * t * (3 - 2 * t) * under * Number(q.get('adapt') ?? 1)
+}
+/* local-exposure:start (a pure function: the test lifts it out and runs it) */
+function localExposure(rgb: Float32Array, w: number, h: number, exposure: number, o: Adapt, k: number): Float32Array {
+  if (!(k > 0)) return rgb
+  const LR = 0.2126, LG = 0.7152, LB = 0.0722
+  const lum = (i: number): number => (rgb[i]! * LR + rgb[i + 1]! * LG + rgb[i + 2]! * LB) * exposure
+  // the guide: log2 luminance, and its mean over f x f blocks (the filter's coefficients are found on that grid)
+  const f = 4, gw = Math.ceil(w / f), gh = Math.ceil(h / f), n = gw * gh
+  const I = new Float32Array(w * h), sum = new Float32Array(n), cnt = new Float32Array(n)
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const p = y * w + x, v = Math.log2(Math.max(lum(p * 3), 1e-5)), g = ((y / f) | 0) * gw + ((x / f) | 0)
+      I[p] = v
+      sum[g]! += v
+      cnt[g]! += 1
+    }
+  }
+  const r = Math.max(1, Math.round((o.radius * Math.min(w, h)) / f))
+  // the mean over the window inside the grid, rows then columns (the clipped window is a product of clipped spans)
+  const box = (src: Float32Array): Float32Array => {
+    const tmp = new Float32Array(n), out = new Float32Array(n), pre = new Float64Array(Math.max(gw, gh) + 1)
+    for (let y = 0; y < gh; y++) {
+      for (let x = 0; x < gw; x++) pre[x + 1] = pre[x]! + src[y * gw + x]!
+      for (let x = 0; x < gw; x++) { const a = Math.max(x - r, 0), b = Math.min(x + r + 1, gw); tmp[y * gw + x] = (pre[b]! - pre[a]!) / (b - a) }
+    }
+    for (let x = 0; x < gw; x++) {
+      for (let y = 0; y < gh; y++) pre[y + 1] = pre[y]! + tmp[y * gw + x]!
+      for (let y = 0; y < gh; y++) { const a = Math.max(y - r, 0), b = Math.min(y + r + 1, gh); out[y * gw + x] = (pre[b]! - pre[a]!) / (b - a) }
+    }
+    return out
+  }
+  const Is = new Float32Array(n), Is2 = new Float32Array(n)
+  for (let g = 0; g < n; g++) { Is[g] = sum[g]! / cnt[g]!; Is2[g] = Is[g]! * Is[g]! }
+  const m = box(Is), m2 = box(Is2), ca = new Float32Array(n), cb = new Float32Array(n)
+  for (let g = 0; g < n; g++) { const v = Math.max(m2[g]! - m[g]! * m[g]!, 0); ca[g] = v / (v + o.eps); cb[g] = m[g]! - ca[g]! * m[g]! }
+  const A = box(ca), Bc = box(cb)
+  const out = new Float32Array(rgb.length), top = Math.log2(o.mid), share1 = k * (1 - o.contrast)
+  for (let y = 0; y < h; y++) {
+    const fy = Math.min(Math.max((y - (f - 1) / 2) / f, 0), gh - 1), y0 = Math.floor(fy), y1 = Math.min(y0 + 1, gh - 1), ty = fy - y0
+    for (let x = 0; x < w; x++) {
+      const fx = Math.min(Math.max((x - (f - 1) / 2) / f, 0), gw - 1), x0 = Math.floor(fx), x1 = Math.min(x0 + 1, gw - 1), tx = fx - x0
+      const at = (G: Float32Array): number => (G[y0 * gw + x0]! * (1 - tx) + G[y0 * gw + x1]! * tx) * (1 - ty) + (G[y1 * gw + x0]! * (1 - tx) + G[y1 * gw + x1]! * tx) * ty
+      const p = y * w + x, B = at(A) * I[p]! + at(Bc)
+      const s = Math.pow(2, Math.min(share1 * Math.max(top - B, 0), o.cap))
+      out[p * 3] = rgb[p * 3]! * s
+      out[p * 3 + 1] = rgb[p * 3 + 1]! * s
+      out[p * 3 + 2] = rgb[p * 3 + 2]! * s
+    }
+  }
+  return out
+}
+/* local-exposure:end */
+
 const putBase = q.get('put') ?? ''
 async function upload(file: string, bytes: Uint8Array | string): Promise<void> {
   const res = await fetch(`${putBase}?path=${encodeURIComponent(file)}`, { method: 'POST', body: bytes as BodyInit })
@@ -610,7 +675,7 @@ function brightness(bytes: Uint8ClampedArray, box?: [number, number, number, num
 interface ReadBack { subFrames: number; target: { width: number; height: number; type: string; format: string; samples: number; depthBuffer: boolean } | null }
 const TYPE_NAMES: Record<number, string> = { 1015: 'FloatType', 1016: 'HalfFloatType', 1009: 'UnsignedByteType' }
 const FORMAT_NAMES: Record<number, string> = { 1023: 'RGBAFormat', 1022: 'RGBFormat' }
-async function render(w: number, h: number, samples: number, stops = 0): Promise<{ bytes: Uint8ClampedArray; rgb: Float32Array; ms: number; readBack: ReadBack }> {
+async function render(w: number, h: number, samples: number, stops = 0): Promise<{ bytes: Uint8ClampedArray; rgb: Float32Array; ms: number; readBack: ReadBack; adapt: { k: number } }> {
   const t = performance.now()
   const readBack: ReadBack = { subFrames: 0, target: null }
   const read = renderer.readRenderTargetPixelsAsync.bind(renderer)
@@ -628,8 +693,10 @@ async function render(w: number, h: number, samples: number, stops = 0): Promise
   } finally {
     renderer.readRenderTargetPixelsAsync = read
   }
-  const bytes = printFrame(rgb, w, h, printNow(stops), 0)
-  return { bytes, rgb, ms: Math.round(performance.now() - t), readBack }
+  const print = printNow(stops)
+  const k = adaptHere()
+  const bytes = printFrame(localExposure(rgb, w, h, print.exposure, ADAPT, k), w, h, print, 0)
+  return { bytes, rgb, ms: Math.round(performance.now() - t), readBack, adapt: { k: +k.toFixed(4) } }
 }
 
 /** a world point (gate frame) to device pixels for the current camera */
@@ -698,7 +765,7 @@ const rig = {
     const v = stillView(o.framing, o.stop)
     if (o.look) aimTrial(o.look, o.w, o.h)
     else aimView(v, o.w, o.h)
-    const { bytes, ms, readBack } = await render(o.w, o.h, o.samples, o.stops ?? 0)
+    const { bytes, ms, readBack, adapt } = await render(o.w, o.h, o.samples, o.stops ?? 0)
     const file = `${o.out}/${o.name}.png`
     await upload(file, await toPNG(bytes, o.w, o.h))
     const s = L.sunAt(hourOf(hour))
@@ -706,7 +773,7 @@ const rig = {
       file, framing: o.framing, stop: o.stop ?? null, state: ['grey', 'flat', 'full'][U.uState.value as number], switch: !!U.uSwitch.value,
       cssSize: o.css, devicePixels: [o.w, o.h], ratio: +(o.w / o.css[0]).toFixed(3), subFramesAsked: o.samples, subFrames: readBack.subFrames,
       renderTarget: readBack.target, sampleCountReadBack: readBack.target?.samples ?? null,
-      backend: stack.backend, adapter: stack.architecture, print: printNow(o.stops ?? 0),
+      backend: stack.backend, adapter: stack.architecture, print: printNow(o.stops ?? 0), adapt,
       hour, sun: { azimuth: +s.azimuth.toFixed(1), elevation: +s.elevation.toFixed(1), toward: sunG(hourOf(hour)).map((x) => +x.toFixed(3)), source: 'map/sun.ts' },
       env: { intensity: scene.environmentIntensity, bounce: L.uBounce.value, sunIntensity: L.sunLight.intensity, eastWalls: [(L.uWalls.value as Color).r, (L.uWalls.value as Color).g, (L.uWalls.value as Color).b].map((v) => +v.toFixed(4)), air: { sigma: L.AIR.uSigma.value, scale: L.AIR.uScale.value, on: L.AIR.uOn.value } },
       camera: o.look ? { gate: o.look } : { gate: { pos: v.pos.map((x) => +x.toFixed(3)), look: v.look }, utm: GF.utm(v.pos[0], v.pos[2]).map((x) => +x.toFixed(2)), eyeOverStreet: +(v.pos[1] - B.level(v.pos[2])).toFixed(3), hfov: v.hfov, vfov: +camera.fov.toFixed(3), shift: shiftNow, near: camera.near, far: camera.far },
@@ -733,11 +800,11 @@ const rig = {
       // the phone on its own stand and look where its keys name one (path.ts), else the desktop's
       const at = o.framing === 'phone' ? p.phone.pos : p.pos, toward = o.framing === 'phone' ? p.phone.look : p.look
       aimWorld(new Vector3(...(at as MV3)), new Vector3(...(toward as MV3)), vfov, o.w, o.h, shift)
-      const { bytes } = await render(o.w, o.h, o.samples, 0)
+      const { bytes, adapt } = await render(o.w, o.h, o.samples, 0)
       const g = Math.round(time * o.fps)
       await upload(`${o.out}/${o.framing ?? 'desktop'}-f${String(g).padStart(5, '0')}.jpg`, await jpeg(bytes, o.w, o.h))
       const pg = new Vector3(...(at as MV3)).applyMatrix4(W2G), lg = new Vector3(...(toward as MV3)).applyMatrix4(W2G)
-      log.push({ i: g, t: +time.toFixed(3), stop: p.stop, kind: p.kind, gate: [+pg.x.toFixed(2), +pg.y.toFixed(2), +pg.z.toFixed(2)], look: [+lg.x.toFixed(2), +lg.y.toFixed(2), +lg.z.toFixed(2)], eyeOverStreet: +(pg.y - B.level(pg.z)).toFixed(3), hour: +p.hour.toFixed(3), hfov: +hfov.toFixed(3), shift: +shift.toFixed(4) })
+      log.push({ i: g, t: +time.toFixed(3), stop: p.stop, kind: p.kind, adapt, gate: [+pg.x.toFixed(2), +pg.y.toFixed(2), +pg.z.toFixed(2)], look: [+lg.x.toFixed(2), +lg.y.toFixed(2), +lg.z.toFixed(2)], eyeOverStreet: +(pg.y - B.level(pg.z)).toFixed(3), hour: +p.hour.toFixed(3), hfov: +hfov.toFixed(3), shift: +shift.toFixed(4) })
     }
     await upload(`${o.out}/${o.framing ?? 'desktop'}-frames-${String(Math.round(from * o.fps)).padStart(5, '0')}.json`, JSON.stringify({ fps: o.fps, w: o.w, h: o.h, samples: o.samples, from, to, frames: log }))
     return { frames: n, ms: Math.round(performance.now() - t) }
