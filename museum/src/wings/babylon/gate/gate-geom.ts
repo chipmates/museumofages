@@ -510,7 +510,8 @@ export function buildGate(plan: J): Built {
       // the two never share that plane
       const out = isTower ? outer : outer - s * 0.012
       const ring: P2[] = [fromST(s0 - (k > 0 ? 0.3 : 0), back), fromST(s1, back), fromST(s1, out), fromST(s0 - (k > 0 ? 0.3 : 0), out)]
-      prisms.push({ id: `lion-${side}-${k}`, part: 'lion walls', poly: s > 0 ? ring : ring.reverse(), y0: Math.min(level(fromST(s1, inner)[1]), lv) - 3, y1, surf: 'brick', plan: 'M', height: 'G', band: band(lv), rTop: friezeY + 23 * C, frieze: friezeY })
+      // the outer face stands over the moat's falling bank, up to 5.3 m under the street at the piece's low end
+      prisms.push({ id: `lion-${side}-${k}`, part: 'lion walls', poly: s > 0 ? ring : ring.reverse(), y0: Math.min(level(fromST(s1, inner)[1]), lv) - 6, y1, surf: 'brick', plan: 'M', height: 'G', band: band(lv), rTop: friezeY + 23 * C, frieze: friezeY })
       const [ox, oz] = fromST(s > 0 ? s0 : s1, faceT)
       const ud: V3 = s > 0 ? [sd[0], 0, sd[1]] : [-sd[0], 0, -sd[1]]
       const n: V3 = [-s * st[0], 0, -s * st[1]]
