@@ -29,7 +29,10 @@ function phoneStill(s) {
 
 test('gate.ts hands the keys their phone lens and films the phone with it', () => {
   assert.match(src, /phoneFilm: cams\.phoneFilm/)
-  assert.match(src, /\.\.\.\(k\.phone \? \{ phone: k\.phone \} : \{\}\)/)
+  // the phone's keys as they are, its own stand (`phone.at`) turned into the path's frame as a key's own `at`
+  assert.match(src, /\.\.\.\(k\.phone \? \{ phone: phoneKey\(k\.phone\) \} : \{\}\)/)
+  assert.match(src, /const phoneKey = \(ph: J\): J => \(ph\.at \? \{ \.\.\.ph, at: GF\.utm\(\.\.\.keyAt\(ph\.at\)\) \} : ph\)/)
+  assert.match(src, /const at = o\.framing === 'phone' \? p\.phone\.pos : p\.pos, toward = o\.framing === 'phone' \? p\.phone\.look : p\.look/)
   assert.match(src, /const hfov = o\.framing === 'phone' \? p\.phone\.hfov : p\.hfov/)
   assert.match(src, /const shift = o\.framing === 'phone' \? p\.phone\.shift : p\.shift/)
   assert.doesNotMatch(src, /framing === 'phone' \? 46/)

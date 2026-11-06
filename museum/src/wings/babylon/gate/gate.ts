@@ -30,7 +30,7 @@ import { buildGate, gateFrame, hourOf, type V3 } from './gate-geom'
 import { animalField } from './gate-relief'
 import { assemble, panelGrid } from './gate-mesh'
 import { birdsGeometry, palmsGeometry } from './gate-life'
-import { bakePanel, lifeMaterial, makeUniforms, panelMaterial, pavingMaterial, wallMaterial, C as COURSE, type Rooms } from './gate-mat'
+import { bakePanel, lifeMaterial, makeUniforms, panelMaterial, pavingMaterial, pavingMean, processionLine, streetsideEarth, uMouth, wallMaterial, C as COURSE, type LinePoint, type Rooms } from './gate-mat'
 import { isLetter, recordNamer, type ClassFile, type Letter, type Pieces } from '../record'
 import { NO_ROWS, bodyTones, panelTones, pavingTones, toneGateWalls, toneMapBodies } from '../record-tones'
 
@@ -128,41 +128,88 @@ say('building the city and the gate')
 const tones = tonesFrom(cityPlan)
 const band = Number(mapPlan.classes.band)
 const bodies = buildBodies(city, tones, sky, L.AIR.uSun, canalZ, undefined, { houses: { rebuild: rebuildHouses, band } })
-/* the city round the gate in the map page's own materials (map/city.ts), so the street south of the gate is the next stop's */
 const lion = mapPlan.frames.lion
-paintCity(bodies.group, city, tones, { band, street: { o: MF.s(lion.origin[0], lion.origin[1]), a: MF.dir(lion.bearing), c: MF.dir(lion.bearing + 90), pavedTo: NORTH_PAVED.a1 } })
 painted.push(toneMapBodies(bodies.group, city, named))
 scene.add(bodies.group)
 uView.value = U.uSwitch.value
 
 /* the south paving's line (built below the gate's paving): from the paving's end, where the map's street line leaves the
-   gate's axis, through the map's street points (its ribbon south of the gate) on a Catmull-Rom curve, sampled every 2 m,
-   to the palace's south-east corner */
+   gate's axis, through the map's street points (its ribbon south of the gate) on an even spline (gate-mat.ts
+   processionLine: straight where the points allow within 0.35 m, sampled every 2 m) past the palace's south-east corner
+   to the canal bridge, the last point the record gives before the washed-away stretch */
 const PAVE_END = -60 // the gate's paving's south edge (gate-mesh.ts pavingGeometry)
+/** the paving's colour as a hue (luminance 1): the warm bounce of the city's fronts and of the open street */
+const PAVE_HUE = ((): [number, number, number] => {
+  const c = plan.light.bounce.paving.colour as [number, number, number], l = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
+  return [c[0] / l, c[1] / l, c[2] / l]
+})()
 const SOUTH = (() => {
   const half = (plan.street.paving.limestone * plan.street.paving.limestoneN) / 2 + plan.street.paving.breccia * plan.street.paving.brecciaN
-  const ctl: Array<[number, number, number]> = [[0, PAVE_END + 20, B.level(PAVE_END)], [0, PAVE_END, B.level(PAVE_END)]]
-  // the map's points past the paving's end (its point at the end is ctl[1]: a run on the axis past it bent the paving in an S)
-  for (const p of mapPlan.street.points as Array<{ at: [number, number]; level: number }>) {
+  // the lead point on the axis steers the start along it (the paving's slabs run on from the gate's)
+  const pts: LinePoint[] = [[0, PAVE_END + 20, B.level(PAVE_END)], [0, PAVE_END, B.level(PAVE_END)]]
+  const cls: string[] = []
+  // the map's points past the paving's end (its point at the end is pts[1]: a run on the axis past it bent the paving in an S)
+  for (const p of mapPlan.street.points as Array<{ at: [number, number]; level: number; cls: string }>) {
     const [x, z] = GF.fromUtm(p.at[0], p.at[1])
-    if (z < PAVE_END - 0.5 && z > -230) ctl.push([x, z, p.level - L0])
+    if (z < PAVE_END - 0.5 && z > -260) { pts.push([x, z, p.level - L0]); cls.push(p.cls) }
   }
-  ctl.push(ctl[ctl.length - 1]!.map((v, i) => 2 * v - ctl[ctl.length - 2]![i]!) as [number, number, number])
-  const cr = (a: number, b: number, c: number, d: number, t: number): number =>
-    0.5 * (2 * b + (c - a) * t + (2 * a - 5 * b + 4 * c - d) * t * t + (3 * b - a - 3 * c + d) * t * t * t)
-  const line: Array<[number, number, number]> = []
-  for (let i = 1; i + 2 < ctl.length; i++) {
-    const [a, b, c, d] = [ctl[i - 1]!, ctl[i]!, ctl[i + 1]!, ctl[i + 2]!]
-    const k = Math.max(1, Math.round(Math.hypot(c[0] - b[0], c[1] - b[1]) / 2))
-    for (let j = 0; j < k; j++) {
-      const t = j / k
-      // the level runs straight between the map's points, as its ribbon does
-      line.push([cr(a[0], b[0], c[0], d[0], t), cr(a[1], b[1], c[1], d[1], t), b[2] + (c[2] - b[2]) * t])
-    }
-  }
-  line.push(ctl[ctl.length - 2]!)
-  return { half, line, zEnd: line[line.length - 1]![1] }
+  const line = processionLine(pts, 0.35, 2)
+  // the stretch after the last point the record holds (R or M) is the record's guess (G): its own class in the switch
+  let zKnown = PAVE_END
+  pts.slice(2).forEach((p, i) => { if (cls[i] !== 'G') zKnown = p[1] })
+  return { half, line, zEnd: line[line.length - 1]![1], zKnown }
 })()
+/* the city round the gate in the map page's own materials (map/city.ts), so the street south of the gate is the next
+   stop's; the ground beside the processional way south of the gate as beaten earth at a walker's scale (gate-mat.ts
+   streetsideEarth): within 45 m of the axis, fading out by 80 m; the class view keeps the map's grey */
+const earthAt = (): { p: N; xs: N; w: N } => {
+  const p = uW2G.mul(vec4(positionWorld, 1)).xyz
+  // the street's centre at the point's z: the south line every 20 m, straight between (it bends at most 11 m off the axis)
+  const L = SOUTH.line, nodes = L.filter((_, i) => i % 10 === 0 || i === L.length - 1)
+  let xs: N = float(nodes[0]![0])
+  for (let i = 0; i + 1 < nodes.length; i++) {
+    const [x0, z0] = nodes[i]!, [x1, z1] = nodes[i + 1]!
+    xs = xs.add(TSL.clamp(float(z0).sub(p.z).div(z0 - z1), 0, 1).mul(x1 - x0))
+  }
+  const w = step(p.z, -47.5).mul(float(1).sub(smoothstep(45, 80, abs(p.x.sub(xs))))).mul(smoothstep(-330, -300, p.z)).mul(float(1).sub(uView))
+  return { p, xs, w }
+}
+const earthOn = (base: N): N => {
+  const e = earthAt(), pv = plan.street.paving
+  return mix(base, streetsideEarth(U, e.p, (pv.limestone * pv.limestoneN) / 2 + pv.breccia * pv.brecciaN, e.xs), e.w)
+}
+paintCity(bodies.group, city, tones, { band, ...(q.get('earth') === '0' ? {} : { ground: earthOn }), street: { o: MF.s(lion.origin[0], lion.origin[1]), a: MF.dir(lion.bearing), c: MF.dir(lion.bearing + 90), pavedTo: NORTH_PAVED.a1 } })
+/* the city's ground and street take back the sky the houses and the palace hide in the light those fronts give: mud brick
+   in shade lit by about half the sky, the west fronts in sun (the field's give-back is otherwise the sky's own blue) */
+const uCityBack = uniform(Number(q.get('gBack') ?? 0.3))
+for (const name of ['ground', 'street']) {
+  const mat = (bodies.group.getObjectByName(name) as Mesh | undefined)?.material as (MeshStandardNodeMaterial & { skyBounceNode?: N }) | undefined
+  if (mat) mat.skyBounceNode = vec3(...PAVE_HUE).mul(uCityBack)
+}
+/* past the canal bridge the record holds no point and the gate's paving stops, but the street ran on: the map's ribbon
+   there takes the paving's far look (pavingMean), its centre on toward the map's next point; its class stays the map's */
+{
+  const sm = (bodies.group.getObjectByName('street') as Mesh | undefined)?.material as MeshStandardNodeMaterial | undefined
+  const [ex, ez] = SOUTH.line[SOUTH.line.length - 1]!
+  const next = (mapPlan.street.points as Array<{ at: [number, number] }>).map((p) => GF.fromUtm(p.at[0], p.at[1])).find(([, z]) => z < ez - 1)
+  if (sm && next && q.get('ribbon') !== '0') {
+    const p = uW2G.mul(vec4(positionWorld, 1)).xyz
+    const xs = float(ex).add(p.z.sub(ez).mul((next[0] - ex) / (next[1] - ez)))
+    const past = smoothstep(ez + 0.5, ez - 0.5, p.z)
+    const pm = pavingMean(plan.street.paving, p.z.negate(), p.x.sub(xs))
+    // the grey state as the paving's own (its grey 0.6), so a grey test of both reads their light alone
+    sm.colorNode = mix(sm.colorNode, TSL.select(U.uState.lessThan(0.5), vec3(0.6), pm.col), past.mul(float(1).sub(uView)))
+    sm.roughnessNode = mix(float(0.8), pm.rough, past)
+  }
+}
+/* the beaten earth beside the street is packed by feet like the worn paving beside it: at a walker's grazing view it takes
+   the low sky's sheen as the paving does (at the map's roughness 1 it took none, and read bluer than the paving in the
+   same shade: a grey test of both, the same light at 0.7) */
+{
+  const gm = (bodies.group.getObjectByName('ground') as Mesh | undefined)?.material as MeshStandardNodeMaterial | undefined
+  if (gm && q.get('earth') !== '0') gm.roughnessNode = mix(float(1), float(Number(q.get('gRough') ?? 0.72)), earthAt().w)
+}
+
 /* the map's street and ground give way to the gate's paving inside its area (a mask, the map's files untouched) */
 /** the apron's south edge beside the street: 0 to 3 m short of the paving's end, uneven along x; the band itself runs on */
 const apronEnd = (x: N): N => float(PAVE_END).add(smoothstep(SOUTH.half, SOUTH.half + 1.5, abs(x)).mul(TSL.mx_noise_float(vec3(x.mul(0.37), 1.7, 0.3)).add(0.5).mul(2.4).add(0.6)))
@@ -192,8 +239,16 @@ const fw: number = FG.frontWall, chD: number = FG.chamber[1], ow: number = FG.wa
 const zCh0 = -fw, zCh1 = -(fw + chD), zBack = -(fw + chD + ow), zMT = zBack - plan.court.depth, zM0 = zMT - MG.towers.proj
 const zMch0 = zM0 - MG.walls, zMch1 = zMch0 - MG.chamber[0], zMS = zMch1 - MG.walls
 const hd = FG.door / 2
+/** a chamber's cross face beside its door, wholly inside its room (the box's soft edge would leave it half out, its
+    glaze mirroring half the sky the room hides); off the door's width, so the passage keeps its own openness */
+const faces = (half: number, zf: number, y1: number, open: number): Rooms['boxes'] =>
+  [[-half - 0.05, -hd - 0.01], [hd + 0.01, half + 0.05]].map(([x0, x1]) => ({ x0: x0!, x1: x1!, z0: zf - 0.65, z1: zf + 0.65, y1, open }))
 const rooms: Rooms = {
   boxes: [
+    ...faces(FG.chamber[0] / 2, zCh0, FG.wallTop.value - 0.6, 0.28),
+    ...faces(FG.chamber[0] / 2, zCh1, FG.wallTop.value - 0.6, 0.28),
+    ...faces(MG.chamber[1] / 2, zMch0, MG.wallTop.value - 0.6, 0.22),
+    ...faces(MG.chamber[1] / 2, zMch1, MG.wallTop.value - 0.6, 0.22),
     { x0: -hd - 0.05, x1: hd + 0.05, z0: zCh0 + 0.6, z1: -0.65, y1: FG.arch.crown + 0.05, open: 0.62 },
     { x0: -FG.chamber[0] / 2 - 0.05, x1: FG.chamber[0] / 2 + 0.05, z0: zCh1 - 0.05, z1: zCh0 + 0.05, y1: FG.wallTop.value - 0.6, open: 0.28 },
     { x0: -hd - 0.05, x1: hd + 0.05, z0: zBack + 0.65, z1: zCh1, y1: FG.arch.crown + 0.05, open: 0.42 },
@@ -202,7 +257,17 @@ const rooms: Rooms = {
     { x0: -MG.chamber[1] / 2 - 0.05, x1: MG.chamber[1] / 2 + 0.05, z0: zMch1 - 0.05, z1: zMch0 + 0.05, y1: MG.wallTop.value - 0.6, open: 0.22 },
     { x0: -hd - 0.05, x1: hd + 0.05, z0: zMS + 0.65, z1: zMch1, y1: MG.arch.crown + 0.05, open: 0.5 },
   ],
+  // the mouths onto the forecourt and the street; the court's two at its own openness
+  mouths: [
+    { z: 0, out: 1, hw: hd, h: FG.arch.crown, lit: 1 },
+    { z: zBack, out: -1, hw: hd, h: FG.arch.crown, lit: 0.55 },
+    { z: zM0, out: 1, hw: hd, h: MG.arch.crown, lit: 0.55 },
+    { z: zMS, out: -1, hw: hd, h: MG.arch.crown, lit: 1 },
+  ],
+  hue: PAVE_HUE,
 }
+// trial knobs for the mouths' bounce (the defaults are the page's)
+for (const k of ['reach', 'give', 'top', 'glaze'] as const) { const v = q.get('m' + k[0]!.toUpperCase() + k.slice(1)); if (v !== null) uMouth[k].value = Number(v) }
 
 const gate = new Group()
 gate.name = 'gate'
@@ -244,6 +309,8 @@ gate.add(pave)
     return [[L[i]![0] + nx * h, L[i]![1] + nz * h], [L[i]![0] - nx * h, L[i]![1] - nz * h]]
   }
   const southMat = pavingMaterial(U, { ...plan.street.paving, sd: B.street.dir, st: [B.street.dir[1], -B.street.dir[0]], turnZ: 21.3, cls: pavingTones(named, [paveL, paveL]) }, rooms)
+  const gTone = bodyTones(named, 'gate:paving-south-guessed', ['G', 'G']).above
+  const southMatG = pavingMaterial(U, { ...plan.street.paving, sd: B.street.dir, st: [B.street.dir[1], -B.street.dir[0]], turnZ: 21.3, cls: [gTone, gTone, gTone] }, rooms)
   let along = -PAVE_END
   for (let i = 0; i + 1 < n; i++) {
     const d = dir(i), len = Math.hypot(L[i + 1]![0] - L[i]![0], L[i + 1]![1] - L[i]![1])
@@ -266,7 +333,7 @@ gate.add(pave)
     const g = new BufferGeometry()
     g.setAttribute('position', new Float32BufferAttribute(pos, 3))
     g.computeVertexNormals()
-    const m = new Mesh(g, southMat)
+    const m = new Mesh(g, (L[i]![1] + L[i + 1]![1]) / 2 < SOUTH.zKnown ? southMatG : southMat)
     m.position.set(ox, 0, oz)
     m.rotation.y = Math.atan2(-nz, nx)
     m.receiveShadow = true
@@ -424,6 +491,8 @@ const keyAt = (at: J): [number, number] => {
   }
   return at as [number, number]
 }
+/** a key's phone in the path's frame: its own stand (`phone.at`, the gate's frame here) to UTM, as the key's own `at` */
+const phoneKey = (ph: J): J => (ph.at ? { ...ph, at: GF.utm(...keyAt(ph.at)) } : ph)
 const pathCams = {
   eye: cams.eye,
   lens: { desktop: cams.stills.desktop.hfov, phoneFilm: cams.phoneFilm },
@@ -440,7 +509,7 @@ const pathCams = {
     // a stop's first key repeats the last stop's last key at the same second, so each stop starts at its own key; the
     // walk's first key is the arrival's landing, so its clock starts at the landing's hour (one clock across the cut)
     const first = s === cams.stops[0] && i === 0
-    return { t: k.t + (i === 0 && !first ? 1e-4 : 0), at: [E, N], y: 'eye', look: [lE, lN, look[1] + L0], stop: s.n, hold: k.kind === 'hold' || i === 0, kind: k.kind, cut: false, ...(k.phone ? { phone: k.phone } : {}), ...(k.desktop ? { hfov: k.desktop.hfov, shift: k.desktop.shift } : {}), ...(first ? { hour: openCams.hour } : {}) }
+    return { t: k.t + (i === 0 && !first ? 1e-4 : 0), at: [E, N], y: 'eye', look: [lE, lN, look[1] + L0], stop: s.n, hold: k.kind === 'hold' || i === 0, kind: k.kind, cut: false, ...(k.phone ? { phone: phoneKey(k.phone) } : {}), ...(k.desktop ? { hfov: k.desktop.hfov, shift: k.desktop.shift } : {}), ...(first ? { hour: openCams.hour } : {}) }
   })),
 }
 const standMap = (x: number, z: number): number => {
@@ -449,8 +518,10 @@ const standMap = (x: number, z: number): number => {
 }
 const path = makePath(pathCams, MF.s, standMap)
 
-/* the id pass (`?ids=1`, with `ao=0`): every surface in one flat colour by what it is, for the shares per still (guard 6) */
-if (q.get('ids') === '1') {
+/* the id pass (`?ids=1`, with `ao=0`): every surface in one flat colour by what it is, for the shares per still (guard 6);
+   `?ids=2` the same with the map's ground (cyan) and its street ribbon (magenta) apart from the paving, the rest grey */
+const IDS = q.get('ids')
+if (IDS === '1' || IDS === '2') {
   // both sides, as the palms' and birds' own material draws them
   const flat = (r: number, g: number, b: number): MeshBasicNodeMaterial => { const m = new MeshBasicNodeMaterial({ side: DoubleSide }); m.colorNode = vec3(r, g, b); m.fog = false; return m }
   const SKY = flat(0, 0, 1), GLAZED = flat(0, 1, 0), PLAIN = flat(1, 0, 0), PAVING = flat(1, 1, 0), FIGURE = flat(1, 1, 1), OTHER = flat(1, 0, 1)
@@ -470,8 +541,26 @@ if (q.get('ids') === '1') {
     const m = o as Mesh
     if (!m.isMesh || o === skyDome) return
     const n = o.name
+    const mask = (m.material as MeshStandardNodeMaterial).maskNode
     m.material = n === 'gate-walls' ? wallIds : n.startsWith('panels-') ? GLAZED : n.startsWith('gate-paving') || n === 'street' || n === 'ground' ? PAVING
       : n === 'figure' || o.parent?.name === 'figure' ? FIGURE : n === 'bronze' || n === 'palms' || n === 'birds' || n.startsWith('water') ? OTHER : PLAIN
+    if (IDS === '2' && (n === 'ground' || n === 'street')) {
+      // the masks kept, so the ground and the ribbon show only where the gate's paving does not lie over them
+      const f = n === 'ground' ? flat(0, 1, 1) : flat(1, 0, 1)
+      f.maskNode = mask ?? null
+      m.material = f
+    }
+    else if (IDS === '2' && m.material === OTHER) m.material = flat(0.5, 0.5, 0.5)
+    else if (IDS === '2' && n.startsWith('gate-paving')) {
+      // the apron (the brick beside the street's stone bands) orange, the bands yellow; south of the court the street is on x;
+      // the paving south of the south mouth white (the street beyond, apart from the passage's floor)
+      const f = flat(1, 1, 0), outer = (plan.street.paving.limestone * plan.street.paving.limestoneN) / 2 + plan.street.paving.breccia * plan.street.paving.brecciaN
+      const pg = uW2G.mul(vec4(positionWorld, 1)).xyz
+      const apron = n === 'gate-paving' ? step(outer, abs(positionLocal.x)).mul(step(positionLocal.z, -41)) : float(0)
+      f.colorNode = mix(mix(vec3(1, 1, 0), vec3(1, 0.5, 0), apron), vec3(1, 1, 1), step(pg.z, zMS))
+      f.maskNode = mask ?? null
+      m.material = f
+    }
   })
   figure.traverse((o) => { if ((o as Mesh).isMesh) (o as Mesh).material = FIGURE })
   void SKY
@@ -641,11 +730,13 @@ const rig = {
       const hfov = o.framing === 'phone' ? p.phone.hfov : p.hfov
       const shift = o.framing === 'phone' ? p.phone.shift : p.shift
       const vfov = fittedFov(hfov, o.framing === 'phone' ? [390, 844] : [16, 9], o.w, o.h)
-      aimWorld(new Vector3(...(p.pos as MV3)), new Vector3(...(p.look as MV3)), vfov, o.w, o.h, shift)
+      // the phone on its own stand and look where its keys name one (path.ts), else the desktop's
+      const at = o.framing === 'phone' ? p.phone.pos : p.pos, toward = o.framing === 'phone' ? p.phone.look : p.look
+      aimWorld(new Vector3(...(at as MV3)), new Vector3(...(toward as MV3)), vfov, o.w, o.h, shift)
       const { bytes } = await render(o.w, o.h, o.samples, 0)
       const g = Math.round(time * o.fps)
       await upload(`${o.out}/${o.framing ?? 'desktop'}-f${String(g).padStart(5, '0')}.jpg`, await jpeg(bytes, o.w, o.h))
-      const pg = new Vector3(...(p.pos as MV3)).applyMatrix4(W2G), lg = new Vector3(...(p.look as MV3)).applyMatrix4(W2G)
+      const pg = new Vector3(...(at as MV3)).applyMatrix4(W2G), lg = new Vector3(...(toward as MV3)).applyMatrix4(W2G)
       log.push({ i: g, t: +time.toFixed(3), stop: p.stop, kind: p.kind, gate: [+pg.x.toFixed(2), +pg.y.toFixed(2), +pg.z.toFixed(2)], look: [+lg.x.toFixed(2), +lg.y.toFixed(2), +lg.z.toFixed(2)], eyeOverStreet: +(pg.y - B.level(pg.z)).toFixed(3), hour: +p.hour.toFixed(3), hfov: +hfov.toFixed(3), shift: +shift.toFixed(4) })
     }
     await upload(`${o.out}/${o.framing ?? 'desktop'}-frames-${String(Math.round(from * o.fps)).padStart(5, '0')}.json`, JSON.stringify({ fps: o.fps, w: o.w, h: o.h, samples: o.samples, from, to, frames: log }))
