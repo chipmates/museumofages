@@ -376,10 +376,14 @@ async function render(w: number, h: number, samples: number, stops = 0): Promise
 }
 
 /* the film at a second, in either framing: the path's camera, the phone's own composition, the eased exposure */
-const stopsOf = (n: number): number => cams.stops.find((x: J) => x.n === n)?.stops ?? 0
-const expAt = (time: number): number => {
+// a stop's `hourStops` is its hour's exposure per framing, over its own `stops`
+const stopsOf = (n: number, framing: 'desktop' | 'phone'): number => {
+  const s = cams.stops.find((x: J) => x.n === n)
+  return (s?.stops ?? 0) + (s?.hourStops?.[framing] ?? 0)
+}
+const expAt = (time: number, framing: 'desktop' | 'phone'): number => {
   let acc = 0
-  for (let k = -6; k <= 6; k++) acc += stopsOf(path.sample(time + k * 0.5).stop)
+  for (let k = -6; k <= 6; k++) acc += stopsOf(path.sample(time + k * 0.5).stop, framing)
   return acc / 13
 }
 /** a stop's own air, eased over the same six seconds as its exposure */
@@ -445,7 +449,7 @@ const rig = {
     // a call's own hour over the page's (`?hour=`) over the path's; the exposure stays the stop's
     const p = aimFilm(time, o.framing, o.w, o.h, o.hour ? hourOf(o.hour) : undefined)
     const hour = o.hour ? hourOf(o.hour) : HOUR_Q ? hourOf(HOUR_Q) : p.hour
-    const ev = expAt(time)
+    const ev = expAt(time, o.framing)
     const { bytes, ms } = await render(o.w, o.h, o.samples, ev)
     const base = o.name ?? `${String(s.n).padStart(2, '0')}-${s.id}-${o.framing}-${o.view}`
     const file = `${o.out}/${base}.png`
@@ -502,7 +506,7 @@ const rig = {
       const e = envNow()
       const env = { owner: e.owner, dusk: e.dusk, bakes: e.bakes - baked }
       baked = e.bakes
-      const ev = expAt(time)
+      const ev = expAt(time, framing)
       const { bytes } = await render(o.w, o.h, o.samples, ev)
       const g = Math.round(time * o.fps)
       await upload(`${o.out}/f${String(g).padStart(5, '0')}.jpg`, await jpeg(bytes, o.w, o.h, 0.86))

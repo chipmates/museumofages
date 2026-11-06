@@ -1,6 +1,7 @@
 {
  "about": "The opening's cameras. A point is {utm: [E, N], y: level} (German excavation zero) or {street: s, across: t, y: level | 'eye'}: s metres out on the lion street's line from the gate's face (gate-geom's street direction), t across it (+ west), the eye 1.65 m over the gate's street profile. The first frame is the flight's second 0 (the entry `first`, one camera per framing); the flight comes through the North Gate's two doors on the map's street axis (the lion frame) and ends still on the street 28 m inside its south door (`land`: the gate sketch's first key, street 150), looking level down the street at the double gate, in the walk's own lens (58 desktop, 46 phone). The gate sketch's street line runs about 2.7 degrees west of the lion frame's (6.6 m at the south door, whose west jamb stands 4.3 m east of the sketch's line): the flight leaves the south door in its west half and turns straight onto the sketch's line, on it 14 m past the door, then holds it to rest. A look key {walk: true, dy} is the walk's look raised dy metres.",
  "hour": "18:00",
+ "hourStops": { "desktop": 1.029983, "phone": 1.039991 },
  "hourSays": "the walk's one clock (map/sun.ts: 19 days after the spring equinox, the old year's last day, 32.54 N, local apparent solar time): the landing at 18:00, its own hour (the gate's stops keep theirs, 17:00, across the page change and its cut); the sun at azimuth 276.3, 4.0 degrees high, on the right of and behind a look down the street at heading 168",
  "eye": 1.65,
  "first": {

@@ -508,6 +508,10 @@
           "shift": 0.15
         },
         "says": "stop 4's own hold: the desktop in the main gate's chamber at its north end, 19.4 m from the south mouth, where the south passage's arch stands whole in the frame with its vault over it and the street south through it (the shift lifts the frame so the crown keeps a margin under the top); the phone on its own stand in the south passage's north mouth, 8.4 m from the south mouth, the shift lifting the frame until the mouth's arch stands whole over the street, the sky kept inside the arch"
+      },
+      "hourStops": {
+        "desktop": -0.589969,
+        "phone": -0.750078
       }
     }
   ],

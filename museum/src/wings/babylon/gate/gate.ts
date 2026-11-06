@@ -460,6 +460,8 @@ function aimTrial(t: { pos: (number | null)[]; look: (number | null)[]; hfov: nu
 }
 /** a stop's still hour (the second of its `hour` pair), the file's own hour for the hero stills */
 const stillHour = (stop?: number): string => cams.stops.find((x: J) => x.n === stop)?.hour?.[1] ?? cams.hour
+/** a stop's hour exposure per framing (`hourStops`), 0 where its hour keeps the gate's own */
+const hourStops = (stop: number | undefined, framing: 'desktop' | 'phone'): number => cams.stops.find((x: J) => x.n === stop)?.hourStops?.[framing] ?? 0
 /* the stills' views, in the gate's frame, then the world: stop 2 (and no stop) the hero stills in `cams.stills`; a stop
    with a `still` its own hold, the key at `still.t`, each framing's lens and any stand of its own over that key */
 interface View { name: string; stop?: number; pos: V3; look: V3; hfov: number; shift: number; authored: [number, number] }
@@ -769,7 +771,7 @@ const rig = {
     const v = stillView(o.framing, o.stop)
     if (o.look) aimTrial(o.look, o.w, o.h)
     else aimView(v, o.w, o.h)
-    const { bytes, ms, readBack, adapt } = await render(o.w, o.h, o.samples, o.stops ?? 0)
+    const { bytes, ms, readBack, adapt } = await render(o.w, o.h, o.samples, o.stops ?? hourStops(o.stop, o.framing))
     const file = `${o.out}/${o.name}.png`
     await upload(file, await toPNG(bytes, o.w, o.h))
     const s = L.sunAt(hourOf(hour))
@@ -777,7 +779,7 @@ const rig = {
       file, framing: o.framing, stop: o.stop ?? null, state: ['grey', 'flat', 'full'][U.uState.value as number], switch: !!U.uSwitch.value,
       cssSize: o.css, devicePixels: [o.w, o.h], ratio: +(o.w / o.css[0]).toFixed(3), subFramesAsked: o.samples, subFrames: readBack.subFrames,
       renderTarget: readBack.target, sampleCountReadBack: readBack.target?.samples ?? null,
-      backend: stack.backend, adapter: stack.architecture, print: printNow(o.stops ?? 0), adapt,
+      backend: stack.backend, adapter: stack.architecture, print: printNow(o.stops ?? hourStops(o.stop, o.framing)), adapt,
       hour, sun: { azimuth: +s.azimuth.toFixed(1), elevation: +s.elevation.toFixed(1), toward: sunG(hourOf(hour)).map((x) => +x.toFixed(3)), source: 'map/sun.ts' },
       env: { intensity: scene.environmentIntensity, bounce: L.uBounce.value, sunIntensity: L.sunLight.intensity, eastWalls: [(L.uWalls.value as Color).r, (L.uWalls.value as Color).g, (L.uWalls.value as Color).b].map((v) => +v.toFixed(4)), air: { sigma: L.AIR.uSigma.value, scale: L.AIR.uScale.value, on: L.AIR.uOn.value } },
       camera: o.look ? { gate: o.look } : { gate: { pos: v.pos.map((x) => +x.toFixed(3)), look: v.look }, utm: GF.utm(v.pos[0], v.pos[2]).map((x) => +x.toFixed(2)), eyeOverStreet: +(v.pos[1] - B.level(v.pos[2])).toFixed(3), hfov: v.hfov, vfov: +camera.fov.toFixed(3), shift: shiftNow, near: camera.near, far: camera.far },
@@ -804,7 +806,7 @@ const rig = {
       // the phone on its own stand and look where its keys name one (path.ts), else the desktop's
       const at = o.framing === 'phone' ? p.phone.pos : p.pos, toward = o.framing === 'phone' ? p.phone.look : p.look
       aimWorld(new Vector3(...(at as MV3)), new Vector3(...(toward as MV3)), vfov, o.w, o.h, shift)
-      const { bytes, adapt } = await render(o.w, o.h, o.samples, 0)
+      const { bytes, adapt } = await render(o.w, o.h, o.samples, hourStops(p.stop, o.framing ?? 'desktop'))
       const g = Math.round(time * o.fps)
       await upload(`${o.out}/${o.framing ?? 'desktop'}-f${String(g).padStart(5, '0')}.jpg`, await jpeg(bytes, o.w, o.h))
       const pg = new Vector3(...(at as MV3)).applyMatrix4(W2G), lg = new Vector3(...(toward as MV3)).applyMatrix4(W2G)
