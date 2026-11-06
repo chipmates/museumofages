@@ -15,8 +15,8 @@ import { buildGate } from ${url('gate/gate-geom.ts')}
 const B = buildGate(JSON.parse(readFileSync(new URL(${url('gate/gate-plan.json')}), 'utf8')))
 console.log(JSON.stringify({
   tops: [
-    ...B.boxes.map((b) => ({ id: b.id, x0: b.x0 + (b.inset?.nx ?? 0), x1: b.x1 - (b.inset?.px ?? 0), z0: b.z0 + (b.inset?.nz ?? 0), z1: b.z1 - (b.inset?.pz ?? 0), y: b.y1, was: b.unsunk ?? b.y1 })),
-    ...B.arches.map((a) => ({ id: a.id, x0: a.x0, x1: a.x1, z0: a.z0 + (a.inset0 ?? 0), z1: a.z1 - a.inset, y: a.top, was: a.unsunk ?? a.top })),
+    ...B.boxes.map((b) => ({ id: b.id, x0: b.x0 + (b.inset?.nx ?? 0), x1: b.x1 - (b.inset?.px ?? 0), z0: b.z0 + (b.inset?.nz ?? 0), z1: b.z1 - (b.inset?.pz ?? 0), y: b.y1, was: b.topBefore ?? b.y1 })),
+    ...B.arches.map((a) => ({ id: a.id, x0: a.x0, x1: a.x1, z0: a.z0 + (a.inset0 ?? 0), z1: a.z1 - a.inset, y: a.top, was: a.topBefore ?? a.top })),
   ],
   runs: B.runs.map((r) => ({ id: r.id, a: r.a, b: r.b, out: r.out, thick: r.thick, y: r.y })),
   lions: B.prisms.filter((p) => /^lion-[we]-\\d+$/.test(p.id)).map((p) => ({ id: p.id, t: Math.max(...p.poly.map(([x, z]) => Math.abs(B.street.t(x, z)))) })),
@@ -33,7 +33,7 @@ const foot = (r) => {
 
 test('the gate builds', () => assert.equal(r.status, 0, r.stderr))
 
-test('seen from above no two bodies overlapping by a hundredth of a square metre share a top; a sunk top sank by 5 mm', () => {
+test('seen from above no two bodies overlapping by a hundredth of a square metre share a top; a parted top moved 5 mm, a lintel up', () => {
   const T = out.tops
   for (let i = 0; i < T.length; i++) for (let j = i + 1; j < T.length; j++) {
     const o = cut(T[i], T[j])
@@ -41,7 +41,7 @@ test('seen from above no two bodies overlapping by a hundredth of a square metre
   }
   const sunk = T.filter((t) => t.y !== t.was)
   assert.ok(sunk.length > 0)
-  for (const t of sunk) assert.ok(Math.abs(t.was - t.y - 0.005) < 1e-9, `${t.id} sank ${t.was - t.y}`)
+  for (const t of sunk) assert.ok(Math.abs(Math.abs(t.was - t.y) - 0.005) < 1e-9 && (t.y > t.was) === /-lintel(-\d+)?$/.test(t.id), `${t.id} moved ${t.y - t.was}`)
 })
 
 test("where two runs cross on one level, a body's top at that level holds the corner (no two soffits face each other in a slot)", () => {

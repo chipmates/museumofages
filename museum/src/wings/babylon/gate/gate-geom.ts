@@ -24,8 +24,8 @@ export interface GBox {
   rTop?: number
   inset?: Partial<Record<'px' | 'nx' | 'pz' | 'nz', number>>
   shadow?: boolean
-  /** the top before the tops' pass sank it under an overlapping body's */
-  unsunk?: number
+  /** the top before the tops' pass parted it from an overlapping body's */
+  topBefore?: number
 }
 
 /** an upright prism over a polygon (x, z) */
@@ -57,8 +57,8 @@ export interface GArch {
   inset0?: number
   plan: Cls
   height: Cls
-  /** the top before the tops' pass sank it under an overlapping body's */
-  unsunk?: number
+  /** the top before the tops' pass parted it from an overlapping body's */
+  topBefore?: number
 }
 
 /** a glazed (or friezed) face that carries the procedural pattern, and the relief panels on it */
@@ -558,20 +558,22 @@ export function buildGate(plan: J): Built {
 /** Two bodies overlapping in plan under one top fight for depth seen from above: the arch, or else the smaller body, sinks 5 mm
     under the other (the rebuilt houses' rule), the runs staying on the higher top. A lap under a centimetre (a storey's side wall
     on its front) is left, since a sunk wall would leave the runs over it hanging; so is a body under the corner of two runs, whose
-    soffits would face each other over the slot. Each sink is kept on its body, so a page that parts these tops its own way (the
-    map's) can take it back. */
+    soffits would face each other over the slot. A lintel rises instead: its faces stand back from its piers', so its lifted top
+    stays inside the run, where a sink would open a slot under the run on the face the forecourt sees. Each body's old top is
+    kept on it, so a page that parts these tops its own way (the map's) can take it back. */
 function partTops(boxes: GBox[], arches: GArch[], runs: Run[]): void {
   const SINK = 0.005
   type R = { x0: number; x1: number; z0: number; z1: number }
-  type It = R & { arch: boolean; vol: number; corner?: boolean; top: () => number; sink: () => void }
+  type It = R & { arch: boolean; vol: number; corner?: boolean; rise?: boolean; top: () => number; sink: () => void }
   const items: It[] = [
     ...boxes.map((b) => {
       const x0 = b.x0 + (b.inset?.nx ?? 0), x1 = b.x1 - (b.inset?.px ?? 0), z0 = b.z0 + (b.inset?.nz ?? 0), z1 = b.z1 - (b.inset?.pz ?? 0)
-      return { x0, x1, z0, z1, arch: false, vol: (x1 - x0) * (b.y1 - b.y0) * (z1 - z0), top: () => b.y1, sink: () => { b.unsunk ??= b.y1; b.y1 -= SINK } }
+      const rise = /-lintel(-\d+)?$/.test(b.id)
+      return { x0, x1, z0, z1, arch: false, vol: (x1 - x0) * (b.y1 - b.y0) * (z1 - z0), rise, top: () => b.y1, sink: () => { b.topBefore ??= b.y1; b.y1 += rise ? SINK : -SINK } }
     }),
     ...arches.map((a) => {
       const z0 = a.z0 + (a.inset0 ?? 0), z1 = a.z1 - a.inset
-      return { x0: a.x0, x1: a.x1, z0, z1, arch: true, vol: (a.x1 - a.x0) * (a.top - a.springing) * (z1 - z0), top: () => a.top, sink: () => { a.unsunk ??= a.top; a.top -= SINK } }
+      return { x0: a.x0, x1: a.x1, z0, z1, arch: true, vol: (a.x1 - a.x0) * (a.top - a.springing) * (z1 - z0), top: () => a.top, sink: () => { a.topBefore ??= a.top; a.top -= SINK } }
     }),
   ]
   const cut = (a: R, b: R): R => ({ x0: Math.max(a.x0, b.x0), x1: Math.min(a.x1, b.x1), z0: Math.max(a.z0, b.z0), z1: Math.min(a.z1, b.z1) })
@@ -683,8 +685,8 @@ export function gateOwnParts(B: Built): Built {
   const faces = B.faces.filter((f) => OWN_PARTS.has(f.part))
   const fid = new Set(faces.map((f) => f.id))
   // the build's own sunk tops come back first: this page lifts them instead
-  const boxes = B.boxes.filter((b) => OWN_PARTS.has(b.part)).map(({ unsunk, ...b }) => ({ ...b, y1: unsunk ?? b.y1 }))
-  const arches = B.arches.filter((a) => OWN_PARTS.has(a.part)).map(({ unsunk, ...a }) => ({ ...a, top: unsunk ?? a.top }))
+  const boxes = B.boxes.filter((b) => OWN_PARTS.has(b.part)).map(({ topBefore, ...b }) => ({ ...b, y1: topBefore ?? b.y1 }))
+  const arches = B.arches.filter((a) => OWN_PARTS.has(a.part)).map(({ topBefore, ...a }) => ({ ...a, top: topBefore ?? a.top }))
   // seen from above, two overlapping bodies' equal tops would fight: the second (an arch, else the smaller) rises by the
   // separation pass's step
   const STEP = 0.012
