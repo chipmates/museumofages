@@ -1,5 +1,5 @@
 /* THE PAPER'S TWO COLOURS, and the only colour values a paper feature has.
-   Anything from another time than the walk's afternoon, or an idea, is drawn in
+   Anything from another time than the walk's day, or an idea, is drawn in
    ink on paper; every other shade on a plate is one of these two mixed. The
    values are a proposal until the palette round sets them, so they live here
    and nowhere else (a tool that renders offline reads this file too).
