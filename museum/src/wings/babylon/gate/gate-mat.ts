@@ -98,10 +98,13 @@ export const hatchOf = (s: N, fw: N, n?: N): N => {
   const h = lines(s, 0.6, 0.09, fw.mul(1.4)).mul(float(1).sub(smoothstep(0.08, 0.2, fw))).mul(0.28)
   return n ? h.mul(smoothstep(0.3, 0.9, abs(dot(n, normalize(cameraPosition.sub(positionWorld)))))) : h
 }
+/** the side mask for the class still's check (?mask=side, with a high self light): the known side white, the guessed black */
+const SIDE_MASK = typeof location !== 'undefined' && new URLSearchParams(location.search).get('mask') === 'side'
 /** the class colour by CLASS_TONE's index, the albedos as measured; the guessed side (2 guessed, 4 typical) hatched */
 export const classColour = (U: GateUniforms, idx: N, hu: N, hy: N, fw: N, n?: N): N => {
   const base = select(idx.lessThan(0.5), U.uM, select(idx.lessThan(1.5), U.uR, select(idx.lessThan(2.5), U.uG, select(idx.lessThan(3.5), U.uK, U.uT))))
   const guessed = step(1.5, idx).mul(step(idx, 2.5)).add(step(3.5, idx))
+  if (SIDE_MASK) return vec3(1).sub(vec3(guessed))
   return base.mul(float(1).sub(hatchOf(hu.add(hy), fw, n).mul(guessed)))
 }
 
