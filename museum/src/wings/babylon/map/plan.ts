@@ -464,8 +464,8 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
         const p0 = add(a, mul(d, (k * L) / n)), p1 = add(a, mul(d, ((k + 1) * L) / n))
         const mid = mul(add(p0, p1), 0.5)
         const lv = streetAt(mid[0], mid[1]).level
-        // a piece laps 0.3 m into the next, which stands at another height
-        pushWall(`${w.id}-${k}`, w.name, [k > 0 ? sub(p0, mul(d, 0.3)) : p0, p1], w.thick, base, lv + w.top, cls)
+        // the line is straight, so a lap would put both pieces' sides in one plane: they abut, end face to end face
+        pushWall(`${w.id}-${k}`, w.name, [p0, p1], w.thick, base, lv + w.top, cls)
       }
       towersOn(w.id, [a, b], w.towers, w.towers.side, w.thick / 2, base, cls, (p) => streetAt(p[0], p[1]).level + w.towers.top)
       continue
