@@ -16,7 +16,10 @@ export interface Canal { id: string; pts: P2[]; w: number }
 export interface Field { pts: P2[]; tone: number }
 /** a plant of the plain: a date palm by its row (canal, river, outer, city; `detail` the palm's preset where the
     flight passes it closer than the far preset holds) or a bank plant by its kind (reed, tamarisk, poplar, willow) */
-export interface Palm { x: number; z: number; s: number; yaw: number; lean: number; row: string; detail?: 'near' | 'mid' }
+export interface Palm { x: number; z: number; s: number; yaw: number; lean: number; row: string; detail?: 'near' | 'mid'; h?: number }
+
+/** a young palm's height to its crown before scale (gate-life.ts YOUNG_H, the same number) */
+const YOUNG_H = 0.7
 
 /** the flight's way down (open-cams.json as flight.ts resolves it, every 2 s, UTM and level): the palm presets' bands */
 const DESCENT: Array<[number, number, number]> = [
@@ -32,6 +35,8 @@ export interface Plain {
   /** grove floors: polygons under the palms, for the map */
   groves: P2[][]
   palms: Palm[]
+  /** the inner city's outline on each bank (the walls' lines closed along the river): inside the walls */
+  inner: P2[][]
   /** how many of `fields` are the outer city's garden plots (the last ones) */
   gardens: number
   /** how many of `fields` are the river belt's plots (just before the gardens; tone 4 a plot under palms) */
@@ -387,6 +392,58 @@ export function buildPlain(mapPlan: J, opts: { palms?: boolean; reach?: number }
     }
     /* the presets by the eye's distance to a palm's crown along the flight: the near preset within 110 m (a palm within
        about 60 m of an eye is near, and the mid's teeth read as teeth to about 120 m), the mid within 400 m */
+    /* an orchard close outside the North Gate's road in the outer city (bab.green.palm.gate: groves in front of a city's
+       gate are attested elsewhere, Babylon's are ours): clumps with gaps from the road's verge out to about 200 m on its
+       west side and 70 m on its east, north of the lion walls' line and the dam, never on the road; its own numbers */
+    {
+      const RG = rng(5703)
+      const road: P2[] = [s(445708.8, 3601172.8), s(445650.4, 3601472.1), s(445700, 3601700), s(445790, 3601920)]
+      const near = new Map<string, Palm[]>()
+      const cell = (x: number, z: number): string => `${Math.floor(x / 8)},${Math.floor(z / 8)}`
+      for (const p of palms) { const k = cell(p.x, p.z); if (!near.has(k)) near.set(k, []); near.get(k)!.push(p) }
+      const crowded = (x: number, z: number): boolean => {
+        const i = Math.floor(x / 8), j = Math.floor(z / 8)
+        for (let a = -1; a <= 1; a++) for (let b = -1; b <= 1; b++) for (const q of near.get(`${i + a},${j + b}`) ?? []) if (Math.hypot(q.x - x, q.z - z) < 5.5) return true
+        return false
+      }
+      const [, zN] = s(0, 3601600), [, zS] = s(0, 3601205)
+      for (let z = zN; z < zS; z += 10) {
+        for (let x = -320; x < 160; x += 10) {
+          const jx = x + (RG() - 0.5) * 8, jz = z + (RG() - 0.5) * 8
+          const d = lineD(jx, jz, road)
+          // west or east of the road: the road's x at this z
+          const west = jx < road[0]![0] + ((road[1]![0] - road[0]![0]) * (jz - road[0]![1])) / (road[1]![1] - road[0]![1])
+          const reachOut = west ? 205 : 70
+          if (d < 16 || d > reachOut) continue
+          // clumps and clearings, a few tens of metres across, thinning away from the road
+          const field = Math.sin(jx * 0.071 + 1.7) * Math.sin(jz * 0.064 + 0.3) + 0.5 * Math.sin(jx * 0.13 - jz * 0.11)
+          const p = Math.max(0, field + 0.15) * (1 - 0.55 * (d - 16) / (reachOut - 16))
+          if (RG() > p) continue
+          if (blocked(jx, jz, 2) || crowded(jx, jz)) continue
+          const q: Palm = { x: jx, z: jz, s: 0.62 + RG() * 0.68, yaw: RG() * Math.PI * 2, lean: (RG() - 0.5) * 0.18, row: 'gate' }
+          palms.push(q)
+          const k = cell(jx, jz)
+          if (!near.has(k)) near.set(k, [])
+          near.get(k)!.push(q)
+        }
+      }
+    }
+    /* young palms and offshoots among the tall ones (bab.green.palm.young: a grove held "small date palms" beside its
+       fruit-bearing ones; the look, a fan from the ground, ours): about one tall palm in four of the groves and the
+       orchard has one beside it, a few metres off; never in the city, on a bank's reed or in water; their own numbers */
+    {
+      const RY = rng(5704)
+      // the plan's built grounds (the fortification by the north wall, the Kasr, the precincts) are no grove
+      const built: P2[][] = (mapPlan.houses?.keepOut ?? []).map((k: J) => k.poly.map((q: number[]) => s(q[0]!, q[1]!)))
+      const tall = palms.filter((p) => p.row === 'canal' || p.row === 'river' || p.row === 'outer' || p.row === 'gate')
+      for (const p of tall) {
+        if (RY() > 0.26) continue
+        const a = RY() * Math.PI * 2, r = 2.4 + RY() * 2.2
+        const x = p.x + Math.cos(a) * r, z = p.z + Math.sin(a) * r
+        if (blocked(x, z, 0) || built.some((q) => inPoly(x, z, q))) continue
+        palms.push({ x, z, s: 0.9 + RY() * 0.8, yaw: RY() * Math.PI * 2, lean: (RY() - 0.5) * 0.2, row: 'young', h: YOUNG_H })
+      }
+    }
     const way = DESCENT.map(([E, N, y]) => { const [x, z] = s(E, N); return [x, y, z] as [number, number, number] })
     const eyeD = (x: number, y: number, z: number): number => {
       let d = Infinity
@@ -404,20 +461,47 @@ export function buildPlain(mapPlan: J, opts: { palms?: boolean; reach?: number }
       if (d < 110) p.detail = 'near'
       else if (d < 400) p.detail = 'mid'
     }
-    // inside the walls: a sparse row by the Libil-hegalla canal (guessed)
+    /* inside the walls (bab.green.palm.city, the kind attested, every place ours): palms want low ground near water, so
+       they stand in clumps of two to five with gaps between, on the Libil-hegalla canal's south bank (its north bank is
+       the South Palace), leaning out over the water, and on the low strip inside the north wall by the moats, short of
+       the first houses; never on a quay, a street, a roof or in a court. Their own numbers, so the groves stay as drawn */
+    const RC = rng(5702)
+    const inner = (x: number, z: number): boolean => (inPoly(x, z, innerE) || inPoly(x, z, innerW)) && !water.some((w) => inPoly(x, z, w))
+    const clump = (cx: number, cz: number, n: number, spread: number, lean: () => [number, number]): void => {
+      for (let k = 0; k < n; k++) {
+        const a = RC() * Math.PI * 2, r = k === 0 ? 0 : 2.6 + RC() * spread
+        const x = cx + Math.cos(a) * r, z = cz + Math.sin(a) * r
+        if (!inner(x, z)) continue
+        const [yaw, ln] = lean()
+        palms.push({ x, z, s: 0.58 + RC() * 0.66, yaw, lean: ln, row: 'city', detail: 'mid' })
+      }
+    }
     const cl: P2[] = mapPlan.canal.line.map((q: number[]) => s(q[0]!, q[1]!))
     for (let i = 0; i + 1 < cl.length; i++) {
       const a = cl[i]!, b = cl[i + 1]!
       const L = Math.hypot(b[0] - a[0], b[1] - a[1])
-      for (let t = 20; t < L - 25; t += 17 + R() * 10) {
-        const x = a[0] + ((b[0] - a[0]) * t) / L, z = a[1] + ((b[1] - a[1]) * t) / L + 6.5
-        palms.push({ x, z, s: 0.7 + R() * 0.4, yaw: R() * Math.PI * 2, lean: (R() - 0.5) * 0.1, row: 'city' })
+      for (let t = 6 + RC() * 8; t < L - 6; t += 15 + RC() * 21) {
+        if (RC() < 0.16) continue
+        const x = a[0] + ((b[0] - a[0]) * t) / L, z = a[1] + ((b[1] - a[1]) * t) / L + 7 + RC() * 3.5
+        // toward the water (north, -z): the instance tilts about an east-west axis
+        clump(x, z, 2 + Math.floor(RC() * 3.4), 2.4, () => [Math.PI + (RC() - 0.5) * 0.9, 0.05 + RC() * 0.17])
+      }
+    }
+    const nw: P2[] = [s(445800, 3600830), s(446737, 3601360)]
+    {
+      const [a, b] = nw as [P2, P2]
+      const L = Math.hypot(b[0] - a[0], b[1] - a[1])
+      const d: P2 = [(b[0] - a[0]) / L, (b[1] - a[1]) / L], n: P2 = [d[1], -d[0]]
+      for (let t = 235 + RC() * 20; t < L - 60; t += 34 + RC() * 44) {
+        if (RC() < 0.3) continue
+        const r = -(12 + RC() * 18)
+        clump(a[0] + d[0] * t + n[0] * r, a[1] + d[1] * t + n[1] * r, 2 + Math.floor(RC() * 4), 3.2, () => [RC() * Math.PI * 2, (RC() - 0.5) * 0.16])
       }
     }
   }
   return {
     domain: { x0: -5200, z0: -5400, size: 12800 },
-    canals: [...canals, ...bChannels, ...gChannels], fields: [...fields, ...belt, ...gardens], groves, palms, gardens: gardens.length, belt: belt.length,
+    canals: [...canals, ...bChannels, ...gChannels], fields: [...fields, ...belt, ...gardens], groves, palms, inner: [innerE, innerW], gardens: gardens.length, belt: belt.length,
     says: 'canals, fields and groves of the plain: kinds Known as types (GREEN.settled), every line and place ours',
   }
 }

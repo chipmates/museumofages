@@ -8,7 +8,7 @@
 
 import { BufferGeometry, CanvasTexture, InstancedBufferAttribute, InstancedMesh, LinearFilter, LinearMipmapLinearFilter, Matrix4, Quaternion, SRGBColorSpace, Vector3, type Material } from 'three/webgpu'
 import type { Plain, Palm } from './plain'
-import { PALM_FAR, PALM_MID, PALM_NEAR, palmGeometry } from '../gate/gate-life'
+import { PALM_FAR, PALM_MID, PALM_NEAR, PALM_YOUNG_FAR, PALM_YOUNG_MID, YOUNG_H, palmGeometry } from '../gate/gate-life'
 import { reedGeometry } from '../plants/banks'
 
 // the bank trees grow in the stack's tree kit, whose leaf atlas is drawn on a canvas: a page only
@@ -56,8 +56,12 @@ export function palmMesh(palms: Palm[], ground: (x: number, z: number) => number
   // Guessed (G); the banks' plants Guessed
   const palmLetter = (p: Palm): number => (p.row === 'canal' || p.row === 'river' ? 1 : 2)
   const bankLetter = (): number => 2
-  const tree = palms.filter((p) => !BANK.has(p.row))
+  const tree = palms.filter((p) => !BANK.has(p.row) && p.row !== 'young')
   const root = set(palmGeometry(12, PALM_FAR), tree.filter((p) => !p.detail), 'palms-plain', palmLetter)
+  // the young palms among the groves (palm-date-babylon's young variant): far, and mid wherever a flight passes close
+  const young = palms.filter((p) => p.row === 'young')
+  root.add(set(palmGeometry(YOUNG_H, PALM_YOUNG_FAR, 23), young.filter((p) => !p.detail), 'palms-young', palmLetter))
+  root.add(set(palmGeometry(YOUNG_H, PALM_YOUNG_MID, 29), young.filter((p) => !!p.detail), 'palms-young-mid', palmLetter))
   root.add(set(palmGeometry(12, PALM_MID), tree.filter((p) => p.detail === 'mid'), 'palms-plain-mid', palmLetter))
   // the few the flight passes within about 110 m: the near preset, two palms of it
   const near = tree.filter((p) => p.detail === 'near')
