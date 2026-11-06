@@ -248,10 +248,10 @@ export function tsvRow(r) {
   const p = r.peaks
   return [r.name, r.startSeconds, r.seconds, r.metres, p.speed, p.accel, p.jerk, p.turnRate, p.headingRate, p.pitchRate, p.turnAccel, p.turnJerk, p.centreWidths, p.farWidths, p.zoom, p.yMin, p.yMax,
     r.holds.length, r.holdSeconds, r.holds.length ? Math.min(...r.holds.map((h) => h.seconds)) : '',
-    ...FLAG_ORDER.map(count), r.flags.filter((f) => f.flag === 'jerk' && f.mark !== undefined).length, FLAG_ORDER.filter((f) => count(f)).join(' ')].join('\t')
+    ...FLAG_ORDER.map(count), r.flags.filter((f) => f.flag === 'jerk' && f.mark !== undefined).length, FLAG_ORDER.filter((f) => count(f)).join(' '), r.note ?? ''].join('\t')
 }
 export const TSV_HEAD = ['move', 'start_s', 'seconds', 'metres', 'speed_mps', 'accel_mps2', 'jerk_mps3', 'turn_dps', 'heading_dps', 'pitch_dps', 'turn_dps2', 'turn_dps3', 'centre_wps', 'far_wps', 'zoom_ps', 'y_min', 'y_max',
-  'holds', 'hold_s', 'shortest_hold_s', ...FLAG_ORDER, 'jerk_at_mark', 'flags'].join('\t')
+  'holds', 'hold_s', 'shortest_hold_s', ...FLAG_ORDER, 'jerk_at_mark', 'flags', 'note'].join('\t')
 
 /** read every move of a track into a folder: readings.tsv and one JSON a move */
 export function readTrackInto(track, out, L = THRESHOLDS) {
@@ -259,7 +259,8 @@ export function readTrackInto(track, out, L = THRESHOLDS) {
   const c = curvesOf(track, L)
   const rows = [TSV_HEAD], all = []
   for (const m of track.moves) {
-    const r = readMove(track, c, m, L)
+    // a preview's readings carry its note in every row and file: its frames are the sketch's, not the export's
+    const r = { ...readMove(track, c, m, L), ...(track.preview ? { note: track.preview } : {}) }
     writeFileSync(join(out, `${m.name}.json`), JSON.stringify({ ...r, curves: moveCurves(c, m) }))
     rows.push(tsvRow(r))
     all.push(r)

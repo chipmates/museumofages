@@ -4,6 +4,9 @@
 // its frame rate, the frame's aspect (so the horizontal lens comes back), and
 // its named spans as half-open frame ranges [from, to): the moves (a leg, a
 // stop), the authored holds and the cuts (a frame that starts a new run).
+// Optional `shifts`: a shift lens per frame, [vertical, sideways] in the
+// projection's units (the sketch's aim adds them to elements 9 and 8); none
+// means a centred lens.
 //
 //   node --experimental-strip-types --no-warnings forge/camera/track.mjs \
 //     --sketch <samples.json> [--framing desktop] --out <track.json>
@@ -62,6 +65,7 @@ export function fromSketch(json, { framing = 'desktop', aspect = framing === 'de
   const dt = raw[1].t - raw[0].t
   const fps = Math.round(1 / dt)
   const samples = raw.map((s) => [s.x, s.y, s.z, ...quatOf(-s.yaw * D2R, s.pitch * D2R), vfovOf(s.hfov, aspect)])
+  const shifts = raw.some((s) => s.shift || s.shiftX) ? raw.map((s) => [s.shift ?? 0, s.shiftX ?? 0]) : null
   const moves = spansOf(raw.map((s) => s.leg))
   const holds = spansOf(raw.map((s, i) => (s.kind === 'hold' || s.kind === 'rest' ? `${s.leg}:${s.kind}` : `-${i}`)), (l) => !l.startsWith('-'))
   const cuts = [], blackTo = {}
@@ -71,7 +75,7 @@ export function fromSketch(json, { framing = 'desktop', aspect = framing === 'de
     cuts.push(i)
     blackTo[i] = j + 1
   }
-  return { format: FORMAT, source: `${source} ${framing}`, fps, aspect, samples, moves, holds, ...jumpCuts(samples, fps, cuts, blackTo), kinds: raw.map((s) => s.kind) }
+  return { format: FORMAT, source: `${source} ${framing}`, fps, aspect, samples, moves, holds, ...jumpCuts(samples, fps, cuts, blackTo), kinds: raw.map((s) => s.kind), ...(shifts ? { shifts } : {}) }
 }
 
 /** a frame whose eye moves over 3 m or whose view turns over 45 degrees from the last starts a new run: a cut where
@@ -138,7 +142,7 @@ export function fromBabylonPath(path, { fps = 30, stops = null, aspect = 16 / 9,
 export function sliceTrack(t, from, to) {
   const clip = (s) => ({ ...s, from: Math.max(s.from, from) - from, to: Math.min(s.to, to) - from })
   return {
-    ...t, samples: t.samples.slice(from, to), kinds: t.kinds?.slice(from, to),
+    ...t, samples: t.samples.slice(from, to), kinds: t.kinds?.slice(from, to), ...(t.shifts ? { shifts: t.shifts.slice(from, to) } : {}),
     moves: t.moves.filter((s) => s.to > from && s.from < to).map(clip),
     holds: t.holds.filter((s) => s.to > from && s.from < to).map(clip).filter((s) => s.to > s.from),
     cuts: t.cuts.filter((c) => c > from && c < to).map((c) => c - from),
@@ -155,6 +159,7 @@ export function checkTrack(t) {
   if (!(t.fps > 0)) bad.push('fps')
   if (!(t.aspect > 0)) bad.push('aspect')
   t.samples.forEach((s, i) => { if (s.length !== 8 || !s.every(Number.isFinite)) bad.push(`sample ${i}`) })
+  if (t.shifts && (t.shifts.length !== t.samples.length || !t.shifts.every((v) => v.length === 2 && v.every(Number.isFinite)))) bad.push('shifts')
   for (const k of ['moves', 'holds']) for (const s of t[k]) if (!(s.from >= 0 && s.to <= t.samples.length && s.from < s.to)) bad.push(`${k} ${s.name}`)
   return bad
 }

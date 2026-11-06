@@ -157,7 +157,7 @@ export function moveSvg(track, c, move, r, { width = 1000 } = {}) {
   const M = 10, S = Math.round(width * 0.36), X0 = M + S + 58, WC = width - X0 - 14
   const parts = []
   const where = `${r.seconds} s, ${r.metres} m, from ${r.startSeconds} s`
-  parts.push(`<text x="${M}" y="24" font-size="19" ${FONT} font-weight="bold" fill="#111">${esc(move.name)}<tspan dx="12" font-weight="normal" font-size="15" fill="#333">${esc(where)}</tspan></text>`)
+  parts.push(`<text x="${M}" y="24" font-size="19" ${FONT} font-weight="bold" fill="#111">${esc(move.name)}<tspan dx="12" font-weight="normal" font-size="15" fill="#333">${esc(where)}</tspan>${track.preview ? `<tspan dx="12" font-size="15" font-weight="bold" fill="#a00">PREVIEW (${esc(track.preview)})</tspan>` : ''}</text>`)
   parts.push(`<text x="${M}" y="46" font-size="14" ${FONT} fill="#b0200f">flags: ${esc(flagWords(r.flags))}</text>`)
   const yA = 58
   parts.push(pathSvg({ x: M, y: yA, side: S, c, from, to, fps, samples: track.samples, holds: r.holds, flags: r.flags, marks: markFrames, cuts: track.cuts ?? [], metres: r.metres }))
