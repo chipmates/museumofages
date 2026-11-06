@@ -18,7 +18,7 @@ import * as TSL from 'three/tsl'
 import { BR, C, PAL, band, bond, footprint, hash2, lines } from '../gate/gate-mat'
 import { classColour, greyNode, uView, type ClassTones } from '../map/mass'
 import { PRESETS as PAVING, pavingBrickCourt } from '../parts/paving-brick-court-babylon'
-import { plasterWash } from '../parts/plaster-wash-babylon'
+import { PRESETS as WASH, plasterWash } from '../parts/plaster-wash-babylon'
 import { PRESETS as ROOF, roofEarth } from '../parts/roof-earth-throneroom-babylon'
 import type { CourtFrame } from './court-geom'
 import { uSkySet } from '../open/sky-set'
@@ -57,9 +57,10 @@ export const uCourtLight = {
     times its mean form factor) and its depth in door widths (its brightest part, just inside), the walls' give-back,
     the power and gain the print takes the walls' light at, the tint kept, the plaster's undulation (radians), the
     niche's own shade at its back, its inside corners' shade and reach (m), the lift its outer edges take, the floor's
-    power and gain (its share of the court's light), the ceiling's share of the doors' light and of the pool's under it,
-    the shade where a wall meets the ceiling */
-export const ROOM = Object.freeze({ bounce: 0.08, pool: 0.8, giveBack: 0.02, gamma: 1.0, gain: 7.0, tint: 0.15, undulate: 0.08, recess: 0.42, corner: 0.5, reach: 1.2, arris: 0.14, floorGamma: 0.9, floor: 4.0, ceiling: 0.16, ceilingPool: 1.0, head: 0.3 })
+    power and gain (its share of the court's light), the ceiling's share of the doors' light, of the pool's under it and
+    of the walls' give-back, the shade where a wall meets the ceiling, and the crease a wall's head takes there (its
+    depth and reach, m) */
+export const ROOM = Object.freeze({ bounce: 0.08, pool: 0.8, giveBack: 0.02, gamma: 1.0, gain: 7.3, tint: 0.15, undulate: 0.08, recess: 0.42, corner: 0.5, reach: 1.2, arris: 0.14, floorGamma: 0.9, floor: 4.0, ceiling: 0.3, ceilingPool: 1.0, ceilingGive: 1.15, head: 0.2, crease: 0.45, creaseReach: 0.7 })
 
 /* ── signed distances, metres, negative inside ── */
 const circle = (p: N, cx: number, cy: number, r: number): N => length(p.sub(vec2(cx, cy))).sub(r)
@@ -417,7 +418,7 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
      thinner, and the brush's run down the wall ── */
   const brushRun = mx_noise_float(vec3(P.x.mul(3.5), P.y.mul(1.2), P.z.mul(3.5))).mul(vertical)
   const washVar = float(1).add(mx_noise_float(P.mul(0.45)).mul(0.08)).add(mx_noise_float(P.mul(1.1).add(7.3)).mul(0.08)).add(mx_noise_float(P.mul(2.1)).mul(0.13)).add(mx_noise_float(P.mul(5.5)).mul(0.14)).add(brushRun.mul(0.025))
-  const plaster = plasterWash(P, n, col.plaster).mul(washVar)
+  const plaster = plasterWash(P, n, col.plaster, WASH.court).mul(washVar)
 
   /* ── the roof: an earth deck behind its parapet (part roof-earth-throneroom-babylon) ── */
   const dPar = min(min(P.x.sub(o.x0 + pt), float(o.x1 - pt).sub(P.x)), min(P.z.sub(o.z0 + pt), float(o.z1 - pt).sub(P.z)))
@@ -528,11 +529,13 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   const skyY = dot(skyRadiance(normalize(vec3(0, 0.2, -1))), LUM)
   const Lc = paveL(0.15).mul(0.6).add(frontL.mul(0.4)), Ls = LT.sky.mul(skyY.div(max(dot(LT.sky, LUM), 1e-6)))
   const shade = mix(float(1), cornerAO, 0.5).mul(recess).mul(arris)
-  // a ceiling sees the dark brick floor and the court's shaded paving more than the white walls: less of the doors' light
-  // and of the walls' give-back comes to it; over the pool just inside a door, most of the pool's
+  // a ceiling sees the doors at a graze: less of their light comes to it, the lit walls' give-back whole; over the pool
+  // just inside a door, most of the pool's
   const onCeil = step(n.y, -0.5)
-  const backTo = mix(float(1), float(ROOM.ceiling), onCeil), poolTo = mix(float(1), float(ROOM.ceilingPool), onCeil), giveTo = mix(float(1), float(0.5), onCeil)
-  const lin = Lc.mul(direct.mul(backTo).add(bounce.mul(ROOM.bounce).mul(poolTo)).mul(shade).add(giveBack.mul(ROOM.giveBack).mul(giveTo))).add(Ls.mul(skyIn.mul(shade).mul(backTo)))
+  const backTo = mix(float(1), float(ROOM.ceiling), onCeil), poolTo = mix(float(1), float(ROOM.ceilingPool), onCeil), giveTo = mix(float(1), float(ROOM.ceilingGive), onCeil)
+  // a wall's head sees less of the lit room under the ceiling: the corner a soft crease from both sides, not a step
+  const crease = float(1).sub(float(1).sub(smoothstep(0.0, ROOM.creaseReach, float(F.wallTop).sub(P.y))).mul(ROOM.crease).mul(vertical))
+  const lin = Lc.mul(crease).mul(direct.mul(backTo).add(bounce.mul(ROOM.bounce).mul(poolTo)).mul(shade).add(giveBack.mul(ROOM.giveBack).mul(giveTo))).add(Ls.mul(skyIn.mul(shade).mul(backTo)))
   // the print takes the walls' light at its own power and gain, the floor's at another: a room seen from a sunlit court
   // reads by its fall, the floor lit just inside the doors and the depths dim
   const linY = max(dot(lin, LUM), 1e-6), rel = linY.div(max(dot(paveL(0.5), LUM), 1e-6))
@@ -540,9 +543,10 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   const shadeIrr = LT.sky.mul(0.85).add(LT.sunIrr.mul(clamp(LT.sun.y, 0, 1)).mul(0.15))
   const hue0 = mix(shadeIrr.div(max(dot(shadeIrr, LUM), 1e-6)), lin.div(linY), ROOM.tint)
   // a ceiling's light is what the brick floor throws up; a wall's has passed the warm wash and the floor more than once,
-  // the lower the more of the floor
-  const floorSeen = float(1).sub(smoothstep(0.0, 6.0, y)).mul(0.8)
-  const hue = select(n.y.lessThan(-0.5), hue0.mul(vec3(1.12, 1.0, 0.82)), hue0.mul(vec3(1.05, 1.0, 0.9)).mul(mix(vec3(1, 1, 1), vec3(1.08, 1.0, 0.88), floorSeen)))
+  // the lower the more of the floor; its head takes the ceiling's, which the floor lights. The stack's haze lies blue over
+  // the dim room after this material (open/air.ts): these hues are set so the wash prints a cool grey under it
+  const floorSeen = float(1).sub(smoothstep(0.0, 6.0, y)).mul(0.8), ceilSeen = smoothstep(F.wallTop - 10.0, F.wallTop, P.y)
+  const hue = select(n.y.lessThan(-0.5), hue0.mul(vec3(1.08, 1.0, 0.88)), hue0.mul(vec3(1.03, 1.0, 0.935)).mul(mix(vec3(1, 1, 1), vec3(1.06, 1.0, 0.91), floorSeen)).mul(mix(vec3(1, 1, 1), vec3(1.05, 1.0, 0.92), ceilSeen)))
   const roomLight = hue.mul(linY).mul(pow(rel, ROOM.gamma - 1)).mul(ROOM.gain)
   // the floor takes the same share of the light its bricks have in the court, so it reads as the court's paving, dimmer
   const onFloor = step(0.5, n.y)
