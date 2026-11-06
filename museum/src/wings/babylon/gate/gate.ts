@@ -5,6 +5,7 @@
 
      ?state=grey|flat|full   massing grey, the first pass (flat glaze, plain animals, noon sun), or full (default)
      ?switch=classes         the evidence switch: each body's record classes on the same scene (record.ts)
+     ?hour=17:30             the stills and the sketch at one solar hour, a test of a stop's light (gate-cams.json's by default)
      ?put=<url>              where the rig hands its files (the shooter's own server) */
 
 import {
@@ -41,6 +42,7 @@ type J = any
 const { abs, float, max, mix, positionLocal, positionWorld, smoothstep, step, uniform, vec3, vec4 } = TSL as unknown as Record<string, N>
 
 const q = new URLSearchParams(location.search)
+const HOUR_Q = q.get('hour')
 const says = document.getElementById('says') as HTMLElement
 const say = (s: string): void => {
   says.textContent = s
@@ -567,7 +569,7 @@ if (IDS === '1' || IDS === '2') {
 }
 
 /* one pipeline: the scene pass, the contact occlusion, output linear; the print on the CPU */
-setHour(hourOf(cams.hour))
+setHour(hourOf(HOUR_Q ?? cams.hour))
 let linear: ReturnType<typeof createOpenLinear> | null = null
 const first = stillView('desktop')
 aimView(first, 1600, 900)
@@ -760,7 +762,7 @@ const rig = {
   /** a still: a framing, the scene state and the switch, device pixels and CSS size, sub-frames */
   async shoot(o: { framing: 'desktop' | 'phone'; stop?: number; state?: 'grey' | 'flat' | 'full'; switch?: boolean; w: number; h: number; css: [number, number]; samples: number; out: string; name: string; hour?: string; stops?: number; box?: [number, number, number, number]; look?: { pos: (number | null)[]; look: (number | null)[]; hfov: number; shift?: number } }) {
     setStates(o)
-    const hour = o.hour ?? (U.uState.value === 1 ? '12:00' : cams.hour)
+    const hour = o.hour ?? HOUR_Q ?? (U.uState.value === 1 ? '12:00' : cams.hour)
     setHour(hourOf(hour))
     const v = stillView(o.framing, o.stop)
     if (o.look) aimTrial(o.look, o.w, o.h)
@@ -792,7 +794,7 @@ const rig = {
     for (let i = 0; i < n; i++) {
       const time = from + i / o.fps
       const p: PathSample = path.sample(time)
-      setHour(p.hour)
+      setHour(HOUR_Q ? hourOf(HOUR_Q) : p.hour)
       // each framing's lens and shift from the path (a hold's from its still), eased between keys
       const hfov = o.framing === 'phone' ? p.phone.hfov : p.hfov
       const shift = o.framing === 'phone' ? p.phone.shift : p.shift
