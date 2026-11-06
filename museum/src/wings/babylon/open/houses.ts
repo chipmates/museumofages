@@ -113,7 +113,11 @@ export function rebuildHouses(boxes: MapBox[], ground: (x: number, z: number) =>
         else put(i, `${name}${r}`, a0, a1, b0 + (b1 - b0) * f0, b0 + (b1 - b0) * f1, g + h, ends | (seam << 2))
       }
     })
-    put(4, 'court', u0 - 0.01, u1 + 0.01, v0 - 0.01, v1 + 0.01, g + 0.12)
+    // the floor 12 cm over the ground at the lot's centre, and 3 cm over the highest ground across the court (its corners, mids
+    // and centre; the map's own settling margin), so a slope never rises through it
+    let gc = -Infinity
+    for (const a of [u0 - 0.01, ou, u1 + 0.01]) for (const c of [v0 - 0.01, ov, v1 + 0.01]) gc = Math.max(gc, ground(ox + ca[0]! * a + cb[0]! * c, oz + ca[1]! * a + cb[1]! * c))
+    put(4, 'court', u0 - 0.01, u1 + 0.01, v0 - 0.01, v1 + 0.01, Math.max(g + 0.12, gc + 0.03))
     houseTrays(trays, R2, k, { W, D, u0, u1, v0, v1, base, g, yaw, ox, oz })
   }
   const parted = partTops(out)
