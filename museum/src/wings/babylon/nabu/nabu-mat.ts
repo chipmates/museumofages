@@ -96,6 +96,11 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const washed = plasterWash(P, n, col.plaster, FLAT, { pix: uNabuPix, floor: F.pave, course: WG.course, brick: WG.brick, joint: WG.joint, mud: col.apron, coat: washCoat })
   const grainRel = washed.div(plasterWash(P, n, col.plaster, FLAT))
   const courtFace = max(any(SURF.courtWall, SURF.altar), any(SURF.merlon, SURF.coping).mul(inBox(F.court, 1.4)))
+  // the court's faces are seen close: their trowel strokes three times tighter and lower, so a near wall keeps detail
+  // instead of soft blotches (the strokes stay as they are where the temple is seen from afar)
+  const strokeNear = mx_noise_float(P.mul(vec3(4.8, 9.6, 4.8)).add(7.3)).mul(np.wash.near.tight).mul(float(1).sub(smoothstep(0.0035, 0.02, fw)))
+    .add(stroke.mul(np.wash.near.stroke))
+  plaster = mix(plaster, plaster.mul(float(1).add(strokeNear).sub(stroke)), courtFace)
   plaster = mix(plaster, plaster.mul(grainRel), courtFace)
   const relL = dot(grainRel, vec3(0.2126, 0.7152, 0.0722))
 
@@ -240,9 +245,11 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const dCorner = length(vec2(min(P.x.sub(c.x0), float(c.x1).sub(P.x)), min(P.z.sub(c.z0), float(c.z1).sub(P.z))))
   const dustMottle = mx_noise_float(vec3(P.x.mul(1.3), 4.7, P.z.mul(1.3))).mul(0.6).add(mx_noise_float(vec3(P.x.mul(3.1), 9.2, P.z.mul(3.1))).mul(0.4))
   const dustFine = mx_noise_float(P.mul(vec3(45, 1, 45)).add(6.1)).mul(keepF(1 / 45)).mul(0.65).add(mx_noise_float(P.mul(vec3(110, 1, 110)).add(1.9)).mul(keepF(1 / 110)).mul(0.35))
-  const film = clamp(float(DU.cover).add(drift.mul(DU.drift)).add(float(1).sub(smoothstep(0.1, DU.footW, pv.dWall)).mul(DU.foot))
-    .add(float(1).sub(smoothstep(0.3, DU.cornerW, dCorner)).mul(DU.corner)).add(dustMottle.mul(DU.mottle))
-    .mul(float(1).sub(trod.mul(DU.swept))).mul(float(1).add(dustGrain.mul(DU.grain)).add(dustFine.mul(DU.fine))), 0, DU.max)
+  const filmBase = float(DU.cover).add(drift.mul(DU.drift)).add(float(1).sub(smoothstep(0.1, DU.footW, pv.dWall)).mul(DU.foot))
+    .add(float(1).sub(smoothstep(0.3, DU.cornerW, dCorner)).mul(DU.corner)).add(dustMottle.mul(DU.mottle)).mul(float(1).sub(trod.mul(DU.swept)))
+  // a deep drift lies smoother than a thin film: its fine unevenness calms where the dust is thick
+  const calm = float(1).sub(smoothstep(0.3, 0.7, filmBase).mul(DU.calm))
+  const film = clamp(filmBase.mul(float(1).add(dustGrain.mul(DU.grain).add(dustFine.mul(DU.fine)).mul(calm))), 0, DU.max)
   skin = mix(skin, V(DU.colour), film)
   // where feet have worn it thin the skin sinks a little into the joint under it: a faint dark line the film does not fill
   skin = skin.mul(float(1).sub(jl.mul(footWorn).mul(SK.sinkThin)))
@@ -266,6 +273,23 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const worn = smoothstep(0.1, 0.45, mx_noise_float(P.mul(vec3(2.2, 3.0, 2.2))).add(mx_noise_float(P.mul(7.0)).mul(0.25)))
   block = mix(block, V(col.apron).mul(1.2), isAltar.mul(worn.mul(0.1)))
   block = mix(block, mix(block, earth, 0.35).mul(0.88), isAltar.mul(smoothstep(0.5, 0.9, n.y)))
+  // knocks thin the wash along each block's arrises, a ragged band to the mud plaster under it; the court's dust settles
+  // at the blocks' feet, the floor's film climbing a hand's breadth
+  const AW = np.altarWear
+  let arrisD: N = float(9)
+  for (const a of F.altar) {
+    const dx = min(P.x.sub(a.x0), float(a.x1).sub(P.x)), dz = min(P.z.sub(a.z0), float(a.z1).sub(P.z)), dt = float(a.top).sub(P.y)
+    const on = step(-0.01, min(min(dx, dz), dt))
+    const d = select(abs(n.y).greaterThan(0.5), min(dx, dz), select(abs(n.x).greaterThan(0.5), min(dz, dt), min(dx, dt)))
+    arrisD = min(arrisD, mix(float(9), d, on))
+  }
+  const rag = mx_noise_float(P.mul(vec3(14, 14, 14)).add(2.6)).mul(0.6).add(mx_noise_float(P.mul(vec3(37, 37, 37)).add(0.8)).mul(0.4))
+  const arrisW = float(AW.arris[0]).add(rag.add(0.5).clamp(0, 1).mul(AW.arris[1] - AW.arris[0]))
+  const arrisK = float(1).sub(smoothstep(arrisW.mul(0.35), arrisW, arrisD)).mul(AW.arrisMix)
+  block = mix(block, V(col.apron), isAltar.mul(arrisK))
+  const footH = P.y.sub(F.pave), footW = float(AW.foot[0]).add(rag.add(0.5).clamp(0, 1).mul(AW.foot[1] - AW.foot[0]))
+  const footK = float(1).sub(smoothstep(footW.mul(0.3), footW, footH)).mul(AW.footMix).mul(float(1).sub(smoothstep(0.5, 0.9, n.y)))
+  block = mix(block, V(PV.skin.dust.colour), isAltar.mul(footK))
   stateCol = mix(stateCol, block, max(isAltar, isPed))
   /* ── the doors: cedar leaves, boards about 22 cm wide down their length, the grain long, weathered grey toward the
      foot; a sill of plain baked brick, worn ── */
