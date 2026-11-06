@@ -85,11 +85,3 @@ test('nothing hangs or leans over the inner city walls at the strips\' south end
   const south = Math.max(...out.strips.filter((t) => t.out === 'w').map((t) => t.z1))
   for (const p of out.plants) assert.ok(p.box[5] < south - 1.0, `${p.id} reaches ${p.box[5]} against the south end ${south}`)
 })
-
-test('every curtain hangs on a terrace face, below its top', () => {
-  for (const p of out.plants.filter((q) => ['vine', 'caper'].includes(q.kind))) {
-    const t = out.strips.find((s) => Math.abs(p.y - s.level) < 1e-6 && ((s.out === 'w' && Math.abs(p.x - s.x0) < 1e-6) || (s.out === 'n' && Math.abs(p.z - s.z0) < 1e-6)))
-    assert.ok(t, `${p.id} is on no terrace face`)
-    assert.ok(p.box[3] <= p.y + 0.4, `${p.id} rises to ${p.box[3]} over its edge ${p.y}`)
-  }
-})

@@ -5,7 +5,7 @@
    a timed camera path. Dev only; the rig `window.__map` takes the stills and the
    moving sketch.
 
-     ?view=classes   each body's record classes (in place, known, guessed) in three tones: its plan row in a
+     ?view=classes   each body's record classes (five on two sides, record.ts) in three tones: its plan row in a
                      band at its foot, its body row above (record.ts), at the stop the camera is at
      ?tower=built|dug|bruegel|bruegel-show   the tower switch: Etemenanki as the record reads it, as excavated, or
                      Bruegel's painted tower (bruegel-show: the showpiece at the painting's figure scale), at one camera
