@@ -30,7 +30,7 @@ import { buildGate, gateFrame, hourOf, type V3 } from './gate-geom'
 import { animalField } from './gate-relief'
 import { assemble, panelGrid } from './gate-mesh'
 import { birdsGeometry, palmsGeometry } from './gate-life'
-import { bakePanel, lifeMaterial, makeUniforms, panelMaterial, pavingMaterial, processionLine, wallMaterial, C as COURSE, type LinePoint, type Rooms } from './gate-mat'
+import { bakePanel, lifeMaterial, makeUniforms, panelMaterial, pavingMaterial, processionLine, uMouth, wallMaterial, C as COURSE, type LinePoint, type Rooms } from './gate-mat'
 import { isLetter, recordNamer, type ClassFile, type Letter, type Pieces } from '../record'
 import { NO_ROWS, bodyTones, panelTones, pavingTones, toneGateWalls, toneMapBodies } from '../record-tones'
 
@@ -196,7 +196,20 @@ const rooms: Rooms = {
     { x0: -MG.chamber[1] / 2 - 0.05, x1: MG.chamber[1] / 2 + 0.05, z0: zMch1 - 0.05, z1: zMch0 + 0.05, y1: MG.wallTop.value - 0.6, open: 0.22 },
     { x0: -hd - 0.05, x1: hd + 0.05, z0: zMS + 0.65, z1: zMch1, y1: MG.arch.crown + 0.05, open: 0.5 },
   ],
+  // the mouths onto the forecourt and the street; the court's two at its own openness
+  mouths: [
+    { z: 0, out: 1, hw: hd, h: FG.arch.crown, lit: 1 },
+    { z: zBack, out: -1, hw: hd, h: FG.arch.crown, lit: 0.55 },
+    { z: zM0, out: 1, hw: hd, h: MG.arch.crown, lit: 0.55 },
+    { z: zMS, out: -1, hw: hd, h: MG.arch.crown, lit: 1 },
+  ],
+  hue: (() => {
+    const c = plan.light.bounce.paving.colour as [number, number, number], l = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
+    return [c[0] / l, c[1] / l, c[2] / l] as [number, number, number]
+  })(),
 }
+// trial knobs for the mouths' bounce (the defaults are the page's)
+for (const k of ['reach', 'give', 'top', 'glaze'] as const) { const v = q.get('m' + k[0]!.toUpperCase() + k.slice(1)); if (v !== null) uMouth[k].value = Number(v) }
 
 const gate = new Group()
 gate.name = 'gate'
@@ -480,10 +493,13 @@ if (IDS === '1' || IDS === '2') {
       m.material = f
     }
     else if (IDS === '2' && m.material === OTHER) m.material = flat(0.5, 0.5, 0.5)
-    else if (IDS === '2' && n === 'gate-paving') {
-      // the apron (the brick beside the street's stone bands) orange, the bands yellow; south of the court the street is on x
+    else if (IDS === '2' && n.startsWith('gate-paving')) {
+      // the apron (the brick beside the street's stone bands) orange, the bands yellow; south of the court the street is on x;
+      // the paving south of the south mouth white (the street beyond, apart from the passage's floor)
       const f = flat(1, 1, 0), outer = (plan.street.paving.limestone * plan.street.paving.limestoneN) / 2 + plan.street.paving.breccia * plan.street.paving.brecciaN
-      f.colorNode = mix(vec3(1, 1, 0), vec3(1, 0.5, 0), step(outer, abs(positionLocal.x)).mul(step(positionLocal.z, -41)))
+      const pg = uW2G.mul(vec4(positionWorld, 1)).xyz
+      const apron = n === 'gate-paving' ? step(outer, abs(positionLocal.x)).mul(step(positionLocal.z, -41)) : float(0)
+      f.colorNode = mix(mix(vec3(1, 1, 0), vec3(1, 0.5, 0), apron), vec3(1, 1, 1), step(pg.z, zMS))
       f.maskNode = mask ?? null
       m.material = f
     }

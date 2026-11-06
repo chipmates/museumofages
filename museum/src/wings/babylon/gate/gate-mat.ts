@@ -161,7 +161,20 @@ const lionFrieze = (u: N, yf: N, fu: N, fy: N): { col: N; inside: N } => {
 }
 
 /* ── the analytic sky openness of the chambers and passages (the stack has no GI; the bounce and sky are modelled) ── */
-export interface Rooms { boxes: Array<{ x0: number; x1: number; z0: number; z1: number; y1: number; open: number }> }
+export interface Rooms {
+  boxes: Array<{ x0: number; x1: number; z0: number; z1: number; y1: number; open: number }>
+  /** the mouths onto the open: a rectangle in the plane z (half-width hw, height h over the floor), `out` the side the open
+      lies on (-1 south), `lit` the light of the open beyond it as a share of the street's (the court between the gates less) */
+  mouths?: Array<{ z: number; out: 1 | -1; hw: number; h: number; lit: number }>
+  /** the paving's colour as a hue (luminance 1): the open street's bounce through a mouth */
+  hue?: [number, number, number]
+}
+/** the open street's bounce through the mouths: the reach of a mouth's view (its area's scale: 3, as the passage's floor
+    and walls carry the light on past the direct view), the share of the hidden sky the lit open gives back at a mouth
+    (1.5: at the mouth's floor line the passage stays darker than the street beyond), and the glaze's
+    own base gloss inside the rooms (1 off); the give-back held under `top`, so the floor just inside a mouth, under the vault,
+    stays darker than the street beyond it */
+export const uMouth = { reach: uniform(3), give: uniform(1.5), top: uniform(0.45), glaze: uniform(1) }
 const openness = (rooms: Rooms, p: N): { open: N; inside: N } => {
   let o: N = float(1), inside: N = float(0)
   for (const r of rooms.boxes) {
@@ -178,10 +191,29 @@ const openness = (rooms: Rooms, p: N): { open: N; inside: N } => {
 /** the rooms' light on a material: without the sky field the openness takes sky and bounce together; under it the
     field takes the sky a point cannot see, so the openness steps aside and stays on the ground bounce alone, which a
     room's floor gives in the sky's hue (open/sky-set.ts, skyGroundNode) */
-export function roomLight(m: Material, rooms: Rooms, p: N): void {
+export function roomLight(m: Material, rooms: Rooms, p: N, glaze?: N): void {
   const r = openness(rooms, p)
-  ;(m as unknown as { aoNode: N }).aoNode = mix(r.open, float(1), uSkySet)
-  ;(m as unknown as { skyGroundNode: N }).skyGroundNode = vec2(r.open, r.inside)
+  // a point's view of the open through the mouths: half its hemisphere at the mouth, falling off as the opening's
+  // projected share (area over area plus 2 pi d squared), d its distance to the opening's rectangle on the room's side
+  let s: N = float(0)
+  for (const mo of rooms.mouths ?? []) {
+    const A = uMouth.reach.mul(2 * mo.hw * mo.h)
+    const dz = max(p.z.sub(mo.z).mul(-mo.out), 0), dx = max(abs(p.x).sub(mo.hw), 0), dy = max(p.y.sub(mo.h), 0)
+    const d2 = dz.mul(dz).add(dx.mul(dx)).add(dy.mul(dy))
+    // only on the room's side: the open beyond keeps its own room's openness
+    const side = step(0, p.z.sub(mo.z).mul(-mo.out))
+    s = max(s, A.div(A.add(d2.mul(2 * Math.PI))).mul(side).mul(0.5 * mo.lit))
+  }
+  s = s.mul(r.inside)
+  // the floor near a mouth is lit by the open, so the room's ground bounce rises toward it and keeps the open's hue
+  const open = r.open.add(float(1).sub(r.open).mul(s))
+  ;(m as unknown as { aoNode: N }).aoNode = mix(open, float(1), uSkySet)
+  ;(m as unknown as { skyGroundNode: N }).skyGroundNode = vec2(open, r.inside.mul(float(1).sub(s)))
+  // the lit street and fronts beyond a mouth stand where the field counts hidden sky: their warm light given back
+  if (rooms.hue) (m as unknown as { skyBounceNode: N }).skyBounceNode = vec3(...rooms.hue).mul(min(s.mul(uMouth.give), uMouth.top))
+  /* a glaze's gloss in a room is its coat's (the weight handed in is the clear coat's): the base layer's mirror there took the environment's sunlit east-walls band
+     (no wall of the forecourt is in view inside), and the field's correction drove its green and blue below nothing */
+  if (glaze) (m as unknown as { specularIntensityNode: N }).specularIntensityNode = float(1).sub(glaze.mul(r.inside).mul(uMouth.glaze))
 }
 
 /* ── the wall material: every body of the gate's soup ── */
@@ -237,7 +269,7 @@ export function wallMaterial(U: GateUniforms, rooms: Rooms): Material {
   // the glaze is glass fired on the brick: a clear coat over it in the full state
   m.clearcoatNode = mix(select(U.uState.lessThan(1.5), float(0), glazed), float(0), U.uSwitch)
   m.clearcoatRoughnessNode = float(0.06)
-  roomLight(m, rooms, p)
+  roomLight(m, rooms, p, m.clearcoatNode)
   return m
 }
 
@@ -405,7 +437,7 @@ export function panelMaterial(U: GateUniforms, maps: PanelMaps, schemes: Array<[
   })()
   m.receivedShadowNode = Fn(([shadow]: [N]) => shadow.mul(selfShadow))
   // the point in the gate's frame from the instance's own origin (iO), not from positionLocal, which the instancing rewrites
-  roomLight(m, rooms, attribute('iO', 'vec3').add(iU.mul(u)).add(vec3(0, v, 0)))
+  roomLight(m, rooms, attribute('iO', 'vec3').add(iU.mul(u)).add(vec3(0, v, 0)), m.clearcoatNode)
   return m
 }
 
