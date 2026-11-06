@@ -28,7 +28,7 @@ type N = any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
 const T = TSL as unknown as Record<string, N>
-const { abs, atan, attribute, cameraPosition, clamp, dot, exp, float, floor, fract, length, max, min, mix, mx_noise_float, normalize, positionWorld, reflect, select, smoothstep, sqrt, step, uniform, vec2, vec3 } = T
+const { abs, atan, attribute, cameraPosition, clamp, dot, exp, float, floor, fract, length, max, min, mix, mx_noise_float, mx_worley_noise_vec2, normalize, positionWorld, reflect, select, smoothstep, sqrt, step, uniform, vec2, vec3 } = T
 
 type RGB = [number, number, number]
 const V = (c: RGB): N => vec3(...c)
@@ -195,7 +195,15 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
      the altars, at the side doors); thin over the bricks' arrises in patches, so the joints ghost faintly. Never bare
      brick, never the bed laid open ── */
   const SK = PV.skin
-  const inNabu = inBox(c, 0.03)
+  // the side doors' passages carry the court's skin through to the rooms' sills; dJamb, the distance to a passage's side
+  let inSide: N = float(0), inPass: N = float(0), dJamb: N = float(9)
+  for (const d of F.doors.filter((e) => e.wall === 'x' && e.id !== 'gate')) {
+    const inP = inBox(d.box, 0.02)
+    inSide = max(inSide, inP)
+    inPass = max(inPass, inBox(d.box, -0.01))
+    dJamb = min(dJamb, mix(float(9), float(d.w / 2).sub(abs(P.z.sub(d.c))), inP))
+  }
+  const inNabu = max(inBox(c, 0.03), inSide)
   const fpx = footprint(U, vec3(1, 0, 0), n), fpz = footprint(U, vec3(0, 0, 1), n)
   const keepF = (lambda: number): N => smoothstep(max(fpx, fpz).mul(2), max(fpx, fpz).mul(4), float(lambda))
   let dAltar: N = float(9)
@@ -205,9 +213,12 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const wt = clamp(P.x.sub(wx).mul(vx).add(P.z.sub(wz).mul(vz)).div(vx * vx + vz * vz), 0, 1)
   const wd = length(vec2(P.x.sub(wx).sub(wt.mul(vx)), P.z.sub(wz).sub(wt.mul(vz))))
   let trod: N = max(exp(wd.div(0.9).mul(wd.div(0.9)).negate()), exp(dAltar.sub(0.35).div(0.45).mul(dAltar.sub(0.35).div(0.45)).negate()).mul(0.8))
+  // a side door's mouth: feet and the air through the doorway keep the wall's foot clear of drift there
+  let mouth: N = float(0)
   for (const d of more) {
     const dd = length(vec2(P.x.sub(d.x), P.z.sub(d.z)))
     trod = max(trod, exp(dd.div(1.1).mul(dd.div(1.1)).negate()).mul(0.7))
+    mouth = max(mouth, exp(dd.div(SK.dust.mouth).mul(dd.div(SK.dust.mouth)).negate()))
   }
   trod = clamp(trod.mul(float(0.75).add(mx_noise_float(vec3(P.x.mul(0.7), 2.3, P.z.mul(0.7))).mul(0.5))), 0, 1)
   const temper = mx_noise_float(P.mul(vec3(90, 1, 90))).mul(keepF(1 / 90)).mul(0.5).add(mx_noise_float(P.mul(vec3(38, 1, 38)).add(4.4)).mul(keepF(1 / 38)).mul(0.4))
@@ -235,24 +246,41 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const grit = smoothstep(0.35, 0.6, mx_noise_float(P.mul(vec3(150, 1, 150)).add(7.7))).mul(keepF(1 / 75))
   skin = skin.mul(float(1).add(grit.mul(SK.grit)))
   skin = mix(skin, V(SK.scuffed), scuff)
-  /* the dust of crumbled mud brick the wind lays on any open floor (bab.wear.dust.drift, guessed): a thin film in
-     drifts, thicker at the walls' feet and in the corners, swept thin on the trodden lines, a soft mottle between and
-     its own fine unevenness; matte, laid over the skin whole, blind to the brick under it */
+  // soles scuff and polish the trodden skin unevenly at a hand's scale: its tone and sheen vary there, their mean kept
+  const tread = mx_noise_float(P.mul(vec3(26, 1, 26)).add(4.1)).mul(0.6).add(mx_noise_float(P.mul(vec3(43, 1, 43)).add(1.7)).mul(0.4)).mul(keepF(1 / 26)).mul(trod)
+  skin = skin.mul(float(1).add(tread.mul(SK.tread[0])))
+  /* the dust of crumbled mud brick the wind lays on any open floor (bab.wear.dust.drift, guessed): gathered into
+     drifts where the air stills (the walls' feet, the blocks' feet, the corners, a few slow patches, the hollows that
+     wear opened), a thin film on the open skin and thinner on the trodden lines; matte, blind to the brick under it */
   const DU = SK.dust
-  const drift = smoothstep(0.1, 0.8, mx_noise_float(vec3(P.x.mul(0.4), 8.1, P.z.mul(0.4))).add(0.5))
+  const fpM = max(fpx, fpz)
+  // a drift's reach wanders along its wall in lobes a metre or two long, so its edge is never ruled
+  const lobe = mx_noise_float(vec3(P.x.mul(0.9), 2.9, P.z.mul(0.9))).mul(0.85).add(mx_noise_float(vec3(P.x.mul(2.3), 6.3, P.z.mul(2.3))).mul(0.15))
+  const reach = (w: number): N => float(w).mul(float(1).add(lobe.mul(DU.lobe)))
+  const dCorner = length(vec2(min(P.x.sub(c.x0), float(c.x1).sub(P.x)), min(P.z.sub(c.z0), float(c.z1).sub(P.z))))
+  const footDrift = float(1).sub(smoothstep(reach(DU.footW * DU.plateau), reach(DU.footW), mix(pv.dWall, dJamb.mul(3), inSide))).mul(float(1).sub(mouth))
+  const cornerDrift = float(1).sub(smoothstep(0.3, reach(DU.cornerW), dCorner)).mul(float(1).sub(inSide))
+  const blockDrift = float(1).sub(smoothstep(0.02, reach(DU.blockW), dAltar))
+  const drift = smoothstep(DU.open[0], DU.open[1], mx_noise_float(vec3(P.x.mul(0.4), 8.1, P.z.mul(0.4))).add(0.5))
+  // hairline cracks in the mastic, a millimetre wide, in patches and broken into short runs (never a closed net), seen only
+  // near; dust settles in them
+  const cw = mx_worley_noise_vec2(vec2(P.x, P.z).mul(SK.crack[0]))
+  const crackW = float(SK.crack[1])
+  const crack = float(1).sub(smoothstep(crackW.mul(0.5), crackW.add(fpM), cw.y.sub(cw.x).div(2 * SK.crack[0])))
+    .mul(min(crackW.div(max(fpM, 1e-4)), 1)).mul(smoothstep(0.0, 0.4, mx_noise_float(vec3(P.x.mul(1.1), 5.1, P.z.mul(1.1)))))
+    .mul(smoothstep(0.05, 0.35, mx_noise_float(vec3(P.x.mul(14), 3.4, P.z.mul(14))))).mul(keepF(0.015))
+  // the joints' hollows where feet wore the skin into them fill with dust (by sinkThin, so the lattice share stays measured)
+  const hollow = jl.mul(footWorn).mul(SK.sinkThin).mul(DU.hollow)
   const dustGrain = mx_noise_float(P.mul(vec3(9, 1, 9)).add(3.3)).mul(0.5).add(mx_noise_float(P.mul(vec3(19, 1, 19)).add(8.4)).mul(0.35).mul(keepF(1 / 19)))
     .add(mx_noise_float(P.mul(vec3(31, 1, 31)).add(5.9)).mul(0.45).mul(keepF(1 / 31)))
-  const dCorner = length(vec2(min(P.x.sub(c.x0), float(c.x1).sub(P.x)), min(P.z.sub(c.z0), float(c.z1).sub(P.z))))
   const dustMottle = mx_noise_float(vec3(P.x.mul(1.3), 4.7, P.z.mul(1.3))).mul(0.6).add(mx_noise_float(vec3(P.x.mul(3.1), 9.2, P.z.mul(3.1))).mul(0.4))
   const dustFine = mx_noise_float(P.mul(vec3(45, 1, 45)).add(6.1)).mul(keepF(1 / 45)).mul(0.65).add(mx_noise_float(P.mul(vec3(110, 1, 110)).add(1.9)).mul(keepF(1 / 110)).mul(0.35))
-  const filmBase = float(DU.cover).add(drift.mul(DU.drift)).add(float(1).sub(smoothstep(0.1, DU.footW, pv.dWall)).mul(DU.foot))
-    .add(float(1).sub(smoothstep(0.3, DU.cornerW, dCorner)).mul(DU.corner)).add(dustMottle.mul(DU.mottle)).mul(float(1).sub(trod.mul(DU.swept)))
+  const filmBase = float(DU.cover).add(dustMottle.mul(DU.mottle)).add(footDrift.mul(DU.foot)).add(cornerDrift.mul(DU.corner)).add(drift.mul(DU.drift))
+    .mul(float(1).sub(trod.mul(DU.swept))).add(blockDrift.mul(DU.block).mul(float(1).sub(trod.mul(DU.swept * 0.5)))).add(hollow).add(crack.mul(DU.crack))
   // a deep drift lies smoother than a thin film: its fine unevenness calms where the dust is thick
   const calm = float(1).sub(smoothstep(0.3, 0.7, filmBase).mul(DU.calm))
   const film = clamp(filmBase.mul(float(1).add(dustGrain.mul(DU.grain).add(dustFine.mul(DU.fine)).mul(calm))), 0, DU.max)
   skin = mix(skin, V(DU.colour), film)
-  // where feet have worn it thin the skin sinks a little into the joint under it: a faint dark line the film does not fill
-  skin = skin.mul(float(1).sub(jl.mul(footWorn).mul(SK.sinkThin)))
   floorCol = mix(floorCol, skin, inNabu)
 
   /* ── the roof's earth deck and the open ground before the gate ── */
@@ -305,6 +333,10 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const sillCol = V(col.sill).mul(float(1).add(mx_noise_float(P.mul(3.3)).mul(0.12)).add(hash2(floor(P.x.div(0.33)), floor(P.z.div(0.33))).sub(0.5).mul(0.1)))
   stateCol = mix(stateCol, wood, isLeaf)
   stateCol = mix(stateCol, sillCol, isSill)
+  // between the wall's faces a side door's sill top carries the court's skin; its lips and risers stay baked brick
+  const passTop = isSill.mul(step(0.5, n.y)).mul(inPass)
+  // dust lodges on a sill top in the lee of its leaf, as a film
+  stateCol = mix(stateCol, mix(skin, V(PV.skin.dust.colour), float(PV.skin.dust.sill)), passTop)
   // bitumen keeps a dull sheen; plaster and earth are matte
   const shiny = max(inked, is(SURF.black)).add(is(SURF.paving).mul(float(PV.sheen).sub(pv.wear.mul(0.25))))
   // the coat's gloss with its thickness; the leaves' wood oiled to a faint sheen
@@ -312,8 +344,8 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   let rough0: N = mix(float(0.92), mix(float(0.42), coatRough.add(brush.mul(0.12)), max(inked, is(SURF.black))), clamp(shiny, 0, 1))
   // feet polish the skin where it shows on the trodden ways: a low, broad sheen, its roughness kept free of the fine octaves
   const polish = clamp(trod.mul(float(1).sub(film.div(DU.max))).mul(SK.polish[1]), 0, 1)
-  const skinRough = mix(mix(float(SK.rough[0]), float(SK.rough[1]), clamp(scuff.mul(1.6), 0, 1)).add(temper.mul(SK.temperRough)).add(perBrick.mul(thinSkin).mul(SK.brickRough)), float(SK.polish[0]).add(perBrick.mul(thinSkin).mul(SK.brickRough * 0.4)), polish).sub(jl.mul(footWorn).mul(0.1))
-  rough0 = mix(rough0, mix(skinRough, float(0.97), film), is(SURF.paving).mul(inNabu))
+  const skinRough = mix(mix(float(SK.rough[0]), float(SK.rough[1]), clamp(scuff.mul(1.6), 0, 1)).add(temper.mul(SK.temperRough)).add(perBrick.mul(thinSkin).mul(SK.brickRough)), float(SK.polish[0]).add(perBrick.mul(thinSkin).mul(SK.brickRough * 0.4)).add(tread.mul(SK.tread[1])), polish).sub(jl.mul(footWorn).mul(0.1))
+  rough0 = mix(rough0, mix(skinRough, float(0.97), smoothstep(0, DU.matte, film)), max(is(SURF.paving).mul(inNabu), passTop))
   m.roughnessNode = mix(mix(rough0, float(0.7), is(SURF.leaf)), float(0.92), uView)
 
   /* ── the light the stack does not carry. A room is lit only through its doors: strongest in front of each, falling
@@ -449,7 +481,7 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
      bounce terms above assume (the walls' rise, the tops' tint and held-back specular); the paving, whose view factor
      the field's own sky replaces, at 1 + 0.9 x hidden: the field hides about three times the sky the floor term's
      view factor did, and the walls' gain (+0.6 x hidden on the whole light) is fitted to the hidden share alone */
-  const onPave = is(SURF.paving).mul(inCourt)
+  const onPave = max(is(SURF.paving).mul(inCourt), passTop)
   const ownCourt = max(is(SURF.courtWall), isAltar)
   /* the paving's give-back in the walls' own colour, not the hidden sky's: each wall as the floor sees it (its view
      factor), white plaster lit by half the sky, by the sun on its lit share and by the dark floor's own sunlit bounce
@@ -459,9 +491,11 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const floorUp = V(PB.floor).mul(uNabuLight.sunIrr).mul(sunY.mul(PB.floorSun))
   for (const [d, [nx, nz], across] of walls) {
     const onFace = min(max(dot(uNabuLight.sun, vec3(nx, 0, nz)), 0), sunY.mul(across / HW))
-    floorWalls = floorWalls.add(uNabuLight.sky.mul(0.5).add(uNabuLight.sunIrr.mul(onFace)).add(floorUp).mul(wallView(max(d, 0.05))))
+    // a sill top inside its passage sees out past its own wall's thickness, not that wall's face
+    floorWalls = floorWalls.add(uNabuLight.sky.mul(0.5).add(uNabuLight.sunIrr.mul(onFace)).add(floorUp).mul(wallView(max(d, 0.05)).mul(mix(float(1), step(0.0, d), passTop))))
   }
-  const floorTint = mix(vec3(1), hue(floorWalls.mul(V(col.plaster))).div(hue(uNabuLight.sky)), float(PB.hue))
+  // a sill top under its passage's lintel sees the court's walls and floor more than the sky
+  const floorTint = mix(vec3(1), hue(floorWalls.mul(V(col.plaster))).div(hue(uNabuLight.sky)), mix(float(PB.hue), float(PB.passHue), passTop))
   ;(m as unknown as { skyBounceNode: N }).skyBounceNode = vec3(float(1).add(hidden.mul(PB.k)).mul(onPave)).mul(mix(vec3(1), floorTint, onPave)).add(ownCourt)
   ;(m as unknown as { skyMirrorNode: N }).skyMirrorNode = max(onPave, ownCourt)
   ;(m as unknown as { receivedShadowNode: (s: N) => N }).receivedShadowNode = (shadow: N): N => shadow.mul(float(1).sub(indoors)).mul(courtSun)
