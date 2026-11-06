@@ -77,8 +77,6 @@
   {"match": "^map:garden-pomegranate-", "part": "the garden's plants (stop 5)", "piece": "bab.green.pomegranate"},
   {"match": "^map:garden-fig-", "part": "the garden's plants (stop 5)", "piece": "bab.green.fig"},
   {"match": "^map:garden-shrub-", "part": "the garden's plants (stop 5)", "piece": "bab.gardens.plants"},
-  {"match": "^map:garden-vine-", "part": "the garden's hanging green (stop 5)", "piece": "bab.green.vine"},
-  {"match": "^map:garden-caper-", "part": "the garden's hanging green (stop 5)", "piece": "bab.green.hanging"},
   {"match": "^map:north-palace-terrace$", "part": "the North Palace terrace", "piece": "bab.northpalace.terrace"},
   {"match": "^map:north-palace-main$", "part": "the North Palace", "piece": "bab.northpalace.main.body", "plan": "bab.northpalace.main.plan"},
   {"match": "^map:gardens-edge-", "part": "the edge terraces (the gardens question)", "piece": "bab.gardens.northpalace"},
