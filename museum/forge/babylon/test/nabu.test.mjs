@@ -98,6 +98,16 @@ test("the court's altars stand before the cella's door, inside the court, clear 
   for (const by of out.altar.slice(2)) assert.ok(by.x1 <= cella.box.x0 || by.x0 >= cella.box.x1, "a low block in the cella's door")
 })
 
+test("a side door's sill sits inside its wall's faces and ends in its jambs, never out on the court's floor", () => {
+  out.doors.forEach((d, i) => {
+    if (d.wall !== 'x' || d.id === 'gate') return
+    const s = out.doorBoxes.sill[i]
+    assert.ok(s[0] >= d.box.x0 && s[1] <= d.box.x1, `${d.id}: sill past a wall face (${s[0].toFixed(3)} to ${s[1].toFixed(3)})`)
+    assert.ok(s[4] >= d.c - d.w / 2 - 0.03 && s[5] <= d.c + d.w / 2 + 0.03, `${d.id}: sill more than 3 cm into a jamb`)
+    assert.ok(s[4] < d.c - d.w / 2 && s[5] > d.c + d.w / 2, `${d.id}: sill short of a jamb`)
+  })
+})
+
 test('every door has a sill and open leaves standing against its reveal, never across it', () => {
   assert.equal(out.doorBoxes.sill.length, out.doors.length, 'a sill per door')
   for (const l of out.doorBoxes.leaf) {

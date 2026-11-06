@@ -561,7 +561,8 @@ export function buildNabu(built: Built, mapPlan: J, np: J): Nabu {
   }
   const templeAll = join([temple, boxesGeometry(mt, SURF.merlon), boxesGeometry(cope, SURF.coping), boxesGeometry(cm, SURF.merlon), pedestalG])
 
-  // every door: a sill across it, proud of both faces, its ends in the jambs; the leaves (Guessed: wood, hung at the
+  // every door: a sill across it, its ends in the jambs: the gate's and the cella's proud of both faces, a side door's
+  // seated 1 cm inside its wall's faces, so none lies out on the court's floor past a jamb; the leaves (Guessed: wood, hung at the
   // end that opens into a room) standing open against the reveal, 1 cm off it; a door under 1.9 m takes one leaf, on
   // its south side
   const LV = np.leaves, sill: Boxes = [], leaf: Boxes = []
@@ -571,8 +572,9 @@ export function buildNabu(built: Built, mapPlan: J, np: J): Nabu {
     const b = d.box, alongX = d.wall === 'x'
     const a0 = alongX ? b.x0 : b.z0, a1 = alongX ? (d.id === 'gate' ? O.x1 : b.x1) : b.z1
     const half = d.w / 2
-    const sA = a0 - 0.06, sB = a1 + 0.06
-    sill.push(alongX ? { c: [(sA + sB) / 2, (F.pave - 0.03 + sillTop) / 2, d.c], s: [sB - sA, sillTop - F.pave + 0.03, d.w + 0.1] } : { c: [d.c, (F.pave - 0.03 + sillTop) / 2, (sA + sB) / 2], s: [d.w + 0.1, sillTop - F.pave + 0.03, sB - sA] })
+    const seated = alongX && d.id !== 'gate'
+    const sA = seated ? a0 + 0.01 : a0 - 0.06, sB = seated ? a1 - 0.01 : a1 + 0.06, sw = d.w + (seated ? 0.04 : 0.1)
+    sill.push(alongX ? { c: [(sA + sB) / 2, (F.pave - 0.03 + sillTop) / 2, d.c], s: [sB - sA, sillTop - F.pave + 0.03, sw] } : { c: [d.c, (F.pave - 0.03 + sillTop) / 2, (sA + sB) / 2], s: [sw, sillTop - F.pave + 0.03, sB - sA] })
     // the end that opens into a room hangs the leaves
     const at0 = alongX ? inRoom(a0 - 0.1, d.c) : inRoom(d.c, a0 - 0.1)
     const hinge = at0 ? a0 + 0.03 : a1 - 0.03, dir = at0 ? 1 : -1

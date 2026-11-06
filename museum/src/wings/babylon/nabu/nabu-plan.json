@@ -24,33 +24,36 @@
   "src": "baked brick covered with asphalt, guessed as a transfer: the temple's floor 'was black with asphalt' (P2021 p. 278, on the older temple below), Pedersen's model gives this court a 'floor of bricks covered with asphalt' (P2021 p. 171, fig. 4.24), the Ishtar and Ninmah temples had black asphalt floors too (P2021 p. 279), Koldewey found an asphalt covering on the Ninmah court's pavement (K1914 ch. IX); the king's common brick about 33 cm square (P2021 p. 20); the coat's thickness and its wear ours: outside the court a thin coat, every joint full, worn thinner on the walked ways",
   "skin": {
    "colour": [
-    0.0264,
-    0.0255,
-    0.0247
+    0.021,
+    0.023,
+    0.027
    ],
    "scuffed": [
-    0.086,
-    0.082,
-    0.079
+    0.065,
+    0.065,
+    0.07
    ],
    "thin": 0.35,
    "ghost": 0.15,
    "scuff": 0.1,
    "temper": 0.4,
    "rough": [
-    0.92,
-    0.97
+    0.97,
+    0.99
    ],
-   "src": "the court's floor as one black asphalt skin over the brick (bab.nabu.floor, guessed): young, the temple raised late in the reign, so its wear light; the skin a dull, near-neutral black mastic with a fine mineral grain (ours), so the dust's clay warmth parts from it by hue, scuffed lighter on the trodden lines (the court's door to the cella's, round the altars) and polished there by feet to a low, broad sheen where the skin shows through the film (polish: its roughness and share, ours), one continuous skin over the court (the floor 'was black with asphalt', P2021 p. 278; the model's court 'of bricks covered with asphalt', p. 171, fig. 4.24), so no brick's own tone and no grid of joints: the courses telegraph faintly only where the skin is thin, and the joints sink only where feet have worn it thin on the trodden ways, darker than the skin round them and matte, never lit by the dust in them (hollow, ours; the arrises' lift kept off, arris 0); a soft dark line where the floor meets a block, over the drift's reach (contact: its reach in m and its depth, ours), so the dust at a block's foot never reads lighter than the floor beyond it (the stack's ao reaches only the sky's light, so the line is laid in the colour); never bare brick, never the black bed laid open",
+   "src": "the court's floor as one black asphalt skin over the brick (bab.nabu.floor, guessed): young, the temple raised late in the reign, so its wear light; the skin a dull, near-neutral black mastic with a fine mineral grain (ours; its albedo a little cool of neutral so it reads near-neutral under the low, golden sun, a tone choice for the light, not a record), with no polished sheen, so the dust's clay warmth parts from it by hue, scuffed lighter on the trodden lines (the court's door to the cella's, round the altars), feet polishing it there only faintly (polish: its roughness and share, ours), one continuous skin over the court (the floor 'was black with asphalt', P2021 p. 278; the model's court 'of bricks covered with asphalt', p. 171, fig. 4.24), so no brick's own tone and no grid of joints: the courses telegraph faintly only where the skin is thin, and the joints sink only where feet have worn it thin on the trodden ways, darker than the skin round them and matte, never lit by the dust in them (hollow, ours; the arrises' lift kept off, arris 0); a soft dark line where the floor meets a block, darkest at its foot (contact, ours: a short core, its reach in m and depth, then a long gentle falloff past the block's cast shadow, its reach, depth and the share of the reach it holds flat), so the dust at a block's foot never reads lighter than the floor beyond it (the stack's ao reaches only the sky's light, so the line is laid in the colour); never bare brick, never the black bed laid open",
    "joint": 0.006,
    "temperRough": 0.5,
-   "brickTone": 0.1,
+   "brickTone": 0.05,
    "brickRough": 0.15,
    "arris": 0,
    "grit": 0.3,
    "contact": [
-    0.45,
-    0.6
+    0.2,
+    0.15,
+    0.95,
+    0.4,
+    0.3
    ],
    "dust": {
     "colour": [
@@ -58,7 +61,7 @@
      0.35,
      0.26
     ],
-    "cover": 0.06,
+    "cover": 0.03,
     "drift": 0.25,
     "open": [
      0.55,
@@ -69,26 +72,26 @@
     "plateau": 0.2,
     "corner": 0.3,
     "cornerW": 3.0,
-    "block": 0.15,
+    "block": 0,
     "blockW": 0.4,
     "lobe": 0.45,
     "hollow": 0.5,
     "crack": 0.08,
-    "mottle": 0.04,
+    "mottle": 0.02,
     "swept": 0.92,
     "grain": 0.9,
     "fine": 1.6,
     "calm": 0.6,
     "max": 0.9,
     "matte": 0.3,
-    "sill": 0.05,
-    "src": "a thin film of dust over the asphalt (bab.wear.dust.drift, guessed): crumbled mud brick, clay-toned, thicker toward the walls' feet and in the corners and in slow drifts, only a little at the blocks' feet (block) under their contact line, a soft mottle between, swept thin on the trodden lines, blind to the brick under the skin; Koldewey saw mud brick weather to 'a light powdery dust' moved by the summer winds (K1914 ch. XLI, said of the ruins: a modern analogue); its colour a sunlit mud-brick clay, the court's earth a shade redder, its share ours, a little denser where it drifts; a film on the side doors' sill tops in the lee of their leaves (sill, ours); a film, never a heap of sand on the paved court",
+    "sill": 0.2,
+    "src": "a thin film of dust over the asphalt (bab.wear.dust.drift, guessed): crumbled mud brick, clay-toned, thicker toward the walls' feet and in the corners and in slow drifts, none gathered at the blocks' feet (block 0: with the open film thin, a foot drift read as a light rim), a soft mottle between, swept thin on the trodden lines, blind to the brick under the skin; Koldewey saw mud brick weather to 'a light powdery dust' moved by the summer winds (K1914 ch. XLI, said of the ruins: a modern analogue); its colour a sunlit mud-brick clay, the court's earth a shade redder, its share ours, a little denser where it drifts; a film on the side doors' sill tops in the lee of their leaves (sill, ours); a film, never a heap of sand on the paved court",
     "mouth": 1.5
    },
-   "sinkThin": 0.4,
+   "sinkThin": 0.15,
    "polish": [
-    0.6,
-    0.4
+    0.85,
+    0.1
    ],
    "crack": [
     6,
@@ -96,7 +99,7 @@
    ],
    "tread": [
     1.2,
-    0.25
+    0.05
    ]
   },
   "bounce": {
@@ -490,7 +493,7 @@
  "leaves": {
   "t": 0.07,
   "sill": 0.05,
-  "src": "guessed: wooden leaves standing open against each door's reveal, hung at the end that opens into a room, after Pedersen's model (P2021 fig. 4.24); a sill of baked brick across each door, 5 cm over the paving, 6 cm proud of each face; the doors plain, never arched (P2021 p. 168)"
+  "src": "guessed: wooden leaves standing open against each door's reveal, hung at the end that opens into a room, after Pedersen's model (P2021 fig. 4.24); a sill of baked brick across each door, one course laid in bitumen, 5 cm over the paving, its ends in the jambs: the gate's and the cella's 6 cm proud of each face, a side door's seated 1 cm inside its wall's faces; the doors plain, never arched (P2021 p. 168)"
  },
  "altarWear": {
   "arris": [

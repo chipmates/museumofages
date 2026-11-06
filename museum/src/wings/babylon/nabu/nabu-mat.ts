@@ -283,9 +283,12 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const film = clamp(filmBase.mul(float(1).add(dustGrain.mul(DU.grain).add(dustFine.mul(DU.fine)).mul(calm))), 0, DU.max)
   skin = mix(skin, V(DU.colour), film)
   skin = skin.mul(float(1).sub(hollow.mul(DU.hollow)))
-  // a soft dark line where the floor meets a block, over the drift's own reach so the drift is never lighter than the
-  // floor beyond it: the ao node reaches only the sky's light, so in the sun the contact is laid in the colour
-  skin = skin.mul(float(1).sub(float(1).sub(smoothstep(0, reach(SK.contact[0]), dAltar)).mul(SK.contact[1])))
+  // a soft dark line where the floor meets a block, darkest at the foot: a short steep core and a long gentle falloff
+  // past the block's cast shadow, so neither the shadow's edge nor a rim bounds it. The ao node reaches only the sky's
+  // light, so in the sun the contact is laid in the colour
+  const coreT = float(1).sub(clamp(dAltar.div(reach(SK.contact[0])), 0, 1))
+  skin = skin.mul(float(1).sub(coreT.mul(coreT).mul(SK.contact[1])))
+    .mul(float(1).sub(float(1).sub(smoothstep(reach(SK.contact[2] * SK.contact[4]), reach(SK.contact[2]), dAltar)).mul(SK.contact[3])))
   floorCol = mix(floorCol, skin, inNabu)
 
   /* ── the roof's earth deck and the open ground before the gate ── */
@@ -335,7 +338,11 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   let wood: N = V(col.cedar).mul(float(1).add(grainW))
   wood = mix(wood, vec3(0.3, 0.27, 0.23), float(1).sub(smoothstep(0.0, 1.2, y)).mul(0.35))
   wood = mix(wood, wood.mul(0.45), boardJ)
-  const sillCol = V(col.sill).mul(float(1).add(mx_noise_float(P.mul(3.3)).mul(0.12)).add(hash2(floor(P.x.div(0.33)), floor(P.z.div(0.33))).sub(0.5).mul(0.1)))
+  let sillCol: N = V(col.sill).mul(float(1).add(mx_noise_float(P.mul(3.3)).mul(0.12)).add(hash2(floor(P.x.div(0.33)), floor(P.z.div(0.33))).sub(0.5).mul(0.1)))
+  // one course of square bricks laid in bitumen: a riser shows their head joints along its face, a top both ways
+  const onX = abs(n.x).greaterThan(0.5)
+  const sillJ = select(abs(n.y).greaterThan(0.5), max(lines(P.x, 0.33, 0.012, fpx), lines(P.z, 0.33, 0.012, fpz)), lines(select(onX, P.z, P.x), 0.33, 0.012, select(onX, fpz, fpx)))
+  sillCol = mix(sillCol, V(col.bitumen), sillJ.mul(0.85))
   stateCol = mix(stateCol, wood, isLeaf)
   stateCol = mix(stateCol, sillCol, isSill)
   // between the wall's faces a side door's sill top carries the court's skin; its lips and risers stay baked brick
