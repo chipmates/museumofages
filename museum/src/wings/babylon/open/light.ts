@@ -110,8 +110,10 @@ export function sunBox(lightCam: OrthographicCamera, pts: Vector3[], centre: Vec
 /** the near slice's view depth by the camera's height over the plain: the court round an eye at the street, the near
     quarters from the air; never past the far map's reach */
 export const nearDepthOf = (h: number, reach: number, d0 = 24, k = 6): number => Math.min(reach, d0 + h * k)
-/** the near slice's points: the eye and a 5x5 grid of view rays out to `depth` of view depth */
-export function nearSlice(cam: PerspectiveCamera, depth: number): Vector3[] {
+/** the near slice's points: the eye and a 5x5 grid of view rays out to `depth` of view depth, and the ground under each
+    ray's end at that depth: a ray under the horizon ends on the ground short of it, so without these the slice's far
+    ground has no point, and facing a low sun it falls outside the box (a contact there took the far map) */
+export function nearSlice(cam: PerspectiveCamera, depth: number, feet = true): Vector3[] {
   const inv = cam.projectionMatrixInverse, world = cam.matrixWorld, origin = cam.position.clone()
   const tmp = new Vector3()
   const fwd = tmp.set(0, 0, -1).transformDirection(world).clone()
@@ -121,12 +123,14 @@ export function nearSlice(cam: PerspectiveCamera, depth: number): Vector3[] {
   const pts: Vector3[] = [new Vector3(origin.x, clampY(origin.y), origin.z)]
   for (let i = 0; i <= 4; i++) for (let k = 0; k <= 4; k++) {
     const dir = tmp.set(i / 2 - 1, k / 2 - 1, 0.5).applyMatrix4(inv).applyMatrix4(world).sub(origin).normalize().clone()
-    let t = depth / Math.max(1e-3, dir.dot(fwd))
+    const full = depth / Math.max(1e-3, dir.dot(fwd))
+    let t = full
     if (dir.y < -1e-4) t = Math.min(t, (ground - origin.y) / dir.y)
     if (dir.y > 1e-4 && origin.y < 100) t = Math.min(t, (100 - origin.y) / dir.y)
     const p = origin.clone().addScaledVector(dir, Math.max(0, t))
     p.y = clampY(p.y)
     pts.push(p)
+    if (feet && t === full && p.y > ground) pts.push(new Vector3(p.x, ground, p.z))
   }
   return pts
 }
@@ -198,7 +202,7 @@ export function walkLight(o: WalkLightOptions) {
   sunLight.shadow.normalBias = 0.03
   scene.add(sunLight, sunLight.target)
   /* the near map (`?near=0` the far map alone): its own light holder and shadow, fitted in fitShadow below */
-  const NEAR = { on: q.get('near') !== '0', size: Number(q.get('nearMap') ?? 8192), band: 0.06, bias: Number(q.get('nearB') ?? 0), normal: Number(q.get('nearN') ?? 0.5), floor: Number(q.get('nearF') ?? 0.001) }
+  const NEAR = { on: q.get('near') !== '0', size: Number(q.get('nearMap') ?? 8192), band: 0.06, bias: Number(q.get('nearB') ?? 0), normal: Number(q.get('nearN') ?? 0.5), floor: Number(q.get('nearF') ?? 0.001), feet: q.get('nearFoot') !== '0' }
   const holder = new Object3D() as Object3D & { target: Object3D; shadow: N; castShadow: boolean }
   holder.target = new Object3D()
   holder.castShadow = true
@@ -310,9 +314,10 @@ export function walkLight(o: WalkLightOptions) {
   /** the near slice's view depth by the camera's height: the court round an eye at the street, the near quarters from the air */
   const nearDepth = (h: number, reach: number): number => nearDepthOf(h, reach, Number(q.get('nearD') ?? 24), Number(q.get('nearK') ?? 6))
   const nearFacts = { depth: 0, w: 0, h: 0, texel: 0 }
+  const FAR = { floor: Number(q.get('farF') ?? 0.08), bias: Number(q.get('farB') ?? 4), normal: Number(q.get('farN') ?? 0.9) }
   function fitNear(cam: PerspectiveCamera, sun: Vector3, h: number, reach: number): void {
     const depth = nearDepth(h, reach)
-    const pts = nearSlice(cam, depth)
+    const pts = nearSlice(cam, depth, NEAR.feet)
     const centre = pts.reduce((a, p) => a.add(p), new Vector3()).multiplyScalar(1 / pts.length)
     const b = boxOf(pts, centre, sun, 0.02, 0.5)
     holder.position.copy(lightCam.position)
@@ -367,10 +372,10 @@ export function walkLight(o: WalkLightOptions) {
     sc.far = 12000
     sc.updateProjectionMatrix()
     const texel = Math.max(sc.right - sc.left, sc.top - sc.bottom) / 8192
-    sunLight.shadow.normalBias = Math.max(0.03, texel * 0.9)
+    sunLight.shadow.normalBias = Math.max(0.03, texel * FAR.normal)
     // the depth bias is a share of the box's 11 km depth: a fixed -0.0002 let the sun 2.2 m past every caster (sunlit
     // strips at the lion walls' feet in their shade); held to a few texels in metres instead
-    sunLight.shadow.bias = -Math.max(0.08, texel * 4) / (sc.far - sc.near)
+    sunLight.shadow.bias = -Math.max(FAR.floor, texel * FAR.bias) / (sc.far - sc.near)
     if (NEAR.on) fitNear(cam, sun, h, reach)
     return texel
   }
