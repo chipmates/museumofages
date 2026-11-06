@@ -542,6 +542,17 @@ export function pavingMaterial(U: GateUniforms, P: PaveSpec, rooms: Rooms): Mate
   return m
 }
 
+/** the earth banked against the paving's edge in `col` (the streetside earth at the point), grey in the massing state,
+    `cls` in the switch; `p` the gate's frame point the class view's pattern runs on */
+export function bankMaterial(U: GateUniforms, col: N, p: N, cls: number): Material {
+  const m = new MeshStandardNodeMaterial({ roughness: 0.95, metalness: 0 })
+  const fw = U.uPix.mul(positionWorld.distance(cameraPosition))
+  const cc = classColour(U, float(cls), p.z, p.x, fw)
+  m.colorNode = mix(select(U.uState.lessThan(0.5), vec3(0.6), col), cc, U.uSwitch)
+  m.emissiveNode = cc.mul(U.uSwitch.mul(U.uSelf))
+  return m
+}
+
 /* ── life without bodies: palms and birds in their vertex colours, grey in the massing state, class G in the switch unless the page names their row ── */
 export function lifeMaterial(U: GateUniforms, cls = 2): Material {
   const m = new MeshStandardNodeMaterial({ roughness: 0.75, metalness: 0, side: DoubleSide })

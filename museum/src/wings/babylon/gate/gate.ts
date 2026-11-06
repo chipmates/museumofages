@@ -31,7 +31,7 @@ import { buildGate, gateFrame, hourOf, type V3 } from './gate-geom'
 import { animalField } from './gate-relief'
 import { assemble, panelGrid } from './gate-mesh'
 import { birdsGeometry, palmsGeometry } from './gate-life'
-import { bakePanel, lifeMaterial, makeUniforms, panelMaterial, pavingMaterial, pavingMean, processionLine, streetsideEarth, uMouth, wallMaterial, C as COURSE, type LinePoint, type Rooms } from './gate-mat'
+import { bakePanel, bankMaterial, lifeMaterial, makeUniforms, panelMaterial, pavingMaterial, pavingMean, processionLine, streetsideEarth, uMouth, wallMaterial, C as COURSE, type LinePoint, type Rooms } from './gate-mat'
 import { isLetter, recordNamer, type ClassFile, type Letter, type Pieces } from '../record'
 import { NO_ROWS, bodyTones, panelTones, pavingTones, toneGateWalls, toneMapBodies } from '../record-tones'
 
@@ -293,12 +293,14 @@ gate.add(pave)
 
 /* the processional way south of the gate's paving, in the gate's own paving (pavingMaterial, its slabs laid in the local x
    and z of each piece): along the gate's axis for 20 m, then on the map's street line (map-plan.json street.points, the
-   ribbon this replaces) to the palace's south-east corner; one mitred piece per leg in that leg's own frame, with a skirt */
+   ribbon this replaces) to the palace's south-east corner; one mitred piece per leg in that leg's own frame, with the earth
+   banked against each edge (our guess: the record names no kerb) 1 in 2 down to 0.6 m below the top: a vertical skirt
+   faced away from the sun stood as a dark line at the far curve */
 {
   const L = SOUTH.line, n = L.length
   const dir = (i: number): [number, number] => { const dx = L[i + 1]![0] - L[i]![0], dz = L[i + 1]![1] - L[i]![1], l = Math.hypot(dx, dz); return [dx / l, dz / l] }
-  // each vertex's left and right edge points: square to the axis at the start, mitred between legs
-  const edge = (i: number): [[number, number], [number, number]] => {
+  // each vertex's left and right points at w from the line: square to the axis at the start, mitred between legs
+  const edge = (i: number, w = SOUTH.half): [[number, number], [number, number]] => {
     let nx: number, nz: number
     if (i === 0) { nx = 1; nz = 0 }
     else if (i === n - 1) { const d = dir(i - 1); nx = -d[1]; nz = d[0] }
@@ -307,35 +309,41 @@ gate.add(pave)
       const mx = -(a[1] + b[1]), mz = a[0] + b[0], ml = Math.hypot(mx, mz), cosH = (mx * -a[1] + mz * a[0]) / ml
       nx = mx / ml / cosH; nz = mz / ml / cosH
     }
-    const h = SOUTH.half
-    return [[L[i]![0] + nx * h, L[i]![1] + nz * h], [L[i]![0] - nx * h, L[i]![1] - nz * h]]
+    return [[L[i]![0] + nx * w, L[i]![1] + nz * w], [L[i]![0] - nx * w, L[i]![1] - nz * w]]
   }
   const southMat = pavingMaterial(U, { ...plan.street.paving, sd: B.street.dir, st: [B.street.dir[1], -B.street.dir[0]], turnZ: 21.3, cls: pavingTones(named, [paveL, paveL]) }, rooms)
   const gTone = bodyTones(named, 'gate:paving-south-guessed', ['G', 'G']).above
   const southMatG = pavingMaterial(U, { ...plan.street.paving, sd: B.street.dir, st: [B.street.dir[1], -B.street.dir[0]], turnZ: 21.3, cls: [gTone, gTone, gTone] }, rooms)
+  const BANK_DROP = 0.6, BANK_RUN = 1.2
+  const bankAt = earthAt()
+  const bankMat = bankMaterial(U, streetsideEarth(U, bankAt.p, SOUTH.half, bankAt.xs), bankAt.p, gTone)
   let along = -PAVE_END
   for (let i = 0; i + 1 < n; i++) {
     const d = dir(i), len = Math.hypot(L[i + 1]![0] - L[i]![0], L[i + 1]![1] - L[i]![1])
     // the leg's frame: local x across (n = (-dz, dx)), local z back up the street, so the slabs' courses run on from the gate's
     const nx = -d[1], nz = d[0], ox = L[i]![0] - d[0] * along, oz = L[i]![1] - d[1] * along
     const toLocal = (x: number, z: number): [number, number] => { const rx = x - ox, rz = z - oz; return [rx * nx + rz * nz, -(rx * d[0] + rz * d[1])] }
-    const [a0, a1] = edge(i), [b0, b1] = edge(i + 1)
+    const [a0, a1] = edge(i), [b0, b1] = edge(i + 1), [fa0, fa1] = edge(i, SOUTH.half + BANK_RUN), [fb0, fb1] = edge(i + 1, SOUTH.half + BANK_RUN)
     const steps = Math.max(1, Math.ceil(len / 2))
-    const pos: number[] = []
+    const pos: number[] = [], bank: number[] = []
     const lerp = (p: [number, number], q: [number, number], f: number): [number, number] => [p[0] + (q[0] - p[0]) * f, p[1] + (q[1] - p[1]) * f]
     for (let k = 0; k < steps; k++) {
       const f0 = k / steps, f1 = (k + 1) / steps
       const y0 = L[i]![2] + (L[i + 1]![2] - L[i]![2]) * f0, y1 = L[i]![2] + (L[i + 1]![2] - L[i]![2]) * f1
       const l0 = toLocal(...lerp(a0, b0, f0)), r0 = toLocal(...lerp(a1, b1, f0)), l1 = toLocal(...lerp(a0, b0, f1)), r1 = toLocal(...lerp(a1, b1, f1))
-      // the top (facing up), then the two skirts 0.6 m down (facing out)
+      const fl0 = toLocal(...lerp(fa0, fb0, f0)), fr0 = toLocal(...lerp(fa1, fb1, f0)), fl1 = toLocal(...lerp(fa0, fb0, f1)), fr1 = toLocal(...lerp(fa1, fb1, f1))
+      const d0 = y0 - BANK_DROP, d1 = y1 - BANK_DROP
+      // the top (facing up), then the two banks from its edges down and out (facing out and up)
       pos.push(l0[0], y0, l0[1], l1[0], y1, l1[1], r0[0], y0, r0[1], r0[0], y0, r0[1], l1[0], y1, l1[1], r1[0], y1, r1[1])
-      pos.push(l0[0], y0, l0[1], l0[0], y0 - 0.6, l0[1], l1[0], y1, l1[1], l1[0], y1, l1[1], l0[0], y0 - 0.6, l0[1], l1[0], y1 - 0.6, l1[1])
-      pos.push(r0[0], y0, r0[1], r1[0], y1, r1[1], r0[0], y0 - 0.6, r0[1], r1[0], y1, r1[1], r1[0], y1 - 0.6, r1[1], r0[0], y0 - 0.6, r0[1])
+      bank.push(l0[0], y0, l0[1], fl0[0], d0, fl0[1], l1[0], y1, l1[1], l1[0], y1, l1[1], fl0[0], d0, fl0[1], fl1[0], d1, fl1[1])
+      bank.push(r0[0], y0, r0[1], r1[0], y1, r1[1], fr0[0], d0, fr0[1], r1[0], y1, r1[1], fr1[0], d1, fr1[1], fr0[0], d0, fr0[1])
     }
     const g = new BufferGeometry()
-    g.setAttribute('position', new Float32BufferAttribute(pos, 3))
+    g.setAttribute('position', new Float32BufferAttribute(pos.concat(bank), 3))
     g.computeVertexNormals()
-    const m = new Mesh(g, (L[i]![1] + L[i + 1]![1]) / 2 < SOUTH.zKnown ? southMatG : southMat)
+    g.addGroup(0, pos.length / 3, 0)
+    g.addGroup(pos.length / 3, bank.length / 3, 1)
+    const m = new Mesh(g, [(L[i]![1] + L[i + 1]![1]) / 2 < SOUTH.zKnown ? southMatG : southMat, bankMat])
     m.position.set(ox, 0, oz)
     m.rotation.y = Math.atan2(-nz, nx)
     m.receiveShadow = true
