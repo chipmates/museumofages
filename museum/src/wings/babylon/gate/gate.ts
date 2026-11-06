@@ -458,6 +458,8 @@ function aimTrial(t: { pos: (number | null)[]; look: (number | null)[]; hfov: nu
   const pos: V3 = [t.pos[0]!, y, t.pos[2]!], look: V3 = [t.look[0]!, t.look[1] ?? y, t.look[2]!]
   aimWorld(toWorld(pos), toWorld(look), fittedFov(t.hfov, [16, 9], w, h), w, h, t.shift ?? 0)
 }
+/** a stop's still hour (the second of its `hour` pair), the file's own hour for the hero stills */
+const stillHour = (stop?: number): string => cams.stops.find((x: J) => x.n === stop)?.hour?.[1] ?? cams.hour
 /* the stills' views, in the gate's frame, then the world: stop 2 (and no stop) the hero stills in `cams.stills`; a stop
    with a `still` its own hold, the key at `still.t`, each framing's lens and any stand of its own over that key */
 interface View { name: string; stop?: number; pos: V3; look: V3; hfov: number; shift: number; authored: [number, number] }
@@ -508,10 +510,10 @@ const pathCams = {
     else if (k.look === 'south') look = [south[0], 1.65, south[1]]
     else look = [k.look[0], k.look[1], k.look[2]]
     const [lE, lN] = GF.utm(look[0], look[2])
-    // a stop's first key repeats the last stop's last key at the same second, so each stop starts at its own key; the
-    // walk's first key is the arrival's landing, so its clock starts at the landing's hour (one clock across the cut)
+    // a stop's first key repeats the last stop's last key at the same second, so each stop starts at its own key; a key
+    // may hold the clock at its own `hour`, else the walk's first key takes the arrival's landing hour
     const first = s === cams.stops[0] && i === 0
-    return { t: k.t + (i === 0 && !first ? 1e-4 : 0), at: [E, N], y: 'eye', look: [lE, lN, look[1] + L0], stop: s.n, hold: k.kind === 'hold' || i === 0, kind: k.kind, cut: false, ...(k.phone ? { phone: phoneKey(k.phone) } : {}), ...(k.desktop ? { hfov: k.desktop.hfov, shift: k.desktop.shift } : {}), ...(first ? { hour: openCams.hour } : {}) }
+    return { t: k.t + (i === 0 && !first ? 1e-4 : 0), at: [E, N], y: 'eye', look: [lE, lN, look[1] + L0], stop: s.n, hold: k.kind === 'hold' || i === 0, kind: k.kind, cut: false, ...(k.phone ? { phone: phoneKey(k.phone) } : {}), ...(k.desktop ? { hfov: k.desktop.hfov, shift: k.desktop.shift } : {}), ...(k.hour ? { hour: k.hour } : first ? { hour: openCams.hour } : {}) }
   })),
 }
 const standMap = (x: number, z: number): number => {
@@ -762,7 +764,7 @@ const rig = {
   /** a still: a framing, the scene state and the switch, device pixels and CSS size, sub-frames */
   async shoot(o: { framing: 'desktop' | 'phone'; stop?: number; state?: 'grey' | 'flat' | 'full'; switch?: boolean; w: number; h: number; css: [number, number]; samples: number; out: string; name: string; hour?: string; stops?: number; box?: [number, number, number, number]; look?: { pos: (number | null)[]; look: (number | null)[]; hfov: number; shift?: number } }) {
     setStates(o)
-    const hour = o.hour ?? HOUR_Q ?? (U.uState.value === 1 ? '12:00' : cams.hour)
+    const hour = o.hour ?? HOUR_Q ?? (U.uState.value === 1 ? '12:00' : stillHour(o.stop))
     setHour(hourOf(hour))
     const v = stillView(o.framing, o.stop)
     if (o.look) aimTrial(o.look, o.w, o.h)

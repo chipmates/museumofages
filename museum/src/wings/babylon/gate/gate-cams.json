@@ -161,7 +161,8 @@
           "t": 0,
           "at": "street:150",
           "look": "gate",
-          "kind": "walk"
+          "kind": "walk",
+          "hour": "16:40"
         },
         {
           "t": 64,
@@ -357,7 +358,8 @@
           "phone": {
             "hfov": 58,
             "shift": 0
-          }
+          },
+          "hour": "17:00"
         }
       ],
       "ends": "the open door with the chamber and the main gate's door beyond",
@@ -378,8 +380,8 @@
       "n": 4,
       "id": "through-the-gate",
       "hour": [
-        "17:00",
-        "17:00"
+        "10:00",
+        "10:00"
       ],
       "keys": [
         {

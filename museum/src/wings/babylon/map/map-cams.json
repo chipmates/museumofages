@@ -89,7 +89,7 @@
    "n": 8,
    "id": "nabu",
    "name": "The Nabu temple, how Babylon wrote",
-   "hour": "17:25",
+   "hour": "13:00",
    "stops": 0.9,
    "figure": [
     445849.9,
@@ -114,7 +114,7 @@
    "n": 10,
    "id": "turn",
    "name": "The turn",
-   "hour": "17:31",
+   "hour": "17:00",
    "stops": 0.6
   },
   {
@@ -133,7 +133,7 @@
    "n": 12,
    "id": "great-stair",
    "name": "The great stair and the switch",
-   "hour": "18:00",
+   "hour": "14:00",
    "stops": 1.7,
    "figure": [
     445664.9,
@@ -2318,7 +2318,7 @@
     "hfov": 46,
     "shift": 0.22
    },
-   "hour": "17:25"
+   "hour": "13:00"
   },
   {
    "t": 202.0,
@@ -2427,7 +2427,7 @@
     "hfov": 34.0,
     "shift": 0.048
    },
-   "hour": "17:25"
+   "hour": "13:00"
   },
   {
    "t": 214.6,
@@ -2456,7 +2456,7 @@
     "hfov": 34.0,
     "shift": 0.048
    },
-   "hour": "17:25"
+   "hour": "13:00"
   },
   {
    "t": 217.95,
@@ -2484,7 +2484,7 @@
     "hfov": 34.0,
     "shift": 0.048
    },
-   "hour": "17:25"
+   "hour": "13:00"
   },
   {
    "t": 218.0,
@@ -2931,7 +2931,8 @@
     "hfov": 36.0,
     "shift": 0.1
    },
-   "say": "down the street south along the precinct wall"
+   "say": "down the street south along the precinct wall",
+   "hour": "17:31"
   },
   {
    "t": 269.53,
@@ -2973,7 +2974,8 @@
    "phone": {
     "hfov": 44.0,
     "shift": 0.0
-   }
+   },
+   "hour": "17:33.7293"
   },
   {
    "t": 274.03,
@@ -2996,7 +2998,8 @@
     "shift": 0.0
    },
    "cut": true,
-   "say": "cut: at the precinct's south-east corner"
+   "say": "cut: at the precinct's south-east corner",
+   "hour": "17:00"
   },
   {
    "t": 275.53,
@@ -3151,7 +3154,8 @@
      3599899.58,
      4.05
     ]
-   }
+   },
+   "hour": "17:00"
   },
   {
    "t": 293.46,
@@ -3355,7 +3359,8 @@
    "phone": {
     "hfov": 44.0,
     "shift": -0.03
-   }
+   },
+   "hour": "17:54.75"
   },
   {
    "t": 355.03,
@@ -3577,7 +3582,7 @@
     "shift": 0.655
    },
    "hold": true,
-   "hour": "18:00",
+   "hour": "14:00",
    "say": "out of the passage: the tower's south face and its three stairs"
   },
   {
@@ -3623,7 +3628,7 @@
    "stop": 12,
    "kind": "hold",
    "hold": true,
-   "hour": "18:00",
+   "hour": "14:00",
    "hfov": 80.0,
    "shift": 0.8,
    "phone": {
@@ -3911,7 +3916,8 @@
    "phone": {
     "hfov": 46.0,
     "shift": 0.0
-   }
+   },
+   "hour": "14:00"
   },
   {
    "t": 441.03,
