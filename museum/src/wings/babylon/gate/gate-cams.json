@@ -391,9 +391,9 @@
             -10.5
           ],
           "look": [
-            0,
-            1.65,
-            -200
+            -4.5,
+            2.8,
+            -14.9
           ],
           "kind": "walk",
           "phone": {
@@ -401,7 +401,7 @@
             "shift": 0
           },
           "cut": true,
-          "says": "cut: at the front gate's south mouth, the court and the main gate's north door ahead"
+          "says": "cut: at the front gate's south mouth, turned east off the axis onto the main gate's glazed north face, its bulls and dragons close; the walk turns back to the door as it goes on"
         },
         {
           "t": 175,
