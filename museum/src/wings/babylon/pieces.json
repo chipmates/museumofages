@@ -130,6 +130,7 @@
   {"match": "^map:bridge-abutment-east", "part": "the bridge's east end", "piece": "bab.bridge.landpier.east"},
   {"match": "^map:bridge-deck", "part": "the bridge's roadway", "piece": "bab.bridge.deck"},
   {"match": "^map:top-palm-(canal|river)-", "part": "the date palms of the groves along the river and the canals outside the walls (stop 15's plain)", "piece": "bab.green.palm.plain"},
+  {"match": "^map:top-palm-city-", "part": "the date palms inside the walls, by the canal and the moats (stop 15)", "piece": "bab.green.palm.city"},
   {"match": "^map:top-palm-outer-", "part": "the date palms of the outer city's gardens", "piece": "bab.green.outercity"},
   {"match": "^map:top-reed-", "part": "the reed at the plain's canal and river banks", "piece": "bab.green.reed"},
   {"match": "^map:top-bank-tamarisk-", "part": "the tamarisks on the plain's canal banks", "piece": "bab.green.tamarisk"},

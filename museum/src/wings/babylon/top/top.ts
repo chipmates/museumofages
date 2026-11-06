@@ -1,7 +1,7 @@
 /* STOP 15 IN CODE, THE CITY FROM THE TOP: the plain round the walls on the map page, as the arrival builds it. Canals,
    field strips, the river's grove belt and the outer city's garden plots painted into the ground's recipe; the groves'
    date palms, the reed and the bank trees instanced on it. Built from the map's own plan, so the banks follow the map's
-   river and nothing stands inside the inner city but the few palms by its canal (open/plain.ts keeps the rest out).
+   river and nothing stands inside the inner city but the palms in clumps by its canal and its moats (open/plain.ts).
    Kinds and mass are the record's, every line and place ours (bab.green.palm.plain, .field.plain, .water.channels,
    .outercity, .palm.city). Scene frame: x = E - E0, z = N0 - N. */
 import type { InstancedMesh, Mesh, MeshStandardNodeMaterial } from 'three/webgpu'

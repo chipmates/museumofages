@@ -3,9 +3,7 @@
  "plain": {
   "reach": 3600,
   "src": "the arrival's palm reach from the city's centre (open.ts palmReach): beyond it the groves are the plain's painted grove floors only, which the haze carries from the top as it does from the flight",
-  "inside": [
-   "city"
-  ],
-  "insideSrc": "the plain's rows that stand inside the walls, left off the map page in this round (the palms by the canal, bab.green.palm.city): seen with their shadows from the street stops"
+  "inside": [],
+  "insideSrc": "the plain's rows left off the map page; none now: the palms inside the walls (bab.green.palm.city) stand in clumps on the canal's south bank and on the low strip inside the north wall, seen from the top over the roofs"
  }
 }

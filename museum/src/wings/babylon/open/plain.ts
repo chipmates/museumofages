@@ -32,6 +32,8 @@ export interface Plain {
   /** grove floors: polygons under the palms, for the map */
   groves: P2[][]
   palms: Palm[]
+  /** the inner city's outline on each bank (the walls' lines closed along the river): inside the walls */
+  inner: P2[][]
   /** how many of `fields` are the outer city's garden plots (the last ones) */
   gardens: number
   /** how many of `fields` are the river belt's plots (just before the gardens; tone 4 a plot under palms) */
@@ -404,20 +406,47 @@ export function buildPlain(mapPlan: J, opts: { palms?: boolean; reach?: number }
       if (d < 110) p.detail = 'near'
       else if (d < 400) p.detail = 'mid'
     }
-    // inside the walls: a sparse row by the Libil-hegalla canal (guessed)
+    /* inside the walls (bab.green.palm.city, the kind attested, every place ours): palms want low ground near water, so
+       they stand in clumps of two to five with gaps between, on the Libil-hegalla canal's south bank (its north bank is
+       the South Palace), leaning out over the water, and on the low strip inside the north wall by the moats, short of
+       the first houses; never on a quay, a street, a roof or in a court. Their own numbers, so the groves stay as drawn */
+    const RC = rng(5702)
+    const inner = (x: number, z: number): boolean => (inPoly(x, z, innerE) || inPoly(x, z, innerW)) && !water.some((w) => inPoly(x, z, w))
+    const clump = (cx: number, cz: number, n: number, spread: number, lean: () => [number, number]): void => {
+      for (let k = 0; k < n; k++) {
+        const a = RC() * Math.PI * 2, r = k === 0 ? 0 : 2.6 + RC() * spread
+        const x = cx + Math.cos(a) * r, z = cz + Math.sin(a) * r
+        if (!inner(x, z)) continue
+        const [yaw, ln] = lean()
+        palms.push({ x, z, s: 0.58 + RC() * 0.66, yaw, lean: ln, row: 'city', detail: 'mid' })
+      }
+    }
     const cl: P2[] = mapPlan.canal.line.map((q: number[]) => s(q[0]!, q[1]!))
     for (let i = 0; i + 1 < cl.length; i++) {
       const a = cl[i]!, b = cl[i + 1]!
       const L = Math.hypot(b[0] - a[0], b[1] - a[1])
-      for (let t = 20; t < L - 25; t += 17 + R() * 10) {
-        const x = a[0] + ((b[0] - a[0]) * t) / L, z = a[1] + ((b[1] - a[1]) * t) / L + 6.5
-        palms.push({ x, z, s: 0.7 + R() * 0.4, yaw: R() * Math.PI * 2, lean: (R() - 0.5) * 0.1, row: 'city' })
+      for (let t = 6 + RC() * 8; t < L - 6; t += 15 + RC() * 21) {
+        if (RC() < 0.16) continue
+        const x = a[0] + ((b[0] - a[0]) * t) / L, z = a[1] + ((b[1] - a[1]) * t) / L + 7 + RC() * 3.5
+        // toward the water (north, -z): the instance tilts about an east-west axis
+        clump(x, z, 2 + Math.floor(RC() * 3.4), 2.4, () => [Math.PI + (RC() - 0.5) * 0.9, 0.05 + RC() * 0.17])
+      }
+    }
+    const nw: P2[] = [s(445800, 3600830), s(446737, 3601360)]
+    {
+      const [a, b] = nw as [P2, P2]
+      const L = Math.hypot(b[0] - a[0], b[1] - a[1])
+      const d: P2 = [(b[0] - a[0]) / L, (b[1] - a[1]) / L], n: P2 = [d[1], -d[0]]
+      for (let t = 235 + RC() * 20; t < L - 60; t += 34 + RC() * 44) {
+        if (RC() < 0.3) continue
+        const r = -(12 + RC() * 18)
+        clump(a[0] + d[0] * t + n[0] * r, a[1] + d[1] * t + n[1] * r, 2 + Math.floor(RC() * 4), 3.2, () => [RC() * Math.PI * 2, (RC() - 0.5) * 0.16])
       }
     }
   }
   return {
     domain: { x0: -5200, z0: -5400, size: 12800 },
-    canals: [...canals, ...bChannels, ...gChannels], fields: [...fields, ...belt, ...gardens], groves, palms, gardens: gardens.length, belt: belt.length,
+    canals: [...canals, ...bChannels, ...gChannels], fields: [...fields, ...belt, ...gardens], groves, palms, inner: [innerE, innerW], gardens: gardens.length, belt: belt.length,
     says: 'canals, fields and groves of the plain: kinds Known as types (GREEN.settled), every line and place ours',
   }
 }
