@@ -68,7 +68,7 @@ export function checkMount(M, st, { bed = 0.002, area = 0.01, all = false, bound
     ...M.allowPair,
   ]
   const allowedPair = (p) => ALLOWED_PAIRS.find((r) => (r.test && r.test(p)) || (r.kind && r.kind === p.kind))
-  const thin = timed('subPixel', () => subPixel(M.faces, thinCams, { checks: M.checks }))
+  const thin = timed('subPixel', () => subPixel(M.faces, thinCams, { checks: M.checks, buried: M.buried ?? null }))
   const allowedThin = (r) => M.allowThin.find((x) => x.body === r.body || (x.prefix && r.body.startsWith(x.prefix)))
   const floatRows = timed('floating', () => floating(M.faces, { ground: M.ground, checks: M.floats }))
   const allowedFloat = (r) => M.allowFloat.find((x) => x.body === r.body || (x.prefix && r.body.startsWith(x.prefix)))
@@ -82,7 +82,7 @@ export function checkMount(M, st, { bed = 0.002, area = 0.01, all = false, bound
     checker: 'babylon-geometry', stop: st.stop, stopId: st.id, page: M.page, frame: M.frame, faces: M.faces.length, bodies, bedMm: bed * 1000, areaMin: area,
     cameras: M.cameras.map((c) => c.name), eyes: eyes.length, bound: cover,
     coplanar: { pairs: pairs.length, offences: pairOff.length, list: (all ? pairs : pairOff).map((p) => ({ ...p, why: allowedPair(p)?.why ?? null })) },
-    subPixel: { sliversInAPlane: thin.slivers, rows: thin.rows.length, offences: thinOff.length, list: (all ? thin.rows : thinOff).map((r) => ({ ...r, why: allowedThin(r)?.why ?? null })) },
+    subPixel: { sliversInAPlane: thin.slivers, buriedEdges: thin.inside, rows: thin.rows.length, offences: thinOff.length, list: (all ? thin.rows : thinOff).map((r) => ({ ...r, why: allowedThin(r)?.why ?? null })) },
     floating: { rows: floatRows.length, offences: floats.length, list: (all ? floatRows : floats).map((r) => ({ ...r, why: allowedFloat(r)?.why ?? null })) },
     seconds, passSeconds,
   }
@@ -94,7 +94,7 @@ export function checkMount(M, st, { bed = 0.002, area = 0.01, all = false, bound
   L.push(`seconds by pass: ${Object.entries(passSeconds).map(([k, v]) => `${k} ${v}`).join(', ')}`)
   L.push(`coplanar (bed ${bed * 1000} mm where the faces overlap, area over ${area} m2; gap: the median where they do): ${pairs.length} pairs (${['fight', 'unseen', 'butt'].map((k) => `${k} ${pairs.filter((p) => p.kind === k).length}`).join(', ')}; ${pairs.filter((p) => p.across).length} across offset runs), ${pairOff.length} not allowed`)
   for (const p of (all ? pairs : pairOff).slice(0, 30)) L.push(`  [${p.kind} ${p.facing > 0 ? '+' : '-'}${p.across ? `, across ${p.across} run pairs` : ''}] ${p.a} | ${p.b}: ${p.area} m2, gap ${p.gapMm} mm (least ${p.gapMinMm}), n ${p.n.join(',')}, x ${p.x.join('..')} y ${p.y.join('..')} z ${p.z.join('..')}`)
-  L.push(`sub-pixel (under 1 device px over 4 px; ${thin.slivers} slivers of triangulated planes set aside): ${thin.rows.length} rows, ${thinOff.length} not allowed`)
+  L.push(`sub-pixel (under 1 device px over 4 px; ${thin.slivers} slivers of triangulated planes set aside${M.buried ? `, ${thin.inside} faces whose long edge runs into another closed body` : ''}): ${thin.rows.length} rows, ${thinOff.length} not allowed`)
   for (const r of (all ? thin.rows : thinOff).slice(0, 30)) L.push(`  ${r.body} at ${r.camera}: ${r.faces} faces, thinnest ${r.thinnestPx} px (${r.thickM} m at ${r.atM} m, run ${r.runPx} px)`)
   L.push(`floating (the map's rule: a grounded body's corner over the ground by more than 1 cm, a raised body with nothing under its centre or its ends): ${floatRows.length} rows, ${floats.length} not allowed`)
   for (const r of (all ? floatRows : floats).slice(0, 30)) L.push(`  ${r.body}: base ${r.baseY} m, ${r.gapM} m over the ground at ${r.at.join(', ')} (${r.rule})`)

@@ -343,6 +343,9 @@ export async function mountGate(stop, { eyesFile = null, cityReach = 'near', cit
     // two of the map's bodies are the map's to answer; only pairs touching the gate are this page's
     counts: (a, b) => !(a.startsWith('map:') && b.startsWith('map:')),
     checks: (b) => !b.startsWith('panel:') && !b.startsWith('map:'),
+    // the gate's closed boxes, each with its skins (a box pulled in behind a skin is closed by the skin on its face):
+    // a point inside one or on its face, to 0.1 mm
+    buried: (p, body) => B.boxes.some((b) => body !== `gate:${b.id}` && p.x >= b.x0 - 1e-4 && p.x <= b.x1 + 1e-4 && p.y >= b.y0 - 1e-4 && p.y <= b.y1 + 1e-4 && p.z >= b.z0 - 1e-4 && p.z <= b.z1 + 1e-4),
     floats: (b) => b.startsWith('gate:') || b.startsWith('life:palm'),
     // the map's street and ground are masked inside the gate's paved area on the page
     masked: (p, a, b) => (/^map:(street|ground)$/.test(a) || /^map:(street|ground)$/.test(b)) && paved(B, p.x, p.z, plan.lionWalls.to),

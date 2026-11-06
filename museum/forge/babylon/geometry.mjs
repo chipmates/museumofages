@@ -562,8 +562,9 @@ function altitude(v) {
 
 /** faces thinner than one device pixel over a run of at least runPx, per body and camera. A sliver of a triangulated
     surface is not a thin surface: where the same body's face (turned under 30 degrees) or a face in the same plane
-    goes on across its long edge, it is set aside. `checks(body)` says which bodies are this check's. */
-export function subPixel(faces, cameras, { runPx = 4, facing = 0.15, thickCap = 0.5, checks = () => true } = {}) {
+    goes on across its long edge, it is set aside; so is one whose long edge runs into another closed body, where
+    `buried(point, body)` (the mount's closed bodies) says so. `checks(body)` says which bodies are this check's. */
+export function subPixel(faces, cameras, { runPx = 4, facing = 0.15, thickCap = 0.5, checks = () => true, buried = null } = {}) {
   const mine = faces.filter((f) => checks(f.body))
   const vkey = (v) => `${Math.round(v.x * 1e4)},${Math.round(v.y * 1e4)},${Math.round(v.z * 1e4)}`
   const ekey = (a, b) => { const p = vkey(a), q = vkey(b); return p < q ? `${p}|${q}` : `${q}|${p}` }
@@ -597,12 +598,14 @@ export function subPixel(faces, cameras, { runPx = 4, facing = 0.15, thickCap = 
     if (across.some((g) => g !== f && flatOn(g, top) && inTri(probe, g))) return true
     return (planes.get(pkey(f)) ?? []).some((g) => g !== f && inTri(probe, g))
   }
-  let slivers = 0
+  let slivers = 0, inside = 0
   const thin = new Map()
   for (const f of mine) {
     const { foot, top, along, thick } = altitude(f.v)
     if (!(thick > 1e-4) || thick >= thickCap) continue
     if (goesOn(f, foot, top, along)) { slivers++; continue }
+    // past its long edge the face runs into another closed body: what shows of it is bounded by that body's face
+    if (buried && buried(along[0].clone().add(along[1]).multiplyScalar(0.5).addScaledVector(foot.clone().sub(top).normalize(), 0.002), f.body)) { inside++; continue }
     const centre = foot.clone().add(top).multiplyScalar(0.5)
     for (const e of cameras) {
       if (centre.distanceTo(e.eye) < e.reach * thick) continue
@@ -623,7 +626,7 @@ export function subPixel(faces, cameras, { runPx = 4, facing = 0.15, thickCap = 
       thin.set(key, row)
     }
   }
-  return { slivers, rows: [...thin.values()].sort((a, b) => a.thinnestPx - b.thinnestPx) }
+  return { slivers, inside, rows: [...thin.values()].sort((a, b) => a.thinnestPx - b.thinnestPx) }
 }
 
 /** the map's support rule on triangles: a body whose foot is near the ground reaches it (`ground(x, z)` + tol) under
