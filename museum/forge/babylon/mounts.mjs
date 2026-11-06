@@ -327,7 +327,9 @@ export async function mountGate(stop, { eyesFile = null, cityReach = 'near', cit
   const eyes = []
   if (eyesFile) for (const s of json(eyesFile).samples) eyes.push(new THREE.Vector3(s.x, s.y, s.z))
   if (eyes.length) for (const c of cameras) eyes.push(c.eye.clone())
-  const FOOT_Y = Math.min(...B.boxes.map((b) => b.y0))
+  // the paved bodies' foot: the city walls run out past the paving where the ground falls, so their deeper foot must
+  // not lower the allowance for every other body
+  const FOOT_Y = Math.min(...B.boxes.filter((b) => b.part !== 'city walls').map((b) => b.y0))
   const toG = (x, y, z) => new THREE.Vector3(x, y, z).applyMatrix4(G2W)
   const surface = (b) => /^map:(street|ground|water-)/.test(b)
   const gv = (p) => { const v = new THREE.Vector3(...p).applyMatrix4(W2G); return [v.x, v.y, v.z] }

@@ -535,13 +535,15 @@ export function buildGate(plan: J): Built {
   /* ── the city walls by the gate (mud brick) ── */
   const CW = plan.cityWalls
   const cwH: number = CW.height.value
+  // the ground falls to 3.8 m under the street at the walls' far ends: their foot 2 m under the paved bodies' sinks them 0.7 m
+  const cwFoot = FOOT - 2
   for (const s of [1, -1]) {
     const side = s > 0 ? 'w' : 'e'
     const reach = CW.reach as number
     const n0 = s > 0 ? Math.max(xSide1, wIn + wTh) - 0.3 : Math.min(-xSide1, eIn - eTh) + 0.3
-    boxes.push({ id: `nemet-${side}`, part: 'city walls', x0: Math.min(n0, s * reach), x1: Math.max(n0, s * reach), y0: FOOT, y1: cwH, z0: CW.nemet.outer - CW.nemet.thick, z1: CW.nemet.outer, surf: 'mud', plan: 'M', height: 'G', band: band(0) })
+    boxes.push({ id: `nemet-${side}`, part: 'city walls', x0: Math.min(n0, s * reach), x1: Math.max(n0, s * reach), y0: cwFoot, y1: cwH, z0: CW.nemet.outer - CW.nemet.thick, z1: CW.nemet.outer, surf: 'mud', plan: 'M', height: 'G', band: band(0) })
     const m0 = s > 0 ? mHalf - 0.3 : -mHalf + 0.3
-    boxes.push({ id: `imgur-${side}`, part: 'city walls', x0: Math.min(m0, s * reach), x1: Math.max(m0, s * reach), y0: FOOT, y1: cwH + 1.5, z0: zM0 - CW.imgur.thick - 0.5, z1: zM0 - 0.5, surf: 'mud', plan: 'M', height: 'G', band: band(0) })
+    boxes.push({ id: `imgur-${side}`, part: 'city walls', x0: Math.min(m0, s * reach), x1: Math.max(m0, s * reach), y0: cwFoot, y1: cwH + 1.5, z0: zM0 - CW.imgur.thick - 0.5, z1: zM0 - 0.5, surf: 'mud', plan: 'M', height: 'G', band: band(0) })
   }
 
   /* ── pedestals ── */
