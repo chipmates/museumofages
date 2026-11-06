@@ -4,9 +4,11 @@
      the outer faces, towers, battlements   white lime-gypsum plaster, a fresh coat: a trowel's unevenness, earth
                                             splashed at the foot, faint streaks under the battlements
      Nabu's court, the cellas               the same plaster with plain black bitumen bands: a foot band, a dado of
-                                            black piers under two bands, black frames round the doors
+                                            black piers under two bands, black frames round the doors; the court's
+                                            faces and altars under the shared wash's grain, a fresh coat
      the smaller court's south wall         all black with bitumen
-     the floors                             baked brick under a bitumen coat, worn to the brick where people walked
+     the floors                             baked brick under a bitumen coat, worn to the brick where people walked;
+                                            Nabu's court one black asphalt skin over its brick, scuffed where trodden
      the roof                               an earth deck behind the parapet
    Every line is box-filtered over one device pixel's footprint. The stack carries no bounce: the rooms are lit only
    through their doors and the court's floor sees the sky its walls leave, both modelled here from the plan. */
@@ -17,6 +19,7 @@ import { band, footprint, hash2, lines } from '../gate/gate-mat'
 import { classColour, uView, type ClassTones } from '../map/mass'
 import { TONES } from '../open/earth'
 import { pavingBrickCourt } from '../parts/paving-brick-court-babylon'
+import { plasterWash } from '../parts/plaster-wash-babylon'
 import { SURF, type Box2, type NabuFrame } from './nabu-geom'
 import { uSkySet } from '../open/sky-set'
 
@@ -25,7 +28,7 @@ type N = any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
 const T = TSL as unknown as Record<string, N>
-const { abs, atan, attribute, cameraPosition, clamp, dot, float, floor, fract, length, max, min, mix, mx_noise_float, normalize, positionWorld, reflect, select, smoothstep, sqrt, step, uniform, vec2, vec3 } = T
+const { abs, atan, attribute, cameraPosition, clamp, dot, exp, float, floor, fract, length, max, min, mix, mx_noise_float, normalize, positionWorld, reflect, select, smoothstep, sqrt, step, uniform, vec2, vec3 } = T
 
 type RGB = [number, number, number]
 const V = (c: RGB): N => vec3(...c)
@@ -76,7 +79,8 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const footY = P.y.sub(mix(float(F.pave), float(F.apronTop), outer))
   const splash = float(1).sub(smoothstep(0.05, 0.9, footY.add(mx_noise_float(vec3(u.mul(1.3), 0.5, 1.7)).mul(0.25)))).mul(0.45)
   const earth = V(col.apron)
-  plaster = mix(plaster, earth.mul(1.05), splash.mul(max(outer, any(SURF.courtWall, SURF.smallCourt))))
+  // Nabu's court is floored with asphalt: no earth splashes its walls' feet
+  plaster = mix(plaster, earth.mul(1.05), splash.mul(max(outer, is(SURF.smallCourt))))
   // streaks under the battlements: thin, faint, long, the rain's way down an outer face
   const streak = smoothstep(0.15, 0.55, mx_noise_float(vec3(u.mul(2.4), P.y.mul(0.12), 3.3))).mul(smoothstep(F.top - 5, F.top, P.y)).mul(0.07)
   plaster = plaster.mul(float(1).sub(streak.mul(outer)))
@@ -84,6 +88,16 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   plaster = mix(plaster, mix(plaster, earth, 0.3).mul(0.92), is(SURF.coping))
   // the Ashratum's plaster a coat older than the Nabu temple's
   plaster = mix(plaster, plaster.mul(vec3(0.94, 0.93, 0.9)), is(SURF.ashratum))
+  /* ── Nabu's court (its walls, its coping and battlements, the altar blocks) under the shared wash's grain as a fairly
+     fresh coat: the courses ghost faintly, no band of wear at the foot; the sand of the wash on the walls, where it
+     reads, not on the altar blocks seen near. Taken as a factor on the plaster above, so the court keeps its tone ── */
+  const WG = np.wash, FLAT = { wall: [1, 1, 1] as RGB, ceiling: [1, 1, 1] as RGB }
+  const washCoat = { ...WG.coat, fine: mix(float(WG.coat.fine ?? 0), float(WG.altar.fine), is(SURF.altar)) }
+  const washed = plasterWash(P, n, col.plaster, FLAT, { pix: uNabuPix, floor: F.pave, course: WG.course, brick: WG.brick, joint: WG.joint, mud: col.apron, coat: washCoat })
+  const grainRel = washed.div(plasterWash(P, n, col.plaster, FLAT))
+  const courtFace = max(any(SURF.courtWall, SURF.altar), any(SURF.merlon, SURF.coping).mul(inBox(F.court, 1.4)))
+  plaster = mix(plaster, plaster.mul(grainRel), courtFace)
+  const relL = dot(grainRel, vec3(0.2126, 0.7152, 0.0722))
 
   /* ── the black bands: plain bitumen, painted on the court's walls and in the cellas ── */
   const banded = any(SURF.courtWall, SURF.bandedRoom)
@@ -102,7 +116,7 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const piers = band(pierAt, 0, pier, fu).mul(step(y, B.low[0]))
   let ink: N = max(band(y, B.foot[0], B.foot[1], fy), max(band(y, B.low[0], B.low[1], fy), band(y, B.high[0], B.high[1], fy)))
   // round each door in these walls a frame of two bands, and no pier inside the outer band
-  let frames: N = float(0), clear: N = float(0)
+  let frames: N = float(0), clear: N = float(0), sideV: N = float(0)
   for (const d of F.doors) {
     if (d.id === 'gate') continue
     const onWall = d.wall === 'x' ? abs(P.x.sub((d.box.x0 + d.box.x1) / 2)).lessThan((d.box.x1 - d.box.x0) / 2 + 0.05) : abs(P.z.sub((d.box.z0 + d.box.z1) / 2)).lessThan((d.box.z1 - d.box.z0) / 2 + 0.05)
@@ -113,6 +127,7 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
     const inFrame = step(out, B.frame[3] + 0.02).mul(step(P.y, d.top + B.frame[3] + 0.02)).mul(step(-0.01, out))
     const fr = max(band(out, B.frame[0], B.frame[1], fw), band(out, B.frame[2], B.frame[3], fw)).mul(inFrame)
     frames = max(frames, select(onWall, fr, float(0)))
+    sideV = max(sideV, select(onWall, fr.mul(step(above, across)), float(0)))
     clear = max(clear, select(onWall, step(out, B.frame[3] + 0.12).mul(step(P.y, d.top + B.frame[3] + 0.12)), float(0)))
   }
   ink = max(max(ink, piers.mul(float(1).sub(clear))), frames)
@@ -137,7 +152,16 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const lipAt = (v: N, a: number, b: number): N => band(v, b, b + 0.006, fy).sub(band(v, a - 0.006, a, fy).mul(0.8))
   const lip = lipAt(y, B.low[0], B.low[1]).add(lipAt(y, B.high[0], B.high[1])).mul(dadoKeep).add(lipAt(y, B.foot[1] - 1, B.foot[1])).mul(banded).mul(nearC)
   const coatVar = mx_noise_float(vec3(u.mul(1.7), P.y.mul(2.3), 5.1)).mul(0.5).add(0.5)
-  const bitCoat = mix(bitumen, plaster.mul(vec3(0.34, 0.26, 0.19)), fringe.mul(0.55).mul(nearC)).mul(mix(float(0.85), float(1.35), coatVar))
+  // the paint follows the plaster's grain under it (the wash's relief, a little stronger in the thin black coat) and
+  // keeps its brush's marks, laid along each band, down each pier and frame side
+  const vStroke = max(piers.mul(float(1).sub(clear)), sideV)
+  const sAlong = mix(u, y, vStroke), sAcross = mix(y, u, vStroke)
+  const fX = mix(fy, fu, vStroke)
+  const keepX = (lambda: number): N => smoothstep(fX.mul(2), fX.mul(4), float(lambda))
+  const brush = mx_noise_float(vec3(sAlong.mul(2.5), sAcross.mul(70), 4.2)).mul(keepX(1 / 70)).mul(0.6)
+    .add(mx_noise_float(vec3(sAlong.mul(1.1), sAcross.mul(24), 8.1)).mul(keepX(1 / 24)).mul(0.4))
+  const paintTex = float(1).add(relL.sub(1).mul(CO.relief)).add(brush.mul(CO.brush)).mul(mix(float(1), float(CO.court), is(SURF.courtWall)))
+  const bitCoat = mix(bitumen, plaster.mul(vec3(0.34, 0.26, 0.19)), fringe.mul(0.55).mul(nearC)).mul(mix(float(0.85), float(1.35), coatVar)).mul(paintTex)
   let wall: N = mix(plaster, bitCoat, inked)
   wall = wall.mul(float(1).add(lip.mul(0.16).mul(float(1).sub(inked))))
   wall = mix(wall, bitumen.mul(1.1), is(SURF.black))
@@ -160,7 +184,61 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const kz = floor(P.z.div(PV.brick)), kx = floor(P.x.add(kz.sub(floor(kz.div(2)).mul(2)).mul(PV.brick / 2)).div(PV.brick))
   const mottle = mx_noise_float(vec3(P.x.mul(0.55), 3.3, P.z.mul(0.55))).mul(0.2).add(hash2(kx.add(3.7), kz.add(1.9)).sub(0.5).mul(0.22))
   const coatK = float(PV.coat).mul(float(1).sub(pv.wear.mul(PV.coatWear))).add(mottle)
-  const floorCol: N = mix(pv.colour, V(col.paving), clamp(coatK, 0, 1))
+  let floorCol: N = mix(pv.colour, V(col.paving), clamp(coatK, 0, 1))
+  /* ── Nabu's court: one black asphalt skin over the brick (bab.nabu.floor), young and lightly worn. A dull mastic with
+     a fine mineral grain; scuffed lighter and duller along the trodden lines (the court's door to the cella's, round
+     the altars, at the side doors); thin over the bricks' arrises in patches, so the joints ghost faintly. Never bare
+     brick, never the bed laid open ── */
+  const SK = PV.skin
+  const inNabu = inBox(c, 0.03)
+  const fpx = footprint(U, vec3(1, 0, 0), n), fpz = footprint(U, vec3(0, 0, 1), n)
+  const keepF = (lambda: number): N => smoothstep(max(fpx, fpz).mul(2), max(fpx, fpz).mul(4), float(lambda))
+  let dAltar: N = float(9)
+  for (const a of F.altar) dAltar = min(dAltar, length(vec2(max(max(float(a.x0).sub(P.x), P.x.sub(a.x1)), 0), max(max(float(a.z0).sub(P.z), P.z.sub(a.z1)), 0))))
+  // the trodden lines: the way from the court's door to the cella's, a ring round the altars, the side doors' mouths
+  const wx = c.x1, wz = courtDoor.c, vx = cellaDoor.c - wx, vz = c.z1 - wz
+  const wt = clamp(P.x.sub(wx).mul(vx).add(P.z.sub(wz).mul(vz)).div(vx * vx + vz * vz), 0, 1)
+  const wd = length(vec2(P.x.sub(wx).sub(wt.mul(vx)), P.z.sub(wz).sub(wt.mul(vz))))
+  let trod: N = max(exp(wd.div(0.9).mul(wd.div(0.9)).negate()), exp(dAltar.sub(0.35).div(0.45).mul(dAltar.sub(0.35).div(0.45)).negate()).mul(0.8))
+  for (const d of more) {
+    const dd = length(vec2(P.x.sub(d.x), P.z.sub(d.z)))
+    trod = max(trod, exp(dd.div(1.1).mul(dd.div(1.1)).negate()).mul(0.7))
+  }
+  trod = clamp(trod.mul(float(0.75).add(mx_noise_float(vec3(P.x.mul(0.7), 2.3, P.z.mul(0.7))).mul(0.5))), 0, 1)
+  const temper = mx_noise_float(P.mul(vec3(90, 1, 90))).mul(keepF(1 / 90)).mul(0.5).add(mx_noise_float(P.mul(vec3(38, 1, 38)).add(4.4)).mul(keepF(1 / 38)).mul(0.4))
+    .add(mx_noise_float(P.mul(vec3(180, 1, 180)).add(2.2)).mul(keepF(1 / 180)).mul(0.4))
+  const thinSkin = clamp(smoothstep(0.05, 0.6, mx_noise_float(vec3(P.x.mul(0.8), 6.6, P.z.mul(0.8))).add(mx_noise_float(vec3(P.x.mul(2.3), 1.2, P.z.mul(2.3))).mul(0.4))).mul(SK.thin).add(trod.mul(SK.thin * 0.6)), 0, 1)
+  // the brick under the skin: the skin sinks a little into every joint (a faint dark line), and where it is thin the
+  // bricks' arrises and their own tone come through
+  const sz = floor(P.z.div(PV.brick)), spx = P.x.add(sz.sub(floor(sz.div(2)).mul(2)).mul(PV.brick / 2))
+  const jl = max(lines(P.z, PV.brick, SK.joint, fpz), lines(spx, PV.brick, SK.joint, fpx))
+  // the skin a little thicker or thinner over each brick, so each takes its own tone and sheen
+  const perBrick = hash2(floor(spx.div(PV.brick)).add(5.1), sz.add(2.7)).sub(0.5).mul(keepF(PV.brick))
+  // a brick's arrises stand a hair proud, so a thin skin wears lightest just inside each joint
+  const ex = fract(spx.div(PV.brick)).mul(PV.brick), ez = fract(P.z.div(PV.brick)).mul(PV.brick)
+  const edgeD = min(min(ex, float(PV.brick).sub(ex)), min(ez, float(PV.brick).sub(ez)))
+  const rim = float(1).sub(smoothstep(SK.joint, SK.joint + 0.025, edgeD)).mul(float(1).sub(jl)).mul(keepF(0.05))
+  const ghost = clamp(dot(pv.colour, vec3(0.2126, 0.7152, 0.0722)).div(0.3).sub(1), -0.85, 0.6)
+  const scuffTex = smoothstep(-0.3, 0.45, mx_noise_float(vec3(P.x.mul(5), 3.9, P.z.mul(5))).add(mx_noise_float(P.mul(vec3(22, 1, 22)).add(1.3)).mul(0.5).mul(keepF(1 / 22))))
+  // the scuffs feet leave on the trodden lines, in patches
+  const scuff = trod.mul(scuffTex).mul(SK.scuff)
+  let skin: N = V(SK.colour).mul(float(1).add(temper.mul(SK.temper))).mul(float(1).add(ghost.mul(SK.ghost).mul(thinSkin)))
+    .mul(float(1).add(perBrick.mul(SK.brickTone))).mul(float(1).add(rim.mul(thinSkin).mul(SK.arris)))
+  // the mastic's grit: fine, sparse, a little lighter, seen only near
+  const grit = smoothstep(0.35, 0.6, mx_noise_float(P.mul(vec3(150, 1, 150)).add(7.7))).mul(keepF(1 / 75))
+  skin = skin.mul(float(1).add(grit.mul(SK.grit)))
+  skin = mix(skin, V(SK.scuffed), scuff)
+  /* the dust of crumbled mud brick the wind lays on any open floor (bab.wear.dust.drift, guessed): a thin film,
+     thicker at the walls' feet and in slow drifts, swept thin on the trodden lines, its own fine unevenness; matte */
+  const DU = SK.dust
+  const drift = smoothstep(0.1, 0.8, mx_noise_float(vec3(P.x.mul(0.4), 8.1, P.z.mul(0.4))).add(0.5))
+  const dustGrain = mx_noise_float(P.mul(vec3(9, 1, 9)).add(3.3)).mul(0.6).add(mx_noise_float(P.mul(vec3(31, 1, 31)).add(5.9)).mul(0.4).mul(keepF(1 / 31)))
+  const film = clamp(float(DU.cover).add(drift.mul(DU.drift)).add(float(1).sub(smoothstep(0.1, DU.footW, pv.dWall)).mul(DU.foot))
+    .mul(float(1).sub(trod.mul(DU.swept))).mul(float(1).add(dustGrain.mul(DU.grain)).add(perBrick.mul(DU.brick))), 0, DU.max)
+  skin = mix(skin, V(DU.colour), film)
+  // the skin sinks a little into every joint: a faint dark line the film does not fill
+  skin = skin.mul(float(1).sub(jl.mul(float(SK.sink).add(thinSkin.mul(SK.sinkThin)))))
+  floorCol = mix(floorCol, skin, inNabu)
 
   /* ── the roof's earth deck and the open ground before the gate ── */
   const deckCol = V(TONES.roof).mul(float(1).add(mx_noise_float(vec3(P.x.mul(0.2), 3.1, P.z.mul(0.2))).mul(0.14)).add(mx_noise_float(P.mul(1.7)).mul(0.05)))
@@ -176,9 +254,9 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
      darkened by what was laid and burnt on it ── */
   const isAltar = is(SURF.altar), isPed = is(SURF.pedestal)
   let block: N = plaster.mul(vec3(0.97, 0.95, 0.92))
-  // an altar's wash worn thin over its mud plaster in patches, earth splashed at its foot, its top stained dark
+  // an altar's fresh wash a little uneven in faint patches, its top stained dark
   const worn = smoothstep(0.1, 0.45, mx_noise_float(P.mul(vec3(2.2, 3.0, 2.2))).add(mx_noise_float(P.mul(7.0)).mul(0.25)))
-  block = mix(block, V(col.apron).mul(1.2), isAltar.mul(worn.mul(0.3).add(float(1).sub(smoothstep(0.0, 0.25, footY)).mul(0.45))))
+  block = mix(block, V(col.apron).mul(1.2), isAltar.mul(worn.mul(0.1)))
   block = mix(block, mix(block, earth, 0.35).mul(0.88), isAltar.mul(smoothstep(0.5, 0.9, n.y)))
   stateCol = mix(stateCol, block, max(isAltar, isPed))
   /* ── the doors: cedar leaves, boards about 22 cm wide down their length, the grain long, weathered grey toward the
@@ -199,7 +277,9 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const shiny = max(inked, is(SURF.black)).add(is(SURF.paving).mul(float(PV.sheen).sub(pv.wear.mul(0.25))))
   // the coat's gloss with its thickness; the leaves' wood oiled to a faint sheen
   const coatRough = mix(float(CO.sheen[0]), float(CO.sheen[1]), float(1).sub(coatVar).add(fringe.mul(0.5)))
-  const rough0 = mix(float(0.92), mix(float(0.42), coatRough, max(inked, is(SURF.black))), clamp(shiny, 0, 1))
+  let rough0: N = mix(float(0.92), mix(float(0.42), coatRough.add(brush.mul(0.12)), max(inked, is(SURF.black))), clamp(shiny, 0, 1))
+  const skinRough = mix(float(SK.rough[0]), float(SK.rough[1]), clamp(scuff.mul(1.6), 0, 1)).add(temper.mul(SK.temperRough)).add(perBrick.mul(SK.brickRough)).sub(jl.mul(0.1))
+  rough0 = mix(rough0, mix(skinRough, float(0.97), film), is(SURF.paving).mul(inNabu))
   m.roughnessNode = mix(mix(rough0, float(0.7), is(SURF.leaf)), float(0.92), uView)
 
   /* ── the light the stack does not carry. A room is lit only through its doors: strongest in front of each, falling
@@ -259,8 +339,6 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   ao = mix(ao, footAO.mul(1.2), is(SURF.smallCourt))
   ao = mix(ao, courtWallAO.mul(footAO), is(SURF.courtWall))
   // the altars' feet and the paving round them: a contact shade
-  let dAltar: N = float(9)
-  for (const a of F.altar) dAltar = min(dAltar, length(vec2(max(max(float(a.x0).sub(P.x), P.x.sub(a.x1)), 0), max(max(float(a.z0).sub(P.z), P.z.sub(a.z1)), 0))))
   const altarContact = float(1).sub(float(1).sub(smoothstep(0.0, 0.5, dAltar)).mul(0.35))
   ao = mix(ao, floorAO.mul(altarContact), is(SURF.paving).mul(inCourt))
   // and a contact shade on the block's own foot, the last 10 cm
