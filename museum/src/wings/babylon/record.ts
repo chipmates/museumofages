@@ -7,17 +7,18 @@
    that stop looks at, and a page cannot tell that stretch from the rest of the body, so each part of such a body
    shows the lower of the row and its own letters at the lower rung: a far stretch never takes a near one's row.
    The pages and the evidence switch (forge/babylon/switch.mjs) both take their classes here, so a page and the
-   check give one answer. Pure: the callers load the two files. */
+   check give one answer. Two sides: known (in place, known, reconstructed) and guessed (typical, guessed); each class
+   keeps its own name and paints its side's tone. Pure: the callers load the two files. */
 
-export type Shown = 'in place' | 'known' | 'guessed' | 'blank'
+export type Shown = 'in place' | 'known' | 'reconstructed' | 'typical' | 'guessed' | 'blank'
 export type Letter = 'M' | 'R' | 'G' | 'T'
 
-export const RANK: Record<Shown, number> = { blank: 0, guessed: 1, known: 2, 'in place': 3 }
+export const RANK: Record<Shown, number> = { blank: 0, guessed: 1, typical: 2, reconstructed: 3, known: 4, 'in place': 5 }
 /** a plan letter where no row speaks, in doubt the lower rung */
 export const FROM_LETTER: Record<Letter, Shown> = { M: 'known', R: 'guessed', G: 'guessed', T: 'guessed' }
 /** the tone a class paints, as the pages index their three tones (0 the M tone, 1 the R tone, 2 the G tone);
     blank has no tone, so a body drawn on a blank row paints the lowest and the check refuses it */
-export const TONE: Record<Shown, number> = { 'in place': 0, known: 1, guessed: 2, blank: 2 }
+export const TONE: Record<Shown, number> = { 'in place': 0, known: 1, reconstructed: 1, typical: 2, guessed: 2, blank: 2 }
 /** the letter a page's tone index carries, to read a body's own letters back from its attributes */
 export const LETTER_OF_TONE: readonly Letter[] = ['M', 'R', 'G']
 

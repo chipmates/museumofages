@@ -258,22 +258,16 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
     checks: (b) => !surface(b) && !b.startsWith('panel:'),
     floats: (b) => !surface(b) && b !== 'map:ramps' && !b.startsWith('panel:'),
     allowPair: [],
-    // a curtain's sheet is foliage in faces of about 0.2 by 1 m, and at 300 to 400 m from stop 5's hold a few of them
-    // fall under a device pixel wherever the planting's sequence puts them
     // the palm's mid preset (palm-date-babylon): a frond's leaflets drawn as teeth along its rib, their tips narrow
     allowThin: [
       { prefix: 'map:garden-palm-', why: "the mid preset's leaflet teeth, their tips 3 to 4 cm at 320 to 390 m (0.09 to 0.2 px, measured 4 Nov); a frond's fine edge, which the sub-frames average as foliage does" },
-      { prefix: 'map:garden-caper-', why: "a curtain's sheet faces, about 0.2 m by 1 m at 315 to 390 m (0.5 to 1 px of the 1600 px desktop, measured 4 Nov); foliage at that range, as the clumps beside them" },
-      { prefix: 'map:garden-vine-', why: "a curtain's sheet faces, about 0.2 m by 1 m at 315 to 390 m (0.5 to 1 px of the 1600 px desktop, measured 4 Nov); foliage at that range, as the clumps beside them" },
       { prefix: 'map:bridge-palm-', why: "the same reused gate palm on the west bank, its frond tips at 100 to 400 m from the bridge's hold; a far preset of palm-date-babylon is open" },
       // the west bank seen from stops 11, 12 and 14 (measured 5 Nov at the landing); a far preset for the bank trees is open
       { prefix: 'map:bridge-poplar-', why: "the bank poplars' trunks and limbs, 0.11 to 0.16 m at 220 to 405 m (0.22 to 0.81 px)" },
       { prefix: 'map:bridge-willow-', why: "the bank willows' trunks and limbs, 0.17 to 0.44 m at 220 to 370 m (0.26 to 0.95 px)" },
       { prefix: 'map:bridge-tamarisk-', why: "the bank tamarisks' stems, 0.19 to 0.32 m at 225 to 365 m (0.28 to 0.99 px)" },
     ],
-    // a curtain hangs on a terrace's face from its lip on the terrace's top: held by the face, which the plan-view
-    // support rule cannot see (as the gate's facing skins)
-    allowFloat: [{ prefix: 'gate:skin:', why: "a facing skin laid on a wall's face over the door: held by the wall behind it, which the plan-view support rule cannot see (as on the gate page)" }, { prefix: 'map:garden-vine-', why: "a curtain hung on a terrace's face from its lip on the top: held by the face behind it" }, { prefix: 'map:garden-caper-', why: "a caper curtain hung on a terrace's face from its lip on the top: held by the face behind it" }],
+    allowFloat: [{ prefix: 'gate:skin:', why: "a facing skin laid on a wall's face over the door: held by the wall behind it, which the plan-view support rule cannot see (as on the gate page)" }],
   }
 }
 

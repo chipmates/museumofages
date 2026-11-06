@@ -1,9 +1,9 @@
 /* STOP 5'S PLANTING, geometry with vertex colours: the guessed garden on the edge terraces. The trees are the stack's
    tree kit's, grown in the page through the wing's adapter (plants/grown.ts, which a page loads; node mounts each
    tree's stand-in, its crown's bounds as one closed body, so the checks run without a DOM); the date palms are the
-   gate's own at their mid preset (passed in, so this module keeps no relative import for node); vine curtains and
-   caper mounds hang over the terraces' own edges. Every vertex carries `leaf` (1 foliage, 0 wood) and `centre` (its
-   crown's middle, for the leaves' light). April (the flora's seasons): the deciduous kinds in new leaf, no fruit. */
+   gate's own at their mid preset (passed in, so this module keeps no relative import for node). Nothing hangs over
+   the terraces' edges. Every vertex carries `leaf` (1 foliage, 0 wood) and `centre` (its crown's middle, for the
+   leaves' light). April (the flora's seasons): the deciduous kinds in new leaf, no fruit. */
 
 import { BufferGeometry, Float32BufferAttribute } from 'three/webgpu'
 import type { GardensFrame, Strip } from './gardens-geom'
@@ -14,7 +14,7 @@ import type { Species } from '../../../stack/parts/planting'
 type J = any
 type V3 = [number, number, number]
 
-export type Kind = 'palm' | 'cypress' | 'broad' | 'tamarisk' | 'pomegranate' | 'fig' | 'shrub' | 'vine' | 'caper'
+export type Kind = 'palm' | 'cypress' | 'broad' | 'tamarisk' | 'pomegranate' | 'fig' | 'shrub'
 export interface Plant { id: string; kind: Kind; row: string; x: number; z: number; y: number; h: number; geometry: BufferGeometry; crown?: { y0: number; y1: number; rx: number; rz: number }; grown?: boolean; r?: number }
 /** the gate's palm builder (gate-life.ts palmGeometry): one palm at the origin, its foot at 0 */
 export type PalmBuilder = (h: number, detail: { seg: number; sides: number; fronds: number; steps: number }, seed: number) => BufferGeometry
@@ -49,8 +49,6 @@ export function standInCrown(kind: Kind, h: number, r: number): { y0: number; y1
   return { y0: Math.max(-0.3, h * t.base - MARGIN - t.hang), y1: h + MARGIN, rx: r + MARGIN, rz: r + MARGIN }
 }
 const WOOD: V3 = [0.11, 0.085, 0.062]
-/** linear albedos of the hanging green, April; ours, from the photo sheet's kinds */
-const LEAF: Partial<Record<Kind, V3>> = { vine: [0.105, 0.15, 0.038], caper: [0.07, 0.095, 0.05] }
 
 class Mesh {
   pos: number[] = []
@@ -83,19 +81,6 @@ const T = (1 + Math.sqrt(5)) / 2
 const ICO_V: V3[] = [[-1, T, 0], [1, T, 0], [-1, -T, 0], [1, -T, 0], [0, -1, T], [0, 1, T], [0, -1, -T], [0, 1, -T], [T, 0, -1], [T, 0, 1], [-T, 0, -1], [-T, 0, 1]].map((v) => norm(v as V3))
 const ICO_F = [[0, 11, 5], [0, 5, 1], [0, 1, 7], [0, 7, 10], [0, 10, 11], [1, 5, 9], [5, 11, 4], [11, 10, 2], [10, 7, 6], [7, 1, 8], [3, 9, 4], [3, 4, 2], [3, 2, 6], [3, 6, 8], [3, 8, 9], [4, 9, 5], [2, 4, 11], [6, 2, 10], [8, 6, 7], [9, 8, 1]]
 
-/** a lobe for the hanging curtains' clumps: an icosahedron scaled to `r`, each corner a little in or out, its normals
-    bent toward the curtain's middle */
-function lobe(m: Mesh, c: V3, r: [number, number, number], crown: V3, col: V3, r01: () => number, bend = 0.5): void {
-  const k = ICO_V.map(() => 0.86 + r01() * 0.24)
-  const P = ICO_V.map((v, i): V3 => [c[0] + v[0] * r[0] * k[i]!, c[1] + v[1] * r[1] * k[i]!, c[2] + v[2] * r[2] * k[i]!])
-  const N = P.map((p, i): V3 => {
-    const own = ICO_V[i]!
-    const out = norm([p[0] - crown[0], (p[1] - crown[1]) * 1.4, p[2] - crown[2]])
-    return norm([own[0] * (1 - bend) + out[0] * bend, own[1] * (1 - bend) + out[1] * bend, own[2] * (1 - bend) + out[2] * bend])
-  })
-  for (const f of ICO_F) m.tri(P[f[0]!]!, P[f[1]!]!, P[f[2]!]!, [N[f[0]!]!, N[f[1]!]!, N[f[2]!]!], col, 1, crown)
-}
-
 /** a grown tree's stand-in for node: one closed body over the crown's bounds (an icosahedron stretched to them, its
     lowest corner on the crown's foot) and a four-sided stem from the ground to it */
 function standIn(m: Mesh, x: number, y: number, z: number, b: { y0: number; y1: number; rx: number; rz: number }, col: V3): void {
@@ -119,54 +104,9 @@ function standIn(m: Mesh, x: number, y: number, z: number, b: { y0: number; y1: 
 
 const tint = (c: V3, k: number): V3 => [c[0] * k, c[1] * k, c[2] * k]
 
-/** a hanging curtain over a terrace's edge: a lip on the top, then a ragged sheet down the face, bulging out from it */
-function curtain(m: Mesh, at: { x: number; z: number; nx: number; nz: number }, top: number, w: number, drop: number, kind: Kind, seed: number): void {
-  const R = rnd(seed)
-  const cols = 4, rows = 4
-  const tx = -at.nz, tz = at.nx
-  const centre: V3 = [at.x + at.nx * 0.6, top - drop * 0.4, at.z + at.nz * 0.6]
-  const ends = Array.from({ length: cols + 1 }, () => drop * (0.45 + R() * 0.55))
-  const grid: V3[][] = []
-  for (let j = 0; j <= rows + 1; j++) {
-    const row: V3[] = []
-    for (let i = 0; i <= cols; i++) {
-      const u = (i / cols - 0.5) * w * (j === 0 ? 0.8 : 1)
-      const edgeK = Math.sin((i / cols) * Math.PI)
-      if (j === 0) {
-        // the lip: half a metre in from the edge, a hand over the top
-        row.push([at.x - at.nx * 0.55 + tx * u, top + 0.25 + R() * 0.1, at.z - at.nz * 0.55 + tz * u])
-        continue
-      }
-      const t = (j - 1) / rows
-      const d = ends[i]! * Math.min(1, t * (0.85 + edgeK * 0.15))
-      const bulge = 0.12 + (0.18 + R() * 0.2) * Math.sin(Math.PI * Math.min(1, t + 0.15)) * (0.5 + edgeK * 0.5)
-      row.push([at.x + at.nx * bulge + tx * u * (1 - t * 0.12), top - Math.max(d, j === 1 ? 0.3 : (j - 1) * 0.25 + 0.3), at.z + at.nz * bulge + tz * u * (1 - t * 0.12)])
-    }
-    grid.push(row)
-  }
-  const col = (j: number): V3 => tint(LEAF[kind]!, (0.85 + R() * 0.25) * (1 - j * 0.04))
-  for (let j = 0; j <= rows; j++) {
-    for (let i = 0; i < cols; i++) {
-      const a = grid[j]![i]!, b = grid[j]![i + 1]!, c = grid[j + 1]![i + 1]!, d = grid[j + 1]![i]!
-      // the sheet's normal faces out of the wall; on the lip it faces up and out
-      const n: V3 = j === 0 ? norm([at.nx, 1, at.nz]) : norm([at.nx, 0.25, at.nz])
-      const k = col(j)
-      m.tri(a, d, c, [n, n, n], k, 1, centre)
-      m.tri(a, c, b, [n, n, n], k, 1, centre)
-    }
-  }
-  // a few clumps along the sheet, so it is never one flat plane
-  for (let i = 0; i < 3; i++) {
-    const u = (R() - 0.5) * w * 0.8, d = drop * (0.15 + R() * 0.5)
-    const c: V3 = [at.x + at.nx * 0.3 + tx * u, top - d, at.z + at.nz * 0.3 + tz * u]
-    const r = 0.35 + R() * 0.3
-    lobe(m, c, [r, r * 0.9, r], centre, col(1), R)
-  }
-}
-
 export interface Planting { plants: Plant[]; facts: Record<string, unknown> }
 
-/** the garden's plants over the strips; `inStair` says where a flight runs (no tree and no curtain there) */
+/** the garden's plants over the strips; `inStair` says where a flight runs (no tree there) */
 export function buildPlanting(F: GardensFrame, gp: J, palm: PalmBuilder, palmDetail: { seg: number; sides: number; fronds: number; steps: number }): Planting {
   const P = gp.planting, T = gp.terraces
   const R = rnd(P.seed)
@@ -268,26 +208,6 @@ export function buildPlanting(F: GardensFrame, gp: J, palm: PalmBuilder, palmDet
     }
   }
 
-  /* the hanging green over each strip's outer edge, and over the lowest strips' faces down to the plain */
-  const H = P.hanging
-  const levels = [...new Set(F.strips.map((t) => t.level))].sort((a, b) => b - a)
-  for (const t of F.strips) {
-    const below = levels[levels.indexOf(t.level) + 1] ?? 0
-    const face = t.level - below
-    const a0 = t.out === 'w' ? t.z0 + 1.5 : t.x0 + 1.5
-    const a1 = t.out === 'w' ? t.z1 - T.southClear : t.x1 - T.eastClear
-    for (let a = a0 + R() * H.every; a < a1; a += H.every * (0.7 + R() * 0.6)) {
-      if (!clearOf(t, a)) continue
-      if (R() < 0.18) continue
-      const w = range(H.w), drop = Math.min(range(H.drop), face - 0.3)
-      const kind: Kind = R() < H.vine ? 'vine' : 'caper'
-      const at = t.out === 'w' ? { x: t.x0, z: a, nx: -1, nz: 0 } : { x: a, z: t.z0, nx: 0, nz: -1 }
-      const m = new Mesh()
-      curtain(m, at, t.level, w, drop, kind, Math.floor(R() * 1e9))
-      const id = nextId(kind)
-      plants.push({ id, kind, row: kind === 'vine' ? 'bab.green.vine' : 'bab.green.hanging', x: at.x, z: at.z, y: t.level, h: drop, geometry: m.geometry() })
-    }
-  }
   const facts = { count, total: plants.length, triangles: plants.reduce((s, p) => s + p.geometry.getAttribute('position').count / 3, 0) }
   return { plants, facts }
 }

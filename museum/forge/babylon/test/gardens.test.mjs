@@ -72,7 +72,7 @@ test('the garden stands on the edge terraces only, rich and within its rules', (
   assert.ok(trees.length >= 120, `trees ${trees.length}`)
   assert.ok(P.filter((p) => p.kind === 'pomegranate').length <= 6, 'a few pomegranates at most')
   assert.ok(P.filter((p) => p.kind === 'fig').length <= 1, 'one fig at most')
-  assert.ok(P.filter((p) => ['vine', 'caper'].includes(p.kind)).length >= 60, 'hanging green over the edges')
+  assert.equal(P.filter((p) => ['vine', 'caper'].includes(p.kind)).length, 0, 'no vine or caper over the edges')
   const strips = out.strips
   for (const p of P) {
     const on = strips.find((t) => p.x >= t.x0 - 0.01 && p.x <= t.x1 + 0.01 && p.z >= t.z0 - 0.01 && p.z <= t.z1 + 0.01 && Math.abs(p.y - t.level) < 1e-6)

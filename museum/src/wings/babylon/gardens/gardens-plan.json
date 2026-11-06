@@ -55,7 +55,7 @@
   "src": "the ground round the edge terraces at the canal's embankment, plus or minus 0 (P2021 p. 115: the terrace top +15 and the embankment ±0 'within a limited area some 22 m wide'); the map's ground field stood at +11 to +14 here and buried the terraces. Its south side is the inner walls' line, its east the terrace's east edge; outside it the ground climbs back to the map's field at one in two (ours). On the map page only"
  },
  "planting": {
-  "src": "every plant ours (REC bab.gardens.plants, bab.green.*: Guessed). Berossus: terraces planted with all manner of trees; the Nineveh garden relief (BM 124939, a type, never Babylon): trees in close regular rows on a slope; Sheldon 1924 (an illustration): trees on every terrace edge, creepers over plain brick edges, palms at the water. Kinds as types: date palm (palm-date-babylon), cypress, broad aromatic and fruit trees, a few pomegranates, one fig; vines and caper hanging from the edges (GREEN H). April: the deciduous kinds in new leaf",
+  "src": "every plant ours (REC bab.gardens.plants, bab.green.*: Guessed). Berossus: terraces planted with all manner of trees; the Nineveh garden relief (BM 124939, a type, never Babylon): trees in close regular rows on a slope; Sheldon 1924 (an illustration): trees on every terrace edge, creepers over plain brick edges, palms at the water. Kinds as types: date palm (palm-date-babylon), cypress, broad aromatic and fruit trees, a few pomegranates, one fig. April: the deciduous kinds in new leaf",
   "seed": 570,
   "rows": {
    "w": [{ "at": 2.4, "every": 6.4, "mix": "edge" }, { "at": 7.6, "every": 7.5, "mix": "inner" }],
@@ -73,8 +73,7 @@
    "pomegranate": { "h": [3.0, 4.5], "r": [1.4, 1.9], "max": 6, "row": "bab.green.pomegranate" },
    "fig": { "h": [5.5, 6.5], "r": [2.8, 3.2], "max": 1, "row": "bab.green.fig" },
    "shrub": { "h": [1.2, 2.2], "r": [1.0, 1.6], "row": "bab.gardens.plants" }
-  },
-  "hanging": { "every": 3.6, "w": [1.6, 3.4], "drop": [0.9, 2.6], "vine": 0.45, "src": "vine curtains and caper mounds over the terraces' own edges only, never a documented wall (GREEN H; REC bab.green.hanging, bab.green.vine)" }
+  }
  },
  "door": {
   "features": ["oil", "garden-words"],

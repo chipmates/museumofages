@@ -10,7 +10,7 @@ import { readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { APP } from './pages.mjs'
 import { mountMap } from './mounts.mjs'
-import { isLetter, recordNamer } from '../../src/wings/babylon/record.ts'
+import { RANK, isLetter, recordNamer } from '../../src/wings/babylon/record.ts'
 import { buildPlan } from '../../src/wings/babylon/map/plan.ts'
 
 const args = process.argv.slice(2)
@@ -19,7 +19,6 @@ const STOP = String(opt('--stop', '6'))
 const OUT = opt('--out', null)
 if (!OUT) { console.error('--out <shown.json>'); process.exit(2) }
 
-const RANK = { blank: 0, guessed: 1, known: 2, 'in place': 3 }
 const json = (p) => JSON.parse(readFileSync(p, 'utf8'))
 const name = recordNamer(json(join(APP, 'src/wings/babylon/pieces.json')), json(join(APP, 'src/wings/babylon/record-classes.json')), STOP)
 const mapPlan = json(join(APP, 'src/wings/babylon/map/map-plan.json'))
