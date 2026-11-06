@@ -441,7 +441,7 @@ export function buildPlain(mapPlan: J, opts: { palms?: boolean; reach?: number }
         const a = RY() * Math.PI * 2, r = 2.4 + RY() * 2.2
         const x = p.x + Math.cos(a) * r, z = p.z + Math.sin(a) * r
         if (blocked(x, z, 0) || built.some((q) => inPoly(x, z, q))) continue
-        palms.push({ x, z, s: 0.7 + RY() * 0.8, yaw: RY() * Math.PI * 2, lean: (RY() - 0.5) * 0.2, row: 'young', h: YOUNG_H })
+        palms.push({ x, z, s: 0.9 + RY() * 0.8, yaw: RY() * Math.PI * 2, lean: (RY() - 0.5) * 0.2, row: 'young', h: YOUNG_H })
       }
     }
     const way = DESCENT.map(([E, N, y]) => { const [x, z] = s(E, N); return [x, y, z] as [number, number, number] })
