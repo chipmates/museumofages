@@ -449,7 +449,7 @@ export function buildEsagila(built: Built, mapPlan: J, ep: J): Esagila {
     const sTurn = sAt(SP.turnTo), sDug = sAt(SP.dugTo)
     const soups = { turn: new Soup(), south: new Soup(), west: new Soup() }
     const lerp3 = (a: number[], b: number[], u: number): number[] => a.map((v, c) => v + (b[c]! - v) * u)
-    const LIFT: number = SP.lift
+    const LIFT: number = SP.lift, PAVED: number = SP.paved
     let sAcc = 0
     // cut each leg at the two split points too, so every quad lies in one piece
     for (let k = 0; k + 1 < pts.length; k++) {
@@ -469,8 +469,16 @@ export function buildEsagila(built: Built, mapPlan: J, ep: J): Esagila {
         const up = (p: number[]): number[] => [p[0]!, p[1]! + LIFT, p[2]!]
         const mid = (s0 + s1) / 2
         const into = mid < sTurn ? soups.turn : mid < sDug ? soups.south : soups.west
-        // left is the north edge (t 0), right the south (t w); the top wound to face up, each lip to face away from the middle
-        into.quad([up(l0), up(l1), up(r1), up(r0)], KIND.street, [[s0, 0, w0, 0], [s1, 0, w1, 0], [s1, w1, w1, 0], [s0, w0, w0, 0]])
+        // left is the north edge (t 0), right the south (t w); the top wound to face up, each lip to face away from the middle.
+        // The top in three strips split where the paved band meets each shoulder: t interpolates linearly inside a
+        // triangle only, so on a turning leg's trapezoid the band's edge bent at the diagonal; on a strip's edge it is straight
+        const m0 = (w0 - PAVED) / 2, m1 = (w1 - PAVED) / 2
+        const t0s = m0 > 0.01 && m1 > 0.01 ? [0, m0, w0 - m0, w0] : [0, w0], t1s = m0 > 0.01 && m1 > 0.01 ? [0, m1, w1 - m1, w1] : [0, w1]
+        for (let q = 0; q + 1 < t0s.length; q++) {
+          const a0 = t0s[q]!, b0 = t0s[q + 1]!, a1 = t1s[q]!, b1 = t1s[q + 1]!
+          const at0 = (t: number): number[] => up(lerp3(l0, r0, t / w0)), at1 = (t: number): number[] => up(lerp3(l1, r1, t / w1))
+          into.quad([at0(a0), at1(a1), at1(b1), at0(b0)], KIND.street, [[s0, a0, w0, 0], [s1, a1, w1, 0], [s1, b1, w1, 0], [s0, b0, w0, 0]])
+        }
         into.quad([l1, up(l1), up(l0), l0], KIND.street, [[s1, 0, w1, 1], [s1, 0, w1, 1], [s0, 0, w0, 1], [s0, 0, w0, 1]])
         into.quad([r0, up(r0), up(r1), r1], KIND.street, [[s0, w0, w0, 1], [s0, w0, w0, 1], [s1, w1, w1, 1], [s1, w1, w1, 1]])
       }
