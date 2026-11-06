@@ -570,9 +570,10 @@ export function subPixel(faces, cameras, { runPx = 4, facing = 0.15, thickCap = 
   const vkey = (v) => `${Math.round(v.x * 1e4)},${Math.round(v.y * 1e4)},${Math.round(v.z * 1e4)}`
   const ekey = (a, b) => { const p = vkey(a), q = vkey(b); return p < q ? `${p}|${q}` : `${q}|${p}` }
   const pkey = (f) => `${[f.n.x, f.n.y, f.n.z].map((c) => (Math.round(c * 1000) / 1000).toFixed(3)).join(',')}|${Math.round(f.d * 1000)}`
-  const edges = new Map(), planes = new Map()
+  const edges = new Map(), planes = new Map(), corners = new Map()
   for (const f of mine) {
     for (let i = 0; i < 3; i++) { const k = ekey(f.v[i], f.v[(i + 1) % 3]); if (!edges.has(k)) edges.set(k, []); edges.get(k).push(f) }
+    for (const v of f.v) { const k = vkey(v); if (!corners.has(k)) corners.set(k, []); corners.get(k).push(f) }
     const k = pkey(f)
     if (!planes.has(k)) planes.set(k, [])
     planes.get(k).push(f)
@@ -590,7 +591,7 @@ export function subPixel(faces, cameras, { runPx = 4, facing = 0.15, thickCap = 
   // face's own far corner instead: within 0.5 mm, about four float32 half-steps of a corner at the pages' 2 km
   const FLAT_M = 5e-4
   const flatOn = (g, top) => Math.abs(top.clone().sub(g.v[0]).dot(g.n)) < FLAT_M
-  // the face in f's plane holding p: across the edge first, else by the plane key (a T-junction shares no edge)
+  // the face in f's plane holding p: among the near faces first, else by the plane key
   const holder = (f, top, p, near, seen) => near.find((g) => !seen.has(g) && flatOn(g, top) && inTri(p, g))
     ?? (planes.get(pkey(f)) ?? []).find((g) => !seen.has(g) && inTri(p, g))
   // where the ray m + t r (in g's plane) leaves g past t0, and by which edge
@@ -606,8 +607,8 @@ export function subPixel(faces, cameras, { runPx = 4, facing = 0.15, thickCap = 
     return { t, at }
   }
   // a sliver's plane goes on past its long edge several times its own thickness (2.5 times for the plane test's widest
-  // fan sliver, 10 for the gate's lion tops); a thin quad split on its diagonal reaches half its thickness into its
-  // other half, a kite split on its long axis its whole thickness: the line sits between them
+  // fan sliver); a thin quad split on its diagonal reaches half its thickness into its other half, a kite split on its
+  // long axis its whole thickness: the line sits between them
   const REACH = 1.5, STEP = 0.002, WALK = 64
   const goesOn = (f, foot, top, along, thick) => {
     const across = edges.get(ekey(along[0], along[1])) ?? []
@@ -615,7 +616,9 @@ export function subPixel(faces, cameras, { runPx = 4, facing = 0.15, thickCap = 
     if (across.some((g) => g !== f && g.body === f.body && g.n.dot(f.n) > 0.866 && g.n.dot(f.n) < 0.99999)) return true
     // otherwise walk from the long edge's middle, straight away from the far corner, through the faces in its plane
     // (each found by a probe 2 mm past the edge the walk left by) until the plane has gone on REACH times the face's
-    // thickness: a sliver of a wider face is set aside, a thin strip split into triangles is not
+    // thickness: a sliver of a wider face is set aside, a thin strip split into triangles is not. The first step looks
+    // across the long edge only; later ones also at the faces on the corners of the edge the walk left by, since a
+    // T-junction shares a corner, not the edge, and far out the plane key splits (by 19 mm in d at the map's Esagila)
     const m = along[0].clone().add(along[1]).multiplyScalar(0.5), r = foot.clone().sub(top).normalize()
     const seen = new Set([f])
     let t = STEP, near = across
@@ -625,7 +628,8 @@ export function subPixel(faces, cameras, { runPx = 4, facing = 0.15, thickCap = 
       const out = leave(g, m, r, f.n, t)
       if (out.t >= REACH * thick) return true
       seen.add(g)
-      near = edges.get(ekey(g.v[out.at], g.v[(out.at + 1) % 3])) ?? []
+      const p = g.v[out.at], q = g.v[(out.at + 1) % 3]
+      near = [...(edges.get(ekey(p, q)) ?? []), ...(corners.get(vkey(p)) ?? []), ...(corners.get(vkey(q)) ?? [])]
       t = out.t + STEP
     }
     return true
