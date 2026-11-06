@@ -2,14 +2,19 @@
    model, built instead of painted. A stage of the tower as a box whose faces are cut into buttress panels at the plan's
    pitch (the recesses sunk into the box, so the measured outline stays the stage's side), capped on every face by a
    coping with a lip and a drip that wraps the corners. Every vertex writes the bodies' existing attributes (`kind`,
-   `fa`, `fb`), so the materials do not fork: `fa` the face's plan centre, half width and pitch as the painted relief
-   read them, `fb` the stage data with the form in `fb.w` (FORM). A guard keeps the recesses and the coping off a face
-   where a stair stands against it. Sizes come from the plan and are checked against the stops' pixel by the forge. */
+   `fa`, `fb`), so the materials do not fork: `fa` the face's middle in plan and its outward normal (FACE), so a material
+   can shade the relief by the sun itself, `fb` the stage data with the form in `fb.w` (FORM). A guard keeps the
+   recesses and the coping off a face where a stair stands against it. Sizes come from the plan and are checked
+   against the stops' pixel by the forge. */
 
 import { BufferGeometry, Float32BufferAttribute } from 'three/webgpu'
 
 /** the form a face belongs to, written into `fb.w` */
 export const FORM = { plain: 0, front: 1, side: 2, back: 3, coping: 4, under: 5, top: 6 } as const
+
+/** `fa` of a face's forms: its middle (x, z) and its outward normal (x, z) at length `lipped` where the coping's lip
+    hangs over it, `open` where a stair keeps the lip off; a top shared by all four faces carries no normal */
+export const FACE = { lipped: 1, open: 0.5 } as const
 
 export interface FormsSpec {
   /** buttress panels: the pitch, the panel's share of it, the recess's depth */
@@ -103,28 +108,9 @@ export function buttressedStage(b: StageBox, kind: number, s: FormsSpec, stage: 
     const P = (u: number, d: number, y: number): V3 => W(f.mid[0] + f.t[0] * u + f.n[0] * d, f.mid[1] + f.t[1] * u + f.n[1] * d, y)
     const out = dirW(f.n[0], f.n[1]), along = dirW(f.t[0], f.t[1])
     const against = [-along[0]!, 0, -along[2]!], up = [0, 1, 0], down = [0, -1, 0]
-    const fa = [b.x, b.z, f.half, s.pitch]
+    const mid = W(f.mid[0], f.mid[1], 0)
+    const faOf = (lipped: boolean): number[] => { const L = lipped ? FACE.lipped : FACE.open; return [mid[0]!, mid[2]!, out[0]! * L, out[2]! * L] }
     const g = (u0: number, u1: number): number => (guard ? guard(k, u0, u1) : -Infinity)
-    // the face plane between the recesses (the panels and the end bays) and under a guarded recess, to the coping
-    // over a stair, a hand's breadth above its highest tread, so the sill and the tread never share a plane
-    const R = recesses(f.half, s).map(([u0, u1]) => { const h = g(u0, u1); return { u0, u1, y: h > foot ? h + 0.05 : foot } }).filter((r) => r.y < yc - 0.3)
-    let u = -f.half
-    const front = (u0: number, u1: number, y0: number, y1: number): void => {
-      if (u1 - u0 > 1e-6 && y1 - y0 > 1e-6) q.quad([P(u0, 0, y0), P(u1, 0, y0), P(u1, 0, y1), P(u0, 0, y1)], fa, FORM.front, out)
-    }
-    for (const r of R) {
-      front(u, r.u0, foot, yc)
-      front(r.u0, r.u1, foot, r.y)
-      // the recess: its back, its two sides (each facing into it), a sill where it starts over a stair, its head
-      const d = -s.out
-      q.quad([P(r.u0, d, r.y), P(r.u1, d, r.y), P(r.u1, d, yc), P(r.u0, d, yc)], fa, FORM.back, out)
-      q.quad([P(r.u0, d, r.y), P(r.u0, 0, r.y), P(r.u0, 0, yc), P(r.u0, d, yc)], fa, FORM.side, along)
-      q.quad([P(r.u1, d, r.y), P(r.u1, 0, r.y), P(r.u1, 0, yc), P(r.u1, d, yc)], fa, FORM.side, against)
-      if (r.y > foot + 1e-6) q.quad([P(r.u0, d, r.y), P(r.u1, d, r.y), P(r.u1, 0, r.y), P(r.u0, 0, r.y)], fa, FORM.top, up)
-      q.quad([P(r.u0, d, yc), P(r.u1, d, yc), P(r.u1, 0, yc), P(r.u0, 0, yc)], fa, FORM.under, down)
-      u = r.u1
-    }
-    front(u, f.half, foot, yc)
     // the coping band: on the face plane where a stair reaches it, else with its lip and drip, mitred at the corners
     const STEP = s.pitch / 2
     const segs: Array<{ u0: number; u1: number; lip: boolean }> = []
@@ -135,9 +121,37 @@ export function buttressedStage(b: StageBox, kind: number, s: FormsSpec, stage: 
       if (last && last.lip === has) last.u1 = u1
       else segs.push({ u0, u1, lip: has })
     }
+    const lippedAt = (u: number): boolean => (segs.find((sg) => u >= sg.u0 - 1e-6 && u <= sg.u1 + 1e-6) ?? segs[0]!).lip
+    // the face plane between the recesses (the panels and the end bays) and under a guarded recess, to the coping
+    // over a stair, a hand's breadth above its highest tread, so the sill and the tread never share a plane
+    const R = recesses(f.half, s).map(([u0, u1]) => { const h = g(u0, u1); return { u0, u1, y: h > foot ? h + 0.05 : foot } }).filter((r) => r.y < yc - 0.3)
+    let u = -f.half
+    // the face plane, cut where the lip above it starts or stops, so each piece knows whether the lip shades it
+    const front = (u0: number, u1: number, y0: number, y1: number): void => {
+      if (!(u1 - u0 > 1e-6 && y1 - y0 > 1e-6)) return
+      const cuts = [u0, ...segs.map((sg) => sg.u0).filter((c) => c > u0 + 1e-6 && c < u1 - 1e-6), u1]
+      for (let i = 0; i + 1 < cuts.length; i++) {
+        const a = cuts[i]!, c = cuts[i + 1]!
+        q.quad([P(a, 0, y0), P(c, 0, y0), P(c, 0, y1), P(a, 0, y1)], faOf(lippedAt((a + c) / 2)), FORM.front, out)
+      }
+    }
+    for (const r of R) {
+      front(u, r.u0, foot, yc)
+      front(r.u0, r.u1, foot, r.y)
+      // the recess: its back, its two sides (each facing into it), a sill where it starts over a stair, its head
+      const d = -s.out, fa = faOf(lippedAt((r.u0 + r.u1) / 2))
+      q.quad([P(r.u0, d, r.y), P(r.u1, d, r.y), P(r.u1, d, yc), P(r.u0, d, yc)], fa, FORM.back, out)
+      q.quad([P(r.u0, d, r.y), P(r.u0, 0, r.y), P(r.u0, 0, yc), P(r.u0, d, yc)], fa, FORM.side, along)
+      q.quad([P(r.u1, d, r.y), P(r.u1, 0, r.y), P(r.u1, 0, yc), P(r.u1, d, yc)], fa, FORM.side, against)
+      if (r.y > foot + 1e-6) q.quad([P(r.u0, d, r.y), P(r.u1, d, r.y), P(r.u1, 0, r.y), P(r.u0, 0, r.y)], fa, FORM.top, up)
+      q.quad([P(r.u0, d, yc), P(r.u1, d, yc), P(r.u1, 0, yc), P(r.u0, 0, yc)], fa, FORM.under, down)
+      u = r.u1
+    }
+    front(u, f.half, foot, yc)
     // a mitred strip at distance d from the face reaches the corner lines only where the coping runs to the corner
     const ext = (seg: { u0: number; u1: number }, d: number): [number, number] => [seg.u0 <= -f.half + 1e-6 ? seg.u0 - d : seg.u0, seg.u1 >= f.half - 1e-6 ? seg.u1 + d : seg.u1]
     for (const seg of segs) {
+      const fa = faOf(seg.lip)
       if (!seg.lip) {
         q.quad([P(seg.u0, 0, yc), P(seg.u1, 0, yc), P(seg.u1, 0, yt), P(seg.u0, 0, yt)], fa, FORM.coping, out)
         continue
@@ -147,15 +161,15 @@ export function buttressedStage(b: StageBox, kind: number, s: FormsSpec, stage: 
       q.quad([P(c0, lip, yd), P(c1, lip, yd), P(c1, lip, yt), P(c0, lip, yt)], fa, FORM.coping, out)
       q.quad([P(a0, 0, yd), P(a1, 0, yd), P(c1, lip, yd), P(c0, lip, yd)], fa, FORM.under, down)
       q.quad([P(a0, 0, yt), P(a1, 0, yt), P(c1, lip, yt), P(c0, lip, yt)], fa, FORM.top, up)
-      // where the lip stops short of a corner (a stair beside it), its end closes it
+      // where the lip stops short of a corner (a stair beside it), its end closes it: a return of the face
       for (const [e, dir] of [[seg.u0, against], [seg.u1, along]] as Array<[number, V3]>) {
         if (Math.abs(Math.abs(e) - f.half) < 1e-6) continue
-        q.quad([P(e, 0, yd), P(e, lip, yd), P(e, lip, yt), P(e, 0, yt)], fa, FORM.coping, dir)
+        q.quad([P(e, 0, yd), P(e, lip, yd), P(e, lip, yt), P(e, 0, yt)], fa, FORM.side, dir)
       }
     }
   })
   // the top, inside the copings' lips
   const hx = b.sx / 2, hz = b.sz / 2
-  q.quad([W(-hx, -hz, yt), W(hx, -hz, yt), W(hx, hz, yt), W(-hx, hz, yt)], [b.x, b.z, 0, s.pitch], FORM.top, [0, 1, 0])
+  q.quad([W(-hx, -hz, yt), W(hx, -hz, yt), W(hx, hz, yt), W(-hx, hz, yt)], [b.x, b.z, 0, 0], FORM.top, [0, 1, 0])
   return q.geometry()
 }

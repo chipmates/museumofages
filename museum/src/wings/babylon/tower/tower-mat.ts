@@ -255,6 +255,49 @@ export function glazeSky(m: Material, sky: Sky): void {
   m.needsUpdate = true
 }
 
+/** the sun on the stages' built relief (`worn-forms-babylon`: `fa` the face's middle and outward normal, `fb.w` the
+    form), multiplied into the sun's shadow: the shared map's bias lets the sun a few decimetres past every caster, so
+    each inner corner of a recess and the face under the coping showed a lit line where the relief's own walls shade
+    it. A face turned from the sun takes none, its returns and coping with it (the core shades them); a recess passes
+    the sun where the ray toward it leaves by the recess's mouth under its head; the coping's lip shades the face and a
+    recess's mouth below it. The stages' tops keep the map's sun. Set once the page has its sun. */
+export function towerSun(m: Material, tp: J, sunDir: N): void {
+  const P = positionWorld
+  const fa = attribute('fa', 'vec4'), fb = attribute('fb', 'vec4'), kind = attribute('kind', 'float')
+  const n = normalize(attribute('normal', 'vec3'))
+  const PN = tp.tower.panels, C = tp.tower.forms.coping
+  const pitch = PN.pitch1, hr = (pitch * (1 - PN.share)) / 2, E = 0.002, W = 0.02
+  const len = vec2(fa.z, fa.w).length()
+  const on = step(abs(kind.sub(1)), 0.5).mul(step(0.5, fb.w)).mul(step(0.25, len))
+  const mN = vec2(fa.z, fa.w).div(max(len, 1e-4)), tN = vec2(mN.y.negate(), mN.x)
+  const lipped = step(0.75, len)
+  const rel = vec2(P.x.sub(fa.x), P.z.sub(fa.y))
+  const u = dot(rel, tN), d = dot(rel, mN)
+  const sun = normalize(sunDir)
+  const sm = dot(vec2(sun.x, sun.z), mN), st = dot(vec2(sun.x, sun.z), tN), sy = sun.y
+  const yd = fb.y.sub(C.h + C.drip)
+  const toward = smoothstep(0.0, 0.02, sm)
+  // the lip: a ray leaving the face's plane at y0 under the drip reaches the drip's level `reach` out from the face
+  const clear = (y0: N): N => {
+    const reach = yd.sub(y0).mul(sm).div(max(sy, 1e-4))
+    const shaded = float(1).sub(smoothstep(float(C.lip - W), float(C.lip + W), reach)).mul(step(1e-4, sy)).mul(lipped).mul(step(y0, yd))
+    return float(1).sub(shaded)
+  }
+  // a recess: where the ray meets the face's plane, inside the mouth (its sides at the recess's half width, its head)
+  const lam = d.negate().div(max(sm, 1e-4))
+  const centre = floor(u.div(pitch)).add(0.5).mul(pitch)
+  const ue = u.sub(centre).add(lam.mul(st)), ye = P.y.add(lam.mul(sy))
+  const mouth = float(1).sub(smoothstep(float(hr + W), float(hr + 2 * W), abs(ue))).mul(float(1).sub(smoothstep(yd.add(W), yd.add(2 * W), ye)))
+  const inRecess = step(d, -E).mul(step(P.y, yd.add(E)))
+  const below = step(abs(d), E).mul(step(P.y, yd.sub(E)))
+  const relief = mix(mix(float(1), clear(P.y), below), mouth.mul(clear(min(ye, yd))), inRecess)
+  // the coping's top over its lip faces the sky, not the face's side: it keeps the map's sun
+  const lidOn = step(0.5, n.y).mul(float(1).sub(inRecess))
+  const k = mix(float(1), mix(toward.mul(relief), float(1), lidOn), on)
+  ;(m as unknown as { receivedShadowNode: (s: N) => N }).receivedShadowNode = (s: N): N => s.mul(k)
+  m.needsUpdate = true
+}
+
 /** the map ground's colour inside the precinct and on the open ground before Gate 5: packed earth, the perpendicular
     street's brick down the recess's middle, fading to the map's grey over 60 m outside; the class view keeps the grey */
 export function groundPaint(F: GateFrame, tp: J, mapPlan: J): (base: N) => N {
