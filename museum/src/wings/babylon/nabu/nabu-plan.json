@@ -21,7 +21,52 @@
   "coat": 0.55,
   "coatWear": 0.45,
   "sheen": 0.45,
-  "src": "baked brick covered with bitumen, guessed: Koldewey found an asphalt covering on the Ninmah court's pavement (K1914 ch. IX), Pedersen's model gives this court bricks covered with asphalt (P2021 fig. 4.24); the king's common brick about 33 cm square (P2021 p. 20); the coat's thickness and its wear ours: a thin coat over the whole court, every joint full, worn thinner on the walked ways"
+  "src": "baked brick covered with asphalt, guessed as a transfer: the temple's floor 'was black with asphalt' (P2021 p. 278, on the older temple below), Pedersen's model gives this court a 'floor of bricks covered with asphalt' (P2021 p. 171, fig. 4.24), the Ishtar and Ninmah temples had black asphalt floors too (P2021 p. 279), Koldewey found an asphalt covering on the Ninmah court's pavement (K1914 ch. IX); the king's common brick about 33 cm square (P2021 p. 20); the coat's thickness and its wear ours: outside the court a thin coat, every joint full, worn thinner on the walked ways",
+  "skin": {
+   "colour": [
+    0.032,
+    0.029,
+    0.026
+   ],
+   "scuffed": [
+    0.1,
+    0.092,
+    0.082
+   ],
+   "thin": 0.35,
+   "ghost": 0.5,
+   "scuff": 0.5,
+   "temper": 0.4,
+   "rough": [
+    0.62,
+    0.92
+   ],
+   "src": "the court's floor as one black asphalt skin over the brick (bab.nabu.floor, guessed): young, the temple raised late in the reign, so its wear light; the skin a dull black mastic with a fine mineral grain (ours), scuffed lighter and duller on the trodden lines (the court's door to the cella's, round the altars), thin over a brick's arrises in patches so the joints ghost faintly; never bare brick, never the black bed laid open",
+   "joint": 0.006,
+   "sink": 0.35,
+   "temperRough": 0.3,
+   "brickTone": 0.28,
+   "brickRough": 0.22,
+   "arris": 0.9,
+   "grit": 0.3,
+   "dust": {
+    "colour": [
+     0.34,
+     0.3,
+     0.24
+    ],
+    "cover": 0.12,
+    "drift": 0.25,
+    "foot": 0.35,
+    "footW": 2.5,
+    "swept": 0.8,
+    "grain": 0.5,
+    "max": 0.75,
+    "src": "a thin film of dust over the asphalt (bab.wear.dust.drift, guessed): crumbled mud brick, clay-toned, thicker toward the walls' feet and in slow drifts, swept thin on the trodden lines; Koldewey saw mud brick weather to 'a light powdery dust' moved by the summer winds (K1914 ch. XLI, said of the ruins: a modern analogue); its colour the court's earth a shade darker, its share ours; a film, never a heap of sand on the paved court",
+    "brick": 0.6
+   },
+   "sinkThin": 0.45
+  }
  },
  "wall": 1.8,
  "wallSrc": "walls 1.8 m thick (P2021 p. 170)",
