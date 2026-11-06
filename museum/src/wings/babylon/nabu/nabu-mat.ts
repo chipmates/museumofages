@@ -208,36 +208,44 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const temper = mx_noise_float(P.mul(vec3(90, 1, 90))).mul(keepF(1 / 90)).mul(0.5).add(mx_noise_float(P.mul(vec3(38, 1, 38)).add(4.4)).mul(keepF(1 / 38)).mul(0.4))
     .add(mx_noise_float(P.mul(vec3(180, 1, 180)).add(2.2)).mul(keepF(1 / 180)).mul(0.4))
   const thinSkin = clamp(smoothstep(0.05, 0.6, mx_noise_float(vec3(P.x.mul(0.8), 6.6, P.z.mul(0.8))).add(mx_noise_float(vec3(P.x.mul(2.3), 1.2, P.z.mul(2.3))).mul(0.4))).mul(SK.thin).add(trod.mul(SK.thin * 0.6)), 0, 1)
-  // the brick under the skin: the skin sinks a little into every joint (a faint dark line), and where it is thin the
-  // bricks' arrises and their own tone come through
+  // the brick under the skin shows only where the skin is thin: its courses telegraph faintly in the thin patches, and
+  // the joints and arrises only where feet have worn the skin on the trodden ways, never as a grid across the court
   const sz = floor(P.z.div(PV.brick)), spx = P.x.add(sz.sub(floor(sz.div(2)).mul(2)).mul(PV.brick / 2))
   const jl = max(lines(P.z, PV.brick, SK.joint, fpz), lines(spx, PV.brick, SK.joint, fpx))
-  // the skin a little thicker or thinner over each brick, so each takes its own tone and sheen
+  // where the skin is thin, each brick's own tone comes through a little
   const perBrick = hash2(floor(spx.div(PV.brick)).add(5.1), sz.add(2.7)).sub(0.5).mul(keepF(PV.brick))
   // a brick's arrises stand a hair proud, so a thin skin wears lightest just inside each joint
   const ex = fract(spx.div(PV.brick)).mul(PV.brick), ez = fract(P.z.div(PV.brick)).mul(PV.brick)
   const edgeD = min(min(ex, float(PV.brick).sub(ex)), min(ez, float(PV.brick).sub(ez)))
   const rim = float(1).sub(smoothstep(SK.joint, SK.joint + 0.025, edgeD)).mul(float(1).sub(jl)).mul(keepF(0.05))
   const ghost = clamp(dot(pv.colour, vec3(0.2126, 0.7152, 0.0722)).div(0.3).sub(1), -0.85, 0.6)
-  const scuffTex = smoothstep(-0.3, 0.45, mx_noise_float(vec3(P.x.mul(5), 3.9, P.z.mul(5))).add(mx_noise_float(P.mul(vec3(22, 1, 22)).add(1.3)).mul(0.5).mul(keepF(1 / 22))))
+  const scuffTex: N = smoothstep(-0.3, 0.45, mx_noise_float(vec3(P.x.mul(5), 3.9, P.z.mul(5))).add(mx_noise_float(P.mul(vec3(22, 1, 22)).add(1.3)).mul(0.5).mul(keepF(1 / 22))))
   // the scuffs feet leave on the trodden lines, in patches
   const scuff = trod.mul(scuffTex).mul(SK.scuff)
+  // the skin worn thin by feet, in patches along the trodden ways: there alone the joints sink and the arrises show
+  const footWorn = trod.mul(scuffTex)
   let skin: N = V(SK.colour).mul(float(1).add(temper.mul(SK.temper))).mul(float(1).add(ghost.mul(SK.ghost).mul(thinSkin)))
-    .mul(float(1).add(perBrick.mul(SK.brickTone))).mul(float(1).add(rim.mul(thinSkin).mul(SK.arris)))
+    .mul(float(1).add(perBrick.mul(SK.brickTone).mul(thinSkin))).mul(float(1).add(rim.mul(footWorn).mul(SK.arris)))
   // the mastic's grit: fine, sparse, a little lighter, seen only near
   const grit = smoothstep(0.35, 0.6, mx_noise_float(P.mul(vec3(150, 1, 150)).add(7.7))).mul(keepF(1 / 75))
   skin = skin.mul(float(1).add(grit.mul(SK.grit)))
   skin = mix(skin, V(SK.scuffed), scuff)
-  /* the dust of crumbled mud brick the wind lays on any open floor (bab.wear.dust.drift, guessed): a thin film,
-     thicker at the walls' feet and in slow drifts, swept thin on the trodden lines, its own fine unevenness; matte */
+  /* the dust of crumbled mud brick the wind lays on any open floor (bab.wear.dust.drift, guessed): a thin film in
+     drifts, thicker at the walls' feet and in the corners, swept thin on the trodden lines, a soft mottle between and
+     its own fine unevenness; matte, laid over the skin whole, blind to the brick under it */
   const DU = SK.dust
   const drift = smoothstep(0.1, 0.8, mx_noise_float(vec3(P.x.mul(0.4), 8.1, P.z.mul(0.4))).add(0.5))
-  const dustGrain = mx_noise_float(P.mul(vec3(9, 1, 9)).add(3.3)).mul(0.6).add(mx_noise_float(P.mul(vec3(31, 1, 31)).add(5.9)).mul(0.4).mul(keepF(1 / 31)))
+  const dustGrain = mx_noise_float(P.mul(vec3(9, 1, 9)).add(3.3)).mul(0.5).add(mx_noise_float(P.mul(vec3(19, 1, 19)).add(8.4)).mul(0.35).mul(keepF(1 / 19)))
+    .add(mx_noise_float(P.mul(vec3(31, 1, 31)).add(5.9)).mul(0.45).mul(keepF(1 / 31)))
+  const dCorner = length(vec2(min(P.x.sub(c.x0), float(c.x1).sub(P.x)), min(P.z.sub(c.z0), float(c.z1).sub(P.z))))
+  const dustMottle = mx_noise_float(vec3(P.x.mul(1.3), 4.7, P.z.mul(1.3))).mul(0.6).add(mx_noise_float(vec3(P.x.mul(3.1), 9.2, P.z.mul(3.1))).mul(0.4))
+  const dustFine = mx_noise_float(P.mul(vec3(45, 1, 45)).add(6.1)).mul(keepF(1 / 45)).mul(0.65).add(mx_noise_float(P.mul(vec3(110, 1, 110)).add(1.9)).mul(keepF(1 / 110)).mul(0.35))
   const film = clamp(float(DU.cover).add(drift.mul(DU.drift)).add(float(1).sub(smoothstep(0.1, DU.footW, pv.dWall)).mul(DU.foot))
-    .mul(float(1).sub(trod.mul(DU.swept))).mul(float(1).add(dustGrain.mul(DU.grain)).add(perBrick.mul(DU.brick))), 0, DU.max)
+    .add(float(1).sub(smoothstep(0.3, DU.cornerW, dCorner)).mul(DU.corner)).add(dustMottle.mul(DU.mottle))
+    .mul(float(1).sub(trod.mul(DU.swept))).mul(float(1).add(dustGrain.mul(DU.grain)).add(dustFine.mul(DU.fine))), 0, DU.max)
   skin = mix(skin, V(DU.colour), film)
-  // the skin sinks a little into every joint: a faint dark line the film does not fill
-  skin = skin.mul(float(1).sub(jl.mul(float(SK.sink).add(thinSkin.mul(SK.sinkThin)))))
+  // where feet have worn it thin the skin sinks a little into the joint under it: a faint dark line the film does not fill
+  skin = skin.mul(float(1).sub(jl.mul(footWorn).mul(SK.sinkThin)))
   floorCol = mix(floorCol, skin, inNabu)
 
   /* ── the roof's earth deck and the open ground before the gate ── */
@@ -280,7 +288,7 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   let rough0: N = mix(float(0.92), mix(float(0.42), coatRough.add(brush.mul(0.12)), max(inked, is(SURF.black))), clamp(shiny, 0, 1))
   // feet polish the skin where it shows on the trodden ways: a low, broad sheen, its roughness kept free of the fine octaves
   const polish = clamp(trod.mul(float(1).sub(film.div(DU.max))).mul(SK.polish[1]), 0, 1)
-  const skinRough = mix(mix(float(SK.rough[0]), float(SK.rough[1]), clamp(scuff.mul(1.6), 0, 1)).add(temper.mul(SK.temperRough)).add(perBrick.mul(SK.brickRough)), float(SK.polish[0]).add(perBrick.mul(SK.brickRough * 0.4)), polish).sub(jl.mul(0.1))
+  const skinRough = mix(mix(float(SK.rough[0]), float(SK.rough[1]), clamp(scuff.mul(1.6), 0, 1)).add(temper.mul(SK.temperRough)).add(perBrick.mul(thinSkin).mul(SK.brickRough)), float(SK.polish[0]).add(perBrick.mul(thinSkin).mul(SK.brickRough * 0.4)), polish).sub(jl.mul(footWorn).mul(0.1))
   rough0 = mix(rough0, mix(skinRough, float(0.97), film), is(SURF.paving).mul(inNabu))
   m.roughnessNode = mix(mix(rough0, float(0.7), is(SURF.leaf)), float(0.92), uView)
 
