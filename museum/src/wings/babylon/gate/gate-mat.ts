@@ -620,12 +620,14 @@ export function streetsideEarth(U: Pick<GateUniforms, 'uPix'>, p: N, half: numbe
   // the footprint along the view's own heading on the level ground, its longest side
   const v = cameraPosition.sub(positionWorld)
   const fw = footprint(U, normalize(vec3(v.x, 0, v.z.add(1e-4))), vec3(0, 1, 0))
-  const silt = vec3(0.335, 0.262, 0.168)
+  // the city's silt (open/earth.ts TONES.silt as the map's city ground takes it) at the paint's own paler brightness
+  const silt = vec3(0.346, 0.26, 0.154)
   const broad = mx_noise_float(vec3(p.x.mul(0.045), 4.1, p.z.mul(0.045))).mul(0.16)
-  const patch = mx_noise_float(vec3(p.x.mul(0.21), 2.7, p.z.mul(0.21))).mul(0.1).mul(float(1).sub(smoothstep(0.08, 0.3, fw)))
+  // each pattern fades between a quarter and a half of its own period (the 4.8 m patches, the 1.8 m streaks), no sooner
+  const patch = mx_noise_float(vec3(p.x.mul(0.21), 2.7, p.z.mul(0.21))).mul(0.1).mul(float(1).sub(smoothstep(1.2, 2.4, fw)))
   // trodden: streaks along the street, darker and a little smoother, most where people step off the paving
   const tread = smoothstep(0.1, 0.45, mx_noise_float(vec3(p.x.mul(0.55), 6.3, p.z.mul(0.05))).add(0.5).mul(0.9))
-  const trodden = tread.mul(float(1).sub(smoothstep(half + 2, half + 14, t))).mul(0.12).mul(float(1).sub(smoothstep(0.1, 0.4, fw)))
+  const trodden = tread.mul(float(1).sub(smoothstep(half + 2, half + 14, t))).mul(0.12).mul(float(1).sub(smoothstep(0.45, 0.9, fw)))
   // dust drifted against the paving's edge, paler
   const drift = float(1).sub(smoothstep(half + 0.2, half + 2.6, t)).mul(smoothstep(-0.1, 0.35, mx_noise_float(vec3(p.x.mul(0.8), 1.3, p.z.mul(0.8)))))
   // pebbles and sherds: a few cells in a stride's grid hold a stone (pale) or a potsherd (red), each a few centimetres

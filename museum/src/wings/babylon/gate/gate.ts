@@ -30,7 +30,7 @@ import { buildGate, gateFrame, hourOf, type V3 } from './gate-geom'
 import { animalField } from './gate-relief'
 import { assemble, panelGrid } from './gate-mesh'
 import { birdsGeometry, palmsGeometry } from './gate-life'
-import { bakePanel, lifeMaterial, makeUniforms, panelMaterial, pavingMaterial, processionLine, uMouth, wallMaterial, C as COURSE, type LinePoint, type Rooms } from './gate-mat'
+import { bakePanel, lifeMaterial, makeUniforms, panelMaterial, pavingMaterial, processionLine, streetsideEarth, uMouth, wallMaterial, C as COURSE, type LinePoint, type Rooms } from './gate-mat'
 import { isLetter, recordNamer, type ClassFile, type Letter, type Pieces } from '../record'
 import { NO_ROWS, bodyTones, panelTones, pavingTones, toneGateWalls, toneMapBodies } from '../record-tones'
 
@@ -138,6 +138,11 @@ uView.value = U.uSwitch.value
    processionLine: straight where the points allow within 0.35 m, sampled every 2 m) past the palace's south-east corner
    to the canal bridge, the last point the record gives before the washed-away stretch */
 const PAVE_END = -60 // the gate's paving's south edge (gate-mesh.ts pavingGeometry)
+/** the paving's colour as a hue (luminance 1): the warm bounce of the city's fronts and of the open street */
+const PAVE_HUE = ((): [number, number, number] => {
+  const c = plan.light.bounce.paving.colour as [number, number, number], l = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
+  return [c[0] / l, c[1] / l, c[2] / l]
+})()
 const SOUTH = (() => {
   const half = (plan.street.paving.limestone * plan.street.paving.limestoneN) / 2 + plan.street.paving.breccia * plan.street.paving.brecciaN
   // the lead point on the axis steers the start along it (the paving's slabs run on from the gate's)
@@ -154,8 +159,40 @@ const SOUTH = (() => {
   pts.slice(2).forEach((p, i) => { if (cls[i] !== 'G') zKnown = p[1] })
   return { half, line, zEnd: line[line.length - 1]![1], zKnown }
 })()
-/* the city round the gate in the map page's own materials (map/city.ts), so the street south of the gate is the next stop's */
-paintCity(bodies.group, city, tones, { band, street: { o: MF.s(lion.origin[0], lion.origin[1]), a: MF.dir(lion.bearing), c: MF.dir(lion.bearing + 90), pavedTo: NORTH_PAVED.a1 } })
+/* the city round the gate in the map page's own materials (map/city.ts), so the street south of the gate is the next
+   stop's; the ground beside the processional way south of the gate as beaten earth at a walker's scale (gate-mat.ts
+   streetsideEarth): within 45 m of the axis, fading out by 80 m; the class view keeps the map's grey */
+const earthAt = (): { p: N; xs: N; w: N } => {
+  const p = uW2G.mul(vec4(positionWorld, 1)).xyz
+  // the street's centre at the point's z: the south line every 20 m, straight between (it bends at most 11 m off the axis)
+  const L = SOUTH.line, nodes = L.filter((_, i) => i % 10 === 0 || i === L.length - 1)
+  let xs: N = float(nodes[0]![0])
+  for (let i = 0; i + 1 < nodes.length; i++) {
+    const [x0, z0] = nodes[i]!, [x1, z1] = nodes[i + 1]!
+    xs = xs.add(TSL.clamp(float(z0).sub(p.z).div(z0 - z1), 0, 1).mul(x1 - x0))
+  }
+  const w = step(p.z, -47.5).mul(float(1).sub(smoothstep(45, 80, abs(p.x.sub(xs))))).mul(smoothstep(-330, -300, p.z)).mul(float(1).sub(uView))
+  return { p, xs, w }
+}
+const earthOn = (base: N): N => {
+  const e = earthAt(), pv = plan.street.paving
+  return mix(base, streetsideEarth(U, e.p, (pv.limestone * pv.limestoneN) / 2 + pv.breccia * pv.brecciaN, e.xs), e.w)
+}
+paintCity(bodies.group, city, tones, { band, ...(q.get('earth') === '0' ? {} : { ground: earthOn }), street: { o: MF.s(lion.origin[0], lion.origin[1]), a: MF.dir(lion.bearing), c: MF.dir(lion.bearing + 90), pavedTo: NORTH_PAVED.a1 } })
+/* the city's ground and street take back the sky the houses and the palace hide in the light those fronts give: mud brick
+   in shade lit by about half the sky, the west fronts in sun (the field's give-back is otherwise the sky's own blue) */
+const uCityBack = uniform(Number(q.get('gBack') ?? 0.3))
+for (const name of ['ground', 'street']) {
+  const mat = (bodies.group.getObjectByName(name) as Mesh | undefined)?.material as (MeshStandardNodeMaterial & { skyBounceNode?: N }) | undefined
+  if (mat) mat.skyBounceNode = vec3(...PAVE_HUE).mul(uCityBack)
+}
+/* the beaten earth beside the street is packed by feet like the worn paving beside it: at a walker's grazing view it takes
+   the low sky's sheen as the paving does (at the map's roughness 1 it took none, and read bluer than the paving in the
+   same shade: a grey test of both, the same light at 0.7) */
+{
+  const gm = (bodies.group.getObjectByName('ground') as Mesh | undefined)?.material as MeshStandardNodeMaterial | undefined
+  if (gm && q.get('earth') !== '0') gm.roughnessNode = mix(float(1), float(Number(q.get('gRough') ?? 0.72)), earthAt().w)
+}
 
 /* the map's street and ground give way to the gate's paving inside its area (a mask, the map's files untouched) */
 /** the apron's south edge beside the street: 0 to 3 m short of the paving's end, uneven along x; the band itself runs on */
@@ -203,10 +240,7 @@ const rooms: Rooms = {
     { z: zM0, out: 1, hw: hd, h: MG.arch.crown, lit: 0.55 },
     { z: zMS, out: -1, hw: hd, h: MG.arch.crown, lit: 1 },
   ],
-  hue: (() => {
-    const c = plan.light.bounce.paving.colour as [number, number, number], l = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
-    return [c[0] / l, c[1] / l, c[2] / l] as [number, number, number]
-  })(),
+  hue: PAVE_HUE,
 }
 // trial knobs for the mouths' bounce (the defaults are the page's)
 for (const k of ['reach', 'give', 'top', 'glaze'] as const) { const v = q.get('m' + k[0]!.toUpperCase() + k.slice(1)); if (v !== null) uMouth[k].value = Number(v) }
