@@ -14,7 +14,7 @@ import type { ClassTones, Sky } from '../map/mass'
 import { TONE, type Namer } from '../record'
 import type { Painted } from '../record-tones'
 import { buildTower, type Tower, type TowerBody } from './tower-geom'
-import { glazeSky, groundPaint, setTowerPixel, towerMaterial } from './tower-mat'
+import { glazeSky, groundPaint, setTowerPixel, towerMaterial, towerSun } from './tower-mat'
 import { buildDug, type Dug } from './tower-dug'
 import { pondMaterial, pondSky, ruinMaterial } from './tower-dug-mat'
 
@@ -137,6 +137,7 @@ export function mountTower(built: Built, mapPlan: J, towerPlan: J, tones: ClassT
     tower, built: tower.built, mesh: precinct.mesh, towerMesh: own.mesh, ground: court, tone, setPixel: setTowerPixel,
     sky: (s: Sky, sunDir: N) => {
       glazeSky(mat, s)
+      towerSun(mat, towerPlan, sunDir)
       pondSky(pond, s, sunDir)
     },
     dug, dugMeshes, attachGround, state, current: () => now,

@@ -2,9 +2,9 @@
    of the stop, branching on the body's `kind` attribute and the face's own data, never on screen derivatives.
      0 the precinct's walls   white lime-gypsum plaster over mud brick, guessed: patches of older and newer coats, the
                               mud showing where splash and flaking took the plaster at the foot, runs under the tops
-     1 the tower's brick      baked brick in thick bitumen joints on the kit's bond, the faces in tall panels; each stage
-                              its own batch, a coping at its top with the drip's shadow under it, the inner corner
-                              at an upper stage's foot holding the sky back
+     1 the tower's brick      baked brick in thick bitumen joints on the kit's bond, the panels and copings built as
+                              forms; each stage its own batch, the inner corner at an upper stage's foot holding
+                              the sky back
      2 the temple on top      blue-glazed brick (the king's claim; the hue ours), each brick fired a little differently,
                               the glaze giving back the sky it faces
      6 a stair's side walls   brick in the bond
@@ -18,7 +18,7 @@
 
 import { MeshStandardNodeMaterial, type Material } from 'three/webgpu'
 import * as TSL from 'three/tsl'
-import { BR, PAL, bond, footprint, hash2, lines } from '../gate/gate-mat'
+import { BR, C as COURSE, PAL, bond, footprint, hash2, lines } from '../gate/gate-mat'
 import { classColour, greyNode, uView, type ClassTones, type Sky } from '../map/mass'
 import type { GateFrame } from './tower-geom'
 
@@ -43,6 +43,15 @@ const U = { uPix: uTowerPix }
 const bandF = (x: N, a: N | number, b: N | number, w: N): N => smoothstep(float(a).sub(w.mul(0.5)), float(a).add(w.mul(0.5)), x).mul(float(1).sub(smoothstep(float(b).sub(w.mul(0.5)), float(b).add(w.mul(0.5)), x)))
 /** fades a detail out once a pixel's footprint passes its size */
 const seen = (fw: N, size: number): N => float(1).sub(smoothstep(size * 0.25, size, fw))
+
+/** a bond's joint cover, each joint set faded to its mean where its course falls under about 4 px (an alias, not a
+    bond): the bed joints by the footprint up the face, the heads by the one along it and by the course's, since
+    they alternate course by course */
+function jointsSeen(b: { bed: N; head: N }, fu: N, fy: N, half: number): N {
+  const bedOff = smoothstep(COURSE / 5, COURSE / 3, fy)
+  const headOff = max(smoothstep(BR / 5, BR / 3, fu), bedOff)
+  return clamp(mix(b.bed, float((2 * half) / COURSE), bedOff).add(mix(b.head, float((2 * half) / BR), headOff)), 0, 1)
+}
 
 /** the inward distance from the wall's centre line, for the ground's level under a wall's foot */
 function inward(F: GateFrame): N {
@@ -107,36 +116,31 @@ export function towerMaterial(F: GateFrame, tp: J, tones: ClassTones): Material 
   const corner = step(halfW.sub(pitch.mul(0.5)), abs(uT))
   const halfPanel = pitch.mul(PN.share / 2)
   const inPanel = float(1).sub(smoothstep(halfPanel.sub(fu.mul(0.5)), halfPanel.add(fu.mul(0.5)), abs(fP))).mul(float(1).sub(corner))
-  // the inner corners of each recess hold the sky's light back, a little on both sides
+  // the glaze keeps its painted panels: the inner corners of each recess hold the sky's light back
   const edgeDist = abs(abs(fP).sub(halfPanel))
   const shade = float(1).sub(smoothstep(0.0, 0.9, edgeDist)).mul(step(halfPanel, abs(fP))).mul(float(1).sub(corner))
   const recess = float(1).sub(inPanel).mul(float(1).sub(corner))
   const tb = bond(uT, P.y, float(0), fu, fy, 0.008)
   const batch = mx_noise_float(vec3(uT.mul(0.05), P.y.mul(0.8), 6.6))
   const fire = tb.brick.sub(0.5).mul(0.16).mul(seen(fw, 0.4))
-  // courses of one firing lie in long bands a metre or so high; each panel a little its own; under each stage's edge
-  // the rain carried dust and bitumen down in streaks; the foot darker where the court's dust was thrown up
+  // courses of one firing lie in long bands a metre or so high; the foot darker where the court's dust was thrown up
   const courses = mx_noise_float(vec3(uT.mul(0.012), P.y.mul(0.55), 2.9)).add(mx_noise_float(vec3(uT.mul(0.03), P.y.mul(1.7), 8.1)).mul(0.5))
-  const panelId = hash2(floor(uT.div(pitch).add(0.5)), floor(P.y.div(40)))
-  const streakN = smoothstep(0.05, 0.4, mx_noise_float(vec3(uT.mul(1.3), P.y.mul(0.06), 4.4)))
   const brickTone = mix(V(col.brick), V(PAL.redBrown as RGB), clamp(float(0.18).add(batch.mul(0.2)).add(fire), 0, 0.6))
-    .mul(float(1).add(batch.mul(0.04)).add(courses.mul(0.07)).add(panelId.sub(0.5).mul(0.05).mul(inPanel)))
-  const joint = clamp(tb.bed.add(tb.head), 0, 1)
+    .mul(float(1).add(batch.mul(0.04)).add(courses.mul(0.07)))
+  const joint = jointsSeen(tb, fu, fy, 0.008)
   let towerCol: N = mix(brickTone, V(PAL.asphalt as RGB).mul(2.2), joint.mul(0.85))
   const mottle1 = mx_noise_float(vec3(uT.mul(0.09), P.y.mul(0.11), 5.5)).mul(0.06)
-  towerCol = towerCol.mul(mix(float(1), float(0.93), recess)).mul(float(1).sub(streakN.mul(0.13))).mul(float(1).add(mottle1))
+  towerCol = towerCol.mul(float(1).add(mottle1))
   towerCol = towerCol.mul(mix(float(0.86), float(1), smoothstep(3.5, 6.0, P.y)))
-  // each stage its own: a batch of brick a little apart in tone, a coping of three courses at its top lighter with the
-  // dust on its lip, the drip's shadow under it, and an upper stage's foot darker where the terrace meets its face
+  // each stage its own: a batch of brick a little apart in tone, and an upper stage's foot darker where the terrace
+  // meets its face (the coping and its drip are built, `worn-forms-babylon`)
   const fb = attribute('fb', 'vec4')
   const sk = fb.z, yb = fb.x, yt = fb.y
-  const hUp = P.y.sub(yb), hDown = yt.sub(P.y)
+  const hUp = P.y.sub(yb)
   const stageTone = float(1).add(hash2(sk, float(3.1)).sub(0.5).mul(0.09))
-  const coping = float(1).sub(smoothstep(float(0.95).sub(fy), float(0.95).add(fy), hDown))
-  const drip = float(1).sub(smoothstep(float(0.25).sub(fy), float(0.25).add(fy), abs(hDown.sub(1.2))))
   const cornerAO = float(1).sub(smoothstep(0.0, 5.0, hUp)).mul(step(1.5, sk))
   const upFace = smoothstep(0.0, max(yt.sub(yb), 1.0), hUp)
-  const staged = stageTone.mul(mix(float(0.93), float(1.04), upFace)).mul(float(1).add(coping.mul(0.13))).mul(float(1).sub(drip.mul(0.22))).mul(float(1).sub(cornerAO.mul(0.3)))
+  const staged = stageTone.mul(mix(float(0.93), float(1.04), upFace)).mul(float(1).sub(cornerAO.mul(0.3)))
   towerCol = towerCol.mul(mix(float(1), staged, step(0.5, sk)))
   // the stage tops: brick laid flat, dust lying on it
   const flatB = max(lines(P.x, BR, 0.008, fw), lines(P.z, BR, 0.008, fw))
@@ -207,7 +211,7 @@ export function towerMaterial(F: GateFrame, tp: J, tones: ClassTones): Material 
   const tread = mix(stairBrick, V(PAL.dust as RGB), 0.4), riserC = stairBrick.mul(0.78)
   const stepCol = mix(mix(tread, riserC, 0.38), mix(tread, riserC, rise), seen(fStep, 0.6))
   const sb = bond(uFace, P.y, float(0), fu, fy, 0.008)
-  const cheek = mix(stairBrick, V(PAL.asphalt as RGB).mul(2.2), clamp(sb.bed.add(sb.head), 0, 1).mul(0.85))
+  const cheek = mix(stairBrick, V(PAL.asphalt as RGB).mul(2.2), jointsSeen(sb, fu, fy, 0.008).mul(0.85))
   const stairCol = mix(cheek, stepCol, step(0.2, n.y))
 
   /* ── one colour per point, the class view over it ── */
@@ -226,10 +230,10 @@ export function towerMaterial(F: GateFrame, tp: J, tones: ClassTones): Material 
   m.colorNode = mix(stateCol, classColour(tones, attribute('cls', 'vec2'), attribute('band', 'float')), uView)
   const glazed = is(2).mul(float(1).sub(upward))
   m.roughnessNode = mix(mix(mix(float(0.92), float(0.35), glazed), float(0.75), is(3).mul(inBrec)), float(0.92), uView)
-  // the light the stack does not carry: the panels' inner corners, the walls' foot and the towers' sides against the wall
+  // the light the stack does not carry: the glaze's panels' inner corners, the walls' foot and the towers' sides against the wall
   const footAO = float(1).sub(float(1).sub(smoothstep(0.0, 0.9, yUp)).mul(0.28))
   let ao: N = float(1)
-  ao = mix(ao, float(1).sub(shade.mul(0.22)), max(is(1), is(2)).mul(vertical))
+  ao = mix(ao, float(1).sub(shade.mul(0.22)), is(2).mul(vertical))
   ao = mix(ao, float(0.55), is(7))
   ao = mix(ao, footAO, is(0).mul(vertical))
   m.aoNode = mix(ao, float(1), uView)
@@ -248,6 +252,54 @@ export function glazeSky(m: Material, sky: Sky): void {
   // a face looking down gives back the ground, not the sky: the reflection fades out below the horizon
   const skyward = smoothstep(-0.05, 0.15, r.y)
   ;(m as MeshStandardNodeMaterial).emissiveNode = sky.colour(normalize(vec3(r.x, max(r.y, 0.02), r.z))).mul(fres).mul(skyward).mul(glazed).mul(float(1).sub(uView))
+  m.needsUpdate = true
+}
+
+/** the sun on the stages' built relief (`worn-forms-babylon`: `fa` the face's middle and outward normal, `fb.w` the
+    form), multiplied into the sun's shadow: the shared map's bias lets the sun a few decimetres past every caster, so
+    each inner corner of a recess and the face under the coping showed a lit line where the relief's own walls shade
+    it. A face turned from the sun takes none, its returns and coping with it (the core shades them); a recess passes
+    the sun where the ray toward it leaves by the recess's mouth under its head; the coping's lip shades the face and a
+    recess's mouth below it. The stages' tops keep the map's sun. Set once the page has its sun. */
+export function towerSun(m: Material, tp: J, sunDir: N): void {
+  const P = positionWorld
+  const fa = attribute('fa', 'vec4'), fb = attribute('fb', 'vec4'), kind = attribute('kind', 'float')
+  const n = normalize(attribute('normal', 'vec3'))
+  const PN = tp.tower.panels, C = tp.tower.forms.coping
+  const pitch = PN.pitch1, hr = (pitch * (1 - PN.share)) / 2, E = 0.002, W = 0.02
+  const len = vec2(fa.z, fa.w).length()
+  const on = step(abs(kind.sub(1)), 0.5).mul(step(0.5, fb.w)).mul(step(0.25, len))
+  const mN = vec2(fa.z, fa.w).div(max(len, 1e-4)), tN = vec2(mN.y.negate(), mN.x)
+  const lipped = step(0.75, len)
+  const rel = vec2(P.x.sub(fa.x), P.z.sub(fa.y))
+  const u = dot(rel, tN), d = dot(rel, mN)
+  const sun = normalize(sunDir)
+  const sm = dot(vec2(sun.x, sun.z), mN), st = dot(vec2(sun.x, sun.z), tN), sy = sun.y
+  const yd = fb.y.sub(C.h + C.drip)
+  const toward = smoothstep(0.0, 0.02, sm)
+  // the lip: a ray leaving the face's plane at y0 under the drip reaches the drip's level `reach` out from the face
+  const clear = (y0: N): N => {
+    const reach = yd.sub(y0).mul(sm).div(max(sy, 1e-4))
+    const shaded = float(1).sub(smoothstep(float(C.lip - W), float(C.lip + W), reach)).mul(step(1e-4, sy)).mul(lipped).mul(step(y0, yd))
+    return float(1).sub(shaded)
+  }
+  // a recess: where the ray meets the face's plane, inside the mouth (its sides at the recess's half width, its head)
+  const lam = d.negate().div(max(sm, 1e-4))
+  const centre = floor(u.div(pitch)).add(0.5).mul(pitch)
+  const ue = u.sub(centre).add(lam.mul(st)), ye = P.y.add(lam.mul(sy))
+  const mouth = float(1).sub(smoothstep(float(hr + W), float(hr + 2 * W), abs(ue))).mul(float(1).sub(smoothstep(yd.add(W), yd.add(2 * W), ye)))
+  const inRecess = step(d, -E).mul(step(P.y, yd.add(E)))
+  const below = step(abs(d), E).mul(step(P.y, yd.sub(E)))
+  const relief = mix(mix(float(1), clear(P.y), below), mouth.mul(clear(min(ye, yd))), inRecess)
+  // the coping's top over its lip faces the sky, not the face's side: it keeps the map's sun
+  const lidOn = step(0.5, n.y).mul(float(1).sub(inRecess))
+  const k = mix(float(1), mix(toward.mul(relief), float(1), lidOn), on)
+  ;(m as unknown as { receivedShadowNode: (s: N) => N }).receivedShadowNode = (s: N): N => s.mul(k)
+  /* a form face looking down and turned from the sun sees the ground in the tower's own shade: three quarters of its
+     bounce become that floor lit by the sky (sky-set's ground hook; the whole share turns the heads under a dusk sky
+     purple), its kept share raised so the warm brick reflects the cooler light as brightly; elsewhere (1, 0), no change */
+  const shadeFloor = on.mul(smoothstep(0.1, 0.5, n.y.negate())).mul(float(1).sub(toward))
+  ;(m as unknown as { skyGroundNode: N }).skyGroundNode = vec2(shadeFloor.mul(0.15).add(1), shadeFloor.mul(0.75))
   m.needsUpdate = true
 }
 

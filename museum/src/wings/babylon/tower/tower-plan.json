@@ -70,6 +70,12 @@
    "out": 0.5,
    "src": "the first stage 'indented or ornamented with buttresses' (Smith's reading of the tablet, K1914 ch. XXX); about 13 tall panels a side in Pedersén's model (P2021 fig. 4.18): the panels, their depth and the upper stages' panels are ours (bab.tower.wallface, guessed; the rhythm after Koldewey's restored tower of 1919)"
   },
+  "forms": {
+   "coping": { "h": 0.344, "lip": 0.33, "drip": 0.172 },
+   "stairMass": { "margin": 0.516, "minH": 2.94, "src": "the side stairs' masses carry the first stage's panels on their outer faces, in the rhythm of the stage face behind them and at its depth, as the mantle the masses were painted with before; each recess's head level under the flight's line by the stages' band (coping and drip), none shorter than it is wide (ours, bab.tower.wallface, guessed)" },
+   "src": "the panels built as relief at panels.pitch1, share and out: the recesses sunk 0.5 m into the stage's side, so the measured side stays the panels' face, none in the end bays; a coping on every stage's top, four courses high, a brick's length out over the panels, its underside hung two courses below the panels' heads as its drip, so the rain fell clear of the face (the coping, its lip and drip ours, bab.tower.wallface, guessed: the record is silent on the stages' tops); the arrises left sharp: a soft arris of a few cm is under a pixel at every stop",
+   "seen": "the 3 px rule (forge test): each form's size times the px per metre of the stop that shows it, from pxm.py on the walk's cameras: S09 13.9 (299 m, desktop and phone), S12 21 to 24 desktop and 24 to 29 phone on the stage faces"
+  },
   "stairs": {
    "riser": 0.3,
    "src": "the middle stair and the two side stairs where the map draws them, up to the first stage's top (P2021 p. 156); their steps are ours, about 30 cm risers, drawn in the material on the stair's slope (bab.tower.stair.middle.rise, bab.tower.stairs.side.rise, guessed)",
