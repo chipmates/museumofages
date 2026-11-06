@@ -238,7 +238,7 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const scuffTex: N = smoothstep(-0.3, 0.45, mx_noise_float(vec3(P.x.mul(5), 3.9, P.z.mul(5))).add(mx_noise_float(P.mul(vec3(22, 1, 22)).add(1.3)).mul(0.5).mul(keepF(1 / 22))))
   // the scuffs feet leave on the trodden lines, in patches
   const scuff = trod.mul(scuffTex).mul(SK.scuff)
-  // the skin worn thin by feet, in patches along the trodden ways: there alone the joints sink and the arrises show
+  // the skin worn thin by feet, in patches along the trodden ways: there alone the joints sink
   const footWorn = trod.mul(scuffTex)
   let skin: N = V(SK.colour).mul(float(1).add(temper.mul(SK.temper))).mul(float(1).add(ghost.mul(SK.ghost).mul(thinSkin)))
     .mul(float(1).add(perBrick.mul(SK.brickTone).mul(thinSkin))).mul(float(1).add(rim.mul(footWorn).mul(SK.arris)))
@@ -250,8 +250,8 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const tread = mx_noise_float(P.mul(vec3(26, 1, 26)).add(4.1)).mul(0.6).add(mx_noise_float(P.mul(vec3(43, 1, 43)).add(1.7)).mul(0.4)).mul(keepF(1 / 26)).mul(trod)
   skin = skin.mul(float(1).add(tread.mul(SK.tread[0])))
   /* the dust of crumbled mud brick the wind lays on any open floor (bab.wear.dust.drift, guessed): gathered into
-     drifts where the air stills (the walls' feet, the blocks' feet, the corners, a few slow patches, the hollows that
-     wear opened), a thin film on the open skin and thinner on the trodden lines; matte, blind to the brick under it */
+     drifts where the air stills (the walls' feet, the blocks' feet, the corners, a few slow patches), a thin film on
+     the open skin and thinner on the trodden lines; matte, blind to the brick under it */
   const DU = SK.dust
   const fpM = max(fpx, fpz)
   // a drift's reach wanders along its wall in lobes a metre or two long, so its edge is never ruled
@@ -269,18 +269,23 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const crack = float(1).sub(smoothstep(crackW.mul(0.5), crackW.add(fpM), cw.y.sub(cw.x).div(2 * SK.crack[0])))
     .mul(min(crackW.div(max(fpM, 1e-4)), 1)).mul(smoothstep(0.0, 0.4, mx_noise_float(vec3(P.x.mul(1.1), 5.1, P.z.mul(1.1)))))
     .mul(smoothstep(0.05, 0.35, mx_noise_float(vec3(P.x.mul(14), 3.4, P.z.mul(14))))).mul(keepF(0.015))
-  // the joints' hollows where feet wore the skin into them fill with dust (by sinkThin, so the lattice share stays measured)
-  const hollow = jl.mul(footWorn).mul(SK.sinkThin).mul(DU.hollow)
+  // the joints' hollows where feet wore the skin into them lie in their own shade, darker and more matte than the skin
+  // round them, never lit by the dust in them (by sinkThin, so the lattice share stays measured)
+  const hollow = jl.mul(footWorn).mul(SK.sinkThin)
   const dustGrain = mx_noise_float(P.mul(vec3(9, 1, 9)).add(3.3)).mul(0.5).add(mx_noise_float(P.mul(vec3(19, 1, 19)).add(8.4)).mul(0.35).mul(keepF(1 / 19)))
     .add(mx_noise_float(P.mul(vec3(31, 1, 31)).add(5.9)).mul(0.45).mul(keepF(1 / 31)))
   const dustMottle = mx_noise_float(vec3(P.x.mul(1.3), 4.7, P.z.mul(1.3))).mul(0.6).add(mx_noise_float(vec3(P.x.mul(3.1), 9.2, P.z.mul(3.1))).mul(0.4))
   const dustFine = mx_noise_float(P.mul(vec3(45, 1, 45)).add(6.1)).mul(keepF(1 / 45)).mul(0.65).add(mx_noise_float(P.mul(vec3(110, 1, 110)).add(1.9)).mul(keepF(1 / 110)).mul(0.35))
   const filmBase = float(DU.cover).add(dustMottle.mul(DU.mottle)).add(footDrift.mul(DU.foot)).add(cornerDrift.mul(DU.corner)).add(drift.mul(DU.drift))
-    .mul(float(1).sub(trod.mul(DU.swept))).add(blockDrift.mul(DU.block).mul(float(1).sub(trod.mul(DU.swept * 0.5)))).add(hollow).add(crack.mul(DU.crack))
+    .mul(float(1).sub(trod.mul(DU.swept))).add(blockDrift.mul(DU.block).mul(float(1).sub(trod.mul(DU.swept * 0.5)))).add(crack.mul(DU.crack))
   // a deep drift lies smoother than a thin film: its fine unevenness calms where the dust is thick
   const calm = float(1).sub(smoothstep(0.3, 0.7, filmBase).mul(DU.calm))
   const film = clamp(filmBase.mul(float(1).add(dustGrain.mul(DU.grain).add(dustFine.mul(DU.fine)).mul(calm))), 0, DU.max)
   skin = mix(skin, V(DU.colour), film)
+  skin = skin.mul(float(1).sub(hollow.mul(DU.hollow)))
+  // a soft dark line where the floor meets a block, over the drift's own reach so the drift is never lighter than the
+  // floor beyond it: the ao node reaches only the sky's light, so in the sun the contact is laid in the colour
+  skin = skin.mul(float(1).sub(float(1).sub(smoothstep(0, reach(SK.contact[0]), dAltar)).mul(SK.contact[1])))
   floorCol = mix(floorCol, skin, inNabu)
 
   /* ── the roof's earth deck and the open ground before the gate ── */
@@ -344,7 +349,7 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   let rough0: N = mix(float(0.92), mix(float(0.42), coatRough.add(brush.mul(0.12)), max(inked, is(SURF.black))), clamp(shiny, 0, 1))
   // feet polish the skin where it shows on the trodden ways: a low, broad sheen, its roughness kept free of the fine octaves
   const polish = clamp(trod.mul(float(1).sub(film.div(DU.max))).mul(SK.polish[1]), 0, 1)
-  const skinRough = mix(mix(float(SK.rough[0]), float(SK.rough[1]), clamp(scuff.mul(1.6), 0, 1)).add(temper.mul(SK.temperRough)).add(perBrick.mul(thinSkin).mul(SK.brickRough)), float(SK.polish[0]).add(perBrick.mul(thinSkin).mul(SK.brickRough * 0.4)).add(tread.mul(SK.tread[1])), polish).sub(jl.mul(footWorn).mul(0.1))
+  const skinRough = mix(mix(float(SK.rough[0]), float(SK.rough[1]), clamp(scuff.mul(1.6), 0, 1)).add(temper.mul(SK.temperRough)).add(perBrick.mul(thinSkin).mul(SK.brickRough)), float(SK.polish[0]).add(perBrick.mul(thinSkin).mul(SK.brickRough * 0.4)).add(tread.mul(SK.tread[1])), polish).add(hollow.mul(0.25))
   rough0 = mix(rough0, mix(skinRough, float(0.97), smoothstep(0, DU.matte, film)), max(is(SURF.paving).mul(inNabu), passTop))
   m.roughnessNode = mix(mix(rough0, float(0.7), is(SURF.leaf)), float(0.92), uView)
 

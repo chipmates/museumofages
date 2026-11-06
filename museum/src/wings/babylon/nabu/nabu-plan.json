@@ -41,13 +41,17 @@
     0.92,
     0.97
    ],
-   "src": "the court's floor as one black asphalt skin over the brick (bab.nabu.floor, guessed): young, the temple raised late in the reign, so its wear light; the skin a dull, near-neutral black mastic with a fine mineral grain (ours), so the dust's clay warmth parts from it by hue, scuffed lighter on the trodden lines (the court's door to the cella's, round the altars) and polished there by feet to a low, broad sheen where the skin shows through the film (polish: its roughness and share, ours), one continuous skin over the court (the floor 'was black with asphalt', P2021 p. 278; the model's court 'of bricks covered with asphalt', p. 171, fig. 4.24), so no brick's own tone and no grid of joints: the courses telegraph faintly only where the skin is thin, and the joints sink and the arrises show only where feet have worn it thin on the trodden ways (ours); never bare brick, never the black bed laid open",
+   "src": "the court's floor as one black asphalt skin over the brick (bab.nabu.floor, guessed): young, the temple raised late in the reign, so its wear light; the skin a dull, near-neutral black mastic with a fine mineral grain (ours), so the dust's clay warmth parts from it by hue, scuffed lighter on the trodden lines (the court's door to the cella's, round the altars) and polished there by feet to a low, broad sheen where the skin shows through the film (polish: its roughness and share, ours), one continuous skin over the court (the floor 'was black with asphalt', P2021 p. 278; the model's court 'of bricks covered with asphalt', p. 171, fig. 4.24), so no brick's own tone and no grid of joints: the courses telegraph faintly only where the skin is thin, and the joints sink only where feet have worn it thin on the trodden ways, darker than the skin round them and matte, never lit by the dust in them (hollow, ours; the arrises' lift kept off, arris 0); a soft dark line where the floor meets a block, over the drift's reach (contact: its reach in m and its depth, ours), so the dust at a block's foot never reads lighter than the floor beyond it (the stack's ao reaches only the sky's light, so the line is laid in the colour); never bare brick, never the black bed laid open",
    "joint": 0.006,
    "temperRough": 0.5,
    "brickTone": 0.1,
    "brickRough": 0.15,
-   "arris": 0.5,
+   "arris": 0,
    "grit": 0.3,
+   "contact": [
+    0.45,
+    0.6
+   ],
    "dust": {
     "colour": [
      0.42,
@@ -65,10 +69,10 @@
     "plateau": 0.2,
     "corner": 0.3,
     "cornerW": 3.0,
-    "block": 0.6,
+    "block": 0.15,
     "blockW": 0.4,
     "lobe": 0.45,
-    "hollow": 0.15,
+    "hollow": 0.5,
     "crack": 0.08,
     "mottle": 0.04,
     "swept": 0.92,
@@ -78,7 +82,7 @@
     "max": 0.9,
     "matte": 0.3,
     "sill": 0.05,
-    "src": "a thin film of dust over the asphalt (bab.wear.dust.drift, guessed): crumbled mud brick, clay-toned, thicker toward the walls' feet and in the corners and in slow drifts, a soft mottle between, swept thin on the trodden lines, blind to the brick under the skin; Koldewey saw mud brick weather to 'a light powdery dust' moved by the summer winds (K1914 ch. XLI, said of the ruins: a modern analogue); its colour a sunlit mud-brick clay, the court's earth a shade redder, its share ours, a little denser where it drifts; a film on the side doors' sill tops in the lee of their leaves (sill, ours); a film, never a heap of sand on the paved court",
+    "src": "a thin film of dust over the asphalt (bab.wear.dust.drift, guessed): crumbled mud brick, clay-toned, thicker toward the walls' feet and in the corners and in slow drifts, only a little at the blocks' feet (block) under their contact line, a soft mottle between, swept thin on the trodden lines, blind to the brick under the skin; Koldewey saw mud brick weather to 'a light powdery dust' moved by the summer winds (K1914 ch. XLI, said of the ruins: a modern analogue); its colour a sunlit mud-brick clay, the court's earth a shade redder, its share ours, a little denser where it drifts; a film on the side doors' sill tops in the lee of their leaves (sill, ours); a film, never a heap of sand on the paved court",
     "mouth": 1.5
    },
    "sinkThin": 0.4,
@@ -91,7 +95,7 @@
     0.0012
    ],
    "tread": [
-    0.8,
+    1.2,
     0.25
    ]
   },
