@@ -278,7 +278,9 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   // the coat's gloss with its thickness; the leaves' wood oiled to a faint sheen
   const coatRough = mix(float(CO.sheen[0]), float(CO.sheen[1]), float(1).sub(coatVar).add(fringe.mul(0.5)))
   let rough0: N = mix(float(0.92), mix(float(0.42), coatRough.add(brush.mul(0.12)), max(inked, is(SURF.black))), clamp(shiny, 0, 1))
-  const skinRough = mix(float(SK.rough[0]), float(SK.rough[1]), clamp(scuff.mul(1.6), 0, 1)).add(temper.mul(SK.temperRough)).add(perBrick.mul(SK.brickRough)).sub(jl.mul(0.1))
+  // feet polish the skin where it shows on the trodden ways: a low, broad sheen, its roughness kept free of the fine octaves
+  const polish = clamp(trod.mul(float(1).sub(film.div(DU.max))).mul(SK.polish[1]), 0, 1)
+  const skinRough = mix(mix(float(SK.rough[0]), float(SK.rough[1]), clamp(scuff.mul(1.6), 0, 1)).add(temper.mul(SK.temperRough)).add(perBrick.mul(SK.brickRough)), float(SK.polish[0]).add(perBrick.mul(SK.brickRough * 0.4)), polish).sub(jl.mul(0.1))
   rough0 = mix(rough0, mix(skinRough, float(0.97), film), is(SURF.paving).mul(inNabu))
   m.roughnessNode = mix(mix(rough0, float(0.7), is(SURF.leaf)), float(0.92), uView)
 
@@ -417,7 +419,18 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
      view factor did, and the walls' gain (+0.6 x hidden on the whole light) is fitted to the hidden share alone */
   const onPave = is(SURF.paving).mul(inCourt)
   const ownCourt = max(is(SURF.courtWall), isAltar)
-  ;(m as unknown as { skyBounceNode: N }).skyBounceNode = vec3(float(1).add(hidden.mul(0.9)).mul(onPave).add(ownCourt))
+  /* the paving's give-back in the walls' own colour, not the hidden sky's: each wall as the floor sees it (its view
+     factor), white plaster lit by half the sky, by the sun on its lit share and by the dark floor's own sunlit bounce
+     (the skin under its film, a low albedo); its amount the fit's, its hue theirs */
+  const PB = PV.bounce
+  let floorWalls: N = vec3(0)
+  const floorUp = V(PB.floor).mul(uNabuLight.sunIrr).mul(sunY.mul(PB.floorSun))
+  for (const [d, [nx, nz], across] of walls) {
+    const onFace = min(max(dot(uNabuLight.sun, vec3(nx, 0, nz)), 0), sunY.mul(across / HW))
+    floorWalls = floorWalls.add(uNabuLight.sky.mul(0.5).add(uNabuLight.sunIrr.mul(onFace)).add(floorUp).mul(wallView(max(d, 0.05))))
+  }
+  const floorTint = mix(vec3(1), hue(floorWalls.mul(V(col.plaster))).div(hue(uNabuLight.sky)), float(PB.hue))
+  ;(m as unknown as { skyBounceNode: N }).skyBounceNode = vec3(float(1).add(hidden.mul(PB.k)).mul(onPave)).mul(mix(vec3(1), floorTint, onPave)).add(ownCourt)
   ;(m as unknown as { skyMirrorNode: N }).skyMirrorNode = max(onPave, ownCourt)
   ;(m as unknown as { receivedShadowNode: (s: N) => N }).receivedShadowNode = (shadow: N): N => shadow.mul(float(1).sub(indoors)).mul(courtSun)
   return m

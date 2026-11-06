@@ -41,7 +41,7 @@
     0.62,
     0.92
    ],
-   "src": "the court's floor as one black asphalt skin over the brick (bab.nabu.floor, guessed): young, the temple raised late in the reign, so its wear light; the skin a dull black mastic with a fine mineral grain (ours), scuffed lighter and duller on the trodden lines (the court's door to the cella's, round the altars), thin over a brick's arrises in patches so the joints ghost faintly; never bare brick, never the black bed laid open",
+   "src": "the court's floor as one black asphalt skin over the brick (bab.nabu.floor, guessed): young, the temple raised late in the reign, so its wear light; the skin a dull black mastic with a fine mineral grain (ours), scuffed lighter on the trodden lines (the court's door to the cella's, round the altars) and polished there by feet to a low, broad sheen where the skin shows through the film (polish: its roughness and share, ours), thin over a brick's arrises in patches so the joints ghost faintly; never bare brick, never the black bed laid open",
    "joint": 0.006,
    "sink": 0.35,
    "temperRough": 0.3,
@@ -51,21 +51,36 @@
    "grit": 0.3,
    "dust": {
     "colour": [
-     0.34,
-     0.3,
-     0.24
+     0.42,
+     0.35,
+     0.26
     ],
-    "cover": 0.12,
-    "drift": 0.25,
+    "cover": 0.2,
+    "drift": 0.4,
     "foot": 0.35,
     "footW": 2.5,
     "swept": 0.8,
     "grain": 0.5,
     "max": 0.75,
-    "src": "a thin film of dust over the asphalt (bab.wear.dust.drift, guessed): crumbled mud brick, clay-toned, thicker toward the walls' feet and in slow drifts, swept thin on the trodden lines; Koldewey saw mud brick weather to 'a light powdery dust' moved by the summer winds (K1914 ch. XLI, said of the ruins: a modern analogue); its colour the court's earth a shade darker, its share ours; a film, never a heap of sand on the paved court",
+    "src": "a thin film of dust over the asphalt (bab.wear.dust.drift, guessed): crumbled mud brick, clay-toned, thicker toward the walls' feet and in slow drifts, swept thin on the trodden lines; Koldewey saw mud brick weather to 'a light powdery dust' moved by the summer winds (K1914 ch. XLI, said of the ruins: a modern analogue); its colour a sunlit mud-brick clay, the court's earth a shade redder, its share ours, a little denser where it drifts; a film, never a heap of sand on the paved court",
     "brick": 0.6
    },
-   "sinkThin": 0.45
+   "sinkThin": 0.45,
+   "polish": [
+    0.5,
+    0.8
+   ]
+  },
+  "bounce": {
+   "k": 1.7,
+   "hue": 0.85,
+   "floor": [
+    0.1,
+    0.09,
+    0.075
+   ],
+   "floorSun": 0.15,
+   "src": "the court's floor in its walls' light under the sky field (ours): the share of the hidden sky its walls give back as the field's fit (1 + k x the walls' view factor), in the walls' colour rather than the sky's: white plaster lit by half the sky, by the sun on the share of each face the opposite wall leaves lit and by the floor's own sunlit bounce; the floor's albedo the skin under its dust film (about 0.1, ours), floorSun the floor's sunlit share as a wall's foot sees it, guessed"
   }
  },
  "wall": 1.8,
