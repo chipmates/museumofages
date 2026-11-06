@@ -143,6 +143,17 @@ export function createLinear(renderer: WebGPURenderer, scene: Scene, camera: Per
   }
 }
 
+/** three draws its frame nodes (the scene pass, the occlusion and its denoise) once per node frame, and only the
+    renderer's own animation tick advances it: a sub-frame drawn before the next tick would repeat the last one's
+    jittered image. Each sub-frame advances it as that tick does. A stand-in renderer (not `isRenderer`) is left alone. */
+function nextNodeFrame(renderer: WebGPURenderer): void {
+  const r = renderer as unknown as { isRenderer?: boolean; _nodes?: { nodeFrame?: { update(): void } } | null }
+  if (!r.isRenderer) return
+  const frame = r._nodes?.nodeFrame
+  if (!frame?.update) throw new Error('accumulate: no renderer._nodes.nodeFrame to advance per sub-frame')
+  frame.update()
+}
+
 /** Draw `samples` jittered sub-frames of the pipeline at the stage's size and return their mean, linear. */
 export async function accumulate(
   renderer: WebGPURenderer,
@@ -168,6 +179,7 @@ export async function accumulate(
     camera.setViewOffset(width, height, jx, jy, width, height)
     each?.(s)
     renderer.setRenderTarget(target)
+    nextNodeFrame(renderer)
     post.render()
     renderer.setRenderTarget(null)
     camera.clearViewOffset()
