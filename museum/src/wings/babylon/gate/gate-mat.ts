@@ -23,7 +23,7 @@ export { PAL }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
 const T = TSL as unknown as Record<string, N>
-const { Fn, If, Loop, abs, attribute, cameraPosition, cameraViewMatrix, clamp, cos, cross, dot, float, floor, fract, length, max, min, mix, mx_noise_float, mx_worley_noise_vec2, normalize, positionLocal, positionWorld, select, sin, smoothstep, sqrt, step, texture, uniform, uv, vec2, vec3, vec4, atan, log2 } = T
+const { Fn, If, Loop, abs, attribute, cameraPosition, cameraViewMatrix, clamp, cos, cross, dFdx, dFdy, dot, float, floor, fract, length, max, min, mix, mx_noise_float, mx_worley_noise_vec2, normalize, positionLocal, positionWorld, select, sin, smoothstep, sqrt, step, texture, uniform, uv, vec2, vec3, vec4, atan, log2 } = T
 
 export const C = 0.086
 export const BR = 0.33
@@ -87,6 +87,24 @@ export const footprint = (U: Pick<GateUniforms, 'uPix'>, t: N, n: N): N => {
 export const classIndex = (cls: N, y: N): N => select(y.lessThan(cls.z), cls.x, select(y.lessThan(cls.w), float(1), cls.y))
 /** the side mask for the class still's check (?mask=side, with a high self light): the known side white, the guessed black */
 const SIDE_MASK = typeof location !== 'undefined' && new URLSearchParams(location.search).get('mask') === 'side'
+/** the bond's stretch check (?bondgrad=<limit>): the worst texel stretch of the bond's (u, y) against the gate frame, unlit;
+ * a soffit green within the limit and red past it, any other wall blue and magenta */
+const BOND_GRAD = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('bondgrad') ?? 0) : 0
+const bondGrad = (m: MeshPhysicalNodeMaterial, p: N, u: N, y: N, soff: N): void => {
+  const px = dFdx(p), py = dFdy(p), e1 = normalize(px)
+  const s11 = length(px), s12 = dot(py, e1), s22 = max(length(py.sub(e1.mul(s12))), 1e-9)
+  const ux = dFdx(u), vx = dFdy(u).sub(ux.mul(s12).div(s11)), yx = dFdx(y), yy = dFdy(y).sub(yx.mul(s12).div(s11))
+  const a = ux.div(s11), b = vx.div(s22), c = yx.div(s11), d = yy.div(s22)
+  // the screen-to-bond map in an orthonormal tangent frame; the stretch is its smaller singular value's inverse
+  const e = a.mul(a).add(b.mul(b)).add(c.mul(c)).add(d.mul(d)), det = abs(a.mul(d).sub(b.mul(c)))
+  const s1 = sqrt(e.add(sqrt(max(e.mul(e).sub(det.mul(det).mul(4)), 0))).mul(0.5))
+  const over = step(float(BOND_GRAD), s1.div(max(det, 1e-12)))
+  m.colorNode = vec3(0)
+  m.emissiveNode = select(soff, mix(vec3(0, 1, 0), vec3(1, 0, 0), over), mix(vec3(0, 0, 1), vec3(1, 0, 1), over)).mul(3)
+  m.clearcoatNode = float(0)
+  m.roughnessNode = float(1)
+  m.metalnessNode = float(0)
+}
 /** the class colour by CLASS_TONE's index, the albedos as measured; the guessed side (2 guessed, 4 typical) hatched */
 export const classColour = (U: GateUniforms, idx: N, hu: N, hy: N, fw: N, n?: N): N => {
   const base = select(idx.lessThan(0.5), U.uM, select(idx.lessThan(1.5), U.uR, select(idx.lessThan(2.5), U.uG, select(idx.lessThan(3.5), U.uK, U.uT))))
@@ -276,6 +294,7 @@ export function wallMaterial(U: GateUniforms, rooms: Rooms): Material {
   m.clearcoatNode = mix(select(U.uState.lessThan(1.5), float(0), glazed), float(0), U.uSwitch)
   m.clearcoatRoughnessNode = float(0.06)
   roomLight(m, rooms, p, m.clearcoatNode)
+  if (BOND_GRAD > 0) bondGrad(m, p, bu, by, soff)
   return m
 }
 
