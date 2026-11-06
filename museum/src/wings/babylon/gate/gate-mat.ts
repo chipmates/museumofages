@@ -14,6 +14,7 @@ import * as TSL from 'three/tsl'
 import { REG, type Field } from './gate-relief'
 import { PAL } from './gate-colours'
 import { uSkySet } from '../open/sky-set'
+import { KEY_COLOUR } from '../switch-key'
 
 export { PAL }
 
@@ -34,14 +35,17 @@ export interface GateUniforms {
   uPix: N
   uSunG: N
   uRot: N
+  /** the class colours by CLASS_TONE's index: 0 in place, 1 reconstructed, 2 guessed, 3 found, 4 typical */
   uM: N
   uR: N
   uG: N
+  uK: N
+  uT: N
   /** the switch's own light, a share of each class colour emitted, so a class keeps its hue in shade and on the low-lit floor */
   uSelf: N
 }
 
-export function makeUniforms(classes: { M: string; R: string; G: string }): GateUniforms {
+export function makeUniforms(classes: { M: string; R: string; G: string; K?: string; T?: string }): GateUniforms {
   const lin = (hex: string): Vector3 => {
     const c = new Color(hex)
     return new Vector3(c.r, c.g, c.b)
@@ -55,6 +59,8 @@ export function makeUniforms(classes: { M: string; R: string; G: string }): Gate
     uM: uniform(lin(classes.M)),
     uR: uniform(lin(classes.R)),
     uG: uniform(lin(classes.G)),
+    uK: uniform(lin(classes.K ?? KEY_COLOUR.found)),
+    uT: uniform(lin(classes.T ?? KEY_COLOUR.typical)),
     uSelf: uniform(0),
   }
 }
@@ -85,12 +91,13 @@ export const footprint = (U: Pick<GateUniforms, 'uPix'>, t: N, n: N): N => {
 /* ── the classes ── */
 /** the class of a point: the plan's under its band, R up to the last relief row on a face that carries rows, the height's above */
 export const classIndex = (cls: N, y: N): N => select(y.lessThan(cls.z), cls.x, select(y.lessThan(cls.w), float(1), cls.y))
-/** the class colour: M a little darker and solid, R as it is, G lighter and hatched (value and texture as well as hue) */
+/** the class colour by CLASS_TONE's index, the albedos as measured; the guessed side (2 guessed, 4 typical) hatched */
 export const classColour = (U: GateUniforms, idx: N, hu: N, hy: N, fw: N): N => {
-  const base = mix(mix(U.uM.mul(0.82), U.uR, step(0.5, idx)), U.uG.mul(1.08), step(1.5, idx))
-  // hatching on G: diagonal lines 0.6 m apart, faded where the footprint passes their width
+  const base = select(idx.lessThan(0.5), U.uM, select(idx.lessThan(1.5), U.uR, select(idx.lessThan(2.5), U.uG, select(idx.lessThan(3.5), U.uK, U.uT))))
+  const guessed = step(1.5, idx).mul(step(idx, 2.5)).add(step(3.5, idx))
+  // hatching: diagonal lines 0.6 m apart, faded where the footprint passes their width
   const hatch = lines(hu.add(hy), 0.6, 0.09, fw.mul(1.4)).mul(float(1).sub(smoothstep(0.08, 0.2, fw)))
-  return base.mul(float(1).sub(hatch.mul(0.28).mul(step(1.5, idx))))
+  return base.mul(float(1).sub(hatch.mul(0.28).mul(guessed)))
 }
 
 /* ── the bond ── */

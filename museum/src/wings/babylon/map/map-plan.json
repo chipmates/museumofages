@@ -29,22 +29,30 @@
  },
  "classes": {
   "M": {
-   "says": "measured: dug and drawn, or a dug size",
-   "token": "--ui-sure-documented",
-   "colour": "#8cba8b",
-   "value": 0.8
+   "says": "in place: the three-tone pages' known tone (in place); the switch's own bodies take shown",
+   "token": "--ui-class-in-place",
+   "colour": "#004030",
+   "value": 1.0
   },
   "R": {
-   "says": "reasoned: drawn but not dug, or from a text",
-   "token": "--ui-sure-reconstructed",
-   "colour": "#d2a557",
+   "says": "reconstructed: the three-tone pages' known tone for found and reconstructed",
+   "token": "--ui-class-reconstructed",
+   "colour": "#677886",
    "value": 1.0
   },
   "G": {
-   "says": "guessed",
-   "token": "--ui-sure-conjectural",
-   "colour": "#df9385",
-   "value": 1.12
+   "says": "guessed: the three-tone pages' guessed tone for typical and guessed, hatched",
+   "token": "--ui-class-guessed",
+   "colour": "#f1daca",
+   "value": 1.0
+  },
+  "shown": {
+   "in place": { "token": "--ui-class-in-place", "colour": "#004030", "side": "known" },
+   "found": { "token": "--ui-class-found", "colour": "#005d75", "side": "known" },
+   "reconstructed": { "token": "--ui-class-reconstructed", "colour": "#677886", "side": "known" },
+   "typical": { "token": "--ui-class-typical", "colour": "#b2ae90", "side": "guessed", "hatch": true },
+   "guessed": { "token": "--ui-class-guessed", "colour": "#f1daca", "side": "guessed", "hatch": true },
+   "src": "the five class colours, every pair 1.5 or more apart in normal, protan and deutan vision, 12.5 L* or more between steps, 30 dE or more from --ui-way (switch-build-1106 E1); M, R and G above are in place, reconstructed and guessed"
   },
   "band": 2.0
  },

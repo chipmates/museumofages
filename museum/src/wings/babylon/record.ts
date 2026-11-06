@@ -8,7 +8,9 @@
    shows the lower of the row and its own letters at the lower rung: a far stretch never takes a near one's row.
    The pages and the evidence switch (forge/babylon/switch.mjs) both take their classes here, so a page and the
    check give one answer. Two sides: known (in place, known, reconstructed) and guessed (typical, guessed); each class
-   keeps its own name and paints its side's tone. Pure: the callers load the two files. */
+   keeps its own name. The pages' shared material (map/mass.ts) paints three tones, a class its side's (TONE); the
+   switch's own materials (gate/gate-mat.ts) paint five, one per class (CLASS_TONE). Pure: the callers load the two
+   files. */
 
 export type Shown = 'in place' | 'known' | 'reconstructed' | 'typical' | 'guessed' | 'blank'
 export type Letter = 'M' | 'R' | 'G' | 'T'
@@ -21,6 +23,11 @@ export const FROM_LETTER: Record<Letter, Shown> = { M: 'known', R: 'guessed', G:
 export const TONE: Record<Shown, number> = { 'in place': 0, known: 1, reconstructed: 1, typical: 2, guessed: 2, blank: 2 }
 /** the letter a page's tone index carries, to read a body's own letters back from its attributes */
 export const LETTER_OF_TONE: readonly Letter[] = ['M', 'R', 'G']
+/** the class index the switch's own materials paint, one per class; 0 to 2 keep the three tones' meaning (M, R, G), so
+    a material's default index still names its side; blank paints guessed and the check refuses it */
+export const CLASS_TONE: Record<Shown, number> = { 'in place': 0, reconstructed: 1, guessed: 2, known: 3, typical: 4, blank: 2 }
+/** the side of each class index: true on the known side */
+export const KNOWN_OF_CLASS: readonly boolean[] = [true, true, false, true, false]
 
 export const weaker = (a: Shown, b: Shown): Shown => (RANK[a] <= RANK[b] ? a : b)
 export const isLetter = (s: unknown): s is Letter => s === 'M' || s === 'R' || s === 'G' || s === 'T'

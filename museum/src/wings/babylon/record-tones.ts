@@ -1,12 +1,12 @@
-/* THE RECORD'S CLASSES PAINTED: the class view's attributes on the map's bodies (mass.ts) and the gate's walls
-   (gate-mesh.ts) rewritten from each body's record rows (record.ts). Only the class attributes change; the grey view,
+/* THE RECORD'S CLASSES PAINTED: the class view's attributes on the map's bodies (mass.ts, three tones: TONE) and the
+   gate's walls, panels, paving and life (gate-mat.ts, five: CLASS_TONE) rewritten from each body's record rows (record.ts). Only the class attributes change; the grey view,
    the geometry and the cameras do not. A body's own letters are kept from the first pass, so a page can paint again
    at another stop and a body without a row still falls back on its plan's letters. */
 
 import type { BufferAttribute, BufferGeometry, InstancedBufferAttribute, Mesh, Object3D } from 'three/webgpu'
 import type { Built as MapBuilt } from './map/plan'
 import type { Panel } from './gate/gate-geom'
-import { LETTER_OF_TONE, TONE, type BodyClasses, type Letter, type Namer, type Shown } from './record'
+import { CLASS_TONE, LETTER_OF_TONE, TONE, type BodyClasses, type Letter, type Namer, type Shown } from './record'
 
 type Attr = BufferAttribute | InstancedBufferAttribute
 
@@ -90,8 +90,8 @@ export function toneGateWalls(walls: BufferGeometry, marks: Array<{ id: string; 
     if (to <= m.from) return
     const c = n.of(`gate:${m.id}`, letterAt(o[m.from * 4]!), letterAt(o[m.from * 4 + 1]!))
     for (let i = m.from; i < to; i++) {
-      arr[i * 4] = TONE[c.foot]
-      arr[i * 4 + 1] = TONE[c.above]
+      arr[i * 4] = CLASS_TONE[c.foot]
+      arr[i * 4 + 1] = CLASS_TONE[c.above]
       arr[i * 4 + 3] = NO_ROWS
     }
   })
@@ -102,17 +102,17 @@ export function toneGateWalls(walls: BufferGeometry, marks: Array<{ id: string; 
 /** one body's (band, above) tones for a page's own attribute, from its letters where it has no row */
 export function bodyTones(name: Namer, body: string, letters: readonly [Letter, Letter]): { foot: number; above: number; c: BodyClasses } {
   const c = name(body, letters)
-  return { foot: TONE[c.foot], above: TONE[c.above], c }
+  return { foot: CLASS_TONE[c.foot], above: CLASS_TONE[c.above], c }
 }
 
 /** each relief panel's tone, in the order a panel set lists them (gate-mesh.ts assemble) */
 export function panelTones(panels: Panel[], name: Namer): number[] {
-  return panels.map((q) => TONE[name(`panel:${q.id}`, [q.cls, q.cls]).above])
+  return panels.map((q) => CLASS_TONE[name(`panel:${q.id}`, [q.cls, q.cls]).above])
 }
 
 /** the paving's strip tones, the middle first: its strips' rows, else its one row for all three */
 export function pavingTones(name: Namer, letters: readonly [Letter, Letter]): [number, number, number] {
   const c = name('gate:paving', letters)
   const s: Shown[] = c.strips.length === 3 ? c.strips.map((x) => x.shown) : [c.above, c.above, c.above]
-  return [TONE[s[0]!], TONE[s[1]!], TONE[s[2]!]]
+  return [CLASS_TONE[s[0]!], CLASS_TONE[s[1]!], CLASS_TONE[s[2]!]]
 }
