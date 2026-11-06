@@ -89,13 +89,17 @@
    "n": 8,
    "id": "nabu",
    "name": "The Nabu temple, how Babylon wrote",
-   "hour": "17:25",
+   "hour": "13:00",
    "stops": 0.9,
    "figure": [
     445849.9,
     3600408.0,
     0
-   ]
+   ],
+   "hourStops": {
+    "desktop": -0.630115,
+    "phone": -1.280159
+   }
   },
   {
    "n": 9,
@@ -114,8 +118,12 @@
    "n": 10,
    "id": "turn",
    "name": "The turn",
-   "hour": "17:31",
-   "stops": 0.6
+   "hour": "17:00",
+   "stops": 0.6,
+   "hourStops": {
+    "desktop": -1.350155,
+    "phone": -0.77998
+   }
   },
   {
    "n": 11,
@@ -133,13 +141,17 @@
    "n": 12,
    "id": "great-stair",
    "name": "The great stair and the switch",
-   "hour": "18:00",
+   "hour": "14:00",
    "stops": 1.7,
    "figure": [
     445664.9,
     3599934.7,
     140.0
-   ]
+   ],
+   "hourStops": {
+    "desktop": -1.659723,
+    "phone": -3.0
+   }
   },
   {
    "n": 15,
@@ -2318,7 +2330,7 @@
     "hfov": 46,
     "shift": 0.22
    },
-   "hour": "17:25"
+   "hour": "13:00"
   },
   {
    "t": 202.0,
@@ -2427,7 +2439,7 @@
     "hfov": 34.0,
     "shift": 0.048
    },
-   "hour": "17:25"
+   "hour": "13:00"
   },
   {
    "t": 214.6,
@@ -2456,7 +2468,7 @@
     "hfov": 34.0,
     "shift": 0.048
    },
-   "hour": "17:25"
+   "hour": "13:00"
   },
   {
    "t": 217.95,
@@ -2484,7 +2496,7 @@
     "hfov": 34.0,
     "shift": 0.048
    },
-   "hour": "17:25"
+   "hour": "13:00"
   },
   {
    "t": 218.0,
@@ -2931,7 +2943,8 @@
     "hfov": 36.0,
     "shift": 0.1
    },
-   "say": "down the street south along the precinct wall"
+   "say": "down the street south along the precinct wall",
+   "hour": "17:31"
   },
   {
    "t": 269.53,
@@ -2973,7 +2986,8 @@
    "phone": {
     "hfov": 44.0,
     "shift": 0.0
-   }
+   },
+   "hour": "17:33.7293"
   },
   {
    "t": 274.03,
@@ -2996,7 +3010,8 @@
     "shift": 0.0
    },
    "cut": true,
-   "say": "cut: at the precinct's south-east corner"
+   "say": "cut: at the precinct's south-east corner",
+   "hour": "17:00"
   },
   {
    "t": 275.53,
@@ -3151,7 +3166,8 @@
      3599899.58,
      4.05
     ]
-   }
+   },
+   "hour": "17:00"
   },
   {
    "t": 293.46,
@@ -3355,107 +3371,11 @@
    "phone": {
     "hfov": 44.0,
     "shift": -0.03
-   }
+   },
+   "hour": "17:54.75"
   },
   {
-   "t": 355.03,
-   "at": [
-    445660.0,
-    3599870.0
-   ],
-   "y": "eye",
-   "look": [
-    445660.0,
-    3599720.0,
-    4.2
-   ],
-   "stop": 12,
-   "kind": "fly",
-   "hold": true,
-   "say": "on the street where Esagila was seen, turning east along the precinct's south rooms",
-   "phone": {
-    "hfov": 46.0,
-    "shift": 0.0
-   }
-  },
-  {
-   "t": 357.03,
-   "at": [
-    445660.0,
-    3599870.0
-   ],
-   "y": "eye",
-   "look": [
-    445782.87,
-    3599783.96,
-    4.2
-   ],
-   "stop": 12,
-   "kind": "turn",
-   "phone": {
-    "hfov": 46.0,
-    "shift": 0.0
-   }
-  },
-  {
-   "t": 359.53,
-   "at": [
-    445667.0,
-    3599872.2
-   ],
-   "y": "eye",
-   "look": [
-    445816.91,
-    3599866.97,
-    4.3
-   ],
-   "stop": 12,
-   "kind": "walk",
-   "phone": {
-    "hfov": 46.0,
-    "shift": 0.0
-   }
-  },
-  {
-   "t": 362.53,
-   "at": [
-    445676.0,
-    3599875.2
-   ],
-   "y": "eye",
-   "look": [
-    445825.18,
-    3599890.88,
-    4.3
-   ],
-   "stop": 12,
-   "kind": "walk",
-   "phone": {
-    "hfov": 46.0,
-    "shift": 0.0
-   }
-  },
-  {
-   "t": 365.53,
-   "at": [
-    445684.2,
-    3599878.6
-   ],
-   "y": "eye",
-   "look": [
-    445814.1,
-    3599953.6,
-    4.3
-   ],
-   "stop": 12,
-   "kind": "walk",
-   "phone": {
-    "hfov": 46.0,
-    "shift": 0.0
-   }
-  },
-  {
-   "t": 368.53,
+   "t": 347.56,
    "at": [
     445689.6,
     3599884.3
@@ -3475,10 +3395,11 @@
    "hold": true,
    "hfov": 64.0,
    "shift": 0.7,
-   "say": "the turn north at the precinct's south gate: the tower through its passage"
+   "say": "cut: the turn north at the precinct's south gate: the tower through its passage",
+   "cut": true
   },
   {
-   "t": 370.53,
+   "t": 353.56,
    "at": [
     445689.6,
     3599884.3
@@ -3500,7 +3421,7 @@
    }
   },
   {
-   "t": 373.53,
+   "t": 361.91,
    "at": [
     445686.83,
     3599892.76
@@ -3526,7 +3447,7 @@
    }
   },
   {
-   "t": 376.53,
+   "t": 370.28,
    "at": [
     445684.06,
     3599901.23
@@ -3577,7 +3498,7 @@
     "shift": 0.655
    },
    "hold": true,
-   "hour": "18:00",
+   "hour": "14:00",
    "say": "out of the passage: the tower's south face and its three stairs"
   },
   {
@@ -3623,7 +3544,7 @@
    "stop": 12,
    "kind": "hold",
    "hold": true,
-   "hour": "18:00",
+   "hour": "14:00",
    "hfov": 80.0,
    "shift": 0.8,
    "phone": {
@@ -3911,7 +3832,31 @@
    "phone": {
     "hfov": 46.0,
     "shift": 0.0
-   }
+   },
+   "hour": "14:00"
+  },
+  {
+   "t": 441.0,
+   "at": [
+    445616.81,
+    3600023.72
+   ],
+   "y": 84.0,
+   "look": [
+    445245.94,
+    3600173.57,
+    82.0
+   ],
+   "stop": 12,
+   "kind": "fly",
+   "hfov": 62.0,
+   "shift": 0.0,
+   "say": "turning north along the top's west side, then the cut on the turn",
+   "phone": {
+    "hfov": 46.0,
+    "shift": 0.0
+   },
+   "hour": "14:00"
   },
   {
    "t": 441.03,
@@ -3939,8 +3884,9 @@
     "shift": -0.5
    },
    "hour": "18:05",
-   "say": "on the top's platform at its west corner: the street north to the double gate, the river west",
-   "stop": 15
+   "say": "cut: on the top's platform at its west corner: the street north to the double gate, the river west",
+   "stop": 15,
+   "cut": true
   },
   {
    "t": 446.03,

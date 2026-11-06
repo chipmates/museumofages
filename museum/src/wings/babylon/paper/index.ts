@@ -1,5 +1,5 @@
 /* THE PAPER KIT: one visual language for every paper feature of the walk.
-   Colour is the walk's afternoon; anything from another time, or an idea, is
+   Colour is the walk's day; anything from another time, or an idea, is
    ink on warm paper. The marks (`marks.ts`), the two measures (`figure.ts`),
    the labels' placer (`placer.ts`), the notches and steps (`steps.ts`), the
    counted unit (`counter.ts`) and the sheet itself (`plate.ts`) are built

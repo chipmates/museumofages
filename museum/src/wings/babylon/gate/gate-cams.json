@@ -161,7 +161,8 @@
           "t": 0,
           "at": "street:150",
           "look": "gate",
-          "kind": "walk"
+          "kind": "walk",
+          "hour": "16:40"
         },
         {
           "t": 64,
@@ -357,7 +358,8 @@
           "phone": {
             "hfov": 58,
             "shift": 0
-          }
+          },
+          "hour": "17:00"
         }
       ],
       "ends": "the open door with the chamber and the main gate's door beyond",
@@ -378,25 +380,31 @@
       "n": 4,
       "id": "through-the-gate",
       "hour": [
-        "17:00",
-        "17:00"
+        "10:00",
+        "10:00"
       ],
       "keys": [
         {
           "t": 139,
           "at": [
             0,
-            7.5
+            -10.5
           ],
           "look": [
-            0,
+            4.216,
             1.65,
-            -200
+            -15.182
           ],
           "kind": "walk",
           "phone": {
             "hfov": 58,
             "shift": 0
+          },
+          "cut": true,
+          "says": "cut: at the front gate's south mouth, turned 42 degrees west off the axis and level onto the main gate's glazed north face, its rows of bulls and dragons whole, the desktop on the 175 s hold's shift lens; the walk turns back to the door as it goes on",
+          "desktop": {
+            "hfov": 64,
+            "shift": 0.65
           }
         },
         {
@@ -506,6 +514,10 @@
           "shift": 0.15
         },
         "says": "stop 4's own hold: the desktop in the main gate's chamber at its north end, 19.4 m from the south mouth, where the south passage's arch stands whole in the frame with its vault over it and the street south through it (the shift lifts the frame so the crown keeps a margin under the top); the phone on its own stand in the south passage's north mouth, 8.4 m from the south mouth, the shift lifting the frame until the mouth's arch stands whole over the street, the sky kept inside the arch"
+      },
+      "hourStops": {
+        "desktop": -0.589969,
+        "phone": -0.750078
       }
     }
   ],
