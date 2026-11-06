@@ -12,10 +12,11 @@ import {
 import * as TSL from 'three/tsl'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import type { Built, Cls, P2 } from './plan'
+import { hatchOf } from '../gate/gate-mat'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
-const { attribute, float, mix, mx_noise_float, normalWorld, positionWorld, step, uniform, vec3, abs, max, smoothstep, dot } = TSL as unknown as Record<string, N>
+const { attribute, cameraPosition, cameraProjectionMatrix, float, mix, mx_noise_float, normalWorld, positionWorld, screenSize, step, uniform, vec3, abs, max, smoothstep, dot } = TSL as unknown as Record<string, N>
 
 const CLS: Record<Cls, number> = { M: 0, R: 1, G: 2 }
 
@@ -35,7 +36,11 @@ export const uView = uniform(0)
 export function classColour(t: ClassTones, cls: N, band: N): N {
   const pick = (i: N): N => mix(mix(vec3(...t.M), vec3(...t.R), step(0.5, i)), vec3(...t.G), step(1.5, i))
   // under the band the plan's class, above it the height's
-  return mix(pick(cls.x), pick(cls.y), step(positionWorld.y, band))
+  const i = mix(cls.x, cls.y, step(positionWorld.y, band))
+  // the guessed tone hatched as the gate's, the footprint from the camera's pixel angle (no screen derivatives)
+  const fw = positionWorld.distance(cameraPosition).mul(2).div(cameraProjectionMatrix.element(1).y.mul(screenSize.y))
+  const s = positionWorld.x.add(positionWorld.y).add(positionWorld.z)
+  return pick(i).mul(float(1).sub(hatchOf(s, fw, normalWorld).mul(step(1.5, i))))
 }
 
 /** grey that still tells faces apart: a little lighter on top, a slow mottle so a big face is never one flat value */

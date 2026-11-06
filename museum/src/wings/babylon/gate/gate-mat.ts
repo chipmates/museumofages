@@ -91,13 +91,18 @@ export const footprint = (U: Pick<GateUniforms, 'uPix'>, t: N, n: N): N => {
 /* ── the classes ── */
 /** the class of a point: the plan's under its band, R up to the last relief row on a face that carries rows, the height's above */
 export const classIndex = (cls: N, y: N): N => select(y.lessThan(cls.z), cls.x, select(y.lessThan(cls.w), float(1), cls.y))
+/** the guessed side's hatch, the share it darkens: lines 0.6 m apart along s, faded where the footprint fw passes
+    their width, and calmed where the face of world normal n is seen grazing (a floor's stripes beat against the
+    pixels there); without n, no calm. The map's bodies (mass.ts) take the same */
+export const hatchOf = (s: N, fw: N, n?: N): N => {
+  const h = lines(s, 0.6, 0.09, fw.mul(1.4)).mul(float(1).sub(smoothstep(0.08, 0.2, fw))).mul(0.28)
+  return n ? h.mul(smoothstep(0.3, 0.9, abs(dot(n, normalize(cameraPosition.sub(positionWorld)))))) : h
+}
 /** the class colour by CLASS_TONE's index, the albedos as measured; the guessed side (2 guessed, 4 typical) hatched */
-export const classColour = (U: GateUniforms, idx: N, hu: N, hy: N, fw: N): N => {
+export const classColour = (U: GateUniforms, idx: N, hu: N, hy: N, fw: N, n?: N): N => {
   const base = select(idx.lessThan(0.5), U.uM, select(idx.lessThan(1.5), U.uR, select(idx.lessThan(2.5), U.uG, select(idx.lessThan(3.5), U.uK, U.uT))))
   const guessed = step(1.5, idx).mul(step(idx, 2.5)).add(step(3.5, idx))
-  // hatching: diagonal lines 0.6 m apart, faded where the footprint passes their width
-  const hatch = lines(hu.add(hy), 0.6, 0.09, fw.mul(1.4)).mul(float(1).sub(smoothstep(0.08, 0.2, fw)))
-  return base.mul(float(1).sub(hatch.mul(0.28).mul(guessed)))
+  return base.mul(float(1).sub(hatchOf(hu.add(hy), fw, n).mul(guessed)))
 }
 
 /* ── the bond ── */
@@ -267,7 +272,7 @@ export function wallMaterial(U: GateUniforms, rooms: Rooms): Material {
   const frieze = step(gInfo.w, p.y).mul(step(p.y, gInfo.w.add(23 * C)))
   const flatCol = V(PAL.cobalt).mul(k0).add(mix(V(PAL.buff).mul(0.85), V(PAL.turquoise), frieze).mul(k1)).add(V(PAL.buff).mul(0.85).mul(k2)).add(V(PAL.mud).mul(k3)).add(V(PAL.cedar).mul(k5)).add(V(PAL.copper).mul(k6)).add(V(PAL.bronze).mul(k7))
   const stateCol = select(U.uState.lessThan(0.5), grey, select(U.uState.lessThan(1.5), flatCol, full))
-  const cc = classColour(U, classIndex(gCls, p.y), gU, p.y, max(fu, fy))
+  const cc = classColour(U, classIndex(gCls, p.y), gU, p.y, max(fu, fy), nW)
   m.colorNode = mix(stateCol, cc, U.uSwitch)
   m.emissiveNode = cc.mul(U.uSwitch.mul(U.uSelf))
   const roughState = select(U.uState.lessThan(0.5), float(0.92), select(U.uState.lessThan(1.5), mix(float(0.88), float(0.45), k0.add(k1.mul(frieze))), roughFull))
@@ -415,7 +420,7 @@ export function panelMaterial(U: GateUniforms, maps: PanelMaps, schemes: Array<[
   const flat = mix(ground, body, sil)
   const grey = vec3(PAL.grey).mul(mx_noise_float(positionWorld.mul(0.07)).mul(0.05).add(1))
   const stateCol = select(U.uState.lessThan(0.5), grey, select(U.uState.lessThan(1.5), flat, full))
-  const cc = classColour(U, iB.z, bondU, yW, fw)
+  const cc = classColour(U, iB.z, bondU, yW, fw, nW)
   m.colorNode = mix(stateCol, cc, U.uSwitch)
   m.emissiveNode = cc.mul(U.uSwitch.mul(U.uSelf))
   m.roughnessNode = mix(select(U.uState.lessThan(1.5), select(U.uState.lessThan(0.5), float(0.92), float(0.45)), mix(float(0.18), float(0.9), joint)), float(0.85), U.uSwitch)
@@ -515,7 +520,7 @@ export function pavingMaterial(U: GateUniforms, P: PaveSpec, rooms: Rooms): Mate
   // the class per strip, the middle first (limestone, breccia, the brick to the walls): R, R, G unless the page names their rows
   const [c0, c1, c2] = P.cls ?? [1, 1, 2]
   const ci = select(at.lessThan(half), float(c0), select(at.lessThan(outer), float(c1), float(c2)))
-  const cc = classColour(U, ci, s, t, fw)
+  const cc = classColour(U, ci, s, t, fw, nW)
   m.colorNode = mix(stateCol, cc, U.uSwitch)
   m.emissiveNode = cc.mul(U.uSwitch.mul(U.uSelf))
   m.roughnessNode = mix(select(U.uState.lessThan(1.5), float(0.85), mix(mix(float(0.82), float(0.6), worn), mix(float(0.7), float(0.5), worn), inBrec)), float(0.9), U.uSwitch)
