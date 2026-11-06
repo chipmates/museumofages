@@ -24,6 +24,8 @@ export interface GBox {
   rTop?: number
   inset?: Partial<Record<'px' | 'nx' | 'pz' | 'nz', number>>
   shadow?: boolean
+  /** the top before the tops' pass parted it from an overlapping body's */
+  topBefore?: number
 }
 
 /** an upright prism over a polygon (x, z) */
@@ -55,6 +57,8 @@ export interface GArch {
   inset0?: number
   plan: Cls
   height: Cls
+  /** the top before the tops' pass parted it from an overlapping body's */
+  topBefore?: number
 }
 
 /** a glazed (or friezed) face that carries the procedural pattern, and the relief panels on it */
@@ -502,8 +506,12 @@ export function buildGate(plan: J): Built {
       if (Math.round(friezeY / C + 9) % 2 === 0) friezeY += C
       // the body stands a skin's depth behind its glazed face, so the two never share a plane
       const back = faceT + s * SK
-      const ring: P2[] = [fromST(s0 - (k > 0 ? 0.3 : 0), back), fromST(s1, back), fromST(s1, outer), fromST(s0 - (k > 0 ? 0.3 : 0), outer)]
-      prisms.push({ id: `lion-${side}-${k}`, part: 'lion walls', poly: s > 0 ? ring : ring.reverse(), y0: Math.min(level(fromST(s1, inner)[1]), lv) - 3, y1, surf: 'brick', plan: 'M', height: 'G', band: band(lv), rTop: friezeY + 23 * C, frieze: friezeY })
+      // each piece laps 0.3 m into the one before it: a wall's outer face stands one separation step behind the towers', so
+      // the two never share that plane
+      const out = isTower ? outer : outer - s * 0.012
+      const ring: P2[] = [fromST(s0 - (k > 0 ? 0.3 : 0), back), fromST(s1, back), fromST(s1, out), fromST(s0 - (k > 0 ? 0.3 : 0), out)]
+      // the outer face stands over the moat's falling bank, up to 5.3 m under the street at the piece's low end
+      prisms.push({ id: `lion-${side}-${k}`, part: 'lion walls', poly: s > 0 ? ring : ring.reverse(), y0: Math.min(level(fromST(s1, inner)[1]), lv) - 6, y1, surf: 'brick', plan: 'M', height: 'G', band: band(lv), rTop: friezeY + 23 * C, frieze: friezeY })
       const [ox, oz] = fromST(s > 0 ? s0 : s1, faceT)
       const ud: V3 = s > 0 ? [sd[0], 0, sd[1]] : [-sd[0], 0, -sd[1]]
       const n: V3 = [-s * st[0], 0, -s * st[1]]
@@ -544,7 +552,61 @@ export function buildGate(plan: J): Built {
   facts['forecourt'] = { width: wIn - eIn, westWall: wIn, eastWall: eIn, depthWest: westEnd, depthEast: eastEnd, height: H }
   facts['lionFaces'] = lionFaces.length
   separate(boxes, arches, prisms)
+  partTops(boxes, arches, runs)
   return { boxes, prisms, arches, faces, panels, runs, loopholes, doors, beams, pedestals, level, street, facts }
+}
+
+/** Two bodies overlapping in plan under one top fight for depth seen from above: the arch, or else the smaller body, sinks 5 mm
+    under the other (the rebuilt houses' rule), the runs staying on the higher top. A lap under a centimetre (a storey's side wall
+    on its front) is left, since a sunk wall would leave the runs over it hanging; so is a body under the corner of two runs, whose
+    soffits would face each other over the slot. A lintel rises instead: its faces stand back from its piers', so its lifted top
+    stays inside the run, where a sink would open a slot under the run on the face the forecourt sees. Each body's old top is
+    kept on it, so a page that parts these tops its own way (the map's) can take it back. */
+function partTops(boxes: GBox[], arches: GArch[], runs: Run[]): void {
+  const SINK = 0.005
+  type R = { x0: number; x1: number; z0: number; z1: number }
+  type It = R & { arch: boolean; vol: number; corner?: boolean; rise?: boolean; top: () => number; sink: () => void }
+  const items: It[] = [
+    ...boxes.map((b) => {
+      const x0 = b.x0 + (b.inset?.nx ?? 0), x1 = b.x1 - (b.inset?.px ?? 0), z0 = b.z0 + (b.inset?.nz ?? 0), z1 = b.z1 - (b.inset?.pz ?? 0)
+      const rise = /-lintel(-\d+)?$/.test(b.id)
+      return { x0, x1, z0, z1, arch: false, vol: (x1 - x0) * (b.y1 - b.y0) * (z1 - z0), rise, top: () => b.y1, sink: () => { b.topBefore ??= b.y1; b.y1 += rise ? SINK : -SINK } }
+    }),
+    ...arches.map((a) => {
+      const z0 = a.z0 + (a.inset0 ?? 0), z1 = a.z1 - a.inset
+      return { x0: a.x0, x1: a.x1, z0, z1, arch: true, vol: (a.x1 - a.x0) * (a.top - a.springing) * (z1 - z0), top: () => a.top, sink: () => { a.topBefore ??= a.top; a.top -= SINK } }
+    }),
+  ]
+  const cut = (a: R, b: R): R => ({ x0: Math.max(a.x0, b.x0), x1: Math.min(a.x1, b.x1), z0: Math.max(a.z0, b.z0), z1: Math.min(a.z1, b.z1) })
+  const meet = (o: R): boolean => o.x1 - o.x0 > 1e-3 && o.z1 - o.z0 > 1e-3
+  const foot = (r: Run): R => {
+    const xs = [r.a[0], r.b[0], r.a[0] - r.out[0] * r.thick, r.b[0] - r.out[0] * r.thick], zs = [r.a[1], r.b[1], r.a[1] - r.out[1] * r.thick, r.b[1] - r.out[1] * r.thick]
+    return { x0: Math.min(...xs), x1: Math.max(...xs), z0: Math.min(...zs), z1: Math.max(...zs) }
+  }
+  for (let i = 0; i < runs.length; i++) for (let j = i + 1; j < runs.length; j++) {
+    const a = runs[i]!, b = runs[j]!
+    if (Math.abs(a.y - b.y) >= 1e-4) continue
+    const o = cut(foot(a), foot(b))
+    if (meet(o)) for (const t of items) if (Math.abs(t.top() - a.y) < 1e-4 && meet(cut(o, t))) t.corner = true
+  }
+  const pairs: Array<[It, It]> = []
+  for (let i = 0; i < items.length; i++) for (let j = i + 1; j < items.length; j++) {
+    const p = items[i]!, q = items[j]!
+    const ox = Math.min(p.x1, q.x1) - Math.max(p.x0, q.x0), oz = Math.min(p.z1, q.z1) - Math.max(p.z0, q.z0)
+    if (ox > 0 && oz > 0 && ox * oz >= 0.01) pairs.push([p, q])
+  }
+  // the pairs a corner turns round go first, so their other body's sink can settle its neighbours' pairs; then until none is
+  // left, since a body sunk under one neighbour can meet another's sunk top
+  pairs.sort((a, b) => Number(!!(b[0].corner || b[1].corner)) - Number(!!(a[0].corner || a[1].corner)))
+  for (let moved = true; moved; ) {
+    moved = false
+    for (const [p, q] of pairs) {
+      if (Math.abs(p.top() - q.top()) >= 1e-4) continue
+      const s = q.arch && !p.arch ? q : p.arch && !q.arch ? p : p.vol <= q.vol ? p : q, o = s === p ? q : p
+      ;(s.corner && !o.corner && !o.arch ? o : s).sink()
+      moved = true
+    }
+  }
 }
 
 /** Two bodies that overlap and share an upright face plane looking the same way fight for depth (the card's rule: a lap or step
@@ -623,8 +685,9 @@ const OWN_RUNS = /^(m?guard-|front-top-|main-top-)/
 export function gateOwnParts(B: Built): Built {
   const faces = B.faces.filter((f) => OWN_PARTS.has(f.part))
   const fid = new Set(faces.map((f) => f.id))
-  const boxes = B.boxes.filter((b) => OWN_PARTS.has(b.part)).map((b) => ({ ...b }))
-  const arches = B.arches.filter((a) => OWN_PARTS.has(a.part)).map((a) => ({ ...a }))
+  // the build's own sunk tops come back first: this page lifts them instead
+  const boxes = B.boxes.filter((b) => OWN_PARTS.has(b.part)).map(({ topBefore, ...b }) => ({ ...b, y1: topBefore ?? b.y1 }))
+  const arches = B.arches.filter((a) => OWN_PARTS.has(a.part)).map(({ topBefore, ...a }) => ({ ...a, top: topBefore ?? a.top }))
   // seen from above, two overlapping bodies' equal tops would fight: the second (an arch, else the smaller) rises by the
   // separation pass's step
   const STEP = 0.012

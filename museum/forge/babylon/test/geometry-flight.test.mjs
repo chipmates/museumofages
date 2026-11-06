@@ -16,7 +16,7 @@ const run = (code) => {
 }
 
 // two 1 m squares in one level plane facing down, 2 m over the landing's eye: every first-frame eye (330 m up) stands
-// behind them, the landing's eye in front
+// behind them, the landing's eye in front; and a sliver 1.5 m long and 1 mm thick facing the landing's eye 6 m before it
 const flight = run(`
 import { MOUNTS } from ${url(join(KIT, 'mounts.mjs'))}
 import { pushFace } from ${url(join(KIT, 'geometry.mjs'))}
@@ -27,10 +27,13 @@ const faces = []
 const e = land.eye, y = e.y + 2
 const P = (x, z) => e.clone().set(e.x + x, y, e.z + z)
 for (const n of ['test:lid-a', 'test:lid-b']) { pushFace(faces, n, P(-0.5, -0.5), P(0.5, -0.5), P(0.5, 0.5)); pushFace(faces, n, P(-0.5, -0.5), P(0.5, 0.5), P(-0.5, 0.5)) }
+const c = e.clone().addScaledVector(land.forward, 6)
+pushFace(faces, 'test:sliver', c.clone().addScaledVector(land.right, -0.75), c.clone().addScaledVector(land.right, 0.75), c.clone().addScaledVector(land.up, 0.001))
+const sliver = (rep) => rep.subPixel.list.filter((r) => r.body === 'test:sliver').map((r) => r.camera)
 const st = { stop: '1', id: 'moat', page: 'open' }
 const row = (rep) => rep.coplanar.list.find((p) => [p.a, p.b].includes('test:lid-a')) ?? null
 const on = checkMount({ ...M, faces }, st, { all: true }).report, off = checkMount({ ...M, faces }, st, { all: true, flight: 0 }).report
-console.log(JSON.stringify({ land: land.name, t: land.t, down: faces.map((f) => f.facing * f.n.y), on: { bound: on.bound, eyes: on.eyes, row: row(on) }, off: { bound: off.bound, eyes: off.eyes, row: row(off) } }))`)
+console.log(JSON.stringify({ land: land.name, t: land.t, down: faces.filter((f) => f.body.startsWith('test:lid')).map((f) => f.facing * f.n.y), on: { bound: on.bound, eyes: on.eyes, row: row(on), sliver: sliver(on) }, off: { bound: off.bound, eyes: off.eyes, row: row(off), sliver: sliver(off) } }))`)
 
 test("the flight's cameras mount at stop 1", () => assert.ok(flight.out, flight.r.stderr))
 
@@ -43,6 +46,15 @@ test("the bound names the first frame's 4 cameras and the flight's 100, every se
   assert.ok(b.cameras.includes('open flight 25 s desktop 3200x1800') && b.cameras.includes('open flight 1 s phone 1170x2532'))
   assert.equal(flight.out.land, 'open flight 25 s phone 1080x1920')
   assert.equal(flight.out.on.eyes, flight.out.off.eyes + 25)
+})
+
+test("the sub-pixel pass looks through the same 104 cameras, and a sliver thin at the landing rows at the flight's cameras", () => {
+  assert.ok(flight.out.on.sliver.includes('open flight 25 s phone 1080x1920'), `rows at ${flight.out.on.sliver.join(', ')}`)
+  assert.ok(!flight.out.off.sliver.some((c) => c.startsWith('open flight')))
+  const b = flight.out.on.bound
+  assert.equal(b.subPixelCameras?.length, 104)
+  assert.ok(b.subPixelCameras.includes('open flight 25 s phone 1080x1920') && b.passes.subPixel.includes('flight every 1 s'))
+  assert.equal(flight.out.off.bound.subPixelCameras?.length, 4)
 })
 
 test("a fight only the landing's eye can see is a fight with the flight, unseen without it", () => {
