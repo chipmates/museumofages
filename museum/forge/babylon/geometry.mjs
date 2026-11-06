@@ -561,8 +561,9 @@ function altitude(v) {
 }
 
 /** faces thinner than one device pixel over a run of at least runPx, per body and camera. A sliver of a triangulated
-    surface is not a thin surface: where the same body's face (turned under 30 degrees) or a face in the same plane
-    goes on across its long edge, it is set aside; so is one whose long edge runs into another closed body, where
+    surface is not a thin surface: where the same body's face (turned under 30 degrees) goes on across its long edge,
+    or faces in its plane go on across it for 1.5 times its thickness, it is set aside; a thin strip split on its
+    diagonal stays a thin face. So is one set aside whose long edge runs into another closed body, where
     `buried(point, body)` (the mount's closed bodies) says so. `checks(body)` says which bodies are this check's. */
 export function subPixel(faces, cameras, { runPx = 4, facing = 0.15, thickCap = 0.5, checks = () => true, buried = null } = {}) {
   const mine = faces.filter((f) => checks(f.body))
@@ -589,21 +590,52 @@ export function subPixel(faces, cameras, { runPx = 4, facing = 0.15, thickCap = 
   // face's own far corner instead: within 0.5 mm, about four float32 half-steps of a corner at the pages' 2 km
   const FLAT_M = 5e-4
   const flatOn = (g, top) => Math.abs(top.clone().sub(g.v[0]).dot(g.n)) < FLAT_M
-  const goesOn = (f, foot, top, along) => {
+  // the face in f's plane holding p: across the edge first, else by the plane key (a T-junction shares no edge)
+  const holder = (f, top, p, near, seen) => near.find((g) => !seen.has(g) && flatOn(g, top) && inTri(p, g))
+    ?? (planes.get(pkey(f)) ?? []).find((g) => !seen.has(g) && inTri(p, g))
+  // where the ray m + t r (in g's plane) leaves g past t0, and by which edge
+  const leave = (g, m, r, n, t0) => {
+    let t = Infinity, at = -1
+    for (let i = 0; i < 3; i++) {
+      const p = g.v[i], e = g.v[(i + 1) % 3].clone().sub(p), w = p.clone().sub(m)
+      const den = r.clone().cross(e).dot(n)
+      if (Math.abs(den) < 1e-12) continue
+      const ti = w.clone().cross(e).dot(n) / den, s = w.clone().cross(r).dot(n) / den
+      if (s >= -1e-6 && s <= 1 + 1e-6 && ti > t0 && ti < t) { t = ti; at = i }
+    }
+    return { t, at }
+  }
+  // a sliver's plane goes on past its long edge several times its own thickness (2.5 times for the plane test's widest
+  // fan sliver, 10 for the gate's lion tops); a thin quad split on its diagonal reaches half its thickness into its
+  // other half, a kite split on its long axis its whole thickness: the line sits between them
+  const REACH = 1.5, STEP = 0.002, WALK = 64
+  const goesOn = (f, foot, top, along, thick) => {
     const across = edges.get(ekey(along[0], along[1])) ?? []
-    // a neighbour turned up to 30 degrees continues a curved surface; a neighbour in the same plane only counts where
-    // the probe lands in it, so a thin quad split on its diagonal is not taken for a sliver of a larger plane
+    // a neighbour turned up to 30 degrees continues a curved surface
     if (across.some((g) => g !== f && g.body === f.body && g.n.dot(f.n) > 0.866 && g.n.dot(f.n) < 0.99999)) return true
-    const probe = along[0].clone().add(along[1]).multiplyScalar(0.5).addScaledVector(foot.clone().sub(top).normalize(), 0.002)
-    if (across.some((g) => g !== f && flatOn(g, top) && inTri(probe, g))) return true
-    return (planes.get(pkey(f)) ?? []).some((g) => g !== f && inTri(probe, g))
+    // otherwise walk from the long edge's middle, straight away from the far corner, through the faces in its plane
+    // (each found by a probe 2 mm past the edge the walk left by) until the plane has gone on REACH times the face's
+    // thickness: a sliver of a wider face is set aside, a thin strip split into triangles is not
+    const m = along[0].clone().add(along[1]).multiplyScalar(0.5), r = foot.clone().sub(top).normalize()
+    const seen = new Set([f])
+    let t = STEP, near = across
+    for (let i = 0; i < WALK; i++) {
+      const g = holder(f, top, m.clone().addScaledVector(r, t), near, seen)
+      if (!g) return false
+      const out = leave(g, m, r, f.n, t)
+      if (out.t >= REACH * thick) return true
+      seen.add(g)
+      near = edges.get(ekey(g.v[out.at], g.v[(out.at + 1) % 3])) ?? []
+      t = out.t + STEP
+    }
+    return true
   }
   let slivers = 0, inside = 0
   const thin = new Map()
   for (const f of mine) {
     const { foot, top, along, thick } = altitude(f.v)
     if (!(thick > 1e-4) || thick >= thickCap) continue
-    if (goesOn(f, foot, top, along)) { slivers++; continue }
+    if (goesOn(f, foot, top, along, thick)) { slivers++; continue }
     // past its long edge the face runs into another closed body: what shows of it is bounded by that body's face
     if (buried && buried(along[0].clone().add(along[1]).multiplyScalar(0.5).addScaledVector(foot.clone().sub(top).normalize(), 0.002), f.body)) { inside++; continue }
     const centre = foot.clone().add(top).multiplyScalar(0.5)

@@ -37,3 +37,21 @@ test('a flat face far out fanned into slivers is one plane; a sliver turned 3 de
   assert.ok(r.rows[0].thinnestPx < 1)
   assert.ok(r.slivers >= N, `${r.slivers} slivers set aside`)
 })
+
+test('a 2 cm strip split on its diagonal is one thin strip at 50 m; a 2 cm sliver beside a wider face is not', () => {
+  const faces = []
+  // a 1.2 m by 2 cm strip, a frond's width, split on its diagonal: each half's other half reaches about 1 cm past the
+  // shared edge at its middle
+  const O = new THREE.Vector3(-17.838, 5.214, 160.873), L = 1.2, W = 0.02
+  tris(faces, 'strip', [[O, at(O, L, 0), at(O, L, W)], [O, at(O, L, W), at(O, 0, W)]])
+  // a 2 cm sliver along the long edge of a triangle 30 cm high in its plane
+  const S = at(O, 0, 0.6)
+  tris(faces, 'panel', [[S, at(S, L, 0), at(S, 0.4, 0.3)]])
+  tris(faces, 'panel', [[at(S, L, 0), S, at(S, 0.7, -W)]])
+  const eye = at(O, 0.6, 0.3, 50)
+  const cam = cameraFrom({ name: 'eye', eye: [eye.x, eye.y, eye.z], look: [O.x + 0.6 * u.x, O.y + 0.3, O.z + 0.6 * u.z], vfov: fittedFov(58, 1600, 900), w: 1600, h: 900 })
+  const r = subPixel(faces, [cam])
+  assert.deepEqual(r.rows.map((x) => x.body), ['strip'])
+  assert.equal(r.rows[0].faces, 2)
+  assert.ok(r.rows[0].thinnestPx < 1)
+})
