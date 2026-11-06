@@ -409,6 +409,67 @@ function templeBody(b: BoxRec, pitch: number, door: { w: number; h: number; d: n
   return { body: q.geometry(), crest: cr.geometry() }
 }
 
+/** the south rooms' street face: slight towers in runs from each end of the band to Gate 8's square and on the
+    square's sides, and the gate across the square's inner end; the map's prisms stay as they are. Along the band,
+    s runs from its west end and u inward from the street face. */
+function southFront(bodies: TowerBody[], mapPlan: J, tp: J, T: J, g: (x: number, z: number) => number, band: number): Record<string, unknown> {
+  const E0: number = mapPlan.frame.E0, N0: number = mapPlan.frame.N0
+  const S = (p: number[]): P2 => [p[0]! - E0, N0 - p[1]!]
+  const w = mapPlan.walls.find((x: J) => x.id === 'precinct-south-rooms')
+  const a = S(w.line[0]), b = S(w.line[1])
+  const d = norm(sub(b, a)), L = Math.hypot(b[0] - a[0], b[1] - a[1])
+  // the street lies south of the band (scene +z)
+  let out: P2 = [-d[1], d[0]]
+  if (out[1] < 0) out = [-out[0], -out[1]]
+  const inn: P2 = [-out[0], -out[1]]
+  const half: number = w.thick / 2
+  const at = (s: number, u: number): P2 => [a[0] + d[0] * s + out[0] * (half - u), a[1] + d[1] * s + out[1] * (half - u)]
+  const top: number = w.top
+  const gap = w.gaps[0]
+  const sG = dot(sub(S(gap.at), a), d), gh: number = gap.w / 2
+  const SQ = tp.south.square, GT = tp.south.gate
+  const minG = (pts: P2[]): number => Math.min(...pts.map((p) => g(p[0], p[1])))
+  const letters: [Cls, Cls] = ['R', 'G']
+  let n = 0
+  const tower = (c: P2, along: P2, o: P2): void => {
+    const corners: P2[] = ([[-1, 0], [1, 0], [-1, 1], [1, 1]] as Array<[number, number]>).map(([k, v]) => [c[0] + along[0] * k * T.w / 2 + o[0] * v * T.out, c[1] + along[1] * k * T.w / 2 + o[1] * v * T.out])
+    bodies.push({ id: `precinct-south-tower-${++n}`, geometry: slightTowerAt(c, along, o, T.w, T.out, minG(corners) - 0.4, top + T.over), band, letters })
+  }
+  // the street face: a run from each end of the band toward the square, a half pitch and 4 m in from each end
+  const first = T.pitch / 2 + 4, runs: Array<[number, number]> = [[0, sG - gh], [sG + gh, L]]
+  const placed: number[] = []
+  for (const [s0, s1] of runs) {
+    const fromEnd = s0 === 0 ? 1 : -1
+    for (let k = 0; ; k++) {
+      const s = fromEnd > 0 ? s0 + first + k * T.pitch : s1 - first - k * T.pitch
+      if (fromEnd > 0 ? s > s1 - T.w : s < s0 + T.w) break
+      tower(at(s, 0), d, out)
+      placed.push(s)
+    }
+  }
+  // the square's two sides, as Gate 5's recess
+  const side: number[] = []
+  for (let u = T.pitch / 2 + 2; u < SQ.depth - T.w; u += T.pitch) {
+    tower(at(sG - gh, u), inn, d)
+    tower(at(sG + gh, u), inn, [-d[0], -d[1]])
+    side.push(u)
+  }
+  // the gate across the square's inner end: two masses either side of the passage, lapped 0.3 m into the rooms
+  const lap = 0.3, pw: number = GT.passage / 2, uBack = 2 * half + GT.back
+  const quad = (s0: number, s1: number, u0: number, u1: number): P2[] => [at(s0, u0), at(s1, u0), at(s1, u1), at(s0, u1)]
+  const flankW = quad(sG - gh - lap, sG - pw, SQ.depth, uBack), flankE = quad(sG + pw, sG + gh + lap, SQ.depth, uBack)
+  bodies.push({ id: 'precinct-gate8-w', geometry: prism(flankW, minG(flankW) - 0.4, GT.top, KIND.wall), band, letters })
+  bodies.push({ id: 'precinct-gate8-e', geometry: prism(flankE, minG(flankE) - 0.4, GT.top, KIND.wall), band, letters })
+  const mid = quad(sG - pw - lap, sG + pw + lap, SQ.depth + GT.set, 2 * half - GT.set)
+  bodies.push({ id: 'precinct-gate8-middle', geometry: prism(mid, GT.high, GT.middle, KIND.wall), band, letters })
+  const utm = (p: P2): number[] => [+(p[0] + E0).toFixed(2), +(N0 - p[1]).toFixed(2)]
+  return {
+    towers: n, face: placed.length, sides: side.length, pitch: T.pitch,
+    gate: { at: utm(at(sG, 0)), width: +(2 * gh).toFixed(2), square: SQ.depth, passage: GT.passage, high: GT.high, top: GT.top, middle: GT.middle, wallTop: top },
+    ends: [utm(at(placed[0]!, 0)), utm(at(placed[placed.length - 1]!, 0))],
+  }
+}
+
 /** the map prisms and boxes this module draws on the map page instead of the map */
 export const TAKEN_PRISM = (id: string): boolean => id.startsWith('precinct-')
 export const TAKEN_BOX = (id: string): boolean => id.startsWith('tower-stage-')
@@ -480,8 +541,12 @@ export function buildTower(built: Built, mapPlan: J, tp: J): Tower {
     bodies.push({ id: p.id, geometry: prism(p.poly, p.y0, y1, KIND.wall), band: wallBand, letters: [p.plan, p.height] })
   }
 
-  /* ── the slight towers: on the street face, and on both sides of the recess ── */
+  /* ── the south front: the south rooms' street face with the east wall's slight towers, and Gate 8's open square
+     with the gate across its inner end (tower-plan.json `south`) ── */
   const T = W.towers
+  const southFacts = southFront(bodies, mapPlan, tp, T, g, wallBand)
+
+  /* ── the slight towers: on the street face, and on both sides of the recess ── */
   const outward: P2 = [-F.i[0], -F.i[1]]
   let n = 0
   const tower = (s: number, t: number, along: P2, o: P2): void => {
@@ -628,6 +693,7 @@ export function buildTower(built: Built, mapPlan: J, tp: J): Tower {
     stairs: stairs.map((r) => ({ id: r.id, w: r.w, rise: +(r.y1 - r.y0).toFixed(2), run: +Math.hypot(r.b[0] - r.a[0], r.b[1] - r.a[1]).toFixed(2) })),
     sideStairs: sideFacts,
     middleWallsEnd: +wallEnd.toFixed(3),
+    south: southFacts,
   }
   return {
     F, bodies, facts,
