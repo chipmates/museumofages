@@ -3,7 +3,8 @@
    slow mottle. The light a room takes through its doors is the room's own (its material's AO). No room imports.
    Its grain is opt-in (a fifth argument): a hand-laid wash's unevenness, the trowel's strokes, the mud brick's courses
    where the wash is thin and a band of wear at a wall's foot, each octave kept only while it spans four of the eye's
-   pixels on the face, so a face far off stays calm and the finer grain comes in as it nears. */
+   pixels on the face, so a face far off stays calm and the finer grain comes in as it nears. A fresh coat (the grain's
+   `coat`) scales the thin-wash ghost and the foot's wear and may add a finer octave, the sand in the wash. */
 
 import * as TSL from 'three/tsl'
 
@@ -15,8 +16,12 @@ const { abs, cameraPosition, dot, float, floor, fract, length, max, mix, mx_nois
 type RGB = [number, number, number]
 /** the tints a face takes for the bounce its room does not model: a wall's and a ceiling's */
 export type WashTint = { wall?: RGB; ceiling?: RGB }
+/** a fresh coat's grain: the shares of the unevenness, the trowel's strokes, the thin-wash ghost and the foot's wear
+    (each 1 when absent); the strength of two finer octaves, the sand in the wash (none when absent; a number or a
+    node, so a face can take its own) */
+export type WashCoat = { uneven?: number; stroke?: number; thin?: number; wear?: number; fine?: number | N }
 /** the grain's inputs: one device pixel's angle (a uniform), the floor's level under the walls, the brick behind */
-export type WashGrain = { pix: N; floor: number; course: number; brick: number; joint: number; mud?: RGB }
+export type WashGrain = { pix: N; floor: number; course: number; brick: number; joint: number; mud?: RGB; coat?: WashCoat }
 
 export const DEFAULTS = Object.freeze({ colour: [0.62, 0.6, 0.55] as RGB, wall: [1.06, 1.0, 0.9] as RGB, ceiling: [0.9, 1.0, 1.16] as RGB, mud: [0.4, 0.33, 0.25] as RGB })
 export const PRESETS = Object.freeze({
@@ -50,14 +55,16 @@ function grainOf(p: N, n: N, base: N, g: WashGrain): N {
   const fu = fp(select(wallX, vec3(0, 0, 1), vec3(1, 0, 0))), fy = fp(vec3(0, 1, 0)), fw = max(fu, fy)
   const keep = (lambda: number, f: N = fw): N => smoothstep(f.mul(2), f.mul(4), float(lambda))
   // unevenness: the wash a little thicker or thinner, three octaves
+  const coat = g.coat ?? {}, unevenK = coat.uneven ?? 1, strokeK = coat.stroke ?? 1, thinK = coat.thin ?? 1, wearK = coat.wear ?? 1
   let k: N = float(1)
-  ;[6, 14, 30].forEach((f, i) => { k = k.add(mx_noise_float(p.mul(f).add(i * 3.1)).mul(G.uneven[i]!).mul(keep(1 / f))) })
+  ;[6, 14, 30].forEach((f, i) => { k = k.add(mx_noise_float(p.mul(f).add(i * 3.1)).mul(G.uneven[i]! * unevenK).mul(keep(1 / f))) })
+  if (coat.fine) [64, 128].forEach((f, i) => { k = k.add(mx_noise_float(p.mul(f).add(9.3 + i)).mul(float(coat.fine).mul(i ? 0.5 : 1)).mul(keep(1 / f))) })
   // the trowel's strokes, laid in two directions by patches: long along, narrow across
   const ca = Math.cos((35 * Math.PI) / 180), sa = Math.sin((35 * Math.PI) / 180)
   const s1 = mx_noise_float(vec3(u.mul(ca).add(y.mul(sa)).mul(1.4), u.mul(-sa).add(y.mul(ca)).mul(11), 1.7))
   const s2 = mx_noise_float(vec3(u.mul(ca).sub(y.mul(sa)).mul(1.4), u.mul(sa).add(y.mul(ca)).mul(11), 5.3))
   const patch = smoothstep(-0.25, 0.25, mx_noise_float(vec3(u.mul(0.7), y.mul(0.7), 9.1)))
-  k = k.add(mix(s1, s2, patch).mul(G.stroke).mul(keep(1 / 11)).mul(vertical))
+  k = k.add(mix(s1, s2, patch).mul(G.stroke * strokeK).mul(keep(1 / 11)).mul(vertical))
   // where the wash is thin the mud brick shows through: its courses, its head joints half a brick on in every other
   // course, each brick its own tone
   const thin = smoothstep(-0.05, 0.4, mx_noise_float(vec3(u.mul(0.45), y.mul(0.8), 3.3)).add(mx_noise_float(vec3(u.mul(1.6), y.mul(2.2), 4.7)).mul(0.4))).mul(vertical)
@@ -67,14 +74,14 @@ function grainOf(p: N, n: N, base: N, g: WashGrain): N {
   const jointMean = g.joint / g.course + g.joint / g.brick
   const joint = bed.add(head).sub(bed.mul(head)).sub(jointMean).mul(keep(g.course, fy))
   const brickTone = hash(floor(ub.div(g.brick)), kc).sub(0.5).mul(keep(g.brick, fu))
-  k = k.mul(float(1).sub(joint.mul(G.joint).mul(thin))).mul(float(1).add(brickTone.mul(G.brick).mul(thin)))
+  k = k.mul(float(1).sub(joint.mul(G.joint * thinK).mul(thin))).mul(float(1).add(brickTone.mul(G.brick * thinK).mul(thin)))
   const mud = vec3(...(g.mud ?? DEFAULTS.mud))
-  let c: N = mix(base, mud.mul(1.2), thin.mul(G.thin * 0.35)).mul(k)
+  let c: N = mix(base, mud.mul(1.2), thin.mul(G.thin * 0.35 * thinK)).mul(k)
   // a band of wear at the foot, its top ragged: darker and browner, as hands, feet and brooms leave it
   const top = float(G.wearH).add(mx_noise_float(vec3(u.mul(1.3), 0.5, 2.2)).mul(0.25)).add(mx_noise_float(vec3(u.mul(7), 0.5, 6.1)).mul(0.07).mul(keep(1 / 7, fu)))
   const wear = float(1).sub(smoothstep(top.sub(0.12), top.add(0.04), y)).mul(vertical)
   const scuff = float(1).add(mx_noise_float(vec3(u.mul(9), y.mul(5), 8.8)).mul(0.12).mul(keep(1 / 9)))
-  c = mix(c, mud.mul(0.95).mul(scuff), wear.mul(G.wear))
+  if (wearK > 0) c = mix(c, mud.mul(0.95).mul(scuff), wear.mul(G.wear * wearK))
   return c
 }
 

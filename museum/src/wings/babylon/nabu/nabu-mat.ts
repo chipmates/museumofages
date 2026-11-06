@@ -4,7 +4,8 @@
      the outer faces, towers, battlements   white lime-gypsum plaster, a fresh coat: a trowel's unevenness, earth
                                             splashed at the foot, faint streaks under the battlements
      Nabu's court, the cellas               the same plaster with plain black bitumen bands: a foot band, a dado of
-                                            black piers under two bands, black frames round the doors
+                                            black piers under two bands, black frames round the doors; the court's
+                                            faces and altars under the shared wash's grain, a fresh coat
      the smaller court's south wall         all black with bitumen
      the floors                             baked brick under a bitumen coat, worn to the brick where people walked
      the roof                               an earth deck behind the parapet
@@ -17,6 +18,7 @@ import { band, footprint, hash2, lines } from '../gate/gate-mat'
 import { classColour, uView, type ClassTones } from '../map/mass'
 import { TONES } from '../open/earth'
 import { pavingBrickCourt } from '../parts/paving-brick-court-babylon'
+import { plasterWash } from '../parts/plaster-wash-babylon'
 import { SURF, type Box2, type NabuFrame } from './nabu-geom'
 import { uSkySet } from '../open/sky-set'
 
@@ -76,7 +78,8 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const footY = P.y.sub(mix(float(F.pave), float(F.apronTop), outer))
   const splash = float(1).sub(smoothstep(0.05, 0.9, footY.add(mx_noise_float(vec3(u.mul(1.3), 0.5, 1.7)).mul(0.25)))).mul(0.45)
   const earth = V(col.apron)
-  plaster = mix(plaster, earth.mul(1.05), splash.mul(max(outer, any(SURF.courtWall, SURF.smallCourt))))
+  // Nabu's court is floored with asphalt: no earth splashes its walls' feet
+  plaster = mix(plaster, earth.mul(1.05), splash.mul(max(outer, is(SURF.smallCourt))))
   // streaks under the battlements: thin, faint, long, the rain's way down an outer face
   const streak = smoothstep(0.15, 0.55, mx_noise_float(vec3(u.mul(2.4), P.y.mul(0.12), 3.3))).mul(smoothstep(F.top - 5, F.top, P.y)).mul(0.07)
   plaster = plaster.mul(float(1).sub(streak.mul(outer)))
@@ -84,6 +87,16 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   plaster = mix(plaster, mix(plaster, earth, 0.3).mul(0.92), is(SURF.coping))
   // the Ashratum's plaster a coat older than the Nabu temple's
   plaster = mix(plaster, plaster.mul(vec3(0.94, 0.93, 0.9)), is(SURF.ashratum))
+  /* ── Nabu's court (its walls, its coping and battlements, the altar blocks) under the shared wash's grain as a fairly
+     fresh coat: the courses ghost faintly, no band of wear at the foot; the sand of the wash on the walls, where it
+     reads, not on the altar blocks seen near. Taken as a factor on the plaster above, so the court keeps its tone ── */
+  const WG = np.wash, FLAT = { wall: [1, 1, 1] as RGB, ceiling: [1, 1, 1] as RGB }
+  const washCoat = { ...WG.coat, fine: mix(float(WG.coat.fine ?? 0), float(WG.altar.fine), is(SURF.altar)) }
+  const washed = plasterWash(P, n, col.plaster, FLAT, { pix: uNabuPix, floor: F.pave, course: WG.course, brick: WG.brick, joint: WG.joint, mud: col.apron, coat: washCoat })
+  const grainRel = washed.div(plasterWash(P, n, col.plaster, FLAT))
+  const courtFace = max(any(SURF.courtWall, SURF.altar), any(SURF.merlon, SURF.coping).mul(inBox(F.court, 1.4)))
+  plaster = mix(plaster, plaster.mul(grainRel), courtFace)
+  const relL = dot(grainRel, vec3(0.2126, 0.7152, 0.0722))
 
   /* ── the black bands: plain bitumen, painted on the court's walls and in the cellas ── */
   const banded = any(SURF.courtWall, SURF.bandedRoom)
@@ -102,7 +115,7 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const piers = band(pierAt, 0, pier, fu).mul(step(y, B.low[0]))
   let ink: N = max(band(y, B.foot[0], B.foot[1], fy), max(band(y, B.low[0], B.low[1], fy), band(y, B.high[0], B.high[1], fy)))
   // round each door in these walls a frame of two bands, and no pier inside the outer band
-  let frames: N = float(0), clear: N = float(0)
+  let frames: N = float(0), clear: N = float(0), sideV: N = float(0)
   for (const d of F.doors) {
     if (d.id === 'gate') continue
     const onWall = d.wall === 'x' ? abs(P.x.sub((d.box.x0 + d.box.x1) / 2)).lessThan((d.box.x1 - d.box.x0) / 2 + 0.05) : abs(P.z.sub((d.box.z0 + d.box.z1) / 2)).lessThan((d.box.z1 - d.box.z0) / 2 + 0.05)
@@ -113,6 +126,7 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
     const inFrame = step(out, B.frame[3] + 0.02).mul(step(P.y, d.top + B.frame[3] + 0.02)).mul(step(-0.01, out))
     const fr = max(band(out, B.frame[0], B.frame[1], fw), band(out, B.frame[2], B.frame[3], fw)).mul(inFrame)
     frames = max(frames, select(onWall, fr, float(0)))
+    sideV = max(sideV, select(onWall, fr.mul(step(above, across)), float(0)))
     clear = max(clear, select(onWall, step(out, B.frame[3] + 0.12).mul(step(P.y, d.top + B.frame[3] + 0.12)), float(0)))
   }
   ink = max(max(ink, piers.mul(float(1).sub(clear))), frames)
@@ -137,7 +151,16 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const lipAt = (v: N, a: number, b: number): N => band(v, b, b + 0.006, fy).sub(band(v, a - 0.006, a, fy).mul(0.8))
   const lip = lipAt(y, B.low[0], B.low[1]).add(lipAt(y, B.high[0], B.high[1])).mul(dadoKeep).add(lipAt(y, B.foot[1] - 1, B.foot[1])).mul(banded).mul(nearC)
   const coatVar = mx_noise_float(vec3(u.mul(1.7), P.y.mul(2.3), 5.1)).mul(0.5).add(0.5)
-  const bitCoat = mix(bitumen, plaster.mul(vec3(0.34, 0.26, 0.19)), fringe.mul(0.55).mul(nearC)).mul(mix(float(0.85), float(1.35), coatVar))
+  // the paint follows the plaster's grain under it (the wash's relief, a little stronger in the thin black coat) and
+  // keeps its brush's marks, laid along each band, down each pier and frame side
+  const vStroke = max(piers.mul(float(1).sub(clear)), sideV)
+  const sAlong = mix(u, y, vStroke), sAcross = mix(y, u, vStroke)
+  const fX = mix(fy, fu, vStroke)
+  const keepX = (lambda: number): N => smoothstep(fX.mul(2), fX.mul(4), float(lambda))
+  const brush = mx_noise_float(vec3(sAlong.mul(2.5), sAcross.mul(70), 4.2)).mul(keepX(1 / 70)).mul(0.6)
+    .add(mx_noise_float(vec3(sAlong.mul(1.1), sAcross.mul(24), 8.1)).mul(keepX(1 / 24)).mul(0.4))
+  const paintTex = float(1).add(relL.sub(1).mul(CO.relief)).add(brush.mul(CO.brush)).mul(mix(float(1), float(CO.court), is(SURF.courtWall)))
+  const bitCoat = mix(bitumen, plaster.mul(vec3(0.34, 0.26, 0.19)), fringe.mul(0.55).mul(nearC)).mul(mix(float(0.85), float(1.35), coatVar)).mul(paintTex)
   let wall: N = mix(plaster, bitCoat, inked)
   wall = wall.mul(float(1).add(lip.mul(0.16).mul(float(1).sub(inked))))
   wall = mix(wall, bitumen.mul(1.1), is(SURF.black))
@@ -176,9 +199,9 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
      darkened by what was laid and burnt on it ── */
   const isAltar = is(SURF.altar), isPed = is(SURF.pedestal)
   let block: N = plaster.mul(vec3(0.97, 0.95, 0.92))
-  // an altar's wash worn thin over its mud plaster in patches, earth splashed at its foot, its top stained dark
+  // an altar's fresh wash a little uneven in faint patches, its top stained dark
   const worn = smoothstep(0.1, 0.45, mx_noise_float(P.mul(vec3(2.2, 3.0, 2.2))).add(mx_noise_float(P.mul(7.0)).mul(0.25)))
-  block = mix(block, V(col.apron).mul(1.2), isAltar.mul(worn.mul(0.3).add(float(1).sub(smoothstep(0.0, 0.25, footY)).mul(0.45))))
+  block = mix(block, V(col.apron).mul(1.2), isAltar.mul(worn.mul(0.1)))
   block = mix(block, mix(block, earth, 0.35).mul(0.88), isAltar.mul(smoothstep(0.5, 0.9, n.y)))
   stateCol = mix(stateCol, block, max(isAltar, isPed))
   /* ── the doors: cedar leaves, boards about 22 cm wide down their length, the grain long, weathered grey toward the
@@ -199,7 +222,7 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const shiny = max(inked, is(SURF.black)).add(is(SURF.paving).mul(float(PV.sheen).sub(pv.wear.mul(0.25))))
   // the coat's gloss with its thickness; the leaves' wood oiled to a faint sheen
   const coatRough = mix(float(CO.sheen[0]), float(CO.sheen[1]), float(1).sub(coatVar).add(fringe.mul(0.5)))
-  const rough0 = mix(float(0.92), mix(float(0.42), coatRough, max(inked, is(SURF.black))), clamp(shiny, 0, 1))
+  const rough0 = mix(float(0.92), mix(float(0.42), coatRough.add(brush.mul(0.12)), max(inked, is(SURF.black))), clamp(shiny, 0, 1))
   m.roughnessNode = mix(mix(rough0, float(0.7), is(SURF.leaf)), float(0.92), uView)
 
   /* ── the light the stack does not carry. A room is lit only through its doors: strongest in front of each, falling
