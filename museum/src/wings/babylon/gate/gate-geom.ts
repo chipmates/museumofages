@@ -59,6 +59,8 @@ export interface GArch {
   height: Cls
   /** the top before the tops' pass parted it from an overlapping body's */
   topBefore?: number
+  /** the soffit's bond shift at x < 0 where its jamb's top course would otherwise share its head joints (default 0) */
+  shiftE?: number
 }
 
 /** a glazed (or friezed) face that carries the procedural pattern, and the relief panels on it */
@@ -287,7 +289,7 @@ export function buildGate(plan: J): Built {
   }
   runs.push({ id: 'front-top-over', a: [-xT0, 0], b: [xT0, 0], out: [0, 1], y: top, thick: 0.33, plan: 'G' })
   runs.push({ id: 'front-top-back', a: [-xSide1, zBack], b: [xSide1, zBack], out: [0, -1], y: top, thick: 0.33, plan: 'G' })
-  arches.push({ id: 'front-arch-outer', part: 'front gate', x0: -hd - 0.15, x1: hd + 0.15, z0: zCh0, z1: 0, springing: spr, r: hd, top, inset: SK, plan: 'G', height: 'G' })
+  arches.push({ id: 'front-arch-outer', part: 'front gate', x0: -hd - 0.15, x1: hd + 0.15, z0: zCh0, z1: 0, springing: spr, r: hd, top, inset: SK, plan: 'G', height: 'G', shiftE: 1 })
   arches.push({ id: 'front-arch-inner', part: 'front gate', x0: -hd - 0.15, x1: hd + 0.15, z0: zBack, z1: zCh1, springing: spr, r: hd, top, inset: 0, plan: 'G', height: 'G' })
   // the chamber's cedar roof: beams across the 3.68 m, a deck over them
   for (let x = -xSide0 + 0.3; x <= xSide0 - 0.3 + 1e-6; x += 0.62) beams.push({ id: `beam-front-${beams.length}`, part: 'front gate', x0: x - 0.16, x1: x + 0.16, y0: top - 1.55, y1: top - 1.15, z0: zCh1 - 0.25, z1: zCh0 + 0.25, surf: 'cedar', plan: 'T', height: 'T', band: -99 })

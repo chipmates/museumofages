@@ -23,7 +23,7 @@ export { PAL }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
 const T = TSL as unknown as Record<string, N>
-const { Fn, If, Loop, abs, attribute, cameraPosition, cameraViewMatrix, clamp, cos, dot, float, floor, fract, length, max, min, mix, mx_noise_float, mx_worley_noise_vec2, normalize, positionLocal, positionWorld, select, sin, smoothstep, sqrt, step, texture, uniform, uv, vec2, vec3, vec4, atan, log2 } = T
+const { Fn, If, Loop, abs, attribute, cameraPosition, cameraViewMatrix, clamp, cos, cross, dFdx, dFdy, dot, float, floor, fract, length, max, min, mix, mx_noise_float, mx_worley_noise_vec2, normalize, positionLocal, positionWorld, select, sin, smoothstep, sqrt, step, texture, uniform, uv, vec2, vec3, vec4, atan, log2 } = T
 
 export const C = 0.086
 export const BR = 0.33
@@ -87,6 +87,24 @@ export const footprint = (U: Pick<GateUniforms, 'uPix'>, t: N, n: N): N => {
 export const classIndex = (cls: N, y: N): N => select(y.lessThan(cls.z), cls.x, select(y.lessThan(cls.w), float(1), cls.y))
 /** the side mask for the class still's check (?mask=side, with a high self light): the known side white, the guessed black */
 const SIDE_MASK = typeof location !== 'undefined' && new URLSearchParams(location.search).get('mask') === 'side'
+/** the bond's stretch check (?bondgrad=<limit>): the worst texel stretch of the bond's (u, y) against the gate frame, unlit;
+ * a soffit green within the limit and red past it, any other wall blue and magenta */
+const BOND_GRAD = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('bondgrad') ?? 0) : 0
+const bondGrad = (m: MeshPhysicalNodeMaterial, p: N, u: N, y: N, soff: N): void => {
+  const px = dFdx(p), py = dFdy(p), e1 = normalize(px)
+  const s11 = length(px), s12 = dot(py, e1), s22 = max(length(py.sub(e1.mul(s12))), 1e-9)
+  const ux = dFdx(u), vx = dFdy(u).sub(ux.mul(s12).div(s11)), yx = dFdx(y), yy = dFdy(y).sub(yx.mul(s12).div(s11))
+  const a = ux.div(s11), b = vx.div(s22), c = yx.div(s11), d = yy.div(s22)
+  // the screen-to-bond map in an orthonormal tangent frame; the stretch is its smaller singular value's inverse
+  const e = a.mul(a).add(b.mul(b)).add(c.mul(c)).add(d.mul(d)), det = abs(a.mul(d).sub(b.mul(c)))
+  const s1 = sqrt(e.add(sqrt(max(e.mul(e).sub(det.mul(det).mul(4)), 0))).mul(0.5))
+  const over = step(float(BOND_GRAD), s1.div(max(det, 1e-12)))
+  m.colorNode = vec3(0)
+  m.emissiveNode = select(soff, mix(vec3(0, 1, 0), vec3(1, 0, 0), over), mix(vec3(0, 0, 1), vec3(1, 0, 1), over)).mul(3)
+  m.clearcoatNode = float(0)
+  m.roughnessNode = float(1)
+  m.metalnessNode = float(0)
+}
 /** the class colour by CLASS_TONE's index, the albedos as measured; the guessed side (2 guessed, 4 typical) hatched */
 export const classColour = (U: GateUniforms, idx: N, hu: N, hy: N, fw: N, n?: N): N => {
   const base = select(idx.lessThan(0.5), U.uM, select(idx.lessThan(1.5), U.uR, select(idx.lessThan(2.5), U.uG, select(idx.lessThan(3.5), U.uK, U.uT))))
@@ -227,19 +245,24 @@ export function wallMaterial(U: GateUniforms, rooms: Rooms): Material {
   // the world normal from the gate-frame attribute: reading normalWorld here took the lighting's normal with it (the walls lost the lower hemisphere's bounce)
   const nW = normalize(U.uRot.mul(attribute('normal', 'vec3')))
   const up = vec3(0, 1, 0)
-  const tU = normalize(select(abs(nW.y).greaterThan(0.7), vec3(1, 0, 0), vec3(nW.z.negate(), 0, nW.x)))
-  const fu = footprint(U, tU, nW), fy = footprint(U, up, nW)
+  // a vault's soffit (info.y -1) brings its course height in gU; its bond's u runs along the passage, as on the jamb below
+  const soff = gInfo.y.lessThan(-0.5)
+  const bu = select(soff, select(p.x.lessThan(0), p.z.negate(), p.z), gU), by = select(soff, gU, p.y)
+  const tZ = normalize(U.uRot.mul(vec3(0, 0, 1)))
+  const tU = select(soff, tZ, normalize(select(abs(nW.y).greaterThan(0.7), vec3(1, 0, 0), vec3(nW.z.negate(), 0, nW.x))))
+  const fu = footprint(U, tU, nW), fy = footprint(U, select(soff, normalize(cross(nW, tZ)), up), nW)
   // one weight per kind: 0 gate glaze, 1 lion wall, 2 plain brick, 3 mud brick, 5 cedar, 6 copper, 7 bronze
   const isK = (k: number): N => step(k - 0.5, kind).mul(step(kind, k + 0.5))
   const k0 = isK(0), k1 = isK(1), k2 = isK(2).add(isK(4)), k3 = isK(3), k5 = isK(5), k6 = isK(6), k7 = isK(7)
-  const b = bond(gU, p.y, gInfo.x, fu, fy, 0.0045)
+  // a soffit's east half (x < 0) takes its shift from info.w, chosen per fragment so the crown's triangles do not blend it
+  const b = bond(bu, by, select(soff.and(p.x.lessThan(0)), gInfo.w, gInfo.x), fu, fy, 0.0045)
   const joint = b.bed.add(b.head).min(1)
   const vary = b.brick.sub(0.5).mul(float(1).sub(smoothstep(0.08, 0.3, fu)))
   const fine = mx_noise_float(p.mul(31)).mul(float(1).sub(smoothstep(0.01, 0.04, max(fu, fy))))
   const jointCol = vec3(0.05, 0.048, 0.045)
   // 0: the gate's glazed brick, the glaze pooling a little darker at the brick's edges
-  const pool = lines(p.y, C, 0.016, fy).add(lines(gU, BR / 2, 0.014, fu)).min(1).mul(0.07)
-  const glaze0 = gateGlaze(gU, p.y, b.kk, gEdge, gInfo.y, fu, fy).mul(float(1).add(vary.mul(0.09)).add(fine.mul(0.025)).sub(pool))
+  const pool = lines(by, C, 0.016, fy).add(lines(bu, BR / 2, 0.014, fu)).min(1).mul(0.07)
+  const glaze0 = gateGlaze(bu, by, b.kk, gEdge, max(gInfo.y, 0), fu, fy).mul(float(1).add(vary.mul(0.09)).add(fine.mul(0.025)).sub(pool))
   const col0 = mix(glaze0, jointCol, joint)
   // 1: a lion wall, plain brick with the glazed frieze
   const fz = lionFrieze(gU, p.y.sub(gInfo.w), fu, fy)
@@ -262,7 +285,7 @@ export function wallMaterial(U: GateUniforms, rooms: Rooms): Material {
   const frieze = step(gInfo.w, p.y).mul(step(p.y, gInfo.w.add(23 * C)))
   const flatCol = V(PAL.cobalt).mul(k0).add(mix(V(PAL.buff).mul(0.85), V(PAL.turquoise), frieze).mul(k1)).add(V(PAL.buff).mul(0.85).mul(k2)).add(V(PAL.mud).mul(k3)).add(V(PAL.cedar).mul(k5)).add(V(PAL.copper).mul(k6)).add(V(PAL.bronze).mul(k7))
   const stateCol = select(U.uState.lessThan(0.5), grey, select(U.uState.lessThan(1.5), flatCol, full))
-  const cc = classColour(U, classIndex(gCls, p.y), gU, p.y, max(fu, fy), nW)
+  const cc = classColour(U, classIndex(gCls, p.y), bu, by, max(fu, fy), nW)
   m.colorNode = mix(stateCol, cc, U.uSwitch)
   m.emissiveNode = cc.mul(U.uSwitch.mul(U.uSelf))
   const roughState = select(U.uState.lessThan(0.5), float(0.92), select(U.uState.lessThan(1.5), mix(float(0.88), float(0.45), k0.add(k1.mul(frieze))), roughFull))
@@ -272,6 +295,7 @@ export function wallMaterial(U: GateUniforms, rooms: Rooms): Material {
   m.clearcoatNode = mix(select(U.uState.lessThan(1.5), float(0), glazed), float(0), U.uSwitch)
   m.clearcoatRoughnessNode = float(0.06)
   roomLight(m, rooms, p, m.clearcoatNode)
+  if (BOND_GRAD > 0) bondGrad(m, p, bu, by, soff)
   return m
 }
 
