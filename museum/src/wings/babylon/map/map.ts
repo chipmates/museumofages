@@ -34,6 +34,7 @@ import { recordNamer, type ClassFile, type Pieces } from '../record'
 import { toneMapBodies, type Painted } from '../record-tones'
 import { hourOf, sunAt, sunVector } from './sun'
 import { makePath, type PathSample, type V3 } from './path'
+import { makeRamp } from './print-ramp'
 import { mountCourt } from '../court/court'
 import { mountTower, towerState, type TowerState } from '../tower/tower'
 import { mountGardens, type GardenState } from '../gardens/gardens'
@@ -381,18 +382,13 @@ const stopsOf = (n: number, framing: 'desktop' | 'phone'): number => {
   const s = cams.stops.find((x: J) => x.n === n)
   return (s?.stops ?? 0) + (s?.hourStops?.[framing] ?? 0)
 }
-const expAt = (time: number, framing: 'desktop' | 'phone'): number => {
-  let acc = 0
-  for (let k = -6; k <= 6; k++) acc += stopsOf(path.sample(time + k * 0.5).stop, framing)
-  return acc / 13
-}
-/** a stop's own air, eased over the same six seconds as its exposure */
+// the print and the air ramp evenly over the 6 s around a stop change inside a run, and switch at a cut; one ramp a walk
+const ramps = { shared: makeRamp(paths.shared.keys, paths.shared.duration), show: makeRamp(paths.show.keys, paths.show.duration) }
+const ramp = { at: (t: number, v: (n: number) => number): number => (walkNow() === paths.show ? ramps.show : ramps.shared).at(t, v) }
+const expAt = (time: number, framing: 'desktop' | 'phone'): number => ramp.at(time, (n) => stopsOf(n, framing))
+/** a stop's own air, eased over the same window as its exposure */
 const airOf = (n: number): number => cams.stops.find((x: J) => x.n === n)?.air ?? 0
-const airAt = (time: number): number => {
-  let acc = 0
-  for (let k = -6; k <= 6; k++) acc += airOf(path.sample(time + k * 0.5).stop)
-  return acc / 13
-}
+const airAt = (time: number): number => ramp.at(time, airOf)
 /* the river's ripples run on the film's seconds; where a stop was put in before the bridge, `waterClock` runs them slower
    across its span, so the water at every later second is the water it was (the bridge's stills stay as landed) */
 const WC = cams.waterClock as { from: number; to: number; seconds: number } | undefined
