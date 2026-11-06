@@ -385,6 +385,8 @@ renderer.render(scene, camera)
 linear = createOpenLinear(renderer, scene, camera, AIR, { ao: { on: q.get('ao') !== '0', intensity: L.uAoOn, radius: 1.2, fadeNear: L.uAoNear, fadeFar: L.uAoFar } })
 const { PRINT, SAT, TOE, ENV, SUN } = L
 const stopsAt = L.stopsAt
+/** the landing hour's exposure per framing, over the flight's stops by height */
+const hourStops = (framing: 'desktop' | 'phone'): number => cams.hourStops?.[framing] ?? 0
 
 const putBase = q.get('put') ?? ''
 async function upload(file: string, bytes: Uint8Array | string): Promise<void> {
@@ -445,7 +447,7 @@ const rig = {
     setView(o.view)
     const t = o.t ?? 0
     const { p, texel } = aimFlight(t, o.framing, o.w, o.h)
-    const stops = stopsAt(p.pos[1])
+    const stops = stopsAt(p.pos[1]) + hourStops(o.framing)
     const { bytes, ms } = await render(o.w, o.h, o.samples, stops)
     const file = `${o.out}/${o.name}.png`
     await upload(file, await toPNG(bytes, o.w, o.h))
@@ -470,7 +472,7 @@ const rig = {
     for (let i = 0; i < n; i++) {
       const time = from + i / o.fps
       const { p, texel } = aimFlight(time, framing, o.w, o.h)
-      const stops = stopsAt(p.pos[1])
+      const stops = stopsAt(p.pos[1]) + hourStops(framing)
       const { bytes } = await render(o.w, o.h, o.samples, stops)
       const g = Math.round(time * o.fps)
       await upload(`${o.out}/f${String(g).padStart(5, '0')}.jpg`, await jpeg(bytes, o.w, o.h, 0.88))

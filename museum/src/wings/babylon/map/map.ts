@@ -12,6 +12,7 @@
                      and one light; the rest of the scene unchanged (apart from ?view)
      ?ao=0           no contact occlusion; ?air=0 no haze; ?sigma=0.00018&scale=300 the haze's density and height
      ?garden=bare    stop 5's terraces without their planting; ?garden=dug without the guessed terraces too
+     ?hour=17:30     every still and film frame at one solar hour, a test of a stop's light (the path's hours by default)
      ?put=<url>      where the rig hands its files (the shooter's own server) */
 
 import { Matrix3, Matrix4, MeshStandardNodeMaterial, PerspectiveCamera, Scene, Vector3, type Mesh, type Object3D } from 'three/webgpu'
@@ -33,6 +34,7 @@ import { recordNamer, type ClassFile, type Pieces } from '../record'
 import { toneMapBodies, type Painted } from '../record-tones'
 import { hourOf, sunAt, sunVector } from './sun'
 import { makePath, type PathSample, type V3 } from './path'
+import { makeRamp } from './print-ramp'
 import { mountCourt } from '../court/court'
 import { mountTower, towerState, type TowerState } from '../tower/tower'
 import { mountGardens, type GardenState } from '../gardens/gardens'
@@ -56,6 +58,7 @@ type J = any
 const { mix, uniform, vec3 } = TSL as unknown as Record<string, N>
 
 const q = new URLSearchParams(location.search)
+const HOUR_Q = q.get('hour')
 const says = document.getElementById('says') as HTMLElement
 const say = (s: string): void => {
   says.textContent = s
@@ -374,27 +377,27 @@ async function render(w: number, h: number, samples: number, stops = 0): Promise
 }
 
 /* the film at a second, in either framing: the path's camera, the phone's own composition, the eased exposure */
-const stopsOf = (n: number): number => cams.stops.find((x: J) => x.n === n)?.stops ?? 0
-const expAt = (time: number): number => {
-  let acc = 0
-  for (let k = -6; k <= 6; k++) acc += stopsOf(path.sample(time + k * 0.5).stop)
-  return acc / 13
+// a stop's `hourStops` is its hour's exposure per framing, over its own `stops`
+const stopsOf = (n: number, framing: 'desktop' | 'phone'): number => {
+  const s = cams.stops.find((x: J) => x.n === n)
+  return (s?.stops ?? 0) + (s?.hourStops?.[framing] ?? 0)
 }
-/** a stop's own air, eased over the same six seconds as its exposure */
+// the print and the air ramp evenly over the 6 s around a stop change inside a run, and switch at a cut; one ramp a walk
+const ramps = { shared: makeRamp(paths.shared.keys, paths.shared.duration), show: makeRamp(paths.show.keys, paths.show.duration) }
+const ramp = { at: (t: number, v: (n: number) => number): number => (walkNow() === paths.show ? ramps.show : ramps.shared).at(t, v) }
+const expAt = (time: number, framing: 'desktop' | 'phone'): number => ramp.at(time, (n) => stopsOf(n, framing))
+/** a stop's own air, eased over the same window as its exposure */
 const airOf = (n: number): number => cams.stops.find((x: J) => x.n === n)?.air ?? 0
-const airAt = (time: number): number => {
-  let acc = 0
-  for (let k = -6; k <= 6; k++) acc += airOf(path.sample(time + k * 0.5).stop)
-  return acc / 13
-}
+const airAt = (time: number): number => ramp.at(time, airOf)
 /* the river's ripples run on the film's seconds; where a stop was put in before the bridge, `waterClock` runs them slower
    across its span, so the water at every later second is the water it was (the bridge's stills stay as landed) */
 const WC = cams.waterClock as { from: number; to: number; seconds: number } | undefined
 const waterAt = (t: number): number => (!WC || t <= WC.from ? t : t >= WC.to ? t - (WC.to - WC.from - WC.seconds) : WC.from + ((t - WC.from) * WC.seconds) / (WC.to - WC.from))
-function aimFilm(time: number, framing: 'desktop' | 'phone', w: number, h: number): PathSample {
+function aimFilm(time: number, framing: 'desktop' | 'phone', w: number, h: number, hour?: number): PathSample {
   const p = path.sample(time)
   toneAt(p.stop)
-  setHour(p.hour)
+  // before the aim: the sun's shadow box is fitted there
+  setHour(hour ?? (HOUR_Q ? hourOf(HOUR_Q) : p.hour))
   bridge.setTime(waterAt(time))
   const ph = framing === 'phone'
   setAir(airAt(time))
@@ -432,27 +435,29 @@ const rig = {
   /** the tower switch: built, dug, bruegel or bruegel-show */
   tower: (s: MapTower) => setTower(mapTower(s)),
   /** a still of one stop: the film's own frame at the stop's still second, full size, either framing */
-  async shoot(o: { stop: number; framing: 'desktop' | 'phone'; view: 'grey' | 'classes'; w: number; h: number; samples: number; out: string; name?: string; css?: [number, number]; t?: number; garden?: GardenState }) {
+  async shoot(o: { stop: number; framing: 'desktop' | 'phone'; view: 'grey' | 'classes'; w: number; h: number; samples: number; out: string; name?: string; css?: [number, number]; t?: number; garden?: GardenState; hour?: string }) {
     const s = cams.stops.find((x: J) => x.n === o.stop)
     if (!s) throw new Error(`no stop ${o.stop}`)
     const time = o.t ?? stillTime(o.stop)
     gardens.setGarden(gardenFor(o.garden ?? gardenState))
     uView.value = o.view === 'classes' ? 1 : 0
     const baked = envNow().bakes
-    const p = aimFilm(time, o.framing, o.w, o.h)
-    const ev = expAt(time)
+    // a call's own hour over the page's (`?hour=`) over the path's; the exposure stays the stop's
+    const p = aimFilm(time, o.framing, o.w, o.h, o.hour ? hourOf(o.hour) : undefined)
+    const hour = o.hour ? hourOf(o.hour) : HOUR_Q ? hourOf(HOUR_Q) : p.hour
+    const ev = expAt(time, o.framing)
     const { bytes, ms } = await render(o.w, o.h, o.samples, ev)
     const base = o.name ?? `${String(s.n).padStart(2, '0')}-${s.id}-${o.framing}-${o.view}`
     const file = `${o.out}/${base}.png`
     await upload(file, await toPNG(bytes, o.w, o.h))
-    const sun = sunAt(p.hour)
+    const sun = sunAt(hour)
     const side = {
       file, stop: s.n, id: s.id, framing: o.framing, view: o.view, tower: towerNow, filmSecond: +time.toFixed(3), filmFrameAt8fps: Math.round(time * 8),
       cssSize: o.css ?? [o.w, o.h], devicePixels: [o.w, o.h], ratio: o.css ? o.w / o.css[0] : 1, subFrames: o.samples,
       sampleCountReadBack: 'one sample a sub-frame: the linear target is allocated without multisampling (render.ts)',
       backend: stack.backend, adapter: stack.architecture, exposureStops: +ev.toFixed(3), heightStops: +L.stopsAt(camera.position.y).toFixed(3), print: printAt(ev),
       air: { sigma: L.AIR.uSigma.value, scale: L.AIR.uScale.value, on: L.AIR.uOn.value }, env: { intensity: scene.environmentIntensity, sun: L.sunLight.intensity, ...envNow(), bakes: envNow().bakes - baked },
-      hour: +p.hour.toFixed(3), sun: { azimuth: +sun.azimuth.toFixed(1), elevation: +sun.elevation.toFixed(1) }, moon: crescent.inFrame(camera, o.w, o.h),
+      hour: +hour.toFixed(3), sun: { azimuth: +sun.azimuth.toFixed(1), elevation: +sun.elevation.toFixed(1) }, moon: crescent.inFrame(camera, o.w, o.h),
       camera: { utm: F.utm(p.pos[0], p.pos[2]), y: +p.pos[1].toFixed(2), eyeOverStand: +(p.pos[1] - stand(p.pos[0], p.pos[2])).toFixed(3), hfov: +camera.fov.toFixed(2), kind: p.kind, near: camera.near, far: camera.far },
       figures: figuresInFrame().filter((n) => n === p.stop),
       brightness: brightness(bytes), ms, sky: skyS ? skyS.facts() : L.field ? L.field.facts() : { mode: 'environment' },
@@ -497,7 +502,7 @@ const rig = {
       const e = envNow()
       const env = { owner: e.owner, dusk: e.dusk, bakes: e.bakes - baked }
       baked = e.bakes
-      const ev = expAt(time)
+      const ev = expAt(time, framing)
       const { bytes } = await render(o.w, o.h, o.samples, ev)
       const g = Math.round(time * o.fps)
       await upload(`${o.out}/f${String(g).padStart(5, '0')}.jpg`, await jpeg(bytes, o.w, o.h, 0.86))

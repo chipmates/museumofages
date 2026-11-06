@@ -64,9 +64,12 @@ test('the lens data move no camera: every sample at 8 fps stands, looks and keep
   }
 })
 
-test('no step in the film: between frames at 8 fps the shift moves at most 0.01 and the lens 0.3 degrees, either framing', () => {
+// a cut is a new shot: the frame pair across a stop's first key marked `cut` may change its lens
+const cutAt = cams.stops.flatMap((s) => (s.keys[0].cut ? [s.keys[0].t + 1e-4] : []))
+test('no step in the film: between frames at 8 fps the shift moves at most 0.01 and the lens 0.3 degrees, either framing, outside a cut', () => {
   const ts = seconds(0, path.duration)
   for (let i = 1; i < ts.length; i++) {
+    if (cutAt.some((c) => ts[i - 1] < c && c <= ts[i])) continue
     const a = path.sample(ts[i - 1]), b = path.sample(ts[i])
     for (const [name, x, y] of [['desktop shift', a.shift, b.shift], ['phone shift', a.phone.shift, b.phone.shift]]) assert.ok(Math.abs(x - y) <= 0.01, `${name} ${x} to ${y} at ${ts[i]} s`)
     for (const [name, x, y] of [['desktop lens', a.hfov, b.hfov], ['phone lens', a.phone.hfov, b.phone.hfov]]) assert.ok(Math.abs(x - y) <= 0.3, `${name} ${x} to ${y} at ${ts[i]} s`)

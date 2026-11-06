@@ -52,7 +52,7 @@ export const SENTENCE_WORDS = 14
 /** THE BAND'S LINES, one per step, for the writer: what each must carry and its pointer */
 export const BAND_KEYS: Record<StepId, { carries: string; pointer: string }> = {
   evenings: {
-    carries: 'the month and the year begin with tonight\'s crescent, so the afternoon walked was the old year\'s last; both evenings computed (14 April too low and thin, 15 April easy to see), never "seen that evening"; no festival; whether anyone saw it is not known',
+    carries: 'the month and the year begin with tonight\'s crescent, so the day of the walk was the old year\'s last; both evenings computed (14 April too low and thin, 15 April easy to see), never "seen that evening"; no festival; whether anyone saw it is not known',
     pointer: 'TARGETS-W2B 13.3.1, 13.3.2, 13.3.9, 13.4; HOW-FUSED feature 11 beats; this round\'s STATUS item 2 (14 April), crescent round item 2 (15 April)',
   },
   shekel: {
@@ -90,7 +90,7 @@ export const SKY_WORDS: Record<SkyLang, SkyWords> = {
         `${DRAFT} The month began when the new crescent was first seen at sunset. This evening began the king's 35th year.`,
         `${DRAFT} 14 April 570${NB}BC, at sunset: the crescent 6.4° up and 0.7${NB}% lit. It set 36 minutes after the sun. Too thin to see.`,
         `${DRAFT} 15 April 570${NB}BC, at sunset: 19.1° up in the west and 3.7${NB}% lit. It set 99 minutes after the sun. Easy to see.`,
-        `${DRAFT} So the afternoon walked was the old year's last.`,
+        `${DRAFT} So the day of the walk was the old year's last.`,
         `${DRAFT} Both skies are computed (JPL Horizons and Yallop's test). Whether anyone saw the crescent is not known.`,
         `${DRAFT} Each disc beside the sky is drawn larger: its lit part is to scale.`,
       ],
@@ -134,7 +134,7 @@ export const SKY_WORDS: Record<SkyLang, SkyWords> = {
         `${DRAFT} Der Monat begann, wenn die neue Sichel zum ersten Mal bei Sonnenuntergang zu sehen war. Dieser Abend begann das 35. Jahr des Königs.`,
         `${DRAFT} 14. April 570${NB}v.${NB}Chr., bei Sonnenuntergang: die Sichel 6,4° hoch und zu 0,7${NB}% beleuchtet. Sie ging 36 Minuten nach der Sonne unter. Zu schmal zum Sehen.`,
         `${DRAFT} 15. April 570${NB}v.${NB}Chr., bei Sonnenuntergang: 19,1° hoch im Westen und zu 3,7${NB}% beleuchtet. Sie ging 99 Minuten nach der Sonne unter. Gut zu sehen.`,
-        `${DRAFT} Der Nachmittag des Rundgangs war also der letzte des alten Jahres.`,
+        `${DRAFT} Der Tag des Rundgangs war also der letzte des alten Jahres.`,
         `${DRAFT} Beide Himmel sind berechnet (JPL Horizons und Yallops Test). Ob jemand die Sichel sah, ist nicht bekannt.`,
         `${DRAFT} Jede Scheibe neben dem Himmel ist größer gezeichnet: Ihr beleuchteter Teil ist maßstäblich.`,
       ],
