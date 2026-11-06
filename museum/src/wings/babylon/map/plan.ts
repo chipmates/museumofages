@@ -464,8 +464,8 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
         const p0 = add(a, mul(d, (k * L) / n)), p1 = add(a, mul(d, ((k + 1) * L) / n))
         const mid = mul(add(p0, p1), 0.5)
         const lv = streetAt(mid[0], mid[1]).level
-        // a piece laps 0.3 m into the next, which stands at another height
-        pushWall(`${w.id}-${k}`, w.name, [k > 0 ? sub(p0, mul(d, 0.3)) : p0, p1], w.thick, base, lv + w.top, cls)
+        // the line is straight, so a lap would put both pieces' sides in one plane: they abut, end face to end face
+        pushWall(`${w.id}-${k}`, w.name, [p0, p1], w.thick, base, lv + w.top, cls)
       }
       towersOn(w.id, [a, b], w.towers, w.towers.side, w.thick / 2, base, cls, (p) => streetAt(p[0], p[1]).level + w.towers.top)
       continue
@@ -609,9 +609,16 @@ export function buildPlan(plan: J, opts: { houses?: boolean } = {}): Built {
     return Math.max(y0, lo) + BAND
   }
   for (const p of prisms) p.band = bandFor(p.poly, p.y0)
+  // a body standing on another body's top (a range's rooms on its floor, a deck sunk 0.1 m into it) keeps its foot
+  // even where the ground at a corner rises past that top: sunk, its sides would lie in the lower body's side planes
+  const onBody = (p: Prism): boolean => {
+    const c = centroid(p.poly)
+    return prisms.some((q) => q !== p && q.y0 < p.y0 && q.y1 >= p.y0 && q.y1 <= p.y0 + 0.15 && pointInPoly(c, q.poly) && !q.holes.some((h) => pointInPoly(c, h)))
+  }
+  const standing = new Set(prisms.filter(onBody))
   // a body standing on the ground (not on another body) reaches down under every corner, so no slope shows a gap under it
   for (const p of prisms) {
-    if (p.band === p.y0 - 1) continue
+    if (p.band === p.y0 - 1 || standing.has(p)) continue
     let lo = Infinity, hi = -Infinity
     for (const q of p.poly) { const g = ground(q[0], q[1]); lo = Math.min(lo, g); hi = Math.max(hi, g) }
     if (p.y0 <= hi + 0.5) p.y0 = Math.min(p.y0, lo - 0.3)
