@@ -254,7 +254,8 @@ export function wallMaterial(U: GateUniforms, rooms: Rooms): Material {
   // one weight per kind: 0 gate glaze, 1 lion wall, 2 plain brick, 3 mud brick, 5 cedar, 6 copper, 7 bronze
   const isK = (k: number): N => step(k - 0.5, kind).mul(step(kind, k + 0.5))
   const k0 = isK(0), k1 = isK(1), k2 = isK(2).add(isK(4)), k3 = isK(3), k5 = isK(5), k6 = isK(6), k7 = isK(7)
-  const b = bond(bu, by, gInfo.x, fu, fy, 0.0045)
+  // a soffit's east half (x < 0) takes its shift from info.w, chosen per fragment so the crown's triangles do not blend it
+  const b = bond(bu, by, select(soff.and(p.x.lessThan(0)), gInfo.w, gInfo.x), fu, fy, 0.0045)
   const joint = b.bed.add(b.head).min(1)
   const vary = b.brick.sub(0.5).mul(float(1).sub(smoothstep(0.08, 0.3, fu)))
   const fine = mx_noise_float(p.mul(31)).mul(float(1).sub(smoothstep(0.01, 0.04, max(fu, fy))))

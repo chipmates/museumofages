@@ -128,13 +128,14 @@ export function addArch(s: Soup, a: GArch): void {
   const at = bodyAttr(KIND.gate, a.plan, a.height, -99, -1)
   // the soffit (info.y -1) carries its course height in u: the jamb's height at the springing, then the arc's length from the
   // nearer springing, scaled under 2 % so a bed joint closes the crown; the material lays its head joints along the passage
+  // and takes the bond shift at x < 0 from info.w (a gate kind leaves w free)
   const C = 0.086, half = (a.r * Math.PI) / 2
   const k = (Math.round((a.springing + half) / C) * C - a.springing) / half
   s.add(g, (p, n) => {
     const t = at(p, n)
     const dx = p[0], dy = p[1] - a.springing
     if (Math.abs(n[2]) > 0.5 || n[0] * dx + n[1] * dy > -0.9 * Math.hypot(dx, dy)) return t
-    return { ...t, u: a.springing + a.r * k * Math.atan2(Math.max(dy, 0), Math.abs(dx)), info: [t.info[0], -1, t.info[2], t.info[3]] }
+    return { ...t, u: a.springing + a.r * k * Math.atan2(Math.max(dy, 0), Math.abs(dx)), info: [t.info[0], -1, t.info[2], a.shiftE ?? 0] }
   })
 }
 
