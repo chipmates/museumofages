@@ -189,14 +189,18 @@ test("the switch's key holds the record's class indices and the forge check find
   assert.match(c.stdout, /5 classes, 20 word cells, 5 colours against the map plan and index\.html, 0 misses/)
 })
 
-test("the map's hatch is the gate's: mass.ts's copy, which node's tools load, equals gate-mat.ts's hatchOf and its lines", () => {
+test("the hatch has one home: switch-hatch.ts, which node loads, imported by gate-mat.ts and mass.ts, copied by neither", () => {
   const src = (p) => readFileSync(join(APP, 'src/wings/babylon', p), 'utf8')
-  const body = (text, name) => {
-    const m = text.match(new RegExp(`const ${name} = (\\([^\\n]*\\n(?:  [^\\n]*\\n)*\\})`))
-    assert.ok(m, `${name} found`)
-    return m[1]
+  const home = pathToFileURL(join(APP, 'src/wings/babylon/switch-hatch.ts')).href
+  const r = spawnSync(process.execPath, ['--experimental-strip-types', '--no-warnings', '--input-type=module', '-e', `import * as H from ${JSON.stringify(home)}\nconsole.log(typeof H.hatchOf, typeof H.lines)`], { encoding: 'utf8' })
+  assert.equal(r.status, 0, r.stderr)
+  assert.equal(r.stdout.trim(), 'function function')
+  for (const [file, names] of [['gate/gate-mat.ts', ['hatchOf', 'lines']], ['map/mass.ts', ['hatchOf']]]) {
+    const text = src(file)
+    const m = text.match(/^import \{([^}]*)\} from '\.\.\/switch-hatch\.ts'$/m)
+    assert.ok(m, `${file} imports ../switch-hatch.ts`)
+    for (const name of names) assert.match(m[1], new RegExp(`\\b${name}\\b`), `${file} takes ${name} from it`)
+    assert.doesNotMatch(text, /const (lineInt|lines|hatchLines|hatchOf) = /, `${file} keeps no copy`)
   }
-  const gate = src('gate/gate-mat.ts'), mass = src('map/mass.ts')
-  for (const name of ['lineInt', 'lines', 'hatchOf']) assert.equal(body(mass.replaceAll('hatchLines', 'lines'), name), body(gate, name), `${name} as the gate's`)
-  assert.doesNotMatch(mass, /from '\.\.\/gate\//, "mass.ts takes nothing from the gate's materials")
+  assert.doesNotMatch(src('map/mass.ts'), /from '\.\.\/gate\//, "mass.ts takes nothing from the gate's materials")
 })

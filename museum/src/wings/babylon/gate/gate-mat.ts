@@ -15,6 +15,8 @@ import { REG, type Field } from './gate-relief'
 import { PAL } from './gate-colours'
 import { uSkySet } from '../open/sky-set'
 import { KEY_COLOUR } from '../switch-key'
+// @ts-expect-error TS5097: the hatch's one home, imported by its extension so the forge's node checks load it too
+import { hatchOf, lines } from '../switch-hatch.ts'
 
 export { PAL }
 
@@ -66,16 +68,8 @@ export function makeUniforms(classes: { M: string; R: string; G: string; K?: str
 }
 
 /* ── filtered patterns ── */
-/** the integral of a train of lines of half width h at multiples of P */
-const lineInt = (x: N, P: number, h: number): N => {
-  const m = x.sub(floor(x.div(P)).mul(P))
-  return floor(x.div(P)).mul(2 * h).add(min(m, h)).add(max(m.sub(P - h), 0))
-}
-/** coverage of those lines, box-filtered over a footprint w */
-export const lines = (x: N, P: number, h: number, w: N): N => {
-  const ww = max(w, 1e-4)
-  return clamp(lineInt(x.add(ww.mul(0.5)), P, h).sub(lineInt(x.sub(ww.mul(0.5)), P, h)).div(ww), 0, 1)
-}
+/* lines (coverage of a train of lines, box-filtered over a footprint) and the hatch live in switch-hatch.ts */
+export { hatchOf, lines }
 /** a band [a, b) of x with soft edges as wide as the footprint */
 export const band = (x: N, a: N | number, b: N | number, w: N): N => smoothstep(float(a).sub(w.mul(0.5)), float(a).add(w.mul(0.5)), x).mul(float(1).sub(smoothstep(float(b).sub(w.mul(0.5)), float(b).add(w.mul(0.5)), x)))
 export const hash2 = (a: N, b: N): N => fract(sin(a.mul(12.9898).add(b.mul(78.233))).mul(43758.5453))
@@ -91,13 +85,6 @@ export const footprint = (U: Pick<GateUniforms, 'uPix'>, t: N, n: N): N => {
 /* ── the classes ── */
 /** the class of a point: the plan's under its band, R up to the last relief row on a face that carries rows, the height's above */
 export const classIndex = (cls: N, y: N): N => select(y.lessThan(cls.z), cls.x, select(y.lessThan(cls.w), float(1), cls.y))
-/** the guessed side's hatch, the share it darkens: lines 0.6 m apart along s, faded where the footprint fw passes
-    their width, and calmed where the face of world normal n is seen grazing (a floor's stripes beat against the
-    pixels there); without n, no calm. The map's bodies (mass.ts) take the same */
-export const hatchOf = (s: N, fw: N, n?: N): N => {
-  const h = lines(s, 0.6, 0.09, fw.mul(1.4)).mul(float(1).sub(smoothstep(0.08, 0.2, fw))).mul(0.28)
-  return n ? h.mul(smoothstep(0.3, 0.9, abs(dot(n, normalize(cameraPosition.sub(positionWorld)))))) : h
-}
 /** the side mask for the class still's check (?mask=side, with a high self light): the known side white, the guessed black */
 const SIDE_MASK = typeof location !== 'undefined' && new URLSearchParams(location.search).get('mask') === 'side'
 /** the class colour by CLASS_TONE's index, the albedos as measured; the guessed side (2 guessed, 4 typical) hatched */
