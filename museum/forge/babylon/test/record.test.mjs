@@ -9,7 +9,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { APP } from '../pages.mjs'
-import { RANK, classFileText, classesFrom, shownBy } from '../record-classes.mjs'
+import { RANK, SIDE, classFileText, classesFrom, shownBy } from '../record-classes.mjs'
 
 const RECORD_TS = pathToFileURL(join(APP, 'src/wings/babylon/record.ts')).href
 const ts = (code) => {
@@ -18,14 +18,21 @@ const ts = (code) => {
   return JSON.parse(r.stdout)
 }
 
-test("a row's class from its place and form, the evidence standard's rule", () => {
+test("a row's ceiling from its place and form, the evidence standard's rule, each class on its side", () => {
   assert.equal(shownBy('here', 'here'), 'in place')
   assert.equal(shownBy('here', 'trace'), 'known')
-  assert.equal(shownBy('rec', 'moved'), 'known')
-  assert.equal(shownBy('here', 'type'), 'guessed')
-  assert.equal(shownBy('type', 'rec'), 'guessed')
-  assert.equal(shownBy('ours', 'here'), 'guessed')
+  assert.equal(shownBy('trace', 'moved'), 'known')
+  assert.equal(shownBy('rec', 'moved'), 'reconstructed')
+  assert.equal(shownBy('here', 'rec'), 'reconstructed')
+  assert.equal(shownBy('here', 'type'), 'typical')
+  assert.equal(shownBy('type', 'rec'), 'typical')
+  // a place of ours under an attested form: the kind attested, where and how many ours
+  assert.equal(shownBy('ours', 'here'), 'typical')
+  assert.equal(shownBy('ours', 'type'), 'typical')
+  assert.equal(shownBy('type', 'ours'), 'guessed')
+  assert.equal(shownBy('here', 'ours'), 'guessed')
   assert.equal(shownBy('here', 'lost'), 'blank')
+  assert.deepEqual(Object.keys(RANK).sort((a, b) => RANK[a] - RANK[b]).map((c) => SIDE[c]), ['none', 'guessed', 'guessed', 'known', 'known', 'known'])
 })
 
 const RECORD = [
@@ -34,15 +41,20 @@ const RECORD = [
   ['x.wall.body', 'The wall above', 'here', 'type', 'known', 'SECRET-KEY p. 5'],
   ['x.relief', 'Reliefs', 'rec', 'moved', 'guessed', 'SECRET-KEY fig. 2'],
   ['x.gates', 'Gates', 'ours', 'lost', 'blank', 'SECRET-KEY'],
+  ['x.text', 'A text', 'rec', 'rec', 'known', 'SECRET-KEY p. 6'],
+  ['x.palms', 'Palms', 'ours', 'type', 'typical', 'SECRET-KEY p. 7'],
+  ['x.reeds', 'Reeds', 'ours', 'type', 'guessed', 'SECRET-KEY p. 8'],
 ].map((r) => r.join('\t')).join('\n') + '\n'
 
 test('the class file takes the weaker of the stored class and the rule, and nothing else', () => {
   const { classes, lowered, problems } = classesFrom(RECORD)
   assert.deepEqual(problems, [])
-  // stored known, the rule gives guessed: lowered; stored guessed under a known rule: kept lower
-  assert.deepEqual(classes, { 'x.wall.plan': 'in place', 'x.wall.body': 'guessed', 'x.relief': 'guessed', 'x.gates': 'blank' })
-  assert.equal(lowered.length, 1)
+  // stored known over a typical ceiling and over a reconstructed one: lowered; stored guessed under a ceiling: kept lower
+  assert.deepEqual(classes, { 'x.wall.plan': 'in place', 'x.wall.body': 'typical', 'x.relief': 'guessed', 'x.gates': 'blank',
+    'x.text': 'reconstructed', 'x.palms': 'typical', 'x.reeds': 'guessed' })
+  assert.equal(lowered.length, 2)
   assert.match(lowered[0], /^x\.wall\.body/)
+  assert.match(lowered[1], /^x\.text: stored "known", its place and form give "reconstructed"/)
   const text = classFileText(classes)
   const j = JSON.parse(text)
   assert.deepEqual(Object.keys(j), ['about', 'classes'])
@@ -98,7 +110,8 @@ test('without a row the letters speak at the lower rung: M known; R, G, T guesse
   assert.deepEqual(out.unruled, ['', ['no rule names this body']])
   assert.deepEqual(out.unnamed, ['no row yet: a row for u'])
   assert.deepEqual(out.from, { M: 'known', R: 'guessed', G: 'guessed', T: 'guessed' })
-  assert.deepEqual(out.tone, { 'in place': 0, known: 1, guessed: 2, blank: 2 })
+  // reconstructed paints the known tone and typical the guessed one: each class on its side
+  assert.deepEqual(out.tone, { 'in place': 0, known: 1, reconstructed: 1, typical: 2, guessed: 2, blank: 2 })
 })
 
 test('a rule held to some stops names its row there only, each part capped by its own letters', () => {
@@ -118,6 +131,17 @@ test('a rule held to some stops names its row there only, each part capped by it
   assert.deepEqual(out.off, ['no rule names this body'])
   // a row held at every stop overrides the letters
   assert.deepEqual(out.unheld, ['p.south', 'in place', 'in place'])
+})
+
+test('a held row on either side is capped by its letters: reconstructed under M stays, under G is guessed; typical under M stays', () => {
+  const out = ts(`
+    const pieces = { rules: [{ match: '^r$', part: 'r', piece: 'p.rec', stops: ['4'] }, { match: '^t$', part: 't', piece: 'p.typ', stops: ['4'] }] }
+    const n = R.recordNamer(pieces, { classes: { 'p.rec': 'reconstructed', 'p.typ': 'typical' } }, '4')
+    const pick = (c) => [c.foot, c.above, R.TONE[c.above]]
+    console.log(JSON.stringify({ rM: pick(n('r', ['M', 'M'])), rG: pick(n('r', ['G', 'G'])), tM: pick(n('t', ['M', 'M'])) }))`)
+  assert.deepEqual(out.rM, ['reconstructed', 'reconstructed', 1])
+  assert.deepEqual(out.rG, ['guessed', 'guessed', 2])
+  assert.deepEqual(out.tM, ['typical', 'typical', 2])
 })
 
 test('every body the gate page builds is named to a row the class file holds (the switch)', () => {

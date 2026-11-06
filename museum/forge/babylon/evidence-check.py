@@ -8,15 +8,25 @@ The record is read by plain tab split (fields may hold quotation marks). Checked
   ids       one row per piece; every piece id `depends` names is a row (it may also hold conditions in words)
   rungs     place on here, trace, rec, type, ours; form on the whole ladder (moved and lost are form only); finish on
             here, trace, rec, type, ours or -
-  shown     recomputed: blank if form is lost; in place if place and form are here; known if place is here or rec and
-            form is here, moved, trace or rec; else guessed
+  shown     a ceiling from the weaker of place and form (here > moved > trace > rec > type > ours): blank if form is
+            lost; in place if place and form are here; known if the weaker is here, moved or trace; reconstructed if it
+            is rec; typical if it is type, or place is ours under a form of type or stronger (the kind attested, where
+            and how many ours); guessed if form is ours. Two sides: known (in place, known, reconstructed) and guessed
+            (typical, guessed). The class a row shows is the weaker of its stored word and its ceiling.
   locator   a row with a rung on here, trace or rec names at least one source with a place in it (a page, chapter, part,
             row, figure, plate, or a single map sheet)
   sources   every source's key resolves through the key table (key, target, note): a file that exists, an http(s)
             address, or "via <key>" to another key
-REFUSED (the switch would show a guess as known): a stored `shown` stronger than the rule gives; a row shown in place or
-known whose every strength is w (guessed, ours); with --switch (a JSON map piece -> the class the page shows), a piece
-shown stronger than its row allows, a piece the record does not hold, a piece whose phase is buried or later drawn at all.
+  phase     one of PHASES, optionally followed by a note in brackets ("out (why)")
+REFUSED (the switch would show a guess as known): a stored word on the known side over a ceiling on the guessed side; any
+word but blank on a lost form; a row shown on the known side whose every graded strength is w (guessed, ours); with
+--switch (a JSON map piece -> the class the page shows), a piece shown on the known side whose row shows less, a piece
+the record does not hold, a piece whose phase is buried, later or out drawn at all.
+ERROR as well: a stored word on the guessed side (or blank) under a ceiling on the known side; a page class stronger
+than its row's inside one side.
+LOWERED, listed, not failing: a stored word stronger than its ceiling inside one side (the class file shows the ceiling);
+a stored word weaker than its ceiling inside one side is allowed. LISTED, not failing: every row shown guessed whose kind
+has no attested source (place and form both ours, and no "Typical" in strength, basis or alternatives).
 Exit 0 when clean, 1 on any error or refusal.
 """
 import json
@@ -30,21 +40,44 @@ EXTRA = ['phase', 'rights']
 PLACE = {'here', 'trace', 'rec', 'type', 'ours'}
 FORM = {'here', 'moved', 'trace', 'rec', 'type', 'ours', 'lost'}
 FINISH = {'here', 'trace', 'rec', 'type', 'ours', '-'}
-PHASES = {'standing', 'late-reign', 'standing-likely', 'open', 'buried', 'not-of-date', 'later'}
-RANK = {'blank': 0, 'guessed': 1, 'known': 2, 'in place': 3}
+PHASES = {'standing', 'late-reign', 'standing-likely', 'open', 'buried', 'not-of-date', 'later', 'out'}
+UNDRAWN = {'buried', 'later', 'out'}
+RANK = {'blank': 0, 'guessed': 1, 'typical': 2, 'reconstructed': 3, 'known': 4, 'in place': 5}
+SIDE = {'in place': 'known', 'known': 'known', 'reconstructed': 'known', 'typical': 'guessed', 'guessed': 'guessed', 'blank': 'none'}
+RUNG = {'here': 5, 'moved': 4, 'trace': 3, 'rec': 2, 'type': 1, 'ours': 0}
+CLASS_WORD = re.compile(r'^(in place|known|reconstructed|typical|guessed)\b', re.I)
 SHEET = re.compile(r'^(?:[A-Z])?\d+\.\d+$')
 PIECE_ID = re.compile(r'\b[a-z]{2,5}\.[a-z0-9][a-z0-9-]*(?:\.[a-z0-9][a-z0-9-]*)*')
 LOCATOR = re.compile(r'\b(p|pp|ch|fig|figs|pl|pls|part|row|rows|abb|taf|col|line|lines)\b\.?|§|\b[IVXLC]+\b|\d', re.I)
 
 
 def shown(place, form):
+    """the ceiling place and form give"""
     if form == 'lost':
         return 'blank'
     if place == 'here' and form == 'here':
         return 'in place'
-    if place in ('here', 'rec') and form in ('here', 'moved', 'trace', 'rec'):
-        return 'known'
-    return 'guessed'
+    if form == 'ours' or place not in RUNG or form not in RUNG:
+        return 'guessed'
+    if place == 'ours':
+        return 'typical'
+    w = min(RUNG[place], RUNG[form])
+    return 'known' if w >= RUNG['trace'] else 'reconstructed' if w == RUNG['rec'] else 'typical'
+
+
+def weaker(a, b):
+    return a if RANK[a] <= RANK[b] else b
+
+
+def phase_of(text):
+    # a phase may carry a note in brackets: "out (why)"
+    return re.sub(r'\s*\([^()]*\)$', '', text.strip())
+
+
+def grades(strength):
+    """the strength cell's graded items (s, m, w); a lead class word ("Reconstructed; ...") is the mark, not a grade"""
+    items = [s.strip() for s in strength.split(';') if s.strip()]
+    return [s[:1] for s in items if not CLASS_WORD.match(s)]
 
 
 def read_tsv(path):
@@ -91,10 +124,10 @@ def key_of(item, keys=()):
 
 def check(record, keys, switch=None):
     head, rows = read_tsv(record)
-    errors, refused, notes = [], [], []
+    errors, refused, notes, lowered, listed = [], [], [], [], []
     if head[:len(COLUMNS)] != COLUMNS or any(c not in EXTRA for c in head[len(COLUMNS):]):
         errors.append(f'schema: the header is not the standard\'s {len(COLUMNS)} columns in order (then {", ".join(EXTRA)}): {head}')
-        return {'rows': len(rows), 'errors': errors, 'refused': refused, 'notes': notes}
+        return {'rows': len(rows), 'errors': errors, 'refused': refused, 'notes': notes, 'lowered': lowered, 'listed': listed}
     col = {c: i for i, c in enumerate(head)}
     ids, by = set(), {}
     for n, f in enumerate(rows, 2):
@@ -120,19 +153,28 @@ def check(record, keys, switch=None):
             errors.append(f'{at}: form "{r["form"]}" is not on the ladder')
         if r['finish'] not in FINISH:
             errors.append(f'{at}: finish "{r["finish"]}" is not on the ladder for finish')
-        if 'phase' in r and r['phase'] not in PHASES:
+        if 'phase' in r and phase_of(r['phase']) not in PHASES:
             errors.append(f'{at}: phase "{r["phase"]}" is not one of {", ".join(sorted(PHASES))}')
         rule = shown(r['place'], r['form'])
-        if r['shown'] not in RANK:
-            errors.append(f'{at}: shown "{r["shown"]}" is not a class')
-        elif r['shown'] != rule:
-            if RANK[r['shown']] > RANK[rule] or (r['shown'] != 'blank' and rule == 'blank'):
-                refused.append(f'{at}: stored "{r["shown"]}", the rule gives "{rule}" (place {r["place"]}, form {r["form"]})')
-            else:
-                errors.append(f'{at}: stored "{r["shown"]}", the rule gives "{rule}" (place {r["place"]}, form {r["form"]})')
-        strengths = [s.strip()[:1] for s in r['strength'].split(';') if s.strip()]
-        if rule in ('in place', 'known') and strengths and all(s == 'w' for s in strengths):
-            refused.append(f'{at}: shown "{rule}" while every strength is w ({r["strength"]})')
+        word = r['shown']
+        cls = rule
+        if word not in RANK:
+            errors.append(f'{at}: shown "{word}" is not a class')
+        elif word != rule:
+            cls = weaker(word, rule)
+            why = f'stored "{word}", the rule gives "{rule}" (place {r["place"]}, form {r["form"]})'
+            if rule == 'blank' or (SIDE[word] == 'known' and SIDE[rule] == 'guessed'):
+                refused.append(f'{at}: {why}')
+            elif SIDE[word] != SIDE[rule] and RANK[word] < RANK[rule]:
+                errors.append(f'{at}: {why}')
+            elif RANK[word] > RANK[rule]:
+                lowered.append(f'{at}: {why}; shown "{rule}"')
+        g = grades(r['strength'])
+        if SIDE[cls] == 'known' and g and all(s == 'w' for s in g):
+            refused.append(f'{at}: shown "{cls}" while every strength is w ({r["strength"]})')
+        if SIDE[cls] == 'guessed' and r['place'] == 'ours' and r['form'] == 'ours' and not any(
+                'typical' in r[c].lower() for c in ('strength', 'basis', 'alternatives')):
+            listed.append(f'{at}: shown "{cls}", place and form ours, and no Typical source named')
         items = source_items(r['sources'])
         if not items:
             errors.append(f'{at}: no source')
@@ -156,18 +198,30 @@ def check(record, keys, switch=None):
                 refused.append(f'switch: {pid} is shown, and the record has no row for it')
                 continue
             n, r = by[pid]
-            rule = shown(r['place'], r['form'])
+            row_cls = class_of(r)
             if cls not in RANK:
                 errors.append(f'switch: {pid} shown as "{cls}", which is no class')
-            elif RANK[cls] > RANK[rule]:
-                refused.append(f'switch: {pid} shown as "{cls}", its row allows "{rule}" (line {n})')
-            if r.get('phase') in ('buried', 'later'):
+            elif SIDE[cls] == 'known' and SIDE[row_cls] != 'known':
+                refused.append(f'switch: {pid} shown as "{cls}", its row allows "{row_cls}" (line {n})')
+            elif RANK[cls] > RANK[row_cls]:
+                errors.append(f'switch: {pid} shown as "{cls}", its row shows "{row_cls}" (line {n})')
+            if phase_of(r.get('phase', '')) in UNDRAWN:
                 refused.append(f'switch: {pid} is drawn, and its phase is {r["phase"]} (line {n})')
-    counts = {}
+    order = lambda c: sorted(c.items(), key=lambda x: -RANK[x[0]])
+    ceilings, classes = {}, {}
     for pid, (n, r) in by.items():
-        counts[shown(r['place'], r['form'])] = counts.get(shown(r['place'], r['form']), 0) + 1
-    notes.append(f'recomputed classes: {", ".join(f"{k} {v}" for k, v in sorted(counts.items(), key=lambda x: -RANK[x[0]]))}')
-    return {'rows': len(by), 'errors': errors, 'refused': refused, 'notes': notes, 'unresolvedKeys': sorted(unresolved)}
+        ceilings[shown(r['place'], r['form'])] = ceilings.get(shown(r['place'], r['form']), 0) + 1
+        classes[class_of(r)] = classes.get(class_of(r), 0) + 1
+    notes.append(f'recomputed ceilings: {", ".join(f"{k} {v}" for k, v in order(ceilings))}')
+    notes.append(f'classes shown (the weaker of word and ceiling): {", ".join(f"{k} {v}" for k, v in order(classes))}')
+    return {'rows': len(by), 'errors': errors, 'refused': refused, 'notes': notes, 'lowered': lowered, 'listed': listed,
+            'unresolvedKeys': sorted(unresolved)}
+
+
+def class_of(r):
+    """the class a row shows: the weaker of its stored word and its ceiling (the ceiling when the word is no class)"""
+    rule = shown(r['place'], r['form'])
+    return weaker(r['shown'], rule) if r['shown'] in RANK else rule
 
 
 def main(argv):
@@ -180,12 +234,17 @@ def main(argv):
         print(f'REFUSED {r}')
     for e in rep['errors']:
         print(f'ERROR {e}')
+    for l in rep['lowered']:
+        print(f'LOWERED {l}')
+    for l in rep['listed']:
+        print(f'LISTED {l}')
     for n in rep['notes']:
         print(n)
     if '--json' in opt:
         json.dump(rep, open(opt['--json'], 'w'), indent=1, ensure_ascii=False)
     bad = len(rep['errors']) + len(rep['refused'])
-    print(f'{rep["rows"]} rows: {len(rep["refused"])} refused, {len(rep["errors"])} errors' + ('' if bad else ', clean'))
+    print(f'{rep["rows"]} rows: {len(rep["refused"])} refused, {len(rep["errors"])} errors, {len(rep["lowered"])} lowered, '
+          f'{len(rep["listed"])} listed' + ('' if bad else ', clean'))
     sys.exit(1 if bad else 0)
 
 

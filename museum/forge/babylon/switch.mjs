@@ -14,7 +14,7 @@ import { readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { APP } from './pages.mjs'
 import { MOUNTS } from './mounts.mjs'
-import { isLetter, recordNamer } from '../../src/wings/babylon/record.ts'
+import { RANK, isLetter, recordNamer } from '../../src/wings/babylon/record.ts'
 import { buildPlan } from '../../src/wings/babylon/map/plan.ts'
 
 const args = process.argv.slice(2)
@@ -24,7 +24,6 @@ if (PAGE !== 'gate' && PAGE !== 'open') { console.error('--page gate|open'); pro
 const OUT = opt('--out', null)
 if (!OUT) { console.error('--out <shown.json>'); process.exit(2) }
 
-const RANK = { blank: 0, guessed: 1, known: 2, 'in place': 3 }
 const json = (p) => JSON.parse(readFileSync(p, 'utf8'))
 // the gate page takes its rows at stop 3, as gate.ts does (RECORD_STOP); the open page at 'open', where its rules hold
 const STOP = PAGE === 'open' ? 'open' : '3'
