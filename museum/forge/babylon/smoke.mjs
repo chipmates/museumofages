@@ -1,9 +1,10 @@
-// THE BASE SMOKE: every Babylon dev page opened in Chromium and WebKit at 1440x900 and 390x844, through the museum's
-// own vite config: the document's status code, the console's errors, the failed requests, whether the rig came ready,
-// and one screenshot each. Writes SMOKE.md, smoke.json and the stills into --out.
+// THE BASE SMOKE: every Babylon dev page opened in Chromium at 1440x900 and 390x844, through the museum's own vite
+// config: the document's status code, the console's errors, the failed requests, whether the rig came ready, and one
+// screenshot each. Writes SMOKE.md, smoke.json and the stills into --out. These are the dev pages of a filmed wing, which a
+// visitor never opens live, so WebKit runs only when asked (`--webkit`, or a list in `--engines`).
 //
-//   node forge/babylon/smoke.mjs --out <abs folder> [--port 5212] [--engines chromium,webkit] [--pages map,gate,open,paper,measure,oil,words]
-//        [--cap 300] (seconds a page may take to come ready)
+//   node forge/babylon/smoke.mjs --out <abs folder> [--port 5212] [--webkit] [--engines chromium,webkit]
+//        [--pages map,gate,open,paper,measure,oil,words] [--cap 300] (seconds a page may take to come ready)
 // Exit 0 when every page answered 200, came ready and logged no error; 1 otherwise.
 import { chromium, webkit } from 'playwright'
 import { mkdirSync, writeFileSync } from 'node:fs'
@@ -24,7 +25,7 @@ if (!opt.out || opt.out === true || !isAbsolute(String(opt.out))) { console.erro
 const OUT = resolve(String(opt.out))
 mkdirSync(OUT, { recursive: true })
 const PORT = Number(opt.port ?? 5212)
-const ENGINES = String(opt.engines ?? 'chromium,webkit').split(',')
+const ENGINES = String(opt.engines ?? (opt.webkit ? 'chromium,webkit' : 'chromium')).split(',')
 const NAMES = String(opt.pages ?? Object.keys(PAGES).join(',')).split(',')
 const CAP = Number(opt.cap ?? 300) * 1000
 const VIEWS = [

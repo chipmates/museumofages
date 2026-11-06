@@ -13,6 +13,7 @@
 //   backend        which adapter answered, and that it is not the CPU
 //   tiers          draws, triangles, frame p50 and p95 over a ten second
 //                  scripted walk, per tier, plus the phone on the calm tier
+//                  in lobby mode (a wing on a phone plays its film)
 //   labels         the smallest interactive target, the persistent marks,
 //                  the brand lines per frame
 //   disclosures    the verbatim diff against the canon file
@@ -41,6 +42,10 @@
 // A-B-A oscillation is measured beside them as a WARNING: a camera that
 // travels past a near occluder makes the same signal as a blink, so that
 // number is read by eye and never fails a run.
+//
+// THE BUDGETS BIND WHAT A VISITOR RUNS LIVE. The lobby is gated on its tier
+// budgets; a wing is filmed and played as a film on every device, so in wing
+// mode the tier and station budget lines are warnings and never fail a run.
 import { chromium } from 'playwright'
 import { spawn } from 'node:child_process'
 import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs'
@@ -533,16 +538,17 @@ try {
     }
     say(costLine(tier, r))
   }
-  // the public gate names the phone, and the phone runs the calm tier
-  const phone = await measure(browser, 'calm', VIEWPORTS.mobile)
-  tiers['calm-phone'] = phone
-  walkProblems.push(...phone.problems.map((p) => `calm-phone: ${p}`))
-  missedStations.push(...phone.missed.map((m) => `calm-phone: ${m}`))
-  for (const [id, c] of Object.entries(phone.stations)) {
-    stationCost[id] = { ...(stationCost[id] ?? {}), 'calm-phone': c }
+  // the phone runs the lobby live on the calm tier; a wing it plays as a film
+  let last = tiers[TIERS[TIERS.length - 1]]
+  if (!WING) {
+    const phone = await measure(browser, 'calm', VIEWPORTS.mobile)
+    tiers['calm-phone'] = phone
+    walkProblems.push(...phone.problems.map((p) => `calm-phone: ${p}`))
+    missedStations.push(...phone.missed.map((m) => `calm-phone: ${m}`))
+    say(costLine('calm-phone', phone))
+    last = phone
   }
-  say(costLine('calm-phone', phone))
-  backend = { backend: phone.backend, adapter: phone.adapter, ok: !/swiftshader|lavapipe|llvmpipe|software/i.test(phone.adapter) }
+  backend = { backend: last.backend, adapter: last.adapter, ok: !/swiftshader|lavapipe|llvmpipe|software/i.test(last.adapter) }
   coneReport = await cones(browser, stationIds)
   leakReport = await leak(browser)
   await browser.close()
@@ -561,7 +567,15 @@ for (const [name, r] of Object.entries(tiers)) {
   if (r.cost.textureMB > b.textureMB) overBudget.push(`${name}: ${r.cost.textureMB} MB of texture over ${b.textureMB}`)
   if (r.cost.frameMB > b.frameMB) overBudget.push(`${name}: ${r.cost.frameMB} MB of frame over ${b.frameMB}`)
 }
-gate('tier budgets', overBudget.length === 0 && Object.keys(tiers).length === 4, overBudget.join('; ') || `${Object.keys(tiers).length} readings`)
+// the lobby owes its three tiers and the calm phone; a wing its three tiers
+const tierReadings = TIERS.length + (WING ? 0 : 1)
+const budgetLine = WING ? warn : gate
+budgetLine(
+  'tier budgets',
+  overBudget.length === 0 && Object.keys(tiers).length === tierReadings,
+  (overBudget.join('; ') || `${Object.keys(tiers).length} readings`) +
+    (WING ? ' (a filmed wing: a reference, never a gate)' : '')
+)
 
 // ------------------------------------------------------- what only a wing has
 let motion = null
@@ -580,7 +594,7 @@ if (WING) {
   gate(
     'every station stood at',
     stationIds.length > 0 && missedStations.length === 0,
-    missedStations.length ? missedStations.join('; ') : `${stationIds.length} station(s), every one reached by id at 4 readings`
+    missedStations.length ? missedStations.join('; ') : `${stationIds.length} station(s), every one reached by id at ${TIERS.length} readings`
   )
   const perStation = []
   for (const [id, byTier] of Object.entries(stationCost)) {
@@ -593,10 +607,11 @@ if (WING) {
     }
   }
   const readings = Object.values(stationCost).reduce((n, byTier) => n + Object.keys(byTier).length, 0)
-  gate(
+  warn(
     'station budgets',
-    perStation.length === 0 && readings === stationIds.length * 4,
-    perStation.join('; ') || `${readings} readings over ${stationIds.length} station(s) at 4 tiers`
+    perStation.length === 0 && readings === stationIds.length * TIERS.length,
+    (perStation.join('; ') || `${readings} readings over ${stationIds.length} station(s) at ${TIERS.length} tiers`) +
+      ' (a filmed wing: a reference, never a gate)'
   )
 }
 
