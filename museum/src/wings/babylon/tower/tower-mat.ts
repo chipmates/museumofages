@@ -295,6 +295,11 @@ export function towerSun(m: Material, tp: J, sunDir: N): void {
   const lidOn = step(0.5, n.y).mul(float(1).sub(inRecess))
   const k = mix(float(1), mix(toward.mul(relief), float(1), lidOn), on)
   ;(m as unknown as { receivedShadowNode: (s: N) => N }).receivedShadowNode = (s: N): N => s.mul(k)
+  /* a form face looking down and turned from the sun sees the ground in the tower's own shade: three quarters of its
+     bounce become that floor lit by the sky (sky-set's ground hook; the whole share turns the heads under a dusk sky
+     purple), its kept share raised so the warm brick reflects the cooler light as brightly; elsewhere (1, 0), no change */
+  const shadeFloor = on.mul(smoothstep(0.1, 0.5, n.y.negate())).mul(float(1).sub(toward))
+  ;(m as unknown as { skyGroundNode: N }).skyGroundNode = vec2(shadeFloor.mul(0.15).add(1), shadeFloor.mul(0.75))
   m.needsUpdate = true
 }
 
