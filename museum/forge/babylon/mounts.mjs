@@ -57,7 +57,14 @@ function mapFaces(faces, group, built, matrix, keep) {
       facesFrom(faces, o.geometry, M, (i) => `map:house#${hi.getX(i)}`, keep)
     } else if (o.name === 'blocks') {
       const pid = o.geometry.getAttribute('pid')
-      facesFrom(faces, o.geometry, M, (i) => { const p = pid.getX(i); return p < 0 ? 'map:ramps' : `map:${built.prisms[p].id}` }, keep)
+      const name = (i) => { const p = pid.getX(i); return p < 0 ? 'map:ramps' : `map:${built.prisms[p].id}` }
+      // a block with a face within the reach comes whole: a long top's centre can lie past the reach while a body
+      // standing on it does not, and the support rule then finds nothing under that body
+      const near = new Set()
+      if (keep) facesFrom([], o.geometry, M, (i) => { near.add(name(i)); return null }, keep)
+      near.delete('map:ramps')
+      facesFrom(faces, o.geometry, M, (i) => (name(i) === 'map:ramps' ? null : !keep || near.has(name(i)) ? name(i) : null))
+      facesFrom(faces, o.geometry, M, (i) => (name(i) === 'map:ramps' ? 'map:ramps' : null), keep)
     } else facesFrom(faces, o.geometry, M, () => `map:${o.name}`, keep)
   })
   return faces
@@ -242,7 +249,7 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
     house, esagila, bridge, top, towerState, dug, bruegel, bruegelShow,
     houseBodies,
     page: 'map', stop: String(stop), frame: "the map's scene metres (x east, z south, y up)", faces, cameras, eyes, reach,
-    cut: `the bodies within ${reach} m of the stop's eye in plan (faces by their centres; stop 5's bodies whole, plants by their foot)`,
+    cut: `the bodies within ${reach} m of the stop's eye in plan (faces by their centres; the plan's blocks and stop 5's bodies whole, plants by their foot)`,
     ground: (x, z) => built.ground(x, z),
     track: (dt = 0.25) => pathTrack(path, n, dt, (q) => ({ kind: q.kind, desktop: view(q.pos, q.look, q.hfov, q.shift), phone: view(q.phone.pos, q.phone.look, q.phone.hfov, q.phone.shift) })),
     path,
