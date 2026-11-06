@@ -12,11 +12,25 @@ import {
 import * as TSL from 'three/tsl'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import type { Built, Cls, P2 } from './plan'
-import { hatchOf } from '../gate/gate-mat'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
-const { attribute, cameraPosition, cameraProjectionMatrix, float, mix, mx_noise_float, normalWorld, positionWorld, screenSize, step, uniform, vec3, abs, max, min, smoothstep, dot } = TSL as unknown as Record<string, N>
+const { attribute, cameraPosition, cameraProjectionMatrix, clamp, float, floor, mix, mx_noise_float, normalize, normalWorld, positionWorld, screenSize, step, uniform, vec3, abs, max, min, smoothstep, dot } = TSL as unknown as Record<string, N>
+
+/* the gate's hatch (gate-mat.ts hatchOf, its lines here hatchLines), copied: the forge's node tools load this file and
+   cannot load gate-mat's; record.test.mjs holds the two copies equal */
+const lineInt = (x: N, P: number, h: number): N => {
+  const m = x.sub(floor(x.div(P)).mul(P))
+  return floor(x.div(P)).mul(2 * h).add(min(m, h)).add(max(m.sub(P - h), 0))
+}
+const hatchLines = (x: N, P: number, h: number, w: N): N => {
+  const ww = max(w, 1e-4)
+  return clamp(lineInt(x.add(ww.mul(0.5)), P, h).sub(lineInt(x.sub(ww.mul(0.5)), P, h)).div(ww), 0, 1)
+}
+const hatchOf = (s: N, fw: N, n?: N): N => {
+  const h = hatchLines(s, 0.6, 0.09, fw.mul(1.4)).mul(float(1).sub(smoothstep(0.08, 0.2, fw))).mul(0.28)
+  return n ? h.mul(smoothstep(0.3, 0.9, abs(dot(n, normalize(cameraPosition.sub(positionWorld)))))) : h
+}
 
 const CLS: Record<Cls, number> = { M: 0, R: 1, G: 2 }
 
