@@ -22,6 +22,8 @@
   { "e": 445680.15, "w": 3.8, "crown": 7.1 }
  ],
  "doorsSrc": "places on S3.45, widths 3.8, 5.8, 3.8 m (P2021 p. 103 to 104); the round arch and the crowns over the floor are guessed",
+ "leaves": { "doors": [1], "thick": 0.18, "gap": 0.05, "inset": 0.1, "band": 1.2, "bandH": 0.08, "src": "door leaves of cedar with copper bands, the gate's kind (its inscription names leaves of cedar with copper, bronze thresholds and pivots: K1918 p. 53), applied to the throne room by us; two leaves at the main door, shown open into the room against the line of its reveals; their form, size, bands and swing are guessed after the gate's" },
+ "wash": { "course": 0.1, "brick": 0.33, "joint": 0.02, "src": "the mud brick under the wash in the baked brick's format, 33 cm, in courses of about 10 cm with their joints: guessed; the grain of a hand-laid gypsum wash (its unevenness, the trowel's strokes, the courses showing through where it is thin, a band of wear at the foot) is ours" },
  "niche": { "e0": 445656.45, "e1": 445664.5, "step0": 445657.55, "step1": 445663.4, "d1": 1.3, "d2": 1.2, "src": "a doubly recessed niche opposite the main door, opening 8.0 m, inner step 5.85 m, first step about 1.3 m deep (S3.45; K1914 ch. XV); the second step's depth and its full height are guessed; no throne" },
  "facade": {
   "course": 0.086,

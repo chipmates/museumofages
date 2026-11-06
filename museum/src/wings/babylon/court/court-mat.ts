@@ -58,9 +58,9 @@ export const uCourtLight = {
     the power and gain the print takes the walls' light at, the tint kept, the plaster's undulation (radians), the
     niche's own shade at its back, its inside corners' shade and reach (m), the lift its outer edges take, the floor's
     power and gain (its share of the court's light), the ceiling's share of the doors' light, of the pool's under it and
-    of the walls' give-back, the shade where a wall meets the ceiling, and the crease a wall's head takes there (its
-    depth and reach, m) */
-export const ROOM = Object.freeze({ bounce: 0.08, pool: 0.8, giveBack: 0.02, gamma: 1.0, gain: 7.3, tint: 0.15, undulate: 0.08, recess: 0.42, corner: 0.5, reach: 1.2, arris: 0.14, floorGamma: 0.9, floor: 4.0, ceiling: 0.3, ceilingPool: 1.0, ceilingGive: 1.15, head: 0.2, crease: 0.45, creaseReach: 0.7 })
+    of the walls' give-back, the shade where a wall meets the ceiling, the crease a wall's head takes there (its depth
+    and reach, m), and the share of the print's gain the main door's leaves take */
+export const ROOM = Object.freeze({ bounce: 0.08, pool: 0.8, giveBack: 0.02, gamma: 1.0, gain: 7.3, tint: 0.15, undulate: 0.08, recess: 0.42, corner: 0.5, reach: 1.2, arris: 0.14, floorGamma: 0.9, floor: 4.0, ceiling: 0.3, ceilingPool: 1.0, ceilingGive: 1.15, head: 0.2, crease: 0.45, creaseReach: 0.7, leaf: 0.5 })
 
 /* ── signed distances, metres, negative inside ── */
 const circle = (p: N, cx: number, cy: number, r: number): N => length(p.sub(vec2(cx, cy))).sub(r)
@@ -138,6 +138,13 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   const roomBack = F.niche.z + F.niche.d1 + F.niche.d2
   const room = inX(F.inner.x0, F.inner.x1, 0.02).mul(inZ(F.inner.z0, roomBack, 0.02)).mul(step(P.y, F.wallTop + 0.01))
   const paving = step(0.9, n.y).mul(step(abs(P.y.sub(F.pave)), 0.01))
+  // the main door's leaves, by their boxes (no other face lies within them but the paving under their feet)
+  let leaf: N = float(0)
+  for (const l of F.leaves) {
+    const xa = l.x + l.dir * l.thick
+    leaf = leaf.add(inX(Math.min(l.x, xa), Math.max(l.x, xa), 0.005).mul(inZ(l.z0, l.z0 + l.w, 0.005)).mul(step(P.y, l.foot + l.spring + l.w + 0.01)))
+  }
+  leaf = min(leaf, 1).mul(float(1).sub(paving))
   const courtFace = vertical.mul(inX(c.x0, c.x1, 0.02)).mul(inZ(c.z0, c.z1, 0.02))
   const o = F.outer, pt = F.parapet
   const onRoof = inX(o.x0, o.x1, 0.02).mul(inZ(o.z0, o.z1, 0.02))
@@ -418,7 +425,15 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
      thinner, and the brush's run down the wall ── */
   const brushRun = mx_noise_float(vec3(P.x.mul(3.5), P.y.mul(1.2), P.z.mul(3.5))).mul(vertical)
   const washVar = float(1).add(mx_noise_float(P.mul(0.45)).mul(0.08)).add(mx_noise_float(P.mul(1.1).add(7.3)).mul(0.08)).add(mx_noise_float(P.mul(2.1)).mul(0.13)).add(mx_noise_float(P.mul(5.5)).mul(0.14)).add(brushRun.mul(0.025))
-  const plaster = plasterWash(P, n, col.plaster, WASH.court).mul(washVar)
+  const wg = cp.wash
+  const plaster = plasterWash(P, n, col.plaster, WASH.court, { pix: uCourtPix, floor: F.pave, course: wg.course, brick: wg.brick, joint: wg.joint }).mul(washVar)
+
+  /* ── the main door's leaves: cedar with copper bands, the gate's kind (gate-mat.ts kind 5) ── */
+  const lf = F.leaves[0]
+  const leafY = P.y.sub(F.floor), fyL = footprint(U, vec3(0, 1, 0), n)
+  const cedarGrain = mx_noise_float(vec3(P.x.mul(3), P.y.mul(0.25), P.z.mul(3))).mul(0.12)
+  const copperBand = lf ? band(fract(leafY.div(lf.band)), 0.0, lf.bandH, fyL.div(lf.band)) : float(0)
+  const leafCol = mix(V(PAL.cedar as RGB).mul(float(1).add(cedarGrain)), V(PAL.copper as RGB), copperBand)
 
   /* ── the roof: an earth deck behind its parapet (part roof-earth-throneroom-babylon) ── */
   const dPar = min(min(P.x.sub(o.x0 + pt), float(o.x1 - pt).sub(P.x)), min(P.z.sub(o.z0 + pt), float(o.z1 - pt).sub(P.z)))
@@ -431,6 +446,7 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   stateCol = mix(stateCol, wallCol, max(courtFace, parapetFace))
   stateCol = mix(stateCol, plaster, room.mul(float(1).sub(paving)))
   stateCol = mix(stateCol, revealCol, reveal)
+  stateCol = mix(stateCol, leafCol, leaf)
   stateCol = mix(stateCol, deckCol, deck)
   stateCol = mix(stateCol, copeCol, coping)
   stateCol = mix(stateCol, facadeCol, front)
@@ -549,7 +565,8 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   const hue = select(n.y.lessThan(-0.5), hue0.mul(vec3(1.08, 1.0, 0.88)), hue0.mul(vec3(1.03, 1.0, 0.935)).mul(mix(vec3(1, 1, 1), vec3(1.06, 1.0, 0.91), floorSeen)).mul(mix(vec3(1, 1, 1), vec3(1.05, 1.0, 0.92), ceilSeen)))
   const roomLight = hue.mul(linY).mul(pow(rel, ROOM.gamma - 1)).mul(ROOM.gain)
   // the floor takes the same share of the light its bricks have in the court, so it reads as the court's paving, dimmer
-  const onFloor = step(0.5, n.y)
+  // a leaf's round top faces up but is lit as a wall
+  const onFloor = step(0.5, n.y).mul(float(1).sub(leaf))
   const floorShare = clamp(pow(rel, ROOM.floorGamma).mul(ROOM.floor), 0.04, 0.85)
   const inRoom = room.mul(float(1).sub(reveal))
   const passAO = mix(float(0.92), float(0.55), clamp(P.z.sub(F.zF).div(F.zB - F.zF), 0, 1))
@@ -571,7 +588,9 @@ export function courtMaterial(F: CourtFrame, cp: J, tones: ClassTones): Material
   ao = mix(ao, deckAO, deck)
   ao = mix(ao, mix(float(0), floorShare, onFloor), inRoom)
   m.aoNode = mix(ao, float(1), uView)
-  m.emissiveNode = sheen.add(stateCol.mul(roomLight).mul(inRoom.mul(float(1).sub(onFloor))).mul(float(1).sub(uView)))
+  // the print's gain lifts the room's depths, which see the doors only far off; a leaf by the door sees them whole
+  const leafLight = mix(float(1), float(ROOM.leaf), leaf)
+  m.emissiveNode = sheen.add(stateCol.mul(roomLight).mul(leafLight).mul(inRoom.mul(float(1).sub(onFloor))).mul(float(1).sub(uView)))
   // no sun reaches into the room or its passages through doors that face north; the shadow map's contact edges leaked it
   const indoors = max(room, reveal)
   // the room and its passages keep their own light under the sky field: it sees only their open sky's share
