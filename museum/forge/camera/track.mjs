@@ -119,12 +119,14 @@ export function fromBabylonPath(path, { fps = 30, stops = null, aspect = 16 / 9,
     stop.push(p.stop)
     kind.push(p.kind)
   }
-  const cutKeys = path.keys.filter((k) => k.cut).map((k) => Math.round(k.t * fps))
+  // a cut key's segment shows the old pose until its time: the run starts at the first frame at or after it
+  const cutKeys = path.keys.filter((k) => k.cut).map((k) => Math.ceil(k.t * fps - 1e-6))
+  const keys = path.keys.map((k) => Math.round(k.t * fps))
   const inStops = (s) => !stops || stops.includes(Number(s))
   let moves = spansOf(stop).filter((m) => inStops(m.name)).map((m) => ({ ...m, name: `stop-${m.name}` }))
   const holds = spansOf(kind.map((k, i) => (k === 'hold' ? `stop-${stop[i]}:hold` : `-${i}`)), (l) => !l.startsWith('-'))
     .filter((h) => moves.some((m) => h.from >= m.from && h.from < m.to))
-  let track = { format: FORMAT, source, fps, aspect, samples, moves, holds, ...jumpCuts(samples, fps, cutKeys), kinds: kind }
+  let track = { format: FORMAT, source, fps, aspect, samples, moves, holds, ...jumpCuts(samples, fps, cutKeys), kinds: kind, keys }
   if (stops) track = sliceTrack(track, Math.min(...moves.map((m) => m.from)), Math.max(...moves.map((m) => m.to)))
   return track
 }
@@ -138,6 +140,7 @@ export function sliceTrack(t, from, to) {
     holds: t.holds.filter((s) => s.to > from && s.from < to).map(clip).filter((s) => s.to > s.from),
     cuts: t.cuts.filter((c) => c > from && c < to).map((c) => c - from),
     jumps: (t.jumps ?? []).filter((c) => c > from && c < to).map((c) => c - from),
+    ...(t.keys ? { keys: t.keys.filter((c) => c >= from && c < to).map((c) => c - from) } : {}),
     offsetSeconds: (t.offsetSeconds ?? 0) + from / t.fps,
   }
 }

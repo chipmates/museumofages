@@ -121,9 +121,22 @@ function spans(mask, from, to) {
   return out
 }
 
-/** the still runs of a stretch, at least minStopSeconds long */
+/**
+ * the still runs of a stretch, at least minStopSeconds long. The ±h central
+ * difference reads a frame as moving while its window still reaches motion, so
+ * every still run is short by h frames at each end: widen it back (exact for a
+ * stop that steps, up to h frames long for an ease), never across a cut's run.
+ */
 export function holdsOf(c, from, to, L = THRESHOLDS) {
-  return spans((i) => c.still[i], from, to).filter((s) => (s.to - s.from) / c.fps >= val(L, 'minStopSeconds'))
+  const out = []
+  const runs = spans((i) => c.still[i], from, to).filter((s) => (s.to - s.from) / c.fps >= val(L, 'minStopSeconds'))
+  for (const s of runs) {
+    const lo = Math.max(from, c.lo[s.from], s.from - c.h), hi = Math.min(to, c.hi[s.from] + 1, s.to + c.h)
+    const last = out[out.length - 1]
+    if (last && last.to >= lo) last.to = Math.max(last.to, hi)
+    else out.push({ from: lo, to: hi })
+  }
+  return out
 }
 
 /**
