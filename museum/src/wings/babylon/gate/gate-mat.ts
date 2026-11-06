@@ -14,6 +14,9 @@ import * as TSL from 'three/tsl'
 import { REG, type Field } from './gate-relief'
 import { PAL } from './gate-colours'
 import { uSkySet } from '../open/sky-set'
+import { KEY_COLOUR } from '../switch-key'
+// @ts-expect-error TS5097: the hatch's one home, imported by its extension so the forge's node checks load it too
+import { hatchOf, lines } from '../switch-hatch.ts'
 
 export { PAL }
 
@@ -34,14 +37,17 @@ export interface GateUniforms {
   uPix: N
   uSunG: N
   uRot: N
+  /** the class colours by CLASS_TONE's index: 0 in place, 1 reconstructed, 2 guessed, 3 found, 4 typical */
   uM: N
   uR: N
   uG: N
+  uK: N
+  uT: N
   /** the switch's own light, a share of each class colour emitted, so a class keeps its hue in shade and on the low-lit floor */
   uSelf: N
 }
 
-export function makeUniforms(classes: { M: string; R: string; G: string }): GateUniforms {
+export function makeUniforms(classes: { M: string; R: string; G: string; K?: string; T?: string }): GateUniforms {
   const lin = (hex: string): Vector3 => {
     const c = new Color(hex)
     return new Vector3(c.r, c.g, c.b)
@@ -55,21 +61,15 @@ export function makeUniforms(classes: { M: string; R: string; G: string }): Gate
     uM: uniform(lin(classes.M)),
     uR: uniform(lin(classes.R)),
     uG: uniform(lin(classes.G)),
+    uK: uniform(lin(classes.K ?? KEY_COLOUR.found)),
+    uT: uniform(lin(classes.T ?? KEY_COLOUR.typical)),
     uSelf: uniform(0),
   }
 }
 
 /* ── filtered patterns ── */
-/** the integral of a train of lines of half width h at multiples of P */
-const lineInt = (x: N, P: number, h: number): N => {
-  const m = x.sub(floor(x.div(P)).mul(P))
-  return floor(x.div(P)).mul(2 * h).add(min(m, h)).add(max(m.sub(P - h), 0))
-}
-/** coverage of those lines, box-filtered over a footprint w */
-export const lines = (x: N, P: number, h: number, w: N): N => {
-  const ww = max(w, 1e-4)
-  return clamp(lineInt(x.add(ww.mul(0.5)), P, h).sub(lineInt(x.sub(ww.mul(0.5)), P, h)).div(ww), 0, 1)
-}
+/* lines (coverage of a train of lines, box-filtered over a footprint) and the hatch live in switch-hatch.ts */
+export { hatchOf, lines }
 /** a band [a, b) of x with soft edges as wide as the footprint */
 export const band = (x: N, a: N | number, b: N | number, w: N): N => smoothstep(float(a).sub(w.mul(0.5)), float(a).add(w.mul(0.5)), x).mul(float(1).sub(smoothstep(float(b).sub(w.mul(0.5)), float(b).add(w.mul(0.5)), x)))
 export const hash2 = (a: N, b: N): N => fract(sin(a.mul(12.9898).add(b.mul(78.233))).mul(43758.5453))
@@ -85,12 +85,14 @@ export const footprint = (U: Pick<GateUniforms, 'uPix'>, t: N, n: N): N => {
 /* ── the classes ── */
 /** the class of a point: the plan's under its band, R up to the last relief row on a face that carries rows, the height's above */
 export const classIndex = (cls: N, y: N): N => select(y.lessThan(cls.z), cls.x, select(y.lessThan(cls.w), float(1), cls.y))
-/** the class colour: M a little darker and solid, R as it is, G lighter and hatched (value and texture as well as hue) */
-export const classColour = (U: GateUniforms, idx: N, hu: N, hy: N, fw: N): N => {
-  const base = mix(mix(U.uM.mul(0.82), U.uR, step(0.5, idx)), U.uG.mul(1.08), step(1.5, idx))
-  // hatching on G: diagonal lines 0.6 m apart, faded where the footprint passes their width
-  const hatch = lines(hu.add(hy), 0.6, 0.09, fw.mul(1.4)).mul(float(1).sub(smoothstep(0.08, 0.2, fw)))
-  return base.mul(float(1).sub(hatch.mul(0.28).mul(step(1.5, idx))))
+/** the side mask for the class still's check (?mask=side, with a high self light): the known side white, the guessed black */
+const SIDE_MASK = typeof location !== 'undefined' && new URLSearchParams(location.search).get('mask') === 'side'
+/** the class colour by CLASS_TONE's index, the albedos as measured; the guessed side (2 guessed, 4 typical) hatched */
+export const classColour = (U: GateUniforms, idx: N, hu: N, hy: N, fw: N, n?: N): N => {
+  const base = select(idx.lessThan(0.5), U.uM, select(idx.lessThan(1.5), U.uR, select(idx.lessThan(2.5), U.uG, select(idx.lessThan(3.5), U.uK, U.uT))))
+  const guessed = step(1.5, idx).mul(step(idx, 2.5)).add(step(3.5, idx))
+  if (SIDE_MASK) return vec3(1).sub(vec3(guessed))
+  return base.mul(float(1).sub(hatchOf(hu.add(hy), fw, n).mul(guessed)))
 }
 
 /* ── the bond ── */
@@ -260,7 +262,7 @@ export function wallMaterial(U: GateUniforms, rooms: Rooms): Material {
   const frieze = step(gInfo.w, p.y).mul(step(p.y, gInfo.w.add(23 * C)))
   const flatCol = V(PAL.cobalt).mul(k0).add(mix(V(PAL.buff).mul(0.85), V(PAL.turquoise), frieze).mul(k1)).add(V(PAL.buff).mul(0.85).mul(k2)).add(V(PAL.mud).mul(k3)).add(V(PAL.cedar).mul(k5)).add(V(PAL.copper).mul(k6)).add(V(PAL.bronze).mul(k7))
   const stateCol = select(U.uState.lessThan(0.5), grey, select(U.uState.lessThan(1.5), flatCol, full))
-  const cc = classColour(U, classIndex(gCls, p.y), gU, p.y, max(fu, fy))
+  const cc = classColour(U, classIndex(gCls, p.y), gU, p.y, max(fu, fy), nW)
   m.colorNode = mix(stateCol, cc, U.uSwitch)
   m.emissiveNode = cc.mul(U.uSwitch.mul(U.uSelf))
   const roughState = select(U.uState.lessThan(0.5), float(0.92), select(U.uState.lessThan(1.5), mix(float(0.88), float(0.45), k0.add(k1.mul(frieze))), roughFull))
@@ -408,7 +410,7 @@ export function panelMaterial(U: GateUniforms, maps: PanelMaps, schemes: Array<[
   const flat = mix(ground, body, sil)
   const grey = vec3(PAL.grey).mul(mx_noise_float(positionWorld.mul(0.07)).mul(0.05).add(1))
   const stateCol = select(U.uState.lessThan(0.5), grey, select(U.uState.lessThan(1.5), flat, full))
-  const cc = classColour(U, iB.z, bondU, yW, fw)
+  const cc = classColour(U, iB.z, bondU, yW, fw, nW)
   m.colorNode = mix(stateCol, cc, U.uSwitch)
   m.emissiveNode = cc.mul(U.uSwitch.mul(U.uSelf))
   m.roughnessNode = mix(select(U.uState.lessThan(1.5), select(U.uState.lessThan(0.5), float(0.92), float(0.45)), mix(float(0.18), float(0.9), joint)), float(0.85), U.uSwitch)
@@ -508,7 +510,7 @@ export function pavingMaterial(U: GateUniforms, P: PaveSpec, rooms: Rooms): Mate
   // the class per strip, the middle first (limestone, breccia, the brick to the walls): R, R, G unless the page names their rows
   const [c0, c1, c2] = P.cls ?? [1, 1, 2]
   const ci = select(at.lessThan(half), float(c0), select(at.lessThan(outer), float(c1), float(c2)))
-  const cc = classColour(U, ci, s, t, fw)
+  const cc = classColour(U, ci, s, t, fw, nW)
   m.colorNode = mix(stateCol, cc, U.uSwitch)
   m.emissiveNode = cc.mul(U.uSwitch.mul(U.uSelf))
   m.roughnessNode = mix(select(U.uState.lessThan(1.5), float(0.85), mix(mix(float(0.82), float(0.6), worn), mix(float(0.7), float(0.5), worn), inBrec)), float(0.9), U.uSwitch)

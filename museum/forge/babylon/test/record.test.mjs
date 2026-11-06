@@ -157,3 +157,50 @@ test('every body the gate page builds is named to a row the class file holds (th
     rmSync(dir, { recursive: true, force: true })
   }
 })
+
+test("the switch's five class indices: 0 to 2 keep the three tones' meaning, each class on its side, one index each", () => {
+  const out = ts(`console.log(JSON.stringify({ classTone: R.CLASS_TONE, known: R.KNOWN_OF_CLASS, tone: R.TONE, letter: R.LETTER_OF_TONE }))`)
+  assert.deepEqual(out.classTone, { 'in place': 0, reconstructed: 1, guessed: 2, known: 3, typical: 4, blank: 2 })
+  assert.deepEqual(out.known, [true, true, false, true, false])
+  const five = ['in place', 'known', 'reconstructed', 'typical', 'guessed']
+  assert.deepEqual(five.map((c) => out.classTone[c]).sort(), [0, 1, 2, 3, 4])
+  for (const c of [...five, 'blank']) {
+    const i = out.classTone[c]
+    // the side a class paints is the side its page tone names (0 and 1 known, 2 guessed)
+    assert.equal(out.known[i], out.tone[c] <= 1, `${c} on its side`)
+    if (i < 3) assert.equal(i, out.tone[c], `${c}'s index keeps its tone's meaning (${out.letter[i]})`)
+  }
+})
+
+test("the switch's key holds the record's class indices and the forge check finds no miss", () => {
+  const KEY_TS = pathToFileURL(join(APP, 'src/wings/babylon/switch-key.ts')).href
+  const r = spawnSync(process.execPath, ['--experimental-strip-types', '--no-warnings', '--input-type=module', '-e',
+    `import * as R from ${JSON.stringify(RECORD_TS)}\nimport * as K from ${JSON.stringify(KEY_TS)}\nconsole.log(JSON.stringify({ rows: K.KEY_ROWS, classTone: R.CLASS_TONE, known: R.KNOWN_OF_CLASS }))`], { encoding: 'utf8' })
+  assert.equal(r.status, 0, r.stderr)
+  const { rows, classTone, known } = JSON.parse(r.stdout)
+  assert.deepEqual(rows.map((k) => k.id), ['in place', 'found', 'reconstructed', 'typical', 'guessed'])
+  for (const k of rows) {
+    assert.equal(k.index, classTone[k.shown], `${k.id}'s index`)
+    assert.equal(known[k.index], k.side === 'known', `${k.id}'s side`)
+    assert.equal(k.hatch, k.side === 'guessed', `${k.id}'s hatch`)
+  }
+  const c = spawnSync(process.env.BABYLON_PY ?? 'python3', ['-I', join(APP, 'forge/babylon/switch-key.py'), 'check'], { encoding: 'utf8' })
+  assert.equal(c.status, 0, c.stdout + c.stderr)
+  assert.match(c.stdout, /5 classes, 20 word cells, 5 colours against the map plan and index\.html, 0 misses/)
+})
+
+test("the hatch has one home: switch-hatch.ts, which node loads, imported by gate-mat.ts and mass.ts, copied by neither", () => {
+  const src = (p) => readFileSync(join(APP, 'src/wings/babylon', p), 'utf8')
+  const home = pathToFileURL(join(APP, 'src/wings/babylon/switch-hatch.ts')).href
+  const r = spawnSync(process.execPath, ['--experimental-strip-types', '--no-warnings', '--input-type=module', '-e', `import * as H from ${JSON.stringify(home)}\nconsole.log(typeof H.hatchOf, typeof H.lines)`], { encoding: 'utf8' })
+  assert.equal(r.status, 0, r.stderr)
+  assert.equal(r.stdout.trim(), 'function function')
+  for (const [file, names] of [['gate/gate-mat.ts', ['hatchOf', 'lines']], ['map/mass.ts', ['hatchOf']]]) {
+    const text = src(file)
+    const m = text.match(/^import \{([^}]*)\} from '\.\.\/switch-hatch\.ts'$/m)
+    assert.ok(m, `${file} imports ../switch-hatch.ts`)
+    for (const name of names) assert.match(m[1], new RegExp(`\\b${name}\\b`), `${file} takes ${name} from it`)
+    assert.doesNotMatch(text, /const (lineInt|lines|hatchLines|hatchOf) = /, `${file} keeps no copy`)
+  }
+  assert.doesNotMatch(src('map/mass.ts'), /from '\.\.\/gate\//, "mass.ts takes nothing from the gate's materials")
+})
