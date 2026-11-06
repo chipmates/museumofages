@@ -16,7 +16,7 @@ import { hatchOf } from '../gate/gate-mat'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
-const { attribute, cameraPosition, cameraProjectionMatrix, float, mix, mx_noise_float, normalWorld, positionWorld, screenSize, step, uniform, vec3, abs, max, smoothstep, dot } = TSL as unknown as Record<string, N>
+const { attribute, cameraPosition, cameraProjectionMatrix, float, mix, mx_noise_float, normalWorld, positionWorld, screenSize, step, uniform, vec3, abs, max, min, smoothstep, dot } = TSL as unknown as Record<string, N>
 
 const CLS: Record<Cls, number> = { M: 0, R: 1, G: 2 }
 
@@ -38,7 +38,8 @@ export function classColour(t: ClassTones, cls: N, band: N): N {
   // under the band the plan's class, above it the height's
   const i = mix(cls.x, cls.y, step(positionWorld.y, band))
   // the guessed tone hatched as the gate's, the footprint from the camera's pixel angle (no screen derivatives)
-  const fw = positionWorld.distance(cameraPosition).mul(2).div(cameraProjectionMatrix.element(1).y.mul(screenSize.y))
+  // capped: a pass without a screen size would give an infinite footprint, and a NaN survives the switch's mix at 0
+  const fw = min(positionWorld.distance(cameraPosition).mul(2).div(cameraProjectionMatrix.element(1).y.mul(screenSize.y)), 1)
   const s = positionWorld.x.add(positionWorld.y).add(positionWorld.z)
   return pick(i).mul(float(1).sub(hatchOf(s, fw, normalWorld).mul(step(1.5, i))))
 }
