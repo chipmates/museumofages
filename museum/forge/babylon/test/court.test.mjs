@@ -52,3 +52,16 @@ test('the room tops out at +23 and the court bodies replace the map prisms they 
   for (const id of ['throne-room-facade', 'throne-room-roof', 'throne-room-parapet', 'court-paving', 'south-palace-rooms']) assert.ok(out.ids.includes(id), id)
   assert.ok(!out.left.some((id) => id === 'south-palace-rooms' || id.startsWith('throne-room')), 'a replaced prism is left on the map')
 })
+
+test('two leaves open square into the room at the main door, mirrored, inside its opening and under the ceiling', () => {
+  const L = out.facts.leaves, r = 5.8 / 2
+  assert.equal(L.length, 2)
+  for (const [x0, x1, z0, z1, top] of L) {
+    assert.ok(x0 > -r && x1 < r, `inside the opening: ${x0} ${x1}`)
+    near(x1 - x0, 0.18, 1e-3, 'thickness')
+    assert.ok(z0 >= 0.04 && z1 > z0 + 2, `off the wall's inner face, into the room: ${z0} ${z1}`)
+    assert.ok(top < 22 - 12 && top > 9, `under the ceiling, as high as the arch: ${top}`)
+  }
+  near(L[0][0] + L[1][1], 0, 1e-3, 'mirrored about the door')
+  for (const id of ['throne-room-leaf-w', 'throne-room-leaf-e']) assert.ok(out.heights[id][0] < 12.03, `${id} sunk into the paving`)
+})

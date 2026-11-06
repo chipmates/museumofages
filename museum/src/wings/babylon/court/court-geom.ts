@@ -11,6 +11,9 @@ type J = any
 
 export interface Box2 { x0: number; x1: number; z0: number; z1: number }
 export interface Door { x0: number; x1: number; c: number; r: number; spring: number; crown: number }
+/** a door leaf opened square into the room: its pivot on the jamb's line `x`, lying toward `dir` (+1 east), its
+    thickness across x, its width along z from the wall's inner face; the top a quarter round like the gate's leaves */
+export interface Leaf { x: number; dir: 1 | -1; thick: number; z0: number; w: number; foot: number; spring: number; band: number; bandH: number }
 
 /** the court plan in scene metres: z0 is the north (smaller z) side, z1 the south */
 export interface CourtFrame {
@@ -31,6 +34,13 @@ export interface CourtFrame {
   zB: number
   doors: Door[]
   niche: { x0: number; x1: number; s0: number; s1: number; z: number; d1: number; d2: number }
+  leaves: Leaf[]
+}
+
+/** a leaf's box in the scene: x across its thickness, z along its width, its top at the free edge */
+export const leafBox = (l: Leaf): { x0: number; x1: number; z0: number; z1: number; top: number } => {
+  const xa = l.x + l.dir * l.thick
+  return { x0: Math.min(l.x, xa), x1: Math.max(l.x, xa), z0: l.z0, z1: l.z0 + l.w, top: l.foot + l.spring + l.w }
 }
 
 export function courtFrame(cp: J, E0: number, N0: number): CourtFrame {
@@ -41,11 +51,21 @@ export function courtFrame(cp: J, E0: number, N0: number): CourtFrame {
   const court = box(cp.court.e, cp.court.n), outer = box(cp.room.outer.e, cp.room.outer.n), inner = box(cp.room.inner.e, cp.room.inner.n)
   const doors: Door[] = cp.doors.map((d: J) => ({ x0: x(d.e - d.w / 2), x1: x(d.e + d.w / 2), c: x(d.e), r: d.w / 2, spring: floor + d.crown - d.w / 2, crown: floor + d.crown }))
   const N = cp.niche
+  const zB = z(cp.room.inner.n[1])
+  const lv = cp.leaves
+  // each leaf pivots a gap inside its jamb, lies a gap off the wall's inner face and stands a gap down in the room's
+  // paving, so no face of it meets another's plane
+  const leaves: Leaf[] = (lv?.doors ?? []).flatMap((i: number) => {
+    const d = doors[i]!, g: number = lv.gap, t: number = lv.thick, w = d.r - lv.inset, foot = floor - g
+    const one = (x: number, dir: 1 | -1): Leaf => ({ x, dir, thick: t, z0: zB + g, w, foot, spring: d.spring - foot, band: lv.band, bandH: lv.bandH })
+    return [one(d.x0 + g, 1), one(d.x1 - g, -1)]
+  })
   return {
     floor, pave: floor + cp.paving.top, sunk: cp.paving.sunk, wallTop: cp.room.wallTop, top: cp.room.top,
     deck: cp.room.roof?.deck ?? cp.room.top, parapet: cp.room.roof?.parapet ?? 0,
     court, outer, inner, zF: outer.z0, zB: inner.z0, doors,
     niche: { x0: x(N.e0), x1: x(N.e1), s0: x(N.step0), s1: x(N.step1), z: inner.z1, d1: N.d1, d2: N.d2 },
+    leaves,
   }
 }
 
@@ -107,6 +127,24 @@ function southWall(F: CourtFrame): BufferGeometry {
   return prism(poly, F.floor, F.wallTop)
 }
 
+/** a leaf as the gate draws one (its pivot edge as high as the arch's springing, its free edge a radius higher, a
+    quarter round between), turned square to the wall: its width runs south into the room, its thickness across x */
+function leafBody(l: Leaf): BufferGeometry {
+  const sh = new Shape()
+  sh.moveTo(0, 0)
+  sh.lineTo(l.w, 0)
+  sh.lineTo(l.w, l.spring + l.w)
+  sh.absarc(l.w, l.spring, l.w, Math.PI / 2, Math.PI, false)
+  sh.lineTo(0, 0)
+  const g = new ExtrudeGeometry(sh, { depth: l.thick, bevelEnabled: false, curveSegments: 24 })
+  // a turn, not a mirror, so the faces keep their winding: the shape's x to the scene's z, its depth to -x
+  g.rotateY(-Math.PI / 2)
+  const b = leafBox(l)
+  g.translate(b.x1, l.foot, l.z0)
+  g.deleteAttribute('uv')
+  return g.index ? g.toNonIndexed() : g
+}
+
 /** the hole the map's rooms body leaves for the court and the room, as UTM points (map-plan.json takes it), wound
     against the palace's outline: three's extrusion turns a hole's faces outward only when its winding opposes the outline's */
 export function holePoly(F: CourtFrame, E0: number, N0: number): Array<[number, number]> {
@@ -148,6 +186,8 @@ export function buildCourt(built: Built, mapPlan: J, cp: J): Court {
   const N = F.niche
   floorParts.push(slab({ x0: N.x0, x1: N.x1, z0: N.z, z1: N.z + N.d1 }, y0, y1), slab({ x0: N.s0, x1: N.s1, z0: N.z + N.d1, z1: N.z + N.d1 + N.d2 }, y0, y1))
   floorParts.forEach((g, i) => bodies.push({ id: `throne-room-floor-${i}`, geometry: g, band: 1e6, letters: roomLetters }))
+  // the main door's leaves, their feet sunk into the room's paving; their form is guessed, so the band lies under them
+  F.leaves.forEach((l) => bodies.push({ id: `throne-room-leaf-${l.dir > 0 ? 'w' : 'e'}`, geometry: leafBody(l), band: F.floor - 1, letters: roomLetters }))
   const facts = {
     court: [+(F.court.x1 - F.court.x0).toFixed(2), +(F.court.z1 - F.court.z0).toFixed(2)],
     roomOuter: [+(outer.x1 - outer.x0).toFixed(2), +(outer.z1 - outer.z0).toFixed(2)],
@@ -155,6 +195,8 @@ export function buildCourt(built: Built, mapPlan: J, cp: J): Court {
     walls: { north: +(F.zB - F.zF).toFixed(2), south: +(outer.z1 - inner.z1).toFixed(2), west: +(inner.x0 - outer.x0).toFixed(2), east: +(outer.x1 - inner.x1).toFixed(2) },
     doors: F.doors.map((d) => ({ w: +(d.x1 - d.x0).toFixed(2), fromRoomCentre: +(d.c - (inner.x0 + inner.x1) / 2).toFixed(2), crownOverFloor: +(d.crown - F.floor).toFixed(2) })),
     niche: { opening: +(N.x1 - N.x0).toFixed(2), step: +(N.s1 - N.s0).toFixed(2) },
+    // each leaf's box from the main door's centre (x), the wall's inner face (z) and the floor (top)
+    leaves: F.leaves.map((l) => { const b = leafBox(l), c = F.doors[1]!.c; return [+(b.x0 - c).toFixed(3), +(b.x1 - c).toFixed(3), +(b.z0 - F.zB).toFixed(3), +(b.z1 - F.zB).toFixed(3), +(b.top - F.floor).toFixed(3)] }),
     facade: +(F.court.x1 - F.court.x0).toFixed(2),
     top: F.top,
     roof: { deck: F.deck, parapet: F.parapet },
