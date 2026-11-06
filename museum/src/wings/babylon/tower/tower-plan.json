@@ -26,6 +26,22 @@
   "src": "the map's line and 8 m thickness (C6.2); a mud-brick double wall with slight towers, two store buildings with deep chambers against the east side (K1914 ch. XXX)",
   "hsrc": "the walls' height, the towers' pitch, width and rise are ours (bab.precinct.body, guessed; the rhythm of slight towers after Koldewey's drawing of 1919); white lime-gypsum plaster over mud brick as one model shows it (P2021 fig. 4.19 caption), guessed"
  },
+ "south": {
+  "towers": "the east wall's slight towers (wall.towers) on the south rooms' street face, the first a half pitch and 4 m from each end of a run, as the east wall's: their spacing, width, projection and rise are ours (bab.precinct.body, guessed); a double wall with slight towers (K1914 ch. XXX)",
+  "square": {
+   "depth": 25,
+   "src": "the south side had gates with open squares 21 x 25 m before them (P2021 p. 208): Gate 8's square where C6.2 cuts the south rooms between 445677 and 445698 E (precinct sheet 1.3 reads 21 x 27 m), the map's 21 m gap; 25 m deep from the street face, the gate across its inner end; the recess's sides carry the slight towers as Gate 5's do (ours)"
+  },
+  "gate": {
+   "passage": 4.2,
+   "high": 7.5,
+   "top": 16.0,
+   "middle": 14.8,
+   "back": 0.4,
+   "set": 0.4,
+   "src": "the gate across the square's inner end, in the rooms' remaining 7 m: its form is not known, all ours (G): two flanking masses risen 4 m over the wall, the middle over the passage 1.2 m lower and 0.4 m back, a passage 4.2 m wide after the cross street at Gate 5 (P2021 p. 209 to 213) and 7.5 m high; the masses 0.4 m proud of the court face"
+  }
+ },
  "street": {
   "from": 14,
   "to": 17,
