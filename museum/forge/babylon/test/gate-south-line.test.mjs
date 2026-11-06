@@ -54,3 +54,17 @@ test('the uniform spline it replaces kinked: the old sampling turned 6.96 degree
   for (let i = 0; i + 2 < old.length; i++) { const h = (j) => Math.atan2(old[j + 1][0] - old[j][0], -(old[j + 1][1] - old[j][1])); worst = Math.max(worst, Math.abs(h(i + 1) - h(i)) * 180 / Math.PI) }
   assert.ok(worst > 5, `the old line's worst turn ${worst.toFixed(2)}`)
 })
+
+test('past the bridge the map ribbon takes the paving\'s far look toward the next point, a guess; its class view the map\'s', () => {
+  const gate = readFileSync(join(W, 'gate/gate.ts'), 'utf8')
+  assert.equal(typeof M.pavingMean, 'function')
+  // the next map point past the line's end is the washed-away stretch's end, a guess (G), close to the gate's axis
+  const end = line[line.length - 1]
+  const next = mp.street.points.map((p) => ({ xz: GF.fromUtm(p.at[0], p.at[1]), cls: p.cls })).find((p) => p.xz[1] < end[1] - 1)
+  assert.equal(next.cls, 'G')
+  const drift = Math.abs(Math.atan2(next.xz[0] - end[0], -(next.xz[1] - end[1])) * 180 / Math.PI)
+  assert.ok(drift < 5, `the ribbon past the bridge runs ${drift.toFixed(2)} degrees off the gate's axis`)
+  assert.match(gate, /const past = smoothstep\(ez \+ 0\.5, ez - 0\.5, p\.z\)/)
+  assert.match(gate, /sm\.colorNode = mix\(sm\.colorNode, TSL\.select\(U\.uState\.lessThan\(0\.5\), vec3\(0\.6\), pm\.col\), past\.mul\(float\(1\)\.sub\(uView\)\)\)/)
+  assert.match(gate, /const pm = pavingMean\(plan\.street\.paving, p\.z\.negate\(\), p\.x\.sub\(xs\)\)/)
+})

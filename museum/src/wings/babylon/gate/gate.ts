@@ -30,7 +30,7 @@ import { buildGate, gateFrame, hourOf, type V3 } from './gate-geom'
 import { animalField } from './gate-relief'
 import { assemble, panelGrid } from './gate-mesh'
 import { birdsGeometry, palmsGeometry } from './gate-life'
-import { bakePanel, lifeMaterial, makeUniforms, panelMaterial, pavingMaterial, processionLine, streetsideEarth, uMouth, wallMaterial, C as COURSE, type LinePoint, type Rooms } from './gate-mat'
+import { bakePanel, lifeMaterial, makeUniforms, panelMaterial, pavingMaterial, pavingMean, processionLine, streetsideEarth, uMouth, wallMaterial, C as COURSE, type LinePoint, type Rooms } from './gate-mat'
 import { isLetter, recordNamer, type ClassFile, type Letter, type Pieces } from '../record'
 import { NO_ROWS, bodyTones, panelTones, pavingTones, toneGateWalls, toneMapBodies } from '../record-tones'
 
@@ -185,6 +185,22 @@ const uCityBack = uniform(Number(q.get('gBack') ?? 0.3))
 for (const name of ['ground', 'street']) {
   const mat = (bodies.group.getObjectByName(name) as Mesh | undefined)?.material as (MeshStandardNodeMaterial & { skyBounceNode?: N }) | undefined
   if (mat) mat.skyBounceNode = vec3(...PAVE_HUE).mul(uCityBack)
+}
+/* past the canal bridge the record holds no point and the gate's paving stops, but the street ran on: the map's ribbon
+   there takes the paving's far look (pavingMean), its centre on toward the map's next point; its class stays the map's */
+{
+  const sm = (bodies.group.getObjectByName('street') as Mesh | undefined)?.material as MeshStandardNodeMaterial | undefined
+  const [ex, ez] = SOUTH.line[SOUTH.line.length - 1]!
+  const next = (mapPlan.street.points as Array<{ at: [number, number] }>).map((p) => GF.fromUtm(p.at[0], p.at[1])).find(([, z]) => z < ez - 1)
+  if (sm && next && q.get('ribbon') !== '0') {
+    const p = uW2G.mul(vec4(positionWorld, 1)).xyz
+    const xs = float(ex).add(p.z.sub(ez).mul((next[0] - ex) / (next[1] - ez)))
+    const past = smoothstep(ez + 0.5, ez - 0.5, p.z)
+    const pm = pavingMean(plan.street.paving, p.z.negate(), p.x.sub(xs))
+    // the grey state as the paving's own (its grey 0.6), so a grey test of both reads their light alone
+    sm.colorNode = mix(sm.colorNode, TSL.select(U.uState.lessThan(0.5), vec3(0.6), pm.col), past.mul(float(1).sub(uView)))
+    sm.roughnessNode = mix(float(0.8), pm.rough, past)
+  }
 }
 /* the beaten earth beside the street is packed by feet like the worn paving beside it: at a walker's grazing view it takes
    the low sky's sheen as the paving does (at the map's roughness 1 it took none, and read bluer than the paving in the

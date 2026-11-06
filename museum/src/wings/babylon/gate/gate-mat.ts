@@ -443,6 +443,21 @@ export function panelMaterial(U: GateUniforms, maps: PanelMaps, schemes: Array<[
 
 /* ── the paving: limestone on the axis, breccia beside it, brick with asphalt joints to the walls ── */
 export interface PaveSpec { limestone: number; limestoneN: number; breccia: number; brecciaN: number; sd: [number, number]; st: [number, number]; turnZ: number; cls?: [number, number, number] }
+/** the paving's look at its far mean (pavingMaterial's full state, each strip's joints, slabs and clasts averaged; its dust
+    drifts kept), for a ribbon of the map's street seen only from afar: s along the street, t across from its centre */
+export function pavingMean(P: Pick<PaveSpec, 'limestone' | 'limestoneN' | 'breccia' | 'brecciaN'>, s: N, t: N): { col: N; rough: N } {
+  const half = (P.limestone * P.limestoneN) / 2, outer = half + P.breccia * P.brecciaN
+  const at = abs(t)
+  const inLime = step(at, half), inBrec = step(half, at).mul(step(at, outer))
+  const worn = float(1).sub(smoothstep(1.0, 4.5, at))
+  // joints' shares of each strip: 4 mm both ways in 1.05 m slabs and 0.66 m breccia, 6 mm both ways in 0.33 m brick
+  const lime = mix(V(PAL.limestone).mul(float(1).add(worn.mul(0.05))), vec3(0.12), 0.008)
+  const brec = mix(V(PAL.breccia).mul(0.95).add(V(PAL.brecciaVein).mul(0.05)), vec3(0.08), 0.012)
+  const brick = mix(mix(V(PAL.buff), V(PAL.redBrown), 0.35).mul(0.92), V(PAL.asphalt), 0.036)
+  const drift = smoothstep(0.35, 0.75, mx_noise_float(vec3(s.mul(0.31), t.mul(0.31), 1.9)).add(0.5)).mul(float(0.35).add(smoothstep(2.5, 9, at).mul(0.65)))
+  const col = mix(mix(mix(brick, brec, inBrec), lime, inLime), V(PAL.dust), drift.mul(worn.oneMinus()).mul(0.28))
+  return { col, rough: mix(mix(float(0.82), float(0.6), worn), mix(float(0.7), float(0.5), worn), inBrec) }
+}
 export function pavingMaterial(U: GateUniforms, P: PaveSpec, rooms: Rooms): Material {
   const m = new MeshStandardNodeMaterial({ roughness: 0.8, metalness: 0 })
   const p = positionLocal
