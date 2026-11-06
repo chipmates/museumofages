@@ -320,6 +320,8 @@
 #wing[data-film][data-walking] .film-dot:not([data-state='walking']) { opacity: 0; pointer-events: none; }
 /* THE FIRST PICTURE COMES FIRST: no band, way or mark stands on a stage that has not shown it */
 #wing[data-first-picture] :is(.desk-low, .film-box, .film-dot) { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+/* the descent from above: the stop's words and its way on wait for the arrival, the way out and the plan stay */
+#wing[data-above] :is(.desk-cap, .desk-on, .film-gold, .film-box > :is(.film-name, .film-line, .film-drawer, .film-keys)) { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
 /* THE DESKTOP'S WAY ON is a raised field on the wall inside its gold ring;
    the marks step's own tints for it (desk-marks.css) are restated on that field */
 #wing[data-desk~='marks'] .desk-on { background: var(--ui-ground-raised); }

@@ -203,6 +203,8 @@ export function createWing(): WingModule {
       once a visit, since the door carries the tag; its way in stands at the stop named. */
   const tagEntry = namedEntry && tagged('walk') && !vinciWelcomeSeen()
   let above = false
+  // the descent from above is under way until its first rest below
+  let aloft = false
   let doorDone: (() => void) | null = null
   let hosts: WingHosts | undefined
   let release: FilmRelease | undefined
@@ -1799,6 +1801,8 @@ export function createWing(): WingModule {
       releaseFirstStill()
     }
     above = mayDescend && card === 0 && Boolean(release.start && release.nodes[release.start])
+    aloft = above
+    wing.toggleAttribute('data-above', aloft)
     if (welcome && above) { welcome.dispose(); welcome = undefined }
     else if (welcome && early && mayDescend) openDoor()
     const film = createFilmSource({ host: h.stage, base: filmReleaseBase(), release, at: above ? release.start! : stopNode(LIFE[card]!.id),
@@ -2092,13 +2096,19 @@ export function createWing(): WingModule {
         const at = LIFE.findIndex(l => stopNode(l.id) === s.to)
         if (at >= 0 && at !== card) { card = at; paint() }
       }
-      const underWay = s.kind === 'walk' || s.kind === 'dip'
+      // a clip waited for inside a walk keeps the walk's band
+      const underWay = s.kind === 'walk' || s.kind === 'dip' || (s.kind === 'wait' && walkActive)
       if (underWay !== legUnderWay) {
         legUnderWay = underWay
         hosts.walking(underWay)
         if (underWay) clearMarks()
         paintGold()
         marksAt = ''
+      }
+      // THE STOP'S WORDS AND ITS WAY ON WAIT FOR THE DESCENT'S ARRIVAL: the way out and the plan stay
+      if (aloft && (s.kind === 'dip' || (s.kind === 'rest' && s.node !== release?.start))) {
+        aloft = false
+        hosts.stage.parentElement?.removeAttribute('data-above')
       }
       if (phone && (goldWalking !== underWay || phone.gold.dataset['wait'] !== String(s.kind === 'wait'))) paintGold()
       // a look that stepped in place (a page turned, a topic on) renames gold
@@ -2120,6 +2130,7 @@ export function createWing(): WingModule {
     stop() {
       controller.abort()
       clearTimeout(firstBound); hosts?.stage.parentElement?.removeAttribute('data-first-picture')
+      aloft = false; hosts?.stage.parentElement?.removeAttribute('data-above')
       desk?.dispose(); desk = undefined
       look?.dispose(); look = undefined; lookLoading = undefined
       phone?.root.remove(); phone = undefined
