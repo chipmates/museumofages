@@ -19,7 +19,8 @@ const build = (bare) => makePath({
   eye: cams.eye, lens: { desktop: cams.stills.desktop.hfov, phoneFilm: cams.phoneFilm }, stops: cams.stops.map((s) => ({ n: s.n, hour: s.hour[0] })),
   path: cams.stops.flatMap((s) => s.keys.map((k, i) => ({
     t: k.t + (i === 0 && s !== cams.stops[0] ? 1e-4 : 0), at: atOf(k.at), y: 'eye', look: lookOf(k.look), stop: s.n, hold: k.kind === 'hold' || i === 0, kind: k.kind,
-    ...(!bare && k.phone ? { phone: k.phone } : {}), ...(!bare && k.desktop ? { hfov: k.desktop.hfov, shift: k.desktop.shift } : {}),
+    // a phone's own stand (`phone.at`) is a place, not a lens: the bare path keeps it
+    ...(k.phone && (!bare || k.phone.at) ? { phone: bare ? { at: k.phone.at } : k.phone } : {}), ...(!bare && k.desktop ? { hfov: k.desktop.hfov, shift: k.desktop.shift } : {}),
   }))),
 }, (E, N) => [E, N], () => 0)
 const path = build(false), bare = build(true)

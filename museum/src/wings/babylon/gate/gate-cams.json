@@ -403,7 +403,7 @@
           "t": 175,
           "at": [
             0,
-            -39.5
+            -28.5
           ],
           "look": [
             0,
@@ -411,21 +411,25 @@
             -200
           ],
           "kind": "arrive",
-          "says": "through the front gate, the court and the main gate's chamber to the south passage's north mouth",
+          "says": "through the front gate, the court and the main gate's chamber: the desktop to the chamber's north end, 19.4 m from the south mouth, the phone on to the south passage's north mouth",
           "phone": {
+            "at": [
+              0,
+              -39.5
+            ],
             "hfov": 58,
             "shift": 0.15
           },
           "desktop": {
-            "hfov": 58,
-            "shift": 0.15
+            "hfov": 64,
+            "shift": 0.65
           }
         },
         {
           "t": 179,
           "at": [
             0,
-            -39.5
+            -28.5
           ],
           "look": [
             0,
@@ -433,21 +437,25 @@
             -200
           ],
           "kind": "hold",
-          "says": "the hold: the south passage's glazed jambs and its arch frame the procession street south to the far haze",
+          "says": "the hold: on the desktop the south passage's arch and its vault frame the procession street south to the far haze; on the phone its glazed jambs and the arch over them",
           "phone": {
+            "at": [
+              0,
+              -39.5
+            ],
             "hfov": 58,
             "shift": 0.15
           },
           "desktop": {
-            "hfov": 58,
-            "shift": 0.15
+            "hfov": 64,
+            "shift": 0.65
           }
         },
         {
           "t": 194,
           "at": [
             0,
-            -56
+            -51
           ],
           "look": [
             0,
@@ -455,7 +463,13 @@
             -200
           ],
           "kind": "walk",
-          "says": "out of the south mouth onto the street"
+          "says": "out of the south mouth onto the street (the desktop 3 m past the mouth, walking on while it turns; the phone at the turn's stand)",
+          "phone": {
+            "at": [
+              0,
+              -56
+            ]
+          }
         },
         {
           "t": 198,
@@ -480,14 +494,18 @@
       "still": {
         "t": 179,
         "desktop": {
-          "hfov": 58,
-          "shift": 0.15
+          "hfov": 64,
+          "shift": 0.65
         },
         "phone": {
+          "at": [
+            0,
+            -39.5
+          ],
           "hfov": 58,
           "shift": 0.15
         },
-        "says": "stop 4's own hold in the south passage's north mouth, 8.4 m from the south mouth: on the desktop the glazed jambs frame the street to the far haze; on the phone the shift lifts the frame until the mouth's arch stands whole over the street, the sky kept inside the arch (24 percent of the frame on the id pass)"
+        "says": "stop 4's own hold: the desktop in the main gate's chamber at its north end, 19.4 m from the south mouth, where the south passage's arch stands whole in the frame with its vault over it and the street south through it (the shift lifts the frame so the crown keeps a margin under the top); the phone on its own stand in the south passage's north mouth, 8.4 m from the south mouth, the shift lifting the frame until the mouth's arch stands whole over the street, the sky kept inside the arch"
       }
     }
   ],

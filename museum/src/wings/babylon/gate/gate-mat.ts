@@ -483,3 +483,127 @@ export function lifeMaterial(U: GateUniforms, cls = 2): Material {
 export function classColoursFrom(plan: { classes: Record<string, { colour: string }> }): { M: string; R: string; G: string } {
   return { M: plan.classes['M']!.colour, R: plan.classes['R']!.colour, G: plan.classes['G']!.colour }
 }
+
+/* ── the processional way's centre line south of the gate's paving (pure; gate.ts builds its paving on it) ── */
+export type LinePoint = [number, number, number]
+/** a centripetal Catmull-Rom through `ctl` (x, z, level; the first and last points only steer the ends), sampled every
+    `step` metres of its length: an even spacing so no mitred leg is short, and no loop where the points' gaps differ
+    (a uniform spline over a 10 m gap between 60 m and 31 m ones bunched its samples into a kink). The level runs
+    straight between the points by length, as the map's ribbon does */
+export function streetLine(ctl: LinePoint[], step = 2): LinePoint[] {
+  const fine: Array<{ x: number; z: number; s: number; seg: number; f: number }> = []
+  let s = 0
+  for (let i = 1; i + 2 < ctl.length; i++) {
+    const P = [ctl[i - 1]!, ctl[i]!, ctl[i + 1]!, ctl[i + 2]!]
+    const tk = [0]
+    for (let k = 1; k < 4; k++) tk.push(tk[k - 1]! + Math.sqrt(Math.max(1e-6, Math.hypot(P[k]![0] - P[k - 1]![0], P[k]![1] - P[k - 1]![1]))))
+    const at = (t: number, c: 0 | 1): number => {
+      // Barry and Goldman's pyramid for a non-uniform knot sequence
+      const [t0, t1, t2, t3] = tk as [number, number, number, number]
+      const p = P.map((q) => q[c])
+      const a1 = ((t1 - t) * p[0]! + (t - t0) * p[1]!) / (t1 - t0), a2 = ((t2 - t) * p[1]! + (t - t1) * p[2]!) / (t2 - t1), a3 = ((t3 - t) * p[2]! + (t - t2) * p[3]!) / (t3 - t2)
+      const b1 = ((t2 - t) * a1 + (t - t0) * a2) / (t2 - t0), b2 = ((t3 - t) * a2 + (t - t1) * a3) / (t3 - t1)
+      return ((t2 - t) * b1 + (t - t1) * b2) / (t2 - t1)
+    }
+    const n = 200
+    for (let j = i === 1 ? 0 : 1; j <= n; j++) {
+      const t = tk[1]! + ((tk[2]! - tk[1]!) * j) / n
+      const x = at(t, 0), z = at(t, 1)
+      if (fine.length) s += Math.hypot(x - fine[fine.length - 1]!.x, z - fine[fine.length - 1]!.z)
+      fine.push({ x, z, s, seg: i, f: j / n })
+    }
+  }
+  // the level by length inside each span between two points
+  const spanLen = new Map<number, [number, number]>()
+  for (const q of fine) { const r = spanLen.get(q.seg); spanLen.set(q.seg, r ? [Math.min(r[0], q.s), Math.max(r[1], q.s)] : [q.s, q.s]) }
+  const level = (q: { s: number; seg: number }): number => {
+    const [a, b] = spanLen.get(q.seg)!, f = b > a ? (q.s - a) / (b - a) : 0
+    return ctl[q.seg]![2] + (ctl[q.seg + 1]![2] - ctl[q.seg]![2]) * f
+  }
+  const total = fine[fine.length - 1]!.s, out: LinePoint[] = []
+  const count = Math.max(1, Math.round(total / step))
+  let k = 0
+  for (let m = 0; m <= count; m++) {
+    const want = (total * m) / count
+    while (k + 1 < fine.length - 1 && fine[k + 1]!.s < want) k++
+    const a = fine[k]!, b = fine[k + 1]!, f = b.s > a.s ? (want - a.s) / (b.s - a.s) : 0
+    out.push([a.x + (b.x - a.x) * f, a.z + (b.z - a.z) * f, level(a) + (level(b) - level(a)) * f])
+  }
+  return out
+}
+/** the points a straight run may stand for: Douglas and Peucker over x and z, keeping every point a chord between kept
+    neighbours misses by more than `eps` metres (the ends always kept) */
+export function straightest(pts: LinePoint[], eps: number): LinePoint[] {
+  if (pts.length < 3) return pts.slice()
+  const keep = new Array<boolean>(pts.length).fill(false)
+  keep[0] = keep[pts.length - 1] = true
+  const run = (a: number, b: number): void => {
+    let far = -1, dMax = eps
+    const [ax, az] = pts[a]!, [bx, bz] = pts[b]!, ux = bx - ax, uz = bz - az, l = Math.hypot(ux, uz) || 1
+    for (let i = a + 1; i < b; i++) {
+      const d = Math.abs((pts[i]![0] - ax) * uz - (pts[i]![1] - az) * ux) / l
+      if (d > dMax) { dMax = d; far = i }
+    }
+    if (far < 0) return
+    keep[far] = true
+    run(a, far); run(far, b)
+  }
+  run(0, pts.length - 1)
+  return pts.filter((_, i) => keep[i])
+}
+/** the street's line through `pts` (its first point only steers the start): straight runs where the points allow
+    (straightest), each point the spline then misses by more than `eps` put back, the worst first, until it passes
+    within `eps` of every point it stands for */
+export function processionLine(pts: LinePoint[], eps: number, step = 2): LinePoint[] {
+  const lead = pts[0]!, real = pts.slice(1)
+  const kept = new Set(straightest(real, eps).map((p) => real.indexOf(p)))
+  const off = (line: LinePoint[], p: LinePoint): number => {
+    let d = Infinity
+    for (let i = 0; i + 1 < line.length; i++) {
+      const [ax, az] = line[i]!, [bx, bz] = line[i + 1]!, ux = bx - ax, uz = bz - az, l2 = ux * ux + uz * uz || 1
+      const f = Math.max(0, Math.min(1, ((p[0] - ax) * ux + (p[1] - az) * uz) / l2))
+      d = Math.min(d, Math.hypot(ax + ux * f - p[0], az + uz * f - p[1]))
+    }
+    return d
+  }
+  for (;;) {
+    const ctl = [lead, ...real.filter((_, i) => kept.has(i))]
+    const a = ctl[ctl.length - 1]!, b = ctl[ctl.length - 2]!
+    ctl.push(a.map((v, i) => 2 * v - b[i]!) as LinePoint)
+    const line = streetLine(ctl, step)
+    let worst = -1, dw = eps
+    real.forEach((p, i) => { if (!kept.has(i)) { const d = off(line, p); if (d > dw) { dw = d; worst = i } } })
+    if (worst < 0) return line
+    kept.add(worst)
+  }
+}
+
+/* ── the open ground beside the processional way south of the gate (the map's ground, painted for this page) ── */
+/** beaten earth in the city's silt, a little paler where dust lies against the paving's edge, trodden in streaks along
+    the street, with pebbles and sherds a stride apart (G: life without bodies); `p` is the gate's frame, `half` the
+    paving's half width, `xs` the street's centre at the point (gate frame x). Every detail fades to its mean once a
+    pixel's footprint passes it, so nothing shimmers at the street's far end */
+export function streetsideEarth(U: Pick<GateUniforms, 'uPix'>, p: N, half: number, xs: N): N {
+  const t = abs(p.x.sub(xs))
+  // the footprint along the view's own heading on the level ground, its longest side
+  const v = cameraPosition.sub(positionWorld)
+  const fw = footprint(U, normalize(vec3(v.x, 0, v.z.add(1e-4))), vec3(0, 1, 0))
+  const silt = vec3(0.335, 0.262, 0.168)
+  const broad = mx_noise_float(vec3(p.x.mul(0.045), 4.1, p.z.mul(0.045))).mul(0.16)
+  const patch = mx_noise_float(vec3(p.x.mul(0.21), 2.7, p.z.mul(0.21))).mul(0.1).mul(float(1).sub(smoothstep(0.08, 0.3, fw)))
+  // trodden: streaks along the street, darker and a little smoother, most where people step off the paving
+  const tread = smoothstep(0.1, 0.45, mx_noise_float(vec3(p.x.mul(0.55), 6.3, p.z.mul(0.05))).add(0.5).mul(0.9))
+  const trodden = tread.mul(float(1).sub(smoothstep(half + 2, half + 14, t))).mul(0.12).mul(float(1).sub(smoothstep(0.1, 0.4, fw)))
+  // dust drifted against the paving's edge, paler
+  const drift = float(1).sub(smoothstep(half + 0.2, half + 2.6, t)).mul(smoothstep(-0.1, 0.35, mx_noise_float(vec3(p.x.mul(0.8), 1.3, p.z.mul(0.8)))))
+  // pebbles and sherds: a few cells in a stride's grid hold a stone (pale) or a potsherd (red), each a few centimetres
+  const cell = mx_worley_noise_vec2(vec2(p.x, p.z).mul(4.5))
+  const pick = hash2(floor(p.x.mul(4.5).add(cell.x.mul(0.01))), floor(p.z.mul(4.5)))
+  const stone = smoothstep(0.16, 0.06, cell.x).mul(step(0.82, pick)).mul(float(1).sub(smoothstep(0.012, 0.035, fw)))
+  const sherd = step(0.93, pick)
+  const grain = mx_noise_float(vec3(p.x.mul(23), 0.5, p.z.mul(23))).mul(0.06).mul(float(1).sub(smoothstep(0.01, 0.03, fw)))
+  let c: N = silt.mul(float(1).add(broad).add(patch).add(grain).sub(trodden))
+  c = mix(c, vec3(0.42, 0.36, 0.27), drift.mul(0.55))
+  c = mix(c, mix(vec3(0.46, 0.43, 0.38), vec3(0.4, 0.19, 0.11), sherd), stone)
+  return c
+}
