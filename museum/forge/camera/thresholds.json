@@ -1,0 +1,33 @@
+{
+  "about": "The flags' lines. 'live' = the vinci wing's calm caps (src/wings/vinci/calm-check.mjs, CALM and CALM_STANDING.desktop, at its T1 = 2) or forge/film/motion.mjs MOTION_CAPS; 'guess' = set here, to tune against what judges see.",
+  "walking": {
+    "turnDegPerSecond": 24,
+    "turnDegPerSecond2": 48,
+    "turnDegPerSecond3": 320,
+    "screenWidthsPerSecond": 0.28125,
+    "source": "live: CALM 12, 12 and 40 times T1, T1^2, T1^3; filmPixelsPerFrame 18 at 1920 px and 30 fps"
+  },
+  "standing": {
+    "turnDegPerSecond": 72,
+    "turnDegPerSecond2": 92,
+    "turnDegPerSecond3": 480,
+    "screenWidthsPerSecond": 0.4375,
+    "source": "live: CALM_STANDING.desktop 36, 23 and 60 times T1, T1^2, T1^3; filmPixelsPerFrame 28 at 1920 px and 30 fps"
+  },
+  "bodyMetresPerSecond2": { "value": 2, "source": "live: CALM.bodyMetresPerSecond2" },
+  "bodyMetresPerSecond3": { "value": 10, "source": "derived: the live 2 m/s2 surge line (CALM.bodyMetresPerSecond2) over the 0.2 s derivative window, so a reading of 10 m/s3 is an acceleration step of 2 m/s2" },
+  "flyMetresPerSecond3": { "value": 20.3, "source": "guess: Babylon's jerk P99 inside fly segments away from keys (camera-kit-1106b dist), for frames of kind fly" },
+  "markReachSeconds": { "value": 0.2, "source": "derived: twice derivativeHalfSeconds, the reach of an acceleration step at a key into the jerk reading" },
+  "zoomPerSecond": { "value": 0.15, "source": "live: CALM.zoomPerSecond (the lens's change as a share of the picture's scale per second)" },
+  "standingMetresPerSecond": { "value": 0.05, "source": "live: motion.mjs middleOf's moved test (0.05 m/s)" },
+  "stillDegPerSecond": { "value": 1, "source": "guess: a view turning under 1 deg/s reads as held" },
+  "minStopSeconds": { "value": 0.15, "source": "guess: a still run shorter than this is a turning point, not a stop" },
+  "minHoldSeconds": { "value": 2, "source": "guess: an editing rule of thumb that a held frame needs about two seconds to be read" },
+  "settleWindowSeconds": { "value": 0.25, "source": "guess" },
+  "settleMetresPerSecond": { "value": 0.3, "source": "guess: arriving at a hold faster than this over its last quarter second reads as a stop, not a settle" },
+  "settleDegPerSecond": { "value": 6, "source": "guess: as settleMetresPerSecond, for the view's turn" },
+  "driftShare": { "value": 0.25, "source": "guess: an authored hold that moves over this share of its frames drifts" },
+  "farM": { "value": 20, "source": "guess: the far point sits 20 m out along the frame's centre and side rays" },
+  "derivativeHalfSeconds": { "value": 0.1, "source": "guess: each derivative is a central difference over +-0.1 s, so jerk reads over about 0.6 s of track" },
+  "motionCaps": { "source": "live: forge/film/motion.mjs MOTION_CAPS through motionVerdict, per move (the weave flag)" }
+}
