@@ -1214,144 +1214,179 @@
    }
   },
   {
-   "t": 94.53,
+   "t": 92.53,
    "at": [
-    445826,
-    3600722
+    445808,
+    3600752
    ],
-   "y": 54,
+   "y": 48,
    "look": [
-    445560,
-    3600430,
-    40
+    445752,
+    3600774,
+    10
    ],
    "stop": 5,
    "kind": "turn",
-   "say": "drawing back as it rises, turning right",
+   "say": "rising beside the vaulted building's block in the palace's north-east corner, one candidate",
    "phone": {
+    "look": [
+     445752,
+     3600776,
+     10
+    ],
     "hfov": 40,
     "shift": 0
    }
   },
   {
-   "t": 99.53,
+   "t": 98.53,
    "at": [
-    445852,
-    3600692
+    445725,
+    3600990
    ],
-   "y": 68,
+   "y": 62,
    "look": [
-    445590,
-    3600660,
-    22
+    445427.9,
+    3600948.2,
+    -1.8
    ],
    "stop": 5,
-   "kind": "turn",
+   "kind": "fly",
+   "say": "north over the gate to the North Palace's canal, its edge terraces planted (guessed) along it",
    "phone": {
-    "look": [
-     445620,
-     3600700,
-     0
+    "at": [
+     445765,
+     3601008
     ],
-    "hfov": 38,
+    "y": 48,
+    "look": [
+     445476.6,
+     3600925.3,
+     -32.4
+    ],
+    "hfov": 30,
     "shift": 0
    }
   },
   {
-   "t": 102.53,
+   "t": 103.03,
    "at": [
-    445860,
-    3600682
+    445585,
+    3601080
    ],
-   "y": 72,
+   "y": 68,
    "look": [
-    445680,
-    3600822,
-    13
+    445458.2,
+    3600808.1,
+    -1.3
    ],
    "stop": 5,
-   "kind": "hold",
-   "hold": true,
-   "say": "at +72: the vaulted building's block in the palace's north-east corner below, the North Palace on its terrace beyond, its edge terraces planted (guessed)",
+   "kind": "fly",
+   "say": "round the palace's north-west corner",
    "phone": {
+    "at": [
+     445730,
+     3601003
+    ],
+    "y": 42,
     "look": [
-     445700,
-     3600812,
-     2
+     445444.7,
+     3600910.3,
+     -44.0
     ],
     "hfov": 28,
     "shift": 0
    }
   },
   {
-   "t": 107.53,
+   "t": 106.03,
    "at": [
-    445860,
-    3600682
+    445520,
+    3601080
    ],
-   "y": 72,
+   "y": 70,
    "look": [
-    445680,
-    3600822,
-    13
+    445612.7,
+    3600794.7,
+    0.7
+   ],
+   "stop": 5,
+   "kind": "hold",
+   "hold": true,
+   "say": "at +70 north-west of the North Palace: its edge terraces planted (guessed) on two sides, the palace on its terrace, the city and the tower beyond; the phone looks west along the canal",
+   "phone": {
+    "at": [
+     445730,
+     3601003
+    ],
+    "y": 42,
+    "look": [
+     445444.7,
+     3600910.3,
+     -44.0
+    ],
+    "hfov": 28,
+    "shift": 0
+   }
+  },
+  {
+   "t": 109.53,
+   "at": [
+    445520,
+    3601080
+   ],
+   "y": 70,
+   "look": [
+    445612.7,
+    3600794.7,
+    0.7
    ],
    "stop": 5,
    "kind": "hold",
    "hold": true,
    "still": true,
    "phone": {
+    "at": [
+     445730,
+     3601003
+    ],
+    "y": 42,
     "look": [
-     445700,
-     3600812,
-     2
+     445444.7,
+     3600910.3,
+     -44.0
     ],
     "hfov": 28,
     "shift": 0
    }
   },
   {
-   "t": 110.03,
-   "at": [
-    445806,
-    3600742
-   ],
-   "y": 46,
-   "look": [
-    445752,
-    3600774,
-    12
-   ],
-   "stop": 5,
-   "kind": "fly",
-   "say": "down past the corner by the gate, looking into the vaulted building's block",
-   "phone": {
-    "hfov": 40,
-    "shift": 0
-   }
-  },
-  {
    "t": 112.03,
    "at": [
-    445806,
-    3600722
+    445520,
+    3601080
    ],
-   "y": "eye",
+   "y": 70,
    "look": [
-    445784,
-    3600770,
-    21
+    445612.7,
+    3600794.7,
+    0.7
    ],
    "stop": 5,
-   "kind": "walk",
+   "kind": "hold",
    "hold": true,
-   "say": "on the street: the palace's corner over the vaulted building, the gate beyond",
    "phone": {
-    "look": [
-     445786,
-     3600768,
-     18
+    "at": [
+     445730,
+     3601003
     ],
-    "hfov": 44,
+    "y": 42,
+    "look": [
+     445444.7,
+     3600910.3,
+     -44.0
+    ],
+    "hfov": 28,
     "shift": 0
    }
   },
