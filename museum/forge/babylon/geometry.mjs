@@ -562,8 +562,9 @@ function altitude(v) {
 
 /** faces thinner than one device pixel over a run of at least runPx, per body and camera. A sliver of a triangulated
     surface is not a thin surface: where the same body's face (turned under 30 degrees) or a face in the same plane
-    goes on across its long edge, it is set aside. `checks(body)` says which bodies are this check's. */
-export function subPixel(faces, cameras, { runPx = 4, facing = 0.15, thickCap = 0.5, checks = () => true } = {}) {
+    goes on across its long edge, it is set aside; so is one whose long edge runs into another closed body, where
+    `buried(point, body)` (the mount's closed bodies) says so. `checks(body)` says which bodies are this check's. */
+export function subPixel(faces, cameras, { runPx = 4, facing = 0.15, thickCap = 0.5, checks = () => true, buried = null } = {}) {
   const mine = faces.filter((f) => checks(f.body))
   const vkey = (v) => `${Math.round(v.x * 1e4)},${Math.round(v.y * 1e4)},${Math.round(v.z * 1e4)}`
   const ekey = (a, b) => { const p = vkey(a), q = vkey(b); return p < q ? `${p}|${q}` : `${q}|${p}` }
@@ -583,20 +584,28 @@ export function subPixel(faces, cameras, { runPx = 4, facing = 0.15, thickCap = 
     const u = (d11 * d02 - d01 * d12) * inv, w = (d00 * d12 - d01 * d02) * inv
     return u >= -1e-6 && w >= -1e-6 && u + w <= 1 + 1e-6 && Math.abs(p.clone().sub(a).dot(f.n)) < 2e-4
   }
+  // a thin face's normal from float32 corners far out is off by up to 1e-4, which moves its offset d by millimetres, so
+  // the rounded key can split one plane; across the shared long edge the neighbour's plane is measured at the thin
+  // face's own far corner instead: within 0.5 mm, about four float32 half-steps of a corner at the pages' 2 km
+  const FLAT_M = 5e-4
+  const flatOn = (g, top) => Math.abs(top.clone().sub(g.v[0]).dot(g.n)) < FLAT_M
   const goesOn = (f, foot, top, along) => {
     const across = edges.get(ekey(along[0], along[1])) ?? []
     // a neighbour turned up to 30 degrees continues a curved surface; a neighbour in the same plane only counts where
     // the probe lands in it, so a thin quad split on its diagonal is not taken for a sliver of a larger plane
     if (across.some((g) => g !== f && g.body === f.body && g.n.dot(f.n) > 0.866 && g.n.dot(f.n) < 0.99999)) return true
     const probe = along[0].clone().add(along[1]).multiplyScalar(0.5).addScaledVector(foot.clone().sub(top).normalize(), 0.002)
+    if (across.some((g) => g !== f && flatOn(g, top) && inTri(probe, g))) return true
     return (planes.get(pkey(f)) ?? []).some((g) => g !== f && inTri(probe, g))
   }
-  let slivers = 0
+  let slivers = 0, inside = 0
   const thin = new Map()
   for (const f of mine) {
     const { foot, top, along, thick } = altitude(f.v)
     if (!(thick > 1e-4) || thick >= thickCap) continue
     if (goesOn(f, foot, top, along)) { slivers++; continue }
+    // past its long edge the face runs into another closed body: what shows of it is bounded by that body's face
+    if (buried && buried(along[0].clone().add(along[1]).multiplyScalar(0.5).addScaledVector(foot.clone().sub(top).normalize(), 0.002), f.body)) { inside++; continue }
     const centre = foot.clone().add(top).multiplyScalar(0.5)
     for (const e of cameras) {
       if (centre.distanceTo(e.eye) < e.reach * thick) continue
@@ -617,7 +626,7 @@ export function subPixel(faces, cameras, { runPx = 4, facing = 0.15, thickCap = 
       thin.set(key, row)
     }
   }
-  return { slivers, rows: [...thin.values()].sort((a, b) => a.thinnestPx - b.thinnestPx) }
+  return { slivers, inside, rows: [...thin.values()].sort((a, b) => a.thinnestPx - b.thinnestPx) }
 }
 
 /** the map's support rule on triangles: a body whose foot is near the ground reaches it (`ground(x, z)` + tol) under
