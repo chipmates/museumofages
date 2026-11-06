@@ -117,6 +117,7 @@ test("the plain's bank plants stand on land, by their rows, and only palms carry
   for (const k of ['reed', 'tamarisk', 'poplar', 'willow']) assert.ok(out.rows[k] > 0, `no ${k}`)
   assert.deepEqual(out.wet, [])
   assert.deepEqual(out.detailOnBank, [])
-  assert.ok(out.detail.near > 0 && out.detail.near < 60, `near palms ${out.detail.near}`)
+  // the city's and the North Gate road's palms stand near the flight too
+  assert.ok(out.detail.near > 0 && out.detail.near < 100, `near palms ${out.detail.near}`)
   assert.ok(out.detail.mid > out.detail.near, `mid palms ${out.detail.mid}`)
 })
