@@ -391,9 +391,9 @@
             -10.5
           ],
           "look": [
-            -4.5,
-            2.8,
-            -14.9
+            4.216,
+            1.65,
+            -15.182
           ],
           "kind": "walk",
           "phone": {
@@ -401,7 +401,11 @@
             "shift": 0
           },
           "cut": true,
-          "says": "cut: at the front gate's south mouth, turned east off the axis onto the main gate's glazed north face, its bulls and dragons close; the walk turns back to the door as it goes on"
+          "says": "cut: at the front gate's south mouth, turned 42 degrees west off the axis and level onto the main gate's glazed north face, its rows of bulls and dragons whole, the desktop on the 175 s hold's shift lens; the walk turns back to the door as it goes on",
+          "desktop": {
+            "hfov": 64,
+            "shift": 0.65
+          }
         },
         {
           "t": 175,
