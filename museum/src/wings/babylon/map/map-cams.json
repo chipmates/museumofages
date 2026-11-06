@@ -3377,104 +3377,6 @@
   {
    "t": 347.56,
    "at": [
-    445660.0,
-    3599870.0
-   ],
-   "y": "eye",
-   "look": [
-    445660.0,
-    3599720.0,
-    4.2
-   ],
-   "stop": 12,
-   "kind": "fly",
-   "hold": true,
-   "say": "cut: on the street where Esagila was seen, turning east along the precinct's south rooms",
-   "phone": {
-    "hfov": 46.0,
-    "shift": 0.0
-   },
-   "cut": true
-  },
-  {
-   "t": 357.03,
-   "at": [
-    445660.0,
-    3599870.0
-   ],
-   "y": "eye",
-   "look": [
-    445782.87,
-    3599783.96,
-    4.2
-   ],
-   "stop": 12,
-   "kind": "turn",
-   "phone": {
-    "hfov": 46.0,
-    "shift": 0.0
-   }
-  },
-  {
-   "t": 359.53,
-   "at": [
-    445667.0,
-    3599872.2
-   ],
-   "y": "eye",
-   "look": [
-    445816.91,
-    3599866.97,
-    4.3
-   ],
-   "stop": 12,
-   "kind": "walk",
-   "phone": {
-    "hfov": 46.0,
-    "shift": 0.0
-   }
-  },
-  {
-   "t": 362.53,
-   "at": [
-    445676.0,
-    3599875.2
-   ],
-   "y": "eye",
-   "look": [
-    445825.18,
-    3599890.88,
-    4.3
-   ],
-   "stop": 12,
-   "kind": "walk",
-   "phone": {
-    "hfov": 46.0,
-    "shift": 0.0
-   }
-  },
-  {
-   "t": 365.53,
-   "at": [
-    445684.2,
-    3599878.6
-   ],
-   "y": "eye",
-   "look": [
-    445814.1,
-    3599953.6,
-    4.3
-   ],
-   "stop": 12,
-   "kind": "walk",
-   "phone": {
-    "hfov": 46.0,
-    "shift": 0.0
-   }
-  },
-  {
-   "t": 368.53,
-   "at": [
     445689.6,
     3599884.3
    ],
@@ -3493,10 +3395,11 @@
    "hold": true,
    "hfov": 64.0,
    "shift": 0.7,
-   "say": "the turn north at the precinct's south gate: the tower through its passage"
+   "say": "cut: the turn north at the precinct's south gate: the tower through its passage",
+   "cut": true
   },
   {
-   "t": 370.53,
+   "t": 353.56,
    "at": [
     445689.6,
     3599884.3
@@ -3518,7 +3421,7 @@
    }
   },
   {
-   "t": 373.53,
+   "t": 361.91,
    "at": [
     445686.83,
     3599892.76
@@ -3544,7 +3447,7 @@
    }
   },
   {
-   "t": 376.53,
+   "t": 370.28,
    "at": [
     445684.06,
     3599901.23
@@ -3940,16 +3843,15 @@
    ],
    "y": 84.0,
    "look": [
-    445219.79,
-    3600072.47,
+    445245.94,
+    3600173.57,
     82.0
    ],
    "stop": 12,
    "kind": "fly",
-   "hold": true,
    "hfov": 62.0,
    "shift": 0.0,
-   "say": "the hold on the top's west side, then the cut",
+   "say": "turning north along the top's west side, then the cut on the turn",
    "phone": {
     "hfov": 46.0,
     "shift": 0.0
