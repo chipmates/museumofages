@@ -19,7 +19,7 @@ import { THRESHOLDS, curvesOf, marksOf, readMove } from './read.mjs'
 const HERE = dirname(fileURLToPath(import.meta.url))
 const FFMPEG = process.env.FFMPEG ?? '/opt/homebrew/bin/ffmpeg'
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-const fmt = (v) => (Math.abs(v) >= 100 ? v.toFixed(0) : Math.abs(v) >= 10 ? v.toFixed(1) : Math.abs(v) >= 1 ? v.toFixed(2) : v.toFixed(3))
+const fmt = (v) => (v === 0 ? '0' : Math.abs(v) >= 100 ? v.toFixed(0) : Math.abs(v) >= 10 ? v.toFixed(1) : Math.abs(v) >= 1 ? v.toFixed(2) : v.toFixed(3))
 const FONT = 'font-family="Helvetica, Arial, sans-serif"'
 
 // which panel shows which flag (a flag's span is drawn in red on its panel and in the flag lanes)
@@ -50,16 +50,30 @@ export function panelSvg({ x, y, w, h, t0, t1, title, series, ymin = 0, ymax = n
   for (const f of flags) out.push(`<rect x="${X(f.t0)}" y="${y}" width="${Math.max(2, X(f.t1) - X(f.t0))}" height="${h}" fill="#e0301e" fill-opacity="0.22"/>`)
   for (const c of cuts) out.push(`<line x1="${X(c)}" x2="${X(c)}" y1="${y}" y2="${y + h}" stroke="#000" stroke-width="1.5" stroke-dasharray="6 3"/>`)
   for (const k of keys) out.push(`<line x1="${X(k)}" x2="${X(k)}" y1="${y + h - 8}" y2="${y + h}" stroke="#1f5fbf" stroke-width="2"/>`)
-  for (const l of lines) {
+  // labels of close lines step upward so they never overprint; drawn last with a halo, so a line or curve
+  // crossing a label never strikes it through
+  let lastLabel = Infinity
+  const labels = []
+  for (const l of [...lines].sort((a, b) => a.y - b.y)) {
     if (l.y < lo || l.y > hi) continue
+    const ly = Math.min(Y(l.y) - 3, lastLabel - 13)
+    lastLabel = ly
     out.push(`<line x1="${x}" x2="${x + w}" y1="${Y(l.y)}" y2="${Y(l.y)}" stroke="${l.color ?? '#e0301e'}" stroke-width="1.2" stroke-dasharray="5 4"/>`)
-    out.push(`<text x="${x + w - 4}" y="${Y(l.y) - 3}" font-size="12" ${FONT} text-anchor="end" fill="${l.color ?? '#e0301e'}">${esc(l.label)}</text>`)
+    labels.push(`<text x="${x + w - 4}" y="${ly}" font-size="12" ${FONT} text-anchor="end" fill="${l.color ?? '#e0301e'}" stroke="#fbfbfb" stroke-width="3" paint-order="stroke">${esc(l.label)}</text>`)
   }
   for (const s of series) {
     const pts = []
     for (let i = 0; i < s.v.length; i++) if (Number.isFinite(s.v[i])) pts.push(`${X(s.t[i]).toFixed(1)},${Y(s.v[i]).toFixed(1)}`)
     out.push(`<polyline points="${pts.join(' ')}" fill="none" stroke="${s.color}" stroke-width="${s.width ?? 1.6}"${s.dash ? ` stroke-dasharray="${s.dash}"` : ''}/>`)
+    // a clipped stretch gets a bar on the top edge, so a flat top never reads as a plateau
+    for (let i = 0; i < s.v.length; i++) {
+      if (!(s.v[i] > hi)) continue
+      let j = i; while (j + 1 < s.v.length && s.v[j + 1] > hi) j++
+      out.push(`<rect x="${X(s.t[i]).toFixed(1)}" y="${y}" width="${Math.max(2, X(s.t[j]) - X(s.t[i])).toFixed(1)}" height="4" fill="${s.color}"/>`)
+      i = j
+    }
   }
+  out.push(...labels)
   out.push(`<text x="${x + 5}" y="${y + 14}" font-size="13" ${FONT} font-weight="bold" fill="#222">${esc(title)}</text>`)
   let lx = x + 5 + 7.4 * title.length + 12
   for (const s of series) if (s.label) { out.push(`<text x="${lx}" y="${y + 14}" font-size="12" ${FONT} fill="${s.color}">${esc(s.label)}</text>`); lx += 6.4 * s.label.length + 12 }
@@ -80,8 +94,9 @@ function pathSvg({ x, y, side, c, from, to, fps, samples, holds, flags, marks, c
   let x0 = Infinity, x1 = -Infinity, z0 = Infinity, z1 = -Infinity
   for (let i = from; i < to; i++) { x0 = Math.min(x0, c.x[i]); x1 = Math.max(x1, c.x[i]); z0 = Math.min(z0, c.z[i]); z1 = Math.max(z1, c.z[i]) }
   // at least 4 m across, so a turn on the spot reads as a fan, not a dot
-  const extent = Math.max(x1 - x0, z1 - z0, 4), pad = 34, k = (side - 2 * pad) / extent
-  const cx = x + side / 2 - ((x0 + x1) / 2) * k, cz = y + side / 2 - ((z0 + z1) / 2) * k
+  // the top pad keeps the path clear of the two legend lines
+  const extent = Math.max(x1 - x0, z1 - z0, 4), pad = 34, padTop = 48, k = (side - pad - padTop) / extent
+  const cx = x + side / 2 - ((x0 + x1) / 2) * k, cz = y + padTop + (side - pad - padTop) / 2 - ((z0 + z1) / 2) * k
   const P = (i) => [cx + c.x[i] * k, cz + c.z[i] * k]
   const out = [`<rect x="${x}" y="${y}" width="${side}" height="${side}" fill="#f4f1ea" stroke="#999"/>`]
   const edges = [from, ...cuts.filter((q) => q > from && q < to), to]
@@ -111,7 +126,8 @@ function pathSvg({ x, y, side, c, from, to, fps, samples, holds, flags, marks, c
   while (bar * k > side / 3) bar /= 2
   out.push(`<line x1="${x + 10}" x2="${x + 10 + bar * k}" y1="${y + side - 10}" y2="${y + side - 10}" stroke="#222" stroke-width="3"/>`)
   out.push(`<text x="${x + 14 + bar * k}" y="${y + side - 6}" font-size="12" ${FONT} fill="#222">${+bar.toPrecision(3)} m, north up</text>`)
-  out.push(`<text x="${x + 8}" y="${y + 15}" font-size="12" ${FONT} fill="#444">the view every ${everySeconds} s, blue to red; squares keys; rings holds; red dots flags</text>`)
+  out.push(`<text x="${x + 8}" y="${y + 15}" font-size="12" ${FONT} fill="#444">the view every ${everySeconds} s, blue to red</text>`)
+  out.push(`<text x="${x + 8}" y="${y + 29}" font-size="12" ${FONT} fill="#444">squares keys, rings holds, red dots flags</text>`)
   return out.join('\n')
 }
 
@@ -141,7 +157,7 @@ export function moveSvg(track, c, move, r, { width = 1000 } = {}) {
   const M = 10, S = Math.round(width * 0.36), X0 = M + S + 58, WC = width - X0 - 14
   const parts = []
   const where = `${r.seconds} s, ${r.metres} m, from ${r.startSeconds} s`
-  parts.push(`<text x="${M}" y="24" font-size="19" ${FONT} font-weight="bold" fill="#111">${esc(move.name)}<tspan font-weight="normal" font-size="15" fill="#333">   ${esc(where)}</tspan></text>`)
+  parts.push(`<text x="${M}" y="24" font-size="19" ${FONT} font-weight="bold" fill="#111">${esc(move.name)}<tspan dx="12" font-weight="normal" font-size="15" fill="#333">${esc(where)}</tspan></text>`)
   parts.push(`<text x="${M}" y="46" font-size="14" ${FONT} fill="#b0200f">flags: ${esc(flagWords(r.flags))}</text>`)
   const yA = 58
   parts.push(pathSvg({ x: M, y: yA, side: S, c, from, to, fps, samples: track.samples, holds: r.holds, flags: r.flags, marks: markFrames, cuts: track.cuts ?? [], metres: r.metres }))
@@ -175,7 +191,7 @@ export function moveSvg(track, c, move, r, { width = 1000 } = {}) {
     }
     y += 19
   }
-  parts.push(`<text x="${M}" y="${y + 13}" font-size="12" ${FONT} fill="#444">grey: measured holds; tan: authored holds; blue ticks: ${track.keys?.length ? 'path keys' : 'kind changes'}; dashed: cuts; red: flag spans (time in s from the move's start)</text>`)
+  parts.push(`<text x="${M}" y="${y + 13}" font-size="12" ${FONT} fill="#444">grey: measured holds; tan: authored holds; blue ticks: ${track.keys?.length ? 'path keys' : 'kind changes'}; dashed: cuts; red: flag spans; a bar on a top edge: the curve runs above the axis (time in s from the move's start)</text>`)
   const height = y + 22
   return { svg: `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><rect width="100%" height="100%" fill="#fff"/>${parts.join('\n')}</svg>`, width, height }
 }

@@ -1,10 +1,10 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { mkdtempSync } from 'node:fs'
+import { mkdtempSync, rmSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { PerspectiveCamera, Vector3 } from 'three'
-import { FORMAT, forwardOf, fromSketch, quatOf, readTrack, writeTrack } from '../track.mjs'
+import { FORMAT, forwardOf, fromBabylonPath, fromSketch, quatOf, readTrack, sliceTrack, writeTrack } from '../track.mjs'
 import { curvesOf, readMove } from '../read.mjs'
 
 const D2R = Math.PI / 180
@@ -32,9 +32,10 @@ test('the sketch mapping looks where the sketch aims (three.js lookAt on its own
   assert.ok(same > 1 - 1e-9, `the same rotation as three.js (dot ${same})`)
 })
 
-test('the format round trip', () => {
+test('the format round trip', (ctx) => {
   const t = madeUp(10)
   const dir = mkdtempSync(SCRATCH)
+  ctx.after(() => rmSync(dir, { recursive: true, force: true }))
   writeTrack(join(dir, 't.json'), t)
   assert.deepEqual(readTrack(join(dir, 't.json')), JSON.parse(JSON.stringify(t, (k, v) => (Object.is(v, -0) ? 0 : v))))
 })
@@ -54,4 +55,56 @@ test('a hold reads as a hold', () => {
   assert.ok(h, JSON.stringify(r.holds))
   assert.ok(h.seconds > 1.5 && h.seconds <= 2.05, `${h.seconds} s`)
   assert.ok(!r.flags.some((f) => f.flag === 'short-hold'))
+})
+
+/** a made-up map path: a walk north at 1 m/s that jumps 10 m east at the cut key's time */
+function cutPath(cutT, duration = 2) {
+  return {
+    duration,
+    keys: [{ t: 0 }, { t: cutT, cut: true }, { t: duration }],
+    sample: (t) => {
+      const x = t < cutT ? 0 : 10, z = -t
+      return { pos: [x, 1.65, z], look: [x, 1.65, z - 1], hfov: 60, stop: 1, kind: 'walk' }
+    },
+  }
+}
+
+test('a cut key between frames starts the run at the next frame', () => {
+  // at 30 fps, 1.01 s lies between frames 30 (1.000 s) and 31 (1.033 s); a key on frame 31's time stays on 31
+  for (const [cutT, want] of [[1.01, 31], [31 / 30, 31], [1, 30]]) {
+    const t = fromBabylonPath(cutPath(cutT), { fps: 30 })
+    assert.deepEqual(t.cuts, [want], `key at ${cutT} s`)
+    assert.deepEqual(t.jumps, [], `key at ${cutT} s: the pose change is the cut, not a jump`)
+    assert.equal(t.samples[want][0], 10, 'the run starts on the new pose')
+    assert.equal(t.samples[want - 1][0], 0, 'the frame before shows the old pose')
+  }
+})
+
+test('sliceTrack keeps and shifts keys', () => {
+  const t = { ...madeUp(10), keys: [0, 10, 30, 50, 140], cuts: [5, 40], jumps: [40] }
+  const s = sliceTrack(t, 20, 60)
+  assert.deepEqual(s.keys, [10, 30])
+  assert.deepEqual(s.cuts, [20])
+  assert.deepEqual(s.jumps, [20])
+  assert.equal(s.samples.length, 40)
+  assert.ok(Math.abs(s.offsetSeconds - 20 / t.fps) < 1e-12)
+  assert.ok(!('keys' in sliceTrack(madeUp(10), 20, 60)), 'a track without keys gets none')
+})
+
+/** a made-up sketch: walk, a black span over frames 10 to 14, walk on; the pose jumps 10 m east at frame `at` */
+function blackSketch(at) {
+  const samples = []
+  for (let i = 0; i < 30; i++) samples.push({ t: i / 20, x: i < at ? 0 : 10, y: 1.65, z: -i * 0.05, yaw: 0, pitch: 0, hfov: 60, leg: 'a', kind: i >= 10 && i < 15 ? 'black' : 'walk' })
+  return { desktop: { samples } }
+}
+
+test('a pose jump inside a black span becomes a cut, not a jump', () => {
+  for (const at of [12, 15]) {
+    const t = fromSketch(blackSketch(at))
+    assert.deepEqual(t.jumps, [], `jump at frame ${at}`)
+    assert.deepEqual(t.cuts, [10, at], `jump at frame ${at}: the black starts a cut, the run starts at the pose's change`)
+  }
+  const out = fromSketch(blackSketch(22))
+  assert.deepEqual(out.jumps, [22], 'the same jump after the black stays a jump')
+  assert.deepEqual(out.cuts, [10, 22])
 })
