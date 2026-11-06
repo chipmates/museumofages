@@ -233,15 +233,15 @@ export async function mountMap(stop, { reach = 400, tower: towerState = process.
   // stop 15's palms whole where the foot lies within the reach (at most 1.2 km: the plain holds some 21,000, and past that a
   // far palm is a few pixels of a grove's mass), each at its preset (open/green.ts palmMesh), and on a whole-page mount
   // (the switch's) each row's first palm wherever it stands, so every row is named; the bank trees grow from a canvas atlas on the page only, none in the city
-  const { PALM_FAR } = await import(join(GATE, 'gate-life.ts'))
-  const presets = { far: palmGeometry(12, PALM_FAR), mid: palmGeometry(12, PALM_MID) }
+  const { PALM_FAR, PALM_YOUNG_FAR, PALM_YOUNG_MID, YOUNG_H } = await import(join(GATE, 'gate-life.ts'))
+  const presets = { far: palmGeometry(12, PALM_FAR), mid: palmGeometry(12, PALM_MID), 'young-far': palmGeometry(YOUNG_H, PALM_YOUNG_FAR, 23), 'young-mid': palmGeometry(YOUNG_H, PALM_YOUNG_MID, 29) }
   const nthTop = new Map()
   for (const q of top.all) {
     const i = nthTop.get(q.row) ?? 0
     nthTop.set(q.row, i + 1)
     if (['reed', 'tamarisk', 'poplar', 'willow'].includes(q.row) || q.detail === 'near' || ((i > 0 || reach <= 1200) && Math.hypot(q.x - ex, q.z - ez) > Math.min(reach, 1200))) continue
     const m = new THREE.Matrix4().compose(new THREE.Vector3(q.x, built.ground(q.x, q.z), q.z), new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(Math.cos(q.yaw), 0, Math.sin(q.yaw)).normalize(), q.lean), new THREE.Vector3(q.s, q.s, q.s))
-    facesFrom(faces, presets[q.detail ?? 'far'].clone().applyMatrix4(m), null, () => `map:top-palm-${q.row}-${i}`)
+    facesFrom(faces, presets[q.row === 'young' ? (q.detail ? 'young-mid' : 'young-far') : q.detail ?? 'far'].clone().applyMatrix4(m), null, () => `map:top-palm-${q.row}-${i}`)
   }
   const surface = (b) => /^map:(street|ground|water-|gate5-street-|merkes-lanes$|esagila-street-|esagila-ground-|ruin-trench$|ruin-water$)/.test(b)
   return {
@@ -401,7 +401,7 @@ export async function mountOpen(stop = '1', opts = {}) {
   // row (groves Known as a mass, the rest Guessed, as green.ts), the banks' reed and trees (Guessed) and the plain's
   // fields and canals (ours, Guessed)
   const openLetters = new Map()
-  const extraBodies = [['open:palm-canal', ['R', 'R']], ['open:palm-river', ['R', 'R']], ['open:palm-city', ['G', 'G']], ['open:palm-outer', ['G', 'G']], ['open:palm-gate', ['G', 'G']], ['open:reed', ['G', 'G']], ['open:bank-tamarisk', ['G', 'G']], ['open:bank-poplar', ['G', 'G']], ['open:bank-willow', ['G', 'G']], ['open:field', ['G', 'G']], ['open:canal', ['G', 'G']], ['open:garden', ['G', 'G']]]
+  const extraBodies = [['open:palm-canal', ['R', 'R']], ['open:palm-river', ['R', 'R']], ['open:palm-city', ['G', 'G']], ['open:palm-outer', ['G', 'G']], ['open:palm-gate', ['G', 'G']], ['open:palm-young', ['G', 'G']], ['open:reed', ['G', 'G']], ['open:bank-tamarisk', ['G', 'G']], ['open:bank-poplar', ['G', 'G']], ['open:bank-willow', ['G', 'G']], ['open:field', ['G', 'G']], ['open:canal', ['G', 'G']], ['open:garden', ['G', 'G']]]
   for (const [n, L] of extraBodies) openLetters.set(n, L)
   {
     const city = buildPlan(edited)

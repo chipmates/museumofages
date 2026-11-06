@@ -67,13 +67,19 @@ const STALK: V3 = [0.32, 0.22, 0.07], STRAND: V3 = [0.2, 0.2, 0.08], SPATHE: V3 
 
 /** how finely a palm is built: rings and sides of the trunk, fronds, segments along a rib; leaflets each side of a rib
     (0 a folded blade, a few: teeth of leaflets, many: one leaflet each); the leaf bases' relief; the season's bunches */
-export interface PalmDetail { seg: number; sides: number; fronds: number; steps: number; leaflets?: number; boots?: boolean; bunches?: number }
+export interface PalmDetail { seg: number; sides: number; fronds: number; steps: number; leaflets?: number; boots?: boolean; bunches?: number; young?: boolean }
 /** within about 60 m of an eye: the gate's street palms */
 export const PALM_NEAR: PalmDetail = { seg: 240, sides: 27, fronds: 60, steps: 12, leaflets: 64, boots: true, bunches: 3 }
 /** 150 to 400 m: the garden's palms on the map page */
 export const PALM_MID: PalmDetail = { seg: 8, sides: 6, fronds: 26, steps: 6, leaflets: 9, bunches: 2 }
 /** the plain's groves seen from the air, instanced by the ten thousand */
 export const PALM_FAR: PalmDetail = { seg: 2, sides: 5, fronds: 16, steps: 3, leaflets: 0 }
+/** a young palm or an offshoot in a grove (bab.green.palm.young): a fan of fronds from the ground on a stub of trunk,
+    no dead fronds hanging, no flowers yet; the far and the mid preset's leaflets */
+export const PALM_YOUNG_FAR: PalmDetail = { seg: 1, sides: 5, fronds: 14, steps: 3, leaflets: 0, young: true }
+export const PALM_YOUNG_MID: PalmDetail = { seg: 2, sides: 6, fronds: 18, steps: 5, leaflets: 8, young: true }
+/** the young palm's height to the crown, metres, before an instance's scale */
+export const YOUNG_H = 0.7
 
 /** the trunk's radius without the leaf bases: a column, a flared foot, a collar of old bases under the crown */
 const trunkR = (t: number, near: boolean): number => (near ? 0.2 : 0.23 - 0.03 * t) * (1 + 0.32 * Math.pow(1 - t, 9)) + (near ? 0.1 : 0.06) * smooth(0.9, 1, t)
@@ -188,14 +194,15 @@ function palm(m: Mesh, p: PalmSpec, base: number, seed: number, d: PalmDetail = 
   for (let f = 0; f < N; f++) {
     // the youngest stand up in the middle, the oldest droop, the last few are dead and hang along the trunk
     const age = (f + 0.5) / N
-    const dead = age > 0.92
+    const dead = !d.young && age > 0.92
     const az = p.turn + f * 2.39996 + (r() - 0.5) * 0.5
-    const el = dead ? -1.2 + (r() - 0.5) * 0.25 : 1.3 - 1.85 * Math.pow(age, 1.15) + (r() - 0.5) * 0.3
-    const L = (3.3 + r() * 1.2) * (f < 2 ? 0.7 : 1) * (dead ? 0.85 : 1)
-    const droop = dead ? 0.06 : 0.14 + 0.62 * age * age + r() * 0.08
+    // a young palm's fan: the oldest fronds spread low but stay off the ground
+    const el = dead ? -1.2 + (r() - 0.5) * 0.25 : d.young ? 1.4 - 1.15 * Math.pow(age, 1.1) + (r() - 0.5) * 0.3 : 1.3 - 1.85 * Math.pow(age, 1.15) + (r() - 0.5) * 0.3
+    const L = (d.young ? 2.1 + r() * 1.1 : (3.3 + r() * 1.2) * (f < 2 ? 0.7 : 1)) * (dead ? 0.85 : 1)
+    const droop = dead ? 0.06 : (d.young ? 0.08 + 0.3 * age * age : 0.14 + 0.62 * age * age) + r() * 0.08
     const dir: V3 = [Math.cos(az) * Math.cos(el), Math.sin(el), Math.sin(az) * Math.cos(el)]
     // older fronds rise from lower on the collar
-    const o: V3 = add(add(top, [0, -0.15 - 0.85 * age, 0]), [Math.cos(az), 0, Math.sin(az)], 0.12 + 0.1 * age)
+    const o: V3 = d.young ? add(add(top, [0, -0.05 - 0.3 * age, 0]), [Math.cos(az), 0, Math.sin(az)], 0.06 + 0.06 * age) : add(add(top, [0, -0.15 - 0.85 * age, 0]), [Math.cos(az), 0, Math.sin(az)], 0.12 + 0.1 * age)
     const R = rib(o, dir, L, droop, az)
     const tone = jig()
     const leafCol = scale(dead ? DEAD : age > 0.78 ? mixV(LEAF, LEAF_OLD, smooth(0.78, 0.92, age)) : mixV(LEAF_YOUNG, LEAF, smooth(0.1, 0.45, age)), tone)

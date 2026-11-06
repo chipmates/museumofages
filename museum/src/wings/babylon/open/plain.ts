@@ -16,7 +16,10 @@ export interface Canal { id: string; pts: P2[]; w: number }
 export interface Field { pts: P2[]; tone: number }
 /** a plant of the plain: a date palm by its row (canal, river, outer, city; `detail` the palm's preset where the
     flight passes it closer than the far preset holds) or a bank plant by its kind (reed, tamarisk, poplar, willow) */
-export interface Palm { x: number; z: number; s: number; yaw: number; lean: number; row: string; detail?: 'near' | 'mid' }
+export interface Palm { x: number; z: number; s: number; yaw: number; lean: number; row: string; detail?: 'near' | 'mid'; h?: number }
+
+/** a young palm's height to its crown before scale (gate-life.ts YOUNG_H, the same number) */
+const YOUNG_H = 0.7
 
 /** the flight's way down (open-cams.json as flight.ts resolves it, every 2 s, UTM and level): the palm presets' bands */
 const DESCENT: Array<[number, number, number]> = [
@@ -423,6 +426,22 @@ export function buildPlain(mapPlan: J, opts: { palms?: boolean; reach?: number }
           if (!near.has(k)) near.set(k, [])
           near.get(k)!.push(q)
         }
+      }
+    }
+    /* young palms and offshoots among the tall ones (bab.green.palm.young: a grove held "small date palms" beside its
+       fruit-bearing ones; the look, a fan from the ground, ours): about one tall palm in four of the groves and the
+       orchard has one beside it, a few metres off; never in the city, on a bank's reed or in water; their own numbers */
+    {
+      const RY = rng(5704)
+      // the plan's built grounds (the fortification by the north wall, the Kasr, the precincts) are no grove
+      const built: P2[][] = (mapPlan.houses?.keepOut ?? []).map((k: J) => k.poly.map((q: number[]) => s(q[0]!, q[1]!)))
+      const tall = palms.filter((p) => p.row === 'canal' || p.row === 'river' || p.row === 'outer' || p.row === 'gate')
+      for (const p of tall) {
+        if (RY() > 0.26) continue
+        const a = RY() * Math.PI * 2, r = 2.4 + RY() * 2.2
+        const x = p.x + Math.cos(a) * r, z = p.z + Math.sin(a) * r
+        if (blocked(x, z, 0) || built.some((q) => inPoly(x, z, q))) continue
+        palms.push({ x, z, s: 0.7 + RY() * 0.8, yaw: RY() * Math.PI * 2, lean: (RY() - 0.5) * 0.2, row: 'young', h: YOUNG_H })
       }
     }
     const way = DESCENT.map(([E, N, y]) => { const [x, z] = s(E, N); return [x, y, z] as [number, number, number] })
