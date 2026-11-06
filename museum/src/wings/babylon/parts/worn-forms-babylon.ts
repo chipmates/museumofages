@@ -1,0 +1,161 @@
+/* WORN FORMS, a shared kit (pure geometry, three's buffers, no DOM): the masonry's forms the low sun and the sky can
+   model, built instead of painted. A stage of the tower as a box whose faces are cut into buttress panels at the plan's
+   pitch (the recesses sunk into the box, so the measured outline stays the stage's side), capped on every face by a
+   coping with a lip and a drip that wraps the corners. Every vertex writes the bodies' existing attributes (`kind`,
+   `fa`, `fb`), so the materials do not fork: `fa` the face's plan centre, half width and pitch as the painted relief
+   read them, `fb` the stage data with the form in `fb.w` (FORM). A guard keeps the recesses and the coping off a face
+   where a stair stands against it. Sizes come from the plan and are checked against the stops' pixel by the forge. */
+
+import { BufferGeometry, Float32BufferAttribute } from 'three/webgpu'
+
+/** the form a face belongs to, written into `fb.w` */
+export const FORM = { plain: 0, front: 1, side: 2, back: 3, coping: 4, under: 5, top: 6 } as const
+
+export interface FormsSpec {
+  /** buttress panels: the pitch, the panel's share of it, the recess's depth */
+  pitch: number
+  share: number
+  out: number
+  /** the coping: its band's height over the face, the lip beyond the face, and the drip, the band's drop under
+      the panels' heads, so its underside throws the rain clear (built as one block: a drip's own foot of a few cm
+      is under a pixel at every stop) */
+  coping: { h: number; lip: number; drip: number }
+}
+
+export interface StageBox { x: number; z: number; yaw: number; sx: number; sz: number; y0: number; y1: number }
+
+/** the lowest level a recess may start at on face `face` over u0..u1 (the face's own frame), or the top to keep it
+    whole; the coping is left off where the guard reaches its drip */
+export type Guard = (face: number, u0: number, u1: number) => number
+
+type V3 = number[]
+
+class Soup {
+  pos: number[] = []
+  kind: number[] = []
+  fa: number[] = []
+  fb: number[] = []
+  k: number
+  stage: number[]
+  constructor(k: number, stage: number[]) {
+    this.k = k
+    this.stage = stage
+  }
+  quad(p: V3[], f: number[], form: number, out: V3): void {
+    const [a, b, c] = p as [V3, V3, V3]
+    const u = [b[0]! - a[0]!, b[1]! - a[1]!, b[2]! - a[2]!], v = [c[0]! - a[0]!, c[1]! - a[1]!, c[2]! - a[2]!]
+    const n = [u[1]! * v[2]! - u[2]! * v[1]!, u[2]! * v[0]! - u[0]! * v[2]!, u[0]! * v[1]! - u[1]! * v[0]!]
+    const q = n[0]! * out[0]! + n[1]! * out[1]! + n[2]! * out[2]! < 0 ? [p[0]!, p[3]!, p[2]!, p[1]!] : p
+    for (const i of [0, 1, 2, 0, 2, 3]) {
+      this.pos.push(...q[i]!)
+      this.kind.push(this.k)
+      this.fa.push(...f)
+      this.fb.push(this.stage[0]!, this.stage[1]!, this.stage[2]!, form)
+    }
+  }
+  geometry(): BufferGeometry {
+    const g = new BufferGeometry()
+    g.setAttribute('position', new Float32BufferAttribute(this.pos, 3))
+    g.setAttribute('kind', new Float32BufferAttribute(this.kind, 1))
+    g.setAttribute('fa', new Float32BufferAttribute(this.fa, 4))
+    g.setAttribute('fb', new Float32BufferAttribute(this.fb, 4))
+    g.computeVertexNormals()
+    return g
+  }
+}
+
+/** the recesses of one face: [u0, u1] between panels centred on the face's middle at the pitch, none in the end bays */
+export function recesses(half: number, s: Pick<FormsSpec, 'pitch' | 'share'>): Array<[number, number]> {
+  const bw = s.pitch * s.share, lim = half - s.pitch / 2, out: Array<[number, number]> = []
+  for (let m = -Math.ceil(half / s.pitch) - 1; m <= Math.ceil(half / s.pitch); m++) {
+    const r0 = m * s.pitch + bw / 2, r1 = (m + 1) * s.pitch - bw / 2
+    if (r0 >= -lim - 1e-6 && r1 <= lim + 1e-6) out.push([r0, r1])
+  }
+  return out
+}
+
+/** the four faces of a box in its own frame: the face's middle, its direction along, outward, its half length */
+export function faces(b: StageBox): Array<{ mid: [number, number]; t: [number, number]; n: [number, number]; half: number }> {
+  const hx = b.sx / 2, hz = b.sz / 2
+  const ring: Array<[number, number]> = [[-hx, -hz], [hx, -hz], [hx, hz], [-hx, hz]]
+  return ring.map((a, k) => {
+    const c = ring[(k + 1) % 4]!
+    const len = Math.hypot(c[0] - a[0], c[1] - a[1])
+    const mid: [number, number] = [(a[0] + c[0]) / 2, (a[1] + c[1]) / 2]
+    const ml = Math.hypot(mid[0], mid[1])
+    return { mid, t: [(c[0] - a[0]) / len, (c[1] - a[1]) / len], n: [mid[0] / ml, mid[1] / ml], half: len / 2 }
+  })
+}
+
+/** a stage as built forms: buttress panels with sunk recesses, the coping with its lip and drip, the top; `foot` the
+    level the recesses run down to (under the ground or into the stage below, where the next surface closes them) */
+export function buttressedStage(b: StageBox, kind: number, s: FormsSpec, stage: number[], foot: number, guard?: Guard): BufferGeometry {
+  const c = Math.cos(b.yaw), sn = Math.sin(b.yaw)
+  // three's rotation about y as towerBox: local (x, z) -> (x c + z s, -x s + z c)
+  const W = (lx: number, lz: number, y: number): V3 => [b.x + lx * c + lz * sn, y, b.z - lx * sn + lz * c]
+  const dirW = (lx: number, lz: number): V3 => [lx * c + lz * sn, 0, -lx * sn + lz * c]
+  const q = new Soup(kind, stage)
+  const { h: cH, lip, drip } = s.coping
+  // the panels and recesses end under the coping's underside, which hangs the drip below the band
+  const yt = b.y1, yd = yt - cH - drip, yc = yd
+  const F = faces(b)
+  F.forEach((f, k) => {
+    const P = (u: number, d: number, y: number): V3 => W(f.mid[0] + f.t[0] * u + f.n[0] * d, f.mid[1] + f.t[1] * u + f.n[1] * d, y)
+    const out = dirW(f.n[0], f.n[1]), along = dirW(f.t[0], f.t[1])
+    const against = [-along[0]!, 0, -along[2]!], up = [0, 1, 0], down = [0, -1, 0]
+    const fa = [b.x, b.z, f.half, s.pitch]
+    const g = (u0: number, u1: number): number => (guard ? guard(k, u0, u1) : -Infinity)
+    // the face plane between the recesses (the panels and the end bays) and under a guarded recess, to the coping
+    // over a stair, a hand's breadth above its highest tread, so the sill and the tread never share a plane
+    const R = recesses(f.half, s).map(([u0, u1]) => { const h = g(u0, u1); return { u0, u1, y: h > foot ? h + 0.05 : foot } }).filter((r) => r.y < yc - 0.3)
+    let u = -f.half
+    const front = (u0: number, u1: number, y0: number, y1: number): void => {
+      if (u1 - u0 > 1e-6 && y1 - y0 > 1e-6) q.quad([P(u0, 0, y0), P(u1, 0, y0), P(u1, 0, y1), P(u0, 0, y1)], fa, FORM.front, out)
+    }
+    for (const r of R) {
+      front(u, r.u0, foot, yc)
+      front(r.u0, r.u1, foot, r.y)
+      // the recess: its back, its two sides (each facing into it), a sill where it starts over a stair, its head
+      const d = -s.out
+      q.quad([P(r.u0, d, r.y), P(r.u1, d, r.y), P(r.u1, d, yc), P(r.u0, d, yc)], fa, FORM.back, out)
+      q.quad([P(r.u0, d, r.y), P(r.u0, 0, r.y), P(r.u0, 0, yc), P(r.u0, d, yc)], fa, FORM.side, along)
+      q.quad([P(r.u1, d, r.y), P(r.u1, 0, r.y), P(r.u1, 0, yc), P(r.u1, d, yc)], fa, FORM.side, against)
+      if (r.y > foot + 1e-6) q.quad([P(r.u0, d, r.y), P(r.u1, d, r.y), P(r.u1, 0, r.y), P(r.u0, 0, r.y)], fa, FORM.top, up)
+      q.quad([P(r.u0, d, yc), P(r.u1, d, yc), P(r.u1, 0, yc), P(r.u0, 0, yc)], fa, FORM.under, down)
+      u = r.u1
+    }
+    front(u, f.half, foot, yc)
+    // the coping band: on the face plane where a stair reaches it, else with its lip and drip, mitred at the corners
+    const STEP = s.pitch / 2
+    const segs: Array<{ u0: number; u1: number; lip: boolean }> = []
+    for (let u0 = -f.half; u0 < f.half - 1e-6; u0 += STEP) {
+      const u1 = Math.min(f.half, u0 + STEP)
+      const has = g(u0, u1) < yd - 0.05
+      const last = segs[segs.length - 1]
+      if (last && last.lip === has) last.u1 = u1
+      else segs.push({ u0, u1, lip: has })
+    }
+    // a mitred strip at distance d from the face reaches the corner lines only where the coping runs to the corner
+    const ext = (seg: { u0: number; u1: number }, d: number): [number, number] => [seg.u0 <= -f.half + 1e-6 ? seg.u0 - d : seg.u0, seg.u1 >= f.half - 1e-6 ? seg.u1 + d : seg.u1]
+    for (const seg of segs) {
+      if (!seg.lip) {
+        q.quad([P(seg.u0, 0, yc), P(seg.u1, 0, yc), P(seg.u1, 0, yt), P(seg.u0, 0, yt)], fa, FORM.coping, out)
+        continue
+      }
+      const [a0, a1] = ext(seg, 0), [c0, c1] = ext(seg, lip)
+      // the front, the underside, the top over the lip
+      q.quad([P(c0, lip, yd), P(c1, lip, yd), P(c1, lip, yt), P(c0, lip, yt)], fa, FORM.coping, out)
+      q.quad([P(a0, 0, yd), P(a1, 0, yd), P(c1, lip, yd), P(c0, lip, yd)], fa, FORM.under, down)
+      q.quad([P(a0, 0, yt), P(a1, 0, yt), P(c1, lip, yt), P(c0, lip, yt)], fa, FORM.top, up)
+      // where the lip stops short of a corner (a stair beside it), its end closes it
+      for (const [e, dir] of [[seg.u0, against], [seg.u1, along]] as Array<[number, V3]>) {
+        if (Math.abs(Math.abs(e) - f.half) < 1e-6) continue
+        q.quad([P(e, 0, yd), P(e, lip, yd), P(e, lip, yt), P(e, 0, yt)], fa, FORM.coping, dir)
+      }
+    }
+  })
+  // the top, inside the copings' lips
+  const hx = b.sx / 2, hz = b.sz / 2
+  q.quad([W(-hx, -hz, yt), W(hx, -hz, yt), W(hx, hz, yt), W(-hx, hz, yt)], [b.x, b.z, 0, s.pitch], FORM.top, [0, 1, 0])
+  return q.geometry()
+}

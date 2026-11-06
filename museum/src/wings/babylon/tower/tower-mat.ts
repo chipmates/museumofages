@@ -2,9 +2,9 @@
    of the stop, branching on the body's `kind` attribute and the face's own data, never on screen derivatives.
      0 the precinct's walls   white lime-gypsum plaster over mud brick, guessed: patches of older and newer coats, the
                               mud showing where splash and flaking took the plaster at the foot, runs under the tops
-     1 the tower's brick      baked brick in thick bitumen joints on the kit's bond, the faces in tall panels; each stage
-                              its own batch, a coping at its top with the drip's shadow under it, the inner corner
-                              at an upper stage's foot holding the sky back
+     1 the tower's brick      baked brick in thick bitumen joints on the kit's bond, the panels and copings built as
+                              forms; each stage its own batch, the inner corner at an upper stage's foot holding
+                              the sky back
      2 the temple on top      blue-glazed brick (the king's claim; the hue ours), each brick fired a little differently,
                               the glaze giving back the sky it faces
      6 a stair's side walls   brick in the bond
@@ -132,17 +132,15 @@ export function towerMaterial(F: GateFrame, tp: J, tones: ClassTones): Material 
   const mottle1 = mx_noise_float(vec3(uT.mul(0.09), P.y.mul(0.11), 5.5)).mul(0.06)
   towerCol = towerCol.mul(float(1).add(mottle1))
   towerCol = towerCol.mul(mix(float(0.86), float(1), smoothstep(3.5, 6.0, P.y)))
-  // each stage its own: a batch of brick a little apart in tone, a coping of three courses at its top lighter with the
-  // dust on its lip, the drip's shadow under it, and an upper stage's foot darker where the terrace meets its face
+  // each stage its own: a batch of brick a little apart in tone, and an upper stage's foot darker where the terrace
+  // meets its face (the coping and its drip are built, `worn-forms-babylon`)
   const fb = attribute('fb', 'vec4')
   const sk = fb.z, yb = fb.x, yt = fb.y
-  const hUp = P.y.sub(yb), hDown = yt.sub(P.y)
+  const hUp = P.y.sub(yb)
   const stageTone = float(1).add(hash2(sk, float(3.1)).sub(0.5).mul(0.09))
-  const coping = float(1).sub(smoothstep(float(0.95).sub(fy), float(0.95).add(fy), hDown))
-  const drip = float(1).sub(smoothstep(float(0.25).sub(fy), float(0.25).add(fy), abs(hDown.sub(1.2))))
   const cornerAO = float(1).sub(smoothstep(0.0, 5.0, hUp)).mul(step(1.5, sk))
   const upFace = smoothstep(0.0, max(yt.sub(yb), 1.0), hUp)
-  const staged = stageTone.mul(mix(float(0.93), float(1.04), upFace)).mul(float(1).add(coping.mul(0.13))).mul(float(1).sub(drip.mul(0.22))).mul(float(1).sub(cornerAO.mul(0.3)))
+  const staged = stageTone.mul(mix(float(0.93), float(1.04), upFace)).mul(float(1).sub(cornerAO.mul(0.3)))
   towerCol = towerCol.mul(mix(float(1), staged, step(0.5, sk)))
   // the stage tops: brick laid flat, dust lying on it
   const flatB = max(lines(P.x, BR, 0.008, fw), lines(P.z, BR, 0.008, fw))

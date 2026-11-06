@@ -10,6 +10,9 @@
 
 import { BufferGeometry, ExtrudeGeometry, Float32BufferAttribute, Shape } from 'three/webgpu'
 import type { BoxRec, Built, Cls, P2, Ramp } from '../map/plan'
+// node resolves a relative module only by its full name, which the bundler's type check refuses without this note
+// @ts-expect-error TS5097: the shared forms kit, imported by its extension so the forge's node checks load it too
+import { buttressedStage, faces as stageFaces, type FormsSpec } from '../parts/worn-forms-babylon.ts'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
@@ -190,6 +193,42 @@ function fixWinding(g: BufferGeometry): void {
   }
   p.needsUpdate = true
   g.computeVertexNormals()
+}
+
+/** the highest point of the stairs within 1.5 m of each face of a stage, over a stretch of that face (its own frame,
+    as the forms kit's `faces`): the stairs' triangle edges sampled every 0.25 m */
+function stairGuard(b: BoxRec, geoms: BufferGeometry[]): (face: number, u0: number, u1: number) => number {
+  const F = stageFaces(b)
+  const c = Math.cos(b.yaw), s = Math.sin(b.yaw)
+  const pts: Array<Array<[number, number]>> = F.map(() => [])
+  const add = (x: number, y: number, z: number): void => {
+    // the inverse of towerBox's turn: local x = dx c - dz s, local z = dx s + dz c
+    const dx = x - b.x, dz = z - b.z, lx = dx * c - dz * s, lz = dx * s + dz * c
+    F.forEach((f, k) => {
+      const rx = lx - f.mid[0], rz = lz - f.mid[1]
+      const u = rx * f.t[0] + rz * f.t[1], d = rx * f.n[0] + rz * f.n[1]
+      if (d > -1.5 && d < 1.5 && Math.abs(u) < f.half + 2) pts[k]!.push([u, y])
+    })
+  }
+  for (const g0 of geoms) {
+    const p = g0.getAttribute('position')
+    for (let k = 0; k < p.count; k += 3) {
+      for (let e = 0; e < 3; e++) {
+        const i = k + e, j = k + ((e + 1) % 3)
+        const L = Math.hypot(p.getX(j) - p.getX(i), p.getY(j) - p.getY(i), p.getZ(j) - p.getZ(i))
+        const n = Math.max(1, Math.ceil(L / 0.25))
+        for (let t = 0; t <= n; t++) {
+          const w = t / n
+          add(p.getX(i) + (p.getX(j) - p.getX(i)) * w, p.getY(i) + (p.getY(j) - p.getY(i)) * w, p.getZ(i) + (p.getZ(j) - p.getZ(i)) * w)
+        }
+      }
+    }
+  }
+  return (face, u0, u1) => {
+    let top = -Infinity
+    for (const [u, y] of pts[face]!) if (u >= u0 - 0.05 && u <= u1 + 0.05 && y > top) top = y
+    return top
+  }
 }
 
 /** a slight tower: a box standing against a wall face at `at` (scene x, z), its back on the face, sunk below the ground */
@@ -625,24 +664,13 @@ export function buildTower(built: Built, mapPlan: J, tp: J): Tower {
   bodies.push({ id: 'gate5-street-dug', geometry: streetGeo(dug), band: 1e6, letters: ['M', 'M'] })
   bodies.push({ id: 'gate5-street-south', geometry: streetGeo(rest), band: 1e6, letters: ['R', 'R'] })
 
-  /* ── Etemenanki: the map's stages, each face with its panels' data; the top a glazed temple ── */
+  /* ── Etemenanki: the map's stages; the stairs first, since they keep the first stage's recesses and coping off the
+     face where they stand against it; the stages keep their place among the bodies ── */
   const stages = built.boxes.filter((b) => TAKEN_BOX(b.id))
   const PN = tp.tower.panels
   const towerGround = g(stages[0]!.x, stages[0]!.z)
   const TT = tp.tower
-  for (const b of stages) {
-    const k = Number(b.id.split('-').pop())
-    // the stage's visible foot: the court for the first, the terrace below for the rest
-    const stage = [k === 1 ? towerGround : b.y0 + 0.05, b.y1, k, 0]
-    if (k === stages.length && TT.temple.glaze) {
-      const t = templeBody(b, PN.pitch1, { ...TT.temple.door, floor: b.y0 + 0.05 }, TT.temple.crest, stage)
-      bodies.push({ id: b.id, geometry: t.body, band: -1, letters: [b.plan, b.height] })
-      bodies.push({ id: 'tower-top-crest', geometry: t.crest, band: -1, letters: [b.plan, b.height] })
-      continue
-    }
-    // about 13 panels a side on the first stage; the upper stages keep its pitch, so the rhythm runs up the tower
-    bodies.push({ id: b.id, geometry: towerBox(b, KIND.brick, PN.pitch1, stage), band: k === 1 ? towerGround + BAND : -1, letters: [b.plan, b.height] })
-  }
+  const stageAt = bodies.length
   // the three stairs up to the first stage's top, on the map's ramps: the middle one a flight between its side walls,
   // the side ones from a foot beyond the tower's corner (the west one's dug foot lies 1.9 m west of the tower)
   const stairs = built.ramps.filter((r) => TAKEN_RAMP(r.id))
@@ -681,6 +709,26 @@ export function buildTower(built: Built, mapPlan: J, tp: J): Tower {
     const uv = (p: P2): number[] => [+dot(sub(p, centre), [-dM[0], -dM[1]]).toFixed(3), +dot(sub(p, centre), nM).toFixed(3)]
     sideFacts[r.id] = { ...st.facts, landing: +landing.toFixed(3), footUV: uv(st.facts.foot), headUV: uv(st.facts.head), endUV: uv(st.facts.end), outerU: +(dot(sub(m, centre), [-dM[0], -dM[1]]) + r.w / 2).toFixed(3), clear: MS.clear }
   }
+
+  // each stage's faces cut into buttress panels at the first stage's pitch (about 13 a side there; the rhythm runs up
+  // the tower), a coping with its lip and drip on every stage's top; the top a glazed temple
+  const forms: FormsSpec = { pitch: PN.pitch1, share: PN.share, out: PN.out, coping: TT.forms.coping }
+  const guard = stairGuard(stages[0]!, bodies.slice(stageAt).filter((b) => TAKEN_RAMP(b.id)).map((b) => b.geometry))
+  const stageBodies: TowerBody[] = []
+  for (const b of stages) {
+    const k = Number(b.id.split('-').pop())
+    // the stage's visible foot: the court for the first, the terrace below for the rest
+    const stage = [k === 1 ? towerGround : b.y0 + 0.05, b.y1, k, 0]
+    if (k === stages.length && TT.temple.glaze) {
+      const t = templeBody(b, PN.pitch1, { ...TT.temple.door, floor: b.y0 + 0.05 }, TT.temple.crest, stage)
+      stageBodies.push({ id: b.id, geometry: t.body, band: -1, letters: [b.plan, b.height] })
+      stageBodies.push({ id: 'tower-top-crest', geometry: t.crest, band: -1, letters: [b.plan, b.height] })
+      continue
+    }
+    const geo = buttressedStage(b, KIND.brick, forms, stage, b.y0, k === 1 ? guard : undefined)
+    stageBodies.push({ id: b.id, geometry: geo, band: k === 1 ? towerGround + BAND : -1, letters: [b.plan, b.height] })
+  }
+  bodies.splice(stageAt, 0, ...stageBodies)
 
   const facts = {
     opening: +(2 * half).toFixed(2),
