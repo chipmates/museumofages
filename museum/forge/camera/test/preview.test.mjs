@@ -86,6 +86,10 @@ test('the lens is read sparsely and filled in, never across a cut', () => {
   assert.equal(f[6].shift, -0.12)
   assert.equal(f[7].shift, 0.3)
   assert.equal(f[8].stops, 1, 'the run after the cut keeps its own exposure')
+  // no readout on the cut itself: the frames after it take the next readout of their own run, not a blend across
+  const sparse = fillLens(12, new Map([[0, { shift: 0, stops: 5 }], [5, { shift: -0.1, stops: 5 }], [10, { shift: 0.3, stops: 1 }]]), [7])
+  assert.equal(sparse[8].shift, 0.3)
+  assert.equal(sparse[6].shift, -0.1)
 })
 
 test('a preview track says so in its source, its readings (TSV and JSON) and its plot title', (ctx) => {
