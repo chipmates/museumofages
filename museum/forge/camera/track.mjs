@@ -75,17 +75,20 @@ export function fromSketch(json, { framing = 'desktop', aspect = framing === 'de
 }
 
 /** a frame whose eye moves over 3 m or whose view turns over 45 degrees from the last starts a new run: a cut where
-    the source names one (within a frame of it, or through its black), a jump where it does not */
+    the source names one (within a frame of it, or through its black, where the run starts at the pose's change), a
+    jump where it does not */
 export function jumpCuts(samples, fps, given = [], blackTo = {}) {
-  const set = new Set(given.flatMap((c) => [c - 1, c, c + 1, ...(blackTo[c] ? Array.from({ length: blackTo[c] - c + 1 }, (_, k) => c + k) : [])]))
-  const jumps = []
+  const named = new Set(given.flatMap((c) => [c - 1, c, c + 1]))
+  const black = new Set(given.flatMap((c) => (blackTo[c] ? Array.from({ length: blackTo[c] - c }, (_, k) => c + 1 + k) : [])))
+  const jumps = [], inBlack = []
   for (let i = 1; i < samples.length; i++) {
     const a = samples[i - 1], b = samples[i]
     const fa = forwardOf(a), fb = forwardOf(b)
     const turn = Math.acos(Math.max(-1, Math.min(1, fa[0] * fb[0] + fa[1] * fb[1] + fa[2] * fb[2]))) / D2R
-    if ((Math.hypot(b[0] - a[0], b[1] - a[1], b[2] - a[2]) > 3 || turn > 45) && !set.has(i)) jumps.push(i)
+    if (!(Math.hypot(b[0] - a[0], b[1] - a[1], b[2] - a[2]) > 3 || turn > 45) || named.has(i)) continue
+    ;(black.has(i) ? inBlack : jumps).push(i)
   }
-  return { cuts: [...new Set([...given, ...jumps])].sort((p, q) => p - q).filter((c, i, a) => !i || c - a[i - 1] > 1), jumps }
+  return { cuts: [...new Set([...given, ...inBlack, ...jumps])].sort((p, q) => p - q).filter((c, i, a) => !i || c - a[i - 1] > 1), jumps }
 }
 
 const APP = join(dirname(fileURLToPath(import.meta.url)), '../..')

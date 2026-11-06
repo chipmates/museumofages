@@ -162,7 +162,8 @@ export function readMove(track, c, move, L = THRESHOLDS) {
   flag('turn-jerk', (i) => c.turnJerk[i] > capOf(i, 'turnDegPerSecond3'), (i) => c.turnJerk[i], (i) => capOf(i, 'turnDegPerSecond3'), 'deg/s3')
   flag('fast-picture', (i) => c.centreWidths[i] > capOf(i, 'screenWidthsPerSecond'), (i) => c.centreWidths[i], (i) => capOf(i, 'screenWidthsPerSecond'), 'widths/s')
   flag('surge', (i) => c.accel[i] > val(L, 'bodyMetresPerSecond2'), (i) => c.accel[i], () => val(L, 'bodyMetresPerSecond2'), 'm/s2')
-  flag('jerk', (i) => c.jerk[i] > val(L, 'bodyMetresPerSecond3'), (i) => c.jerk[i], () => val(L, 'bodyMetresPerSecond3'), 'm/s3')
+  const jerkCap = (i) => val(L, track.kinds?.[i] === 'fly' ? 'flyMetresPerSecond3' : 'bodyMetresPerSecond3')
+  flag('jerk', (i) => c.jerk[i] > jerkCap(i), (i) => c.jerk[i], jerkCap, 'm/s3')
   flag('zoom', (i) => c.zoom[i] > val(L, 'zoomPerSecond'), (i) => c.zoom[i], () => val(L, 'zoomPerSecond'), '/s')
 
   // the holds: still runs, the authored spans beside them
@@ -190,6 +191,13 @@ export function readMove(track, c, move, L = THRESHOLDS) {
   for (const a of authored) if (a.movingShare > val(L, 'driftShare')) flags.push({ flag: 'unsettled', t0: a.t0, t1: a.t1, peak: a.movingShare, at: a.t0, cap: val(L, 'driftShare'), unit: 'share of an authored hold that moves' })
   for (const j of track.jumps ?? []) if (j > from && j < to) flags.push({ flag: 'jump', t0: sec(j - 1), t1: sec(j), peak: 1, at: sec(j), cap: 0, unit: 'unnamed cut' })
 
+  // a surge or jerk peak within reach of a key is the path's step there, not a reading's fault: name the key
+  const marks = marksOf(track).filter((k) => k >= from && k < to), reach = Math.round(val(L, 'markReachSeconds') * fps)
+  for (const f of flags) if (f.flag === 'surge' || f.flag === 'jerk') {
+    const at = from + Math.round(f.at * fps)
+    const near = marks.filter((k) => Math.abs(k - at) <= reach).sort((p, q) => Math.abs(p - at) - Math.abs(q - at))[0]
+    if (near !== undefined) f.mark = sec(near)
+  }
   // the live film's walk gate on the move's own frames
   let weave = null
   if (to - from > 2) {
@@ -217,6 +225,14 @@ export function readMove(track, c, move, L = THRESHOLDS) {
   }
 }
 
+/** a track's marks as frames: its path keys where it has them, else its kind changes; its cuts in both */
+export function marksOf(track) {
+  const out = new Set(track.cuts ?? [])
+  if (track.keys?.length) for (const k of track.keys) out.add(k)
+  else if (track.kinds) for (let i = 1; i < track.kinds.length; i++) if (track.kinds[i] !== track.kinds[i - 1]) out.add(i)
+  return [...out].sort((p, q) => p - q)
+}
+
 /** the per-frame curves of one move, for its JSON and its plot */
 export function moveCurves(c, move) {
   const keys = ['x', 'y', 'z', 'heading', 'elevation', 'speed', 'accel', 'jerk', 'headingRate', 'pitchRate', 'turnRate', 'turnAccel', 'turnJerk', 'centreWidths', 'farWidths', 'zoom', 'hfov', 'standing', 'still']
@@ -232,10 +248,10 @@ export function tsvRow(r) {
   const p = r.peaks
   return [r.name, r.startSeconds, r.seconds, r.metres, p.speed, p.accel, p.jerk, p.turnRate, p.headingRate, p.pitchRate, p.turnAccel, p.turnJerk, p.centreWidths, p.farWidths, p.zoom, p.yMin, p.yMax,
     r.holds.length, r.holdSeconds, r.holds.length ? Math.min(...r.holds.map((h) => h.seconds)) : '',
-    ...FLAG_ORDER.map(count), FLAG_ORDER.filter((f) => count(f)).join(' ')].join('\t')
+    ...FLAG_ORDER.map(count), r.flags.filter((f) => f.flag === 'jerk' && f.mark !== undefined).length, FLAG_ORDER.filter((f) => count(f)).join(' ')].join('\t')
 }
 export const TSV_HEAD = ['move', 'start_s', 'seconds', 'metres', 'speed_mps', 'accel_mps2', 'jerk_mps3', 'turn_dps', 'heading_dps', 'pitch_dps', 'turn_dps2', 'turn_dps3', 'centre_wps', 'far_wps', 'zoom_ps', 'y_min', 'y_max',
-  'holds', 'hold_s', 'shortest_hold_s', ...FLAG_ORDER, 'flags'].join('\t')
+  'holds', 'hold_s', 'shortest_hold_s', ...FLAG_ORDER, 'jerk_at_mark', 'flags'].join('\t')
 
 /** read every move of a track into a folder: readings.tsv and one JSON a move */
 export function readTrackInto(track, out, L = THRESHOLDS) {

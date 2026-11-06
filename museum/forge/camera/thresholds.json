@@ -15,7 +15,9 @@
     "source": "live: CALM_STANDING.desktop 36, 23 and 60 times T1, T1^2, T1^3; filmPixelsPerFrame 28 at 1920 px and 30 fps"
   },
   "bodyMetresPerSecond2": { "value": 2, "source": "live: CALM.bodyMetresPerSecond2" },
-  "bodyMetresPerSecond3": { "value": 4, "source": "guess: the live 2 m/s2 reached in no less than half a second" },
+  "bodyMetresPerSecond3": { "value": 10, "source": "derived: the live 2 m/s2 surge line (CALM.bodyMetresPerSecond2) over the 0.2 s derivative window, so a reading of 10 m/s3 is an acceleration step of 2 m/s2" },
+  "flyMetresPerSecond3": { "value": 20.3, "source": "guess: Babylon's jerk P99 inside fly segments away from keys (camera-kit-1106b dist), for frames of kind fly" },
+  "markReachSeconds": { "value": 0.2, "source": "derived: twice derivativeHalfSeconds, the reach of an acceleration step at a key into the jerk reading" },
   "zoomPerSecond": { "value": 0.15, "source": "live: CALM.zoomPerSecond (the lens's change as a share of the picture's scale per second)" },
   "standingMetresPerSecond": { "value": 0.05, "source": "live: motion.mjs middleOf's moved test (0.05 m/s)" },
   "stillDegPerSecond": { "value": 1, "source": "guess: a view turning under 1 deg/s reads as held" },
