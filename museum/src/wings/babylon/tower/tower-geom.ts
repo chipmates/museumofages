@@ -12,7 +12,7 @@ import { BufferGeometry, ExtrudeGeometry, Float32BufferAttribute, Shape } from '
 import type { BoxRec, Built, Cls, P2, Ramp } from '../map/plan'
 // node resolves a relative module only by its full name, which the bundler's type check refuses without this note
 // @ts-expect-error TS5097: the shared forms kit, imported by its extension so the forge's node checks load it too
-import { buttressedStage, faces as stageFaces, type FormsSpec } from '../parts/worn-forms-babylon.ts'
+import { buttressedFace, buttressedStage, faces as stageFaces, type FormsSpec } from '../parts/worn-forms-babylon.ts'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type J = any
@@ -69,21 +69,21 @@ class Soup {
   fb: number[] = []
   /** the stage data every following face carries */
   stage: number[] = [0, 0, 0, 0]
-  tri(p: number[][], k: number, f: number[][]): void {
+  tri(p: number[][], k: number, f: number[][], b?: number[][]): void {
     for (let j = 0; j < 3; j++) {
       this.pos.push(...p[j]!)
       this.kind.push(k)
       this.fa.push(...f[j]!)
-      this.fb.push(...this.stage)
+      this.fb.push(...(b ? b[j]! : this.stage))
     }
   }
   /** a quad turned so its front faces `out` */
-  quadOut(p: number[][], k: number, f: number[][], out: number[]): void {
+  quadOut(p: number[][], k: number, f: number[][], out: number[], fbs?: number[][]): void {
     const a = p[0]!, b = p[1]!, c = p[2]!
     const u = [b[0]! - a[0]!, b[1]! - a[1]!, b[2]! - a[2]!], v = [c[0]! - a[0]!, c[1]! - a[1]!, c[2]! - a[2]!]
     const n = [u[1]! * v[2]! - u[2]! * v[1]!, u[2]! * v[0]! - u[0]! * v[2]!, u[0]! * v[1]! - u[1]! * v[0]!]
-    if (n[0]! * out[0]! + n[1]! * out[1]! + n[2]! * out[2]! < 0) this.quad([p[0]!, p[3]!, p[2]!, p[1]!], k, [f[0]!, f[3]!, f[2]!, f[1]!])
-    else this.quad(p, k, f)
+    if (n[0]! * out[0]! + n[1]! * out[1]! + n[2]! * out[2]! < 0) this.quad([p[0]!, p[3]!, p[2]!, p[1]!], k, [f[0]!, f[3]!, f[2]!, f[1]!], fbs && [fbs[0]!, fbs[3]!, fbs[2]!, fbs[1]!])
+    else this.quad(p, k, f, fbs)
   }
   /** a triangle turned so its front faces `out` */
   triOut(p: number[][], k: number, f: number[][], out: number[]): void {
@@ -108,9 +108,10 @@ class Soup {
     this.quadOut([P(-hx, -hz, y1), P(-hx, hz, y1), P(hx, hz, y1), P(hx, -hz, y1)], k, f, [0, 1, 0])
   }
   /** a quad p0 p1 p2 p3 (counter-clockwise seen from its front) */
-  quad(p: number[][], k: number, f: number[][]): void {
-    this.tri([p[0]!, p[1]!, p[2]!], k, [f[0]!, f[1]!, f[2]!])
-    this.tri([p[0]!, p[2]!, p[3]!], k, [f[0]!, f[2]!, f[3]!])
+  /** `b` per corner where a face's stage data varies over it (a sloped recess head), else the soup's stage */
+  quad(p: number[][], k: number, f: number[][], b?: number[][]): void {
+    this.tri([p[0]!, p[1]!, p[2]!], k, [f[0]!, f[1]!, f[2]!], b && [b[0]!, b[1]!, b[2]!])
+    this.tri([p[0]!, p[2]!, p[3]!], k, [f[0]!, f[2]!, f[3]!], b && [b[0]!, b[2]!, b[3]!])
   }
   geometry(): BufferGeometry {
     const g = new BufferGeometry()
@@ -329,6 +330,9 @@ export interface SideStairOpts {
   pitch: number
   /** the middle flight's level under a point (scene x, z), where the landing's end stands on it */
   under: (x: number, z: number) => number
+  /** the mass's outer face built in the stage's forms: `mid` the first stage's face middle there (plan), so the
+      panels run on in its rhythm; a recess's head `margin` under the flight's line, none under `minH` tall */
+  forms?: { mid: P2; spec: FormsSpec; margin: number; minH: number }
 }
 
 /** a side stair as built steps: a riser and a tread per step from the foot (`beyond` short of the ramp's start, at
@@ -371,9 +375,18 @@ export function sideStair(r: Ramp, o: SideStairOpts): { flight: BufferGeometry; 
   const midP = at(sEnd / 2, vo, 0)
   const fp = Array(4).fill([midP[0]!, midP[2]!, sEnd / 2, o.pitch])
   const w = new Soup()
-  // the mass: its outer face, the ledge on it, its foot
-  w.quadOut([at(0, vo, r.floor), at(run, vo, r.floor), at(run, vo, r.y1), at(0, vo, r.y0)], KIND.brick, fp, out)
-  w.quadOut([at(run, vo, r.floor), at(sEnd, vo, r.floor), at(sEnd, vo, r.y1), at(run, vo, r.y1)], KIND.brick, fp, out)
+  // the mass: its outer face (in the stage's forms where the plan gives them), the ledge on it, its foot
+  if (o.forms) {
+    const nO: P2 = [n[0] * o.outer, n[1] * o.outer], p0 = at(0, vo, 0), F = o.forms
+    const dist = (p0[0]! - F.mid[0]) * nO[0] + (p0[2]! - F.mid[1]) * nO[1]
+    const mid: [number, number] = [F.mid[0] + nO[0] * dist, F.mid[1] + nO[1] * dist]
+    const u0 = (p0[0]! - mid[0]) * d[0] + (p0[2]! - mid[1]) * d[1]
+    const top: Array<[number, number]> = [[u0, r.y0], [u0 + run, r.y1], [u0 + sEnd, r.y1]]
+    buttressedFace({ mid, t: d, n: nO, u0, u1: u0 + sEnd, foot: r.floor, top, margin: F.margin, minH: F.minH }, F.spec, (p, fa, fb, dir) => w.quadOut(p, KIND.brick, [fa, fa, fa, fa], dir, fb))
+  } else {
+    w.quadOut([at(0, vo, r.floor), at(run, vo, r.floor), at(run, vo, r.y1), at(0, vo, r.y0)], KIND.brick, fp, out)
+    w.quadOut([at(run, vo, r.floor), at(sEnd, vo, r.floor), at(sEnd, vo, r.y1), at(run, vo, r.y1)], KIND.brick, fp, out)
+  }
   w.quadOut([at(0, vo2, r.y0), at(run, vo2, r.y1), at(run, vo, r.y1), at(0, vo, r.y0)], KIND.cheek, f0, up)
   w.quadOut([at(run, vo2, r.y1), at(sEnd, vo2, r.y1), at(sEnd, vo, r.y1), at(run, vo, r.y1)], KIND.cheek, f0, up)
   w.quadOut([at(0, vi, r.floor), at(0, vo, r.floor), at(0, vo, r.y0), at(0, vi, r.y0)], KIND.cheek, f0, back)
@@ -684,6 +697,7 @@ export function buildTower(built: Built, mapPlan: J, tp: J): Tower {
   const sides = stairs.filter((r) => r !== mid)
   const wallEnd = Math.max(...sides.map((r) => dot(sub(r.a, mid.b), [-dM[0], -dM[1]]) + r.w / 2))
   const sideFacts: Record<string, unknown> = {}
+  const forms: FormsSpec = { pitch: PN.pitch1, share: PN.share, out: PN.out, coping: TT.forms.coping }
   for (const r of stairs) {
     const middle = r === mid
     if (middle) {
@@ -702,7 +716,12 @@ export function buildTower(built: Built, mapPlan: J, tp: J): Tower {
     const d = norm(sub(r.b, r.a)), n: P2 = [-d[1], d[0]], m: P2 = [(r.a[0] + r.b[0]) / 2, (r.a[1] + r.b[1]) / 2]
     const outer = dot(sub(m, centre), n) > 0 ? 1 : -1
     const landing = Math.abs(dot(sub(r.b, mid.a), nM)) - MS.clear / 2
-    const st = sideStair(r, { riser: TT.stairs.riser, beyond: SS.beyond, wall: SS.wall, above: SS.above, outer, sink: SS.sink, ledge: SS.ledge, pitch: PN.pitch1, landing, under })
+    // the first stage's face the mass stands before, so its panels run on in that face's rhythm
+    const s1 = stages[0]!, c1 = Math.cos(s1.yaw), n1 = Math.sin(s1.yaw), nO: P2 = [n[0] * outer, n[1] * outer]
+    const f1 = stageFaces(s1).map((f) => ({ mid: [s1.x + f.mid[0] * c1 + f.mid[1] * n1, s1.z - f.mid[0] * n1 + f.mid[1] * c1] as P2, n: [f.n[0] * c1 + f.n[1] * n1, -f.n[0] * n1 + f.n[1] * c1] as P2 }))
+    const face1 = f1.reduce((a, b) => (dot(b.n, nO) > dot(a.n, nO) ? b : a))
+    const massForms = TT.forms.stairMass ? { mid: face1.mid, spec: forms, margin: TT.forms.stairMass.margin, minH: TT.forms.stairMass.minH } : undefined
+    const st = sideStair(r, { riser: TT.stairs.riser, beyond: SS.beyond, wall: SS.wall, above: SS.above, outer, sink: SS.sink, ledge: SS.ledge, pitch: PN.pitch1, landing, under, forms: massForms })
     bodies.push({ id: r.id, geometry: st.flight, band: r.band, letters: [r.plan, r.height] })
     bodies.push({ id: `${r.id}-wall-outer`, geometry: st.wall, band: r.band, letters: [r.plan, r.height] })
     // in the tower's own frame: out along the middle stair's axis, across it
@@ -712,7 +731,6 @@ export function buildTower(built: Built, mapPlan: J, tp: J): Tower {
 
   // each stage's faces cut into buttress panels at the first stage's pitch (about 13 a side there; the rhythm runs up
   // the tower), a coping with its lip and drip on every stage's top; the top a glazed temple
-  const forms: FormsSpec = { pitch: PN.pitch1, share: PN.share, out: PN.out, coping: TT.forms.coping }
   const guard = stairGuard(stages[0]!, bodies.slice(stageAt).filter((b) => TAKEN_RAMP(b.id)).map((b) => b.geometry))
   const stageBodies: TowerBody[] = []
   for (const b of stages) {

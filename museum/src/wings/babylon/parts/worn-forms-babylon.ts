@@ -173,3 +173,76 @@ export function buttressedStage(b: StageBox, kind: number, s: FormsSpec, stage: 
   q.quad([W(-hx, -hz, yt), W(hx, -hz, yt), W(hx, hz, yt), W(-hx, hz, yt)], [b.x, b.z, 0, 0], FORM.top, [0, 1, 0])
   return q.geometry()
 }
+
+/** one quad of a face's forms for a body that builds its own soup: its corners, `fa`, `fb` per corner (the form in
+    `w`), outward */
+export type FaceEmit = (p: V3[], fa: number[], fb: number[][], out: V3) => void
+
+export interface SlopedFace {
+  /** a point of the face's plane where its panels are centred (the stage's rhythm carried on), along it, outward (plan) */
+  mid: [number, number]
+  t: [number, number]
+  n: [number, number]
+  /** the span from `mid` along `t`, the foot, and the top as points (u, y) from u0 to u1, linear between them */
+  u0: number
+  u1: number
+  foot: number
+  top: Array<[number, number]>
+  /** a recess's head runs `margin` under the top, parallel to it; one whose head comes under `minH` over the foot is
+      left whole */
+  margin: number
+  minH: number
+}
+
+/** buttress panels sunk into one upright face whose top runs along a line (a stair's mass under its flight): the
+    stage's recesses at its pitch, share and depth, none in the end bays, each head a band under the top and parallel
+    to it, as the stages' heads run under their copings; the face plane round them to the top. `fa` the face's middle
+    and outward normal with no lip (FACE.open), `fb.y` the head over the stages' band at each corner, so `towerSun`
+    shades a recess as a stage's; `fb.z` 0 keeps the stages' tone off. Returns the recesses built. */
+export function buttressedFace(f: SlopedFace, s: Pick<FormsSpec, 'pitch' | 'share' | 'out' | 'coping'>, emit: FaceEmit): number {
+  const P = (u: number, d: number, y: number): V3 => [f.mid[0] + f.t[0] * u + f.n[0] * d, y, f.mid[1] + f.t[1] * u + f.n[1] * d]
+  const out: V3 = [f.n[0], 0, f.n[1]], along: V3 = [f.t[0], 0, f.t[1]], against: V3 = [-f.t[0], 0, -f.t[1]]
+  const fa = [f.mid[0], f.mid[1], f.n[0] * FACE.open, f.n[1] * FACE.open]
+  const band = s.coping.h + s.coping.drip
+  const top = (u: number): number => {
+    const T = f.top
+    if (u <= T[0]![0]) return T[0]![1]
+    for (let i = 0; i + 1 < T.length; i++) {
+      const [ua, ya] = T[i]!, [ub, yb] = T[i + 1]!
+      if (u <= ub) return ya + ((yb - ya) * (u - ua)) / Math.max(ub - ua, 1e-9)
+    }
+    return T[T.length - 1]![1]
+  }
+  const head = (u: number): number => top(u) - f.margin
+  // u0..u1 cut at the top's corners, so every piece between two levels that follow the top stays planar
+  const pieces = (u0: number, u1: number): Array<[number, number]> => {
+    const c = [u0, ...f.top.map((p) => p[0]).filter((x) => x > u0 + 1e-6 && x < u1 - 1e-6), u1]
+    return c.slice(1).map((x, i) => [c[i]!, x])
+  }
+  const B = (form: number, u: number): number[] => [0, head(u) + band, 0, form]
+  // an upright piece of the plane `d` from the face, from `lo(u)` up to `hi(u)`
+  const wall = (u0: number, u1: number, d: number, lo: (u: number) => number, hi: (u: number) => number, form: number, dir: V3): void => {
+    for (const [a, c] of pieces(u0, u1)) {
+      if (hi(a) - lo(a) > 1e-6 || hi(c) - lo(c) > 1e-6) emit([P(a, d, lo(a)), P(c, d, lo(c)), P(c, d, hi(c)), P(a, d, hi(a))], fa, [B(form, a), B(form, c), B(form, c), B(form, a)], dir)
+    }
+  }
+  const bw = s.pitch * s.share, lo = f.u0 + s.pitch / 2, hi = f.u1 - s.pitch / 2
+  const R: Array<[number, number]> = []
+  for (let m = Math.floor(f.u0 / s.pitch) - 1; m <= Math.ceil(f.u1 / s.pitch); m++) {
+    const r0 = m * s.pitch + bw / 2, r1 = (m + 1) * s.pitch - bw / 2
+    if (r0 >= lo - 1e-6 && r1 <= hi + 1e-6 && Math.min(head(r0), head(r1)) - f.foot >= f.minH) R.push([r0, r1])
+  }
+  const foot = (): number => f.foot, d = -s.out
+  let u = f.u0
+  for (const [r0, r1] of R) {
+    wall(u, r0, 0, foot, top, FORM.front, out)
+    wall(r0, r1, 0, head, top, FORM.front, out)
+    wall(r0, r1, d, foot, head, FORM.back, out)
+    emit([P(r0, d, f.foot), P(r0, 0, f.foot), P(r0, 0, head(r0)), P(r0, d, head(r0))], fa, Array(4).fill(B(FORM.side, r0)), along)
+    emit([P(r1, d, f.foot), P(r1, 0, f.foot), P(r1, 0, head(r1)), P(r1, d, head(r1))], fa, Array(4).fill(B(FORM.side, r1)), against)
+    for (const [a, c] of pieces(r0, r1)) emit([P(a, d, head(a)), P(c, d, head(c)), P(c, 0, head(c)), P(a, 0, head(a))], fa, [B(FORM.under, a), B(FORM.under, c), B(FORM.under, c), B(FORM.under, a)], [0, -1, 0])
+    u = r1
+  }
+  wall(u, f.u1, 0, foot, top, FORM.front, out)
+  return R.length
+}
