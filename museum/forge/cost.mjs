@@ -6,14 +6,16 @@
 //
 // Usage:  pnpm build && node forge/cost.mjs [--strict] [--tier=hero]
 //   --strict  exit non-zero when a tier is over its own budget
+// The default run reads the lobby's stages, the part a visitor runs live.
 //
 // WING MODE, the per-object reading:
-//   node forge/cost.mjs --wing=vinci [--tier=standard,calm] [--phone]
+//   node forge/cost.mjs --wing=vinci [--tier=standard,calm]
 //        [--stations=picture-room,body] [--rows=14] [--serve=off] [--json=out.json]
 // stands at every station of the wing, settles it, and says WHOSE the cost
 // is: the draws and triangles by body and by pass (the stack's ledger), and
-// the texture line owner by owner. `--phone` reads the calm tier at the
-// phone's viewport, which is the gate's calm-phone line.
+// the texture line owner by owner. It reports and never fails on a budget: a
+// wing is filmed and a phone plays the film, so a live tier's budget is only
+// a reference for it. `--phone` is retired for the same reason.
 //
 // Every reading is a SETTLED one: forge/settle.mjs stands at the stage until
 // the count stops moving and reports the count that repeats, with the frames
@@ -53,6 +55,11 @@ const named = (flag) => process.argv.find((a) => a.startsWith(`--${flag}=`))?.sl
 const WING = named('wing')
 const SERVE = named('serve') !== 'off'
 
+if (process.argv.includes('--phone')) {
+  console.error('--phone is retired: a phone plays the wing as a film, so the calm tier at the phone\'s viewport binds nothing there')
+  process.exit(2)
+}
+
 if (WING) {
   await wingCost()
   process.exit(process.exitCode ?? 0)
@@ -60,11 +67,10 @@ if (WING) {
 
 /** one wing, station by station, with the cost said owner by owner */
 async function wingCost() {
-  const PHONE = process.argv.includes('--phone')
   const ROWS = Number(named('rows') ?? 14)
   const onlyStations = named('stations')?.split(',')
-  const wingTiers = PHONE ? ['calm'] : only ? only.split(',') : TIERS
-  const vp = PHONE ? VIEWPORTS.mobile : VIEWPORTS.desktop
+  const wingTiers = only ? only.split(',') : TIERS
+  const vp = VIEWPORTS.desktop
   const server = SERVE
     ? spawn('pnpm', ['exec', 'vite', 'preview', '--port', String(PORT), '--strictPort', '--host', '127.0.0.1'], { stdio: 'ignore', cwd: APP_ROOT })
     : null
@@ -91,8 +97,7 @@ async function wingCost() {
       await page.evaluate((s) => window.__forge.station(s), ids[0])
       await arrive(page, ids[0])
       const warm = await warmScene(page, { ms: SETTLE_CAP })
-      const label = PHONE ? 'calm-phone' : tier
-      console.log(`\n== ${label} == cold ${warm.cold.draws} / ${warm.cold.triangles}, steady ${warm.warm.draws} / ${warm.warm.triangles}`)
+      console.log(`\n== ${tier} == cold ${warm.cold.draws} / ${warm.cold.triangles}, steady ${warm.warm.draws} / ${warm.warm.triangles}`)
       const rows = {}
       for (const id of ids) {
         if (onlyStations && !onlyStations.includes(id)) continue
@@ -108,7 +113,7 @@ async function wingCost() {
           refresh: c.settled.refresh, held: c.steady.held, byPass, ledger, textures, residency }
         console.log(`\n${id}: ${c.draws} draws / ${c.triangles} tris / ${c.textureMB} MB` +
           `  (first ${c.steady.first.draws} / ${c.steady.first.triangles}, refresh ${c.settled.refresh.frames}f+${c.settled.refresh.draws})` +
-          `  over ${c.budget.draws} / ${c.budget.triangles} / ${c.budget.textureMB}: ` +
+          `  live budget for reference ${c.budget.draws} / ${c.budget.triangles} / ${c.budget.textureMB}: ` +
           `${c.draws > c.budget.draws ? 'DRAWS ' : ''}${c.triangles > c.budget.triangles ? 'TRIS ' : ''}${c.textureMB > c.budget.textureMB ? 'TEXTURE' : ''}`)
         console.log(`   passes  ${Object.entries(byPass).map(([k, v]) => `${k} ${v.toFixed(1)}`).join(' | ')}`)
         for (const r of ledger.slice(0, ROWS))
@@ -118,7 +123,7 @@ async function wingCost() {
         console.log(`   on the device ${onDevice.toFixed(1)} MB in ${residency.length} textures; largest ` +
           residency.slice(0, 8).map((t) => `${t.name} ${t.width}x${t.height} ${t.format} ${t.MB.toFixed(1)}`).join(' | '))
       }
-      out.tiers[label] = rows
+      out.tiers[tier] = rows
       await page.close()
     }
     await browser.close()
@@ -132,7 +137,8 @@ async function wingCost() {
   }
 }
 
-// the stages of the museum's path, in the order a visitor meets them
+// the lobby's stages, in the order a visitor meets them; the wing is filmed,
+// so its cost is read in wing mode and never held to these budgets
 const STAGES = [
   ['held', 'held', {}],
   ['descent', 'descent', { desc: 0.5 }],
@@ -140,7 +146,6 @@ const STAGES = [
   ['wheel', 'wheel', { chapter: 0 }],
   ['pane', 'pane', { slug: 'vinci' }],
   ['breath', 'breath', {}],
-  ['wing', 'wing', { slug: 'vinci' }],
 ]
 
 const server = spawn('pnpm', ['preview', '--port', String(PORT), '--strictPort'], { stdio: 'ignore' })

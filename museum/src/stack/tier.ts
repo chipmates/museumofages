@@ -3,7 +3,11 @@
    A tier is not a quality slider with things missing at the bottom: the calm
    tier is COMPLETE (every station reachable, every label readable), only
    cheaper. What a tier changes is how much the frame is allowed to cost, and
-   the budgets below are the numbers the cost meter measures against. */
+   the budgets below are the numbers the cost meter measures against.
+
+   The budgets bind what a visitor runs live: the lobby and the machine's
+   island. A wing is filmed and played as a film on every device, so its
+   rooms are bound by the render, and these numbers are only a reference. */
 
 export type TierName = 'hero' | 'standard' | 'calm'
 
@@ -206,8 +210,8 @@ export function pickTier(adapter: AdapterReading | null): TierName {
   if (adapter.maxBufferSize < 2 ** 31) return 'standard'
   if (memory !== undefined && memory < 8) return 'standard'
 
-  // the phone axis: a narrow stage is a phone held in a hand, and the phone
-  // is where the launch is measured, so it gets the standard tier by default
+  // the phone axis: a narrow stage is a phone held in a hand, and what it
+  // runs live (the lobby, the island) gets the standard tier by default
   const short = Math.min(window.innerWidth, window.innerHeight)
   if (short < 520) return 'standard'
 

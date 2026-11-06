@@ -1,6 +1,6 @@
 #!/bin/bash
 # One step of a Babylon round, by stop id, in one call; every render runs under the render lock.
-#   bash step.sh smoke                          every Babylon page in Chromium and WebKit at 1440x900 and 390x844: smoke/SMOKE.md
+#   bash step.sh smoke                          every Babylon page in Chromium at 1440x900 and 390x844 (WebKit: smoke.mjs --webkit): smoke/SMOKE.md
 #   bash step.sh stills <stop> <label> [view]   both framings of the stop into stills/<label>/, a contact sheet and NUMBERS.md
 #   bash step.sh geometry <stop>                coplanar, sub-pixel and floating bodies of the stop's page: checks/geometry-<stop>.txt
 #   bash step.sh change <label a> <label b>     the change measure between two still sets: checks/change-<a>-<b>.txt (exit 2: no judge)

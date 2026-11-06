@@ -1,6 +1,7 @@
 // THE PAGES' READY TIME UNDER TWO QUERIES: each page opened fresh in each engine, the seconds from the address to the
-// rig's ready, a query against another, interleaved, several loads each; the console's errors counted.
-//   node forge/babylon/ready-time.mjs --out <abs folder> [--pages map,gate] [--engines chromium,webkit]
+// rig's ready, a query against another, interleaved, several loads each; the console's errors counted. Chromium by
+// default: these are the dev pages of a filmed wing, which a visitor never opens live, so WebKit runs only when asked.
+//   node forge/babylon/ready-time.mjs --out <abs folder> [--pages map,gate] [--webkit] [--engines chromium,webkit]
 //        [--q 'sky=env|sky=set'] [--loads 3] [--port 5214]
 // Writes ready-time.json and prints one line per page, engine and query; exit 1 on a console error or a page not ready.
 import { chromium, webkit } from 'playwright'
@@ -22,7 +23,7 @@ if (!opt.out || opt.out === true || !isAbsolute(String(opt.out))) { console.erro
 const OUT = resolve(String(opt.out))
 mkdirSync(OUT, { recursive: true })
 const pages = String(opt.pages ?? 'map,gate').split(',')
-const engines = String(opt.engines ?? 'chromium,webkit').split(',')
+const engines = String(opt.engines ?? (opt.webkit ? 'chromium,webkit' : 'chromium')).split(',')
 const queries = String(opt.q ?? 'sky=env|sky=set').split('|')
 const loads = Number(opt.loads ?? 3)
 const LAUNCH = { chromium: () => chromium.launch({ args: browserArgs('webgpu') }), webkit: () => webkit.launch() }
