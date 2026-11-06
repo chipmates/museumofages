@@ -401,7 +401,7 @@ export async function mountOpen(stop = '1', opts = {}) {
   // row (groves Known as a mass, the rest Guessed, as green.ts), the banks' reed and trees (Guessed) and the plain's
   // fields and canals (ours, Guessed)
   const openLetters = new Map()
-  const extraBodies = [['open:palm-canal', ['R', 'R']], ['open:palm-river', ['R', 'R']], ['open:palm-city', ['G', 'G']], ['open:palm-outer', ['G', 'G']], ['open:reed', ['G', 'G']], ['open:bank-tamarisk', ['G', 'G']], ['open:bank-poplar', ['G', 'G']], ['open:bank-willow', ['G', 'G']], ['open:field', ['G', 'G']], ['open:canal', ['G', 'G']], ['open:garden', ['G', 'G']]]
+  const extraBodies = [['open:palm-canal', ['R', 'R']], ['open:palm-river', ['R', 'R']], ['open:palm-city', ['G', 'G']], ['open:palm-outer', ['G', 'G']], ['open:palm-gate', ['G', 'G']], ['open:reed', ['G', 'G']], ['open:bank-tamarisk', ['G', 'G']], ['open:bank-poplar', ['G', 'G']], ['open:bank-willow', ['G', 'G']], ['open:field', ['G', 'G']], ['open:canal', ['G', 'G']], ['open:garden', ['G', 'G']]]
   for (const [n, L] of extraBodies) openLetters.set(n, L)
   {
     const city = buildPlan(edited)

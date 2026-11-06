@@ -389,6 +389,42 @@ export function buildPlain(mapPlan: J, opts: { palms?: boolean; reach?: number }
     }
     /* the presets by the eye's distance to a palm's crown along the flight: the near preset within 110 m (a palm within
        about 60 m of an eye is near, and the mid's teeth read as teeth to about 120 m), the mid within 400 m */
+    /* an orchard close outside the North Gate's road in the outer city (bab.green.palm.gate: groves in front of a city's
+       gate are attested elsewhere, Babylon's are ours): clumps with gaps from the road's verge out to about 200 m on its
+       west side and 70 m on its east, north of the lion walls' line and the dam, never on the road; its own numbers */
+    {
+      const RG = rng(5703)
+      const road: P2[] = [s(445708.8, 3601172.8), s(445650.4, 3601472.1), s(445700, 3601700), s(445790, 3601920)]
+      const near = new Map<string, Palm[]>()
+      const cell = (x: number, z: number): string => `${Math.floor(x / 8)},${Math.floor(z / 8)}`
+      for (const p of palms) { const k = cell(p.x, p.z); if (!near.has(k)) near.set(k, []); near.get(k)!.push(p) }
+      const crowded = (x: number, z: number): boolean => {
+        const i = Math.floor(x / 8), j = Math.floor(z / 8)
+        for (let a = -1; a <= 1; a++) for (let b = -1; b <= 1; b++) for (const q of near.get(`${i + a},${j + b}`) ?? []) if (Math.hypot(q.x - x, q.z - z) < 5.5) return true
+        return false
+      }
+      const [, zN] = s(0, 3601600), [, zS] = s(0, 3601205)
+      for (let z = zN; z < zS; z += 10) {
+        for (let x = -320; x < 160; x += 10) {
+          const jx = x + (RG() - 0.5) * 8, jz = z + (RG() - 0.5) * 8
+          const d = lineD(jx, jz, road)
+          // west or east of the road: the road's x at this z
+          const west = jx < road[0]![0] + ((road[1]![0] - road[0]![0]) * (jz - road[0]![1])) / (road[1]![1] - road[0]![1])
+          const reachOut = west ? 205 : 70
+          if (d < 16 || d > reachOut) continue
+          // clumps and clearings, a few tens of metres across, thinning away from the road
+          const field = Math.sin(jx * 0.071 + 1.7) * Math.sin(jz * 0.064 + 0.3) + 0.5 * Math.sin(jx * 0.13 - jz * 0.11)
+          const p = Math.max(0, field + 0.15) * (1 - 0.55 * (d - 16) / (reachOut - 16))
+          if (RG() > p) continue
+          if (blocked(jx, jz, 2) || crowded(jx, jz)) continue
+          const q: Palm = { x: jx, z: jz, s: 0.62 + RG() * 0.68, yaw: RG() * Math.PI * 2, lean: (RG() - 0.5) * 0.18, row: 'gate' }
+          palms.push(q)
+          const k = cell(jx, jz)
+          if (!near.has(k)) near.set(k, [])
+          near.get(k)!.push(q)
+        }
+      }
+    }
     const way = DESCENT.map(([E, N, y]) => { const [x, z] = s(E, N); return [x, y, z] as [number, number, number] })
     const eyeD = (x: number, y: number, z: number): number => {
       let d = Infinity
