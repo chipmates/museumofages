@@ -318,6 +318,8 @@
 .film-marks-glass { position: fixed; inset: var(--na-safe-top, env(safe-area-inset-top, 0px)) var(--na-safe-right, env(safe-area-inset-right, 0px))
   var(--na-safe-bottom, env(safe-area-inset-bottom, 0px)) var(--na-safe-left, env(safe-area-inset-left, 0px)); visibility: hidden; pointer-events: none; }
 #wing[data-film][data-walking] .film-dot:not([data-state='walking']) { opacity: 0; pointer-events: none; }
+/* THE FIRST PICTURE COMES FIRST: no band, way or mark stands on a stage that has not shown it */
+#wing[data-first-picture] :is(.desk-low, .film-box, .film-dot) { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
 /* THE DESKTOP'S WAY ON is a raised field on the wall inside its gold ring;
    the marks step's own tints for it (desk-marks.css) are restated on that field */
 #wing[data-desk~='marks'] .desk-on { background: var(--ui-ground-raised); }

@@ -107,6 +107,9 @@ const RING = 2 * Math.PI * 20.5
 /** the most a mark is lifted to stand clear of the phone's box: sideways
     takes 28; upright the Baptism's mark needs 37 at 390x664 and 41 at 375x667 */
 const MARK_LIFT = 44
+/** the chrome waits for the first still at most this long: a still that never
+    settles must not leave the visitor without words and ways */
+const FIRST_PICTURE_BOUND = 6000
 /** the thumb's reach upright: a control's centre stands at or below 40 % of the glass */
 const REACH = 0.4
 /** THE DRAWER'S PLATE, upright: the way on through a drawer taller than its window, and back to its first sentence */
@@ -224,6 +227,8 @@ export function createWing(): WingModule {
   let wordsTries = 0
   let veiled = false
   let legUnderWay = false
+  let firstShown = false
+  let firstBound = 0
   let answering: { dot: HTMLButtonElement; id: string } | null = null
   const stood = new Set<string>()
   /** the door at the first stop: while it stands the picture keeps the whole glass */
@@ -1733,6 +1738,17 @@ export function createWing(): WingModule {
   let labelsHidden: string | null = null
   async function mount(h: WingHosts): Promise<void> {
     hosts = h
+    // NO BAND OR MARK OVER A STAGE THAT HAS NOT SHOWN ITS FIRST PICTURE
+    firstShown = false
+    const wingEl = h.stage.parentElement
+    wingEl?.setAttribute('data-first-picture', '')
+    const pictured = (): void => {
+      clearTimeout(firstBound)
+      if (firstShown || hosts !== h) return
+      firstShown = true
+      wingEl?.removeAttribute('data-first-picture')
+    }
+    firstBound = window.setTimeout(pictured, FIRST_PICTURE_BOUND)
     countArrival('vinci')
     form = filmForm()
     wide = form !== 'upright'
@@ -2013,6 +2029,7 @@ export function createWing(): WingModule {
     crossed()
     stood.add(LIFE[card]!.id)
     paint()
+    picture.ready().then(pictured, pictured)
     await picture.ready()
     releaseFirstStill()
     // no door stands over the walk from above: the page's flag goes with its still
@@ -2095,13 +2112,14 @@ export function createWing(): WingModule {
       if (answering) setWalkingLeg(answering.dot, s.kind === 'walk' ? s.share : 0)
       desk?.update()
       const courtWalk = inGraveCourt(s) && !eveningOn
-      if (s.kind === 'rest' && performance.now() > doorLeaving && performance.now() > riseSettles && !eveningOn) { paintMarks(); paintWords() }
+      if (s.kind === 'rest' && firstShown && performance.now() > doorLeaving && performance.now() > riseSettles && !eveningOn) { paintMarks(); paintWords() }
       else if (s.kind === 'wait' && dots.length) clearMarks()
       if (courtWalk) paintWords(true)
       else if (s.kind !== 'rest' && wordsAt) { words?.hide(); wordsAt = '' }
     },
     stop() {
       controller.abort()
+      clearTimeout(firstBound); hosts?.stage.parentElement?.removeAttribute('data-first-picture')
       desk?.dispose(); desk = undefined
       look?.dispose(); look = undefined; lookLoading = undefined
       phone?.root.remove(); phone = undefined
