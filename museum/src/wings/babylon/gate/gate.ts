@@ -223,8 +223,16 @@ const fw: number = FG.frontWall, chD: number = FG.chamber[1], ow: number = FG.wa
 const zCh0 = -fw, zCh1 = -(fw + chD), zBack = -(fw + chD + ow), zMT = zBack - plan.court.depth, zM0 = zMT - MG.towers.proj
 const zMch0 = zM0 - MG.walls, zMch1 = zMch0 - MG.chamber[0], zMS = zMch1 - MG.walls
 const hd = FG.door / 2
+/** a chamber's cross face beside its door, wholly inside its room (the box's soft edge would leave it half out, its
+    glaze mirroring half the sky the room hides); off the door's width, so the passage keeps its own openness */
+const faces = (half: number, zf: number, y1: number, open: number): Rooms['boxes'] =>
+  [[-half - 0.05, -hd - 0.01], [hd + 0.01, half + 0.05]].map(([x0, x1]) => ({ x0: x0!, x1: x1!, z0: zf - 0.65, z1: zf + 0.65, y1, open }))
 const rooms: Rooms = {
   boxes: [
+    ...faces(FG.chamber[0] / 2, zCh0, FG.wallTop.value - 0.6, 0.28),
+    ...faces(FG.chamber[0] / 2, zCh1, FG.wallTop.value - 0.6, 0.28),
+    ...faces(MG.chamber[1] / 2, zMch0, MG.wallTop.value - 0.6, 0.22),
+    ...faces(MG.chamber[1] / 2, zMch1, MG.wallTop.value - 0.6, 0.22),
     { x0: -hd - 0.05, x1: hd + 0.05, z0: zCh0 + 0.6, z1: -0.65, y1: FG.arch.crown + 0.05, open: 0.62 },
     { x0: -FG.chamber[0] / 2 - 0.05, x1: FG.chamber[0] / 2 + 0.05, z0: zCh1 - 0.05, z1: zCh0 + 0.05, y1: FG.wallTop.value - 0.6, open: 0.28 },
     { x0: -hd - 0.05, x1: hd + 0.05, z0: zBack + 0.65, z1: zCh1, y1: FG.arch.crown + 0.05, open: 0.42 },

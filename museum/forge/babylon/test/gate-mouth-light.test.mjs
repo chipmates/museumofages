@@ -44,3 +44,16 @@ test('the earth beside the street keeps the city silt hue, the worn paving sheen
   assert.match(gate, /gm\.roughnessNode = mix\(float\(1\), float\(Number\(q\.get\('gRough'\) \?\? [\d.]+\)\), earthAt\(\)\.w\)/)
   assert.match(gate, /mat\.skyBounceNode = vec3\(\.\.\.PAVE_HUE\)\.mul\(uCityBack\)/)
 })
+
+test('each chamber cross face beside its door lies wholly inside its room, off the door so the passage keeps its own', () => {
+  const edge = Number(/const inZ = smoothstep\(r\.z0 - ([\d.]+), r\.z0 \+ \1, p\.z\)/.exec(mat)[1])
+  const [, lo, hi] = /z0: zf - ([\d.]+), z1: zf \+ ([\d.]+), y1, open/.exec(gate).map(Number)
+  // the box's weight is whole only past its soft edge: the face at zf full on both sides
+  assert.ok(lo > edge && hi > edge, `the face's box ${lo}, ${hi} against the soft edge ${edge}`)
+  assert.match(gate, /\[\[-half - 0\.05, -hd - 0\.01\], \[hd \+ 0\.01, half \+ 0\.05\]\]/)
+  const rows = [...gate.matchAll(/\.\.\.faces\((FG|MG)\.chamber\[(\d)\] \/ 2, (\w+), \1\.wallTop\.value - 0\.6, ([\d.]+)\)/g)].map((m) => [m[1], m[3], Number(m[4])])
+  assert.deepEqual(rows, [['FG', 'zCh0', 0.28], ['FG', 'zCh1', 0.28], ['MG', 'zMch0', 0.22], ['MG', 'zMch1', 0.22]])
+  // the faces take their chamber's own openness
+  assert.match(gate, /z0: zCh1 - 0\.05, z1: zCh0 \+ 0\.05, y1: FG\.wallTop\.value - 0\.6, open: 0\.28 \}/)
+  assert.match(gate, /z0: zMch1 - 0\.05, z1: zMch0 \+ 0\.05, y1: MG\.wallTop\.value - 0\.6, open: 0\.22 \}/)
+})
