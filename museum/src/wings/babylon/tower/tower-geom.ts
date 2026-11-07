@@ -333,6 +333,9 @@ export interface SideStairOpts {
   /** the mass's outer face built in the stage's forms: `mid` the first stage's face middle there (plan), so the
       panels run on in its rhythm; a recess's head `margin` under the flight's line, none under `minH` tall */
   forms?: { mid: P2; spec: FormsSpec; margin: number; minH: number }
+  /** the level parapet's head held `back` short of the landing's end on its outer face and `turn` more on its inner
+      face, so its end faces in toward the tower; none runs it on to the end, square */
+  head?: { back: number; turn: number }
 }
 
 /** a side stair as built steps: a riser and a tread per step from the foot (`beyond` short of the ramp's start, at
@@ -399,13 +402,21 @@ export function sideStair(r: Ramp, o: SideStairOpts): { flight: BufferGeometry; 
     w.quadOut([at(s0, vi, env(s0)), at(s0, vo2, env(s0)), at(s0, vo2, y), at(s0, vi, y)], KIND.cheek, f0, back)
     w.quadOut([at(s0, vi, y), at(s0, vo2, y), at(s1, vo2, y), at(s1, vi, y)], KIND.cheek, f0, up)
   }
-  w.quadOut([at(run, vi, r.y1 - 0.05), at(sEnd, vi, r.y1 - 0.05), at(sEnd, vi, yB), at(run, vi, yB)], KIND.cheek, f0, inn)
-  w.quadOut([at(run, vo2, r.y1), at(sEnd, vo2, r.y1), at(sEnd, vo2, yB), at(run, vo2, yB)], KIND.cheek, f0, out)
-  w.quadOut([at(run, vi, yB), at(sEnd, vi, yB), at(sEnd, vo2, yB), at(run, vo2, yB)], KIND.cheek, f0, up)
+  const sP = sEnd - (o.head?.back ?? 0), sQ = sP - (o.head?.turn ?? 0)
+  w.quadOut([at(run, vi, r.y1 - 0.05), at(sQ, vi, r.y1 - 0.05), at(sQ, vi, yB), at(run, vi, yB)], KIND.cheek, f0, inn)
+  w.quadOut([at(run, vo2, r.y1), at(sP, vo2, r.y1), at(sP, vo2, yB), at(run, vo2, yB)], KIND.cheek, f0, out)
+  w.quadOut([at(run, vi, yB), at(sQ, vi, yB), at(sP, vo2, yB), at(run, vo2, yB)], KIND.cheek, f0, up)
   w.quadOut([at(0, vi, r.y0), at(0, vo2, r.y0), at(0, vo2, env(0)), at(0, vi, env(0))], KIND.cheek, f0, back)
   // the head, down onto the middle flight: the mass under the parapet, then the parapet
   w.quadOut([at(sEnd, vi, below(vi)), at(sEnd, vo, below(vo)), at(sEnd, vo, r.y1), at(sEnd, vi, r.y1)], KIND.cheek, f0, fwd)
-  w.quadOut([at(sEnd, vi, r.y1), at(sEnd, vo2, r.y1), at(sEnd, vo2, yB), at(sEnd, vi, yB)], KIND.cheek, f0, fwd)
+  if (!o.head) w.quadOut([at(sEnd, vi, r.y1), at(sEnd, vo2, r.y1), at(sEnd, vo2, yB), at(sEnd, vi, yB)], KIND.cheek, f0, fwd)
+  else {
+    // a head held back: its end turned in toward the tower (a camera out before the stair sees its back), and the
+    // landing's floor run on under it to the end
+    const t = o.wall - o.ledge, h = Math.hypot(t, o.head.turn), endN = [(d[0] * t - n[0] * o.outer * o.head.turn) / h, 0, (d[1] * t - n[1] * o.outer * o.head.turn) / h]
+    w.quadOut([at(sQ, vi, r.y1), at(sP, vo2, r.y1), at(sP, vo2, yB), at(sQ, vi, yB)], KIND.cheek, f0, endN)
+    fl.quadOut([at(sQ, vi, r.y1), at(sEnd, vi, r.y1), at(sEnd, vo2, r.y1), at(sP, vo2, r.y1)], KIND.stair, fT, up)
+  }
   const p2 = (s: number): P2 => { const p = at(s, 0, 0); return [+p[0]!.toFixed(3), +p[2]!.toFixed(3)] }
   return { flight: fl.geometry(), wall: w.geometry(), facts: { steps: N, riser: +rr.toFixed(4), tread: +tt.toFixed(4), run: +run.toFixed(3), foot: p2(0), head: p2(run), end: p2(sEnd), y0: r.y0, y1: r.y1, width: r.w } }
 }
@@ -721,7 +732,7 @@ export function buildTower(built: Built, mapPlan: J, tp: J): Tower {
     const f1 = stageFaces(s1).map((f) => ({ mid: [s1.x + f.mid[0] * c1 + f.mid[1] * n1, s1.z - f.mid[0] * n1 + f.mid[1] * c1] as P2, n: [f.n[0] * c1 + f.n[1] * n1, -f.n[0] * n1 + f.n[1] * c1] as P2 }))
     const face1 = f1.reduce((a, b) => (dot(b.n, nO) > dot(a.n, nO) ? b : a))
     const massForms = TT.forms.stairMass ? { mid: face1.mid, spec: forms, margin: TT.forms.stairMass.margin, minH: TT.forms.stairMass.minH } : undefined
-    const st = sideStair(r, { riser: TT.stairs.riser, beyond: SS.beyond, wall: SS.wall, above: SS.above, outer, sink: SS.sink, ledge: SS.ledge, pitch: PN.pitch1, landing, under, forms: massForms })
+    const st = sideStair(r, { riser: TT.stairs.riser, beyond: SS.beyond, wall: SS.wall, above: SS.above, outer, sink: SS.sink, ledge: SS.ledge, pitch: PN.pitch1, landing, under, forms: massForms, head: SS.head?.[r.id] })
     bodies.push({ id: r.id, geometry: st.flight, band: r.band, letters: [r.plan, r.height] })
     bodies.push({ id: `${r.id}-wall-outer`, geometry: st.wall, band: r.band, letters: [r.plan, r.height] })
     // in the tower's own frame: out along the middle stair's axis, across it

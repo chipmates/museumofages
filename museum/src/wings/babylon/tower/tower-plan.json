@@ -94,7 +94,9 @@
     "ledge": 0.3,
     "ledgeSrc": "the stair's mass carries the mantle's panels up to its flight's line, and the parapet in the stair's brick stands on it 0.3 m back, stepping with the treads: the setback, the stepped top and the panels on the stair's side are ours",
     "steps": "built as steps, a riser and a tread each: 110 risers of 0.3 m on treads of about 0.38 m (the risers ours, bab.tower.stairs.side.rise, guessed); the inner edge runs 0.1 m into the tower's face",
-    "landing": "where the three meet: each side stair's head runs on level at the first stage's top to the middle flight's edge (about 2.65 m), its parapet level over it, and the middle stair's walls end against the side stairs' outer face, so the middle flight climbs its last 8.5 m between the two landings; the landing's form is not known, ours"
+    "landing": "where the three meet: each side stair's head runs on level at the first stage's top to the middle flight's edge (about 2.65 m), its parapet level over it, and the middle stair's walls end against the side stairs' outer face, so the middle flight climbs its last 8.5 m between the two landings; the landing's form is not known, ours",
+    "head": { "tower-stair-west": { "back": 1.0, "turn": 0.3 } },
+    "headSrc": "ours, like the landing: the west parapet's level head stops its own height (1 m) short of the landing's end, its end cut 0.3 m further back on its inner face; the east one runs on to the middle flight's edge"
    }
   },
   "temple": {
