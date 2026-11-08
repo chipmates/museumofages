@@ -11,6 +11,7 @@ import * as TSL from 'three/tsl'
 import { lines, PAL } from '../gate/gate-mat'
 import { classColour, uView, type ClassTones } from '../map/mass'
 import { brickBond, TONES } from '../open/earth'
+import { OUTDOOR, washGrain } from '../parts/plaster-wash-babylon'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -70,7 +71,8 @@ export function bodiesMaterial(tones: ClassTones, V: CellsPlan): Material {
   const faceCol = wall.mul(mix(float(1), float(0.9), is(2)))
 
   // the roofs: plastered earth over beams, room by room; the parapet's top a course of brick laid flat
-  const roof = V3(TONES.roof).mul(0.95).mul(roofCells(p, w, 10.5)).mul(mottle)
+  // a roof keeps the wash's unevenness only (part plaster-wash-babylon)
+  const roof = washGrain(p, n, V3(TONES.roof).mul(0.95).mul(roofCells(p, w, 10.5)).mul(mottle), { ...OUTDOOR, pix: uGardensPix, floor: 0, course: 0.086, brick: 0.33, joint: 0.012, thin: 0, wear: false })
   // the terrace's open top round the palace: trodden earth and brick dust
   const trodden = V3(TONES.silt).mul(1.12).mul(mottle).mul(float(1).sub(smoothstep(0.1, 0.5, mx_noise_float(vec3(p.x.mul(0.08), 2.1, p.z.mul(0.08)))).mul(0.08)))
   // the garden's tops: watered soil, low green in drifts and along the beds; dry earth when the garden is off

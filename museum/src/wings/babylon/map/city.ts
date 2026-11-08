@@ -14,6 +14,7 @@ import { classColour, uView, type ClassTones } from './mass'
 import { TONES, boxMaterial, cityBlockColour, groundMaterial, houseMaterial, streetMaterial, toneOf, type StreetLook } from '../open/earth'
 import { PRESETS as PAVING } from '../parts/paving-brick-court-babylon'
 import { PAL } from '../gate/gate-colours'
+import { OUTDOOR, washGrain } from '../parts/plaster-wash-babylon'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -138,7 +139,8 @@ export function trayMaterial(t: ClassTones, band: number, uPix: N): Material {
   const own = hash(h.mul(5.37).add(2.9)).sub(0.5).mul(0.18).add(1)
   const roofBase = mix(vec3(...TONES.roof).mul(vec3(1.03, 1.0, 0.95)), vec3(...TONES.mud).mul(1.1), bare.mul(0.8)).mul(own).mul(r.sub(0.5).mul(0.12).add(1)).mul(blockK)
   const patch = smoothstep(0.25, 0.55, mx_noise_float(vec3(p.x.mul(0.45), h, p.z.mul(0.45)))).mul(0.12).add(mx_noise_float(p.mul(1.6)).mul(0.04))
-  const roof = roofBase.mul(float(1).sub(patch))
+  // a roof keeps the wash's unevenness only (part plaster-wash-babylon)
+  const roof = washGrain(p, normalWorld, roofBase.mul(float(1).sub(patch)), { ...OUTDOOR, share: OUTDOOR.share.map((s) => s * 1.12), pix: uPix, floor: 0, course: 0.086, brick: 0.33, joint: 0.012, thin: 0, wear: false })
   const cap = roofBase.mul(1.12)
   const inner = mix(wash, roofBase, 0.6).mul(0.96)
   let c: N = mix(wall, inner, isK(2))
