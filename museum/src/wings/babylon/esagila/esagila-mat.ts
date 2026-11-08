@@ -167,7 +167,10 @@ export function esagilaMaterial(F: Face, ep: J, tones: ClassTones): Material {
   const jR = clamp(lines(s, BR, 0.006, fS).add(lines(tB, BR, 0.006, fT)), 0, 1)
   const hB = hash2(floor(tB.div(BR)), kk)
   const dustC = V(PAL.dust as RGB).mul(1.15)
-  const drift = mx_noise_float(vec3(s.mul(0.25), t.mul(0.25), 6.2))
+  // the along-street noises go to their mean once a pixel spans metres of street, or the lens folds them into cross
+  // bands (footprint() holds its grazing term at n.v 0.1, so far down a street it reads a few times short)
+  const far = seen(fFlat, 0.15)
+  const drift = mx_noise_float(vec3(s.mul(0.25), t.mul(0.25), 6.2)).mul(far)
   const sBrick = mix(V(PAL.buff as RGB), V(PAL.redBrown as RGB), clamp(float(0.3).add(drift.mul(0.25)).add(hB.sub(0.5).mul(0.3).mul(near)), 0, 1))
     .mul(float(0.8).add(hash2(kk.add(7), floor(tB.div(BR)).add(3)).mul(0.1)))
   // the joints full of asphalt and dust: dark only where the coat broke off them, never an even grid
@@ -176,12 +179,12 @@ export function esagilaMaterial(F: Face, ep: J, tones: ClassTones): Material {
   // the bricks lie in asphalt; a thin coat of it, dusty, over them, worn through on the walked middle first
   const coatC = mix(V(col.asphalt), dustC, 0.45).mul(float(1).add(mx_noise_float(vec3(s.mul(1.3), 1.7, t.mul(1.3))).mul(0.1)))
   const mid = abs(tt.sub(float(ep.street.paved / 2)).add(mx_noise_float(vec3(s.mul(0.04), 2.2, 0)).mul(0.6)))
-  const wornN = mx_noise_float(vec3(s.mul(0.35), 4.2, t.mul(0.5))).mul(0.35).add(mx_noise_float(vec3(s.mul(1.6), 5.9, t.mul(1.6))).mul(0.12))
-  const patch = smoothstep(-0.15, 0.25, mx_noise_float(vec3(s.mul(0.22), 8.1, t.mul(0.4))))
+  const wornN = mx_noise_float(vec3(s.mul(0.35), 4.2, t.mul(0.5))).mul(0.35).add(mx_noise_float(vec3(s.mul(1.6), 5.9, t.mul(1.6))).mul(0.12)).mul(far)
+  const patch = mix(float(0.5), smoothstep(-0.15, 0.25, mx_noise_float(vec3(s.mul(0.22), 8.1, t.mul(0.4)))), far)
   const cover = clamp(smoothstep(1.0, 3.0, mid).mul(0.8).add(wornN).add(patch.mul(0.4)).add(0.18), 0, 0.85)
   const thin = float(1).sub(cover)
   let paveCol: N = mix(paveBrick, coatC, cover)
-  const sDrift = smoothstep(0.25, 0.75, mx_noise_float(vec3(s.mul(0.3), t.mul(0.3), 1.9)).add(0.5))
+  const sDrift = mix(float(0.5), smoothstep(0.25, 0.75, mx_noise_float(vec3(s.mul(0.3), t.mul(0.3), 1.9)).add(0.5)), far)
   const toEdge = float(1).sub(smoothstep(0.3, 1.5, min(tt, float(ep.street.paved).sub(tt))))
   // a film of dust over the whole street between rains, thicker toward the edges
   const sDust = clamp(sDrift.mul(0.2).add(toEdge.mul(0.35)).add(0.15), 0, 0.7)

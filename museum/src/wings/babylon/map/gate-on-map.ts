@@ -19,12 +19,13 @@ import { panelTones, toneGateWalls, type Painted } from '../record-tones'
 type J = any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
-const { uniform, attribute, positionLocal, normalize, vec3, select, abs, step, max, floor, fract, log2, exp2, mix, float, smoothstep } = TSL as unknown as Record<string, N>
+const { uniform, attribute, positionLocal, normalize, vec3, select, abs, step, max, floor, fract, log2, exp2, mix, float, smoothstep, dot } = TSL as unknown as Record<string, N>
 
 /** the glaze from far off. Past a brick a pixel the gate's material lets its brick-to-brick tone go (right on its own page,
     where a pixel never spans one); a pixel's mean over n bricks keeps 1/sqrt(n) of it, drawn here on cells of 2^j bricks
     blended like mip levels so it neither shimmers nor swims; and the courses laid from one firing in bands of six courses and stretches of 8 m
     (a guess, as the tower's baked brick has it). Only on the glazed brick, only where the material's own detail faded */
+const FAR_SAT = 1.6
 function distantGlaze(m: N, U: GateUniforms): N {
   const gU = attribute('gU', 'float'), gInfo = attribute('gInfo', 'vec4')
   const y = positionLocal.y
@@ -38,6 +39,11 @@ function distantGlaze(m: N, U: GateUniforms): N {
   const speckle = mix(cell(j0), cell(j0.add(1)), fract(lv)).mul(0.09)
   const batch = hash2(floor(y.div(6 * COURSE)).add(17), floor(gU.div(8))).sub(0.5).mul(0.12).mul(float(1).sub(smoothstep(3 * COURSE, 6 * COURSE, fy)))
   m.colorNode = m.colorNode.mul(float(1).add(speckle.add(batch).mul(far).mul(float(1).sub(U.uSwitch))))
+  // from far off the coat's mirror of the sky and the box-filtered joints grey the glaze: the mirror goes, and the
+  // glaze keeps more of its hue (FAR_SAT, a guess)
+  m.clearcoatNode = m.clearcoatNode.mul(float(1).sub(far.mul(0.7)))
+  const c = m.colorNode, l = dot(c, vec3(0.2126, 0.7152, 0.0722))
+  m.colorNode = max(mix(c, c.sub(l).mul(FAR_SAT).add(l), far.mul(float(1).sub(U.uSwitch))), vec3(0))
   return m
 }
 
