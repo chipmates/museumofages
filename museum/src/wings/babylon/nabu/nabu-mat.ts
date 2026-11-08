@@ -290,6 +290,13 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   const coreT = float(1).sub(clamp(dAltar.div(reach(SK.contact[0])), 0, 1))
   skin = skin.mul(float(1).sub(coreT.mul(coreT).mul(SK.contact[1])))
   const contactFall = float(1).sub(float(1).sub(smoothstep(reach(SK.contact[2] * SK.contact[4]), reach(SK.contact[2]), dAltar)).mul(SK.contact[3]))
+  // the low blocks stand in their wall's drift, and a drift lit by the sky alone shows bright at their feet: there the
+  // falloff also grades the sky's light (the ao below); the altar's tiers keep their foot strip sky-lit. F.altar lists
+  // the tiers first, then the low blocks
+  let dBlock: N = float(9)
+  for (const a of F.altar.slice(np.altar.tiers.length)) dBlock = min(dBlock, length(vec2(max(max(float(a.x0).sub(P.x), P.x.sub(a.x1)), 0), max(max(float(a.z0).sub(P.z), P.z.sub(a.z1)), 0))))
+  const CS: [number, number, number] = SK.contactSky ?? [0.95, 0, 0.3]
+  const blockSky = float(1).sub(float(1).sub(smoothstep(reach(CS[0] * CS[2]), reach(CS[0]), dBlock)).mul(CS[1]))
   floorCol = mix(floorCol, skin, inNabu)
 
   /* ── the roof's earth deck and the open ground before the gate ── */
@@ -419,7 +426,7 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   ao = mix(ao, courtWallAO.mul(footAO), is(SURF.courtWall))
   // the altars' feet and the paving round them: a contact shade
   const altarContact = float(1).sub(float(1).sub(smoothstep(0.0, 0.5, dAltar)).mul(0.35))
-  ao = mix(ao, floorAO.mul(altarContact), is(SURF.paving).mul(inCourt))
+  ao = mix(ao, floorAO.mul(altarContact).mul(mix(float(1), blockSky, inNabu)), is(SURF.paving).mul(inCourt))
   // and a contact shade on the block's own foot, the last 10 cm
   ao = mix(ao, footAO.mul(float(1).sub(float(1).sub(smoothstep(0.0, 0.1, footY)).mul(0.25))), isAltar)
   ao = mix(ao, passAO, reveal)

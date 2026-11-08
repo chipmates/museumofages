@@ -42,7 +42,7 @@
     0.99
    ],
    "spec": 0.5,
-   "src": "the court's floor as one black asphalt skin over the brick (bab.nabu.floor, guessed): young, the temple raised late in the reign, so its wear light; the skin a dull, near-neutral black mastic with a fine mineral grain (ours; its albedo a little cool of neutral so it reads near-neutral under the low, golden sun, a tone choice for the light, not a record), with no polished sheen (its sheen half the stack's under the dust film, spec, ours), so the dust's clay warmth parts from it by hue, scuffed lighter on the trodden lines (the court's door to the cella's, round the altars), feet polishing it there only faintly (polish: its roughness and share, ours), one continuous skin over the court (the floor 'was black with asphalt', P2021 p. 278; the model's court 'of bricks covered with asphalt', p. 171, fig. 4.24), so no brick's own tone and no grid of joints: the courses telegraph faintly only where the skin is thin, and the joints sink only where feet have worn it thin on the trodden ways, darker than the skin round them and matte, never lit by the dust in them (hollow, ours; the arrises' lift kept off, arris 0); a soft dark line where the floor meets a block, darkest at its foot (contact, ours: a short core, its reach in m and depth, then a long gentle falloff past the block's cast shadow, its reach, depth and the share of the reach it holds flat), so the dust at a block's foot never reads lighter than the floor beyond it (the stack's ao reaches only the sky's light, so the line is laid in the colour); never bare brick, never the black bed laid open",
+   "src": "the court's floor as one black asphalt skin over the brick (bab.nabu.floor, guessed): young, the temple raised late in the reign, so its wear light; the skin a dull, near-neutral black mastic with a fine mineral grain (ours; its albedo a little cool of neutral so it reads near-neutral under the low, golden sun, a tone choice for the light, not a record), with no polished sheen (its sheen half the stack's under the dust film, spec, ours), so the dust's clay warmth parts from it by hue, scuffed lighter on the trodden lines (the court's door to the cella's, round the altars), feet polishing it there only faintly (polish: its roughness and share, ours), one continuous skin over the court (the floor 'was black with asphalt', P2021 p. 278; the model's court 'of bricks covered with asphalt', p. 171, fig. 4.24), so no brick's own tone and no grid of joints: the courses telegraph faintly only where the skin is thin, and the joints sink only where feet have worn it thin on the trodden ways, darker than the skin round them and matte, never lit by the dust in them (hollow, ours; the arrises' lift kept off, arris 0); a soft dark line where the floor meets a block, darkest at its foot (contact, ours: a short core, its reach in m and depth, then a long gentle falloff past the block's cast shadow, its reach, depth and the share of the reach it holds flat), so the dust at a block's foot never reads lighter than the floor beyond it (the stack's ao reaches only the sky's light, so the core is laid in the colour and the falloff on the sun; at the two low blocks, which stand in their wall's drift, the falloff also grades the sky's light, contactSky: its reach, depth and flat share, ours, so in shade the drift there never rims the block's foot); never bare brick, never the black bed laid open",
    "joint": 0.006,
    "temperRough": 0.5,
    "brickTone": 0.05,
@@ -55,6 +55,11 @@
     0.95,
     0.4,
     0.3
+   ],
+   "contactSky": [
+    1.2,
+    0.6,
+    0.45
    ],
    "dust": {
     "colour": [
