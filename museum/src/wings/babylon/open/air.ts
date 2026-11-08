@@ -63,8 +63,10 @@ export function airColour(U: AirUniforms, d: N): N {
   const flat = normalize(vec3(d.x, 0.0001, d.z))
   const sunFlat = normalize(vec3(U.uSun.x, 0.0001, U.uSun.z))
   const toward = smoothstep(U.uReach, 1, dot(flat, sunFlat))
-  const away = mix(vec3(0.3, 0.3, 0.34), vec3(U.uAway), low)
-  const near = mix(vec3(0.82, 0.5, 0.3), vec3(U.uNear), low)
+  // past 20 degrees of sun the horizon leaves the low sun's peach for a pale day; under 20.5 degrees high is 0
+  const high = smoothstep(0.35, 0.8, U.uSun.y)
+  const away = mix(mix(vec3(0.3, 0.3, 0.34), vec3(U.uAway), low), vec3(0.7, 0.75, 0.84), high)
+  const near = mix(mix(vec3(0.82, 0.5, 0.3), vec3(U.uNear), low), vec3(0.9, 0.83, 0.7), high)
   const cosS = max(dot(normalize(d), U.uSun), 0)
   const glow = vec3(1.0, 0.7, 0.42).mul(pow(cosS, 6).mul(0.5).add(pow(cosS, 60).mul(0.9)))
   return mix(away, near, toward).add(glow).mul(U.uDay)
