@@ -30,7 +30,26 @@ const faces = (g) => {
   return { up, down, upright }
 }
 const side = ['tower-stair-east', 'tower-stair-west']
-console.log(JSON.stringify({ facts: t.facts.sideStairs, wallsEnd: t.facts.middleWallsEnd, faces: Object.fromEntries(side.map((id) => [id, faces(t.bodies.find((b) => b.id === id).geometry)])) }))`
+// each parapet's level head: how far its top (over the landing's level) runs along the climb, and the normals of its
+// upright faces looking on along it
+const head = (id) => {
+  const f = t.facts.sideStairs[id], p = t.bodies.find((b) => b.id === id + '-wall-outer').geometry.getAttribute('position')
+  const L = Math.hypot(f.head[0] - f.foot[0], f.head[1] - f.foot[1]), d = [(f.head[0] - f.foot[0]) / L, (f.head[1] - f.foot[1]) / L]
+  const s = (k) => (p.getX(k) - f.foot[0]) * d[0] + (p.getZ(k) - f.foot[1]) * d[1]
+  let topEnd = -Infinity
+  const ends = []
+  for (let k = 0; k < p.count; k += 3) {
+    const v = [0, 1, 2].map((q) => [p.getX(k + q), p.getY(k + q), p.getZ(k + q)])
+    const a = v[1].map((x, q) => x - v[0][q]), b = v[2].map((x, q) => x - v[0][q])
+    const c = [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]], l = Math.hypot(...c)
+    if (l === 0 || Math.min(...v.map((x) => x[1])) < f.y1 - 1e-6) continue
+    const ny = c[1] / l, along = (c[0] * d[0] + c[2] * d[1]) / l
+    if (ny > 0.99 && v[0][1] > f.y1 + 0.5 && v.every((x) => Math.abs(x[1] - v[0][1]) < 1e-6)) topEnd = Math.max(topEnd, ...[0, 1, 2].map((q) => s(k + q)))
+    if (Math.abs(ny) < 0.01 && along > 0.5) ends.push(+along.toFixed(4))
+  }
+  return { topEnd: +topEnd.toFixed(3), ends: [...new Set(ends)] }
+}
+console.log(JSON.stringify({ facts: t.facts.sideStairs, wallsEnd: t.facts.middleWallsEnd, faces: Object.fromEntries(side.map((id) => [id, faces(t.bodies.find((b) => b.id === id).geometry)])), heads: Object.fromEntries(side.map((id) => [id, head(id)])) }))`
 const r = spawnSync(process.execPath, ['--experimental-strip-types', '--no-warnings', '--input-type=module', '-e', code], { encoding: 'utf8' })
 const out = r.status === 0 ? JSON.parse(r.stdout.trim().split('\n').pop()) : null
 const near = (a, b, tol, what) => assert.ok(Math.abs(a - b) <= tol, `${what}: ${a} against ${b} (tolerance ${tol})`)
@@ -79,4 +98,15 @@ test('the flights are steps: a tread and a riser each, nothing faces down', () =
 test("the middle stair's walls end against the side stairs' outer face", () => {
   const f = Object.values(out.facts)[0]
   near(out.wallsEnd, f.outerU - (half - 0.5), 0.01, "walls end short of the middle stair's head")
+})
+
+test("the parapet runs level to the landing's end, the west one held back with its end turned in, as the plan says", () => {
+  for (const [id, h] of Object.entries(out.heads)) {
+    const f = out.facts[id], hd = SS.head?.[id], sEnd = f.run + f.landing
+    near(h.topEnd, sEnd - (hd ? hd.back : 0), 0.01, `${id}: the level top's end along the climb`)
+    assert.equal(h.ends.length, 1, `${id}: one end face over the landing (${h.ends})`)
+    const t = SS.wall - SS.ledge
+    near(h.ends[0], hd ? t / Math.hypot(t, hd.turn) : 1, 1e-3, `${id}: its end face's share along the climb`)
+  }
+  assert.ok(SS.head['tower-stair-west'] && !SS.head['tower-stair-east'], 'the west head alone is held back')
 })
