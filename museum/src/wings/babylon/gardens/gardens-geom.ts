@@ -4,7 +4,7 @@
    as plan.ts (x east, y up, z south). Only type imports from the wing: node resolves no relative module without its
    extension. */
 
-import { BoxGeometry, BufferGeometry, ExtrudeGeometry, Path, Shape } from 'three/webgpu'
+import { BoxGeometry, BufferGeometry, ExtrudeGeometry, Float32BufferAttribute, Path, Shape } from 'three/webgpu'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import type { Built, Cls, P2, Prism } from '../map/plan'
 
@@ -113,6 +113,13 @@ function flight(x: number, z: number, dx: number, dz: number, top: number, low: 
   }
   const g = mergeGeometries(parts)!
   g.deleteAttribute('uv')
+  // the plane through the nosings, y = A + B x + C z, on every vertex: the stair look reads the sun's shadow there
+  const k = r / tread
+  const ramp = [top + k * (x * dx + z * dz), -k * dx, -k * dz, 1]
+  const count = g.getAttribute('position').count
+  const arr = new Float32Array(count * 4)
+  for (let i = 0; i < count; i++) arr.set(ramp, i * 4)
+  g.setAttribute('ramp', new Float32BufferAttribute(arr, 4))
   return g
 }
 
@@ -135,6 +142,8 @@ export function buildGardens(built: Built, mapPlan: J, gp: J): Gardens {
   const BAND: number = mapPlan.classes.band
   const bodies: GardenBody[] = []
   const add = (id: string, geometry: BufferGeometry, band: number, letters: [Cls, Cls], look: Look, garden = false): void => {
+    // every body carries a ramp so the merged meshes share one attribute set; 0 where no flight is
+    if (!geometry.getAttribute('ramp')) geometry.setAttribute('ramp', new Float32BufferAttribute(new Float32Array(geometry.getAttribute('position').count * 4), 4))
     bodies.push({ id, geometry, band, letters, look, garden })
   }
   const byId = (id: string): Prism | undefined => built.prisms.find((p) => p.id === id)
