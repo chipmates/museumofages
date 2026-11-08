@@ -33,6 +33,10 @@ export function setBridgePixel(vfovDeg: number, heightPx: number): void {
 }
 const U = { uPix: uBridgePix }
 const seen = (fw: N, size: number): N => float(1).sub(smoothstep(size * 0.25, size, fw))
+/** the edge timber's linear albedo and its lengths, metres (Guessed: the beams' timber hue, bleached about 1.45 times
+    lighter on the face the sun reaches; its shaded face at dusk a little under the boards) */
+export const FAS_ALB: RGB = [0.36, 0.275, 0.19]
+export const FAS_LEN = 3.2
 
 /** a running bond of square bricks of side L in courses of C on a face: joints and each brick's own number */
 function bondOf(u: N, y: N, L: number, C: number, half: number, fu: N, fy: N): { joint: N; cell: N; row: N } {
@@ -141,6 +145,34 @@ export function bridgeMaterial(F: BridgeFrame, bp: J, waterLevel: number, tones:
   const streak = mx_noise_float(vec3(along.mul(0.05), fa.z.mul(1.7), 2.2)).mul(0.1)
   const beam = V(col.timber).mul(float(0.85).add(hash2(fa.z, float(5)).mul(0.25)).add(grain).add(streak))
 
+  /* ── 2b the edge timber (fa.z past the beams): sun-bleached, lighter than the beams in the deck's shade, in lengths
+     butted end to end, the grain along it; fa.w its depth under the walking face ── */
+  const nB: number = bp.deck.beams.n
+  const isFas = is(2).mul(step(nB - 0.5, fa.z))
+  const flatF = step(0.5, abs(n.y))
+  const acr = mix(fa.w, abs(fa.y), flatF), fAcr = mix(fy, fFlat, flatF)
+  // the two sides' joints staggered by half a length
+  const tJ = fa.x.add(fa.z.sub(nB).mul(FAS_LEN / 2))
+  const piece = floor(tJ.div(FAS_LEN))
+  const pTone = hash2(piece, fa.z.add(17)).sub(0.5).mul(0.2)
+  const gWarp = mx_noise_float(vec3(fa.x.mul(0.35), piece.mul(1.3), 3.3)).mul(0.025)
+  const gA = acr.add(gWarp)
+  // the grain: broad streaks of darker and paler wood along the length, a finer figure inside them; a pixel-sized
+  // figure fades to its mean, so a far timber does not shimmer
+  const streaks = smoothstep(-0.15, 0.25, mx_noise_float(vec3(fa.x.mul(0.12), gA.mul(12), piece.mul(1.7).add(fa.z)))).sub(0.5).mul(0.36).mul(seen(fAcr, 0.05))
+  const fGrain = mx_noise_float(vec3(fa.x.mul(0.3), gA.mul(30), piece.mul(2.3))).mul(0.15).mul(seen(fAcr, 0.025))
+  const coarse = mx_noise_float(vec3(fa.x.mul(0.08), gA.mul(5), piece.mul(2.9))).mul(0.12).mul(seen(fAcr, 0.12))
+  // two seasoning checks along most of each length, each at its own depth
+  const hC1 = float(0.05).add(hash2(piece, fa.z.add(29)).mul(0.07)), hC2 = float(0.14).add(hash2(piece, fa.z.add(41)).mul(0.08))
+  const chkOf = (h: N, k: number): N => lines(gA.sub(h), 10, 0.004, fAcr).mul(smoothstep(-0.25, 0.15, mx_noise_float(vec3(fa.x.mul(0.5), piece, k))))
+  const chk = clamp(chkOf(hC1, 8.1).add(chkOf(hC2, 2.7)), 0, 1).mul(float(1).sub(flatF))
+  // bleached toward the upper arris, darker toward the drip edge below
+  const weather = mix(float(1.06), float(0.9), smoothstep(0.02, FASCIA.h, fa.w).mul(float(1).sub(flatF)))
+  let fascia: N = V(FAS_ALB).mul(float(1).add(pTone).add(streaks).add(fGrain).add(coarse)).mul(weather)
+  fascia = mix(fascia, fascia.mul(0.35), chk.mul(0.85))
+  fascia = mix(fascia, fascia.mul(0.25), lines(tJ, FAS_LEN, 0.008, fu).mul(0.9))
+  fascia = mix(fascia, dust.mul(1.1), up.mul(0.3))
+
   /* ── 3 the boards: across the axis, 30 cm, joints dark, each board its own tone, dust and a walked middle ── */
   const bw: number = bp.deck.board
   const bIdx = floor(fa.x.div(bw))
@@ -179,7 +211,7 @@ export function bridgeMaterial(F: BridgeFrame, bp: J, waterLevel: number, tones:
   let c: N = greyNode(0.42)
   c = mix(c, brickCol, is(0))
   c = mix(c, stone, is(1))
-  c = mix(c, beam, is(2))
+  c = mix(c, mix(beam, fascia, isFas), is(2))
   c = mix(c, board, is(3))
   c = mix(c, quayCol, is(4))
   m.colorNode = mix(c, classColour(tones, attribute('cls', 'vec2'), attribute('band', 'float')), uView)

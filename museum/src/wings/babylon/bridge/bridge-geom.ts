@@ -289,7 +289,8 @@ export function buildBridge(built: Built, mapPlan: J, bp: J): Bridge {
       const c0 = s * (w / 2), c1 = s * (w / 2 + F.w)
       hexa(b, [C(f0, c0, slab(f0) - F.h), C(f1, c0, slab(f1) - F.h), C(f1, c1, slab(f1) - F.h), C(f0, c1, slab(f0) - F.h),
         C(f0, c0, slab(f0)), C(f1, c0, slab(f1)), C(f1, c1, slab(f1)), C(f0, c1, slab(f0))],
-      KIND.beam, (p) => { const r = tf(p); return [r[0]!, r[1]!, Bm.n + (s + 1) / 2, 0] })
+      // fa.w: the depth under the walking face, so the grain runs with the timber on the sloping deck
+      KIND.beam, (p) => { const r = tf(p); return [r[0]!, r[1]!, Bm.n + (s + 1) / 2, Math.max(0, slab(r[0]!) - p[1]!)] })
     }
     body('bridge-deck-boards', b, -10, ['G', 'G'])
   }
