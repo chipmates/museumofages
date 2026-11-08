@@ -416,9 +416,15 @@ export function panelMaterial(U: GateUniforms, maps: PanelMaps, schemes: Array<[
   m.normalNode = normalize(cameraViewMatrix.mul(vec4(nWorld, 0)).xyz)
   // colours: the scheme's map over the ground
   const cuv = texUV(u, v)
+  /* the glaze runs over the moulding's edge: a steep face takes its colour from the top of its step, uphill, not the
+     ground at its foot that the planar map and its blur put there (seen as a blue and orange rim at a grazing view) */
+  const steep = float(1).sub(smoothstep(0.8, 0.98, dot(nWorld, nW)))
+  const lean = steep.mul(max(float(0.012), e)).div(max(length(vec2(hu, hv)), 1e-4))
+  const ucol = u.add(hu.mul(lean)), vcol = v.add(hv.mul(lean))
+  const cuvA = texUV(ucol, vcol)
   let animal: N = vec4(0)
   for (const [sc, idx] of schemes) {
-    const c = texture(maps.colour[sc]!, cuv).level(lod).mul(inside(u, v))
+    const c = texture(maps.colour[sc]!, cuvA).level(lod).mul(inside(ucol, vcol))
     animal = schemes.length === 1 ? c : animal.add(c.mul(step(idx - 0.5, iB.x).mul(step(iB.x, idx + 0.5))))
   }
   const ground = mix(V(PAL.cobalt), V(PAL.turquoise), iB.y)
