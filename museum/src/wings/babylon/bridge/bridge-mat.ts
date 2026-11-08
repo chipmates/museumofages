@@ -14,6 +14,7 @@ import { MeshStandardNodeMaterial, type Material } from 'three/webgpu'
 import * as TSL from 'three/tsl'
 import { PAL, footprint, hash2, lines } from '../gate/gate-mat'
 import { classColour, greyNode, uView, type ClassTones } from '../map/mass'
+import { FASCIA } from './bridge-geom'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
@@ -187,7 +188,12 @@ export function bridgeMaterial(F: BridgeFrame, bp: J, waterLevel: number, tones:
   m.roughnessNode = mix(mix(float(0.9), float(0.55), wetSheen), float(0.92), uView)
   // the contact the stack does not carry: under the boards' edge and the capping's lip
   const under = float(1).sub(step(0.0, n.y.negate().sub(0.5)).mul(0.35))
-  m.aoNode = mix(under, float(1), uView)
+  // and on the capping by the deck: the sky a flat face x metres out from an edge h high still sees (1 + x / hypot) / 2,
+  // falling under the boards toward a floor the open spans' light keeps
+  const xOut = abs(cA).sub(bp.deck.w / 2 + FASCIA.w), hDeck: number = bp.deck.boards + bp.deck.beams.h - 0.03
+  const sky = float(0.5).add(xOut.mul(0.5).div(xOut.mul(xOut).add(hDeck * hDeck).sqrt()))
+  const capContact = mix(float(1), max(sky, 0.18), is(1).mul(up))
+  m.aoNode = mix(under.mul(capContact), float(1), uView)
   void min
   return m
 }
