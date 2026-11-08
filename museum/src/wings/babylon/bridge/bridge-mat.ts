@@ -37,6 +37,9 @@ const seen = (fw: N, size: number): N => float(1).sub(smoothstep(size * 0.25, si
     lighter on the face the sun reaches; its shaded face at dusk a little under the boards) */
 export const FAS_ALB: RGB = [0.36, 0.275, 0.19]
 export const FAS_LEN = 3.2
+/** the lengths' tone spread, and the butt joint's width (m) and the share of the timber it keeps (Guessed) */
+export const FAS_TONE = 0.05
+export const FAS_JOINT: readonly [number, number] = [0.004, 0.62]
 
 /** a running bond of square bricks of side L in courses of C on a face: joints and each brick's own number */
 function bondOf(u: N, y: N, L: number, C: number, half: number, fu: N, fy: N): { joint: N; cell: N; row: N } {
@@ -154,23 +157,27 @@ export function bridgeMaterial(F: BridgeFrame, bp: J, waterLevel: number, tones:
   // the two sides' joints staggered by half a length
   const tJ = fa.x.add(fa.z.sub(nB).mul(FAS_LEN / 2))
   const piece = floor(tJ.div(FAS_LEN))
-  const pTone = hash2(piece, fa.z.add(17)).sub(0.5).mul(0.2)
-  const gWarp = mx_noise_float(vec3(fa.x.mul(0.35), piece.mul(1.3), 3.3)).mul(0.025)
+  // the lengths' own tones held close, so no length steps from its neighbour at a reading distance
+  const pTone = hash2(piece, fa.z.add(17)).sub(0.5).mul(FAS_TONE)
+  // the grain's noise runs on across the joints: a per-length seed jumped the tone at the arris and the drip edge
+  const fSide = fa.z.mul(3.1)
+  const gWarp = mx_noise_float(vec3(fa.x.mul(0.35), fSide, 3.3)).mul(0.025)
   const gA = acr.add(gWarp)
   // the grain: broad streaks of darker and paler wood along the length, a finer figure inside them; a pixel-sized
   // figure fades to its mean, so a far timber does not shimmer
-  const streaks = smoothstep(-0.15, 0.25, mx_noise_float(vec3(fa.x.mul(0.12), gA.mul(12), piece.mul(1.7).add(fa.z)))).sub(0.5).mul(0.36).mul(seen(fAcr, 0.05))
-  const fGrain = mx_noise_float(vec3(fa.x.mul(0.3), gA.mul(30), piece.mul(2.3))).mul(0.15).mul(seen(fAcr, 0.025))
-  const coarse = mx_noise_float(vec3(fa.x.mul(0.08), gA.mul(5), piece.mul(2.9))).mul(0.12).mul(seen(fAcr, 0.12))
-  // two seasoning checks along most of each length, each at its own depth
-  const hC1 = float(0.05).add(hash2(piece, fa.z.add(29)).mul(0.07)), hC2 = float(0.14).add(hash2(piece, fa.z.add(41)).mul(0.08))
+  const streaks = smoothstep(-0.15, 0.25, mx_noise_float(vec3(fa.x.mul(0.22), gA.mul(12), fSide.add(1.7)))).sub(0.5).mul(0.48).mul(seen(fAcr, 0.07))
+  const fGrain = mx_noise_float(vec3(fa.x.mul(0.3), gA.mul(30), fSide.add(2.3))).mul(0.15).mul(seen(fAcr, 0.025))
+  const coarse = mx_noise_float(vec3(fa.x.mul(0.08), gA.mul(5), fSide.add(2.9))).mul(0.12).mul(seen(fAcr, 0.12))
+  // two seasoning checks along most of each length, each at its own depth, kept off the arris and the drip edge
+  const hC1 = float(0.05).add(hash2(piece, fa.z.add(29)).mul(0.07)), hC2 = float(0.14).add(hash2(piece, fa.z.add(41)).mul(0.06))
   const chkOf = (h: N, k: number): N => lines(gA.sub(h), 10, 0.004, fAcr).mul(smoothstep(-0.25, 0.15, mx_noise_float(vec3(fa.x.mul(0.5), piece, k))))
   const chk = clamp(chkOf(hC1, 8.1).add(chkOf(hC2, 2.7)), 0, 1).mul(float(1).sub(flatF))
-  // bleached toward the upper arris, darker toward the drip edge below
+  // bleached toward the upper arris, darker toward the drip edge below (by depth only, the same on every length)
   const weather = mix(float(1.06), float(0.9), smoothstep(0.02, FASCIA.h, fa.w).mul(float(1).sub(flatF)))
   let fascia: N = V(FAS_ALB).mul(float(1).add(pTone).add(streaks).add(fGrain).add(coarse)).mul(weather)
   fascia = mix(fascia, fascia.mul(0.35), chk.mul(0.85))
-  fascia = mix(fascia, fascia.mul(0.25), lines(tJ, FAS_LEN, 0.008, fu).mul(0.9))
+  // the butt joint a hairline: under a pixel its box filter leaves only a faint darkening
+  fascia = mix(fascia, fascia.mul(FAS_JOINT[1]), lines(tJ, FAS_LEN, FAS_JOINT[0] / 2, fu))
   fascia = mix(fascia, dust.mul(1.1), up.mul(0.3))
 
   /* ── 3 the boards: across the axis, 30 cm, joints dark, each board its own tone, dust and a walked middle ── */
