@@ -21,7 +21,99 @@
   "coat": 0.55,
   "coatWear": 0.45,
   "sheen": 0.45,
-  "src": "baked brick covered with bitumen, guessed: Koldewey found an asphalt covering on the Ninmah court's pavement (K1914 ch. IX), Pedersen's model gives this court bricks covered with asphalt (P2021 fig. 4.24); the king's common brick about 33 cm square (P2021 p. 20); the coat's thickness and its wear ours: a thin coat over the whole court, every joint full, worn thinner on the walked ways"
+  "src": "baked brick covered with asphalt, guessed as a transfer: the temple's floor 'was black with asphalt' (P2021 p. 278, on the older temple below), Pedersen's model gives this court a 'floor of bricks covered with asphalt' (P2021 p. 171, fig. 4.24), the Ishtar and Ninmah temples had black asphalt floors too (P2021 p. 279), Koldewey found an asphalt covering on the Ninmah court's pavement (K1914 ch. IX); the king's common brick about 33 cm square (P2021 p. 20); the coat's thickness and its wear ours: outside the court a thin coat, every joint full, worn thinner on the walked ways",
+  "skin": {
+   "colour": [
+    0.021,
+    0.023,
+    0.027
+   ],
+   "scuffed": [
+    0.065,
+    0.065,
+    0.07
+   ],
+   "thin": 0.35,
+   "ghost": 0.15,
+   "scuff": 0.1,
+   "temper": 0.4,
+   "rough": [
+    0.97,
+    0.99
+   ],
+   "src": "the court's floor as one black asphalt skin over the brick (bab.nabu.floor, guessed): young, the temple raised late in the reign, so its wear light; the skin a dull, near-neutral black mastic with a fine mineral grain (ours; its albedo a little cool of neutral so it reads near-neutral under the low, golden sun, a tone choice for the light, not a record), with no polished sheen, so the dust's clay warmth parts from it by hue, scuffed lighter on the trodden lines (the court's door to the cella's, round the altars), feet polishing it there only faintly (polish: its roughness and share, ours), one continuous skin over the court (the floor 'was black with asphalt', P2021 p. 278; the model's court 'of bricks covered with asphalt', p. 171, fig. 4.24), so no brick's own tone and no grid of joints: the courses telegraph faintly only where the skin is thin, and the joints sink only where feet have worn it thin on the trodden ways, darker than the skin round them and matte, never lit by the dust in them (hollow, ours; the arrises' lift kept off, arris 0); a soft dark line where the floor meets a block, darkest at its foot (contact, ours: a short core, its reach in m and depth, then a long gentle falloff past the block's cast shadow, its reach, depth and the share of the reach it holds flat), so the dust at a block's foot never reads lighter than the floor beyond it (the stack's ao reaches only the sky's light, so the line is laid in the colour); never bare brick, never the black bed laid open",
+   "joint": 0.006,
+   "temperRough": 0.5,
+   "brickTone": 0.05,
+   "brickRough": 0.15,
+   "arris": 0,
+   "grit": 0.3,
+   "contact": [
+    0.2,
+    0.15,
+    0.95,
+    0.4,
+    0.3
+   ],
+   "dust": {
+    "colour": [
+     0.42,
+     0.35,
+     0.26
+    ],
+    "cover": 0.03,
+    "drift": 0.25,
+    "open": [
+     0.55,
+     0.9
+    ],
+    "foot": 0.75,
+    "footW": 1.8,
+    "plateau": 0.2,
+    "corner": 0.3,
+    "cornerW": 3.0,
+    "block": 0,
+    "blockW": 0.4,
+    "lobe": 0.45,
+    "hollow": 0.5,
+    "crack": 0.08,
+    "mottle": 0.02,
+    "swept": 0.92,
+    "grain": 0.9,
+    "fine": 1.6,
+    "calm": 0.6,
+    "max": 0.9,
+    "matte": 0.3,
+    "sill": 0.2,
+    "src": "a thin film of dust over the asphalt (bab.wear.dust.drift, guessed): crumbled mud brick, clay-toned, thicker toward the walls' feet and in the corners and in slow drifts, none gathered at the blocks' feet (block 0: with the open film thin, a foot drift read as a light rim), a soft mottle between, swept thin on the trodden lines, blind to the brick under the skin; Koldewey saw mud brick weather to 'a light powdery dust' moved by the summer winds (K1914 ch. XLI, said of the ruins: a modern analogue); its colour a sunlit mud-brick clay, the court's earth a shade redder, its share ours, a little denser where it drifts; a film on the side doors' sill tops in the lee of their leaves (sill, ours); a film, never a heap of sand on the paved court",
+    "mouth": 1.5
+   },
+   "sinkThin": 0.15,
+   "polish": [
+    0.85,
+    0.1
+   ],
+   "crack": [
+    6,
+    0.0012
+   ],
+   "tread": [
+    1.2,
+    0.05
+   ]
+  },
+  "bounce": {
+   "k": 1.7,
+   "hue": 0.85,
+   "passHue": 1.0,
+   "floor": [
+    0.1,
+    0.09,
+    0.075
+   ],
+   "floorSun": 0.15,
+   "src": "the court's floor in its walls' light under the sky field (ours): the share of the hidden sky its walls give back as the field's fit (1 + k x the walls' view factor), in the walls' colour rather than the sky's: white plaster lit by half the sky, by the sun on the share of each face the opposite wall leaves lit and by the floor's own sunlit bounce; the floor's albedo the skin under its dust film (about 0.1, ours), floorSun the floor's sunlit share as a wall's foot sees it, guessed; a side door's sill top sees out past its own wall's thickness and, under its lintel, takes the walls' hue whole (passHue, ours)"
+  }
  },
  "wall": 1.8,
  "wallSrc": "walls 1.8 m thick (P2021 p. 170)",
@@ -250,7 +342,10 @@
     0.28,
     0.55
    ],
-   "src": "the bands as a coat of bitumen paint on the plaster: it thins at its edge to a brown fringe of about a centimetre, it lies a little proud (a lit lip over each band, a shade under it), and its gloss varies with its thickness; plain bands only (SET-C1 G-C1-9)"
+   "src": "the bands as a coat of bitumen paint on the plaster: it thins at its edge to a brown fringe of about a centimetre, it lies a little proud (a lit lip over each band, a shade under it), and its gloss varies with its thickness; plain bands only (SET-C1 G-C1-9)",
+   "brush": 0.4,
+   "relief": 5,
+   "court": 2.0
   }
  },
  "black": {
@@ -398,6 +493,40 @@
  "leaves": {
   "t": 0.07,
   "sill": 0.05,
-  "src": "guessed: wooden leaves standing open against each door's reveal, hung at the end that opens into a room, after Pedersen's model (P2021 fig. 4.24); a sill of baked brick across each door, 5 cm over the paving, 6 cm proud of each face; the doors plain, never arched (P2021 p. 168)"
+  "src": "guessed: wooden leaves standing open against each door's reveal, hung at the end that opens into a room, after Pedersen's model (P2021 fig. 4.24); a sill of baked brick across each door, one course laid in bitumen, 5 cm over the paving, its ends in the jambs: the gate's and the cella's 6 cm proud of each face, a side door's seated 1 cm inside its wall's faces; the doors plain, never arched (P2021 p. 168)"
+ },
+ "altarWear": {
+  "arris": [
+   0.03,
+   0.06
+  ],
+  "arrisMix": 0.2,
+  "foot": [
+   0.05,
+   0.1
+  ],
+  "footMix": 0.3,
+  "src": "the altar blocks' plastered mud brick lightly used (ours, guessed): knocks thin the wash along the arrises in a ragged band of 3 to 6 cm toward the mud plaster under it, and the court's dust (paving.skin.dust) settles at their feet over the last 5 to 10 cm, as it lies thicker at any foot on the floor"
+ },
+ "wash": {
+  "course": 0.1,
+  "brick": 0.33,
+  "joint": 0.02,
+  "coat": {
+   "uneven": 0.5,
+   "stroke": 0.3,
+   "thin": 0.15,
+   "wear": 0,
+   "fine": 0.3
+  },
+  "altar": {
+   "fine": 0.1
+  },
+  "near": {
+   "tight": 0.025,
+   "stroke": 0.25,
+   "src": "the court's faces seen close (ours): the plaster's trowel strokes (1.6 to 3.2 per m, 4 percent; they carried most of the near left wall's soft blotches, measured) swapped on them for strokes three times tighter at 2.5 percent, the old kept at a quarter of its depth"
+  },
+  "src": "the court's walls, coping, battlements and altar blocks under the shared wash's grain (plaster-wash-babylon), as a fairly fresh coat: a white wash laid at a royal rebuilding is text-attested (CAD G pp. 53 to 54), white lime-gypsum plaster Known on the dug temples, this one included (P2021 p. 279); patches renewed between rebuilds guessed, so only faint tone patches; the mud brick under it in the baked brick's format, 33 cm in courses of about 10 cm, guessed as the throne room's; the sand of the wash only where a face is seen from afar (ours), the altar blocks seen near keep their plain plaster; no salt bloom, no damp band, no chipped edge"
  }
 }
