@@ -382,8 +382,9 @@ function prism(poly: P2[], y0: number, y1: number, code: number): BufferGeometry
 }
 
 /** a plastered block: a vertical prism from a plan outline whose arrises are rounded by a bevel `r` (the outline is
-    inset by it, so the block keeps its size), y0 to y1 */
-function slab(poly: P2[], y0: number, y1: number, code: number, r = 0.04): BufferGeometry {
+    inset by it, so the block keeps its size), y0 to y1; `sunk` lays the lower bevel below y0, so a block standing in
+    the paving meets it square (a rounded foot shows down-turned normals over the floor, a warm hairline in the sun) */
+function slab(poly: P2[], y0: number, y1: number, code: number, r = 0.04, sunk = false): BufferGeometry {
   // inset each vertex along its corner's bisector; the outlines here are convex and wound either way
   const n = poly.length
   let area = 0
@@ -402,9 +403,10 @@ function slab(poly: P2[], y0: number, y1: number, code: number, r = 0.04): Buffe
   sh.moveTo(inset[0]![0], -inset[0]![1])
   for (const [px, pz] of inset.slice(1)) sh.lineTo(px, -pz)
   sh.closePath()
-  const g0 = new ExtrudeGeometry(sh, { depth: y1 - y0 - 2 * r, bevelEnabled: true, bevelThickness: r, bevelSize: r, bevelOffset: 0, bevelSegments: 2, steps: 1 })
+  const yb = sunk ? y0 - r : y0
+  const g0 = new ExtrudeGeometry(sh, { depth: y1 - yb - 2 * r, bevelEnabled: true, bevelThickness: r, bevelSize: r, bevelOffset: 0, bevelSegments: 2, steps: 1 })
   g0.rotateX(-Math.PI / 2)
-  g0.translate(0, y0 + r, 0)
+  g0.translate(0, yb + r, 0)
   g0.deleteAttribute('uv')
   const g = g0.index ? g0.toNonIndexed() : g0
   g.setAttribute('surf', new Float32BufferAttribute(new Array(g.getAttribute('position').count).fill(code), 1))
@@ -541,9 +543,9 @@ export function buildNabu(built: Built, mapPlan: J, np: J): Nabu {
   merlonRing(ma, F.ash, F.ashTop, M, P.pitch / 2)
   // the god's pedestal: C6.2's outline with its front corners cut, standing 3 cm in the paving, its back 5 cm in the wall
   const pd = F.pedestal, ch = pd.chamfer, zb = D(pd.z1 + 0.05)
-  const pedestalG = slab([[pd.x0 + ch, pd.z0], [pd.x1 - ch, pd.z0], [pd.x1, pd.z0 + ch], [pd.x1, zb], [pd.x0, zb], [pd.x0, pd.z0 + ch]], F.pave - 0.03, pd.top, SURF.pedestal)
+  const pedestalG = slab([[pd.x0 + ch, pd.z0], [pd.x1 - ch, pd.z0], [pd.x1, pd.z0 + ch], [pd.x1, zb], [pd.x0, zb], [pd.x0, pd.z0 + ch]], F.pave - 0.03, pd.top, SURF.pedestal, 0.04, true)
   // the court's altars: plastered blocks standing 3 cm in the paving; the block's tiers overlap 5 cm, so no face is shared
-  const altarG = join(F.altar.map((a) => slab([[a.x0, a.z0], [a.x1, a.z0], [a.x1, a.z1], [a.x0, a.z1]], F.pave - 0.03, a.top, SURF.altar)))
+  const altarG = join(F.altar.map((a) => slab([[a.x0, a.z0], [a.x1, a.z0], [a.x1, a.z1], [a.x0, a.z1]], F.pave - 0.03, a.top, SURF.altar, 0.04, true)))
   // round each court a coping course standing proud of the wall's face, and stepped merlons on it (Guessed, after the
   // temples' battlements, K1914 ch. IX); the north and south runs take the corners, the east and west runs sit 5 mm
   // lower where they overlap them and keep the runs' own gap from each corner merlon

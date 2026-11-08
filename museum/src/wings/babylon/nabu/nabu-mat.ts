@@ -285,10 +285,18 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   skin = skin.mul(float(1).sub(hollow.mul(DU.hollow)))
   // a soft dark line where the floor meets a block, darkest at the foot: a short steep core and a long gentle falloff
   // past the block's cast shadow, so neither the shadow's edge nor a rim bounds it. The ao node reaches only the sky's
-  // light, so in the sun the contact is laid in the colour
+  // light, so the core is laid in the colour and the falloff on the sun alone (the received shadow below): in the
+  // block's shadow the ao grades the sky's light and the falloff would darken it twice
   const coreT = float(1).sub(clamp(dAltar.div(reach(SK.contact[0])), 0, 1))
   skin = skin.mul(float(1).sub(coreT.mul(coreT).mul(SK.contact[1])))
-    .mul(float(1).sub(float(1).sub(smoothstep(reach(SK.contact[2] * SK.contact[4]), reach(SK.contact[2]), dAltar)).mul(SK.contact[3])))
+  const contactFall = float(1).sub(float(1).sub(smoothstep(reach(SK.contact[2] * SK.contact[4]), reach(SK.contact[2]), dAltar)).mul(SK.contact[3]))
+  // the low blocks stand in their wall's drift, and a drift lit by the sky alone shows bright at their feet: there the
+  // falloff also grades the sky's light (the ao below); the altar's tiers keep their foot strip sky-lit. F.altar lists
+  // the tiers first, then the low blocks
+  let dBlock: N = float(9)
+  for (const a of F.altar.slice(np.altar.tiers.length)) dBlock = min(dBlock, length(vec2(max(max(float(a.x0).sub(P.x), P.x.sub(a.x1)), 0), max(max(float(a.z0).sub(P.z), P.z.sub(a.z1)), 0))))
+  const CS: [number, number, number] = SK.contactSky ?? [0.95, 0, 0.3]
+  const blockSky = float(1).sub(float(1).sub(smoothstep(reach(CS[0] * CS[2]), reach(CS[0]), dBlock)).mul(CS[1]))
   floorCol = mix(floorCol, skin, inNabu)
 
   /* ── the roof's earth deck and the open ground before the gate ── */
@@ -418,7 +426,7 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   ao = mix(ao, courtWallAO.mul(footAO), is(SURF.courtWall))
   // the altars' feet and the paving round them: a contact shade
   const altarContact = float(1).sub(float(1).sub(smoothstep(0.0, 0.5, dAltar)).mul(0.35))
-  ao = mix(ao, floorAO.mul(altarContact), is(SURF.paving).mul(inCourt))
+  ao = mix(ao, floorAO.mul(altarContact).mul(mix(float(1), blockSky, inNabu)), is(SURF.paving).mul(inCourt))
   // and a contact shade on the block's own foot, the last 10 cm
   ao = mix(ao, footAO.mul(float(1).sub(float(1).sub(smoothstep(0.0, 0.1, footY)).mul(0.25))), isAltar)
   ao = mix(ao, passAO, reveal)
@@ -461,6 +469,8 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
   // kept beside the sky field: it stands for the walls in the mirror being dimmer than the sky they hide
   const occluded = isAltar.mul(smoothstep(0.5, 0.9, n.y)).mul(inBox(c, 0.1))
   ;(m as unknown as { specularIntensityNode: N }).specularIntensityNode = mix(float(1), mix(float(0.2), float(1), skyShare), occluded.mul(float(1).sub(uView)))
+    // the skin's sheen under its dust film (spec, ours)
+    .mul(mix(float(1), float(SK.spec ?? 1), is(SURF.paving).mul(inNabu)))
   // indoors the light is the court's, thrown back by warm-white walls and brick, warmer than the sky's
   stateCol = stateCol.mul(mix(vec3(1), vec3(1.07, 1.0, 0.88), indoors))
   stateCol = stateCol.mul(topTint)
@@ -507,9 +517,14 @@ export function nabuMaterial(F: NabuFrame, np: J, tones: ClassTones): Material {
     floorWalls = floorWalls.add(uNabuLight.sky.mul(0.5).add(uNabuLight.sunIrr.mul(onFace)).add(floorUp).mul(wallView(max(d, 0.05)).mul(mix(float(1), step(0.0, d), passTop))))
   }
   // a sill top under its passage's lintel sees the court's walls and floor more than the sky
-  const floorTint = mix(vec3(1), hue(floorWalls.mul(V(col.plaster))).div(hue(uNabuLight.sky)), mix(float(PB.hue), float(PB.passHue), passTop))
+  const wallRatio = hue(floorWalls.mul(V(col.plaster))).div(hue(uNabuLight.sky))
+  const floorTint = mix(vec3(1), wallRatio, mix(float(PB.hue), float(PB.passHue), passTop))
   ;(m as unknown as { skyBounceNode: N }).skyBounceNode = vec3(float(1).add(hidden.mul(PB.k)).mul(onPave)).mul(mix(vec3(1), floorTint, onPave)).add(ownCourt)
-  ;(m as unknown as { skyMirrorNode: N }).skyMirrorNode = max(onPave, ownCourt)
-  ;(m as unknown as { receivedShadowNode: (s: N) => N }).receivedShadowNode = (shadow: N): N => shadow.mul(float(1).sub(indoors)).mul(courtSun)
+  // in a walled court the paving's mirror shows the walls as much as the sky: the mirrored sky takes the walls' hue
+  // (mirror[0], its share) at mirror[1] of its light, so the dark skin's sheen in shade is not the open sky's blue
+  const MR: number[] = PB.mirror ?? [0, 1]
+  ;(m as unknown as { skyMirrorNode: N }).skyMirrorNode = mix(vec3(max(onPave, ownCourt)), mix(vec3(1), wallRatio, MR[0]).mul(MR[1]), onPave)
+  const fallOn = is(SURF.paving).mul(inNabu)
+  ;(m as unknown as { receivedShadowNode: (s: N) => N }).receivedShadowNode = (shadow: N): N => shadow.mul(float(1).sub(indoors)).mul(courtSun).mul(mix(float(1), contactFall, fallOn))
   return m
 }
