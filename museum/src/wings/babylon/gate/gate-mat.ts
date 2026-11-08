@@ -517,8 +517,11 @@ export function pavingMaterial(U: GateUniforms, P: PaveSpec, rooms: Rooms): Mate
   const clastId = mx_noise_float(vec3(s.mul(11), t.mul(11), 0.7)).mul(0.6).add(0.5).add(cell.x.mul(0.25))
   const clast = mix(mix(V(PAL.brecciaDark), V(PAL.breccia), smoothstep(0.0, 0.5, clastId)), V(PAL.brecciaPale), smoothstep(0.6, 1.0, clastId))
   const matrix = smoothstep(0.12, 0.05, edge)
-  const vein = smoothstep(0.02, 0.0, edge).mul(step(0.78, mx_noise_float(vec3(s.mul(1.7), t.mul(1.7), 3.1)).add(0.5)))
-  const brecNear = mix(mix(clast, V(PAL.brecciaDark), matrix.mul(0.5)), V(PAL.brecciaVein), vein.mul(0.45))
+  // a vein is a whole cell edge picked by a coarse noise; a finer noise breaks it along its length so no straight
+  // segment of one width runs from end to end
+  const veinRun = smoothstep(0.3, 0.6, mx_noise_float(vec3(s.mul(9), t.mul(9), 5.3)).add(0.5))
+  const vein = smoothstep(0.02, 0.0, edge).mul(step(0.78, mx_noise_float(vec3(s.mul(1.7), t.mul(1.7), 3.1)).add(0.5))).mul(veinRun)
+  const brecNear = mix(mix(clast, V(PAL.brecciaDark), matrix.mul(0.5)), V(PAL.brecciaVein), vein.mul(0.2))
   const brecMean = V(PAL.breccia).mul(0.95).add(V(PAL.brecciaVein).mul(0.05))
   const brec = mix(brecMean, brecNear, near)
   const brickH = hash2(floor(t.div(BR)), kk)
