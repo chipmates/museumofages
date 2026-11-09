@@ -36,6 +36,8 @@ export interface Bridge {
 export const TAKEN_PRISM = (id: string): boolean => /^bridge-pier-\d+$/.test(id) || id === 'arahtu-quay' || id === 'arahtu-quay-2' || id === 'river-wall-south'
 export const TAKEN_BOX = (id: string): boolean => /^bridge-(abutment|pier)-/.test(id)
 export const TAKEN_RAMP = (id: string): boolean => id === 'bridge-deck'
+/** the deck's edge timber: across and high, metres (Guessed) */
+export const FASCIA = { w: 0.08, h: 0.25 } as const
 export const TAKEN_WATER = (id: string): boolean => id === 'euphrates'
 /** each kind's foot (its trunk, stems or sheaves) as a share of its height, and the most the ground may fall under a
     foot (a share of the height) before the spot is left bare */
@@ -278,6 +280,18 @@ export function buildBridge(built: Built, mapPlan: J, bp: J): Bridge {
     const C = (tt: number, cc: number, y: number): number[] => { const p = at(tt, cc); return [p[0], y, p[1]] }
     hexa(b, [C(t0, -w / 2, deckTop(t0) - D.boards), C(t1, -w / 2, deckTop(t1) - D.boards), C(t1, w / 2, deckTop(t1) - D.boards), C(t0, w / 2, deckTop(t0) - D.boards),
       C(t0, -w / 2, deckTop(t0)), C(t1, -w / 2, deckTop(t1)), C(t1, w / 2, deckTop(t1)), C(t0, w / 2, deckTop(t0))], KIND.boards, (p) => tf(p))
+    // the fascia: an edge timber over the boards' ends on both sides, flush with the walking face, so the deck's edge
+    // reads over the capping; it runs between the land piers' battered faces, taken at its own mid-height (sizes ours)
+    const F = FASCIA
+    const slab = (tt: number): number => deckTop(t0) + ((tt - t0) / (t1 - t0)) * (deckTop(t1) - deckTop(t0))
+    const f0 = LP.east.to - batter * (slab(LP.east.to) - F.h / 2 - WL), f1 = LP.west.from + batter * (slab(LP.west.from) - F.h / 2 - WL)
+    for (const s of [-1, 1]) {
+      const c0 = s * (w / 2), c1 = s * (w / 2 + F.w)
+      hexa(b, [C(f0, c0, slab(f0) - F.h), C(f1, c0, slab(f1) - F.h), C(f1, c1, slab(f1) - F.h), C(f0, c1, slab(f0) - F.h),
+        C(f0, c0, slab(f0)), C(f1, c0, slab(f1)), C(f1, c1, slab(f1)), C(f0, c1, slab(f0))],
+      // fa.w: the depth under the walking face, so the grain runs with the timber on the sloping deck
+      KIND.beam, (p) => { const r = tf(p); return [r[0]!, r[1]!, Bm.n + (s + 1) / 2, Math.max(0, slab(r[0]!) - p[1]!)] })
+    }
     body('bridge-deck-boards', b, -10, ['G', 'G'])
   }
 
