@@ -16,7 +16,7 @@ import { OUTDOOR, washGrain } from '../parts/plaster-wash-babylon'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type N = any
 const T = TSL as unknown as Record<string, N>
-const { abs, attribute, cameraPosition, dot, float, floor, fract, max, mix, mx_noise_float, mx_worley_noise_float, normalWorld, normalize, positionWorld, pow, sin, smoothstep, step, uniform, vec3 } = T
+const { abs, attribute, cameraPosition, cameraProjectionMatrix, dot, float, floor, fract, length, max, mix, modelWorldMatrix, mx_noise_float, mx_worley_noise_float, normalLocal, normalWorld, normalize, positionLocal, positionWorld, pow, screenSize, select, sin, smoothstep, step, uniform, vec2, vec3, vec4 } = T
 
 type RGB = [number, number, number]
 const V3 = (c: readonly number[]): N => vec3(c[0]!, c[1]!, c[2]!)
@@ -107,7 +107,29 @@ export function bodiesMaterial(tones: ClassTones, V: CellsPlan): Material {
   topCol = mix(topCol, tread, is(5))
   const stateCol = mix(faceCol, topCol, up)
   m.colorNode = mix(stateCol, classColour(tones, attribute('cls', 'vec2'), attribute('band', 'float')), uView)
+  m.receivedShadowPositionNode = stairShadowAt(is(5))
   return m
+}
+
+/** half the side of the stairs' shadow footprint in plan, metres: about two thirds of a tread (a guess, near the blur
+    a low sun's disc gives a leaf's shadow cast some metres above) */
+const STAIR_SOFT = 0.2
+
+/** where a stair's tread or riser reads the sun's shadow: straight above or below it on its flight's ramp (the plane
+    through the nosings, gardens-geom.ts), so a lit patch's outline runs on across the flight at a low sun instead of
+    stepping with each tread; the flight's sides and every other body read their own point */
+function stairShadowAt(isStair: N): N {
+  const ramp = attribute('ramp', 'vec4'), pl = positionLocal
+  const grad = vec2(ramp.y, ramp.z)
+  // a side face's normal runs across the flight, square to the ramp's slope
+  const across = abs(normalLocal.x.mul(ramp.z).sub(normalLocal.z.mul(ramp.y))).div(max(length(grad), 1e-4))
+  // a still's sub-frames each shift the camera by under a pixel (setViewOffset in accumulate); the same shift scaled to
+  // the footprint moves each sub-frame's lookup, so their mean reads the map over the footprint; a live frame keeps one
+  const lens = cameraProjectionMatrix.mul(vec4(0, 0, 1, 0))
+  const sub = fract(vec2(lens.x, lens.y).mul(screenSize).mul(0.5).add(0.5)).sub(0.5)
+  const q = vec2(pl.x, pl.z).add(sub.mul(2 * STAIR_SOFT))
+  const onRamp = modelWorldMatrix.mul(vec4(q.x, ramp.x.add(ramp.y.mul(q.x)).add(ramp.z.mul(q.y)), q.y, 1)).xyz
+  return select(ramp.w.mul(isStair).mul(step(across, 0.5)).greaterThan(0.5), onRamp, positionWorld)
 }
 
 /** the plants: vertex colours broken into leaf clumps that fade into their mean where a pixel covers them; the
