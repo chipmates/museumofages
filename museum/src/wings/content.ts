@@ -315,13 +315,13 @@ export const WING_TEXT = {
   },
   /** the reading table's bench page door (the walk carries no station door) */
   door: {
-    en: 'Ask the Echo about this',
-    de: 'Frag das Echo danach',
+    en: 'His stories in the library',
+    de: 'Zu seinen Geschichten',
   },
-  /** the no-signup case, in the app's own words for its daily free messages */
+  /** what the door opens, without a promise of messages */
   doorNote: {
-    en: 'Opens the library in a new tab. 30 free messages a day. No signup needed.',
-    de: 'Öffnet die Bibliothek in einem neuen Tab. 30 kostenlose Nachrichten pro Tag. Ohne Anmeldung.',
+    en: 'Opens the library in a new tab. Short stories from his life, to hear or to read. No signup needed.',
+    de: 'Öffnet die Bibliothek in einem neuen Tab. Kurze Geschichten aus seinem Leben, zum Hören oder Lesen. Ohne Anmeldung.',
   },
   /* THE PLATE IN FRONT OF THE LIBRARY: its heading and its way in are the
      wing's own words. */

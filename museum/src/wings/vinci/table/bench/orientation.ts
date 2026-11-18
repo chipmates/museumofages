@@ -25,7 +25,6 @@ const COPY = {
     sources: 'Sources', sourcesKey: 'L', close: 'Close sources', record: 'The full record',
     sourceTitle: 'The page and its sources', plate: 'The displayed reproduction',
     sourceLink: 'Source record', hourTitle: 'The wing’s computed hour',
-    doorScope: 'The library opens Leonardo’s general question. The question above remains here to copy.',
   },
   de: {
     hour: 'Stunde des Flügels · 15:19 nach der Sonne, 10. Oktober 1517',
@@ -33,7 +32,6 @@ const COPY = {
     sources: 'Quellen', sourcesKey: 'L', close: 'Quellen schließen', record: 'Der vollständige Nachweis',
     sourceTitle: 'Das Blatt und seine Quellen', plate: 'Die ausgestellte Reproduktion',
     sourceLink: 'Quellennachweis', hourTitle: 'Die berechnete Stunde des Flügels',
-    doorScope: 'Die Bibliothek öffnet Leonardos allgemeine Frage. Die Frage oben bleibt hier zum Kopieren.',
   },
 } as const
 
@@ -74,8 +72,7 @@ export function createTableOrientation(options: TableOrientationOptions) {
   door.target = '_blank'
   door.rel = 'noopener noreferrer'
   const doorNote = node('p', 'table-orientation-door-note')
-  const doorScope = node('p', 'table-orientation-door-scope')
-  doorFooter.append(question, door, doorNote, doorScope)
+  doorFooter.append(question, door, doorNote)
   navSource.append(style, chip, stations, sourceButton, drawer)
 
   function centerStation() {
@@ -117,8 +114,7 @@ export function createTableOrientation(options: TableOrientationOptions) {
     const doorContext = node('section', 'table-orientation-plate-source table-orientation-door-source')
     doorContext.append(
       node('h3', '', WING_TEXT.door[language]),
-      node('p', 'table-orientation-source-copy', station.door[language]),
-      node('p', 'table-orientation-source-copy', copy.doorScope),
+      node('p', 'table-orientation-source-copy', WING_TEXT.doorNote[language]),
     )
     body.append(doorContext)
     const hour = node('section', 'table-orientation-hour-source')
@@ -181,11 +177,12 @@ export function createTableOrientation(options: TableOrientationOptions) {
       node('kbd', 'table-orientation-source-key', copy.sourcesKey),
     )
     sourceButton.setAttribute('aria-expanded', String(drawer.open))
-    question.textContent = station.door[language]
+    // the station's question was put to the library's chat, which ended: the door now opens his stories
+    question.textContent = ''
+    question.hidden = true
     door.textContent = WING_TEXT.door[language]
     door.href = agoraFigureUrl(wing.publicSlug ?? wing.slug, language)
     doorNote.textContent = WING_TEXT.doorNote[language]
-    doorScope.textContent = copy.doorScope
     if (drawer.open) refreshSources()
     requestAnimationFrame(centerStation)
   }
