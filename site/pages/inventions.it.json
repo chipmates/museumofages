@@ -182,7 +182,7 @@
   "og_image_alt": "Quattro macchine di legno nella sala delle macchine, nel sole basso del pomeriggio: le porte battenti di una chiusa, la vite aerea con la sua vela a spirale, una vite di Archimede e un laminatoio. Ricostruzioni in codice dai fogli di Leonardo da Vinci."
  },
  "labels": {
-  "crumbs": "Sei qui",
+  "crumbs": "Percorso di navigazione",
   "crumb_home": "Museo",
   "crumb_here": "Invenzioni",
   "toc": "In questa pagina",
@@ -208,9 +208,9 @@
    "alt": "Una sala alta con un soffitto a listelli di legno e una fila di finestre, nel sole basso del pomeriggio. Su bassi basamenti ci sono quattro macchine di legno: le porte battenti di una chiusa, la vite aerea con la sua vela a spirale, una vite di Archimede nel suo telaio e un laminatoio."
   },
   "door": {
-   "text": "Entra nel museo",
+   "text": "Ingresso al museo",
    "note": "Ingresso libero, senza account.",
-   "leads": "La porta ti conduce all’inizio dell’ala di Leonardo. Dalla pianta dell’ala arrivi alla sala delle macchine."
+   "leads": "La porta conduce all’inizio dell’ala di Leonardo. Dalla pianta dell’ala si arriva alla sala delle macchine."
   }
  },
  "blocks": [
@@ -219,7 +219,7 @@
    "id": "where",
    "nav": "Dove sono",
    "h": "Dove sono le macchine nel museo",
-   "intro": "Museum of Ages è un museo digitale. La sua prima ala è quella di Leonardo da Vinci, e lì le macchine stanno in tre luoghi. La pianta dell’ala elenca ogni macchina sotto il luogo in cui si trova. Premi lì il suo nome e la vedi da vicino.",
+   "intro": "Museum of Ages è un museo digitale. La sua prima ala è quella di Leonardo da Vinci, e lì le macchine stanno in tre luoghi. La pianta dell’ala elenca ogni macchina sotto il luogo in cui si trova. Un tocco sul suo nome la mostra da vicino.",
    "rows": [
     {
      "term": "La sala delle macchine",
@@ -253,7 +253,7 @@
     },
     {
      "term": "Il tavolo di lettura",
-     "text": "Qui sfogli più di 200 pagine dei suoi quaderni, ordinate in diciassette temi, tra cui il volo e le macchine. Ogni pagina indica il suo quaderno e il suo foglio, e puoi leggerla nella sua grafia, allo specchio e come testo. Quando non sfogli, resta aperto un facsimile del Manoscritto B, stampato nel 1883. Il disegno della vite aerea, al foglio 83 verso, è in questo facsimile.",
+     "text": "Qui si sfogliano più di 200 pagine dei suoi quaderni, ordinate in diciassette temi, tra cui il volo e le macchine. Ogni pagina indica il suo quaderno e il suo foglio, e si può leggere nella sua grafia, allo specchio e come testo. Quando non si sfoglia, resta aperto un facsimile del Manoscritto B, stampato nel 1883. Il disegno della vite aerea, al foglio 83 verso, è in questo facsimile.",
      "pic": {
       "pic": "table",
       "tag": "tag_reproduction",
@@ -744,7 +744,7 @@
     },
     {
      "q": "Dove sono oggi i quaderni di Leonardo da Vinci?",
-     "a": "Gli originali sono in poche biblioteche e collezioni, e nessuno è in questo museo. Il Codice Atlantico, con 1.119 fogli, è nella Veneranda Biblioteca Ambrosiana di Milano. Dodici quaderni sono nella Bibliothèque de l’Institut de France, Parigi. Due sono nella Biblioteca nazionale di Spagna, a Madrid, e cinque, rilegati in tre volumi, nel Victoria and Albert Museum di Londra. Circa 550 fogli sono nella Royal Collection, a Windsor. Il Codice Arundel è nella British Library di Londra, il Codice sul volo degli uccelli nella Biblioteca Reale di Torino. Un quaderno è in una collezione privata. Al tavolo di lettura del museo sfogli pagine fotografate, e ognuna indica il quaderno da cui viene.",
+     "a": "Gli originali sono in poche biblioteche e collezioni, e nessuno è in questo museo. Il Codice Atlantico, con 1.119 fogli, è nella Veneranda Biblioteca Ambrosiana di Milano. Dodici quaderni sono nella Bibliothèque de l’Institut de France, Parigi. Due sono nella Biblioteca nazionale di Spagna, a Madrid, e cinque, rilegati in tre volumi, nel Victoria and Albert Museum di Londra. Circa 550 fogli sono nella Royal Collection, a Windsor. Il Codice Arundel è nella British Library di Londra, il Codice sul volo degli uccelli nella Biblioteca Reale di Torino. Un quaderno è in una collezione privata. Al tavolo di lettura del museo si sfogliano pagine fotografate, e ognuna indica il quaderno da cui viene.",
      "links": []
     }
    ]
@@ -754,7 +754,7 @@
    "id": "sources",
    "nav": "Fonti",
    "h": "Fonti",
-   "intro": "I fatti di questa pagina vengono dalla ricerca per l’ala di Leonardo del museo. Li abbiamo confrontati con i cataloghi di chi conserva gli originali e con le edizioni digitali dei quaderni, per quanto era possibile leggerli. Nel museo, quando guardi da vicino una macchina, trovi la sua scheda: il foglio, ciò che il foglio non dice, i calcoli e le fonti.",
+   "intro": "I fatti di questa pagina vengono dalla ricerca per l’ala di Leonardo del museo. Li abbiamo confrontati con i cataloghi di chi conserva gli originali e con le edizioni digitali dei quaderni, per quanto era possibile leggerli. Nel museo, guardando da vicino una macchina, si trova la sua scheda: il foglio, ciò che il foglio non dice, i calcoli e le fonti.",
    "holders_h": "Dove sono conservati i quattordici disegni",
    "holders": [
     {
@@ -785,7 +785,7 @@
     "Il museo nomina queste istituzioni perché conservano gli originali. È indipendente da ognuna di loro.",
     "Le immagini di questa pagina vengono dal film del museo: stanze e macchine costruite in codice. Il libro sul tavolo di lettura è un facsimile del Manoscritto B stampato nel 1883, di pubblico dominio perché i diritti sono scaduti."
    ],
-   "editions_h": "Dove puoi leggere i fogli direttamente",
+   "editions_h": "Dove leggere i fogli direttamente",
    "editions": [
     {
      "name": "Veneranda Biblioteca Ambrosiana",
@@ -840,18 +840,18 @@
      ]
     }
    ],
-   "contact": "Se una data, un foglio o il nome di chi conserva un originale è sbagliato, scrivici e lo correggiamo.",
-   "contact_link": "Vai alle note legali",
+   "contact": "Se una data, un foglio o il nome di chi conserva un originale è sbagliato, basta scriverci e lo correggiamo.",
+   "contact_link": "Note legali",
    "what_link": "Che cos’è questo museo"
   },
   {
    "type": "close",
    "id": "enter",
    "nav": "",
-   "h": "Guarda le macchine nel museo",
-   "p": "La porta ti conduce all’inizio dell’ala di Leonardo. Prima c’è la sala dei quadri, poi, più avanti nel percorso, la sala delle macchine.",
+   "h": "Le macchine nel museo",
+   "p": "La porta conduce all’inizio dell’ala di Leonardo. Prima c’è la sala dei quadri, poi, più avanti nel percorso, la sala delle macchine.",
    "door": {
-    "text": "Entra nel museo",
+    "text": "Ingresso al museo",
     "note": "Ingresso libero, senza account."
    }
   }

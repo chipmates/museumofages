@@ -1,0 +1,493 @@
+{
+ "_note": "THE WORDS of the page on Leonardo da Vinci's bridge, from its words file and the drawing made for it. Every displayed sentence lives here and in the twin file. The two files hold the same structure and the same pictures: each language's frame shows its own drawing. No em dash, no en dash, no semicolon.",
+ "page": {
+  "id": "vinci-bridge",
+  "wing": "vinci",
+  "topic": "bridge",
+  "published": "2026-11-19",
+  "checked": "2026-11-18",
+  "og_image": {
+   "file": "vinci-bridge-og-{lang}-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "frame_en": {
+   "stem": "vinci-bridge-frame-en",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) 46vw, calc(100vw - 40px)",
+   "narrow": {
+    "stem": "vinci-bridge-frame-phone-en",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 600
+   }
+  },
+  "frame_de": {
+   "stem": "vinci-bridge-frame-de",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) 46vw, calc(100vw - 40px)",
+   "narrow": {
+    "stem": "vinci-bridge-frame-phone-de",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 600
+   }
+  },
+  "lead_en": {
+   "stem": "vinci-bridge-lead-en",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 640px) 560px, calc(100vw - 40px)",
+   "narrow": {
+    "stem": "vinci-bridge-lead-phone-en",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 560
+   }
+  },
+  "lead_de": {
+   "stem": "vinci-bridge-lead-de",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 640px) 560px, calc(100vw - 40px)",
+   "narrow": {
+    "stem": "vinci-bridge-lead-phone-de",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 560
+   }
+  }
+ },
+ "meta": {
+  "title": "Da Vinci bridge: how the poles hold | Museum of Ages",
+  "description": "Two Leonardo designs: a bridge of poles that holds without nails or rope, explained step by step, and an arch for the Golden Horn in Istanbul, to scale.",
+  "og_title": "Leonardo da Vinci's bridge: how the poles hold, and the Golden Horn arch to scale",
+  "og_image_alt": "The question over the drawing made for this page: how Leonardo's bridge of poles holds, as a principle, and his bridge for the Golden Horn to one scale with other bridges."
+ },
+ "labels": {
+  "crumbs": "Breadcrumb",
+  "crumb_home": "Museum",
+  "crumb_here": "Leonardo da Vinci's bridge",
+  "toc": "On this page",
+  "tag_made": "Made for this page"
+ },
+ "top": {
+  "h1": "What is Leonardo da Vinci's bridge?",
+  "answer": [
+   "Two Leonardo designs carry the name: a bridge of poles woven to hold each other, in the ",
+   {
+    "text": "Codex Atlanticus",
+    "href": "https://codex-atlanticus.ambrosiana.it/"
+   },
+   " about 1485 to 1487, and a one-arch bridge over the Golden Horn in Istanbul, about 350 metres long, in ",
+   {
+    "text": "Manuscript L",
+    "href": "https://leonardo-online.mpiwg-berlin.mpg.de/en/div-classleo_title_authorleonardo-da-vincidivdiv-classleo_title_titlep-classtedesco_catalogo_titolo_dspannweitepdivdiv-classleo_title_dateplacep-classtedesco_catalogo_dati_tec_d1502-pdiv"
+   },
+   " about 1502. Neither is known to have been built then."
+  ],
+  "answer_more": "Both drawings, and the arch's sizes: in his hand. The year 1502: most scholars, from a dated note. His letter's year: disputed.",
+  "frame": {
+   "pic": "frame_en",
+   "title": "The bridge for the Golden Horn",
+   "tag": "tag_made",
+   "what": "seen from the side to one scale, from the sizes in Leonardo's note.",
+   "alt": "Leonardo's bridge for the Golden Horn in Istanbul to one scale: one arch about 235 metres across the water and about 41 metres high, about 350 metres long in all.",
+   "src": [
+    "Drawing: Museum of Ages, CC BY-SA 4.0. The arch after Leonardo's sketch in Manuscript L, folio 66 recto, as J. P. Richter printed it in 1883."
+   ]
+  },
+  "door_first": true,
+  "door": {
+   "text": "Enter the museum",
+   "note": "Free entry, no account.",
+   "leads": "The door opens the Leonardo wing at its beginning. The machines the museum has rebuilt in code stand there, neither bridge among them."
+  }
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "id": "poles",
+   "nav": "How the poles hold",
+   "h": "How does the self-supporting bridge of poles hold, and how is it built?",
+   "paras": [
+    [
+     "By its own weight: each pole rests on another and carries a third, so the load presses the poles together and friction keeps them from sliding, with no nail, peg or rope, as the ",
+     {
+      "text": "encyclopedia",
+      "href": "https://en.wikipedia.org/wiki/Da_Vinci%27s_self_supporting_bridge"
+     },
+     " explains."
+    ],
+    [
+     "Leonardo drew it on two sheets of the Codex Atlanticus, folios 69a recto and 71 verso, kept by the ",
+     {
+      "text": "Veneranda Biblioteca Ambrosiana",
+      "href": "https://codex-atlanticus.ambrosiana.it/"
+     },
+     " in Milan and dated to about 1485 to 1487. They show a temporary wooden bridge for an army, and his note says to weave it. Whether his own version had rope is disputed: a museum in Vinci sees logs that stand without it, while ",
+     {
+      "text": "a 2008 talk by the mathematician Hans Humenberger",
+      "href": "https://www.numa.uni-linz.ac.at/Talks/JKS/2008/Humenberger_Vortrag.pdf"
+     },
+     " has them fastened with ropes. No record shows one built in his lifetime."
+    ],
+    "Classes build it today on a table, from sticks of one size. In this build the smallest bridge takes six sticks, two pairs and two cross sticks, and each further joint adds two cross and two long sticks, as Humenberger counts:",
+    {
+     "points": [
+      [
+       "1.",
+       "Two sticks lie flat on the table, side by side and a little apart: the first pair."
+      ],
+      [
+       "2.",
+       "A cross stick lies across them, partway along."
+      ],
+      [
+       "3.",
+       "A second pair, set closer together so that it fits between the first, rests one end on that cross stick and runs on between the first pair's sticks, under their far ends."
+      ],
+      [
+       "4.",
+       "Those far ends are lifted, a second cross stick goes across the second pair beneath them, and they are set down on it."
+      ],
+      [
+       "5.",
+       "The joint is locked: each pair carries a cross stick that carries the other pair, and weight presses them tighter."
+      ],
+      [
+       "6.",
+       "Each further joint repeats steps 2 to 4, wide and narrow pairs in turn. With each joint the bridge bends further into an arch, its two ends on the table, and its end sticks stand steeper. When they stand so steep that they slip, the bridge has one joint too many."
+      ]
+     ]
+    }
+   ],
+   "pic": {
+    "pic": "lead_en",
+    "shape": "whole",
+    "tag": "tag_made",
+    "what": "how the poles hold, as a principle, and the bridge for the Golden Horn to one scale with other bridges, from the sizes in Leonardo's note.",
+    "alt": "A drawing in two parts. First, how Leonardo's bridge of poles holds, pairs of poles leaning on each other through cross poles, each cross pole lying on one pair and carrying the end of the next, with no nail or rope. Second, his bridge for the Golden Horn in Istanbul to one scale with other bridges: one arch about 235 metres across the water and about 41 metres high, about 350 metres long in all, beside the arches at Trezzo sull'Adda, 72 metres, and Verona, 48.7 metres, the footbridge at Ås in Norway, 40 metres, and today's Galata Bridge, 490 metres long."
+   }
+  },
+  {
+   "type": "text",
+   "id": "why-not-built",
+   "nav": "Why it was not built",
+   "h": "Why was the bridge over the Golden Horn never built?",
+   "paras": [
+    [
+     "Nobody knows: no answer from Sultan Bayezid II survives, as ",
+     {
+      "text": "Orlandi and Giannantonio",
+      "href": "https://www.rmoa.unina.it/9516/"
+     },
+     " note in a study of 2025."
+    ],
+    "Leonardo offered it to the Sultan in a letter that survives only as an Ottoman Turkish copy, probably a translation, in the Topkapı Palace archive in Istanbul. Found in 1951 and published in 1952, it is dated 3 July but gives no year: most scholars say 1502 or 1503, some earlier. In it he offers several works, among them this bridge and a second bridge.",
+    "A few years later, Condivi and Vasari tell, the Sultan asked Michelangelo for a bridge across the Golden Horn, and he did not go."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "would-it-stand",
+   "nav": "Would it have stood",
+   "h": "Would the bridge over the Golden Horn have stood?",
+   "paras": [
+    [
+     "Most likely, if built as an arch of stone: in 2019 engineers at MIT built ",
+     {
+      "text": "a model of it at 1 to 500",
+      "href": "https://news.mit.edu/2019/leonardo-da-vinci-bridge-test-1010"
+     },
+     " from loose blocks, and it stood without mortar."
+    ],
+    [
+     "His note, in ",
+     {
+      "text": "Richter's English of 1883",
+      "href": "https://archive.org/details/literaryworksofl02leonuoft"
+     },
+     ": \"The bridge of Pera at Constantinople, 40 braccia wide, 70 braccia high above the water, 600 braccia long\", that is \"400 over the sea and 200 on the land, thus making its own abutments\". With the Florentine braccio of 58.3 centimetres, that is about 350 metres long, 235 of them over the water, and 41 metres high, enough, his letter promises, for a ship with its sail set. The longest arch before it, at Trezzo sull'Adda, spanned 72 metres. Where builders of the time would have needed ten or more piers, MIT notes, Leonardo drew one flattened arch, its ends spreading outward like a swallowtail against sideways sway."
+    ],
+    "The MIT team, Karly Bast and Michelle Xie with their professor John Ochsendorf, 3D-printed 126 blocks, set them on scaffolding, then took the scaffolding away: the model carried itself. When one support was moved away from the other, as weak ground might, it only deformed slightly until stretched to collapse. Leonardo meant to build without scaffolding, Orlandi and Giannantonio point out, and the model did not test wind or stone at full size.",
+    "Leonardo's note names no material, and MIT's report says his letter gives none either, though Bast's thesis calls his plan \"a masonry bridge\". MIT concluded that only stone could carry such a span. Other readings put a timber arch on stone piers, among them the Swiss engineer Fritz Stüssi's, who judged the bridge buildable in 1953, Orlandi and Giannantonio report. A year earlier the art historian Ludwig Heydenreich had called it pure utopia. The material is still disputed."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "built-today",
+   "nav": "Built in real life",
+   "h": "Has Leonardo's bridge been built in real life?",
+   "paras": [
+    "Not at full size: no bridge after his sketch crosses the Golden Horn, but a smaller one has crossed the E18 road at Ås in Norway since 2001, and bridges of poles go up in classrooms.",
+    [
+     "The painter Vebjørn Sand pushed for the Ås bridge, and Norway's Public Roads Administration built it, the ",
+     {
+      "text": "encyclopedia",
+      "href": "https://en.wikipedia.org/wiki/Vebj%C3%B8rn_Sand_Da_Vinci_Project"
+     },
+     " and ",
+     {
+      "text": "Bridgeinfo.net",
+      "href": "https://www.bridgeinfo.broer.no/bridge/index.php?ID=3"
+     },
+     " record: about 100 metres long, its main span 40 metres, of glued timber. On the Golden Horn itself stands today's ",
+     {
+      "text": "Galata Bridge",
+      "href": "https://fr.wikipedia.org/wiki/Pont_de_Galata"
+     },
+     ", 490 metres long, the fifth on its site since 1845."
+    ]
+   ]
+  },
+  {
+   "type": "question",
+   "id": "how-we-know",
+   "nav": "How we know",
+   "h": "How do we know?",
+   "answer": "From Leonardo's sheets, a copy of his letter, and tests made in our time.",
+   "known": [
+    [
+     "The arch is on folio 66 recto of Manuscript L, a pocket notebook about 10 by 7 centimetres in the Bibliothèque de l'Institut de France. In the notebook the page stands upside down. The back of the leaf carries a note dated 6 September 1502, which is why most scholars date the sketch to that year. Ravaisson-Mollien printed the notebook ",
+     {
+      "text": "in facsimile in 1890",
+      "href": "https://archive.org/details/lesmanuscritsdel05lo"
+     },
+     "."
+    ]
+   ],
+   "open": "What stays open: the year of the letter, the material Leonardo meant, which braccio he used, and where exactly the bridge would have crossed.",
+   "links": [
+    {
+     "text": "The machines on his sheets, and which of them anyone ever built",
+     "page": "inventions"
+    }
+   ]
+  },
+  {
+   "type": "ledger",
+   "id": "numbers",
+   "nav": "The numbers",
+   "h": "The numbers",
+   "intro": "Each figure with its basis, how sure it is and its source.",
+   "cols": [
+    "Figure",
+    "Basis",
+    "Known or guessed",
+    "Source"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Bridge of poles, about 1485 to 1487",
+      "dated by the standard catalogue",
+      "Known (sheets), Guessed (date)",
+      "Veneranda Biblioteca Ambrosiana"
+     ]
+    },
+    {
+     "cells": [
+      "Golden Horn sketch, about 1502",
+      "a note dated 6 September 1502 on the back of the leaf",
+      "Known (sheet), Guessed (year)",
+      "Ravaisson-Mollien 1890"
+     ]
+    },
+    {
+     "cells": [
+      "Length 600 braccia, about 350 m (400 over the water, about 235 m, 200 on land, about 117 m). Height 70, about 41 m. Width 40, about 23 m",
+      "his note, at the Florentine braccio",
+      "Known (braccia), Guessed (metres)",
+      "Richter 1883"
+     ]
+    },
+    {
+     "cells": [
+      "The braccio: 58.3 cm in Florence, 59.5 cm in Milan",
+      "which he meant is not known. Milan's adds about 2 percent",
+      "Guessed",
+      "Italian units of measurement"
+     ]
+    },
+    {
+     "cells": [
+      "Span by MIT: about 280 m",
+      "MIT's own figure, its basis not given",
+      "Guessed",
+      "MIT News 2019"
+     ]
+    },
+    {
+     "cells": [
+      "Arches before his: Trezzo sull'Adda 72 m, the longest, and Castelvecchio in Verona 48.7 m",
+      "built in the 1370s (gone by 1416) and the 1350s",
+      "Known",
+      "Trezzo sull'Adda Bridge, Castelvecchio Bridge"
+     ]
+    }
+   ],
+   "note": "Sources are named as in the list below."
+  },
+  {
+   "type": "text",
+   "id": "myths",
+   "nav": "Things often read",
+   "h": "Things often read",
+   "subs": [
+    {
+     "h": "\"The Golden Horn bridge was 240 metres long, with a span of 280.\"",
+     "paras": [
+      "About 240 metres is roughly the part over the water, and 280 is MIT's figure. His note gives 600 braccia in all, about 350 metres."
+     ]
+    },
+    {
+     "h": "\"The Sultan turned it down as impossible.\"",
+     "paras": [
+      "No answer from the Sultan survives, so nobody knows why it was not built. Some scholars read the silence as a no."
+     ]
+    },
+    {
+     "h": "\"The bridge of poles was made for Cesare Borgia in 1502.\"",
+     "paras": [
+      "Its sheets date to about 1485 to 1487. The often read 1478 to 1518 is the span of the whole Codex Atlanticus."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "The facts on this page come from these pages, read on 18 November 2026.",
+   "editions_h": "Where the sheets are kept",
+   "editions": [
+    {
+     "name": "Veneranda Biblioteca Ambrosiana",
+     "text": "In Milan: Codex Atlanticus, folios 69a recto and 71 verso.",
+     "links": [
+      {
+       "label": "The Codex Atlanticus online",
+       "href": "https://codex-atlanticus.ambrosiana.it/"
+      }
+     ]
+    },
+    {
+     "name": "Bibliothèque de l'Institut de France",
+     "text": "In Paris: Manuscript L, folio 66 recto.",
+     "links": [
+      {
+       "label": "Manuscript L, in French",
+       "href": "https://minerva.bibliotheque-institutdefrance.fr/expositions/exhibitions/12-carnet-l2"
+      }
+     ]
+    }
+   ],
+   "read": [
+    {
+     "text": "J. P. Richter, The Literary Works of Leonardo da Vinci, volume II, 1883, section 1109 and plate CX (Internet Archive)",
+     "href": "https://archive.org/details/literaryworksofl02leonuoft"
+    },
+    {
+     "text": "Ch. Ravaisson-Mollien, Les manuscrits de Léonard de Vinci, volume 5, 1890, Manuscript L in facsimile (in French, Internet Archive)",
+     "href": "https://archive.org/details/lesmanuscritsdel05lo"
+    },
+    {
+     "text": "Max Planck Institute for the History of Science, Leonardo Online, \"Span of a bridge\", Manuscript L, folio 66 recto",
+     "href": "https://leonardo-online.mpiwg-berlin.mpg.de/en/div-classleo_title_authorleonardo-da-vincidivdiv-classleo_title_titlep-classtedesco_catalogo_titolo_dspannweitepdivdiv-classleo_title_dateplacep-classtedesco_catalogo_dati_tec_d1502-pdiv"
+    },
+    {
+     "text": "L. Orlandi and R. Giannantonio, \"Il ponte di Galata: la 'Monna Lisa dei ponti'\", Achademia Leonardi Vinci 5, 2025 (in Italian, open copy at the University of Naples)",
+     "href": "https://www.rmoa.unina.it/9516/"
+    },
+    {
+     "text": "D. L. Chandler, \"Engineers put Leonardo da Vinci's bridge design to the test\", MIT News, 9 October 2019",
+     "href": "https://news.mit.edu/2019/leonardo-da-vinci-bridge-test-1010"
+    },
+    {
+     "text": "K. M. Bast, Feasibility study of Leonardo da Vinci's bridge proposal over the Golden Horn in Istanbul, MIT, 2019 (the record)",
+     "href": "https://dspace.mit.edu/handle/1721.1/123216"
+    },
+    {
+     "text": "H. Humenberger, Die Leonardo-Brücke: Mathematische und praktische Aktivitäten rund um die Leonardo-Brücke, talk slides, Kepler Symposium, Linz, 12 November 2008 (in German)",
+     "href": "https://www.numa.uni-linz.ac.at/Talks/JKS/2008/Humenberger_Vortrag.pdf"
+    },
+    {
+     "text": "Holztechnikum, Leonardobrücke: Konstruktion, Grundgedanke, Bauanleitung (in German, PDF)",
+     "href": "https://www.holztechnikum.at/wp-content/uploads/2017/07/bauanleitungleonardoneu.pdf"
+    },
+    {
+     "text": "Wikipedia, Da Vinci's self supporting bridge",
+     "href": "https://en.wikipedia.org/wiki/Da_Vinci%27s_self_supporting_bridge"
+    },
+    {
+     "text": "Wikipedia, Vebjørn Sand Da Vinci Project",
+     "href": "https://en.wikipedia.org/wiki/Vebj%C3%B8rn_Sand_Da_Vinci_Project"
+    },
+    {
+     "text": "Bridgeinfo.net, Da Vinci Bridge",
+     "href": "https://www.bridgeinfo.broer.no/bridge/index.php?ID=3"
+    },
+    {
+     "text": "Wikipedia, Trezzo sull'Adda Bridge",
+     "href": "https://en.wikipedia.org/wiki/Trezzo_sull%27Adda_Bridge"
+    },
+    {
+     "text": "Wikipedia, Castelvecchio Bridge",
+     "href": "https://en.wikipedia.org/wiki/Castelvecchio_Bridge"
+    },
+    {
+     "text": "Wikipedia, Italian units of measurement",
+     "href": "https://en.wikipedia.org/wiki/Italian_units_of_measurement"
+    },
+    {
+     "text": "Wikipédia, Pont de Galata (in French)",
+     "href": "https://fr.wikipedia.org/wiki/Pont_de_Galata"
+    }
+   ],
+   "contact": "If a date, a figure or a sentence is wrong, a message is enough, and we will correct it.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "close",
+   "id": "enter",
+   "nav": "",
+   "h": "See the machines in the museum",
+   "p": "The museum has not built either bridge. The machines it has rebuilt in code stand in the Leonardo wing, in its mechanism hall, its court and its house, each labelled as a reconstruction, and this door opens the wing at its beginning.",
+   "door": {
+    "text": "Enter the museum",
+    "note": "Free entry, no account."
+   }
+  }
+ ]
+}

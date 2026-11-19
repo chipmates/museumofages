@@ -1,0 +1,498 @@
+{
+ "_note": "AN ANSWER PAGE of the questions shelf, from its words and its picture made for it.",
+ "page": {
+  "id": "questions-pompeii-casts",
+  "wing": "questions",
+  "topic": "pompeii_casts",
+  "published": "2026-11-19",
+  "checked": "2026-11-18",
+  "og_image": {
+   "file": "questions-pompeii-casts-og-{lang}-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "lead": {
+   "stem": "questions-pompeii-casts-lead-{lang}",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 560px, (min-width: 960px) 44vw, calc(100vw - 40px)",
+   "swatches": {
+    "known": "#c8cddd",
+    "guessed": "#c8cddd"
+   },
+   "narrow": {
+    "stem": "questions-pompeii-casts-lead-phone-{lang}",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 560
+   }
+  },
+  "photo": {
+   "stem": "questions-pompeii-casts-photo",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 600px) 560px, calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "Sind die Toten von Pompeji versteinert? | Museum of Ages",
+  "description": "Versteinert wurde niemand: Die Figuren sind Gipsabgüsse echter Menschen. Wie ein Abguss entsteht, Schritt für Schritt gezeichnet, und was die DNA zeigte.",
+  "og_title": "Sind die Toten von Pompeji versteinert?",
+  "og_image_alt": "Die Frage über dem oberen Teil der Zeichnung zu dieser Seite: wie ein Abguss entsteht, in vier Schritten, jeder ein Schnitt durch den Boden mit einer schlichten gestrichelten Umrisslinie in der Asche."
+ },
+ "labels": {
+  "crumbs": "Seitenpfad",
+  "crumb_home": "Museum",
+  "toc": "Auf dieser Seite",
+  "tag_made": "Für diese Seite gemacht",
+  "tag_photo": "Fotografie",
+  "no_figure": "keine Zahl",
+  "crumb_here": "Pompeji: die Abgüsse"
+ },
+ "top": {
+  "h1": "Sind die Toten von Pompeji versteinert?",
+  "answer": [
+   "Nein, versteinert wurde niemand: Fast wie Stein erhärtete nur die Asche, und in ihr hinterließen die Körper beim Zerfall Hohlräume, in die Ausgräber seit 1863 ",
+   {
+    "text": "Gips gießen",
+    "href": "https://pompeiisites.org/pompei-map/approfondimenti/i-calchi/"
+   },
+   ". Die Menschen waren echt, die Figuren sind Gipsabgüsse, viele enthalten noch Knochen der Toten, und von den ",
+   {
+    "text": "mehr als 1.000 gefundenen Toten",
+    "href": "https://pompeiisites.org/en/pompeii-map/analysis/the-casts/"
+   },
+   " wurden ",
+   {
+    "text": "etwa 104",
+    "href": "https://www.cambridge.org/core/journals/papers-of-the-british-school-at-rome/article/abs/inside-the-casts-of-the-pompeian-victims-results-from-the-first-season-of-the-pompeii-cast-project-in-2015/1F0C97208BF820BFAAF58C5BC3018A68"
+   },
+   " abgegossen."
+  ],
+  "strength": "Wie ein Abguss entsteht und seit wann: Aufzeichnungen des Parks. Knochen im Gips: in Scans gesehen, nicht in jedem Abguss. Geschlecht und Verwandtschaft: DNA von fünf Toten, eine Studie.",
+  "slot": {
+   "pic": "lead",
+   "tag": "tag_made",
+   "what": "So entsteht ein Abguss: Der Körper hinterließ in der erhärteten Asche einen Hohlraum, und der Gips, der hineingegossen wird, bewahrt seine Form und oft einen Teil der Knochen.",
+   "alt": "Eine Zeichnung in vier Schritten, wie in Pompeji ein Abguss entsteht. Eins: Ein Mensch, als schlichte Umrisslinie gezeichnet, liegt in der Asche über einer Schicht aus Bimsstein und Lapilli, bis etwa 3 Meter hoch. Zwei: Die Asche ist erhärtet, der Körper zerfallen, zurück bleibt ein Hohlraum mit einigen Knochen darin. Drei: Gips mit Wasser wird in den Hohlraum gegossen, bis er voll ist, und ein Hinweis sagt, dass Knochen oft vorher entnommen und manche frühen Abgüsse mit Metallstangen gestützt wurden. Vier: Die Asche ist abgegraben, der Abguss aus Gips bewahrt die Form des Hohlraums, mit Knochen darin und dem Abdruck von Stoff auf der Oberfläche.",
+   "legend": "picture"
+  },
+  "next": {
+   "page": "how-many-died-in-pompeii",
+   "label": "Nächste Frage:",
+   "text": "Wie viele Menschen starben in Pompeji, und wer überlebte?"
+  }
+ },
+ "faq": [
+  {
+   "q": "Woher wissen wir das?",
+   "a": "Aus den Aufzeichnungen der Ausgräber zu den Abgüssen, aus Fotografien seit 1863, aus Röntgenbildern und CT-Scans von 2015 und aus der DNA der Knochen in den Abgüssen."
+  }
+ ],
+ "blocks": [
+  {
+   "type": "text",
+   "id": "how-were-the-pompeii",
+   "nav": "Wie entstanden die Gipsabgüsse von Pompeji?",
+   "h": "Wie entstanden die Gipsabgüsse von Pompeji?",
+   "paras": [
+    [
+     "Ausgräber gossen eine Mischung aus Gips und Wasser in einen Hohlraum in der erhärteten Asche, bis er voll war, ließen den Gips trocknen und trugen dann die Asche ab, ",
+     {
+      "text": "so beschreibt es der Park",
+      "href": "https://pompeiisites.org/pompei-map/approfondimenti/i-calchi/"
+     },
+     ". Wie eine Gussform hatte die Asche Umfang, Form und Lage dessen bewahrt, was in ihr lag, und der Gips nahm diese Form an. So entstanden die Abgüsse, oft auch Gipsabdrücke genannt."
+    ],
+    [
+     "Die Hohlräume gibt es, weil die Körper in der Asche zerfielen und leere Räume hinterließen, wie auch Türen und Möbel aus Holz. Nur ein Teil der Toten hinterließ einen solchen Hohlraum. Von denen, die im zuerst gefallenen Bimsstein lagen, fand man nur die Knochen. Wer in der Asche der später folgenden Glutwolken lag, dessen Form blieb erhalten, denn die Asche erhärtete zu einer sehr festen Schicht, ",
+     {
+      "text": "schreibt der Park",
+      "href": "https://pompeiisites.org/pompei-map/approfondimenti/i-calchi/"
+     },
+     ". Woran genau die Menschen starben, ist umstritten: Die Studien dazu stehen unter ",
+     {
+      "text": "Wann und wie starben die Menschen?",
+      "page": "how-many-died-in-pompeii",
+      "at": "when-and-how-did"
+     },
+     " auf der Seite über die Zahl der Toten."
+    ],
+    [
+     "Ein Abguss kann enthalten, was nicht zerfiel, etwa Knochen oder Gegenstände aus Metall, die ein Mensch trug oder bei sich hatte, und auf seiner Oberfläche die Webstruktur der Kleidung zeigen, ",
+     {
+      "text": "so der Park",
+      "href": "https://pompeiisites.org/pompei-map/approfondimenti/i-calchi/"
+     },
+     ". Das Verfahren wird bis heute angewandt, mit Gips: ",
+     {
+      "text": "Ein Beitrag des Parks von 2024",
+      "href": "https://pompeiisites.org/wp-content/uploads/17_E-Journal-Civita-Giuliana.pdf"
+     },
+     " nennt neue Abgüsse aus der Villa von Civita Giuliana vor der Stadt, darunter ein Pferd und zwei Menschen."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "who-made-the-first",
+   "nav": "Seit wann gibt es die Abgüsse?",
+   "h": "Seit wann gibt es die Abgüsse?",
+   "paras": [
+    [
+     "Seit Februar 1863: Zwischen dem 2. und dem 5. Februar ließ Giuseppe Fiorelli, der Leiter der Ausgrabungen, die ersten Abgüsse von Menschen anfertigen, ",
+     {
+      "text": "so der Park",
+      "href": "https://pompeiisites.org/pompei-map/approfondimenti/i-calchi/"
+     },
+     ". In einer Gasse, die damals den Namen Vicolo degli Scheletri bekam, fand man vier Menschen und goss die Hohlräume aus, die sie hinterlassen hatten. Türen und Möbel aus Holz ",
+     {
+      "text": "hatte man schon zuvor so abgegossen",
+      "href": "https://pompeiisites.org/wp-content/uploads/17_E-Journal-Civita-Giuliana.pdf"
+     },
+     "."
+    ],
+    [
+     "Das sei keine Kunst und keine Nachahmung, es seien die Knochen der Toten selbst, schrieb der Schriftsteller Luigi Settembrini an Fiorelli über die Abgüsse, wie ",
+     {
+      "text": "der Park ihn zitiert",
+      "href": "https://pompeiisites.org/pompei-map/approfondimenti/i-calchi/"
+     },
+     ". Die Scans von 2015 zeigten jedoch: Oft hatte man Knochen vor dem Gießen entfernt, ",
+     {
+      "text": "so das Pompeii Cast Project",
+      "href": "https://www.cambridge.org/core/journals/papers-of-the-british-school-at-rome/article/abs/inside-the-casts-of-the-pompeian-victims-results-from-the-first-season-of-the-pompeii-cast-project-in-2015/1F0C97208BF820BFAAF58C5BC3018A68"
+     },
+     ", und manche frühen Abgüsse enthalten fast keine Knochen, dafür Metallstangen als Stütze, ",
+     {
+      "text": "berichtete die Universität Sydney",
+      "href": "https://www.sydney.edu.au/news-opinion/news/2016/08/18/skeletal-analysis-reveals-pompeii-myths-are-getting-long-in-the-.html"
+     },
+     ". Von den 26 untersuchten Abgüssen enthielt keiner ein vollständiges Skelett, hält ",
+     {
+      "text": "die DNA-Studie von 2024",
+      "href": "https://doi.org/10.1016/j.cub.2024.10.007"
+     },
+     " fest."
+    ]
+   ],
+   "pic": {
+    "pic": "photo",
+    "tag": "tag_photo",
+    "what": "Eine der ältesten Fotografien eines Abgusses: ein Abguss von einem der vier Menschen, die im Februar 1863 in einer Gasse in Pompeji gefunden wurden, fotografiert von Sommer & Behles um 1863. Der Abzug kam 1864 in ein Frankfurter Museum.",
+    "alt": "Eine Fotografie aus dem 19. Jahrhundert: der Gipsabguss eines Menschen, der auf einem niedrigen Tisch vor einer Mauer liegt.",
+    "src": [
+     "Giorgio Sommer und Edmondo Behles (Sommer & Behles), um 1863. Städel Museum, Frankfurt am Main. ",
+     {
+      "text": "Gemeinfrei",
+      "href": "https://sammlung.staedelmuseum.de/en/work/pompeii-cast-of-a-human-victim"
+     },
+     "."
+    ],
+    "shape": "whole"
+   }
+  },
+  {
+   "type": "text",
+   "id": "how-many-casts-are",
+   "nav": "Wie viele Abgüsse gibt es?",
+   "h": "Wie viele Abgüsse gibt es?",
+   "paras": [
+    [
+     "Etwa 104 der mehr als 1.000 Toten, deren Überreste in Pompeji gefunden wurden, sind seit 1863 abgegossen worden, nach der 2021 veröffentlichten Zählung des ",
+     {
+      "text": "Pompeii Cast Project",
+      "href": "https://www.cambridge.org/core/journals/papers-of-the-british-school-at-rome/article/abs/inside-the-casts-of-the-pompeian-victims-results-from-the-first-season-of-the-pompeii-cast-project-in-2015/1F0C97208BF820BFAAF58C5BC3018A68"
+     },
+     ". Der Park selbst spricht von ",
+     {
+      "text": "etwas mehr als hundert",
+      "href": "https://pompeiisites.org/en/pompeii-map/analysis/the-casts/"
+     },
+     " Abgüssen."
+    ],
+    [
+     "Nicht jeder Hohlraum ließ sich ausgießen: 1914 fand man im Garten vor dem Haus des Kryptoportikus neun Menschen, abgießen ließen sich vier, ",
+     {
+      "text": "so die Liste des Parks",
+      "href": "https://pompeiisites.org/pompei-map/approfondimenti/i-calchi/"
+     },
+     ". Viele ausgestellte Abgüsse wurden ",
+     {
+      "text": "1943 durch Bomben zerstört",
+      "href": "https://pompeiisites.org/en/pompeii-map/analysis/the-casts/"
+     },
+     " oder beschädigt. Ab August 2015 restaurierte man 86 Abgüsse gemeinsam, fast alle, die der Park besitzt, ",
+     {
+      "text": "meldete das Kulturministerium",
+      "href": "https://cultura.gov.it/comunicato/pompei-interventi-con-tac-sui-calchi-indagini-tomografiche-per-studiare-le-vittime-dell-eruzione-di-pompei-la-scienza-medica-al-servizio-dell-archeologia"
+     },
+     "."
+    ],
+    [
+     "Für Ausstellungen anderswo verleiht der Park Kopien, nach Laserscans gedruckt oder früher aus Gips oder Harz gegossen, und in Pompeji soll eine neue Ausstellung der Originale entstehen. Sie seien Menschen, bevor sie Zeugnisse seien, ",
+     {
+      "text": "schreibt der Park",
+      "href": "https://pompeiisites.org/pompei-map/approfondimenti/i-calchi/"
+     },
+     "."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "what-did-dna-show",
+   "nav": "Was zeigte die DNA aus den Abgüssen?",
+   "h": "Was zeigte die DNA aus den Abgüssen?",
+   "paras": [
+    [
+     "Dass manche alte Deutung falsch war. 2024 ",
+     {
+      "text": "untersuchte ein Team",
+      "href": "https://doi.org/10.1016/j.cub.2024.10.007"
+     },
+     ", zu dem Archäologen des Parks gehörten, die DNA von Knochen, die mit Gips vermischt in 14 der 86 seit 2015 restaurierten Abgüsse steckten, so die Studie und die Pressemitteilung der Max-Planck-Gesellschaft. Bei fünf Toten gelang eine genomweite Analyse. Alle fünf waren genetisch männlich, und unter ihnen fand sich keine Verwandtschaft bis zum dritten Grad. Der Erwachsene mit dem goldenen Armreif im Haus des Goldenen Armbands, lange für die Mutter gehalten, war also genetisch männlich und nicht mit dem Kind verwandt, das bei ihm gefunden wurde. Von den beiden Menschen im Haus des Kryptoportikus, lange als Schwestern oder als Mutter und Tochter gedeutet, war mindestens einer männlich. Es ist eine Studie an fünf Toten. Bei einem zweiten Erwachsenen aus dem Haus des Goldenen Armbands (Abguss 50 in der Zählung des Parks) war nur die Linie der Mutter lesbar, und sein Geschlecht ließ sich nicht aus der DNA des Zellkerns bestimmen."
+    ],
+    "Die Studie zeige, wie unzuverlässig Deutungen auf schmaler Grundlage sein könnten, schreiben die Forschenden, und es sei möglich, dass Restauratoren früher die Haltung der Abgüsse verändert hätten, um Geschichten zu erzählen. Die Ergebnisse sollten zum Nachdenken anregen, statt neue Geschichten hervorzubringen, die das Leben dieser Menschen ebenso verzerren könnten."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "know",
+   "nav": "Woher wissen wir das?",
+   "h": "Woher wissen wir das?",
+   "paras": [
+    "Aus den Aufzeichnungen der Ausgräber zu den Abgüssen, aus Fotografien seit 1863, aus Röntgenbildern und CT-Scans von 2015 und aus der DNA der Knochen in den Abgüssen.",
+    [
+     "Die Seite des Parks nennt viele Abgüsse nach Datum und Ort, darunter die vier vom Februar 1863 und die 15 an der Porta di Nola in den 1970er-Jahren (",
+     {
+      "text": "I Calchi",
+      "href": "https://pompeiisites.org/pompei-map/approfondimenti/i-calchi/"
+     },
+     "). Ein Abzug der Fotografen Sommer & Behles, beschriftet mit dem Funddatum 5. Februar 1863, kam 1864 ins Städel Museum in Frankfurt, ",
+     {
+      "text": "so der Eintrag des Museums",
+      "href": "https://sammlung.staedelmuseum.de/en/work/pompeii-cast-of-a-human-victim"
+     },
+     "."
+    ],
+    [
+     "Die Scans auszuwerten war nicht leicht, ",
+     {
+      "text": "vermerkte das Kulturministerium",
+      "href": "https://cultura.gov.it/comunicato/pompei-interventi-con-tac-sui-calchi-indagini-tomografiche-per-studiare-le-vittime-dell-eruzione-di-pompei-la-scienza-medica-al-servizio-dell-archeologia"
+     },
+     " zu Beginn der Arbeiten: Der Gips ist ähnlich dicht wie fast 2.000 Jahre alte Knochen. Trotzdem ließ sich eine alte Deutung neu lesen: Beim Abguss, den man 1863 eine schwangere Frau nannte, war die Wölbung am Bauch wohl gebauschte Kleidung, schreiben die Autoren der ",
+     {
+      "text": "DNA-Studie",
+      "href": "https://doi.org/10.1016/j.cub.2024.10.007"
+     },
+     " über die Scans."
+    ],
+    [
+     "Auch alte Abgüsse bergen noch Neues. 2016 fanden Restauratoren bei der Arbeit an einem Abguss aus dem Orto dei Fuggiaschi ein kleines Kästchen, vielleicht aus Holz, Kork oder Leder, etwa 12,5 Zentimeter lang, darin eine kleine Reibplatte aus Stein und kleine Werkzeuge aus Bronze, dazu einen Stoffbeutel mit drei Bronze- und vier Silbermünzen. ",
+     {
+      "text": "Der Park veröffentlichte den Fund 2026",
+      "href": "https://pompeiisites.org/wp-content/uploads/Un-medico-nellOrto-dei-Fuggiaschi-a-Pompei.-Esami-radiografici-e-ricostruzione-archeologica.pdf"
+     },
+     ", und seine Archäologen halten es für möglich, dass das Kästchen ein Arztbesteck war, denn solche Reibplatten finden sich rund um den Vesuv oft in Arztbestecken."
+    ]
+   ]
+  },
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Die Zahlen",
+   "h": "Die Zahlen",
+   "unit": "Die Quellen heißen wie in der Liste unten.",
+   "cols": [
+    "Zahl",
+    "Wert",
+    "Grundlage",
+    "Belegt oder vermutet",
+    "Quelle"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "In Pompeji gefundene Überreste",
+      "mehr als 1.000 Menschen",
+      "Grabungsberichte",
+      "belegt",
+      "Park, The Casts"
+     ]
+    },
+    {
+     "cells": [
+      "Seit 1863 abgegossene Menschen",
+      "etwa 104, nach den Worten des Parks etwas mehr als hundert",
+      "Zählung des Cast Project, 2024 wiederholt",
+      "belegt",
+      "Lazer 2021, Pilli 2024, Park"
+     ]
+    },
+    {
+     "cells": [
+      "Ab August 2015 gemeinsam restauriert",
+      "86 Abgüsse, fast alle",
+      "die Restaurierung",
+      "belegt",
+      "Kulturministerium"
+     ]
+    },
+    {
+     "cells": [
+      "2015 per CT oder Röntgen untersucht",
+      "26 Abgüsse, keiner mit vollständigem Skelett",
+      "die Scans",
+      "belegt",
+      "Lazer 2021, Pilli 2024"
+     ]
+    },
+    {
+     "cells": [
+      "Für die DNA beprobt",
+      "14 Abgüsse",
+      "mit Gips vermischte Knochen",
+      "belegt",
+      "Pilli 2024"
+     ]
+    },
+    {
+     "cells": [
+      "Tote mit genomweiter DNA",
+      "5, alle genetisch männlich",
+      "eine Studie",
+      "belegt",
+      "Pilli 2024"
+     ]
+    },
+    {
+     "cells": [
+      "Erste Abgüsse von Menschen",
+      "2. bis 5. Februar 1863, vier Menschen",
+      "der Grabungsbericht",
+      "belegt",
+      "Park, I Calchi"
+     ]
+    },
+    {
+     "cells": [
+      "Bimsstein und Lapilli",
+      "bis etwa 3 Meter hoch",
+      "Angabe des Parks",
+      "belegt",
+      "Park, I Calchi"
+     ]
+    },
+    {
+     "cells": [
+      "Das Kästchen aus einem Abguss, gefunden 2016",
+      "ein Arztbesteck",
+      "Vorschlag der Archäologen",
+      "vermutet",
+      "Park, 2026"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "myths",
+   "nav": "Was man oft liest",
+   "h": "Was man oft liest",
+   "subs": [
+    {
+     "h": "„Lava hat die Menschen begraben.“",
+     "paras": [
+      "Pompeji begruben Bimsstein und Lapilli, danach die Asche heißer Glutwolken. In der Asche entstanden die Hohlräume für die Abgüsse."
+     ]
+    },
+    {
+     "h": "„Jeder Abguss zeigt einen Menschen genau so, wie man ihn fand.“",
+     "paras": [
+      "Restauratoren haben die Abgüsse bearbeitet, gestützt und versetzt. Von den 14 Abgüssen aus dem Orto dei Fuggiaschi von 1961 kam einer sofort an einen anderen Ort und lässt sich heute unter Abgüssen unbekannter Herkunft nicht mehr sicher erkennen, schreibt der Park."
+     ]
+    },
+    {
+     "h": "„Heute nimmt man Harz statt Gips.“",
+     "paras": [
+      "Der Park nennt einen Abguss aus Harz, 1984 in Oplontis gegossen, damit die Knochen darin sichtbar sind und sich Schmuck finden lässt. Gegossen wird weiter mit Gips."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Quellen",
+   "h": "Quellen",
+   "intro": "Die Angaben dieser Seite stammen aus diesen Seiten, gelesen am 17. und 18. November 2026. Englische und italienische Quellen werden in eigenen Worten wiedergegeben.",
+   "read": [
+    {
+     "text": "Archäologischer Park Pompeji, „The Casts“ (englisch)",
+     "href": "https://pompeiisites.org/en/pompeii-map/analysis/the-casts/"
+    },
+    {
+     "text": "Archäologischer Park Pompeji, „I Calchi“ (italienisch)",
+     "href": "https://pompeiisites.org/pompei-map/approfondimenti/i-calchi/"
+    },
+    {
+     "text": "Elena Pilli, Stefania Vai, Victoria Carley Moses und andere, „Ancient DNA challenges prevailing interpretations of the Pompeii plaster casts“, Current Biology 34, 2024 (englisch)",
+     "href": "https://doi.org/10.1016/j.cub.2024.10.007"
+    },
+    {
+     "text": "Max-Planck-Gesellschaft, Pressemitteilung zur Studie von Pilli und anderen, 7. November 2024",
+     "href": "https://www.mpg.de/23701587/1106-evan-alte-dna-schreibt-die-geschichte-der-verschuetteten-von-pompeji-neu-150495-x",
+     "only": "de"
+    },
+    {
+     "text": "Estelle Lazer und andere, „Inside the casts of the Pompeian victims: results from the first season of the Pompeii Cast Project in 2015“, Papers of the British School at Rome 89, 2021 (englisch, Zusammenfassung)",
+     "href": "https://www.cambridge.org/core/journals/papers-of-the-british-school-at-rome/article/abs/inside-the-casts-of-the-pompeian-victims-results-from-the-first-season-of-the-pompeii-cast-project-in-2015/1F0C97208BF820BFAAF58C5BC3018A68"
+    },
+    {
+     "text": "University of Sydney, „Skeletal analysis reveals Pompeii myths are getting long in the tooth“, 18. August 2016 (englisch)",
+     "href": "https://www.sydney.edu.au/news-opinion/news/2016/08/18/skeletal-analysis-reveals-pompeii-myths-are-getting-long-in-the-.html"
+    },
+    {
+     "text": "Italienisches Kulturministerium, „Pompei: interventi con TAC sui calchi“, 29. September 2015 (italienisch)",
+     "href": "https://cultura.gov.it/comunicato/pompei-interventi-con-tac-sui-calchi-indagini-tomografiche-per-studiare-le-vittime-dell-eruzione-di-pompei-la-scienza-medica-al-servizio-dell-archeologia"
+    },
+    {
+     "text": "Archäologischer Park Pompeji, E-Journal 2026.04, Zuchtriegel, Russo, Amoretti, Empireo, Cirillo, „Un medico nell'Orto dei Fuggiaschi a Pompei. Esami radiografici e ricostruzione archeologica“, 15. Mai 2026 (italienisch)",
+     "href": "https://pompeiisites.org/wp-content/uploads/Un-medico-nellOrto-dei-Fuggiaschi-a-Pompei.-Esami-radiografici-e-ricostruzione-archeologica.pdf"
+    },
+    {
+     "text": "Archäologischer Park Pompeji, E-Journal 17, Zuchtriegel, Fragliasso, Giletti und andere, „Un progetto di 'archeologia giudiziaria': nuove scoperte nella villa suburbana di Civita Giuliana“, 3. Juli 2024 (italienisch)",
+     "href": "https://pompeiisites.org/wp-content/uploads/17_E-Journal-Civita-Giuliana.pdf"
+    },
+    {
+     "text": "Städel Museum, Frankfurt am Main, Sommer & Behles, „Pompeii: Cast of a Human Victim“, um 1863, St.F.989 (englische Seite)",
+     "href": "https://sammlung.staedelmuseum.de/en/work/pompeii-cast-of-a-human-victim"
+    }
+   ],
+   "contact": "Ist ein Datum, eine Zahl oder ein Satz falsch, genügt eine Nachricht, und wir korrigieren es.",
+   "contact_link": "Zum Impressum",
+   "what_link": "Was dieses Museum ist"
+  },
+  {
+   "type": "museum",
+   "id": "museum",
+   "nav": "Im Museum",
+   "h": "Im Museum",
+   "text": "Museum of Ages ist ein digitales Museum. Der Flügel {wing} zeigt {place} am {day}.",
+   "link": "Zum Flügel {wing}"
+  }
+ ]
+}

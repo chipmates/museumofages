@@ -15,7 +15,7 @@
   var HOSTS = ['museumofages.org', 'www.museumofages.org', '127.0.0.1', 'localhost'];
   var SOURCES = ['direct', 'search', 'ad_grant', 'ad_paid', 'ad_forum', 'forum', 'code', 'edu', 'wiki', 'news',
     'mail', 'award', 'assistant', 'social', 'referral', 'reload'];
-  var DOORS = ['top', 'item', 'end'];
+  var DOORS = ['top', 'item', 'end', 'still'];
   var PROBE = 'moa_probe';
   if (HOSTS.indexOf(loc.hostname) < 0 || !navigator.sendBeacon) return;
   var me = doc.currentScript || doc.querySelector('script[data-count]');

@@ -149,7 +149,7 @@
   "credit": "Museum of Ages, Körperform nach Shimada und anderen 2025 (CC BY 4.0)"
  },
  "labels": {
-  "crumbs": "Du bist hier",
+  "crumbs": "Seitenpfad",
   "crumb_home": "Museum",
   "crumb_here": "Megalodon",
   "toc": "Auf dieser Seite",
@@ -353,14 +353,14 @@
    "paras": [
     "In Brüssel, im Königlich Belgischen Institut für Naturwissenschaften, liegen 141 lose Wirbel eines einzigen Hais, Inventarnummer IRSNB P 9893, gefunden bei Antwerpen in den 1860er Jahren. Der größte misst 15,5 cm im Durchmesser, in einer Reihe ergeben sie etwa 11 m. Sie verraten die Länge des Rumpfs, aber nichts über den Kopf und nichts über die Dicke des Körpers. Zähne lagen nicht dabei, darum ist selbst der Name Megalodon für dieses Tier nur erschlossen, nicht belegt.",
     "In Dänemark wurden 1978 bei Gram Reste von etwa 20 Wirbeln ausgegraben, 1989 bei einem Umzug des Lagers beschädigt und lange für verloren gehalten. Geblieben sind zwei zerbrochene Wirbel und viele Splitter. Der größere misst 23 cm im Durchmesser, und auf ihm beruht die größte Schätzung in der Liste weiter unten.",
-    "Ein Skelett des Megalodons hat niemand gefunden, und auch kein Gebiss, in dem die Zähne noch an ihrem Platz sitzen. Jede Zahnreihe, die du je gesehen hast, ist eine Anordnung, auch unsere."
+    "Ein Skelett des Megalodons hat niemand gefunden, und auch kein Gebiss, in dem die Zähne noch an ihrem Platz sitzen. Jede Zahnreihe, die je gezeigt wurde, ist eine Anordnung, auch unsere."
    ]
   },
   {
    "type": "notes",
    "id": "numbers-read",
-   "nav": "Zahlen, die du vielleicht gelesen hast",
-   "h": "Zahlen, die du vielleicht gelesen hast",
+   "nav": "Zahlen, die oft genannt werden",
+   "h": "Zahlen, die oft genannt werden",
    "intro": "Zu jeder Zahl: woher sie kommt und was die Forschung heute von ihr hält.",
    "rows": [
     {
@@ -392,8 +392,8 @@
   {
    "type": "notes",
    "id": "pictures-seen",
-   "nav": "Bilder, die du vielleicht gesehen hast",
-   "h": "Bilder, die du vielleicht gesehen hast",
+   "nav": "Bilder, die oft gezeigt werden",
+   "h": "Bilder, die oft gezeigt werden",
    "intro": "Zu jedem Bild: woher es kommt und was wir heute wissen.",
    "rows": [
     {
@@ -449,7 +449,7 @@
    "nav": "Im Museum",
    "h": "Im Museum",
    "paras": [
-    "Museum of Ages ist ein digitales Museum, gemacht von einer gemeinnützigen Organisation. Der Eintritt ist frei, ein Konto brauchst du nicht. Im Flügel der Tiere wird dieses Tier unter den anderen stehen, von den Riesen der Vorzeit bis zu den letzten ihrer Art. Wie ein fertiger Flügel aussieht, zeigt der Flügel von Leonardo da Vinci."
+    "Museum of Ages ist ein digitales Museum, gemacht von einer gemeinnützigen Organisation. Der Eintritt ist frei, ein Konto ist nicht nötig. Im Flügel der Tiere wird dieses Tier unter den anderen stehen, von den Riesen der Vorzeit bis zu den letzten ihrer Art. Wie ein fertiger Flügel aussieht, zeigt der Flügel von Leonardo da Vinci."
    ],
    "links": [
     {
@@ -569,7 +569,7 @@
      "href": "https://www.smnk.de/fileadmin/page_content/pressemitteilungen/PM_Megalodon_Naturkundemuseum_Karlsruhe_.pdf"
     }
    ],
-   "contact": "Ist eine Zahl oder ein Haus falsch angegeben, schreib uns, und wir korrigieren es.",
+   "contact": "Ist eine Zahl oder ein Haus falsch angegeben, genügt eine Nachricht, und wir korrigieren es.",
    "contact_link": "Zum Impressum",
    "what_link": "Was dieses Museum ist"
   },

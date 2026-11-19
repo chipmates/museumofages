@@ -31,7 +31,7 @@
   "og_image_alt": "Una riproduzione della Dama con l’ermellino. La giovane donna indossa un abito rosso, con un panno blu su una spalla e una collana di grani scuri, e volta la testa verso destra. Tiene in braccio un ermellino bianco, con la mano sul suo dorso. Lo sfondo è nero, con un’antica scritta nell’angolo in alto a sinistra."
  },
  "labels": {
-  "crumbs": "Sei qui",
+  "crumbs": "Percorso di navigazione",
   "crumb_home": "Museo",
   "crumb_here": "Dama con l’ermellino",
   "toc": "In questa pagina",
@@ -66,9 +66,9 @@
    ]
   },
   "door": {
-   "text": "Vedi la Dama con l’ermellino nell’ala",
+   "text": "Vedere la Dama con l’ermellino nell’ala",
    "note": "Ingresso libero, senza account.",
-   "leads": "Da questa porta arrivi nella sala dei quadri dell’ala, dove la riproduzione del ritratto è appesa tra gli altri dipinti di Leonardo."
+   "leads": "Da questa porta si arriva nella sala dei quadri dell’ala, dove la riproduzione del ritratto è appesa tra gli altri dipinti di Leonardo."
   }
  },
  "blocks": [
@@ -188,7 +188,7 @@
    ],
    "links": [
     {
-     "text": "Vedi la Dama con l’ermellino nell’ala",
+     "text": "Vedere la Dama con l’ermellino nell’ala",
      "stop": "picture-room"
     }
    ]
@@ -431,18 +431,18 @@
      "href": "https://about.netflix.com/en/news/berlin-and-the-lady-with-an-ermine-arrives-to-netflix-on-may-15"
     }
    ],
-   "contact": "Se una data, un nome o una frase è sbagliata, scrivici e la correggiamo.",
-   "contact_link": "Vai alle note legali (in inglese)",
+   "contact": "Se una data, un nome o una frase è sbagliata, basta scriverci e la correggiamo.",
+   "contact_link": "Note legali (in inglese)",
    "what_link": "Che cos’è questo museo"
   },
   {
    "type": "close",
    "id": "enter",
    "nav": "",
-   "h": "Vedi la Dama con l’ermellino nell’ala",
-   "p": "Da questa porta entri nella sala dei quadri della nostra ala di Leonardo. Lì la riproduzione del ritratto è appesa insieme agli altri dipinti di Leonardo, e un primo piano mostra il nero che una mano più tarda ha steso sopra il grigio del pittore.",
+   "h": "La Dama con l’ermellino nell’ala",
+   "p": "Da questa porta si entra nella sala dei quadri della nostra ala di Leonardo. Lì la riproduzione del ritratto è appesa insieme agli altri dipinti di Leonardo, e un primo piano mostra il nero che una mano più tarda ha steso sopra il grigio del pittore.",
    "door": {
-    "text": "Entra nel museo",
+    "text": "Ingresso al museo",
     "note": "Ingresso libero, senza account."
    }
   }

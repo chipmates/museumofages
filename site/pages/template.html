@@ -18,12 +18,7 @@
 <meta property="og:description" content="{{meta.description}}">
 <meta property="og:url" content="{{url.self}}">
 <meta property="og:locale" content="{{og_locale}}">
-{{html.og_alternates}}<meta property="og:image" content="{{url.og_image}}">
-<meta property="og:image:width" content="{{og.width}}">
-<meta property="og:image:height" content="{{og.height}}">
-<meta property="og:image:alt" content="{{meta.og_image_alt}}">
-<meta name="twitter:card" content="summary_large_image">
-</head>
+{{html.og_alternates}}{{html.og_image}}</head>
 <body class="sp-body">
 {{html.header}}
 
@@ -39,7 +34,7 @@
     <header class="sp-top{{attr.top}}">
       <div class="sp-top__text">
         <h1{{attr.h1}}>{{top.h1}}</h1>
-        <p class="sp-answer">{{top.answer}}</p>{{html.answer_more}}{{html.order}}
+        <p class="sp-answer">{{top.answer}}</p>{{html.answer_more}}{{html.strength}}{{html.order}}
       </div>
 {{html.frame}}
 {{html.way}}{{html.after}}
@@ -68,8 +63,37 @@
         <p class="sp-way__note">{{top.door.note}}</p>
         <p class="sp-way__leads">{{top.door.leads}}</p>
       </div>
+<!--@ side -->
+      <!-- The wing's still beside the door, on a desktop only: a phone keeps its first screen for the answer and the door. -->
+      <div class="sp-side">
+{{html.side}}
+      </div>
+<!--@ still -->
+      <figure class="plate sp-still" data-slot="still">
+        <div class="hang"><a class="sp-still__a" href="{{href.top}}" data-page="{{page.id}}" data-slot="door-still" data-door="still">{{html.picture}}</a></div>
+        <figcaption class="label sp-still__label">
+          <span class="label__what"><span class="tag">{{tag}}<span class="vh">:</span></span> {{what}}</span><span class="label__src">{{html.src}}</span>
+        </figcaption>
+      </figure>
 <!--@ way:out -->
       <!-- A wing in the making has no way in yet: one line on it, and a plain link to the newest open wing's page. -->
+      <div class="sp-way sc-out">
+        <p class="sc-out__p">{{text}}</p>
+        <p class="sp-more"><a class="more" href="{{href.out}}" data-out="wing"><span>{{link}}</span>{{svg.arrow}}</a></p>
+      </div>
+<!--@ way:next -->
+      <!-- The way on: a plain link to the next question's page, with why it leads there where its words give it. -->
+      <div class="sp-way sc-next">{{html.label}}
+        <p class="sp-more"><a class="more" href="{{href.next}}" data-next="page"><span>{{next.text}}</span>{{svg.arrow}}</a></p>{{html.note}}
+      </div>
+<!--@ legend -->
+<ul class="label__src sc-key sc-keys sc-legend">{{html.items}}</ul>
+<span class="label__src sc-legend__map">{{text}} <a href="{{href}}"><span>{{link}}</span></a></span>
+<!--@ legend:link -->
+<ul class="vh">{{html.items}}</ul>
+<span class="label__src sc-legend__map"><span class="vh">{{text}} </span><a href="{{href}}"><span>{{link}}</span></a></span>
+<!--@ way:shelf -->
+      <!-- One line on the museum, and a plain link to its open wing's page. -->
       <div class="sp-way sc-out">
         <p class="sc-out__p">{{text}}</p>
         <p class="sp-more"><a class="more" href="{{href.out}}" data-out="wing"><span>{{link}}</span>{{svg.arrow}}</a></p>
@@ -232,8 +256,7 @@
 <section class="sp-sec sp-sources" id="{{id}}">
   <h2>{{h}}</h2>
 {{html.checked}}
-  <p class="sp-intro">{{intro}}</p>
-{{html.holders_part}}
+{{html.intro}}{{html.holders_part}}
 {{html.notes}}
 {{html.editions_part}}{{html.read_part}}
   <p class="sp-contact">{{contact}} <a href="{{href.imprint}}"{{attr.imprint_lang}}>{{contact_link}}</a></p>
@@ -311,8 +334,7 @@
 <!--@ sub_para -->
     <p>{{text}}</p>
 <!--@ block:text -->
-<section class="sp-sec sp-prose" id="{{id}}">
-  <h2>{{h}}</h2>
+<section class="sp-sec sp-prose" id="{{id}}">{{html.h}}
 {{html.paras}}
 {{html.pic}}{{html.links}}
 </section>
@@ -472,6 +494,15 @@
       <div class="sc-pair">
 {{html.close}}{{html.guess}}
       </div>
+<!--@ frame:lead -->
+      <!-- The picture made for the page, beside its answer on a wide screen, its credit under it. -->
+      <figure class="plate sc-fig sc-fig--first" data-slot="frame">
+        {{html.above}}<div class="hang">{{html.picture}}</div>
+        <figcaption class="label sc-label">
+          <span class="label__what"><span class="tag">{{tag}}<span class="vh">:</span></span> {{what}}</span>
+          <span class="label__src">{{note}}</span>{{html.key}}{{html.whole}}
+        </figcaption>
+      </figure>
 <!--@ scale_fig -->
 <figure class="plate sc-fig">
   {{html.above}}<div class="hang">{{html.picture}}{{html.person}}</div>{{html.below}}
@@ -529,8 +560,7 @@
   </details>
 </section>
 <!--@ block:numbers -->
-<section class="sp-sec sc-sec" id="{{id}}">
-  <h2>{{h}}</h2>
+<section class="sp-sec sc-sec" id="{{id}}">{{html.h}}
   <!-- The pictures' numbers as text. On a phone each row stands as a card, each number under its column's name. -->
   <table class="sc-table sc-table--v{{n.values}}" role="table">
     <caption>{{unit}}</caption>
@@ -539,6 +569,12 @@
 {{html.rows}}
     </tbody>
   </table>
+</section>
+<!--@ block:museum -->
+<!-- The museum, once, in the close: its open wing, the place and the day it shows, from the registry. -->
+<section class="sp-sec sp-prose sc-museum" id="{{id}}">{{html.h}}
+  <p class="sp-does">{{text}}</p>
+<p class="sp-more"><a class="more" href="{{href.out}}" data-out="wing"><span>{{link}}</span>{{svg.arrow}}</a></p>
 </section>
 <!--@ block:pages -->
 <section class="sp-sec sc-pages{{attr.pages}}" id="{{id}}">{{html.h}}

@@ -1,0 +1,466 @@
+{
+ "_note": "AN ANSWER PAGE of the questions shelf, from its words and its picture made for it.",
+ "page": {
+  "id": "questions-was-atlantis-real",
+  "wing": "questions",
+  "topic": "was_atlantis_real",
+  "published": "2026-11-19",
+  "checked": "2026-11-17",
+  "og_image": {
+   "file": "questions-was-atlantis-real-og-{lang}-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "lead": {
+   "stem": "questions-was-atlantis-real-lead-{lang}",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 560px, (min-width: 960px) 44vw, calc(100vw - 40px)",
+   "swatches": {
+    "known": "#cb8561",
+    "guessed": "#cb8561"
+   },
+   "narrow": {
+    "stem": "questions-was-atlantis-real-lead-phone-{lang}",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 560
+   }
+  }
+ },
+ "meta": {
+  "title": "Gab es Atlantis wirklich? Was Platon sagt | Museum of Ages",
+  "description": "Die einzige Quelle für Atlantis ist Platon: was Timaios und Kritias erzählen, die Ringstadt nach seinen Zahlen gezeichnet, und was die Geologie dazu sagt.",
+  "og_title": "Gab es Atlantis wirklich?",
+  "og_image_alt": "Die Frage über der Zeichnung zu dieser Seite: die Ringstadt aus Platons Kritias nach seinen eigenen Zahlen, ihre Ringe aus Land und Wasser und der Kanal zum Meer."
+ },
+ "labels": {
+  "crumbs": "Seitenpfad",
+  "crumb_home": "Museum",
+  "toc": "Auf dieser Seite",
+  "tag_made": "Für diese Seite gemacht",
+  "no_figure": "keine Zahl",
+  "crumb_here": "Gab es Atlantis wirklich?"
+ },
+ "top": {
+  "h1": "Gab es Atlantis wirklich?",
+  "answer": [
+   "Nichts zeigt, dass es Atlantis gab: Die einzige Quelle ist Platon, in seinen Dialogen ",
+   {
+    "text": "Timaios und Kritias",
+    "href": "https://archive.org/details/Jowett-3rded-ebox-set"
+   },
+   " um 360 v. Chr., und weder ein älterer Text noch ein Fund erzählt von der Insel. Die Altphilologie liest die Geschichte als Platons Erfindung: Ein wohlgeordnetes Athen besiegt darin ein reiches, stolzes Seereich."
+  ],
+  "strength": "Platons Text: belegt. Dass es Atlantis gab: kein Beleg. Woher Platon die Idee hatte: vermutet.",
+  "slot": {
+   "pic": "lead",
+   "tag": "tag_made",
+   "what": "Atlantis, wie Platon es im Kritias beschreibt, nach seinen eigenen Zahlen gezeichnet. Die Zeichnung eines Textes: Von diesem Ort wurde keine Spur gefunden.",
+   "alt": "Eine Zeichnung der Ringstadt, die Platon im Kritias beschreibt, nach seinen eigenen Zahlen: eine Mittelinsel von 5 Stadien Durchmesser, umgeben von Ringen aus Wasser und Land von 1, 2, 2, 3 und 3 Stadien Breite, zusammen etwa 27 Stadien oder rund 5 Kilometer, dazu ein Kanal von 50 Stadien Länge vom Meer her. Darunter, in kleinerem Maßstab, die Ebene, die er mit 3.000 mal 2.000 Stadien angibt, rund 550 mal 370 Kilometer, die Stadt darin als Punkt. Die Zeichnung eines Textes, keine Karte eines Ortes.",
+   "legend": "picture"
+  },
+  "next": {
+   "page": "where-was-atlantis",
+   "label": "Nächste Frage:",
+   "text": "Wo lag Atlantis?"
+  }
+ },
+ "faq": [
+  {
+   "q": "Was schreibt Platon über Atlantis?",
+   "a": "Dass 9.000 Jahre vor Solon eine Insel, größer als Libyen und Asien zusammen, im Atlantik lag, jenseits der Säulen des Herakles, und dass ihre Könige bis nach Ägypten und Tyrrhenien herrschten, bis sie einen Krieg gegen das alte Athen verloren und die Insel versank."
+  },
+  {
+   "q": "Wie ging Atlantis unter?",
+   "a": "In Platons Erzählung durch Erdbeben und Fluten: Binnen eines einzigen schlimmen Tages und einer Nacht verschwand die Insel im Meer (Timaios 25c bis d)."
+  },
+  {
+   "q": "Wurde Atlantis gefunden?",
+   "a": "Nein."
+  },
+  {
+   "q": "Woher wissen wir das?",
+   "a": "Weil Platons Text erhalten ist, so wie er ihn hinterließ, und nichts Älteres oder Unabhängiges die Geschichte erzählt."
+  }
+ ],
+ "blocks": [
+  {
+   "type": "text",
+   "id": "what-did-plato-say",
+   "nav": "Was schreibt Platon über Atlantis?",
+   "h": "Was schreibt Platon über Atlantis?",
+   "paras": [
+    "Dass 9.000 Jahre vor Solon eine Insel, größer als Libyen und Asien zusammen, im Atlantik lag, jenseits der Säulen des Herakles, und dass ihre Könige bis nach Ägypten und Tyrrhenien herrschten, bis sie einen Krieg gegen das alte Athen verloren und die Insel versank. Im Timaios erzählt Kritias, die Geschichte stamme von Priestern in Sais in Ägypten. Sie hätten sie Solon von Athen erzählt, und Solon, ein Verwandter und Freund der Familie, habe sie dem älteren Kritias weitergegeben, dem Großvater des Erzählers (Timaios 20e bis 21a).",
+    [
+     "Der Kritias beschreibt dann die Insel. Poseidon umgab den Hügel der Kleito mit Ringen aus Meer und Land, zwei aus Land und drei aus Wasser (Kritias 113d). Insel und Ozean wurden nach Atlas benannt, ihrem ersten König, und eine Ebene maß 3.000 mal 2.000 Stadien. Zeus ruft die Götter zusammen, um die Könige der Insel für ihre Habgier zu strafen, und der Kritias bricht ab, gerade als er zu sprechen beginnt. Die Stellen folgen der englischen ",
+     {
+      "text": "Übersetzung von Benjamin Jowett aus dem Jahr 1892",
+      "href": "https://archive.org/details/Jowett-3rded-ebox-set"
+     },
+     " und sind hier sinngemäß wiedergegeben."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "is-atlantis-a-myth",
+   "nav": "Ist Atlantis ein Mythos?",
+   "h": "Ist Atlantis ein Mythos?",
+   "paras": [
+    [
+     "Die meisten Forscher lesen es so: als Geschichte, die Platon erfand, um etwas zu zeigen, ohne eine wirkliche Insel dahinter. Darin ist sich die ",
+     {
+      "text": "Altphilologie",
+      "href": "https://bmcr.brynmawr.edu/2018/2018.06.40/"
+     },
+     " heute einig, und die Archäologie sieht es weitgehend genauso, fasst der englische Wikipedia-Artikel ",
+     {
+      "text": "Atlantis",
+      "href": "https://en.wikipedia.org/wiki/Atlantis"
+     },
+     " zusammen."
+    ],
+    [
+     "Am Tag zuvor hatte Sokrates eine wohlgeordnete Stadt entworfen, als Gedankenspiel, und Kritias bietet an, diese erdachte Stadt in die Wirklichkeit zu übertragen (Timaios 26c bis d). Sie wird zum Athen vor 9.000 Jahren, Atlantis zu seinem stolzen Gegner. Platons Sprecher beteuern, die Erzählung sei gewiss wahr (Timaios 20d), und die Philosophin Julia Annas nennt eine solche Beteuerung einen gängigen Kunstgriff der Fiktion. Worauf Platon hinauswollte, sehen Forscher verschieden: Pierre Vidal-Naquet sah ein frühes, wohlgeordnetes Athen im Gegensatz zum imperialen Athen des 4. Jahrhunderts v. Chr., Platons eigener Zeit, so eine ",
+     {
+      "text": "Besprechung seines Buches",
+      "href": "https://bmcr.brynmawr.edu/2008/2008.05.29"
+     },
+     ". Christopher Gill liest die Geschichte ",
+     {
+      "text": "eher philosophisch als politisch",
+      "href": "https://bmcr.brynmawr.edu/2018/2018.06.40/"
+     },
+     "."
+    ],
+    [
+     "Die Idee eines wirklichen Atlantis kam von Lesern, die Platon beim Wort nahmen. Krantor, der erste Ausleger des Timaios, hielt die Erzählung für wahre Geschichte, berichtet Proklos. Athanasius Kircher druckte ",
+     {
+      "text": "in den 1660er-Jahren",
+      "href": "https://archive.org/details/chepfl-lipr-AXC15_01"
+     },
+     " eine Karte der Insel, und Ignatius Donnelly löste mit seinem Buch von 1882, Atlantis: The Antediluvian World, im 19. Jahrhundert die Wiederbelebung der Idee aus."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-did-atlantis-sink",
+   "nav": "Wie ging Atlantis unter?",
+   "h": "Wie ging Atlantis unter?",
+   "paras": [
+    "In Platons Erzählung durch Erdbeben und Fluten: Binnen eines einzigen schlimmen Tages und einer Nacht verschwand die Insel im Meer (Timaios 25c bis d). Am selben Tag versank das Heer der Athener in der Erde, und das Meer dort wurde unpassierbar, versperrt von Schlamm.",
+    "Die Plattentektonik, in den 1960er-Jahren anerkannt, zeigte, dass in der jüngeren Erdgeschichte kein Kontinent versunken ist. Die Azoren, oft für die Gipfel eines versunkenen Landes gehalten, sind Vulkaninseln, die steil von einem Plateau aufragen, das seit Jahrmillionen unter dem Meer liegt. In Platons Erzählung setzen die Priester den Krieg und die Niederlage von Atlantis 9.000 Jahre vor Solon an, nach unserer Rechnung etwa 9600 v. Chr., das Versinken der Insel erst danach."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "has-atlantis-been-found",
+   "nav": "Wurde Atlantis gefunden?",
+   "h": "Wurde Atlantis gefunden?",
+   "paras": [
+    "Nein. Viele Orte wurden vorgeschlagen, nach einer Zählung 98 allein zwischen 2000 und 2011, und keiner hat einen Fund geliefert, der ihn mit Platons Insel verbindet.",
+    {
+     "points": [
+      [
+       "Santorin, das antike Thera:",
+       [
+        "Ein Ausbruch um 1600 v. Chr., dessen Datum umstritten ist, zerstörte den Ort Akrotiri. Doch Thera liegt im Mittelmeer, nicht jenseits der Säulen des Herakles, und rund 1.000 Jahre vor Solon, nicht 9.000. Die heutige Forschung stützt die Verbindung nicht, vermerkt der englische Artikel über den ",
+        {
+         "text": "minoischen Ausbruch",
+         "href": "https://en.wikipedia.org/wiki/Minoan_eruption"
+        },
+        "."
+       ]
+      ],
+      [
+       "Die Richat-Struktur, Mauretanien:",
+       "Ihre Ringe erinnern an Platons Ringstadt, doch sie ist eine natürliche Gesteinskuppel von 40 bis 45 Kilometern Durchmesser, etwa doppelt so breit wie Platons Stadt mit ihrer äußeren Mauer, rund 23 Kilometer (Kritias 117e). Sie liegt rund 500 Kilometer von der Atlantikküste entfernt. Das Gestein, das sie aufwölbte, erkaltete vor 94 bis 104 Millionen Jahren, und Spuren einer Stadt oder von Kanälen fanden sich dort keine."
+      ],
+      [
+       "Die Bimini Road, Bahamas:",
+       "eine Reihe von Steinblöcken unter dem Meer, 1968 entdeckt. Geologen und Archäologen sind sich einig, dass es natürliches Strandgestein (Beachrock) ist, das in Blöcke zerbrach."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "know",
+   "nav": "Woher wissen wir das?",
+   "h": "Woher wissen wir das?",
+   "paras": [
+    "Weil Platons Text erhalten ist, so wie er ihn hinterließ, und nichts Älteres oder Unabhängiges die Geschichte erzählt. Jede andere antike Erwähnung der Insel geht auf seine zwei Dialoge zurück: Es gibt nur diese eine Quelle, wie eine Besprechung von Christopher Gills Buch festhält.",
+    [
+     "Ein älteres griechisches Werk mit dem Titel Atlantis gibt es zwar, von Hellanikos von Lesbos, doch ",
+     {
+      "text": "seine Bruchstücke",
+      "href": "https://archive.org/details/oxyrhynchuspapyr08grenuoft"
+     },
+     " handeln von den Töchtern des Atlas, nicht von einer Insel. Ein ägyptischer Text, der Atlantis nennt, ist nicht bekannt. Die Erzählung selbst macht Athen zu Solons Zeit 9.000 Jahre alt, tausend Jahre älter als Sais, dessen Priester sie erzählen (Timaios 23d bis e)."
+    ],
+    "Offen bleibt, woher Platon seine Idee hatte. Forscher nennen Ereignisse, die ihn angeregt haben könnten: den Feldzug der Athener nach Sizilien, die Stadt Helike, 373 v. Chr. von Erdbeben und Flutwelle zerstört, den Ausbruch auf Thera. Das sind Vermutungen über seine Quellen, keine Orte, an denen Atlantis lag."
+   ]
+  },
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Die Zahlen",
+   "h": "Die Zahlen",
+   "unit": "Platons Zahlen stehen als seine: Belegt heißt hier, dass sein Text sie nennt. Eine Angabe in Kilometern ist unsere, aus der Länge eines Stadions.",
+   "cols": [
+    "Zahl",
+    "Wert",
+    "Grundlage",
+    "Belegt oder vermutet",
+    "Quelle"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Timaios und Kritias geschrieben",
+      "um 360 v. Chr.",
+      "Datierung der Forschung",
+      "vermutet (das Jahr)",
+      "Timaeus (dialogue)"
+     ]
+    },
+    {
+     "cells": [
+      "Solon in Ägypten",
+      "etwa 590 bis 580 v. Chr.",
+      "heutige Datierung von Solons Reisen, die Dialoge nennen kein Jahr",
+      "vermutet",
+      "Atlantis"
+     ]
+    },
+    {
+     "cells": [
+      "Der Krieg",
+      "9.000 Jahre vor Solon",
+      "Timaios 23e, Kritias 108e",
+      "belegt (in seinem Text)",
+      "Platon"
+     ]
+    },
+    {
+     "cells": [
+      "Dasselbe als Jahreszahl",
+      "etwa 9600 v. Chr.",
+      "unsere Rechnung",
+      "vermutet",
+      "unsere"
+     ]
+    },
+    {
+     "cells": [
+      "Die Insel",
+      "größer als Libyen und Asien zusammen",
+      "Timaios 24e bis 25a",
+      "belegt (in seinem Text)",
+      "Platon"
+     ]
+    },
+    {
+     "cells": [
+      "Die Ebene",
+      "3.000 mal 2.000 Stadien",
+      "Kritias 118a",
+      "belegt (in seinem Text)",
+      "Platon"
+     ]
+    },
+    {
+     "cells": [
+      "Die Ebene",
+      "rund 550 mal 370 km, oder 470 bis 630 mal 310 bis 420 km",
+      "ein Stadion von etwa 185 m, die bekannten Stadien maßen 157 bis 209 m",
+      "vermutet",
+      "Stadia (length)"
+     ]
+    },
+    {
+     "cells": [
+      "Mittelinsel",
+      "5 Stadien, etwa 0,9 km",
+      "Kritias 116a",
+      "belegt (die Stadien), die km unsere",
+      "Platon"
+     ]
+    },
+    {
+     "cells": [
+      "Ringe aus Wasser und Land",
+      "1, 2, 2, 3 und 3 Stadien",
+      "Kritias 115e bis 116a",
+      "belegt (in seinem Text)",
+      "Platon"
+     ]
+    },
+    {
+     "cells": [
+      "Die Ringstadt im Ganzen",
+      "etwa 27 Stadien, etwa 5 km",
+      "unsere Summe",
+      "vermutet",
+      "unsere"
+     ]
+    },
+    {
+     "cells": [
+      "Kanal vom Meer",
+      "50 Stadien lang",
+      "Kritias 115d",
+      "belegt (in seinem Text)",
+      "Platon"
+     ]
+    },
+    {
+     "cells": [
+      "Richat-Struktur",
+      "etwa 40 bis 45 km Durchmesser",
+      "der Wikipedia-Artikel nennt 40 km, NASAs Bildeintrag 45 km",
+      "belegt",
+      "Richat Structure, NASA"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "myths",
+   "nav": "Was man oft liest",
+   "h": "Was man oft liest",
+   "subs": [
+    {
+     "h": "„Atlantis war eine vollkommene Gesellschaft.“",
+     "paras": [
+      "In Platons Erzählung ist die wohlgeordnete Stadt das alte Athen. Atlantis ist das reiche Reich, das es angreift, und am Ende sind seine Könige von Habgier und ungerechter Macht erfüllt (Kritias 121b)."
+     ]
+    },
+    {
+     "h": "„Platon sagt, die Geschichte sei wahr, also glaubte er sie.“",
+     "paras": [
+      "Das sagen seine Sprecher. Die Forschung liest es als Teil der Fiktion, und der Platon-Forscher A. E. Taylor nannte den ganzen Bericht von Solon und den Priestern eine Erfindung von Platons Phantasie."
+     ]
+    },
+    {
+     "h": "„Ägyptische Aufzeichnungen beweisen es.“",
+     "paras": [
+      "Ein ägyptischer Text, der Atlantis nennt, ist nicht bekannt. Die Erzählung von beschrifteten Säulen in Sais beruht auf einem einzigen Satz bei Proklos, einem Autor des 5. Jahrhunderts n. Chr., und dieser Satz kann sich auf Platons eigene Erzählung beziehen."
+     ]
+    },
+    {
+     "h": "„Atlantis war ein versunkener Kontinent.“",
+     "paras": [
+      "Platon nennt es eine Insel, und in der jüngeren Erdgeschichte ist kein Kontinent versunken."
+     ]
+    },
+    {
+     "h": "„Der Atlantik ist nach Atlantis benannt.“",
+     "paras": [
+      "Der Name ist älter als Platon. Schon Herodot, der um 450 v. Chr. schrieb, spricht vom Atlantischen Meer, benannt nach Atlas."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Quellen",
+   "h": "Quellen",
+   "intro": "Die Angaben dieser Seite stammen aus diesen Seiten, gelesen am 17. November 2026. Platon wird nach der gemeinfreien englischen Übersetzung von Benjamin Jowett, 1892, sinngemäß wiedergegeben.",
+   "read": [
+    {
+     "text": "Platon, Timaios und Kritias, übersetzt von Benjamin Jowett, The Dialogues of Plato, 3. Auflage, Band 3, Oxford 1892 (englisch, Internet Archive)",
+     "href": "https://archive.org/details/Jowett-3rded-ebox-set"
+    },
+    {
+     "text": "Derselbe Band, der Scan auf Wikimedia Commons",
+     "href": "https://commons.wikimedia.org/wiki/File:The_Dialogues_of_Plato_v._3.djvu"
+    },
+    {
+     "text": "Platons griechischer Text mit den Stephanus-Zahlen: Platonis Opera, herausgegeben von John Burnet, Band IV, Oxford, Clarendon Press (Internet Archive)",
+     "href": "https://archive.org/details/platonisopera04platuoft"
+    },
+    {
+     "text": "Bernard P. Grenfell und Arthur S. Hunt, The Oxyrhynchus Papyri, Teil VIII, London 1911, Nr. 1084, Hellanikos, Atlantis (englisch, Internet Archive)",
+     "href": "https://archive.org/details/oxyrhynchuspapyr08grenuoft"
+    },
+    {
+     "text": "Athanasius Kircher, Mundus subterraneus, Band 1, Amsterdam 1665, das Exemplar der EPFL-Bibliothek (Internet Archive)",
+     "href": "https://archive.org/details/chepfl-lipr-AXC15_01"
+    },
+    {
+     "text": "Bryn Mawr Classical Review 2018.06.40, Carol Atack über Christopher Gill, Plato's Atlantis Story, 2017 (englisch)",
+     "href": "https://bmcr.brynmawr.edu/2018/2018.06.40/"
+    },
+    {
+     "text": "Bryn Mawr Classical Review 2008.05.29, Lynn LiDonnici über Pierre Vidal-Naquet, The Atlantis Story, 2007 (englisch)",
+     "href": "https://bmcr.brynmawr.edu/2008/2008.05.29"
+    },
+    {
+     "text": "Wikipedia, Atlantis (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Atlantis"
+    },
+    {
+     "text": "Wikipedia, Timaeus (dialogue) (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Timaeus_(dialogue)"
+    },
+    {
+     "text": "Wikipedia, Critias (dialogue) (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Critias_(dialogue)"
+    },
+    {
+     "text": "Wikipedia, Minoan eruption (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Minoan_eruption"
+    },
+    {
+     "text": "Wikipedia, Richat Structure (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Richat_Structure"
+    },
+    {
+     "text": "Wikipedia, Location hypotheses of Atlantis (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Location_hypotheses_of_Atlantis"
+    },
+    {
+     "text": "Wikipedia, Bimini Road (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Bimini_Road"
+    },
+    {
+     "text": "Wikipedia, Atlantic Ocean (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Atlantic_Ocean"
+    },
+    {
+     "text": "Wikipedia, Stadia (length) (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Stadia_(length)"
+    },
+    {
+     "text": "NASA, Astronautenfoto ISS030-E-12516 mit Beschreibung, auf Wikimedia Commons (englisch)",
+     "href": "https://commons.wikimedia.org/wiki/File:Richat_Structure_ISS030-E-12516.jpg"
+    }
+   ],
+   "contact": "Ist ein Datum, eine Zahl oder ein Satz falsch, genügt eine Nachricht, und wir korrigieren es.",
+   "contact_link": "Zum Impressum",
+   "what_link": "Was dieses Museum ist"
+  },
+  {
+   "type": "museum",
+   "id": "museum",
+   "nav": "Im Museum",
+   "h": "Im Museum",
+   "text": "Museum of Ages ist ein digitales Museum. Der Flügel {wing} zeigt {place} am {day}.",
+   "link": "Zum Flügel {wing}"
+  }
+ ]
+}

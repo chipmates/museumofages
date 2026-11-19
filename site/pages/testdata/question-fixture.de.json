@@ -1,0 +1,170 @@
+{
+ "_note": "A TEST FIXTURE, never published: a made-up question on a shelf, with made-up numbers. The tests copy it beside the build (testdata/question_fixture.py), with its topic in their own copy of the registry and its picture record in their own copy of pictures.json. No place, no wing and no source is real.",
+ "page": {
+  "id": "questions-fixture",
+  "fixture": true,
+  "wing": "questions",
+  "topic": "question_fixture",
+  "published": "2026-11-17",
+  "checked": "2026-11-17",
+  "og_image": {
+   "file": "questions-fixture-og-{lang}-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "plan": {
+   "stem": "questions-fixture-plan-{lang}",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 560px, (min-width: 960px) 44vw, calc(100vw - 40px)",
+   "swatches": {
+    "known": "#d9c38c",
+    "guessed": "#7fa6c4"
+   }
+  }
+ },
+ "meta": {
+  "title": "Testseite: Wie lang ist die Probemauer? | Museum of Ages",
+  "description": "Eine Testseite mit erfundenen Zahlen: wie lang die Probemauer ist, was gemessen und was vermutet ist. Sie wird nie veröffentlicht.",
+  "og_title": "Testseite: Wie lang ist die Probemauer?",
+  "og_image_alt": "Eine graue Karte für die Testseite, ohne Bild."
+ },
+ "labels": {
+  "crumbs": "Seitenpfad",
+  "crumb_home": "Museum",
+  "crumb_here": "Probemauer",
+  "toc": "Auf dieser Seite",
+  "tag_made": "Für diese Seite gemacht",
+  "no_figure": "keine Zahl"
+ },
+ "top": {
+  "h1": "Testseite: Wie lang ist die Probemauer?",
+  "answer": "Dies ist eine Testseite mit erfundenen Zahlen. Die Probemauer ist 120 m lang und etwa 6 m hoch. Die Länge ist am Plan gemessen, die Höhe ist eine Vermutung.",
+  "strength": "Länge: am Plan gemessen. Höhe: eine Vermutung.",
+  "slot": {
+   "pic": "plan",
+   "tag": "tag_made",
+   "what": "Die Probemauer auf einem erfundenen Plan: der gemessene Abschnitt in der einen Farbe, der vermutete in der anderen.",
+   "alt": "Der Plan einer langen geraden Mauer, von oben gesehen. Ihre linken zwei Drittel sind als helle durchgehende Linie gezeichnet, ihr rechtes Drittel als blaue gestrichelte Linie.",
+   "src": [
+    "Gezeichnet auf Kartendaten von ",
+    {
+     "href": "https://www.openstreetmap.org/copyright",
+     "text": "OpenStreetMap"
+    },
+    ", ",
+    {
+     "href": "https://opendatacommons.org/licenses/odbl/",
+     "text": "ODbL"
+    },
+    "."
+   ]
+  },
+  "next": {
+   "page": "questions",
+   "text": "Alle Fragen und Antworten"
+  }
+ },
+ "faq": [
+  {
+   "q": "Woher wissen wir das?",
+   "a": "Über die Probemauer wissen wir nichts, denn es gibt sie nur für die Tests."
+  }
+ ],
+ "blocks": [
+  {
+   "type": "text",
+   "id": "know",
+   "nav": "Woher wissen wir das?",
+   "h": "Woher wissen wir das?",
+   "paras": [
+    "Über die Probemauer wissen wir nichts, denn es gibt sie nur für die Tests. Ihre Länge steht für eine am Plan gemessene Zahl, ihre Höhe für eine Zahl, die niemand gemessen hat."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "high",
+   "nav": "Wie hoch war die Probemauer?",
+   "h": "Wie hoch war die Probemauer?",
+   "paras": [
+    "Etwa 6 m, als Vermutung. Eine echte Seite würde sagen, wer das vermutet und woraus."
+   ]
+  },
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Die Zahlen",
+   "h": "Die Zahlen",
+   "unit": "Meter. Erfundene Zahlen für die Tests.",
+   "cols": [
+    "Zahl",
+    "Wert",
+    "Grundlage",
+    "Belegt oder vermutet",
+    "Quelle"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Länge",
+      "120 m",
+      "am Plan gemessen",
+      "Belegt",
+      "der Testplan"
+     ]
+    },
+    {
+     "cells": [
+      "Höhe",
+      "etwa 6 m",
+      "nicht gemessen",
+      "Vermutet",
+      "keine"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "myths",
+   "id": "myths",
+   "nav": "Was oft zu lesen ist",
+   "h": "Was oft zu lesen ist",
+   "intro": "Eine Behauptung, für die Tests erfunden.",
+   "items": [
+    {
+     "name": "Eine Mauer aus Gold",
+     "claim": "Eine erfundene Behauptung: Die Probemauer war aus Gold gebaut.",
+     "known": "Nichts spricht dafür. Sie steht hier, damit zu sehen ist, wie eine Behauptung und ihre Antwort aussehen."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Quellen",
+   "h": "Quellen",
+   "intro": "Eine Testseite hat keine Quellen.",
+   "read": [
+    {
+     "text": "Keine: Jede Zahl auf dieser Seite ist für die Tests erfunden."
+    }
+   ],
+   "contact": "Ist eine Zahl hier falsch, genügt eine Nachricht, und wir korrigieren sie.",
+   "contact_link": "Zum Impressum",
+   "what_link": "Was dieses Museum ist"
+  },
+  {
+   "type": "museum",
+   "id": "museum",
+   "nav": "Im Museum",
+   "h": "Im Museum",
+   "text": "Museum of Ages ist ein digitales Museum. Der Flügel {wing} zeigt {place} am {day}.",
+   "link": "Zum Flügel {wing}"
+  }
+ ]
+}

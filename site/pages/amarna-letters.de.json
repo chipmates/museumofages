@@ -1,0 +1,524 @@
+{
+ "_note": "AN ANSWER PAGE of the questions shelf, from its words and its picture made for it.",
+ "page": {
+  "id": "questions-amarna-letters",
+  "wing": "questions",
+  "topic": "amarna_letters",
+  "published": "2026-11-19",
+  "checked": "2026-11-18",
+  "og_image": {
+   "file": "questions-amarna-letters-og-{lang}-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "lead": {
+   "stem": "questions-amarna-letters-lead-{lang}",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 560px, (min-width: 960px) 44vw, calc(100vw - 40px)",
+   "swatches": {
+    "known": "#cb8561",
+    "guessed": "#cb8561"
+   },
+   "narrow": {
+    "stem": "questions-amarna-letters-lead-phone-{lang}",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 560
+   }
+  }
+ },
+ "meta": {
+  "title": "Was sind die Amarna-Briefe? | Museum of Ages",
+  "description": "382 Tontafeln in Keilschrift, ab 1887 in Amarna gefunden: wer an Ägyptens Könige schrieb, woher die Briefe kamen (mit Karte) und wo sie heute liegen.",
+  "og_title": "Was sind die Amarna-Briefe?",
+  "og_image_alt": "Die Frage über einem Ausschnitt der Karte zu dieser Seite: Alašija mit einem Ring über Zypern, die Städte der Küste, Assyrien und Babylonien mit den Nummern ihrer Briefe."
+ },
+ "labels": {
+  "crumbs": "Seitenpfad",
+  "crumb_home": "Museum",
+  "toc": "Auf dieser Seite",
+  "tag_made": "Für diese Seite gemacht",
+  "no_figure": "keine Zahl",
+  "crumb_here": "Was sind die Amarna-Briefe?"
+ },
+ "top": {
+  "h1": "Was sind die Amarna-Briefe?",
+  "answer": [
+   "Die Amarna-Briefe sind ",
+   {
+    "text": "382 bekannte Tontafeln und Bruchstücke",
+    "href": "https://humanities.tau.ac.il/hebrew/research/el-amarna-akkadian/el-amarna-introduction"
+   },
+   " in Keilschrift, meist Briefe auf Akkadisch zwischen dem ägyptischen Hof und Herrschern im ganzen Vorderen Orient um die Mitte des 14. Jahrhunderts v. Chr. ",
+   {
+    "text": "Die ersten fanden Einheimische",
+    "href": "https://humanities.tau.ac.il/hebrew/research/el-amarna-akkadian/el-amarna-introduction"
+   },
+   " 1887 in Amarna, und ",
+   {
+    "text": "die meisten liegen heute",
+    "href": "https://en.wikipedia.org/wiki/Amarna_letters"
+   },
+   " in Berlin, London und Kairo."
+  ],
+  "strength": "Was sie sind und wo sie gefunden wurden: belegt. Wie viele jedes Museum besitzt: Die Zählungen schwanken nach Quelle und Jahr.",
+  "slot": {
+   "pic": "lead",
+   "tag": "tag_made",
+   "what": "Woher die Amarna-Briefe kamen, auf der heutigen Karte, jeder Ort mit den Nummern der Briefe von dort und dorthin in Knudtzons Ausgabe. Mitanni und Arzawa stehen im Kasten.",
+   "alt": "Eine Karte des östlichen Mittelmeers und des Vorderen Orients heute, Norden oben, mit Amarna am Ostufer des Nils, zwischen Kairo und Luxor. Eingezeichnet sind die Reiche und Städte der Briefe, mit den Nummern ihrer Briefe in Knudtzons Ausgabe: Babylon für Babylonien, 1 bis 14, Assur für Assyrien, 15 und 16, Hattuša für die Hethiter, 41 bis 44, der Süden Zyperns mit einem Ring für Alašija, 33 bis 40, und die Städte Byblos, Tyros, Akko, Megiddo, Sichem, Geser und Jerusalem, unter der Karte noch einmal größer. Mitanni, 17 bis 30, und Arzawa, 31 und 32, stehen in einem Kasten neben der Karte. Eine Liste nennt, wo die Tafeln heute liegen: die meisten in Berlin, London und Kairo.",
+   "legend": "picture",
+   "src": [
+    "Küsten und Flüsse: ",
+    {
+     "text": "Natural Earth",
+     "href": "https://www.naturalearthdata.com/about/terms-of-use/"
+    },
+    ", gemeinfrei. Lage Babylons: ",
+    {
+     "text": "OpenStreetMap",
+     "href": "https://www.openstreetmap.org/copyright"
+    },
+    ", unter der ",
+    {
+     "text": "ODbL",
+     "href": "https://opendatacommons.org/licenses/odbl/"
+    },
+    "."
+   ]
+  },
+  "next": {
+   "page": "questions",
+   "text": "Weitere Fragen, beantwortet mit dem, was belegt ist und was wir vermuten"
+  }
+ },
+ "faq": [
+  {
+   "q": "Woher wissen wir das?",
+   "a": "Aus den Tafeln selbst, aus dem, was Finder den ersten Museen erzählten, und aus Petries Grabung."
+  }
+ ],
+ "blocks": [
+  {
+   "type": "text",
+   "id": "who-wrote-the-amarna",
+   "nav": "Wer schrieb die Amarna-Briefe, und was steht darin?",
+   "h": "Wer schrieb die Amarna-Briefe, und was steht darin?",
+   "paras": [
+    [
+     "Könige und Stadtherrscher schrieben die meisten an zwei Könige Ägyptens, Amenophis III. und seinen Sohn Echnaton, so fasst es ",
+     {
+      "text": "Shlomo Izre'el von der Universität Tel Aviv",
+      "href": "https://humanities.tau.ac.il/hebrew/research/el-amarna-akkadian/el-amarna-introduction"
+     },
+     " zusammen. Einige wenige entstanden in Ägypten selbst, an Könige im Ausland und an Herrscher von Städten, wie die Liste im ",
+     {
+      "text": "englischen Wikipedia-Artikel",
+      "href": "https://en.wikipedia.org/wiki/Amarna_letters"
+     },
+     " zeigt."
+    ],
+    [
+     "Die Könige der Großmächte, darunter Babylonien, Assyrien, Mitanni und die Hethiter, schrieben einander als Gleiche und sprachen sich als „Brüder“ an. Sie schickten einander Gold und Geschenke, verhandelten über Heiraten und beschwerten sich, wie der ",
+     {
+      "text": "deutsche Artikel",
+      "href": "https://de.wikipedia.org/wiki/Amarna-Briefe"
+     },
+     " schildert. In EA 1 grüßt Amenophis III. den König von Babylonien als seinen Bruder, in ",
+     {
+      "text": "Knudtzons Übersetzung",
+      "href": "https://archive.org/details/dieelamarnatafel01knud"
+     },
+     ": „Vor mir ist Wohlbefinden. Vor dir sei Wohlbefinden!“ Aššur-uballiṭ von Assyrien klagt über ein dürftiges Geschenk und will Gold, denn: „Gold ist in deinem Lande (wie) Staub“ (EA 16). In ",
+     {
+      "text": "EA 4",
+      "href": "https://archive.org/details/dieelamarnatafel01knud"
+     },
+     " erinnert der König von Babylonien an die Antwort, die er auf seine Bitte um eine ägyptische Prinzessin bekam: „Von alters her ist eine Königstochter von Ägypten an niemand gegeben.“"
+    ],
+    [
+     "Die meisten übrigen stammen von Herrschern der Städte in ",
+     {
+      "text": "Syrien, im Libanon und in Kanaan",
+      "href": "https://en.wikipedia.org/wiki/Amarna_letters"
+     },
+     ". Sie schreiben, so Aziru von Amurru in ",
+     {
+      "text": "EA 156",
+      "href": "https://archive.org/details/dieelamarnatafel01knud"
+     },
+     ", „Zu dem König, meinem Herrn, meinem Gott, meiner Sonne“, fallen „7mal und 7mal“ zu seinen Füßen nieder, beschuldigen ihre Nachbarn und bitten um Truppen. Rib-Hadda von Byblos fleht in mehr als 58 Briefen um Hilfe, und Abdi-Heba von Jerusalem, auf den Tafeln Urusalim, bittet um Bogenschützen gegen die Habiru, hält der ",
+     {
+      "text": "englische Artikel",
+      "href": "https://en.wikipedia.org/wiki/Amarna_letters"
+     },
+     " fest."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "where-is-amarna",
+   "nav": "Wo liegt Amarna?",
+   "h": "Wo liegt Amarna?",
+   "paras": [
+    [
+     "Am Ostufer des Nils in der heutigen ägyptischen Provinz al-Minya, so der ",
+     {
+      "text": "englische Artikel zu Amarna",
+      "href": "https://en.wikipedia.org/wiki/Amarna"
+     },
+     ", etwa 270 Kilometer Luftlinie südlich von Kairo. Genau westlich liegt die Stadt Deir Mawas, auf der Ostseite liegen heutige Dörfer, im Norden el-Till, im Süden el-Hagg Qandil."
+    ],
+    [
+     "Die Ruinen sind die von ",
+     {
+      "text": "Achet-Aton",
+      "href": "https://en.wikipedia.org/wiki/Amarna"
+     },
+     ", der Hauptstadt, die König Echnaton im 14. Jahrhundert v. Chr. bauen ließ und die kurz nach seinem Tod verlassen wurde. ",
+     {
+      "text": "Flinders Petrie",
+      "href": "https://archive.org/details/tellelamarna00petr"
+     },
+     " machte 1891 und 1892 den Fundort in einem Block von Räumen aus, den er mit der Nummer 19 bezeichnete und der seiner Ansicht nach für das Archiv gebaut worden war."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "where-are-the-amarna",
+   "nav": "Wo sind die Amarna-Briefe heute?",
+   "h": "Wo sind die Amarna-Briefe heute?",
+   "paras": [
+    [
+     "In mindestens acht Sammlungen, die meisten in Berlin, London und Kairo. 202 oder 203 liegen im Vorderasiatischen Museum in Berlin, 99 im British Museum, 49 oder 50 im Ägyptischen Museum in Kairo, 7 im Louvre, 3 im Puschkin-Museum in Moskau und eine am Institute for the Study of Ancient Cultures in Chicago, so die Liste im ",
+     {
+      "text": "englischen Artikel",
+      "href": "https://en.wikipedia.org/wiki/Amarna_letters"
+     },
+     ", dazu weitere im Ashmolean Museum in Oxford, nach ",
+     {
+      "text": "Knudtzons Zählung von 1915",
+      "href": "https://archive.org/details/dieelamarnatafel01knud"
+     },
+     " 22 Stücke aus Petries Grabung, und einige in den Königlichen Museen für Kunst und Geschichte in Brüssel."
+    ],
+    [
+     "Die Zählungen schwanken nach Quelle und Jahr. 1892 nannte der ",
+     {
+      "text": "Katalog des British Museum",
+      "href": "https://archive.org/details/tellelamarnatabl00bezo"
+     },
+     " 82 Tafeln in London, die 1888 für das Museum gekauft worden waren, 160 in Berlin, viele davon Bruchstücke, und 60 im Museum in Gizeh."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-are-the-amarna",
+   "nav": "Wie liest und übersetzt man die Amarna-Briefe?",
+   "h": "Wie liest und übersetzt man die Amarna-Briefe?",
+   "paras": [
+    [
+     "Gelesen werden sie in Knudtzons Ausgabe von 1907 bis 1915, die ",
+     {
+      "text": "bis heute als maßgeblich gilt",
+      "href": "https://humanities.tau.ac.il/hebrew/research/el-amarna-akkadian/el-amarna-introduction"
+     },
+     ", und in William Morans Übersetzungen, 1987 ins Französische und 1992 ins Englische. Geschrieben sind sie in Keilschrift, der Schrift Mesopotamiens, und auf Akkadisch, der Sprache der Diplomatie jener Zeit. In den Briefen aus Kanaan mischt sich das Akkadische mit dem Kanaanäischen der Schreiber, und so sind sie ",
+     {
+      "text": "die wichtigste Quelle",
+      "href": "https://humanities.tau.ac.il/hebrew/research/el-amarna-akkadian/el-amarna-introduction"
+     },
+     " für die kanaanäischen Dialekte jener Zeit, schreibt Izre'el. Die beiden Arzawa-Briefe, EA 31 und 32, sind hethitisch, und an ihnen erkannte Jørgen Alexander Knudtzon 1902 das Hethitische als indogermanische Sprache, wie der ",
+     {
+      "text": "englische Artikel über ihn",
+      "href": "https://en.wikipedia.org/wiki/J%C3%B8rgen_Alexander_Knudtzon"
+     },
+     " festhält."
+    ],
+    [
+     "EA steht für El-Amarna, und EA 153 ist die 153. Tafel in Knudtzons Ordnung. Seine Ausgabe enthält ",
+     {
+      "text": "358 der 382 Tafeln",
+      "href": "https://humanities.tau.ac.il/hebrew/research/el-amarna-akkadian/el-amarna-introduction"
+     },
+     ", EA 359 bis 379 veröffentlichte Anson Rainey 1970. Izre'el hat seine Umschriften des ganzen Bestands ins Netz gestellt. Leicht zu lesen sind die Tafeln nicht. Alte Zeichen und Schreibweisen stehen neben neuen, und wer sie übersetzen will, müsse „außerdem Spezialist im Hebräischen und Ugaritischen sein“, schrieb der Ägyptologe Cyril Aldred 1968, wie der ",
+     {
+      "text": "deutsche Artikel",
+      "href": "https://de.wikipedia.org/wiki/Amarna-Briefe"
+     },
+     " ihn zitiert."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "know",
+   "nav": "Woher wissen wir das?",
+   "h": "Woher wissen wir das?",
+   "paras": [
+    "Aus den Tafeln selbst, aus dem, was Finder den ersten Museen erzählten, und aus Petries Grabung.",
+    [
+     "Vom Fund weiß man nur aus zweiter Hand. Der ",
+     {
+      "text": "Katalog des British Museum",
+      "href": "https://archive.org/details/tellelamarnatabl00bezo"
+     },
+     " von 1892 schreibt, eine Bäuerin solle ihn zufällig gemacht haben. Andere Berichte nennen Leute, die nach Altertümern suchten, nach Mergel für ihre Äcker gruben oder alte Ziegel abtrugen, so der ",
+     {
+      "text": "deutsche Artikel",
+      "href": "https://de.wikipedia.org/wiki/Amarna-Briefe"
+     },
+     ". ",
+     {
+      "text": "Petrie schrieb",
+      "href": "https://archive.org/details/tellelamarna00petr"
+     },
+     ", viele Tafeln seien beim Transport auf Eseln zerbrochen, und gerettet sei vielleicht nicht die Hälfte dessen, was sich mit Sorgfalt hätte bewahren lassen. Seine eigene Grabung fand ein Stück in einem Raum und die übrigen in zwei Abfallgruben darunter, mehr Wörterlisten und Arbeitsmaterial als Briefe."
+    ],
+    [
+     "Die Daten stammen aus dem Inhalt. Ein Schreiber vermerkte auf EA 23 in hieratischer Schrift, der Brief sei im 36. Regierungsjahr Amenophis' III. eingegangen, und das Archiv umfasst nach William Moran höchstens etwa dreißig Jahre, vielleicht nur fünfzehn, wie der ",
+     {
+      "text": "englische Artikel",
+      "href": "https://en.wikipedia.org/wiki/Amarna_letters"
+     },
+     " ihn zitiert. Auch der Ton gibt Auskunft: Eine Untersuchung von Yuval Goren, Israel Finkelstein und Nadav Na'aman verortete Alašija im Süden Zyperns, berichtet der ",
+     {
+      "text": "deutsche Artikel",
+      "href": "https://de.wikipedia.org/wiki/Amarna-Briefe"
+     },
+     "."
+    ]
+   ]
+  },
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Die Zahlen",
+   "h": "Die Zahlen",
+   "unit": "Die Quellen heißen wie in der Liste unten.",
+   "cols": [
+    "Zahl",
+    "Wert",
+    "Grundlage",
+    "Belegt oder vermutet",
+    "Quelle"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Bekannte Tafeln und Bruchstücke",
+      "382",
+      "der heute verzeichnete Bestand",
+      "belegt",
+      "Izre'el, Universität Tel Aviv"
+     ]
+    },
+    {
+     "cells": [
+      "Davon Briefe",
+      "rund 350, der Rest Wörterlisten, Silbentabellen, Mythen und Schultexte",
+      "der Bestand",
+      "belegt",
+      "Wikipedia, Amarna letters und Wikipedia, Amarna-Briefe"
+     ]
+    },
+    {
+     "cells": [
+      "In Knudtzons Ausgabe von 1907 bis 1915",
+      "358",
+      "die Ausgabe",
+      "belegt",
+      "Izre'el"
+     ]
+    },
+    {
+     "cells": [
+      "Berlin, Vorderasiatisches Museum",
+      "160 im Jahr 1892, heute 202 oder 203",
+      "Zählungen ihrer Zeit",
+      "belegt (jede für ihr Jahr)",
+      "Katalog des British Museum, 1892, und Wikipedia, Amarna letters"
+     ]
+    },
+    {
+     "cells": [
+      "London, British Museum",
+      "82 im Jahr 1892, heute 99",
+      "Zählungen ihrer Zeit",
+      "belegt (jede für ihr Jahr)",
+      "Katalog des British Museum, 1892, und Wikipedia, Amarna letters"
+     ]
+    },
+    {
+     "cells": [
+      "Kairo, Ägyptisches Museum",
+      "60 im Jahr 1892, heute 49 oder 50",
+      "Zählungen ihrer Zeit",
+      "belegt (jede für ihr Jahr)",
+      "Katalog des British Museum, 1892, und Wikipedia, Amarna letters"
+     ]
+    },
+    {
+     "cells": [
+      "Oxford, Ashmolean Museum",
+      "22 im Jahr 1915, heute einige",
+      "Zählungen ihrer Zeit",
+      "belegt (jede für ihr Jahr, einige: ohne Zahl)",
+      "Knudtzon 1915 und Wikipedia, Amarna letters"
+     ]
+    },
+    {
+     "cells": [
+      "Paris 7, Moskau 3, Chicago 1, Brüssel einige",
+      "",
+      "Zählungen wie berichtet",
+      "belegt (einige: ohne Zahl)",
+      "Wikipedia, Amarna letters"
+     ]
+    },
+    {
+     "cells": [
+      "Von Petrie 1891 und 1892 gefunden",
+      "21 oder 22 Bruchstücke",
+      "seine Grabung, verschieden gezählt",
+      "belegt",
+      "Wikipedia, Amarna letters und Wikipedia, Amarna-Briefe"
+     ]
+    },
+    {
+     "cells": [
+      "Zeitspanne des Archivs",
+      "höchstens etwa 30 Jahre, vielleicht etwa 15",
+      "die genannten Könige, Vermerke der Schreiber",
+      "vermutet",
+      "Moran, zitiert in Wikipedia, Amarna letters"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "myths",
+   "nav": "Was man oft liest",
+   "h": "Was man oft liest",
+   "subs": [
+    {
+     "h": "„Sie sind in Hieroglyphen auf Papyrus geschrieben.“",
+     "paras": [
+      "Sie sind in Keilschrift auf Ton geschrieben, fast alle auf Akkadisch."
+     ]
+    },
+    {
+     "h": "„Petrie hat sie entdeckt.“",
+     "paras": [
+      "Die meisten fanden Einheimische, ab 1887. Petrie machte den Fundort aus und fand 1891 und 1892 weitere Bruchstücke."
+     ]
+    },
+    {
+     "h": "„Die Habiru der Briefe sind die Hebräer.“",
+     "paras": [
+      [
+       "Die ",
+       {
+        "text": "meisten Fachleute",
+        "href": "https://en.wikipedia.org/wiki/Habiru"
+       },
+       " setzen die beiden Gruppen heute nicht mehr gleich, und ob die Wörter verwandt sind, ist weiter umstritten."
+      ]
+     ]
+    },
+    {
+     "h": "„Es sind die ältesten Briefe der Welt.“",
+     "paras": [
+      [
+       "Das Archiv von ",
+       {
+        "text": "Mari",
+        "href": "https://en.wikipedia.org/wiki/Mari,_Syria"
+       },
+       " am Euphrat aus dem 18. Jahrhundert v. Chr. ist älter, und mehr als 3.000 seiner Tafeln sind Briefe."
+      ]
+     ]
+    },
+    {
+     "h": "„Die Briefe nennen genaue Daten.“",
+     "paras": [
+      "Sie tragen kein eigenes Datum. Einige haben einen Vermerk mit dem Regierungsjahr eines Königs, und die Jahre v. Chr. hängen von der verwendeten Chronologie ab."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Quellen",
+   "h": "Quellen",
+   "intro": "Die Angaben stammen aus diesen Quellen, gelesen am 18. November 2026. Die Briefe werden nach Knudtzons deutscher Übersetzung von 1915 zitiert.",
+   "read": [
+    {
+     "text": "Shlomo Izre'el, „The Amarna Letters: Introduction“, Universität Tel Aviv, 2000 (englisch)",
+     "href": "https://humanities.tau.ac.il/hebrew/research/el-amarna-akkadian/el-amarna-introduction"
+    },
+    {
+     "text": "J. A. Knudtzon, Die El-Amarna-Tafeln, Band 1, Leipzig, 1915 (das Exemplar der University of Toronto, Internet Archive)",
+     "href": "https://archive.org/details/dieelamarnatafel01knud"
+    },
+    {
+     "text": "C. Bezold und E. A. Wallis Budge, The Tell el-Amarna Tablets in the British Museum, London, 1892 (englisch, das Exemplar des Getty Research Institute, Internet Archive)",
+     "href": "https://archive.org/details/tellelamarnatabl00bezo"
+    },
+    {
+     "text": "W. M. Flinders Petrie, Tell el Amarna, London, 1894 (englisch, Internet Archive)",
+     "href": "https://archive.org/details/tellelamarna00petr"
+    },
+    {
+     "text": "Wikipedia, Amarna-Briefe",
+     "href": "https://de.wikipedia.org/wiki/Amarna-Briefe"
+    },
+    {
+     "text": "Wikipedia, Amarna letters (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Amarna_letters"
+    },
+    {
+     "text": "Wikipedia, Amarna (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Amarna"
+    },
+    {
+     "text": "Wikipedia, Jørgen Alexander Knudtzon (englisch)",
+     "href": "https://en.wikipedia.org/wiki/J%C3%B8rgen_Alexander_Knudtzon"
+    },
+    {
+     "text": "Wikipedia, Habiru (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Habiru"
+    },
+    {
+     "text": "Wikipedia, Mari, Syria (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Mari,_Syria"
+    }
+   ],
+   "contact": "Ist ein Datum, eine Zahl oder ein Satz falsch, genügt eine Nachricht, und wir korrigieren es.",
+   "contact_link": "Zum Impressum",
+   "what_link": "Was dieses Museum ist"
+  },
+  {
+   "type": "museum",
+   "id": "museum",
+   "nav": "Im Museum",
+   "h": "Im Museum",
+   "text": "Museum of Ages ist ein digitales Museum. Der Flügel {wing} zeigt {place} am {day}.",
+   "link": "Zum Flügel {wing}"
+  }
+ ]
+}

@@ -1,0 +1,25 @@
+/* An answer page's first screen, set only on a page that needs it: how sure the answer is, in one line under it; the
+   sentence that leads to the picture made for the page, over it, clear of its frame line; the legend under the picture,
+   its two marks side by side and the sentence that ties them to the museum's four grades. */
+.sc-strength{margin-top:10px;font-family:var(--sans);font-size:.9375rem;line-height:1.5;color:var(--ink-soft);max-width:36rem}
+.sc-fig .sc-lead{margin-bottom:13px}
+.sc-legend{grid-template-columns:repeat(2,max-content);column-gap:20px}
+.sc-legend__map{display:block;margin-top:4px}
+/* Below a wide screen the markup's order stands: the answer, the way on, then the tall picture, so a phone's first
+   screen holds the way on and the picture's start. From a wide screen the picture stands beside the answer and the way
+   on under the answer, both on the first screen. */
+@media (min-width:1280px){
+  .sc-top:has(>.sc-fig--first):has(>.sc-next){grid-template-rows:auto 1fr}
+  .sc-top:has(>.sc-fig--first):has(>.sc-next) .sc-fig--first{grid-row:1/span 2}
+  .sc-top:has(>.sc-fig--first) .sc-next{grid-column:1/7;grid-row:2;align-self:start}
+}
+/* A shelf's list of every answer page, in words only: each page's name over its line, closer together, and side by
+   side from a wide screen. */
+.sc-pages--plain .sc-list{gap:0}
+.sc-pages--plain .sc-item{gap:6px;padding:18px 0 20px}
+.sc-pages--plain .sc-item__pic{display:none}
+.sc-pages--plain .sc-item__h{font-size:1.375rem}
+@media (min-width:960px){
+  .sc-pages--plain .sc-item{grid-template-areas:"h line";align-items:baseline;padding:22px 0 24px}
+  .sp-sec.sc-pages--plain .sc-item__h{font-size:1.5rem}
+}

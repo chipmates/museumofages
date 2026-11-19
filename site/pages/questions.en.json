@@ -1,0 +1,36 @@
+{
+ "_note": "THE WORDS of the questions shelf's own page, English: a list of every answer page of the site, of every entry (every), each by its name and line in the registry. Its way out names the open wing, the place and the day it shows by {wing}, {place} and {day}, from the registry.",
+ "page": {
+  "id": "questions",
+  "wing": "questions",
+  "hub": true,
+  "published": null
+ },
+ "pics": {},
+ "meta": {
+  "title": "Questions about the past | Museum of Ages",
+  "description": "Each page here answers one question, with the numbers and the sources the answer rests on.",
+  "og_title": "Questions and answers"
+ },
+ "labels": {
+  "crumbs": "You are here",
+  "crumb_home": "Museum",
+  "crumb_here": "Questions",
+  "toc": "On this page"
+ },
+ "top": {
+  "h1": "Questions and answers",
+  "answer": "Each page here answers one question, with the numbers and the sources the answer rests on.",
+  "out": {
+   "text": "Museum of Ages is a digital museum. Its {wing} wing shows {place} on {day}.",
+   "link": "To the {wing} wing"
+  }
+ },
+ "blocks": [
+  {
+   "type": "pages",
+   "id": "pages",
+   "every": true
+  }
+ ]
+}

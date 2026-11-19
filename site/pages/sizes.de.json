@@ -6,7 +6,7 @@
     "topic": "sizes",
     "published": "2026-10-12",
     "checked": "2026-10-13",
-    "changed": "2026-10-18",
+    "changed": "2026-11-17",
     "og_image": {
       "file": "vinci-sizes-og-{lang}-1200x630.png",
       "width": 1200,
@@ -77,7 +77,7 @@
     "og_image_alt": "Die Mona Lisa im selben Maßstab neben einem Menschen von 1,70 Metern, beide auf einer Bodenlinie: Das Gemälde, 79,4 mal 53,4 Zentimeter, ist nicht einmal halb so hoch wie der Mensch. Eine Reproduktion des Gemäldes in einem Diagramm, für diese Seite gemacht."
   },
   "labels": {
-    "crumbs": "Du bist hier",
+    "crumbs": "Seitenpfad",
     "crumb_home": "Museum",
     "crumb_here": "Größen",
     "toc": "Auf dieser Seite",
@@ -87,8 +87,8 @@
   },
   "top": {
     "h1": "Wie groß ist die Mona Lisa?",
-    "answer": "Die Mona Lisa misst 79,4 mal 53,4 Zentimeter. Neben einem Menschen von 1,70 Metern ist sie nicht einmal halb so hoch und etwas mehr als einen halben Meter breit. Das Abendmahl ist 8,8 Meter breit: Sechzehn Mona Lisas hätten nebeneinander darauf Platz.",
-    "answer_more": "Viele Bücher und Websites nennen 77 mal 53 Zentimeter. Das ist eine ältere offizielle Angabe. Der Louvre verzeichnet heute 79,4 mal 53,4 Zentimeter: die Größe der Holztafel, gemessen für eine naturwissenschaftliche Untersuchung, die 2006 erschien. Mit Rahmen misst sie 1,01 Meter mal 77 Zentimeter, sagt der Louvre.",
+    "answer": "Die Mona Lisa misst ohne Rahmen 79,4 mal 53,4 Zentimeter. Das ist die Größe der Holztafel laut Verzeichnis des Louvre, und viele Bücher nennen noch eine ältere offizielle Angabe, 77 mal 53 Zentimeter. Neben einem Menschen von 1,70 Metern ist sie nicht einmal halb so hoch.",
+    "answer_more": "Leonardo wählte eine große Tafel, um sein Modell lebensgroß zu malen, schreibt der Louvre. Mit Rahmen misst das Bild 1,01 Meter mal 77 Zentimeter. Das Diagramm weiter unten zeigt es im selben Maßstab neben jedem anderen Werk des Bildersaals und neben dem Abendmahl.",
     "order": "Alle Maße: Höhe mal Breite.",
     "figure": {
       "work": "mona-lisa",
@@ -96,6 +96,7 @@
       "what": "neben einem Menschen von 1,70 Metern",
       "alt": "Die Mona Lisa, 79,4 mal 53,4 Zentimeter, neben einem Menschen von 1,70 Metern, beide auf einer Bodenlinie und im selben Maßstab gezeichnet: Das Gemälde ist nicht einmal halb so hoch wie der Mensch."
     },
+    "door_first": true,
     "door": {
       "text": "Die Mona Lisa im Flügel ansehen",
       "note": "Eintritt frei, kein Konto.",
@@ -116,6 +117,38 @@
       "still_caption": "Alle 24 Werke und das Abendmahl im selben Maßstab, neben einem Menschen von 1,70 Metern.",
       "licence": "Das Diagramm ist eine eigene Arbeit des Museums, CC BY-SA 4.0.",
       "still_link": "Das Diagramm als Bild, 1600 Pixel breit"
+    },
+    {
+      "type": "text",
+      "id": "questions",
+      "nav": "Fragen zur Größe",
+      "h": "Fragen zur Größe",
+      "subs": [
+        {
+          "h": "Wie groß ist die Mona Lisa mit und ohne Rahmen?",
+          "paras": [
+            "Ohne Rahmen misst die Mona Lisa 79,4 mal 53,4 Zentimeter: die Größe der dünnen Tafel aus Pappelholz, auf die Leonardo sie malte. Mit Rahmen misst sie 1,01 Meter mal 77 Zentimeter. Beide Maße stehen im Verzeichnis des Louvre."
+          ]
+        },
+        {
+          "h": "Warum nennen viele Bücher 77 mal 53 Zentimeter?",
+          "paras": [
+            "Das ist eine ältere offizielle Angabe, die viele Bücher und Websites noch nennen. Der Louvre verzeichnet heute 79,4 mal 53,4 Zentimeter, die Größe der Tafel, gemessen für eine naturwissenschaftliche Untersuchung, die 2006 erschien. Keine der beiden Angaben schließt den Rahmen ein."
+          ]
+        },
+        {
+          "h": "Wie groß ist die Mona Lisa im Vergleich zu einem Menschen?",
+          "paras": [
+            "Mit 79,4 Zentimetern ist sie nicht einmal halb so hoch wie ein Mensch von 1,70 Metern. Die Zeichnung oben auf dieser Seite stellt beide im selben Maßstab nebeneinander. Ein Blatt im Format DIN A1, so groß wie acht DIN-A4-Blätter, ist mit 84,1 mal 59,4 Zentimetern etwas größer als die Tafel."
+          ]
+        },
+        {
+          "h": "Ist die Mona Lisa ein kleines Bild?",
+          "paras": [
+            "Unter den Werken im Bildersaal des Flügels liegt sie etwas über der Mitte: Von den anderen 23 sind vierzehn niedriger als sie und neun höher. Das niedrigste ist eine Predella von 16,2 Zentimetern, das höchste die Anbetung der Könige aus dem Morgenland mit 2,4 Metern. Das Abendmahl, ein Wandbild in Mailand, ist 8,8 Meter breit: Sechzehn Mona Lisas hätten nebeneinander darauf Platz. Das Diagramm oben zeigt alle im selben Maßstab."
+          ]
+        }
+      ]
     },
     {
       "type": "text",
@@ -236,7 +269,7 @@
       "h": "Die Tabelle",
       "caption": "Dieselben Zahlen wie im Diagramm, in der Reihenfolge, in der die Werke hängen.",
       "unit": "Angaben in Zentimetern.",
-      "hint": "Wisch über die Tabelle, um Haus und Ort zu sehen.",
+      "hint": "Über die Tabelle wischen, um Haus und Ort zu sehen.",
       "cols": {
         "work": "Werk",
         "height": "Höhe",
@@ -348,7 +381,7 @@
         }
       ],
       "notes": [],
-      "contact": "Ist eine Größe oder ein Haus falsch angegeben, schreib uns, und wir korrigieren es.",
+      "contact": "Ist eine Größe oder ein Haus falsch angegeben, genügt eine Nachricht, und wir korrigieren es.",
       "contact_link": "Zum Impressum",
       "what_link": "Was dieses Museum ist"
     },
@@ -357,7 +390,7 @@
       "id": "enter",
       "nav": "",
       "h": "Die Bilder im Flügel ansehen",
-      "p": "Die Tür führt in den Leonardo-Flügel, in den Bildersaal, wo der Rundgang beginnt. Dort hängt die Mona Lisa unter 25 Bildern, und an jedes kannst du herantreten.",
+      "p": "Die Tür führt in den Leonardo-Flügel, in den Bildersaal, wo der Rundgang beginnt. Dort hängt die Mona Lisa unter 25 Bildern, und jedes lässt sich aus der Nähe ansehen.",
       "door": {
         "text": "Ins Museum",
         "note": "Eintritt frei, kein Konto."

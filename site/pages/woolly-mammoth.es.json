@@ -111,7 +111,7 @@
   "og_image_alt": "Nuestro mamut lanudo, el macho de Berezovka, de lado, con pelaje marrón oscuro: la cabeza alta y abombada, el lomo en pendiente, dos colmillos curvos y una marca a la altura del hombro, a 271 cm según una reconstrucción. La persona gris de al lado, de 1,70 m, queda más baja que las puntas de los colmillos."
  },
  "labels": {
-  "crumbs": "Estás aquí",
+  "crumbs": "Ruta de navegación",
   "crumb_home": "Museo",
   "crumb_here": "Mamut lanudo",
   "toc": "En esta página",
@@ -551,7 +551,7 @@
      "href": "https://www.helsinki.fi/en/luomus/news/last-mammoths-died-remote-island"
     }
    ],
-   "contact": "Si una cifra o un museo está mal, escríbenos y lo corregiremos.",
+   "contact": "Si una cifra o un museo está mal, basta con escribirnos y lo corregiremos.",
    "contact_link": "Ir al aviso legal",
    "what_link": "Qué es este museo"
   },

@@ -33,7 +33,7 @@
     "og_image_alt": "Das Abendmahl im selben Maßstab neben einem Menschen von 1,70 Metern: das Wandbild mit 4,6 mal 8,8 Metern. Darin der Tisch und darunter der Scheitel des Türbogens, wo die Füße Christi waren. Eine Zeichnung, für diese Seite gemacht, Tisch und Bogen nach einem Foto."
   },
   "labels": {
-    "crumbs": "Du bist hier",
+    "crumbs": "Seitenpfad",
     "crumb_home": "Museum",
     "crumb_here": "Das Abendmahl",
     "toc": "Auf dieser Seite",
@@ -43,7 +43,7 @@
   },
   "top": {
     "h1": "Leonardo da Vincis Abendmahl in Mailand",
-    "answer": "Das letzte Abendmahl von Leonardo da Vinci ist ein Wandgemälde in Mailand, in Santa Maria delle Grazie. Es ist im Refektorium, dem Speisesaal eines Dominikanerklosters. Leonardo malte es für Ludovico Sforza, den Herzog von Mailand, etwa von 1494 bis 1498. Andere Quellen nennen 1495 bis 1498 oder 1495 bis 1497: Selbst die amtlichen Quellen in Italien weichen an beiden Enden um ein Jahr voneinander ab. Das Bild ist noch immer an der Wand, auf die er es gemalt hat: laut Museum 4,6 mal 8,8 Meter, Höhe mal Breite. Schau unter den Tisch: Christus hat keine Füße. Im 17. Jahrhundert wollten die Dominikaner eine größere Tür in ihre Küche, und die Tür, die sie unten in der Wand vergrößerten, sitzt genau dort, wo seine Füße waren.",
+    "answer": "Das letzte Abendmahl von Leonardo da Vinci ist ein Wandgemälde in Mailand, in Santa Maria delle Grazie. Es ist im Refektorium, dem Speisesaal eines Dominikanerklosters. Leonardo malte es für Ludovico Sforza, den Herzog von Mailand, etwa von 1494 bis 1498. Andere Quellen nennen 1495 bis 1498 oder 1495 bis 1497: Selbst die amtlichen Quellen in Italien weichen an beiden Enden um ein Jahr voneinander ab. Das Bild ist noch immer an der Wand, auf die er es gemalt hat: laut Museum 4,6 mal 8,8 Meter, Höhe mal Breite. Unter dem Tisch fehlt etwas: Christus hat keine Füße. Im 17. Jahrhundert wollten die Dominikaner eine größere Tür in ihre Küche, und die Tür, die sie unten in der Wand vergrößerten, sitzt genau dort, wo seine Füße waren.",
     "drawing": {
       "wall": "supper",
       "tag": "tag_chart",
@@ -70,6 +70,7 @@
         "wo die Füße Christi waren"
       ]
     },
+    "door_first": true,
     "door": {
       "text": "Das Abendmahl im Flügel ansehen",
       "note": "Eintritt frei, kein Konto.",
@@ -114,7 +115,7 @@
       "nav": "In Mailand heute",
       "h": "Das Bild in Mailand sehen",
       "paras": [
-        "Das Bild ist noch in seinem Raum. Mit Kirche und Kloster ist es seit 1980 Welterbe der UNESCO. Die Luft im Refektorium wird gefiltert und das Klima geregelt. Darum gehst du durch eine Folge kleiner Räume hinein, deren Türen sich nacheinander öffnen, und die Besuche sind kurz, zeitlich festgelegt und in kleinen Gruppen. Eine Buchung ist Pflicht.",
+        "Das Bild ist noch in seinem Raum. Mit Kirche und Kloster ist es seit 1980 Welterbe der UNESCO. Die Luft im Refektorium wird gefiltert und das Klima geregelt. Darum führt der Weg durch eine Folge kleiner Räume hinein, deren Türen sich nacheinander öffnen, und die Besuche sind kurz, zeitlich festgelegt und in kleinen Gruppen. Eine Buchung ist Pflicht.",
         [
           "Die Wand gegenüber trägt die Kreuzigung von Giovanni Donato Montorfano, signiert und datiert 1495 und als Fresko gemalt. Sie hat ihre Farbe viel besser behalten als Leonardos Wand. Kniende Figuren der Herzogsfamilie wurden nachträglich darauf gemalt, wahrscheinlich von Leonardo, sagt das Museum, und von ihnen ist fast nichts übrig. Für den Besuch: die Website des Museums, ",
           {
@@ -131,8 +132,8 @@
       "nav": "Im Flügel",
       "h": "Was unsere Kopie zeigt und was sie nicht zeigen kann",
       "paras": [
-        "Im Leonardo-Flügel des Museums trägt eine Wand im Hof eine Kopie des Abendmahls. Sie ist eine Reproduktion und hat die Höhe und die Breite des Originals, 4,6 mal 8,8 Meter. Sie zeigt dir, was ein Buch nicht zeigen kann: die ganze Komposition in ihrer wirklichen Größe, mit dir davor, Christus in der Mitte und die Apostel in vier Dreiergruppen.",
-        "Was eine flache Kopie nicht zeigen kann, ist die Wand selbst: wie die Farbschuppen vom Putz abstehen und wie zerbrechlich das alles ist. Und sie kann das Licht des Raums nicht zeigen. In Mailand kommt das gemalte Licht von links, von derselben Seite wie das Licht aus den echten Fenstern des Saals. Nimm das Bild von dieser Wand, und das Zusammenspiel ist weg.",
+        "Im Leonardo-Flügel des Museums trägt eine Wand im Hof eine Kopie des Abendmahls. Sie ist eine Reproduktion und hat die Höhe und die Breite des Originals, 4,6 mal 8,8 Meter. Sie zeigt, was ein Buch nicht zeigen kann: die ganze Komposition in ihrer wirklichen Größe, mit uns davor, Christus in der Mitte und die Apostel in vier Dreiergruppen.",
+        "Was eine flache Kopie nicht zeigen kann, ist die Wand selbst: wie die Farbschuppen vom Putz abstehen und wie zerbrechlich das alles ist. Und sie kann das Licht des Raums nicht zeigen. In Mailand kommt das gemalte Licht von links, von derselben Seite wie das Licht aus den echten Fenstern des Saals. Von dieser Wand gelöst, verliert das Bild dieses Zusammenspiel.",
         [
           "Wie groß es neben der Mona Lisa und den anderen Werken ist: ",
           {
@@ -230,7 +231,7 @@
         }
       ],
       "notes": [],
-      "contact": "Ist ein Datum, ein Name oder ein Satz falsch, schreib uns, und wir korrigieren es.",
+      "contact": "Ist ein Datum, ein Name oder ein Satz falsch, genügt eine Nachricht, und wir korrigieren es.",
       "contact_link": "Zum Impressum",
       "what_link": "Was dieses Museum ist"
     },

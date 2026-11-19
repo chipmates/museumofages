@@ -1,0 +1,463 @@
+{
+ "_note": "AN ANSWER PAGE of the questions shelf, from its words and its picture made for it.",
+ "page": {
+  "id": "questions-where-was-constantinople",
+  "wing": "questions",
+  "topic": "where_was_constantinople",
+  "published": "2026-11-19",
+  "checked": "2026-11-17",
+  "og_image": {
+   "file": "questions-where-was-constantinople-og-{lang}-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "lead": {
+   "stem": "questions-where-was-constantinople-lead-{lang}",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 560px, (min-width: 960px) 44vw, calc(100vw - 40px)",
+   "swatches": {
+    "known": "#cb8561",
+    "guessed": "#cb8561"
+   },
+   "narrow": {
+    "stem": "questions-where-was-constantinople-lead-phone-{lang}",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 560
+   }
+  }
+ },
+ "meta": {
+  "title": "Where was Constantinople? Its walls mapped | Museum of Ages",
+  "description": "Constantinople is today's Istanbul. Its walls drawn on today's streets, what still stands, how big it was and how many lived there, known and guessed.",
+  "og_title": "Where was Constantinople?",
+  "og_image_alt": "The question over part of the map made for this page: the land walls and the guessed course of Constantine's wall on today's Istanbul, with Hagia Sophia, the Hippodrome and the Basilica Cistern."
+ },
+ "labels": {
+  "crumbs": "Breadcrumb",
+  "crumb_home": "Museum",
+  "toc": "On this page",
+  "tag_made": "Made for this page",
+  "no_figure": "no figure",
+  "crumb_here": "Where was Constantinople?"
+ },
+ "top": {
+  "h1": "Where was Constantinople?",
+  "answer": [
+   "Constantinople is today's Istanbul in Turkey: the old city filled the peninsula on the European shore between the Golden Horn, the Bosporus and the Sea of Marmara. Its place is certain, because its ",
+   {
+    "text": "land walls",
+    "href": "https://en.wikipedia.org/wiki/Walls_of_Constantinople"
+   },
+   " still cross that peninsula from the Sea of Marmara to the Golden Horn."
+  ],
+  "strength": "Where it lay: known, the walls still stand. How big it was and how many lived there: scholars' estimates.",
+  "slot": {
+   "pic": "lead",
+   "tag": "tag_made",
+   "what": "The walls of Constantinople on the ground of today's Istanbul. Inside the land walls lay about 12 to 14 square kilometres.",
+   "alt": "Map of today's Istanbul with the walls of Constantinople, north at the top: the land walls, solid where they stand, cross the peninsula for about 5.7 kilometres from the Sea of Marmara and run on to the Golden Horn. Constantine's older wall, dashed, lies 1 to 2 kilometres further east. Hagia Sophia, the Hippodrome in today's Sultanahmet Square and the Basilica Cistern stand near the tip. The Harbour of Theodosius at Yenikapı lies inland, on today's map about half a kilometre from the nearest water and about a kilometre from the open sea. The city inside the land walls covered about 12 to 14 square kilometres.",
+   "legend": "picture",
+   "src": [
+    "Map data: ",
+    {
+     "text": "OpenStreetMap",
+     "href": "https://www.openstreetmap.org/copyright"
+    },
+    ", under the ",
+    {
+     "text": "ODbL",
+     "href": "https://opendatacommons.org/licenses/odbl/"
+    },
+    "."
+   ]
+  },
+  "next": {
+   "page": "questions",
+   "text": "More questions, answered with what is known and what is guessed"
+  }
+ },
+ "faq": [
+  {
+   "q": "What is left of Constantinople today?",
+   "a": "A good deal: the land walls, Hagia Sophia and the Basilica Cistern still stand, the Hippodrome survives as a square, and some streets keep their old course."
+  },
+  {
+   "q": "How big was Constantinople?",
+   "a": "Inside its land walls the city covered about 12 to 14 square kilometres, against about 6 inside the older wall of Constantine."
+  },
+  {
+   "q": "How do we know?",
+   "a": "From what still stands, from texts written in and about the city, and from digs."
+  }
+ ],
+ "blocks": [
+  {
+   "type": "text",
+   "id": "what-is-constantinople-called",
+   "nav": "What is Constantinople called today?",
+   "h": "What is Constantinople called today?",
+   "paras": [
+    [
+     "Istanbul, the name Turkish speakers used for centuries before other countries took it up. The name most likely grew out of spoken Greek: \"stin Poli\", \"in the City\", which is how people there spoke of Constantinople. The Ottoman state used both names, Kostantiniyye on coins and in official formulas, İstanbul in everyday speech. Turkey asked other countries to use Istanbul from 1930, two years after it changed from the Arabic to the Latin alphabet, as the ",
+     {
+      "text": "names of Istanbul",
+      "href": "https://en.wikipedia.org/wiki/Names_of_Istanbul"
+     },
+     " article sets out."
+    ],
+    [
+     "Before these names, the town on the site was ",
+     {
+      "text": "Byzantion",
+      "href": "https://en.wikipedia.org/wiki/Byzantium"
+     },
+     ", Byzantium in Latin, founded in the 7th century BC as a colony of the Greek city of Megara. Constantine founded his new city on its site in 324 and inaugurated it on 11 May 330."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "what-is-left-of",
+   "nav": "What is left of Constantinople today?",
+   "h": "What is left of Constantinople today?",
+   "paras": [
+    "A good deal: the land walls, Hagia Sophia and the Basilica Cistern still stand, the Hippodrome survives as a square, and some streets keep their old course.",
+    [
+     "The ",
+     {
+      "text": "land walls",
+      "href": "https://en.wikipedia.org/wiki/Walls_of_Constantinople"
+     },
+     ", built under Theodosius II, run about 5.7 kilometres from the Marble Tower on the Sea of Marmara to the Blachernae quarter, and later walls carry the line on to the Golden Horn. They were a double wall behind a moat: an inner wall about 12 metres high with 96 towers, a lower outer wall, and a moat about 20 metres wide. Stretches have been restored since the 1980s, and in the earthquakes of 1999 restored sections fell while the old wall underneath held."
+    ],
+    "Hagia Sophia was built as a church from 532 to 537, and its dome, rebuilt after it fell in 558, rises 55.6 metres above the floor. It has gone through three changes: a mosque from 1453, a museum from 1935, and a mosque again since July 2020.",
+    "The Hippodrome, the city's racecourse, is today's Sultanahmet Square. Three monuments from the barrier down its middle still stand there: the Obelisk of Theodosius, first set up at Karnak in Egypt about 1490 BC and brought here in 390, the Serpent Column and the Walled Obelisk. Part of its curved south end survives. The Basilica Cistern, about 150 metres southwest of Hagia Sophia, was built in the 6th century: about 138 by 65 metres, with 336 columns, the largest of several hundred ancient cisterns under the city.",
+    [
+     "Parts of the main street, the Mese, survive as today's Divanyolu, and the Augusteion as the square beside Hagia Sophia, Yunus Koç notes in ",
+     {
+      "text": "A History of Istanbul",
+      "href": "https://istanbultarihi.ist/460-the-population-of-constantinople-in-the-byzantine-period"
+     },
+     "."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-big-was-constantinople",
+   "nav": "How big was Constantinople?",
+   "h": "How big was Constantinople?",
+   "paras": [
+    "Inside its land walls the city covered about 12 to 14 square kilometres, against about 6 inside the older wall of Constantine. Sources give 12 or 14 for the larger area, so both stand here.",
+    "Only the west side of the peninsula faced land, so only there did the city need land walls. Along the water ran sea walls, almost 8.5 kilometres beside the Sea of Marmara and 5.6 beside the Golden Horn. The first phase of the land walls was finished in 413, and after an earthquake in 447 the double wall and the moat were completed. Constantine's earlier wall ran 1.5 to 2 kilometres further east. Only its rough course is known, and a stretch of its foundation came to light at Yenikapı in 2018."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-many-people-lived",
+   "nav": "How many people lived in Constantinople?",
+   "h": "How many people lived in Constantinople?",
+   "paras": [
+    [
+     "At its height in the 6th century perhaps 400,000 to 500,000, though some scholars say fewer. No count of the people survives, so every figure is an estimate. In the 8th century, a low point, perhaps 30,000 to 40,000 lived there, and in 1453 well under 50,000. These are the ranges in Yunus Koç's chapter in ",
+     {
+      "text": "A History of Istanbul",
+      "href": "https://istanbultarihi.ist/460-the-population-of-constantinople-in-the-byzantine-period"
+     },
+     ", and he adds that \"all these figures are contested\"."
+    ],
+    "Scholars work back from the grain shipped from Egypt (under Constantine, enough for 80,000 daily rations), the walled area, the houses and churches, the water supply, and the round numbers of chroniclers and visitors, the Western ones \"sometimes exaggerated\", Koç writes. The plague of 542 moves every later figure, and how many it killed is argued, from half the city to a much smaller share."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "know",
+   "nav": "How do we know?",
+   "h": "How do we know?",
+   "paras": [
+    "From what still stands, from texts written in and about the city, and from digs.",
+    [
+     "The walls can be dated closely. A law of 413 in the Codex Theodosianus records the first phase of the land walls as finished, and an inscription found in 1993 says the work took nine years. A list of the city's monuments from about 425, the Notitia urbis Constantinopolitanae, names its regions and buildings. Procopius, who lived through the plague of 542, ",
+     {
+      "text": "gave its dead by the day",
+      "href": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Procopius/Wars/2F*.html"
+     },
+     ". ",
+     {
+      "text": "Alexander van Millingen's survey of 1899",
+      "href": "https://archive.org/details/byzantineconsta00vanm"
+     },
+     " is still cited throughout modern work on the walls."
+    ],
+    [
+     "Building the Marmaray rail tunnel and a metro line at Yenikapı uncovered the Harbour of Theodosius, silted up by the Lycus river and later built over, about 1.5 kilometres inland by the excavators' count of 2010, and more than 30 ships in it, as they reported in ",
+     {
+      "text": "Current World Archaeology",
+      "href": "https://www.world-archaeology.com/features/yenikapi-istanbul/"
+     },
+     "."
+    ],
+    "What stays guessed is the exact course of Constantine's wall, the lost north end of the land walls, the old shore, and every count of people. The map above marks those lines Guessed."
+   ]
+  },
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "The numbers",
+   "h": "The numbers",
+   "unit": "Sources are named as in the list below. Most are encyclopedia articles that cite the scholarly surveys.",
+   "cols": [
+    "Figure",
+    "Value",
+    "Basis",
+    "Known or guessed",
+    "Source"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Byzantium founded",
+      "7th century BC",
+      "ancient writers differ on the year",
+      "Known (the century), Guessed (the year)",
+      "Byzantium"
+     ]
+    },
+    {
+     "cells": [
+      "Land walls, Marmara to Blachernae",
+      "about 5.7 km",
+      "the standing wall",
+      "Known",
+      "Walls of Constantinople"
+     ]
+    },
+    {
+     "cells": [
+      "Area inside the land walls",
+      "about 12 to 14 km²",
+      "sources give 12 or 14",
+      "Guessed",
+      "Constantinople, Konstantinopel"
+     ]
+    },
+    {
+     "cells": [
+      "Area inside Constantine's wall",
+      "about 6 km²",
+      "its course is known only roughly",
+      "Guessed",
+      "Constantinople, Konstantinopel"
+     ]
+    },
+    {
+     "cells": [
+      "Hagia Sophia's dome",
+      "55.6 m above the floor",
+      "measured",
+      "Known",
+      "Hagia Sophia"
+     ]
+    },
+    {
+     "cells": [
+      "Hippodrome",
+      "about 450 by 130 m",
+      "an estimate",
+      "Guessed",
+      "Hippodrome of Constantinople"
+     ]
+    },
+    {
+     "cells": [
+      "Basilica Cistern",
+      "about 138 by 65 m, 336 columns",
+      "measured",
+      "Known",
+      "Basilica Cistern"
+     ]
+    },
+    {
+     "cells": [
+      "People at the 6th-century height",
+      "perhaps 400,000 to 500,000, some scholars say fewer",
+      "grain imports",
+      "Guessed",
+      "Koç"
+     ]
+    },
+    {
+     "cells": [
+      "People at the 8th-century low",
+      "perhaps 30,000 to 40,000",
+      "water supply, ruined walls",
+      "Guessed",
+      "Koç"
+     ]
+    },
+    {
+     "cells": [
+      "People in 1453",
+      "well under 50,000",
+      "eyewitnesses' estimates",
+      "Guessed",
+      "Koç"
+     ]
+    },
+    {
+     "cells": [
+      "Harbour of Theodosius",
+      "about 1.5 km inland (2010)",
+      "the excavators' figure",
+      "Known",
+      "Current World Archaeology"
+     ]
+    },
+    {
+     "cells": [
+      "Ships found at Yenikapı",
+      "more than 30",
+      "the excavators' count",
+      "Known",
+      "Current World Archaeology"
+     ]
+    },
+    {
+     "cells": [
+      "Ottoman conquest",
+      "29 May 1453",
+      "contemporary accounts",
+      "Known",
+      "Constantinople"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "myths",
+   "nav": "Things often read",
+   "h": "Things often read",
+   "subs": [
+    {
+     "h": "\"Constantinople was renamed Istanbul in 1453.\"",
+     "paras": [
+      "The Ottomans used both names for centuries. Other countries took up Istanbul from 1930, when Turkey asked them to."
+     ]
+    },
+    {
+     "h": "\"Istanbul means 'city of Islam'.\"",
+     "paras": [
+      "That was a play on the name, Islambol, \"full of Islam\", which appeared after 1453. İstanbul itself most likely comes from the Greek \"stin Poli\", \"in the City\"."
+     ]
+    },
+    {
+     "h": "\"The walls were never breached before 1453.\"",
+     "paras": [
+      "The Fourth Crusade took the city in 1204, when Venetian troops stormed the sea walls along the Golden Horn."
+     ]
+    },
+    {
+     "h": "\"Constantine built his city on empty ground.\"",
+     "paras": [
+      "Byzantium had stood on the site for close to a thousand years."
+     ]
+    },
+    {
+     "h": "\"Constantine named it New Rome.\"",
+     "paras": [
+      "The name New Rome was in use early, at the Council of 381 for one, but no record shows that Constantine gave it officially. Coins of the 330s call the city Constantinopolis."
+     ]
+    },
+    {
+     "h": "\"The city fell in 1453 because a gate was left open.\"",
+     "paras": [
+      "Only one historian, Doukas, tells of a small gate left open by mistake. The siege had lasted weeks, against a far larger army."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "The facts on this page come from these pages, read on 17 November 2026. Where a page is an encyclopedia article, it names the scholarly works behind it (van Millingen, Janin, Mango, Müller-Wiener).",
+   "read": [
+    {
+     "text": "Alexander van Millingen, Byzantine Constantinople: the walls of the city and adjoining historical sites, London, 1899 (Internet Archive)",
+     "href": "https://archive.org/details/byzantineconsta00vanm"
+    },
+    {
+     "text": "Procopius, History of the Wars, book 2, chapters 22 and 23, on the plague of 542, translated by H. B. Dewing, Loeb Classical Library (LacusCurtius)",
+     "href": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Procopius/Wars/2F*.html"
+    },
+    {
+     "text": "Yunus Koç, \"The Population of Constantinople in the Byzantine Period\", A History of Istanbul",
+     "href": "https://istanbultarihi.ist/460-the-population-of-constantinople-in-the-byzantine-period"
+    },
+    {
+     "text": "Current World Archaeology, issue 41, \"Yenikapi, Istanbul\", 7 May 2010",
+     "href": "https://www.world-archaeology.com/features/yenikapi-istanbul/"
+    },
+    {
+     "text": "Wikipedia, Walls of Constantinople",
+     "href": "https://en.wikipedia.org/wiki/Walls_of_Constantinople"
+    },
+    {
+     "text": "Wikipedia, Constantinople",
+     "href": "https://en.wikipedia.org/wiki/Constantinople"
+    },
+    {
+     "text": "Wikipedia, Konstantinopel (in German)",
+     "href": "https://de.wikipedia.org/wiki/Konstantinopel"
+    },
+    {
+     "text": "Wikipedia, Names of Istanbul",
+     "href": "https://en.wikipedia.org/wiki/Names_of_Istanbul"
+    },
+    {
+     "text": "Wikipedia, Byzantium",
+     "href": "https://en.wikipedia.org/wiki/Byzantium"
+    },
+    {
+     "text": "Wikipedia, Hagia Sophia",
+     "href": "https://en.wikipedia.org/wiki/Hagia_Sophia"
+    },
+    {
+     "text": "Wikipedia, Hippodrome of Constantinople",
+     "href": "https://en.wikipedia.org/wiki/Hippodrome_of_Constantinople"
+    },
+    {
+     "text": "Wikipedia, Basilica Cistern",
+     "href": "https://en.wikipedia.org/wiki/Basilica_Cistern"
+    },
+    {
+     "text": "OpenStreetMap, copyright and licence of the map data",
+     "href": "https://www.openstreetmap.org/copyright"
+    }
+   ],
+   "contact": "If a date, a figure or a sentence is wrong, a message is enough, and we will correct it.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "museum",
+   "id": "museum",
+   "nav": "In the museum",
+   "h": "In the museum",
+   "text": "Museum of Ages is a digital museum. Its {wing} wing shows {place} on {day}.",
+   "link": "To the {wing} wing"
+  }
+ ]
+}

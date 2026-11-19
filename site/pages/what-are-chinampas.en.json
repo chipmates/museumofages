@@ -1,0 +1,491 @@
+{
+ "_note": "AN ANSWER PAGE of the questions shelf, from its words and its picture made for it.",
+ "page": {
+  "id": "questions-what-are-chinampas",
+  "wing": "questions",
+  "topic": "what_are_chinampas",
+  "published": "2026-11-19",
+  "checked": "2026-11-18",
+  "og_image": {
+   "file": "questions-what-are-chinampas-og-{lang}-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "lead": {
+   "stem": "questions-what-are-chinampas-lead-{lang}",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 560px, (min-width: 960px) 44vw, calc(100vw - 40px)",
+   "swatches": {
+    "known": "#cb8561",
+    "guessed": "#cb8561"
+   },
+   "narrow": {
+    "stem": "questions-what-are-chinampas-lead-phone-{lang}",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 560
+   }
+  }
+ },
+ "meta": {
+  "title": "What are chinampas? A field drawn to scale | Museum of Ages",
+  "description": "Fields built up from the lake bed and held by stakes and willows, never afloat. One drawn to scale beside a person, with what is known and what is guessed.",
+  "og_title": "What are chinampas?",
+  "og_image_alt": "The question over the drawing made for this page: one chinampa and its canal cut across, to one scale for width and height, with its layers, its edge stakes and stones and its willows."
+ },
+ "labels": {
+  "crumbs": "Breadcrumb",
+  "crumb_home": "Museum",
+  "toc": "On this page",
+  "tag_made": "Made for this page",
+  "no_figure": "no figure",
+  "crumb_here": "What are chinampas?"
+ },
+ "top": {
+  "h1": "What are chinampas?",
+  "answer": [
+   "Chinampas are fields built up by hand from the bed of shallow lakes in central Mexico: mud and water plants heaped between canals, held by stakes, stones and willows. ",
+   {
+    "text": "Digs",
+    "href": "https://arqueologiamexicana.mx/mexico-antiguo/exploran-chinampas-y-canales-de-un-barrio-de-la-antigua-mexico-tenochtitlan"
+   },
+   " show they never floated, the ",
+   {
+    "text": "oldest known",
+    "href": "https://arqueologiamexicana.mx/mexico-antiguo/la-tecnologia-hidraulica-de-las-chinampas"
+   },
+   " date from AD 900 to 1200, and some are still farmed at ",
+   {
+    "text": "Xochimilco",
+    "href": "https://www.xochimilco.cdmx.gob.mx/wp-content/uploads//2021/12/Proyecto-chinampa-refugio-2021.pdf"
+   },
+   "."
+  ],
+  "strength": "Built up from the lake bed: known from digs. The oldest date: from recent digs, while older work had none securely dated before 1150 to 1350. How much food they grew for Tenochtitlan: guessed, and estimates differ widely.",
+  "slot": {
+   "pic": "lead",
+   "tag": "tag_made",
+   "what": "One chinampa and its canal cut across, to scale, beside a person 1.7 metres tall. At one dig in Mexico City the buried fields were found up to 0.7 metres high.",
+   "alt": "A cross-section drawn to scale. A chinampa 4 metres wide rises about half a metre above the water of a canal 2 metres wide, whose floor lies at most 1 metre below the field's edge. The field is built in layers on the lake bed: a base of peat from the lake bottom, then mats of water plants and mud, with canal mud on top. Stones and wooden stakes hold its edges, and willow trees grow along them. A person 1.7 metres tall stands on the field. A small plan shows the whole plot from above, 30 metres long and 4 metres wide.",
+   "legend": "picture"
+  },
+  "next": {
+   "page": "where-was-tenochtitlan",
+   "label": "Next question:",
+   "text": "Where was Tenochtitlan, and how big was it?"
+  }
+ },
+ "faq": [
+  {
+   "q": "How do we know?",
+   "a": "From digs in the old lake beds, from wills and accounts, and from the chinamperos who still build and farm chinampas."
+  }
+ ],
+ "blocks": [
+  {
+   "type": "text",
+   "id": "how-do-chinampas-work",
+   "nav": "How do chinampas work?",
+   "h": "How do chinampas work?",
+   "paras": [
+    [
+     "A chinampa is built up from the bottom of a shallow lake and farmed on its wet, rich soil. In the method recorded from the 16th century on, farmers cut thick mats of water plants in the marsh, towed them to the plot with a wooden hook and heaped them up with earth and mud, then planted living stakes of ahuejote, a willow, along the edges, ",
+     {
+      "text": "Teresa Rojas Rabiela writes",
+      "href": "https://arqueologiamexicana.mx/indice-tematico-mexico-antiguo/las-chinampas-de-mexico-metodos-constructivos"
+     },
+     ". ",
+     {
+      "text": "INAH's archaeologists",
+      "href": "https://arqueologiamexicana.mx/mexico-antiguo/exploran-chinampas-y-canales-de-un-barrio-de-la-antigua-mexico-tenochtitlan"
+     },
+     " found a similar build in about thirty chinampas three metres below today's ground in central Mexico City, at a place once called Ateponazco: peat from the lake bottom as the base, plant waste above it, stones and willow stakes along the sides. The name comes from the Nahuatl chinampan, \"on the fence of canes or sticks\", ",
+     {
+      "text": "INAH's atlas",
+      "href": "https://deas.inah.gob.mx/pdf/publicaciones/publicaciones/publicacion(39963)-3447.pdf"
+     },
+     " explains."
+    ],
+    "The water does much of the work. The soil stays moist, canal water is at hand when it dries, and the water softens the night frosts, Virginia Popper writes. Seedlings grow in seedbeds before they are planted out, and in the past mud dredged from the canals kept the soil rich. In the most intensive form, crops grow all year round."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "were-chinampas-floating-gardens",
+   "nav": "Were chinampas floating gardens?",
+   "h": "Were chinampas floating gardens?",
+   "paras": [
+    [
+     "No. Each field was built up from the lake bed and held by stakes, stones and trees, as the ",
+     {
+      "text": "dig at Ateponazco",
+      "href": "https://arqueologiamexicana.mx/mexico-antiguo/exploran-chinampas-y-canales-de-un-barrio-de-la-antigua-mexico-tenochtitlan"
+     },
+     " shows. Only the building material floated: thick mats of water plants. In one method that ",
+     {
+      "text": "INAH's atlas",
+      "href": "https://deas.inah.gob.mx/pdf/publicaciones/publicaciones/publicacion(39963)-3447.pdf"
+     },
+     " describes, strips of such a mat were laid where the field was to go and heaped with earth and mud until the heap stood about 2 metres high."
+    ],
+    [
+     "The idea is old. In 1590 the Jesuit José de Acosta described fields in the lake as \"fundadas sobre la propia agua\", founded on the water itself, and told of a movable planted plot, earth spread on sedge and cattails, sown and carried from place to place (",
+     {
+      "text": "his book, in an edition of 1792",
+      "href": "https://archive.org/details/historianaturaly00acos_0"
+     },
+     "). Foreign visitors repeated it for centuries, perhaps misled by the woven reeds along the banks or by small nurseries towed on the lake, ",
+     {
+      "text": "one encyclopedia suggests",
+      "href": "https://www.encyclopedia.com/humanities/encyclopedias-almanacs-transcripts-and-maps/chinampas"
+     },
+     "."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-much-food-did",
+   "nav": "How much food did chinampas grow for Tenochtitlan?",
+   "h": "How much food did chinampas grow for Tenochtitlan?",
+   "paras": [
+    [
+     "Nobody knows. One estimate puts it at half to two thirds of the city's food, and a UNAM page says the fields alone could not feed the growing city. The Mexica, often called the Aztecs, founded Tenochtitlan on islands in Lake Texcoco in 1325, and the city grew on chinampas, ",
+     {
+      "text": "a UNAM history page notes",
+      "href": "https://e1.portalacademico.cch.unam.mx/alumno/historiademexico1/unidad2/culturamexica/mexicotenochtitlan"
+     },
+     ". Most chinampas lay in the southern lakes of Xochimilco and Chalco, whose water came from springs and was fresh."
+    ],
+    [
+     "By Pedro Armillas's reconstruction of 1981, about 9,000 hectares of fields were made there between about 1300 and 1500, and William Sanders reckoned in 1976 that they could feed 117,000 to 200,000 people, both as reported by ",
+     {
+      "text": "Rojas Rabiela",
+      "href": "https://arqueologiamexicana.mx/indice-tematico-mexico-antiguo/las-chinampas-de-mexico-metodos-constructivos"
+     },
+     ". The half to two thirds is Jeffrey Parsons's estimate, as Popper cites him. ",
+     {
+      "text": "Another UNAM page",
+      "href": "https://e1.portalacademico.cch.unam.mx/alumno/historiademexico1/unidad2/culturamexica/economia"
+     },
+     " holds that the fields were not large enough to feed the growing city on their own, so some food had to be brought in, through trade and as tribute."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "where-are-chinampas-still",
+   "nav": "Where are chinampas still farmed today?",
+   "h": "Where are chinampas still farmed today?",
+   "paras": [
+    [
+     "In the south of Mexico City: at Xochimilco, San Gregorio Atlapulco, San Luis Tlaxialtemalco, San Pedro Tláhuac and San Andrés Mixquic, ",
+     {
+      "text": "INAH's atlas lists",
+      "href": "https://deas.inah.gob.mx/pdf/publicaciones/publicaciones/publicacion(39963)-3447.pdf"
+     },
+     ", in the old towns it calls the original peoples (pueblos originarios). Chinamperos and chinamperas farm them with methods handed down by word of mouth, and maize, beans, squash and amaranth still grow there, ",
+     {
+      "text": "Mexico's agriculture ministry writes",
+      "href": "https://www.gob.mx/agricultura/articulos/la-chinampa-un-antiguo-sistema-de-seguridad-alimentaria?idiom=es"
+     },
+     "."
+    ],
+    [
+     "The conquest of 1521 was a break, not the end. In the city itself the fields went out of use within fifty years at most, ",
+     {
+      "text": "the excavator of Ateponazco thinks",
+      "href": "https://arqueologiamexicana.mx/mexico-antiguo/exploran-chinampas-y-canales-de-un-barrio-de-la-antigua-mexico-tenochtitlan"
+     },
+     ", while the lake towns kept theirs: the way of building recorded in the 16th century was still in use in the 19th, ",
+     {
+      "text": "Teresa Rojas Rabiela writes",
+      "href": "https://arqueologiamexicana.mx/indice-tematico-mexico-antiguo/las-chinampas-de-mexico-metodos-constructivos"
+     },
+     "."
+    ],
+    [
+     "A report of ",
+     {
+      "text": "Xochimilco borough",
+      "href": "https://www.xochimilco.cdmx.gob.mx/wp-content/uploads//2021/12/Proyecto-chinampa-refugio-2021.pdf"
+     },
+     " from 2021 counts 18,524 chinampas, 2,824 of them in use. More than a third of those hold greenhouses, pasture, party grounds or football pitches. About half are farmed as chinampas, only 14.4 percent the fully traditional way. Some owners use heavy doses of pesticides and fertilisers, and the growing city presses in, the borough writes. In 2017 the FAO named the chinampa farming of Mexico City a Globally Important Agricultural Heritage System, ",
+     {
+      "text": "Mexico's foreign ministry announced",
+      "href": "https://www.gob.mx/sre/prensa/fao-reconoce-al-sistema-de-chinampas-como-sistema-importante-del-patrimonio-agricola-mundial-sipam?idiom=es"
+     },
+     ". In four phases of the borough's project with UNAM's ecological restoration lab and the chinamperos, more than 3,000 metres of canals were cleaned and 20,000 ahuejotes planted, with 30 refuges for the axolotl."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "know",
+   "nav": "How do we know?",
+   "h": "How do we know?",
+   "paras": [
+    "From digs in the old lake beds, from wills and accounts, and from the chinamperos who still build and farm chinampas.",
+    [
+     "At Ateponazco in 2015, INAH's team under Raúl Barrera Rodríguez mapped plots, canals and furrows. At Xaltocan, in the northern lakes, ",
+     {
+      "text": "Christopher Morehart",
+      "href": "https://arqueologiamexicana.mx/mexico-antiguo/las-chinampas-y-sus-canales"
+     },
+     " mapped buried chinampas from satellite pictures, air photos and digs."
+    ],
+    [
+     "The oldest chinampas known, at Xaltocan, Acatla and Ayotzingo, date from AD 900 to 1200, before Tenochtitlan existed, ",
+     {
+      "text": "Guillermo Acosta Ochoa",
+      "href": "https://arqueologiamexicana.mx/mexico-antiguo/la-tecnologia-hidraulica-de-las-chinampas"
+     },
+     " and his colleagues write. Their great spread coincides with the rise of the Triple Alliance of Tenochtitlan, Texcoco and Tlacopan."
+    ],
+    [
+     "Nahuatl wills from Culhuacan, most written in 1580 and 1581, leave chinampas to heirs, as ",
+     {
+      "text": "their edition by S. L. Cline and Miguel León-Portilla",
+      "href": "https://www.history.ucsb.edu/wp-content/uploads/testaments_of_culhuacan.pdf"
+     },
+     " shows, and in the 18th century, ",
+     {
+      "text": "McClung de Tapia",
+      "href": "https://arqueologiamexicana.mx/mexico-antiguo/la-chinampa-es-de-origen-prehispanico"
+     },
+     " and her colleagues write, Antonio de Alzate gave the first full account of how one is built. What stays open is how much food they grew, when the first were made, and how high the water stood. The drawing above marks the water level, and the other measures it has to guess, dashed."
+    ]
+   ]
+  },
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "The numbers",
+   "h": "The numbers",
+   "unit": "Sources are named as in the list below.",
+   "cols": [
+    "Figure",
+    "Value",
+    "Basis",
+    "Known or guessed",
+    "Source"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "One plot",
+      "2 to 8 m wide, 26 to 36 m long",
+      "dig",
+      "Known",
+      "INAH, Ateponazco"
+     ]
+    },
+    {
+     "cells": [
+      "Height of a plot as found at one dig",
+      "at most 0.7 m",
+      "dig",
+      "Known",
+      "INAH, Ateponazco"
+     ]
+    },
+    {
+     "cells": [
+      "Surface above the water",
+      "about 1 m",
+      "summary of sources",
+      "Guessed",
+      "Popper"
+     ]
+    },
+    {
+     "cells": [
+      "Field canals at Xaltocan",
+      "about 2 m wide, at most 1 m deep from the field's edge as found",
+      "dig",
+      "Known",
+      "Morehart"
+     ]
+    },
+    {
+     "cells": [
+      "Oldest fields",
+      "AD 900 to 1200 (older work: none securely before 1150 to 1350)",
+      "dated sites",
+      "Known",
+      "Acosta Ochoa and others, and Popper"
+     ]
+    },
+    {
+     "cells": [
+      "Fields in the southern lakes, about 1300 to 1500",
+      "about 9,000 ha",
+      "reconstruction",
+      "Guessed",
+      "Armillas, reported by Rojas Rabiela"
+     ]
+    },
+    {
+     "cells": [
+      "People those fields could feed",
+      "117,000 to 200,000",
+      "calculation",
+      "Guessed",
+      "Sanders, reported by Rojas Rabiela"
+     ]
+    },
+    {
+     "cells": [
+      "Share of the city's food",
+      "half to two thirds (Parsons), not enough alone, with some food brought in (UNAM)",
+      "estimates",
+      "Guessed",
+      "Parsons, as cited by Popper, and UNAM"
+     ]
+    },
+    {
+     "cells": [
+      "People in Tenochtitlan",
+      "150,000 to 200,000 (Popper), about 150,000 (UNAM)",
+      "estimates",
+      "Guessed",
+      "Popper and UNAM"
+     ]
+    },
+    {
+     "cells": [
+      "Chinampas in Xochimilco borough, report of 2021",
+      "18,524, of them 2,824 in use",
+      "count",
+      "Known",
+      "Alcaldía Xochimilco"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "myths",
+   "nav": "Things often read",
+   "h": "Things often read",
+   "subs": [
+    {
+     "h": "\"Chinampas are floating gardens.\"",
+     "paras": [
+      "They were built up from the lake bed and held by stakes, stones and trees."
+     ]
+    },
+    {
+     "h": "\"Chinampas are the boats of Xochimilco.\"",
+     "paras": [
+      "The boats that carry visitors along the canals are trajineras. Chinampas are the fields beside them."
+     ]
+    },
+    {
+     "h": "\"The Aztecs invented chinampas.\"",
+     "paras": [
+      "The oldest known fields are older than Tenochtitlan. In the time of the Mexica and their allies they spread over most of the lakes."
+     ]
+    },
+    {
+     "h": "\"Chinampas fed the whole city.\"",
+     "paras": [
+      "Estimates run up to two thirds of its food, and trade and tribute brought food as well."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "The facts on this page come from these pages, read on 18 November 2026. Quotes in Spanish are given with our English after them.",
+   "read": [
+    {
+     "text": "INAH (Instituto Nacional de Antropología e Historia, Mexico's national institute of anthropology and history), \"Exploran chinampas y canales de un barrio de la antigua México-Tenochtitlan\", on the rescue dig of 2015 at Ateponazco led by Raúl Barrera Rodríguez, reprinted by Arqueología Mexicana (in Spanish)",
+     "href": "https://arqueologiamexicana.mx/mexico-antiguo/exploran-chinampas-y-canales-de-un-barrio-de-la-antigua-mexico-tenochtitlan"
+    },
+    {
+     "text": "Teresa Rojas Rabiela, \"Las chinampas de México: métodos constructivos\", Arqueología Mexicana 4, 1993, an excerpt (in Spanish)",
+     "href": "https://arqueologiamexicana.mx/indice-tematico-mexico-antiguo/las-chinampas-de-mexico-metodos-constructivos"
+    },
+    {
+     "text": "Guillermo Acosta Ochoa and others, \"Chinampas arqueológicas. Historia de una tecnología hidráulica\", Arqueología Mexicana 184, 2024, an excerpt (in Spanish)",
+     "href": "https://arqueologiamexicana.mx/mexico-antiguo/la-tecnologia-hidraulica-de-las-chinampas"
+    },
+    {
+     "text": "Emily McClung de Tapia and others, \"La tierra dentro del agua. Las chinampas desde la época prehispánica hasta nuestros días\", Arqueología Mexicana 184, 2024, an excerpt (in Spanish)",
+     "href": "https://arqueologiamexicana.mx/mexico-antiguo/la-chinampa-es-de-origen-prehispanico"
+    },
+    {
+     "text": "Christopher T. Morehart, \"La ecología política del paisaje chinampero de Xaltocan\", Arqueología Mexicana 184, 2024, an excerpt (in Spanish)",
+     "href": "https://arqueologiamexicana.mx/mexico-antiguo/las-chinampas-y-sus-canales"
+    },
+    {
+     "text": "Virginia Popper, \"Investigating Chinampa Farming\", Backdirt, newsletter of the Institute of Archaeology, UCLA, Fall/Winter 2000, pages 1 and 4 to 5 (no public copy linked)"
+    },
+    {
+     "text": "INAH, Los pueblos originarios de la Ciudad de México. Atlas etnográfico, 2007, the chapter \"Chinampas: entre apantles y acalotes\" by José Genovevo Pérez Espinosa (PDF, in Spanish)",
+     "href": "https://deas.inah.gob.mx/pdf/publicaciones/publicaciones/publicacion(39963)-3447.pdf"
+    },
+    {
+     "text": "Alcaldía Xochimilco, \"Conservación y reactivación de la zona chinampera de Xochimilco\", fifth phase, 2021 (PDF, in Spanish)",
+     "href": "https://www.xochimilco.cdmx.gob.mx/wp-content/uploads//2021/12/Proyecto-chinampa-refugio-2021.pdf"
+    },
+    {
+     "text": "Secretaría de Relaciones Exteriores, communiqué 271, 12 July 2017 (in Spanish)",
+     "href": "https://www.gob.mx/sre/prensa/fao-reconoce-al-sistema-de-chinampas-como-sistema-importante-del-patrimonio-agricola-mundial-sipam?idiom=es"
+    },
+    {
+     "text": "Secretaría de Agricultura y Desarrollo Rural, \"La chinampa, un antiguo sistema de seguridad alimentaria\", 19 June 2020 (in Spanish)",
+     "href": "https://www.gob.mx/agricultura/articulos/la-chinampa-un-antiguo-sistema-de-seguridad-alimentaria?idiom=es"
+    },
+    {
+     "text": "UNAM (Universidad Nacional Autónoma de México), CCH Portal Académico, \"México-Tenochtitlan\" (in Spanish)",
+     "href": "https://e1.portalacademico.cch.unam.mx/alumno/historiademexico1/unidad2/culturamexica/mexicotenochtitlan"
+    },
+    {
+     "text": "UNAM, CCH Portal Académico, \"Economía mexica\" (in Spanish)",
+     "href": "https://e1.portalacademico.cch.unam.mx/alumno/historiademexico1/unidad2/culturamexica/economia"
+    },
+    {
+     "text": "S. L. Cline and Miguel León-Portilla, eds., The Testaments of Culhuacan, UCLA Latin American Center, 1984, a corrected draft on the website of the history department of UC Santa Barbara (PDF, Nahuatl and English)",
+     "href": "https://www.history.ucsb.edu/wp-content/uploads/testaments_of_culhuacan.pdf"
+    },
+    {
+     "text": "Clara Ramírez and Claudia Llanos, eds., Testamentos de mujeres indígenas culhuacanas, siglo XVI, translated by Sofía Torres Jiménez, UNAM, IISUE, 2020 (PDF, Nahuatl and Spanish)",
+     "href": "https://iisue.unam.mx/publicaciones/descargas/testamentos-de-mujeres-indigenas-culhuacanas-siglo-xvi.pdf"
+    },
+    {
+     "text": "Stephanie Wood, \"Chinampas\", Encyclopedia of Latin American History and Culture, on Encyclopedia.com",
+     "href": "https://www.encyclopedia.com/humanities/encyclopedias-almanacs-transcripts-and-maps/chinampas"
+    },
+    {
+     "text": "José de Acosta, Historia natural y moral de las Indias, 1590, the sixth edition, Madrid, 1792, book 3, page 153, and book 7, page 168 (Internet Archive, in Spanish)",
+     "href": "https://archive.org/details/historianaturaly00acos_0"
+    }
+   ],
+   "contact": "If a date, a figure or a sentence is wrong, a message is enough, and we will correct it.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "museum",
+   "id": "museum",
+   "nav": "In the museum",
+   "h": "In the museum",
+   "text": "Museum of Ages is a digital museum. Its {wing} wing shows {place} on {day}.",
+   "link": "To the {wing} wing"
+  }
+ ]
+}

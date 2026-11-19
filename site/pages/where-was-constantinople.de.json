@@ -1,0 +1,463 @@
+{
+ "_note": "AN ANSWER PAGE of the questions shelf, from its words and its picture made for it.",
+ "page": {
+  "id": "questions-where-was-constantinople",
+  "wing": "questions",
+  "topic": "where_was_constantinople",
+  "published": "2026-11-19",
+  "checked": "2026-11-17",
+  "og_image": {
+   "file": "questions-where-was-constantinople-og-{lang}-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "lead": {
+   "stem": "questions-where-was-constantinople-lead-{lang}",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 560px, (min-width: 960px) 44vw, calc(100vw - 40px)",
+   "swatches": {
+    "known": "#cb8561",
+    "guessed": "#cb8561"
+   },
+   "narrow": {
+    "stem": "questions-where-was-constantinople-lead-phone-{lang}",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 560
+   }
+  }
+ },
+ "meta": {
+  "title": "Konstantinopel heute: Wo lag die Stadt? | Museum of Ages",
+  "description": "Konstantinopel ist das heutige Istanbul. Die Karte zeigt die Mauern auf den Straßen von heute: was noch steht, was verloren ist, wie viele dort lebten.",
+  "og_title": "Konstantinopel heute: Wo lag die Stadt?",
+  "og_image_alt": "Die Frage über einem Ausschnitt der Karte zu dieser Seite: die Landmauern und der vermutete Verlauf der Mauer Konstantins im heutigen Istanbul, mit Hagia Sophia, Hippodrom und Basilika-Zisterne."
+ },
+ "labels": {
+  "crumbs": "Seitenpfad",
+  "crumb_home": "Museum",
+  "toc": "Auf dieser Seite",
+  "tag_made": "Für diese Seite gemacht",
+  "no_figure": "keine Zahl",
+  "crumb_here": "Konstantinopel heute"
+ },
+ "top": {
+  "h1": "Konstantinopel heute: Wo lag die Stadt?",
+  "answer": [
+   "Konstantinopel ist das heutige Istanbul in der Türkei: Die alte Stadt füllte die Halbinsel am europäischen Ufer zwischen Goldenem Horn, Bosporus und Marmarameer. Wo sie lag, ist sicher, denn ihre ",
+   {
+    "text": "Landmauern",
+    "href": "https://en.wikipedia.org/wiki/Walls_of_Constantinople"
+   },
+   " ziehen sich bis heute quer über die Halbinsel, vom Marmarameer bis zum Goldenen Horn."
+  ],
+  "strength": "Wo die Stadt lag: belegt, die Mauern stehen noch. Wie groß sie war und wie viele dort lebten: Schätzungen der Forschung.",
+  "slot": {
+   "pic": "lead",
+   "tag": "tag_made",
+   "what": "Die Mauern von Konstantinopel auf dem Boden des heutigen Istanbul. Innerhalb der Landmauern lagen etwa 12 bis 14 Quadratkilometer.",
+   "alt": "Karte des heutigen Istanbul mit den Mauern von Konstantinopel, Norden oben: Die Landmauern, durchgezogen, wo sie stehen, queren die Halbinsel auf etwa 5,7 Kilometern vom Marmarameer aus und führen weiter bis zum Goldenen Horn. Die ältere Mauer Konstantins, gestrichelt, liegt 1 bis 2 Kilometer weiter östlich. Hagia Sophia, das Hippodrom auf dem heutigen Sultanahmet-Platz und die Basilika-Zisterne liegen nahe der Spitze. Der Hafen des Theodosius bei Yenikapı liegt landeinwärts, auf der heutigen Karte etwa einen halben Kilometer vom nächsten Wasser und etwa einen Kilometer vom offenen Meer. Die Stadt innerhalb der Landmauern umfasste etwa 12 bis 14 Quadratkilometer.",
+   "legend": "picture",
+   "src": [
+    "Kartendaten: ",
+    {
+     "text": "OpenStreetMap",
+     "href": "https://www.openstreetmap.org/copyright"
+    },
+    ", unter der ",
+    {
+     "text": "ODbL",
+     "href": "https://opendatacommons.org/licenses/odbl/"
+    },
+    "."
+   ]
+  },
+  "next": {
+   "page": "questions",
+   "text": "Weitere Fragen, beantwortet mit dem, was belegt ist und was wir vermuten"
+  }
+ },
+ "faq": [
+  {
+   "q": "Was ist von Konstantinopel noch zu sehen?",
+   "a": "Eine ganze Menge: Die Landmauern, die Hagia Sophia und die Basilika-Zisterne stehen noch, das Hippodrom lebt als Platz fort, und manche Straßen folgen ihrem alten Lauf."
+  },
+  {
+   "q": "Wie groß war Konstantinopel?",
+   "a": "Innerhalb der Landmauern umfasste die Stadt etwa 12 bis 14 Quadratkilometer, rund doppelt so viel wie die etwa 6 innerhalb der älteren Mauer Konstantins."
+  },
+  {
+   "q": "Woher wissen wir das?",
+   "a": "Aus dem, was noch steht, aus Texten, die in der Stadt und über sie geschrieben wurden, und aus Grabungen."
+  }
+ ],
+ "blocks": [
+  {
+   "type": "text",
+   "id": "what-is-constantinople-called",
+   "nav": "Wie heißt Konstantinopel heute?",
+   "h": "Wie heißt Konstantinopel heute?",
+   "paras": [
+    [
+     "Istanbul. So nannten Türkischsprachige die Stadt schon Jahrhunderte, bevor das Ausland den Namen übernahm. Er geht sehr wahrscheinlich auf gesprochenes Griechisch zurück: „stin Poli“, „in der Stadt“, so sprach man dort von Konstantinopel. Das Osmanische Reich gebrauchte beide Namen, Kostantiniyye auf Münzen und in amtlichen Formeln, İstanbul im Alltag. Ab 1930 bat die Türkei andere Staaten, den Namen Istanbul zu verwenden, zwei Jahre nachdem sie von der arabischen zur lateinischen Schrift gewechselt hatte. So steht es im Artikel über die ",
+     {
+      "text": "Namen Istanbuls",
+      "href": "https://en.wikipedia.org/wiki/Names_of_Istanbul"
+     },
+     " in der englischen Wikipedia."
+    ],
+    [
+     "Vor all diesen Namen stand hier ",
+     {
+      "text": "Byzantion",
+      "href": "https://en.wikipedia.org/wiki/Byzantium"
+     },
+     ", lateinisch Byzantium, im 7. Jahrhundert v. Chr. als Kolonie der griechischen Stadt Megara gegründet. An seiner Stelle gründete Konstantin 324 seine neue Stadt und weihte sie am 11. Mai 330 ein."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "what-is-left-of",
+   "nav": "Was ist von Konstantinopel noch zu sehen?",
+   "h": "Was ist von Konstantinopel noch zu sehen?",
+   "paras": [
+    "Eine ganze Menge: Die Landmauern, die Hagia Sophia und die Basilika-Zisterne stehen noch, das Hippodrom lebt als Platz fort, und manche Straßen folgen ihrem alten Lauf.",
+    [
+     "Die ",
+     {
+      "text": "Landmauern",
+      "href": "https://en.wikipedia.org/wiki/Walls_of_Constantinople"
+     },
+     ", unter Theodosius II. errichtet, ziehen sich etwa 5,7 Kilometer weit vom Marmorturm am Marmarameer bis zum Viertel Blachernae, und jüngere Mauern führen die Linie weiter bis zum Goldenen Horn. Es war eine doppelte Mauer hinter einem Graben: innen eine Mauer von etwa 12 Metern Höhe mit 96 Türmen, davor eine niedrigere Außenmauer und ein Graben von etwa 20 Metern Breite. Seit den 1980er-Jahren wurden Abschnitte restauriert, und bei den Erdbeben von 1999 stürzten restaurierte Teile ein, während die alte Mauer darunter hielt."
+    ],
+    "Die Hagia Sophia wurde von 532 bis 537 als Kirche gebaut, und ihre Kuppel, nach dem Einsturz von 558 neu errichtet, reicht 55,6 Meter über den Boden. Seither wechselte sie dreimal: ab 1453 eine Moschee, ab 1935 ein Museum und seit Juli 2020 wieder eine Moschee.",
+    "Das Hippodrom, die Rennbahn der Stadt, ist der heutige Sultanahmet-Platz. Von der Barriere in seiner Mitte stehen dort noch drei Monumente: der Obelisk des Theodosius, um 1490 v. Chr. in Karnak in Ägypten aufgestellt und 390 hierher gebracht, die Schlangensäule und der gemauerte Obelisk. Ein Teil des runden Südendes ist erhalten. Die Basilika-Zisterne, türkisch Yerebatan Sarnıcı, etwa 150 Meter südwestlich der Hagia Sophia, entstand im 6. Jahrhundert: etwa 138 mal 65 Meter groß, mit 336 Säulen, die größte von mehreren hundert antiken Zisternen unter der Stadt.",
+    [
+     "Teile der Hauptstraße, der Mese, leben in der heutigen Divanyolu fort, das Augusteion im Platz neben der Hagia Sophia, schreibt Yunus Koç in ",
+     {
+      "text": "A History of Istanbul",
+      "href": "https://istanbultarihi.ist/460-the-population-of-constantinople-in-the-byzantine-period"
+     },
+     ", einem Nachschlagewerk zur Stadtgeschichte."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-big-was-constantinople",
+   "nav": "Wie groß war Konstantinopel?",
+   "h": "Wie groß war Konstantinopel?",
+   "paras": [
+    "Innerhalb der Landmauern umfasste die Stadt etwa 12 bis 14 Quadratkilometer, rund doppelt so viel wie die etwa 6 innerhalb der älteren Mauer Konstantins. Für die größere Fläche nennen die Quellen 12 oder 14, darum stehen hier beide Zahlen.",
+    "Nur im Westen grenzte die Halbinsel an Land, und nur dort brauchte die Stadt Landmauern. Am Wasser liefen Seemauern, fast 8,5 Kilometer am Marmarameer und 5,6 am Goldenen Horn. Der erste Bauabschnitt der Landmauern war 413 fertig, und nach einem Erdbeben 447 wurden Doppelmauer und Graben vollendet. Die frühere Mauer Konstantins lag 1,5 bis 2 Kilometer weiter östlich. Ihr Verlauf ist nur ungefähr bekannt, und 2018 kam bei Yenikapı ein Stück ihres Fundaments zutage."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-many-people-lived",
+   "nav": "Wie viele Menschen lebten in Konstantinopel?",
+   "h": "Wie viele Menschen lebten in Konstantinopel?",
+   "paras": [
+    [
+     "Zur Blütezeit im 6. Jahrhundert vielleicht 400.000 bis 500.000, manche Forscher sagen: weniger. Eine Zählung der Einwohner ist nicht erhalten, jede Zahl ist also eine Schätzung. Im 8. Jahrhundert, an einem Tiefpunkt, lebten dort vielleicht 30.000 bis 40.000 Menschen, 1453 deutlich unter 50.000. Das sind die Spannen in Yunus Koçs Kapitel in ",
+     {
+      "text": "A History of Istanbul",
+      "href": "https://istanbultarihi.ist/460-the-population-of-constantinople-in-the-byzantine-period"
+     },
+     ", und er fügt hinzu, dass alle diese Zahlen umstritten sind."
+    ],
+    "Die Forschung rechnet zurück: vom Getreide, das aus Ägypten kam (unter Konstantin genug für 80.000 Tagesrationen), von der ummauerten Fläche, von Häusern, Kirchen und Wasserversorgung, und von den runden Zahlen der Chronisten und Reisenden, die westlichen manchmal übertrieben, wie Koç schreibt. Die Pest von 542 verschiebt jede spätere Zahl, und wie viele sie tötete, ist umstritten, von der halben Stadt bis zu einem weit kleineren Teil."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "know",
+   "nav": "Woher wissen wir das?",
+   "h": "Woher wissen wir das?",
+   "paras": [
+    "Aus dem, was noch steht, aus Texten, die in der Stadt und über sie geschrieben wurden, und aus Grabungen.",
+    [
+     "Die Mauern lassen sich genau datieren. Laut einem Gesetz von 413 im Codex Theodosianus war der erste Bauabschnitt der Landmauern fertig, und eine 1993 gefundene Inschrift sagt, die Arbeit habe neun Jahre gedauert. Ein Verzeichnis der Bauten der Stadt aus der Zeit um 425, die Notitia urbis Constantinopolitanae, nennt ihre Bezirke und Gebäude. Prokop, der die Pest von 542 miterlebte, gab ",
+     {
+      "text": "die Zahl ihrer Toten",
+      "href": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Procopius/Wars/2F*.html"
+     },
+     " Tag für Tag an. ",
+     {
+      "text": "Alexander van Millingens Vermessung von 1899",
+      "href": "https://archive.org/details/byzantineconsta00vanm"
+     },
+     " wird bis heute in der Forschung zu den Mauern zitiert."
+    ],
+    [
+     "Beim Bau des Marmaray-Bahntunnels und einer Metrolinie kam bei Yenikapı der Hafen des Theodosius ans Licht. Der Fluss Lykos hatte ihn verlanden lassen, später wurde das Land bebaut, und 2010 lag er nach der Zählung der Ausgräber etwa 1,5 Kilometer landeinwärts. Mehr als 30 Schiffe fanden sich darin, wie sie in ",
+     {
+      "text": "Current World Archaeology",
+      "href": "https://www.world-archaeology.com/features/yenikapi-istanbul/"
+     },
+     " berichteten."
+    ],
+    "Vermutet bleiben der genaue Verlauf der Mauer Konstantins, das verlorene Nordende der Landmauern, das alte Ufer und jede Einwohnerzahl. Die Karte oben kennzeichnet diese Linien als vermutet."
+   ]
+  },
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Die Zahlen",
+   "h": "Die Zahlen",
+   "unit": "Die Quellen heißen wie in der Liste unten. Die meisten sind Lexikonartikel, die sich auf die Forschung stützen.",
+   "cols": [
+    "Zahl",
+    "Wert",
+    "Grundlage",
+    "Belegt oder vermutet",
+    "Quelle"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Gründung von Byzantion",
+      "7. Jahrhundert v. Chr.",
+      "antike Autoren nennen verschiedene Jahre",
+      "belegt (das Jahrhundert), vermutet (das Jahr)",
+      "Byzantium"
+     ]
+    },
+    {
+     "cells": [
+      "Landmauern, Marmarameer bis Blachernae",
+      "etwa 5,7 km",
+      "die stehende Mauer",
+      "belegt",
+      "Walls of Constantinople"
+     ]
+    },
+    {
+     "cells": [
+      "Fläche innerhalb der Landmauern",
+      "etwa 12 bis 14 km²",
+      "die Quellen nennen 12 oder 14",
+      "vermutet",
+      "Konstantinopel, Constantinople"
+     ]
+    },
+    {
+     "cells": [
+      "Fläche innerhalb der Mauer Konstantins",
+      "etwa 6 km²",
+      "ihr Verlauf ist nur ungefähr bekannt",
+      "vermutet",
+      "Konstantinopel, Constantinople"
+     ]
+    },
+    {
+     "cells": [
+      "Kuppel der Hagia Sophia",
+      "55,6 m über dem Boden",
+      "gemessen",
+      "belegt",
+      "Hagia Sophia"
+     ]
+    },
+    {
+     "cells": [
+      "Hippodrom",
+      "etwa 450 mal 130 m",
+      "geschätzt",
+      "vermutet",
+      "Hippodrome of Constantinople"
+     ]
+    },
+    {
+     "cells": [
+      "Basilika-Zisterne",
+      "etwa 138 mal 65 m, 336 Säulen",
+      "gemessen",
+      "belegt",
+      "Basilica Cistern"
+     ]
+    },
+    {
+     "cells": [
+      "Einwohner zur Blütezeit im 6. Jahrhundert",
+      "vielleicht 400.000 bis 500.000, manche sagen weniger",
+      "Getreideeinfuhr",
+      "vermutet",
+      "Koç"
+     ]
+    },
+    {
+     "cells": [
+      "Einwohner im Tiefpunkt des 8. Jahrhunderts",
+      "vielleicht 30.000 bis 40.000",
+      "Wasserversorgung, verfallene Mauern",
+      "vermutet",
+      "Koç"
+     ]
+    },
+    {
+     "cells": [
+      "Einwohner 1453",
+      "deutlich unter 50.000",
+      "Schätzungen von Augenzeugen",
+      "vermutet",
+      "Koç"
+     ]
+    },
+    {
+     "cells": [
+      "Hafen des Theodosius",
+      "etwa 1,5 km landeinwärts (2010)",
+      "Angabe der Ausgräber",
+      "belegt",
+      "Current World Archaeology"
+     ]
+    },
+    {
+     "cells": [
+      "Schiffe aus Yenikapı",
+      "mehr als 30",
+      "gezählt von den Ausgräbern",
+      "belegt",
+      "Current World Archaeology"
+     ]
+    },
+    {
+     "cells": [
+      "Eroberung durch die Osmanen",
+      "29. Mai 1453",
+      "zeitgenössische Berichte",
+      "belegt",
+      "Constantinople"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "myths",
+   "nav": "Was man oft liest",
+   "h": "Was man oft liest",
+   "subs": [
+    {
+     "h": "„Konstantinopel wurde 1453 in Istanbul umbenannt.“",
+     "paras": [
+      "Die Osmanen gebrauchten beide Namen über Jahrhunderte. Andere Länder übernahmen Istanbul ab 1930, als die Türkei sie darum bat."
+     ]
+    },
+    {
+     "h": "„Istanbul heißt ‚Stadt des Islam‘.“",
+     "paras": [
+      "Das war ein Wortspiel mit dem Namen, Islambol, „voll des Islam“, das nach 1453 aufkam. İstanbul selbst stammt sehr wahrscheinlich vom griechischen „stin Poli“, „in der Stadt“."
+     ]
+    },
+    {
+     "h": "„Vor 1453 wurden die Mauern nie überwunden.“",
+     "paras": [
+      "Der Vierte Kreuzzug nahm die Stadt 1204 ein, als venezianische Truppen die Seemauern am Goldenen Horn stürmten."
+     ]
+    },
+    {
+     "h": "„Konstantin baute seine Stadt auf leerem Land.“",
+     "paras": [
+      "Byzantion stand dort schon fast tausend Jahre."
+     ]
+    },
+    {
+     "h": "„Konstantin nannte sie Neues Rom.“",
+     "paras": [
+      "Der Name Neues Rom war früh in Gebrauch, etwa beim Konzil von 381, doch kein Beleg zeigt, dass Konstantin ihn amtlich vergab. Münzen der 330er-Jahre nennen die Stadt Constantinopolis."
+     ]
+    },
+    {
+     "h": "„Die Stadt fiel 1453, weil ein Tor offen stand.“",
+     "paras": [
+      "Nur ein einziger Geschichtsschreiber, Dukas, erzählt von einer kleinen Pforte, die versehentlich offen blieb. Die Belagerung hatte da schon Wochen gedauert, gegen ein weit größeres Heer."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Quellen",
+   "h": "Quellen",
+   "intro": "Die Angaben dieser Seite stammen aus diesen Seiten, gelesen am 17. November 2026. Die Lexikonartikel nennen die Forschungswerke, auf die sie sich stützen (van Millingen, Janin, Mango, Müller-Wiener).",
+   "read": [
+    {
+     "text": "Alexander van Millingen, Byzantine Constantinople: the walls of the city and adjoining historical sites, London 1899 (englisch, Internet Archive)",
+     "href": "https://archive.org/details/byzantineconsta00vanm"
+    },
+    {
+     "text": "Prokop, Kriege, Buch 2, Kapitel 22 und 23, zur Pest von 542, übersetzt von H. B. Dewing, Loeb Classical Library (englisch, LacusCurtius)",
+     "href": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Procopius/Wars/2F*.html"
+    },
+    {
+     "text": "Yunus Koç, „The Population of Constantinople in the Byzantine Period“, in: A History of Istanbul (englisch)",
+     "href": "https://istanbultarihi.ist/460-the-population-of-constantinople-in-the-byzantine-period"
+    },
+    {
+     "text": "Current World Archaeology, Heft 41, „Yenikapi, Istanbul“, 7. Mai 2010 (englisch)",
+     "href": "https://www.world-archaeology.com/features/yenikapi-istanbul/"
+    },
+    {
+     "text": "Wikipedia, Konstantinopel",
+     "href": "https://de.wikipedia.org/wiki/Konstantinopel"
+    },
+    {
+     "text": "Wikipedia, Walls of Constantinople (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Walls_of_Constantinople"
+    },
+    {
+     "text": "Wikipedia, Constantinople (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Constantinople"
+    },
+    {
+     "text": "Wikipedia, Names of Istanbul (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Names_of_Istanbul"
+    },
+    {
+     "text": "Wikipedia, Byzantium (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Byzantium"
+    },
+    {
+     "text": "Wikipedia, Hagia Sophia (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Hagia_Sophia"
+    },
+    {
+     "text": "Wikipedia, Hippodrome of Constantinople (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Hippodrome_of_Constantinople"
+    },
+    {
+     "text": "Wikipedia, Basilica Cistern (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Basilica_Cistern"
+    },
+    {
+     "text": "OpenStreetMap, Urheberrecht und Lizenz der Kartendaten",
+     "href": "https://www.openstreetmap.org/copyright"
+    }
+   ],
+   "contact": "Ist ein Datum, eine Zahl oder ein Satz falsch, genügt eine Nachricht, und wir korrigieren es.",
+   "contact_link": "Zum Impressum",
+   "what_link": "Was dieses Museum ist"
+  },
+  {
+   "type": "museum",
+   "id": "museum",
+   "nav": "Im Museum",
+   "h": "Im Museum",
+   "text": "Museum of Ages ist ein digitales Museum. Der Flügel {wing} zeigt {place} am {day}.",
+   "link": "Zum Flügel {wing}"
+  }
+ ]
+}

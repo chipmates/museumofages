@@ -13,7 +13,7 @@ import { LANGUAGES, PAGE_KINDS, WING_STOPS } from './lists.js'
 
 export const HOLDS = Object.freeze(['upright', 'sideways', 'wide'])
 export const LOOKS = Object.freeze(['painting', 'machine', 'sheet', 'book', 'film', 'place'])
-export const DOORS = Object.freeze(['top', 'item', 'end'])
+export const DOORS = Object.freeze(['top', 'item', 'end', 'still'])
 export const DEVICES = Object.freeze(['phone', 'tablet', 'desktop'])
 
 // Each step's fields: the ones it needs, and the source word where it may carry one.

@@ -1,0 +1,527 @@
+{
+ "_note": "AN ANSWER PAGE of the questions shelf, from its words and its picture made for it.",
+ "page": {
+  "id": "questions-how-many-died-in-pompeii",
+  "wing": "questions",
+  "topic": "how_many_died_in_pompeii",
+  "published": "2026-11-19",
+  "checked": "2026-11-17",
+  "og_image": {
+   "file": "questions-how-many-died-in-pompeii-og-{lang}-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "lead": {
+   "stem": "questions-how-many-died-in-pompeii-lead-{lang}",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 560px, (min-width: 960px) 44vw, calc(100vw - 40px)",
+   "swatches": {
+    "known": "#c8cddd",
+    "guessed": "#c8cddd"
+   },
+   "narrow": {
+    "stem": "questions-how-many-died-in-pompeii-lead-phone-{lang}",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 560
+   }
+  }
+ },
+ "meta": {
+  "title": "Wie viele Menschen starben in Pompeji? | Museum of Ages",
+  "description": "Rund 2.000 Tote innerhalb der Mauern, schätzt der Archäologische Park, die meisten Einwohner waren fort. Die Zahlen im selben Maßstab gezeichnet.",
+  "og_title": "Wie viele Menschen starben in Pompeji, und wer überlebte?",
+  "og_image_alt": "Die Frage über dem Diagramm zu dieser Seite: die Einwohner von Pompeji, wohl 11.000 bis 20.000, neben rund 2.000 Toten innerhalb der Mauern und den 1.044 bis 2003 gezählten, im selben Maßstab."
+ },
+ "labels": {
+  "crumbs": "Seitenpfad",
+  "crumb_home": "Museum",
+  "toc": "Auf dieser Seite",
+  "tag_made": "Für diese Seite gemacht",
+  "no_figure": "keine Zahl",
+  "crumb_here": "Pompeji: Tote und Überlebende"
+ },
+ "top": {
+  "h1": "Wie viele Menschen starben in Pompeji, und wer überlebte?",
+  "answer": [
+   "Rund 2.000 Menschen starben innerhalb der Mauern von Pompeji, ",
+   {
+    "text": "schätzt der Archäologische Park",
+    "href": "https://pompeiisites.org/wp-content/uploads/E-Journal_4_2026-Il-rinvenimento-di-due-vittime-delleruzione-fuori-porta-Stabia-a-Pompei-prime-analisi-antropologiche-e-archeologiche.pdf"
+   },
+   ", und die Überreste von mehr als 1.000 wurden bisher gefunden. Die Stadt hatte wohl ",
+   {
+    "text": "11.000",
+    "href": "https://en.wikipedia.org/wiki/Pompeii"
+   },
+   " bis ",
+   {
+    "text": "20.000",
+    "href": "https://pompeiisites.org/wp-content/uploads/E-Journal_4_2026-Il-rinvenimento-di-due-vittime-delleruzione-fuori-porta-Stabia-a-Pompei-prime-analisi-antropologiche-e-archeologiche.pdf"
+   },
+   " Einwohner, also hatten die meisten sie verlassen, und ",
+   {
+    "text": "Steven Tuck",
+    "href": "https://www.livescience.com/archaeology/romans/people-made-it-out-of-the-cities-alive-tracing-the-survivors-of-pompeii-and-herculaneum-2-000-years-after-vesuvius-erupted"
+   },
+   " hat mindestens 172 Überlebende mit Namen aufgespürt."
+  ],
+  "strength": "Gefundene Tote: von den Ausgräbern gezählt. Tote innerhalb der Mauern und Einwohner: Schätzungen. Tote außerhalb der Stadt: unbekannt.",
+  "slot": {
+   "pic": "lead",
+   "tag": "tag_made",
+   "what": "Die Einwohner von Pompeji und die in der Stadt gefundenen Toten, im selben Maßstab. Wie viele unterwegs und an der Küste starben, weiß niemand.",
+   "alt": "Ein Balkendiagramm im selben Maßstab. Die Einwohner von Pompeji, wohl 11.000 bis 20.000, gestrichelt als Schätzung. Die Toten innerhalb der Mauern, nach der Schätzung des Archäologischen Parks rund 2.000, ebenfalls gestrichelt. Die Überreste von 1.044 Menschen, bis 2003 in Pompeji gezählt, durchgezogen: 394 im Bimssteinregen und 650 in den heißen Glutwolken. Der Rest der Stadt ging fort oder starb außerhalb und wurde nie gezählt. Darunter, im selben Maßstab, die Überreste von rund 300 Menschen, bis 2018 am Strand von Herculaneum gezählt, der kleineren Nachbarstadt.",
+   "legend": "picture"
+  },
+  "next": {
+   "page": "pompeii-casts",
+   "label": "Nächste Frage:",
+   "text": "Sind die Toten von Pompeji versteinert?"
+  }
+ },
+ "faq": [
+  {
+   "q": "Woher wissen wir das?",
+   "a": "Von einem Zeugen jenseits der Bucht, aus den Grabungen und den Knochen und aus Namen, die in Stein gehauen sind."
+  }
+ ],
+ "blocks": [
+  {
+   "type": "text",
+   "id": "did-anyone-survive-pompeii",
+   "nav": "Hat jemand Pompeji überlebt?",
+   "h": "Hat jemand Pompeji überlebt?",
+   "paras": [
+    [
+     "Ja, viele, vielleicht sogar die meisten. Die Forschung sei sich inzwischen weitgehend einig, dass ein großer Teil, vielleicht die Mehrheit, der Menschen aus Pompeji und Herculaneum den Ausbruch wohl überlebte, schreibt Steven Tuck in seinem Buch ",
+     {
+      "text": "Escape from Pompeii",
+      "href": "https://www.livescience.com/archaeology/romans/people-made-it-out-of-the-cities-alive-tracing-the-survivors-of-pompeii-and-herculaneum-2-000-years-after-vesuvius-erupted"
+     },
+     " von 2025. ",
+     {
+      "text": "Der Bimsstein fiel",
+      "href": "https://pompeiisites.org/wp-content/uploads/E-Journal_4_2026-Il-rinvenimento-di-due-vittime-delleruzione-fuori-porta-Stabia-a-Pompei-prime-analisi-antropologiche-e-archeologiche.pdf"
+     },
+     " vom frühen Nachmittag des ersten Tages bis in die Morgenstunden des nächsten auf die Stadt, es blieben also Stunden, um zu gehen."
+    ],
+    [
+     "Tuck hat mindestens 172 Überlebende mit Namen aufgespürt, hinter denen er etwa 3.000 Menschen in ihren Haushalten vermutet. Er suchte Familiennamen aus Pompeji und Herculaneum, die nach dem Ausbruch auf ",
+     {
+      "text": "Inschriften anderer Städte",
+      "href": "https://miamioh.edu/news/top-stories/2019/08/steven-tuck.html"
+     },
+     " wieder auftauchen. Die meisten ließen sich an der Küste zwischen Neapel und Cumae nieder, andere in Capua, Nola oder bis nach Ostia."
+    ],
+    [
+     "Manche kamen zurück. Nach dem Ausbruch lebten wieder Menschen in den Ruinen, ",
+     {
+      "text": "berichtete der Park 2025",
+      "href": "https://pompeiisites.org/wp-content/uploads/07_E-Journal-La-rioccupazione-nellInsula-meridionalis-di-Pompei-dopo-il-79-d.C.-Riflessioni-a-margine-dellinconscio-archeologico.pdf"
+     },
+     ", in zwei Phasen, die letzte im 4. und 5. Jahrhundert. Wer keinen anderen Ort hatte, schreiben die Archäologen des Parks, für den war das besser als nichts."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-many-bodies-have",
+   "nav": "Wie viele Opfer wurden in Pompeji gefunden?",
+   "h": "Wie viele Opfer wurden in Pompeji gefunden?",
+   "paras": [
+    [
+     "Die Überreste von mehr als 1.000 Menschen, ",
+     {
+      "text": "so der Park",
+      "href": "https://pompeiisites.org/en/pompeii-map/analysis/the-casts/"
+     },
+     ", und noch immer kommen neue hinzu. Eine 1998 veröffentlichte Zählung kam auf etwa 1.150, berichtet der ",
+     {
+      "text": "englische Wikipedia-Artikel",
+      "href": "https://en.wikipedia.org/wiki/Pompeii"
+     },
+     " zu Pompeji. Ausgegraben sind nur etwa 44 der 66 Hektar der Stadt, laut der ",
+     {
+      "text": "Pressemappe des Parks",
+      "href": "https://pompeiisites.org/en/archaeological-park-of-pompeii/press-kit/"
+     },
+     ", ein Drittel wurde also nie durchsucht. Im April 2026 ",
+     {
+      "text": "meldete der Park",
+      "href": "https://pompeiisites.org/wp-content/uploads/E-Journal_4_2026-Il-rinvenimento-di-due-vittime-delleruzione-fuori-porta-Stabia-a-Pompei-prime-analisi-antropologiche-e-archeologiche.pdf"
+     },
+     " den Fund zweier Männer vor der Porta Stabia, die den Strand erreichen wollten: Der ältere, der einen großen Mörser aus Terrakotta zum Schutz über dem Kopf trug, starb im Bimssteinregen, der jüngere einige Stunden später in der Asche."
+    ],
+    [
+     "In Herculaneum, der kleineren Stadt in der Nähe, hatten etwa 300 Menschen in zwölf Gewölben am Strand Zuflucht gesucht und starben dort, als die erste heiße Glutwolke kam, so ",
+     {
+      "text": "eine Studie von 2018",
+      "href": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0203210"
+     },
+     ". Tagsüber war dort nur wenig Asche gefallen, doch sie bewog die meisten Bewohner zur Flucht, schreibt der ",
+     {
+      "text": "englische Artikel zu Herculaneum",
+      "href": "https://en.wikipedia.org/wiki/Herculaneum"
+     },
+     ". Bei Oplontis, nahe Pompeji, starben 54 Menschen in einem gewölbten Lagerraum einer großen Villa, ",
+     {
+      "text": "schreibt der Park",
+      "href": "https://pompeiisites.org/en/oplontis-en-2/villa-b-or-of-lucius-crassius-tertius/"
+     },
+     ", und ",
+     {
+      "text": "Tote liegen in Villen",
+      "href": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011127"
+     },
+     " bis nach Stabiae, mindestens 15 Kilometer vom Krater entfernt. Wie viele der Ausbruch insgesamt tötete, weiß niemand: Viele könnten außerhalb der Stadt gestorben sein, auf dem Weg zur Küste, ",
+     {
+      "text": "heißt es im Beitrag des Parks von 2026",
+      "href": "https://pompeiisites.org/wp-content/uploads/E-Journal_4_2026-Il-rinvenimento-di-due-vittime-delleruzione-fuori-porta-Stabia-a-Pompei-prime-analisi-antropologiche-e-archeologiche.pdf"
+     },
+     "."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "when-and-how-did",
+   "nav": "Wann und wie starben die Menschen?",
+   "h": "Wann und wie starben die Menschen?",
+   "paras": [
+    [
+     "Im Lauf von etwa einem Tag, in zwei Phasen. Bis 2003 wurden in Pompeji 1.044 Tote gezählt, dazu ",
+     {
+      "text": "verstreute Knochen",
+      "href": "https://en.wikipedia.org/wiki/Eruption_of_Mount_Vesuvius_in_79_AD"
+     },
+     " von etwa 100 weiteren. Von ihnen lagen 394 im Bimsstein, der den ersten Nachmittag und die Nacht hindurch fiel, neun von zehn davon in Gebäuden, wohl dort, wo Dächer und Decken einbrachen. Die übrigen 650 lagen in den Ablagerungen der heißen Glutwolken, die die Stadt am nächsten Morgen erreichten, so ",
+     {
+      "text": "eine Studie von 2010",
+      "href": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011127"
+     },
+     "."
+    ],
+    [
+     "Woran genau sie starben, ist umstritten. Die Studie von 2010 kam zu dem Schluss, dass Hitze, mindestens 250 Grad noch 10 Kilometer vom Krater entfernt, die Hauptursache war, und nicht, wie lange angenommen, das Ersticken in der Asche. ",
+     {
+      "text": "Der Park schreibt",
+      "href": "https://pompeiisites.org/en/pompeii-map/analysis/the-casts/"
+     },
+     ", wer noch in der Stadt war, sei sofort am Hitzeschock gestorben. Für Herculaneum fand ",
+     {
+      "text": "eine Studie von 2020",
+      "href": "https://www.cambridge.org/core/journals/antiquity/article/reevaluation-of-manner-of-death-at-roman-herculaneum-following-the-ad-79-eruption-of-vesuvius/FD54E5B954D8E86B9B59001C0B0CC0BB"
+     },
+     ", dass Weichgewebe und Steingewölbe die Knochen vor einem Teil der Hitze schützten, und nennt die genaue Todesart dort weiter ungeklärt."
+    ],
+    [
+     "Selbst der Tag ist offen. Der Brief des Plinius nennt in allen seinen ältesten Handschriften den 24. August, manche Funde weisen auf den Herbst, und ",
+     {
+      "text": "eine Studie des Parks von 2024",
+      "href": "https://pompeiisites.org/wp-content/uploads/27_E-Journal_La-data-della-distruzione-di-Pompei_2.pdf"
+     },
+     " erklärt keine Seite zum Sieger."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-many-people-lived",
+   "nav": "Wie viele Einwohner hatte Pompeji?",
+   "h": "Wie viele Einwohner hatte Pompeji?",
+   "paras": [
+    [
+     "Wohl 11.000 bis 20.000. Eine Zählung der Einwohner ist nicht erhalten, jede Zahl wird aus dem zurückgerechnet, was die Stadt hinterließ, und die Forschung ist uneins. Eine Rechnung nach Haushalten ergibt etwa 11.000, berichtet der ",
+     {
+      "text": "englische Wikipedia-Artikel",
+      "href": "https://en.wikipedia.org/wiki/Pompeii"
+     },
+     ", der Park nennt in ",
+     {
+      "text": "seinem Beitrag von 2026",
+      "href": "https://pompeiisites.org/wp-content/uploads/E-Journal_4_2026-Il-rinvenimento-di-due-vittime-delleruzione-fuori-porta-Stabia-a-Pompei-prime-analisi-antropologiche-e-archeologiche.pdf"
+     },
+     " mindestens 20.000. Herculaneum war kleiner, mit wohl ",
+     {
+      "text": "4.000",
+      "href": "https://de.wikipedia.org/wiki/Herculaneum"
+     },
+     " bis ",
+     {
+      "text": "5.000",
+      "href": "https://en.wikipedia.org/wiki/Herculaneum"
+     },
+     " Einwohnern."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "know",
+   "nav": "Woher wissen wir das?",
+   "h": "Woher wissen wir das?",
+   "paras": [
+    "Von einem Zeugen jenseits der Bucht, aus den Grabungen und den Knochen und aus Namen, die in Stein gehauen sind.",
+    [
+     "Aus Pompeji selbst ist kein Bericht erhalten. Am nächsten kommt der von Plinius dem Jüngeren: Er sah den Ausbruch von Misenum aus, jenseits der Bucht, und beschrieb ihn nach der üblichen Datierung rund 25 Jahre später in ",
+     {
+      "text": "zwei Briefen",
+      "href": "https://www.thelatinlibrary.com/pliny.ep6.html"
+     },
+     " an den Geschichtsschreiber Tacitus. Sein Onkel, Plinius der Ältere, fuhr mit der Flotte hinaus, um den Menschen an der Küste zu helfen, und starb in Stabiae (Brief 6,16). In Brief 6,20 erzählt Plinius von der Menge, die mit ihm im Dunkeln floh: Frauen klagten, kleine Kinder weinten, Männer riefen, man suchte Eltern, Kinder und Ehepartner und erkannte sie an der Stimme."
+    ],
+    [
+     {
+      "text": "Gegraben wird",
+      "href": "https://pompeiisites.org/en/archaeological-park-of-pompeii/press-kit/"
+     },
+     " seit dem 18. Jahrhundert, und die Schicht, in der ein Mensch lag, zeigt, wann er starb. In Herculaneum werden die Skelette vom Strand seit den 1980er-Jahren untersucht, wie die Studie von 2018 festhält: Männer, Frauen und Kinder der Stadt. Namen auf Inschriften führen zu den Überlebenden. Und manche Tote hinterließen gar keine Erben: Kaiser Titus gab ihr Vermögen für den Wiederaufbau der betroffenen Städte, schreibt Sueton (Titus 8,4, zitiert im ",
+     {
+      "text": "Beitrag des Parks von 2025",
+      "href": "https://pompeiisites.org/wp-content/uploads/07_E-Journal-La-rioccupazione-nellInsula-meridionalis-di-Pompei-dopo-il-79-d.C.-Riflessioni-a-margine-dellinconscio-archeologico.pdf"
+     },
+     ")."
+    ],
+    "Offen bleibt, wie viele in der Stadt lebten, wie viele unterwegs und an der Küste starben und an welchem Tag. Das Diagramm oben zeichnet die Schätzungen gestrichelt und lässt die nicht gezählten Toten ohne Zahl."
+   ]
+  },
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Die Zahlen",
+   "h": "Die Zahlen",
+   "unit": "Die Quellen heißen wie in der Liste unten.",
+   "cols": [
+    "Zahl",
+    "Wert",
+    "Grundlage",
+    "Belegt oder vermutet",
+    "Quelle"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "In Pompeji gefundene Überreste",
+      "mehr als 1.000",
+      "Grabungsberichte",
+      "belegt",
+      "Archäologischer Park Pompeji"
+     ]
+    },
+    {
+     "cells": [
+      "Bis 2003 in Pompeji gezählt",
+      "1.044 nach ihrer Schicht, 394 im Bimssteinregen und 650 in den Glutwolken, dazu verstreute Knochen von etwa 100 weiteren",
+      "Grabungszählungen",
+      "belegt",
+      "PLOS ONE 2010, und Wikipedia, Eruption of Mount Vesuvius"
+     ]
+    },
+    {
+     "cells": [
+      "Tote innerhalb der Mauern, nicht ausgegrabene Teile eingerechnet",
+      "rund 2.000",
+      "Schätzung des Parks",
+      "vermutet",
+      "Park, 2026"
+     ]
+    },
+    {
+     "cells": [
+      "Einwohner von Pompeji",
+      "wohl 11.000 bis 20.000",
+      "etwa 11.000 nach Haushalten, mindestens 20.000 im Beitrag des Parks",
+      "vermutet",
+      "Park, 2026, und Wikipedia, Pompeii"
+     ]
+    },
+    {
+     "cells": [
+      "Fläche der Stadt",
+      "etwa 66 Hektar, davon etwa 44 ausgegraben",
+      "vermessen",
+      "belegt",
+      "Park, Pressemappe"
+     ]
+    },
+    {
+     "cells": [
+      "Strand von Herculaneum",
+      "etwa 300 Menschen in zwölf Gewölben",
+      "Grabungsberichte, andere Zählungen nennen etwa 250 bis 340",
+      "belegt",
+      "PLOS ONE 2018"
+     ]
+    },
+    {
+     "cells": [
+      "Einwohner von Herculaneum",
+      "wohl 4.000 bis 5.000",
+      "Schätzungen gehen auseinander",
+      "vermutet",
+      "Wikipedia, Herculaneum (deutsch und englisch)"
+     ]
+    },
+    {
+     "cells": [
+      "Oplontis",
+      "54 Menschen in einem gewölbten Lagerraum",
+      "Grabungsberichte",
+      "belegt",
+      "Park, Villa B"
+     ]
+    },
+    {
+     "cells": [
+      "Überlebende mit Namen",
+      "mindestens 172, mit ihren Haushalten etwa 3.000",
+      "Familiennamen auf Inschriften, von einem Forscher gedeutet",
+      "vermutet",
+      "Tuck, 2025"
+     ]
+    },
+    {
+     "cells": [
+      "Tote in der ganzen Region",
+      "",
+      "nie gezählt",
+      "unbekannt",
+      "Park, 2026"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "myths",
+   "nav": "Was man oft liest",
+   "h": "Was man oft liest",
+   "subs": [
+    {
+     "h": "„Die Menschen wurden versteinert.“",
+     "paras": [
+      "Versteinert wurde niemand: Die Körper zerfielen in der erhärteten Asche und hinterließen Hohlräume. In manche goss man ab 1863 Gips, so entstanden die Abgüsse."
+     ]
+    },
+    {
+     "h": "„Niemand hat überlebt.“",
+     "paras": [
+      "Die meisten hatten die Stadt vor dem Ende verlassen, und mindestens 172 Überlebende sind mit Namen bekannt."
+     ]
+    },
+    {
+     "h": "„Alle starben im selben Augenblick.“",
+     "paras": [
+      "Das Sterben zog sich über etwa einen Tag hin: erst unter dem Bimsstein und den einstürzenden Dächern, dann in den Glutwolken des nächsten Morgens."
+     ]
+    },
+    {
+     "h": "„Nur die Reichen kamen davon.“",
+     "paras": [
+      "Unter den Überlebenden, die Tuck fand, waren Arme und Reiche, Männer, Frauen und Kinder, ein Querschnitt der Bevölkerung."
+     ]
+    },
+    {
+     "h": "„Es geschah am 24. Oktober.“",
+     "paras": [
+      "Dieses Datum geht auf ein Buch von 1929 zurück, das die Handschriften falsch auswertete, so die Studie des Parks von 2024. Der Brief des Plinius nennt den 24. August, manche Funde weisen auf den Herbst, und um den Tag wird weiter gestritten."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Quellen",
+   "h": "Quellen",
+   "intro": "Die Angaben dieser Seite stammen aus diesen Seiten, gelesen am 17. November 2026. Plinius wird in eigenen Worten nach dem lateinischen Text wiedergegeben.",
+   "read": [
+    {
+     "text": "Archäologischer Park Pompeji, E-Journal 4/2026, Amoretti, Bonetto, Buondonno, Scarpati, Sparice, Zuchtriegel, „Il rinvenimento di due vittime dell'eruzione fuori porta Stabia a Pompei“, 24. April 2026 (italienisch)",
+     "href": "https://pompeiisites.org/wp-content/uploads/E-Journal_4_2026-Il-rinvenimento-di-due-vittime-delleruzione-fuori-porta-Stabia-a-Pompei-prime-analisi-antropologiche-e-archeologiche.pdf"
+    },
+    {
+     "text": "Archäologischer Park Pompeji, „The Casts“ (englisch)",
+     "href": "https://pompeiisites.org/en/pompeii-map/analysis/the-casts/"
+    },
+    {
+     "text": "Archäologischer Park Pompeji, Pressemappe (englisch)",
+     "href": "https://pompeiisites.org/en/archaeological-park-of-pompeii/press-kit/"
+    },
+    {
+     "text": "Archäologischer Park Pompeji, Villa B or of Lucius Crassius Tertius (englisch)",
+     "href": "https://pompeiisites.org/en/oplontis-en-2/villa-b-or-of-lucius-crassius-tertius/"
+    },
+    {
+     "text": "Archäologischer Park Pompeji, E-Journal 27, Zuchtriegel, Comegna, Conte, Russo, „La data della distruzione di Pompei: premesse per un dibattito aperto“, 12. Dezember 2024 (italienisch)",
+     "href": "https://pompeiisites.org/wp-content/uploads/27_E-Journal_La-data-della-distruzione-di-Pompei_2.pdf"
+    },
+    {
+     "text": "Archäologischer Park Pompeji, E-Journal 7, Zuchtriegel und andere, „La rioccupazione nell'Insula meridionalis di Pompei dopo il 79 d.C.“, 6. August 2025 (italienisch)",
+     "href": "https://pompeiisites.org/wp-content/uploads/07_E-Journal-La-rioccupazione-nellInsula-meridionalis-di-Pompei-dopo-il-79-d.C.-Riflessioni-a-margine-dellinconscio-archeologico.pdf"
+    },
+    {
+     "text": "Mastrolorenzo, Petrone, Pappalardo, Guarino, „Lethal Thermal Impact at Periphery of Pyroclastic Surges: Evidences at Pompeii“, PLOS ONE, 2010 (englisch)",
+     "href": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011127"
+    },
+    {
+     "text": "Petrone und andere, „A hypothesis of sudden body fluid vaporization in the 79 AD victims of Vesuvius“, PLOS ONE, 2018 (englisch)",
+     "href": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0203210"
+    },
+    {
+     "text": "Martyn und andere, „A re-evaluation of manner of death at Roman Herculaneum following the AD 79 eruption of Vesuvius“, Antiquity, 2020 (englisch, Zusammenfassung)",
+     "href": "https://www.cambridge.org/core/journals/antiquity/article/reevaluation-of-manner-of-death-at-roman-herculaneum-following-the-ad-79-eruption-of-vesuvius/FD54E5B954D8E86B9B59001C0B0CC0BB"
+    },
+    {
+     "text": "Steven L. Tuck, Escape from Pompeii, Oxford University Press, 2025, ein Auszug in Live Science, 20. Oktober 2025 (englisch)",
+     "href": "https://www.livescience.com/archaeology/romans/people-made-it-out-of-the-cities-alive-tracing-the-survivors-of-pompeii-and-herculaneum-2-000-years-after-vesuvius-erupted"
+    },
+    {
+     "text": "Miami University über Steven Tucks Studie zu den Überlebenden, August 2019 (englisch)",
+     "href": "https://miamioh.edu/news/top-stories/2019/08/steven-tuck.html"
+    },
+    {
+     "text": "Plinius der Jüngere, Briefe, Buch 6, mit den Briefen 16 und 20, lateinisch (The Latin Library)",
+     "href": "https://www.thelatinlibrary.com/pliny.ep6.html"
+    },
+    {
+     "text": "Wikipedia, Pompeii (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Pompeii"
+    },
+    {
+     "text": "Wikipedia, Eruption of Mount Vesuvius in 79 AD (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Eruption_of_Mount_Vesuvius_in_79_AD"
+    },
+    {
+     "text": "Wikipedia, Herculaneum",
+     "href": "https://de.wikipedia.org/wiki/Herculaneum"
+    },
+    {
+     "text": "Wikipedia, Herculaneum (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Herculaneum"
+    }
+   ],
+   "contact": "Ist ein Datum, eine Zahl oder ein Satz falsch, genügt eine Nachricht, und wir korrigieren es.",
+   "contact_link": "Zum Impressum",
+   "what_link": "Was dieses Museum ist"
+  },
+  {
+   "type": "museum",
+   "id": "museum",
+   "nav": "Im Museum",
+   "h": "Im Museum",
+   "text": "Museum of Ages ist ein digitales Museum. Der Flügel {wing} zeigt {place} am {day}.",
+   "link": "Zum Flügel {wing}"
+  }
+ ]
+}

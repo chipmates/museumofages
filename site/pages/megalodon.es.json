@@ -149,7 +149,7 @@
   "credit": "Museum of Ages, forma del cuerpo según Shimada y otros 2025 (CC BY 4.0)"
  },
  "labels": {
-  "crumbs": "Estás aquí",
+  "crumbs": "Ruta de navegación",
   "crumb_home": "Museo",
   "crumb_here": "Megalodón",
   "toc": "En esta página",
@@ -402,7 +402,7 @@
     },
     {
      "term": "Vivo hoy, escondido en las profundidades del mar",
-     "text": "La televisión lo mostró así, pero se extinguió hace mucho: mira «¿Existe todavía el megalodón?» más arriba."
+     "text": "La televisión lo mostró así, pero se extinguió hace mucho: véase «¿Existe todavía el megalodón?» más arriba."
     },
     {
      "term": "Un megalodón que ataca a una ballena tan grande como una ballena azul",
@@ -569,7 +569,7 @@
      "href": "https://www.smnk.de/fileadmin/page_content/pressemitteilungen/PM_Megalodon_Naturkundemuseum_Karlsruhe_.pdf"
     }
    ],
-   "contact": "Si una cifra o una institución está mal, escríbenos y lo corregiremos.",
+   "contact": "Si una cifra o una institución está mal, basta con escribirnos y lo corregiremos.",
    "contact_link": "Ir al aviso legal",
    "what_link": "Qué es este museo"
   },

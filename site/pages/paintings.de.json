@@ -230,7 +230,7 @@
   "og_image_alt": "Die 24 Werke des Leonardo-Flügels nach Lebensabschnitten, jedes mit einem Zeichen dafür, wie sicher die Zuschreibung ist: 14 belegt, 4 umstritten, 4 mit Vorbehalt, 1 aus seiner Werkstatt, 1 Kopie, dazu das Abendmahl auf einer eigenen Wand. Ein Diagramm, für diese Seite gemacht."
  },
  "labels": {
-  "crumbs": "Du bist hier",
+  "crumbs": "Seitenpfad",
   "crumb_home": "Museum",
   "toc": "Auf dieser Seite",
   "tag_chart": "Für diese Seite gemacht",
@@ -1192,7 +1192,7 @@
     }
    ],
    "notes": [],
-   "contact": "Stimmt ein Datum, ein Name oder ein Satz nicht, schreib uns, und wir bessern es aus.",
+   "contact": "Stimmt ein Datum, ein Name oder ein Satz nicht, genügt eine Nachricht, und wir bessern es aus.",
    "contact_link": "Zum Impressum",
    "what_link": "Was dieses Museum ist"
   },

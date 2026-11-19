@@ -34,7 +34,7 @@
     "og_image_alt": "Leonardo da Vinci: Steckbrief und Lebenslauf. Geboren: 15. April 1452, gegen zehn Uhr abends. Geburtsort: Bei Vinci in der Toskana. Anchiano ist Überlieferung, kein Beleg. Bekannt für: Die Mona Lisa, das Abendmahl, seine Notizbücher. Gestorben: 2. Mai 1519 in Cloux bei Amboise, Frankreich. Eine Karte, für diese Seite gemacht."
   },
   "labels": {
-    "crumbs": "Du bist hier",
+    "crumbs": "Seitenpfad",
     "crumb_home": "Museum",
     "crumb_here": "Sein Leben",
     "toc": "Auf dieser Seite",
@@ -442,7 +442,7 @@
           "id": "after-1519",
           "nav": "Nach 1519",
           "h": "Nach 1519, was blieb",
-          "p": "Melzi erbte seine Bücher und Notizen. Tausende Seiten seiner Notizen sind erhalten, und einige davon kannst du am Lesetisch des Flügels umblättern.",
+          "p": "Melzi erbte seine Bücher und Notizen. Tausende Seiten seiner Notizen sind erhalten, und einige davon lassen sich am Lesetisch des Flügels umblättern.",
           "items": [
             {
               "id": "life-43",
@@ -595,7 +595,7 @@
       "h": "Quellen",
       "intro": "Die Seite stützt sich auf die Dokumente seines Lebens, wie die Forschung sie veröffentlicht hat, von der Notiz seines Großvaters bis zu den Akten von 1476 im Staatsarchiv Florenz, 1896 von Nino Smiraglia Scognamiglio im Archivio storico dell'arte veröffentlicht, auf seine eigenen Notizen in der Ausgabe von J. P. Richter von 1883, auf Vasaris Lebensbeschreibung Leonardos von 1568, auf Gustavo Uziellis Forschungen von 1896, das biografische Lexikon der Treccani, die Chronologie und die Seiten des Museo Galileo in Florenz, das Museo Leonardiano in Vinci, die Untersuchung des Opificio delle Pietre Dure von 2019 an seiner Zeichnung von 1473 in den Uffizien, Walter Isaacsons Biografie von 2017, Live Science und Finestre sull'Arte, den Bericht der Carleton University über einen Vortrag von Elizabeth Abbott und die Chronik des Leonardo-Flügels im Museum, alle am 17. Oktober 2026 gelesen, Smiraglia Scognamiglios Abdruck am 21. Oktober.",
       "notes": [],
-      "contact": "Ist ein Datum, ein Name oder ein Satz hier falsch, schreib uns, und wir korrigieren es.",
+      "contact": "Ist ein Datum, ein Name oder ein Satz hier falsch, genügt eine Nachricht, und wir korrigieren es.",
       "contact_link": "Zum Impressum",
       "what_link": "Was dieses Museum ist"
     },
@@ -604,7 +604,7 @@
       "id": "enter",
       "nav": "",
       "h": "Sein Leben im Flügel ansehen",
-      "p": "Diese Tür öffnet den Rundgang in der langen Galerie, bei den Daten seines Lebens im Boden. Wähle eines, und dort öffnet sich die Chronik, mit allen 56 Daten und ihren Zeichen. Der Lesetisch mit seinen Notizbüchern steht in derselben Galerie.",
+      "p": "Diese Tür öffnet den Rundgang in der langen Galerie, bei den Daten seines Lebens im Boden. Ein Klick auf ein Datum öffnet dort die Chronik, mit allen 56 Daten und ihren Zeichen. Der Lesetisch mit seinen Notizbüchern steht in derselben Galerie.",
       "door": {
         "text": "Ins Museum",
         "note": "Eintritt frei, kein Konto."

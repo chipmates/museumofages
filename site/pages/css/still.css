@@ -1,0 +1,16 @@
+/* The wing's still beside the first door, only on the pages that carry one (top.door.still), and only on a desktop:
+   a phone's first screen stays the answer and the door, and a hidden lazy picture is never fetched. */
+.sp-side{display:none}
+
+@media (min-width:960px){
+  /* a page whose first part is one column (its list stands beside it): the still in a second column beside the door */
+  .wrap>.sp-top--still.sp-top--list.sp-top{grid-template-columns:minmax(0,1fr) minmax(0,17rem);column-gap:32px}
+  .wrap>.sp-top--still.sp-top--list>.sp-top__text{grid-column:1/-1}
+  .wrap>.sp-top--still.sp-top--list>.sp-way{grid-column:1;grid-row:2}
+  .wrap>.sp-top--still.sp-top--list>.sp-side{display:block;grid-column:2;grid-row:2}
+  .sp-still .hang{--pool-up:44%;--pool-side:26%;--pool-down:14%}
+  .sp-still__a{display:block}
+  .sp-still__a:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+  .sp-still img{aspect-ratio:2/1;object-fit:cover;object-position:50% 45%}
+  .sp-still .sp-still__label{display:grid;gap:3px;margin-top:14px;padding-top:11px}
+}

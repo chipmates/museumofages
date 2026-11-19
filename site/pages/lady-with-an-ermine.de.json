@@ -31,7 +31,7 @@
   "og_image_alt": "Eine Reproduktion der Dame mit dem Hermelin. Die junge Frau trägt ein rotes Kleid, ein blaues Tuch über der Schulter und dunkle Perlen am Hals und wendet den Kopf nach rechts. Im Arm hält sie ein weißes Hermelin, die Hand auf seinem Rücken. Der Hintergrund ist schwarz, oben links steht eine alte Beschriftung."
  },
  "labels": {
-  "crumbs": "Du bist hier",
+  "crumbs": "Seitenpfad",
   "crumb_home": "Museum",
   "crumb_here": "Dame mit dem Hermelin",
   "toc": "Auf dieser Seite",
@@ -68,7 +68,7 @@
   "door": {
    "text": "Die Dame mit dem Hermelin im Flügel ansehen",
    "note": "Eintritt frei, kein Konto.",
-   "leads": "Durch diese Tür kommst du in den Bildersaal des Flügels, wo ihre Reproduktion zwischen seinen anderen Gemälden hängt."
+   "leads": "Diese Tür führt in den Bildersaal des Flügels, wo ihre Reproduktion zwischen seinen anderen Gemälden hängt."
   }
  },
  "blocks": [
@@ -436,7 +436,7 @@
      "only": "de"
     }
    ],
-   "contact": "Ist ein Datum, ein Name oder ein Satz falsch, schreib uns, und wir korrigieren es.",
+   "contact": "Ist ein Datum, ein Name oder ein Satz falsch, genügt eine Nachricht, und wir korrigieren es.",
    "contact_link": "Zum Impressum",
    "what_link": "Was dieses Museum ist"
   },

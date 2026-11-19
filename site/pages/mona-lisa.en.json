@@ -56,7 +56,9 @@
     "door": {
       "text": "Visit her in the wing",
       "note": "Free entry, no account.",
-      "leads": "This door takes you into the Leonardo wing, to her stop, “A woman called Lisa”."
+      "leads": "This door takes you into the Leonardo wing, to her stop, “A woman called Lisa”.",
+      "still": "card",
+      "still_room": "house"
     }
   },
   "blocks": [

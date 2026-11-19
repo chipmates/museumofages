@@ -182,7 +182,7 @@
     "og_image_alt": "Vier hölzerne Maschinen in der Maschinenhalle im Licht der tief stehenden Nachmittagssonne: Schleusentore, die Luftschraube mit ihrem Spiralsegel, eine Wasserschnecke und ein Walzwerk. Rekonstruktionen nach Blättern von Leonardo da Vinci, in Code gebaut."
   },
   "labels": {
-    "crumbs": "Du bist hier",
+    "crumbs": "Seitenpfad",
     "crumb_home": "Museum",
     "crumb_here": "Erfindungen",
     "toc": "Auf dieser Seite",
@@ -210,7 +210,7 @@
     "door": {
       "text": "Ins Museum",
       "note": "Eintritt frei, kein Konto.",
-      "leads": "Die Tür führt an den Anfang des Leonardo-Flügels. Über den Plan des Flügels kommst du zur Maschinenhalle."
+      "leads": "Die Tür führt an den Anfang des Leonardo-Flügels. Über den Plan des Flügels geht es zur Maschinenhalle."
     }
   },
   "blocks": [
@@ -219,7 +219,7 @@
       "id": "where",
       "nav": "Wo sie stehen",
       "h": "Wo die Maschinen im Museum stehen",
-      "intro": "Museum of Ages ist ein digitales Museum. Sein erster Flügel gehört Leonardo da Vinci, und die Maschinen stehen dort an drei Orten. Der Plan des Flügels nennt jede Maschine unter dem Ort, an dem sie steht. Drückst du dort auf ihren Namen, siehst du sie aus der Nähe.",
+      "intro": "Museum of Ages ist ein digitales Museum. Sein erster Flügel gehört Leonardo da Vinci, und die Maschinen stehen dort an drei Orten. Der Plan des Flügels nennt jede Maschine unter dem Ort, an dem sie steht. Ein Klick auf ihren Namen zeigt sie dort aus der Nähe.",
       "rows": [
         {
           "term": "Die Maschinenhalle",
@@ -253,7 +253,7 @@
         },
         {
           "term": "Der Lesetisch",
-          "text": "Hier blätterst du durch mehr als 200 Seiten seiner Notizbücher, geordnet nach siebzehn Themen, darunter Fliegen und Maschinen. Jede Seite nennt ihr Notizbuch und ihr Blatt, und du kannst sie in seiner Handschrift, im Spiegel und als Text lesen. In Ruhe liegt ein 1883 gedrucktes Faksimile des Manuskripts B aufgeschlagen. Das Blatt der Luftschraube, Blatt 83 verso, ist in diesem Faksimile enthalten.",
+          "text": "Hier liegen mehr als 200 Seiten seiner Notizbücher zum Blättern, geordnet nach siebzehn Themen, darunter Fliegen und Maschinen. Jede Seite nennt ihr Notizbuch und ihr Blatt, und jede lässt sich in seiner Handschrift, im Spiegel und als Text lesen. In Ruhe liegt ein 1883 gedrucktes Faksimile des Manuskripts B aufgeschlagen. Das Blatt der Luftschraube, Blatt 83 verso, ist in diesem Faksimile enthalten.",
           "pic": {
             "pic": "table",
             "tag": "tag_reproduction",
@@ -744,7 +744,7 @@
         },
         {
           "q": "Wo sind Leonardo da Vincis Notizbücher heute?",
-          "a": "Die Originale liegen in wenigen Bibliotheken und Sammlungen, keines davon in diesem Museum. Der Codex Atlanticus mit 1.119 Blättern liegt in der Veneranda Biblioteca Ambrosiana in Mailand. Zwölf Notizbücher sind in der Bibliothèque de l'Institut de France in Paris, zwei in der Biblioteca Nacional de España in Madrid und fünf, in drei Bänden gebunden, im Victoria and Albert Museum in London. Etwa 550 Blätter liegen in der Royal Collection in Windsor. Der Codex Arundel ist in der British Library in London, der Kodex über den Vogelflug in der Biblioteca Reale in Turin. Ein Notizbuch ist in Privatbesitz. Am Lesetisch dieses Museums blätterst du durch fotografierte Seiten, und jede nennt das Notizbuch, aus dem sie stammt.",
+          "a": "Die Originale liegen in wenigen Bibliotheken und Sammlungen, keines davon in diesem Museum. Der Codex Atlanticus mit 1.119 Blättern liegt in der Veneranda Biblioteca Ambrosiana in Mailand. Zwölf Notizbücher sind in der Bibliothèque de l'Institut de France in Paris, zwei in der Biblioteca Nacional de España in Madrid und fünf, in drei Bänden gebunden, im Victoria and Albert Museum in London. Etwa 550 Blätter liegen in der Royal Collection in Windsor. Der Codex Arundel ist in der British Library in London, der Kodex über den Vogelflug in der Biblioteca Reale in Turin. Ein Notizbuch ist in Privatbesitz. Am Lesetisch dieses Museums liegen fotografierte Seiten zum Blättern, und jede nennt das Notizbuch, aus dem sie stammt.",
           "links": [
             {
               "text": "Leonardo da Vinci: Steckbrief und Lebenslauf",
@@ -791,7 +791,7 @@
         "Das Museum nennt diese Häuser, weil sie die Originale bewahren. Es ist von ihnen allen unabhängig.",
         "Die Bilder auf dieser Seite sind Standbilder aus dem eigenen Film des Museums: Räume und Maschinen, in Code gebaut. Das Buch am Lesetisch ist ein 1883 gedrucktes Faksimile des Manuskripts B, gemeinfrei wegen seines Alters."
       ],
-      "editions_h": "Wo du die Blätter selbst lesen kannst",
+      "editions_h": "Wo die Blätter selbst zu lesen sind",
       "editions": [
         {
           "name": "Veneranda Biblioteca Ambrosiana",
@@ -846,7 +846,7 @@
           ]
         }
       ],
-      "contact": "Ist ein Datum, ein Blatt oder ein Haus falsch angegeben, schreib uns, und wir korrigieren es.",
+      "contact": "Ist ein Datum, ein Blatt oder ein Haus falsch angegeben, genügt eine Nachricht, und wir korrigieren es.",
       "contact_link": "Zum Impressum",
       "what_link": "Was dieses Museum ist"
     },

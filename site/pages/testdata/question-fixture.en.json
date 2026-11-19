@@ -1,0 +1,170 @@
+{
+ "_note": "A TEST FIXTURE, never published: a made-up question on a shelf, with made-up numbers. The tests copy it beside the build (testdata/question_fixture.py), with its topic in their own copy of the registry and its picture record in their own copy of pictures.json. No place, no wing and no source is real.",
+ "page": {
+  "id": "questions-fixture",
+  "fixture": true,
+  "wing": "questions",
+  "topic": "question_fixture",
+  "published": "2026-11-17",
+  "checked": "2026-11-17",
+  "og_image": {
+   "file": "questions-fixture-og-{lang}-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "plan": {
+   "stem": "questions-fixture-plan-{lang}",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 560px, (min-width: 960px) 44vw, calc(100vw - 40px)",
+   "swatches": {
+    "known": "#d9c38c",
+    "guessed": "#7fa6c4"
+   }
+  }
+ },
+ "meta": {
+  "title": "Fixture: how long is the sample wall? | Museum of Ages",
+  "description": "A test page with made-up numbers: how long the sample wall is, what is measured and what is guessed. It is never published.",
+  "og_title": "Fixture: how long is the sample wall?",
+  "og_image_alt": "A grey card for the test page, with no picture on it."
+ },
+ "labels": {
+  "crumbs": "You are here",
+  "crumb_home": "Museum",
+  "crumb_here": "Sample wall",
+  "toc": "On this page",
+  "tag_made": "Made for this page",
+  "no_figure": "no figure"
+ },
+ "top": {
+  "h1": "Fixture: how long is the sample wall?",
+  "answer": "This is a test page with made-up numbers. The sample wall is 120 m long and about 6 m high. The length is measured on the plan, the height is a guess.",
+  "strength": "Length: measured on the plan. Height: a guess.",
+  "slot": {
+   "pic": "plan",
+   "tag": "tag_made",
+   "what": "The sample wall on a made-up plan: the measured stretch in one colour, the guessed stretch in the other.",
+   "alt": "A plan of a long straight wall seen from above. Its left two thirds are drawn as a solid pale line, its right third as a dashed blue line.",
+   "src": [
+    "Drawn on map data from ",
+    {
+     "href": "https://www.openstreetmap.org/copyright",
+     "text": "OpenStreetMap"
+    },
+    ", ",
+    {
+     "href": "https://opendatacommons.org/licenses/odbl/",
+     "text": "ODbL"
+    },
+    "."
+   ]
+  },
+  "next": {
+   "page": "questions",
+   "text": "All questions and answers"
+  }
+ },
+ "faq": [
+  {
+   "q": "How do we know?",
+   "a": "We know nothing about the sample wall, because it exists only for the tests."
+  }
+ ],
+ "blocks": [
+  {
+   "type": "text",
+   "id": "know",
+   "nav": "How do we know?",
+   "h": "How do we know?",
+   "paras": [
+    "We know nothing about the sample wall, because it exists only for the tests. Its length stands for a figure measured on a plan, its height for a figure nobody measured."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "high",
+   "nav": "How high was the sample wall?",
+   "h": "How high was the sample wall?",
+   "paras": [
+    "About 6 m, as a guess. A real page would say who guessed it and from what."
+   ]
+  },
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "The numbers",
+   "h": "The numbers",
+   "unit": "Metres. Made-up figures for the tests.",
+   "cols": [
+    "Figure",
+    "Value",
+    "Basis",
+    "Known or guessed",
+    "Source"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Length",
+      "120 m",
+      "measured on the plan",
+      "Known",
+      "the test plan"
+     ]
+    },
+    {
+     "cells": [
+      "Height",
+      "about 6 m",
+      "no measure",
+      "Guessed",
+      "none"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "myths",
+   "id": "myths",
+   "nav": "Things often read",
+   "h": "Things often read",
+   "intro": "One claim, made up for the tests.",
+   "items": [
+    {
+     "name": "A wall of gold",
+     "claim": "A made-up claim: the sample wall was built of gold.",
+     "known": "Nothing says so. It stands here to show how a claim and its answer look."
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "A test page has no sources.",
+   "read": [
+    {
+     "text": "None: every figure on this page is made up for the tests."
+    }
+   ],
+   "contact": "If a number here is wrong, tell us and we will correct it.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "museum",
+   "id": "museum",
+   "nav": "In the museum",
+   "h": "In the museum",
+   "text": "Museum of Ages is a digital museum. Its {wing} wing shows {place} on {day}.",
+   "link": "To the {wing} wing"
+  }
+ ]
+}

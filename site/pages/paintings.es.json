@@ -230,7 +230,7 @@
   "og_image_alt": "Las 24 obras del ala de Leonardo por periodo, cada una con una marca de lo segura que es su atribución: 14 documentadas, 4 discutidas, 4 con reservas, 1 de su taller, 1 copia, y La última cena en su propio muro. Un gráfico hecho para esta página."
  },
  "labels": {
-  "crumbs": "Estás aquí",
+  "crumbs": "Ruta de navegación",
   "crumb_home": "Museo",
   "toc": "En esta página",
   "tag_chart": "Hecho para esta página",
@@ -1185,7 +1185,7 @@
     }
    ],
    "notes": [],
-   "contact": "Si una fecha, una atribución o una frase de esta página están mal, escríbenos y lo corregiremos.",
+   "contact": "Si una fecha, una atribución o una frase de esta página están mal, basta con escribirnos y lo corregiremos.",
    "contact_link": "Ir al aviso legal",
    "what_link": "Qué es este museo"
   },

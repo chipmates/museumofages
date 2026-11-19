@@ -33,7 +33,7 @@
   "og_image_alt": "L’Ultima Cena e, accanto, una persona alta 1,70 metri, disegnate alla stessa scala: la pittura murale misura 4,6 per 8,8 metri. Al suo interno la tavola e, sotto, la parte alta dell’arco della porta, dove erano i piedi di Cristo. Un disegno fatto per questa pagina, con la tavola e l’arco ricavati da una fotografia."
  },
  "labels": {
-  "crumbs": "Sei qui",
+  "crumbs": "Percorso di navigazione",
   "crumb_home": "Museo",
   "crumb_here": "Ultima Cena",
   "toc": "In questa pagina",
@@ -43,7 +43,7 @@
  },
  "top": {
   "h1": "L’Ultima Cena di Leonardo da Vinci",
-  "answer": "L’Ultima Cena di Leonardo da Vinci, detta anche il Cenacolo, è una pittura murale in Santa Maria delle Grazie, a Milano. È nel refettorio, la sala da pranzo di un convento domenicano. Leonardo l’ha dipinta per Ludovico Sforza, duca di Milano, dal 1494 al 1498 circa. Altre fonti dicono dal 1495 al 1498, o dal 1495 al 1497: perfino le fonti ufficiali italiane differiscono di un anno all’inizio e alla fine. L’opera è ancora sulla sua parete originale: secondo il museo misura 4,6 per 8,8 metri, altezza per larghezza. Guarda sotto la tavola: Cristo non ha i piedi. Nel XVII secolo i frati volevano una porta più grande verso le cucine. Quella che hanno allargato è al centro della parete, proprio dove c’erano i piedi di Cristo.",
+  "answer": "L’Ultima Cena di Leonardo da Vinci, detta anche il Cenacolo, è una pittura murale in Santa Maria delle Grazie, a Milano. È nel refettorio, la sala da pranzo di un convento domenicano. Leonardo l’ha dipinta per Ludovico Sforza, duca di Milano, dal 1494 al 1498 circa. Altre fonti dicono dal 1495 al 1498, o dal 1495 al 1497: perfino le fonti ufficiali italiane differiscono di un anno all’inizio e alla fine. L’opera è ancora sulla sua parete originale: secondo il museo misura 4,6 per 8,8 metri, altezza per larghezza. Sotto la tavola manca qualcosa: Cristo non ha i piedi. Nel XVII secolo i frati volevano una porta più grande verso le cucine. Quella che hanno allargato è al centro della parete, proprio dove c’erano i piedi di Cristo.",
   "drawing": {
    "wall": "supper",
    "tag": "tag_chart",
@@ -70,10 +70,11 @@
     "dove erano i piedi di Cristo"
    ]
   },
+  "door_first": true,
   "door": {
-   "text": "Vedi l’Ultima Cena nell’ala",
+   "text": "Vedere l’Ultima Cena nell’ala",
    "note": "Ingresso libero, senza account.",
-   "leads": "La porta ti conduce nell’ala di Leonardo, alla parete del cortile."
+   "leads": "La porta conduce nell’ala di Leonardo, alla parete del cortile."
   }
  },
  "blocks": [
@@ -114,7 +115,7 @@
    "nav": "A Milano oggi",
    "h": "Vederla oggi a Milano",
    "paras": [
-    "Il dipinto è ancora nella sua sala. Insieme alla chiesa e al convento, dal 1980 è Patrimonio mondiale dell’UNESCO. Nel refettorio l’aria è filtrata e il clima è controllato. Per questo entri attraverso una serie di piccole stanze, con porte che si aprono una dopo l’altra, e le visite sono brevi, a orario fisso e in piccoli gruppi. Bisogna prenotare.",
+    "Il dipinto è ancora nella sua sala. Insieme alla chiesa e al convento, dal 1980 è Patrimonio mondiale dell’UNESCO. Nel refettorio l’aria è filtrata e il clima è controllato. Per questo si entra attraverso una serie di piccole stanze, con porte che si aprono una dopo l’altra, e le visite sono brevi, a orario fisso e in piccoli gruppi. Bisogna prenotare.",
     [
      "Sulla parete di fronte c’è una Crocifissione di Giovanni Donato Montorfano. L’ha firmata e datata 1495, e l’ha dipinta ad affresco. Ha conservato il colore molto meglio della parete di Leonardo. Più tardi vi sono state aggiunte figure inginocchiate della famiglia del duca, dipinte probabilmente da Leonardo, dice il museo, e di quelle figure non resta quasi nulla. Per la visita, il sito del museo: ",
      {
@@ -131,7 +132,7 @@
    "nav": "Nell’ala",
    "h": "Cosa mostra la nostra copia e cosa non può mostrare",
    "paras": [
-    "La nostra ala di Leonardo ha una copia dell’Ultima Cena su una parete del cortile. È una riproduzione, con l’altezza e la larghezza dell’originale, 4,6 per 8,8 metri. Ti mostra ciò che un libro non può mostrare: tutta la composizione a grandezza naturale, con te davanti, Cristo al centro e gli apostoli in quattro gruppi di tre.",
+    "La nostra ala di Leonardo ha una copia dell’Ultima Cena su una parete del cortile. È una riproduzione, con l’altezza e la larghezza dell’originale, 4,6 per 8,8 metri. Mostra ciò che un libro non può mostrare: tutta la composizione a grandezza naturale, con noi davanti, Cristo al centro e gli apostoli in quattro gruppi di tre.",
     "Ciò che una copia piatta non può mostrare è la parete stessa: come le scaglie di colore si sollevano dall’intonaco, e quanto è fragile tutto l’insieme. E non può mostrare la luce della sala. A Milano la luce dipinta entra da sinistra, dallo stesso lato delle vere finestre del refettorio. Se togli il dipinto da quella parete, questo legame si perde.",
     [
      "Quanto è grande accanto alla Gioconda e alle altre opere: ",
@@ -159,7 +160,7 @@
    },
    "links": [
     {
-     "text": "Vedi l’Ultima Cena nell’ala",
+     "text": "Vedere l’Ultima Cena nell’ala",
      "stop": "supper-wall"
     }
    ]
@@ -225,18 +226,18 @@
     }
    ],
    "notes": [],
-   "contact": "Se una data, un nome o una frase è sbagliata, scrivici e la correggiamo.",
-   "contact_link": "Vai alle note legali (in inglese)",
+   "contact": "Se una data, un nome o una frase è sbagliata, basta scriverci e la correggiamo.",
+   "contact_link": "Note legali (in inglese)",
    "what_link": "Che cos’è questo museo"
   },
   {
    "type": "close",
    "id": "enter",
    "nav": "",
-   "h": "Vedi l’Ultima Cena nell’ala",
+   "h": "L’Ultima Cena nell’ala",
    "p": "Questa porta conduce direttamente alla parete del cortile. Il percorso completo comincia nella sala dei quadri, con la Gioconda.",
    "door": {
-    "text": "Entra nel museo",
+    "text": "Ingresso al museo",
     "note": "Ingresso libero, senza account."
    }
   }

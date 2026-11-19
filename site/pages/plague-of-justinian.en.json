@@ -1,0 +1,574 @@
+{
+ "_note": "AN ANSWER PAGE of the questions shelf, from its words and its picture made for it.",
+ "page": {
+  "id": "questions-plague-of-justinian",
+  "wing": "questions",
+  "topic": "plague_of_justinian",
+  "published": "2026-11-19",
+  "checked": "2026-11-18",
+  "og_image": {
+   "file": "questions-plague-of-justinian-og-{lang}-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "lead": {
+   "stem": "questions-plague-of-justinian-lead-{lang}",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 560px, (min-width: 960px) 44vw, calc(100vw - 40px)",
+   "swatches": {
+    "known": "#cb8561",
+    "guessed": "#cb8561"
+   },
+   "narrow": {
+    "stem": "questions-plague-of-justinian-lead-phone-{lang}",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 560
+   }
+  }
+ },
+ "meta": {
+  "title": "Plague of Justinian: who counted the dead | Museum of Ages",
+  "description": "No one knows how many the Plague of Justinian killed. Eyewitness figures and modern estimates side by side, each with its source, and why they differ.",
+  "og_title": "The Plague of Justinian: how many died?",
+  "og_image_alt": "The question over the chart made for this page: the deaths a day in Constantinople as two eyewitnesses gave them, Procopius and John of Ephesus, every bar dashed as a claim."
+ },
+ "labels": {
+  "crumbs": "Breadcrumb",
+  "crumb_home": "Museum",
+  "toc": "On this page",
+  "tag_made": "Made for this page",
+  "no_figure": "no figure",
+  "crumb_here": "Plague of Justinian: how many died?"
+ },
+ "top": {
+  "h1": "The Plague of Justinian: how many died?",
+  "answer": [
+   "No one knows: in Constantinople in 542, ",
+   {
+    "text": "Procopius",
+    "href": "https://archive.org/details/b24750281_0001"
+   },
+   " wrote of 5,000, then 10,000 and more dead a day, and John of Ephesus of 230,000 counted. Estimates run from ",
+   {
+    "text": "a fifth",
+    "href": "https://en.wikipedia.org/wiki/Plague_of_Justinian"
+   },
+   " to ",
+   {
+    "text": "half",
+    "href": "https://istanbultarihi.ist/460-the-population-of-constantinople-in-the-byzantine-period"
+   },
+   " of the city, and ",
+   {
+    "text": "15 to 100 million",
+    "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6926030/"
+   },
+   " for the empire, which some scholars since 2019 call overstated."
+  ],
+  "strength": "When and where it struck: documented. The daily counts: eyewitness claims. Every total: an estimate.",
+  "slot": {
+   "pic": "lead",
+   "tag": "tag_made",
+   "what": "The counts of the dead, each with who gives it. The strip below shows when the plague came back.",
+   "alt": "A chart in three panels, every bar dashed as a claim or an estimate. Deaths a day in Constantinople: 5,000, then 10,000 and more by Procopius, and 5,000 to 16,000 by John of Ephesus, at first among the poor. The dead in all by John of Ephesus: 230,000 counted before the counting stopped, and over 300,000 taken off the streets, beside a city of perhaps 400,000 to 500,000 people. The share of the city who died by modern estimates: about a fifth, 20 to 40 percent, a quarter to half, and half, while some scholars since 2019 argue the toll was overstated. Below, a time line of the plague's return from 541 until the last great outbreak in 746 to 748.",
+   "legend": "picture"
+  },
+  "next": {
+   "page": "questions",
+   "text": "More questions, answered with what is known and what is guessed"
+  }
+ },
+ "faq": [
+  {
+   "q": "How do we know?",
+   "a": "From a few eyewitnesses, from inscriptions and papyri, and since 2013 from the bacterium's own DNA."
+  }
+ ],
+ "blocks": [
+  {
+   "type": "text",
+   "id": "when-and-where-did",
+   "nav": "When and where did the Plague of Justinian break out?",
+   "h": "When and where did the Plague of Justinian break out?",
+   "paras": [
+    [
+     "In Egypt in 541, at the port of Pelusium on the eastern edge of the Nile delta, and in Constantinople, the capital, in the middle of spring 542. \"It started from the Aegyptians who dwell in Pelusium,\" wrote ",
+     {
+      "text": "Procopius",
+      "href": "https://archive.org/details/b24750281_0001"
+     },
+     ", who was in Constantinople when it came. Sources of the time date its start at Pelusium to 541, the ",
+     {
+      "text": "German Wikipedia article",
+      "href": "https://de.wikipedia.org/wiki/Justinianische_Pest"
+     },
+     " notes."
+    ],
+    [
+     "In the capital it ran for four months, about three of them at its worst, by ",
+     {
+      "text": "Procopius's account",
+      "href": "https://archive.org/details/b24750281_0001"
+     },
+     ". The emperor sent soldiers and money to bury the dead no one else could bury, and when the old tombs were full, new graves were dug all around the city. Justinian himself fell ill: \"he too had a swelling of the groin\", ",
+     {
+      "text": "Procopius",
+      "href": "https://archive.org/details/b24750281_0001"
+     },
+     " writes."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "what-caused-the-plague",
+   "nav": "What caused the Plague of Justinian, and what were its symptoms?",
+   "h": "What caused the Plague of Justinian, and what were its symptoms?",
+   "paras": [
+    [
+     "Plague, caused by the bacterium Yersinia pestis: first a fever so mild that no one expected to die of it, then within a day or a few days a swelling in the groin, the armpit or beside the ears, as ",
+     {
+      "text": "Procopius",
+      "href": "https://archive.org/details/b24750281_0001"
+     },
+     " describes it. Its DNA has been read from the teeth of people buried in the 6th century."
+    ],
+    [
+     "In 2013 scientists from Munich, Mainz and the German armed forces confirmed the bacterium in 6th-century graves at Aschheim near Munich, and in 2016 a complete genome was read from Altenerding nearby, the ",
+     {
+      "text": "German article",
+      "href": "https://de.wikipedia.org/wiki/Justinianische_Pest"
+     },
+     " records. In 2025 ",
+     {
+      "text": "a team found it",
+      "href": "https://archaeology.org/news/2025/09/05/ancient-dna-pinpoints-culprit-responsible-for-worlds-first-pandemic/"
+     },
+     " in a mass grave of the mid-6th to early 7th century beneath the old hippodrome of Jerash in Jordan, \"the first site where a plague mass grave has been confirmed both archaeologically and genetically\", the ",
+     {
+      "text": "University of South Florida",
+      "href": "https://www.eurekalert.org/news-releases/1113309"
+     },
+     " said in 2026."
+    ],
+    [
+     "How it spread is still argued. Rats on grain ships from Egypt are the old answer, yet none of the routes a ",
+     {
+      "text": "model study of 2020",
+      "href": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0231256"
+     },
+     " tested, by rat fleas, through the air or both, fits everything the sources describe."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-many-died-across",
+   "nav": "How many died across the empire?",
+   "h": "How many died across the empire?",
+   "paras": [
+    [
+     "No one counted the empire's dead, and the estimates lie tens of millions apart. The figures often quoted, 15 to 100 million dead over two centuries of waves, appear in the ",
+     {
+      "text": "English article",
+      "href": "https://en.wikipedia.org/wiki/Plague_of_Justinian"
+     },
+     ", and a ",
+     {
+      "text": "2025 news piece in Archaeology",
+      "href": "https://archaeology.org/news/2025/09/05/ancient-dna-pinpoints-culprit-responsible-for-worlds-first-pandemic/"
+     },
+     " gives 25 to 100 million. ",
+     {
+      "text": "Lee Mordechai and five colleagues",
+      "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6926030/"
+     },
+     " called such figures the \"maximalist position\" in 2019, when they set out to test them. Earlier estimates \"are founded on a small subset of textual evidence\", they found, and laws, coins, papyri, inscriptions and pollen show no clear sign of a collapse. Some places, such as Constantinople in the first outbreak, may still have suffered higher losses, ",
+     {
+      "text": "they allow",
+      "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6926030/"
+     },
+     "."
+    ],
+    [
+     "Others disagree. Peter Sarris criticises the method and the use of sources in Mordechai and Eisenberg's work, the ",
+     {
+      "text": "English article",
+      "href": "https://en.wikipedia.org/wiki/Plague_of_Justinian"
+     },
+     " notes, and many scholars still follow the sources' picture of a catastrophe in essence, the ",
+     {
+      "text": "German article",
+      "href": "https://de.wikipedia.org/wiki/Justinianische_Pest"
+     },
+     " says."
+    ],
+    [
+     "A model test shows how hard the sources' numbers are to fit together. In 2020 Lauren White and Lee Mordechai ",
+     {
+      "text": "modelled the outbreak in Constantinople",
+      "href": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0231256"
+     },
+     ", assuming 500,000 people. With the values they expected, the bubonic models gave about 315,000 to 340,000 dead, more than even the highest estimates, but over a shorter time than Procopius describes."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "did-the-plague-of",
+   "nav": "Did the Plague of Justinian come back?",
+   "h": "Did the Plague of Justinian come back?",
+   "paras": [
+    [
+     "Yes, in waves for two centuries. Justinian declared it over in 544, but it broke out again in 557, came back in 570 and then returned about every 15 to 25 years until after the middle of the 8th century, the last great outbreak in 746 to 748, the ",
+     {
+      "text": "German article",
+      "href": "https://de.wikipedia.org/wiki/Justinianische_Pest"
+     },
+     " sets out. Most of these waves are \"thinly documented\", the ",
+     {
+      "text": "2019 study",
+      "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6926030/"
+     },
+     " adds."
+    ],
+    [
+     {
+      "text": "Evagrius",
+      "href": "https://www.tertullian.org/fathers/evagrius_4_book4.htm"
+     },
+     " caught it as a schoolboy in Antioch and survived. Later outbreaks took several of his children, his wife and many of his family, and on its fourth visit to the city he lost a daughter and her son."
+    ],
+    [
+     "By the middle of the 8th century, after the plague and other setbacks, perhaps 30,000 to 40,000 people lived in Constantinople, ",
+     {
+      "text": "Yunus Koç",
+      "href": "https://istanbultarihi.ist/460-the-population-of-constantinople-in-the-byzantine-period"
+     },
+     " writes, and he adds that \"all these figures are contested\"."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "know",
+   "nav": "How do we know?",
+   "h": "How do we know?",
+   "paras": [
+    "From a few eyewitnesses, from inscriptions and papyri, and since 2013 from the bacterium's own DNA.",
+    [
+     "Procopius wrote up what he saw in close imitation of Thucydides' account of the plague of Athens, as the ",
+     {
+      "text": "English",
+      "href": "https://en.wikipedia.org/wiki/Plague_of_Justinian"
+     },
+     " and ",
+     {
+      "text": "German",
+      "href": "https://de.wikipedia.org/wiki/Justinianische_Pest"
+     },
+     " Wikipedia articles note. John of Ephesus, a churchman who lived through it too, wrote a long account of it, which survives in a later Syriac chronicle. Scholars trust Procopius more than John, who also gives the death of 99.9 percent of the people, as ",
+     {
+      "text": "White and Mordechai",
+      "href": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0231256"
+     },
+     " note."
+    ],
+    [
+     "A Greek epitaph of 542 records that Bishop Varus of Zora in Syria died of swellings of the loins and armpits, the ",
+     {
+      "text": "German article",
+      "href": "https://de.wikipedia.org/wiki/Justinianische_Pest"
+     },
+     " records. The ",
+     {
+      "text": "2019 study",
+      "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6926030/"
+     },
+     " counted 505 papyri dated to single years from 520 to 570 and found \"neither an observable reduction nor a marked increase\" in their number. The DNA shows where the bacterium was, but not how many it killed, the study stresses."
+    ],
+    "What stays open is the total and the share of the capital that died."
+   ]
+  },
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "The numbers",
+   "h": "The numbers",
+   "unit": "Sources are named as in the list below.",
+   "cols": [
+    "Figure",
+    "Value",
+    "Basis",
+    "Known or guessed",
+    "Source"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "First outbreak",
+      "Pelusium, Egypt, 541",
+      "sources of the time",
+      "Known",
+      "Procopius, Justinianische Pest"
+     ]
+    },
+    {
+     "cells": [
+      "In Constantinople",
+      "from spring 542, four months, about three at its worst",
+      "an eyewitness",
+      "Known",
+      "Procopius"
+     ]
+    },
+    {
+     "cells": [
+      "Deaths a day at the peak",
+      "5,000, then 10,000 and more",
+      "an eyewitness's claim",
+      "Guessed",
+      "Procopius"
+     ]
+    },
+    {
+     "cells": [
+      "Deaths a day at first, among the poor in the streets",
+      "5,000 to 16,000",
+      "an eyewitness's claim",
+      "Guessed",
+      "John of Ephesus"
+     ]
+    },
+    {
+     "cells": [
+      "The dead in all",
+      "230,000 counted before the counting stopped, over 300,000 taken off the streets",
+      "an eyewitness's claim",
+      "Guessed",
+      "John of Ephesus"
+     ]
+    },
+    {
+     "cells": [
+      "People in the city before the plague",
+      "perhaps 400,000 to 500,000, though some scholars say fewer",
+      "grain imports, building",
+      "Guessed",
+      "Koç"
+     ]
+    },
+    {
+     "cells": [
+      "Share of the city who died",
+      "about a fifth, 20 to 40 percent, a quarter to half, or half",
+      "modern estimates",
+      "Guessed",
+      "Plague of Justinian, Constantinople, White and Mordechai, Koç"
+     ]
+    },
+    {
+     "cells": [
+      "A model of the outbreak",
+      "about 315,000 to 340,000 dead, assuming 500,000 people",
+      "a model, not a count",
+      "Guessed",
+      "White and Mordechai"
+     ]
+    },
+    {
+     "cells": [
+      "The whole pandemic",
+      "15 to 100 million",
+      "the high range, as its 2019 critics describe it",
+      "Guessed",
+      "Mordechai and others, Plague of Justinian"
+     ]
+    },
+    {
+     "cells": [
+      "Last great outbreak",
+      "746 to 748",
+      "chronicles",
+      "Known",
+      "Justinianische Pest"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "myths",
+   "nav": "Things often read",
+   "h": "Things often read",
+   "subs": [
+    {
+     "h": "\"Half the world died.\"",
+     "paras": [
+      [
+       {
+        "text": "Procopius",
+        "href": "https://archive.org/details/b24750281_0001"
+       },
+       " wrote that \"the whole human race came near to being annihilated\", in a passage modelled on Thucydides. High modern estimates speak of ",
+       {
+        "text": "a quarter to half",
+        "href": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0231256"
+       },
+       " of the people of the Eastern Roman Empire, some of ",
+       {
+        "text": "up to 60 percent",
+        "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6926030/"
+       },
+       ", and the ",
+       {
+        "text": "2019 study",
+        "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6926030/"
+       },
+       " calls such figures exaggerated."
+      ]
+     ]
+    },
+    {
+     "h": "\"Justinian died of the plague.\"",
+     "paras": [
+      [
+       "He fell ill in 542, ",
+       {
+        "text": "recovered",
+        "href": "https://en.wikipedia.org/wiki/Plague_of_Justinian"
+       },
+       " and ruled until 565."
+      ]
+     ]
+    },
+    {
+     "h": "\"It was the Black Death.\"",
+     "paras": [
+      [
+       "The same bacterium, about 800 years earlier, but a different strain, ",
+       {
+        "text": "now extinct",
+        "href": "https://de.wikipedia.org/wiki/Justinianische_Pest"
+       },
+       "."
+      ]
+     ]
+    },
+    {
+     "h": "\"A mass grave in France proved it.\"",
+     "paras": [
+      [
+       "A result from Sens, reported in 2004 and 2005, is now read as contamination in the laboratory, the ",
+       {
+        "text": "German article",
+        "href": "https://de.wikipedia.org/wiki/Justinianische_Pest"
+       },
+       " notes, and the ",
+       {
+        "text": "2019 study",
+        "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6926030/"
+       },
+       " rejects it too. The proof came from graves in Bavaria in 2013."
+      ]
+     ]
+    },
+    {
+     "h": "\"The painting of Saint Sebastian shows the plague of 542.\"",
+     "paras": [
+      [
+       "Josse Lieferinxe's panel, which the ",
+       {
+        "text": "English Wikipedia article",
+        "href": "https://en.wikipedia.org/wiki/Plague_of_Justinian"
+       },
+       " prints with this plague, tells a legend from a later wave, at Pavia in the 7th century. It was painted between 1497 and 1499, about 800 years later, ",
+       {
+        "text": "the Walters Art Museum's description on Wikimedia Commons",
+        "href": "https://commons.wikimedia.org/wiki/File:Josse_Lieferinxe_-_Saint_Sebastian_Interceding_for_the_Plague_Stricken_-_Walters_371995.jpg"
+       },
+       " says."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "The facts on this page come from these pages, read on 18 November 2026. John of Ephesus is cited from a translation that is in copyright, so no copy is linked and only his figures are given.",
+   "read": [
+    {
+     "text": "Procopius, History of the Wars, books 1 and 2 (the plague in book 2, chapters 22 and 23), translated by H. B. Dewing, Loeb Classical Library, London, 1914 (the Royal College of Physicians' copy, Internet Archive)",
+     "href": "https://archive.org/details/b24750281_0001"
+    },
+    {
+     "text": "John of Ephesus, his account of the plague as preserved in the Syriac Chronicle of Zuqnin (Pseudo-Dionysius of Tel-Mahre, Chronicle, Part III), translated by Witold Witakowski, Liverpool University Press (in copyright, no copy linked)"
+    },
+    {
+     "text": "Evagrius Scholasticus, Ecclesiastical History, book 4, chapter 29, translated by E. Walford, 1846 (tertullian.org)",
+     "href": "https://www.tertullian.org/fathers/evagrius_4_book4.htm"
+    },
+    {
+     "text": "Lee Mordechai, Merle Eisenberg, Timothy P. Newfield, Adam Izdebski, Janet E. Kay, Hendrik Poinar, \"The Justinianic Plague: An inconsequential pandemic?\", PNAS, 17 December 2019",
+     "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6926030/"
+    },
+    {
+     "text": "Lauren A. White and Lee Mordechai, \"Modeling the Justinianic Plague: Comparing hypothesized transmission routes\", PLOS ONE, 2020",
+     "href": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0231256"
+    },
+    {
+     "text": "Yunus Koç, \"The Population of Constantinople in the Byzantine Period\", A History of Istanbul",
+     "href": "https://istanbultarihi.ist/460-the-population-of-constantinople-in-the-byzantine-period"
+    },
+    {
+     "text": "Archaeology, Archaeological Institute of America, \"Ancient DNA Pinpoints Culprit Responsible for World's First Pandemic\", 5 September 2025",
+     "href": "https://archaeology.org/news/2025/09/05/ancient-dna-pinpoints-culprit-responsible-for-worlds-first-pandemic/"
+    },
+    {
+     "text": "University of South Florida, \"USF-led paper sheds light on human impact of first known ancient pandemic\", 20 January 2026 (EurekAlert)",
+     "href": "https://www.eurekalert.org/news-releases/1113309"
+    },
+    {
+     "text": "The Walters Art Museum, Josse Lieferinxe, Saint Sebastian Interceding for the Plague Stricken, its description on Wikimedia Commons",
+     "href": "https://commons.wikimedia.org/wiki/File:Josse_Lieferinxe_-_Saint_Sebastian_Interceding_for_the_Plague_Stricken_-_Walters_371995.jpg"
+    },
+    {
+     "text": "Wikipedia, Plague of Justinian",
+     "href": "https://en.wikipedia.org/wiki/Plague_of_Justinian"
+    },
+    {
+     "text": "Wikipedia, Justinianische Pest (in German)",
+     "href": "https://de.wikipedia.org/wiki/Justinianische_Pest"
+    },
+    {
+     "text": "Wikipedia, Constantinople",
+     "href": "https://en.wikipedia.org/wiki/Constantinople"
+    }
+   ],
+   "contact": "If a date, a figure or a sentence is wrong, a message is enough, and we will correct it.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "museum",
+   "id": "museum",
+   "nav": "In the museum",
+   "h": "In the museum",
+   "text": "Museum of Ages is a digital museum. Its {wing} wing shows {place} on {day}.",
+   "link": "To the {wing} wing"
+  }
+ ]
+}

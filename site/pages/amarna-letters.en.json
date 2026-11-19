@@ -1,0 +1,524 @@
+{
+ "_note": "AN ANSWER PAGE of the questions shelf, from its words and its picture made for it.",
+ "page": {
+  "id": "questions-amarna-letters",
+  "wing": "questions",
+  "topic": "amarna_letters",
+  "published": "2026-11-19",
+  "checked": "2026-11-18",
+  "og_image": {
+   "file": "questions-amarna-letters-og-{lang}-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "lead": {
+   "stem": "questions-amarna-letters-lead-{lang}",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 560px, (min-width: 960px) 44vw, calc(100vw - 40px)",
+   "swatches": {
+    "known": "#cb8561",
+    "guessed": "#cb8561"
+   },
+   "narrow": {
+    "stem": "questions-amarna-letters-lead-phone-{lang}",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 560
+   }
+  }
+ },
+ "meta": {
+  "title": "What are the Amarna letters? | Museum of Ages",
+  "description": "382 clay tablets in cuneiform, first found at Amarna in 1887: who wrote to Egypt's kings, where the letters came from on a map, and where they are today.",
+  "og_title": "What are the Amarna letters?",
+  "og_image_alt": "The question over part of the map made for this page: Alashiya ringed over Cyprus, the cities of the coast, and Assyria and Babylonia with the numbers of their letters."
+ },
+ "labels": {
+  "crumbs": "Breadcrumb",
+  "crumb_home": "Museum",
+  "toc": "On this page",
+  "tag_made": "Made for this page",
+  "no_figure": "no figure",
+  "crumb_here": "What are the Amarna letters?"
+ },
+ "top": {
+  "h1": "What are the Amarna letters?",
+  "answer": [
+   "The Amarna letters are ",
+   {
+    "text": "382 known clay tablets and fragments",
+    "href": "https://humanities.tau.ac.il/hebrew/research/el-amarna-akkadian/el-amarna-introduction"
+   },
+   " in cuneiform, mostly letters in Akkadian between Egypt's court and rulers across the Near East in the mid-14th century BC. ",
+   {
+    "text": "Local people first found them",
+    "href": "https://humanities.tau.ac.il/hebrew/research/el-amarna-akkadian/el-amarna-introduction"
+   },
+   " at Amarna in 1887, and ",
+   {
+    "text": "most are now in Berlin, London and Cairo",
+    "href": "https://en.wikipedia.org/wiki/Amarna_letters"
+   },
+   "."
+  ],
+  "strength": "What they are and where they were found: documented. How many each museum holds: counts differ by source and year.",
+  "slot": {
+   "pic": "lead",
+   "tag": "tag_made",
+   "what": "Where the Amarna letters came from, on today's map, each place with the numbers of the letters to and from it in Knudtzon's edition. Mitanni and Arzawa are named in the box.",
+   "alt": "A map of the eastern Mediterranean and the Near East today, north at the top, with Amarna on the east bank of the Nile, between Cairo and Luxor. Marked are the kingdoms and cities of the letters, with the numbers of their letters in Knudtzon's edition. Babylon stands for Babylonia, 1 to 14, Assur for Assyria, 15 and 16, and Hattusa for the Hittites, 41 to 44. A ring over southern Cyprus marks Alashiya, 33 to 40. Dots mark the cities of Byblos, Tyre, Acre, Megiddo, Shechem, Gezer and Jerusalem, shown again larger below the map. Mitanni, 17 to 30, and Arzawa, 31 and 32, are named in a box beside the map. A list gives where the tablets are today: most in Berlin, London and Cairo.",
+   "legend": "picture",
+   "src": [
+    "Coasts and rivers: ",
+    {
+     "text": "Natural Earth",
+     "href": "https://www.naturalearthdata.com/about/terms-of-use/"
+    },
+    ", public domain. Babylon's position: ",
+    {
+     "text": "OpenStreetMap",
+     "href": "https://www.openstreetmap.org/copyright"
+    },
+    ", under the ",
+    {
+     "text": "ODbL",
+     "href": "https://opendatacommons.org/licenses/odbl/"
+    },
+    "."
+   ]
+  },
+  "next": {
+   "page": "questions",
+   "text": "More questions, answered with what is known and what is guessed"
+  }
+ },
+ "faq": [
+  {
+   "q": "How do we know?",
+   "a": "From the tablets themselves, from what finders told the first museums, and from Petrie's dig."
+  }
+ ],
+ "blocks": [
+  {
+   "type": "text",
+   "id": "who-wrote-the-amarna",
+   "nav": "Who wrote the Amarna letters, and what do they say?",
+   "h": "Who wrote the Amarna letters, and what do they say?",
+   "paras": [
+    [
+     "Kings and city rulers wrote most of them to two kings of Egypt, Amenhotep III and his son Akhenaten, as ",
+     {
+      "text": "Shlomo Izre'el of Tel Aviv University",
+      "href": "https://humanities.tau.ac.il/hebrew/research/el-amarna-akkadian/el-amarna-introduction"
+     },
+     " sums them up, and a few were written in Egypt, to kings abroad and to rulers of cities, the ",
+     {
+      "text": "English Wikipedia article",
+      "href": "https://en.wikipedia.org/wiki/Amarna_letters"
+     },
+     " lists."
+    ],
+    [
+     "The kings of the great powers, Babylonia, Assyria, Mitanni and the Hittites among them, wrote as equals and called one another \"brother\". They traded gold, gifts and princesses, and complained, as the ",
+     {
+      "text": "German article",
+      "href": "https://de.wikipedia.org/wiki/Amarna-Briefe"
+     },
+     " tells it. In EA 1, in ",
+     {
+      "text": "Knudtzon's translation",
+      "href": "https://archive.org/details/dieelamarnatafel01knud"
+     },
+     ", Amenhotep III greets the king of Babylonia as his brother: all is well with me, may all be well with you. Ashur-uballit of Assyria complains of a meagre gift and asks for gold, since in Egypt, he writes, gold is like dust (EA 16). In ",
+     {
+      "text": "EA 4",
+      "href": "https://archive.org/details/dieelamarnatafel01knud"
+     },
+     " the king of Babylonia recalls the answer he got when he asked for an Egyptian princess: from of old, no daughter of a king of Egypt has been given to anyone."
+    ],
+    [
+     "Most of the others are from the rulers of cities in ",
+     {
+      "text": "Syria, Lebanon and Canaan",
+      "href": "https://en.wikipedia.org/wiki/Amarna_letters"
+     },
+     ". They write, as Aziru of Amurru does in ",
+     {
+      "text": "EA 156",
+      "href": "https://archive.org/details/dieelamarnatafel01knud"
+     },
+     ", as servants to the king, their lord, their god and their sun, fall at his feet \"7 times and 7 times\", accuse their neighbours and ask for troops. Rib-Hadda of Byblos pleads for help in over 58 letters, and Abdi-Heba of Jerusalem, Urusalim in the tablets, asks for archers against the Habiru, the ",
+     {
+      "text": "English article",
+      "href": "https://en.wikipedia.org/wiki/Amarna_letters"
+     },
+     " records."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "where-is-amarna",
+   "nav": "Where is Amarna?",
+   "h": "Where is Amarna?",
+   "paras": [
+    [
+     "On the east bank of the Nile in Egypt's Minya province, as the ",
+     {
+      "text": "English article on Amarna",
+      "href": "https://en.wikipedia.org/wiki/Amarna"
+     },
+     " places it, about 270 kilometres south of Cairo as the crow flies. The town of Deir Mawas lies due west, and the villages of el-Till and el-Hagg Qandil on its east side."
+    ],
+    [
+     "The ruins are those of ",
+     {
+      "text": "Akhetaten",
+      "href": "https://en.wikipedia.org/wiki/Amarna"
+     },
+     ", the capital King Akhenaten built in the 14th century BC, abandoned soon after his death. ",
+     {
+      "text": "Flinders Petrie",
+      "href": "https://archive.org/details/tellelamarna00petr"
+     },
+     " traced the find spot in 1891 and 1892 to a block of rooms he numbered 19, which he believed was built to hold the archive."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "where-are-the-amarna",
+   "nav": "Where are the Amarna letters today?",
+   "h": "Where are the Amarna letters today?",
+   "paras": [
+    [
+     "In at least eight collections, most in Berlin, London and Cairo. 202 or 203 are in the Vorderasiatisches Museum in Berlin, 99 in the British Museum, 49 or 50 in the Egyptian Museum in Cairo, 7 in the Louvre, 3 in the Pushkin Museum in Moscow and 1 at the Institute for the Study of Ancient Cultures in Chicago, the ",
+     {
+      "text": "English article",
+      "href": "https://en.wikipedia.org/wiki/Amarna_letters"
+     },
+     " lists, with more in Oxford's Ashmolean Museum, 22 pieces from Petrie's dig in ",
+     {
+      "text": "Knudtzon's count of 1915",
+      "href": "https://archive.org/details/dieelamarnatafel01knud"
+     },
+     ", and a few in the Royal Museums of Art and History in Brussels."
+    ],
+    [
+     "The counts differ by source and year. In 1892 the ",
+     {
+      "text": "British Museum's catalogue",
+      "href": "https://archive.org/details/tellelamarnatabl00bezo"
+     },
+     " gave London 82, bought for it in 1888, Berlin 160, \"a large number being fragments\", and the museum at Giza 60."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-are-the-amarna",
+   "nav": "How are the Amarna letters read and translated?",
+   "h": "How are the Amarna letters read and translated?",
+   "paras": [
+    [
+     "Scholars read them in Knudtzon's edition of 1907 to 1915, ",
+     {
+      "text": "still the standard",
+      "href": "https://humanities.tau.ac.il/hebrew/research/el-amarna-akkadian/el-amarna-introduction"
+     },
+     ", and in William Moran's translations, in French in 1987 and in English in 1992. The tablets are in cuneiform, the script of Mesopotamia, and in Akkadian, the language of diplomacy in that age. In the letters from Canaan it is mixed with the scribes' own Canaanite, which makes them ",
+     {
+      "text": "the most important source",
+      "href": "https://humanities.tau.ac.il/hebrew/research/el-amarna-akkadian/el-amarna-introduction"
+     },
+     " for the Canaanite dialects of the time, Izre'el writes. The two letters exchanged with Arzawa, EA 31 and 32, are in Hittite, and from them Jørgen Alexander Knudtzon recognised Hittite as an Indo-European language in 1902, the ",
+     {
+      "text": "article on him",
+      "href": "https://en.wikipedia.org/wiki/J%C3%B8rgen_Alexander_Knudtzon"
+     },
+     " records."
+    ],
+    [
+     "EA stands for El Amarna, and EA 153 is the 153rd tablet in Knudtzon's order. His edition holds ",
+     {
+      "text": "358 of the 382",
+      "href": "https://humanities.tau.ac.il/hebrew/research/el-amarna-akkadian/el-amarna-introduction"
+     },
+     ", and Anson Rainey published EA 359 to 379 in 1970. Izre'el has put his transliterations of the whole corpus online. Reading the tablets is hard. Old signs and spellings stand beside new ones, and a would-be translator needs Hebrew and Ugaritic as well as Akkadian, the Egyptologist Cyril Aldred wrote in 1968, as the ",
+     {
+      "text": "German article",
+      "href": "https://de.wikipedia.org/wiki/Amarna-Briefe"
+     },
+     " quotes him."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "know",
+   "nav": "How do we know?",
+   "h": "How do we know?",
+   "paras": [
+    "From the tablets themselves, from what finders told the first museums, and from Petrie's dig.",
+    [
+     "The find was told at second hand. The ",
+     {
+      "text": "British Museum's catalogue of 1892",
+      "href": "https://archive.org/details/tellelamarnatabl00bezo"
+     },
+     " says the discovery \"is said to have been accidentally made by a peasant woman\". Other accounts name people digging for antiquities, for earth to spread on their fields or for old bricks, the ",
+     {
+      "text": "German article",
+      "href": "https://de.wikipedia.org/wiki/Amarna-Briefe"
+     },
+     " notes. ",
+     {
+      "text": "Petrie wrote",
+      "href": "https://archive.org/details/tellelamarna00petr"
+     },
+     " that many tablets broke in transport on donkey back, and that what was saved was \"perhaps not half\" of what care could have kept. His own dig found one piece in a room and the rest in two rubbish pits below, \"more of them dictionaries and working materials than actual letters\"."
+    ],
+    [
+     "The dates come from the letters' contents. A clerk's note in hieratic on EA 23 records its arrival in Amenhotep III's 36th year, and the archive \"spans at most about thirty years, perhaps only fifteen or so\", William Moran wrote, as the ",
+     {
+      "text": "English article",
+      "href": "https://en.wikipedia.org/wiki/Amarna_letters"
+     },
+     " quotes him. The clay speaks too: a study by Yuval Goren, Israel Finkelstein and Nadav Na'aman placed Alashiya in southern Cyprus, the ",
+     {
+      "text": "German article",
+      "href": "https://de.wikipedia.org/wiki/Amarna-Briefe"
+     },
+     " reports."
+    ]
+   ]
+  },
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "The numbers",
+   "h": "The numbers",
+   "unit": "Sources are named as in the list below.",
+   "cols": [
+    "Figure",
+    "Value",
+    "Basis",
+    "Known or guessed",
+    "Source"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Tablets and fragments known",
+      "382",
+      "the corpus as itemized today",
+      "Known",
+      "Izre'el, Tel Aviv University"
+     ]
+    },
+    {
+     "cells": [
+      "Letters among them",
+      "about 350, the rest literary and school texts",
+      "the corpus",
+      "Known",
+      "Wikipedia, Amarna letters and Wikipedia, Amarna-Briefe"
+     ]
+    },
+    {
+     "cells": [
+      "In Knudtzon's edition of 1907 to 1915",
+      "358",
+      "the edition",
+      "Known",
+      "Izre'el"
+     ]
+    },
+    {
+     "cells": [
+      "Berlin, Vorderasiatisches Museum",
+      "160 in 1892, 202 or 203 today",
+      "counts of their day",
+      "Known (each for its year)",
+      "British Museum catalogue, 1892, and Wikipedia, Amarna letters"
+     ]
+    },
+    {
+     "cells": [
+      "London, British Museum",
+      "82 in 1892, 99 today",
+      "counts of their day",
+      "Known (each for its year)",
+      "British Museum catalogue, 1892, and Wikipedia, Amarna letters"
+     ]
+    },
+    {
+     "cells": [
+      "Cairo, Egyptian Museum",
+      "60 in 1892, 49 or 50 today",
+      "counts of their day",
+      "Known (each for its year)",
+      "British Museum catalogue, 1892, and Wikipedia, Amarna letters"
+     ]
+    },
+    {
+     "cells": [
+      "Oxford, Ashmolean Museum",
+      "22 in 1915, \"a few\" today",
+      "counts of their day",
+      "Known (each for its year, \"a few\" with no number)",
+      "Knudtzon 1915 and Wikipedia, Amarna letters"
+     ]
+    },
+    {
+     "cells": [
+      "Paris 7, Moscow 3, Chicago 1, Brussels a few",
+      "",
+      "counts as reported",
+      "Known (a few: no number)",
+      "Wikipedia, Amarna letters"
+     ]
+    },
+    {
+     "cells": [
+      "Found by Petrie in 1891 and 1892",
+      "21 or 22 fragments",
+      "his dig, counted differently",
+      "Known",
+      "Wikipedia, Amarna letters and Wikipedia, Amarna-Briefe"
+     ]
+    },
+    {
+     "cells": [
+      "Time the archive spans",
+      "at most about 30 years, perhaps about 15",
+      "the kings named, clerks' notes",
+      "Guessed",
+      "Moran, quoted in Wikipedia, Amarna letters"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "myths",
+   "nav": "Things often read",
+   "h": "Things often read",
+   "subs": [
+    {
+     "h": "\"They are written in hieroglyphs on papyrus.\"",
+     "paras": [
+      "They are written in cuneiform on clay, and nearly all in Akkadian."
+     ]
+    },
+    {
+     "h": "\"Petrie discovered them.\"",
+     "paras": [
+      "Local people found most of them, from 1887 on. Petrie traced the find spot and found more fragments in 1891 and 1892."
+     ]
+    },
+    {
+     "h": "\"The Habiru in the letters are the Hebrews.\"",
+     "paras": [
+      [
+       "The ",
+       {
+        "text": "majority of scholars",
+        "href": "https://en.wikipedia.org/wiki/Habiru"
+       },
+       " today no longer equate the two groups, and whether the words are linked is still debated."
+      ]
+     ]
+    },
+    {
+     "h": "\"They are the oldest letters in the world.\"",
+     "paras": [
+      [
+       "The archive of ",
+       {
+        "text": "Mari",
+        "href": "https://en.wikipedia.org/wiki/Mari,_Syria"
+       },
+       " on the Euphrates, of the 18th century BC, is older, and more than 3,000 of its tablets are letters."
+      ]
+     ]
+    },
+    {
+     "h": "\"The letters give exact dates.\"",
+     "paras": [
+      "They carry no dates of their own. A few have a clerk's note with a king's year, and the years BC depend on the chronology used."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "The facts on this page come from these sources, read on 18 November 2026. The letters' words are given in our own English from Knudtzon's German translation.",
+   "read": [
+    {
+     "text": "Shlomo Izre'el, \"The Amarna Letters: Introduction\", Tel Aviv University, 2000",
+     "href": "https://humanities.tau.ac.il/hebrew/research/el-amarna-akkadian/el-amarna-introduction"
+    },
+    {
+     "text": "J. A. Knudtzon, Die El-Amarna-Tafeln, volume 1, Leipzig, 1915 (in German, the University of Toronto's copy, Internet Archive)",
+     "href": "https://archive.org/details/dieelamarnatafel01knud"
+    },
+    {
+     "text": "C. Bezold and E. A. Wallis Budge, The Tell el-Amarna Tablets in the British Museum, London, 1892 (the Getty Research Institute's copy, Internet Archive)",
+     "href": "https://archive.org/details/tellelamarnatabl00bezo"
+    },
+    {
+     "text": "W. M. Flinders Petrie, Tell el Amarna, London, 1894 (Internet Archive)",
+     "href": "https://archive.org/details/tellelamarna00petr"
+    },
+    {
+     "text": "Wikipedia, Amarna letters",
+     "href": "https://en.wikipedia.org/wiki/Amarna_letters"
+    },
+    {
+     "text": "Wikipedia, Amarna-Briefe (in German)",
+     "href": "https://de.wikipedia.org/wiki/Amarna-Briefe"
+    },
+    {
+     "text": "Wikipedia, Amarna",
+     "href": "https://en.wikipedia.org/wiki/Amarna"
+    },
+    {
+     "text": "Wikipedia, Jørgen Alexander Knudtzon",
+     "href": "https://en.wikipedia.org/wiki/J%C3%B8rgen_Alexander_Knudtzon"
+    },
+    {
+     "text": "Wikipedia, Habiru",
+     "href": "https://en.wikipedia.org/wiki/Habiru"
+    },
+    {
+     "text": "Wikipedia, Mari, Syria",
+     "href": "https://en.wikipedia.org/wiki/Mari,_Syria"
+    }
+   ],
+   "contact": "If a date, a figure or a sentence is wrong, a message is enough, and we will correct it.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "museum",
+   "id": "museum",
+   "nav": "In the museum",
+   "h": "In the museum",
+   "text": "Museum of Ages is a digital museum. Its {wing} wing shows {place} on {day}.",
+   "link": "To the {wing} wing"
+  }
+ ]
+}

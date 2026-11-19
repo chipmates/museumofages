@@ -1,0 +1,493 @@
+{
+ "_note": "THE WORDS of the page on Leonardo da Vinci's bridge, from its words file and the drawing made for it. Every displayed sentence lives here and in the twin file. The two files hold the same structure and the same pictures: each language's frame shows its own drawing. No em dash, no en dash, no semicolon.",
+ "page": {
+  "id": "vinci-bridge",
+  "wing": "vinci",
+  "topic": "bridge",
+  "published": "2026-11-19",
+  "checked": "2026-11-18",
+  "og_image": {
+   "file": "vinci-bridge-og-{lang}-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "frame_en": {
+   "stem": "vinci-bridge-frame-en",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) 46vw, calc(100vw - 40px)",
+   "narrow": {
+    "stem": "vinci-bridge-frame-phone-en",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 600
+   }
+  },
+  "frame_de": {
+   "stem": "vinci-bridge-frame-de",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 588px, (min-width: 960px) 46vw, calc(100vw - 40px)",
+   "narrow": {
+    "stem": "vinci-bridge-frame-phone-de",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 600
+   }
+  },
+  "lead_en": {
+   "stem": "vinci-bridge-lead-en",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 640px) 560px, calc(100vw - 40px)",
+   "narrow": {
+    "stem": "vinci-bridge-lead-phone-en",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 560
+   }
+  },
+  "lead_de": {
+   "stem": "vinci-bridge-lead-de",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 640px) 560px, calc(100vw - 40px)",
+   "narrow": {
+    "stem": "vinci-bridge-lead-phone-de",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 560
+   }
+  }
+ },
+ "meta": {
+  "title": "Da-Vinci-Brücke: Wie hält sie ohne Nagel? | Museum of Ages",
+  "description": "Zwei Entwürfe Leonardos: die Leonardo-Brücke aus Stangen, die ohne Nagel und Seil hält, Schritt für Schritt erklärt, und sein Bogen über das Goldene Horn.",
+  "og_title": "Die Brücke von Leonardo da Vinci: wie die Stangen halten, und der Bogen über das Goldene Horn im Maßstab",
+  "og_image_alt": "Die Frage über der Zeichnung zu dieser Seite: wie Leonardos Brücke aus Stangen hält, als Prinzip, und seine Brücke über das Goldene Horn im Maßstab neben anderen Brücken."
+ },
+ "labels": {
+  "crumbs": "Seitenpfad",
+  "crumb_home": "Museum",
+  "crumb_here": "Leonardos Brücke",
+  "toc": "Auf dieser Seite",
+  "tag_made": "Für diese Seite gemacht"
+ },
+ "top": {
+  "h1": "Was ist die Brücke von Leonardo da Vinci?",
+  "answer": [
+   "Gemeint ist meist einer von zwei Entwürfen Leonardos: die Leonardo-Brücke aus verflochtenen Stangen, die sich gegenseitig halten, im ",
+   {
+    "text": "Codex Atlanticus",
+    "href": "https://codex-atlanticus.ambrosiana.it/"
+   },
+   " um 1485 bis 1487, oder eine Brücke aus einem einzigen Bogen über das Goldene Horn in Istanbul, etwa 350 Meter lang, im ",
+   {
+    "text": "Manuskript L",
+    "href": "https://leonardo-online.mpiwg-berlin.mpg.de/de/buch-113-leonardo-da-vinci-1502-spannweite-paris-ms-l-institut-de-france-paris-fol-66r.html"
+   },
+   " um 1502. Gebaut wurde zu seinen Lebzeiten, soweit bekannt, keine der beiden."
+  ],
+  "answer_more": "Beide Zeichnungen und die Maße des Bogens: von seiner Hand. Das Jahr 1502: die meisten Fachleute, nach einer datierten Notiz. Das Jahr seines Briefs: umstritten.",
+  "frame": {
+   "pic": "frame_de",
+   "title": "Die Brücke über das Goldene Horn",
+   "tag": "tag_made",
+   "what": "von der Seite gesehen, maßstabsgetreu, nach den Maßen in Leonardos Notiz.",
+   "alt": "Leonardos Brücke über das Goldene Horn in Istanbul im Maßstab: ein einziger Bogen, etwa 235 Meter über dem Wasser und etwa 41 Meter hoch, insgesamt etwa 350 Meter lang.",
+   "src": [
+    "Zeichnung: Museum of Ages, CC BY-SA 4.0. Der Bogen nach Leonardos Skizze im Manuskript L, Blatt 66 recto, wie J. P. Richter sie 1883 druckte."
+   ]
+  },
+  "door_first": true,
+  "door": {
+   "text": "Ins Museum",
+   "note": "Eintritt frei, kein Konto.",
+   "leads": "Die Tür führt an den Anfang des Leonardo-Flügels. Dort stehen die Maschinen, die das Museum in Code nachgebaut hat, keine der beiden Brücken darunter."
+  }
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "id": "poles",
+   "nav": "Wie die Stangen halten",
+   "h": "Wie hält die Leonardo-Brücke, und wie baut man sie?",
+   "paras": [
+    [
+     "Durch ihr eigenes Gewicht: Jede Stange liegt auf einer anderen und trägt eine dritte, so presst die Last die Stangen aneinander, und die Reibung hält sie fest, ohne Nagel, Dübel oder Seil, wie eine ",
+     {
+      "text": "Bauanleitung des Holztechnikums",
+      "href": "https://www.holztechnikum.at/wp-content/uploads/2017/07/bauanleitungleonardoneu.pdf"
+     },
+     " erklärt."
+    ],
+    [
+     "Leonardo zeichnete sie um 1485 bis 1487, so der Standardkatalog, auf zwei Blätter des Codex Atlanticus, Blatt 69a recto und 71 verso, heute in der ",
+     {
+      "text": "Veneranda Biblioteca Ambrosiana",
+      "href": "https://codex-atlanticus.ambrosiana.it/"
+     },
+     " in Mailand. Sie zeigen eine hölzerne Behelfsbrücke für ein Heer, und seine Notiz sagt, man solle sie flechten. Ob seine eigene Fassung Seile hatte, ist umstritten: Ein Museum in Vinci sieht Stämme, die ohne Seil stehen, ",
+     {
+      "text": "ein Vortrag des Mathematikers Hans Humenberger von 2008",
+      "href": "https://www.numa.uni-linz.ac.at/Talks/JKS/2008/Humenberger_Vortrag.pdf"
+     },
+     " dagegen Seile zur Befestigung. Dass zu seinen Lebzeiten eine gebaut wurde, ist nicht belegt."
+    ],
+    "Schulklassen bauen sie heute auf dem Tisch nach, aus gleich langen Stäben, etwa aus flachen Holzklötzchen oder Eisstielen. Bei dieser Bauweise braucht die kleinste Brücke sechs Stäbe, zwei Paare und zwei Querstäbe, und jede weitere Verbindung zwei Längs- und zwei Querstäbe mehr, wie Humenberger vorrechnet. Die Schritte:",
+    {
+     "points": [
+      [
+       "1.",
+       "Zwei Stäbe liegen flach auf dem Tisch, nebeneinander und mit etwas Abstand: das erste Paar."
+      ],
+      [
+       "2.",
+       "Ein Querstab liegt quer über diesem Paar, ein Stück vor seinen freien Enden."
+      ],
+      [
+       "3.",
+       "Ein zweites Paar, enger gesetzt, damit es zwischen das erste passt, liegt mit einem Ende auf diesem Querstab und läuft zwischen den Stäben des ersten Paars unter deren freien Enden hindurch."
+      ],
+      [
+       "4.",
+       "Diese freien Enden werden angehoben, ein zweiter Querstab kommt darunter quer über das zweite Paar, und die Enden werden darauf abgelegt."
+      ],
+      [
+       "5.",
+       "Jetzt ist die Verbindung verriegelt: Jedes Paar trägt einen Querstab, der das andere Paar trägt, und das Gewicht presst alles fester zusammen."
+      ],
+      [
+       "6.",
+       "Jede weitere Verbindung wiederholt die Schritte 2 bis 4, weite und enge Paare im Wechsel. Mit jeder Verbindung biegt sich die Brücke weiter zum Bogen, beide Enden auf dem Tisch, und ihre Endstäbe stehen steiler. Rutschen sie ab, hat die Brücke eine Verbindung zu viel."
+      ]
+     ]
+    }
+   ],
+   "pic": {
+    "pic": "lead_de",
+    "shape": "whole",
+    "tag": "tag_made",
+    "what": "wie die Stangen halten, als Prinzip, und die Brücke über das Goldene Horn im Maßstab neben anderen Brücken, nach den Maßen in Leonardos Notiz.",
+    "alt": "Eine Zeichnung in zwei Teilen. Im ersten: wie Leonardos Brücke aus Stangen hält. Stangenpaare stützen sich über Querstangen gegenseitig, jede Querstange liegt auf einem Paar und trägt das Ende des nächsten, ohne Nagel und Seil. Im zweiten: seine Brücke über das Goldene Horn in Istanbul im Maßstab neben anderen Brücken: ein einziger Bogen, etwa 235 Meter über dem Wasser und etwa 41 Meter hoch, insgesamt etwa 350 Meter lang, neben den Bögen von Trezzo sull'Adda, 72 Meter, und Verona, 48,7 Meter, der Fußgängerbrücke in Ås in Norwegen, 40 Meter, und der heutigen Galatabrücke, 490 Meter lang."
+   }
+  },
+  {
+   "type": "text",
+   "id": "why-not-built",
+   "nav": "Warum nie gebaut",
+   "h": "Warum wurde die Brücke über das Goldene Horn nie gebaut?",
+   "paras": [
+    [
+     "Das weiß niemand, denn eine Antwort von Sultan Bayezid II. ist nicht erhalten, wie ",
+     {
+      "text": "Orlandi und Giannantonio",
+      "href": "https://www.rmoa.unina.it/9516/"
+     },
+     " in einer Studie von 2025 festhalten."
+    ],
+    "Leonardo bot sie dem Sultan in einem Brief an, der nur als osmanisch-türkische Abschrift erhalten ist, vermutlich eine Übersetzung, im Archiv des Topkapı-Palasts in Istanbul. 1951 gefunden und 1952 veröffentlicht, ist er auf den 3. Juli datiert, aber ohne Jahreszahl: Die meisten Fachleute nennen 1502 oder 1503, manche ein früheres Jahr. Darin bietet er mehrere Bauwerke an, darunter diese Brücke und eine zweite Brücke.",
+    "Einige Jahre später, erzählen Condivi und Vasari, bat der Sultan Michelangelo um eine Brücke über das Goldene Horn, doch Michelangelo reiste nicht hin."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "would-it-stand",
+   "nav": "Hätte sie gehalten",
+   "h": "Hätte die Brücke über das Goldene Horn gehalten?",
+   "paras": [
+    [
+     "Sehr wahrscheinlich, als Bogen aus Stein: 2019 bauten Ingenieure am MIT ",
+     {
+      "text": "ein Modell im Maßstab 1 zu 500",
+      "href": "https://news.mit.edu/2019/leonardo-da-vinci-bridge-test-1010"
+     },
+     " aus losen Blöcken, und es stand ohne Mörtel."
+    ],
+    [
+     "Die Maße nennt seine Notiz in Spiegelschrift, hier nach der ",
+     {
+      "text": "Umschrift von 1890",
+      "href": "https://archive.org/details/lesmanuscritsdel05lo"
+     },
+     " in unserer Übersetzung: „Brücke von Pera nach Konstantinopel. 40 Braccia breit, 70 Braccia hoch über dem Wasser, 600 Braccia lang, nämlich 400 über dem Meer, und 200 liegen an Land und bilden sich selbst ihre Widerlager.“ Mit dem Florentiner Braccio von 58,3 Zentimetern sind das etwa 350 Meter Länge, davon 235 über dem Wasser, und 41 Meter Höhe, genug, wie sein Brief verspricht, für ein Schiff mit gesetztem Segel. Der längste Bogen vor ihm, bei Trezzo sull'Adda, maß 72 Meter. Wo man damals zehn oder mehr Pfeiler gebraucht hätte, so das MIT, zeichnete Leonardo einen einzigen flachen Bogen, dessen Enden sich gegen seitliches Schwanken wie ein Schwalbenschwanz spreizen."
+    ],
+    "Das Team am MIT, Karly Bast und Michelle Xie mit ihrem Professor John Ochsendorf, druckte 126 Blöcke im 3D-Drucker, setzte sie auf ein Gerüst und nahm das Gerüst dann weg: Das Modell trug sich selbst. Als ein Auflager vom anderen weggerückt wurde, wie es nachgebender Boden tun könnte, verformte es sich nur leicht, bis es ganz auseinandergezogen einstürzte. Leonardo wollte ohne Gerüst bauen, merken Orlandi und Giannantonio an, und Wind oder Stein in voller Größe hat das Modell nicht geprüft.",
+    "Leonardos Notiz nennt keinen Baustoff, und laut dem Bericht des MIT macht auch sein Brief dazu keine Angaben, doch Basts Abschlussarbeit spricht von einer gemauerten Brücke. Das MIT schloss, nur Stein könne einen solchen Bogen tragen. Andere Deutungen setzen einen Holzbogen auf steinerne Pfeiler, darunter die des Schweizer Ingenieurs Fritz Stüssi, der die Brücke 1953 für baubar hielt, wie Orlandi und Giannantonio berichten. Ein Jahr zuvor hatte der Kunsthistoriker Ludwig Heydenreich sie eine reine Utopie genannt. Der Baustoff bleibt umstritten."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "built-today",
+   "nav": "Wo sie heute steht",
+   "h": "Steht Leonardos Brücke heute irgendwo?",
+   "paras": [
+    "In voller Größe nicht: Über das Goldene Horn führt keine Brücke nach seiner Skizze, doch eine kleinere überquert seit 2001 die Europastraße 18 in Ås in Norwegen, und Leonardo-Brücken aus Stäben entstehen in Schulklassen.",
+    [
+     "Angestoßen hat die Brücke in Ås der Maler Vebjørn Sand, gebaut Norwegens Straßenbehörde, laut der englischsprachigen ",
+     {
+      "text": "Wikipedia",
+      "href": "https://en.wikipedia.org/wiki/Vebj%C3%B8rn_Sand_Da_Vinci_Project"
+     },
+     " und ",
+     {
+      "text": "Bridgeinfo.net",
+      "href": "https://www.bridgeinfo.broer.no/bridge/index.php?ID=3"
+     },
+     ": etwa 100 Meter lang, mit 40 Metern Hauptspannweite, aus Brettschichtholz. Über das Goldene Horn selbst führt heute die ",
+     {
+      "text": "Galatabrücke",
+      "href": "https://fr.wikipedia.org/wiki/Pont_de_Galata"
+     },
+     ", 490 Meter lang, die fünfte an dieser Stelle seit 1845."
+    ]
+   ]
+  },
+  {
+   "type": "question",
+   "id": "how-we-know",
+   "nav": "Woher wir es wissen",
+   "h": "Woher wissen wir das?",
+   "answer": "Aus Leonardos Blättern, aus einer Abschrift seines Briefs und aus Versuchen unserer Zeit.",
+   "known": [
+    [
+     "Der Bogen steht auf Blatt 66 recto des Manuskripts L, eines Taschennotizbuchs von etwa 10 mal 7 Zentimetern in der Bibliothèque de l'Institut de France. Im Notizbuch steht die Seite kopfüber. Die Rückseite des Blatts trägt eine Notiz vom 6. September 1502, darum datieren die meisten Fachleute die Skizze in dieses Jahr. Ravaisson-Mollien gab das Notizbuch ",
+     {
+      "text": "1890 als Faksimile",
+      "href": "https://archive.org/details/lesmanuscritsdel05lo"
+     },
+     " heraus."
+    ]
+   ],
+   "open": "Offen bleiben das Jahr des Briefs, der Baustoff, den Leonardo meinte, welchen Braccio er benutzte und wo genau die Brücke das Wasser gequert hätte.",
+   "links": [
+    {
+     "text": "Die Maschinen auf seinen Blättern, und welche davon je gebaut wurden",
+     "page": "inventions"
+    }
+   ]
+  },
+  {
+   "type": "ledger",
+   "id": "numbers",
+   "nav": "Die Zahlen",
+   "h": "Die Zahlen",
+   "intro": "Jede Zahl mit ihrer Grundlage, wie sicher sie ist, und ihrer Quelle.",
+   "cols": [
+    "Zahl",
+    "Grundlage",
+    "Belegt oder vermutet",
+    "Quelle"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Leonardo-Brücke, um 1485 bis 1487",
+      "datiert vom Standardkatalog",
+      "belegt (Blätter), vermutet (Datum)",
+      "Veneranda Biblioteca Ambrosiana"
+     ]
+    },
+    {
+     "cells": [
+      "Skizze für das Goldene Horn, um 1502",
+      "eine Notiz vom 6. September 1502 auf der Rückseite",
+      "belegt (Blatt), vermutet (Jahr)",
+      "Ravaisson-Mollien 1890"
+     ]
+    },
+    {
+     "cells": [
+      "Länge 600 Braccia, etwa 350 m (400 über dem Wasser, etwa 235 m, 200 an Land, etwa 117 m). Höhe 70, etwa 41 m. Breite 40, etwa 23 m",
+      "seine Notiz, mit dem Florentiner Braccio",
+      "belegt (Braccia), vermutet (Meter)",
+      "Richter 1883, Ravaisson-Mollien 1890"
+     ]
+    },
+    {
+     "cells": [
+      "Der Braccio: 58,3 cm in Florenz, 59,5 cm in Mailand",
+      "welchen er meinte, ist nicht bekannt. Der Mailänder ergibt etwa 2 Prozent mehr",
+      "vermutet",
+      "Italian units of measurement"
+     ]
+    },
+    {
+     "cells": [
+      "Spannweite nach dem MIT: etwa 280 m",
+      "eigene Zahl des MIT, ihre Grundlage nicht angegeben",
+      "vermutet",
+      "MIT News 2019"
+     ]
+    },
+    {
+     "cells": [
+      "Bögen vor seinem: Trezzo sull'Adda 72 m, der längste, und Castelvecchio in Verona 48,7 m",
+      "gebaut in den 1370er Jahren (1416 zerstört) und den 1350er Jahren",
+      "belegt",
+      "Trezzo sull'Adda Bridge, Castelvecchio Bridge"
+     ]
+    }
+   ],
+   "note": "Die Quellen heißen wie in der Liste unten."
+  },
+  {
+   "type": "text",
+   "id": "myths",
+   "nav": "Was oft zu lesen ist",
+   "h": "Was oft zu lesen ist",
+   "subs": [
+    {
+     "h": "„Die Brücke über das Goldene Horn war 240 Meter lang, mit 280 Metern Spannweite.“",
+     "paras": [
+      "240 Meter sind ungefähr der Teil über dem Wasser, 280 die Zahl des MIT. Seine Notiz nennt 600 Braccia insgesamt, etwa 350 Meter."
+     ]
+    },
+    {
+     "h": "„Der Sultan lehnte sie als unmöglich ab.“",
+     "paras": [
+      "Eine Antwort des Sultans ist nicht erhalten, den Grund kennt niemand. Manche Fachleute deuten das Schweigen als Absage."
+     ]
+    },
+    {
+     "h": "„Die Leonardo-Brücke entstand 1502 für Cesare Borgia.“",
+     "paras": [
+      "Ihre Blätter stammen von etwa 1485 bis 1487. Die oft genannten Jahre 1478 bis 1518 umfassen den ganzen Codex Atlanticus."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Quellen",
+   "h": "Quellen",
+   "intro": "Die Fakten auf dieser Seite stammen aus diesen Seiten, gelesen am 18. November 2026.",
+   "editions_h": "Wo die Blätter liegen",
+   "editions": [
+    {
+     "name": "Veneranda Biblioteca Ambrosiana",
+     "text": "In Mailand: Codex Atlanticus, Blatt 69a recto und 71 verso.",
+     "links": [
+      {
+       "label": "Der Codex Atlanticus online",
+       "href": "https://codex-atlanticus.ambrosiana.it/"
+      }
+     ]
+    },
+    {
+     "name": "Bibliothèque de l'Institut de France",
+     "text": "In Paris: Manuskript L, Blatt 66 recto.",
+     "links": [
+      {
+       "label": "Manuskript L, auf Französisch",
+       "href": "https://minerva.bibliotheque-institutdefrance.fr/expositions/exhibitions/12-carnet-l2"
+      }
+     ]
+    }
+   ],
+   "read": [
+    {
+     "text": "J. P. Richter, The Literary Works of Leonardo da Vinci, Band II, 1883, Abschnitt 1109 und Tafel CX (auf Englisch, Internet Archive)",
+     "href": "https://archive.org/details/literaryworksofl02leonuoft"
+    },
+    {
+     "text": "Ch. Ravaisson-Mollien, Les manuscrits de Léonard de Vinci, Band 5, 1890, das Manuskript L als Faksimile mit Umschrift (auf Französisch, Internet Archive)",
+     "href": "https://archive.org/details/lesmanuscritsdel05lo"
+    },
+    {
+     "text": "Max-Planck-Institut für Wissenschaftsgeschichte, Leonardo Online, „Spannweite“, Manuskript L, Blatt 66 recto",
+     "href": "https://leonardo-online.mpiwg-berlin.mpg.de/de/buch-113-leonardo-da-vinci-1502-spannweite-paris-ms-l-institut-de-france-paris-fol-66r.html"
+    },
+    {
+     "text": "L. Orlandi und R. Giannantonio, „Il ponte di Galata: la 'Monna Lisa dei ponti'“, Achademia Leonardi Vinci 5, 2025 (auf Italienisch, frei zugänglich an der Universität Neapel)",
+     "href": "https://www.rmoa.unina.it/9516/"
+    },
+    {
+     "text": "D. L. Chandler, „Engineers put Leonardo da Vinci's bridge design to the test“, MIT News, 9. Oktober 2019 (auf Englisch)",
+     "href": "https://news.mit.edu/2019/leonardo-da-vinci-bridge-test-1010"
+    },
+    {
+     "text": "K. M. Bast, Feasibility study of Leonardo da Vinci's bridge proposal over the Golden Horn in Istanbul, MIT, 2019 (der Katalogeintrag, auf Englisch)",
+     "href": "https://dspace.mit.edu/handle/1721.1/123216"
+    },
+    {
+     "text": "H. Humenberger, Die Leonardo-Brücke: Mathematische und praktische Aktivitäten rund um die Leonardo-Brücke, Vortragsfolien, Kepler-Symposium, Linz, 12. November 2008",
+     "href": "https://www.numa.uni-linz.ac.at/Talks/JKS/2008/Humenberger_Vortrag.pdf"
+    },
+    {
+     "text": "Holztechnikum, Leonardobrücke: Konstruktion, Grundgedanke, Bauanleitung (PDF)",
+     "href": "https://www.holztechnikum.at/wp-content/uploads/2017/07/bauanleitungleonardoneu.pdf"
+    },
+    {
+     "text": "Wikipedia, Leonardo-da-Vinci-Brücke",
+     "href": "https://de.wikipedia.org/wiki/Leonardo-da-Vinci-Br%C3%BCcke"
+    },
+    {
+     "text": "Wikipedia, Vebjørn Sand Da Vinci Project (auf Englisch)",
+     "href": "https://en.wikipedia.org/wiki/Vebj%C3%B8rn_Sand_Da_Vinci_Project"
+    },
+    {
+     "text": "Bridgeinfo.net, Da Vinci Bridge (auf Englisch)",
+     "href": "https://www.bridgeinfo.broer.no/bridge/index.php?ID=3"
+    },
+    {
+     "text": "Wikipedia, Trezzo sull'Adda Bridge (auf Englisch)",
+     "href": "https://en.wikipedia.org/wiki/Trezzo_sull%27Adda_Bridge"
+    },
+    {
+     "text": "Wikipedia, Castelvecchio Bridge (auf Englisch)",
+     "href": "https://en.wikipedia.org/wiki/Castelvecchio_Bridge"
+    },
+    {
+     "text": "Wikipedia, Italian units of measurement (auf Englisch)",
+     "href": "https://en.wikipedia.org/wiki/Italian_units_of_measurement"
+    },
+    {
+     "text": "Wikipédia, Pont de Galata (auf Französisch)",
+     "href": "https://fr.wikipedia.org/wiki/Pont_de_Galata"
+    }
+   ],
+   "contact": "Ist ein Datum, eine Zahl oder ein Satz falsch, genügt eine Nachricht, und wir korrigieren es.",
+   "contact_link": "Zum Impressum",
+   "what_link": "Was dieses Museum ist"
+  },
+  {
+   "type": "close",
+   "id": "enter",
+   "nav": "",
+   "h": "Die Maschinen im Museum ansehen",
+   "p": "Keine der beiden Brücken hat das Museum gebaut. Die Maschinen, die es in Code nachgebaut hat, stehen im Leonardo-Flügel, in der Maschinenhalle, im Hof und im Haus, jede als Rekonstruktion beschriftet, und diese Tür führt an den Anfang des Flügels.",
+   "door": {
+    "text": "Ins Museum",
+    "note": "Eintritt frei, kein Konto."
+   }
+  }
+ ]
+}

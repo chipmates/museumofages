@@ -7,7 +7,7 @@
   "share_alt": "La vite aerea nella sala delle macchine: un’asta di legno con una vela di lino a spirale nel sole basso del pomeriggio, con la sua ombra sul muro. Una ricostruzione basata su un foglio di Leonardo da Vinci, costruita in codice."
  },
  "first": {
-  "lede": "Un percorso di {count:stops} tappe, con circa {count:works} opere che puoi guardare da vicino: {count:pictures} quadri quasi a grandezza naturale, {count:machines} macchine, {count:sheets} fogli di anatomia e i suoi quaderni.",
+  "lede": "Un percorso di {count:stops} tappe, con circa {count:works} opere che si possono guardare da vicino: {count:pictures} quadri quasi a grandezza naturale, {count:machines} macchine, {count:sheets} fogli di anatomia e i suoi quaderni.",
   "piece": {
    "title": "Un percorso attraverso l’ala",
    "kind": "Dal film",
@@ -90,7 +90,7 @@
     "name": "walk",
     "script": "walk.js",
     "pause": "Pausa",
-    "play": "Avvia",
+    "play": "Avviare",
     "keep_kind": true
    }
   }
@@ -133,7 +133,7 @@
  },
  "intro": {
   "p": "L’ala mostra {shows:place} il {shows:day}: la sua ultima casa, in un giorno della sua vita. Il giorno è documentato: Antonio de Beatis lo ha annotato nel suo diario. Era il segretario del cardinale Luigi d’Aragona, che quel giorno è venuto in visita. L’ora l’abbiamo scelta noi. Accanto alla casa ci sono le sale del museo per i suoi quadri, le sue macchine, i suoi quaderni e i suoi fogli di anatomia.",
-  "film": "Vai da una tappa all’altra attraverso un film, fatto con il software del museo stesso. Nella maggior parte delle tappe puoi avvicinarti alle opere.",
+  "film": "Il percorso va da una tappa all’altra attraverso un film, fatto con il software del museo stesso. Nella maggior parte delle tappe ci si può avvicinare alle opere.",
   "stills": "Le immagini delle sale in questa pagina vengono da quel film."
  },
  "rooms": [
@@ -178,7 +178,7 @@
      },
      "title": "La Dama con l’ermellino, da vicino",
      "kind": "Riproduzione",
-     "what": "il quadro come lo mostra l’ala quando ti avvicini. La barra in basso a sinistra indica dieci centimetri sul quadro. La scritta in alto a sinistra è un’iscrizione più tarda sulla tavola.",
+     "what": "il quadro come lo mostra l’ala da vicino. La barra in basso a sinistra indica dieci centimetri sul quadro. La scritta in alto a sinistra è un’iscrizione più tarda sulla tavola.",
      "src": "Conservato nel Muzeum Narodowe w Krakowie, Museo Czartoryski, Cracovia. Opera di pubblico dominio. Riproduzione da Wikimedia Commons.",
      "alt": "Una schermata dell’ala: la Dama con l’ermellino su fondo nero, una giovane donna con un abito rosso e blu che tiene in braccio un ermellino bianco. In basso a sinistra del quadro, una barra che indica dieci centimetri."
     }
@@ -190,7 +190,7 @@
    "note": "Macchine che si muovono",
    "hang": "wide",
    "p": [
-    "{Word:hall} macchine stanno qui, costruite in codice dai suoi fogli: la vite aerea, le porte di una chiusa, una vite di Archimede, un laminatoio, un tornio per forare, un volano, un cuscinetto a sfere, una mitragliera a tre file di canne e la camera oscura nella sua nicchia buia. Puoi mettere in moto ognuna e guardarla da vicino, con il foglio da cui viene. Due di questi tipi, le porte di chiusa e la vite di Archimede, erano in uso già prima di lui."
+    "{Word:hall} macchine stanno qui, costruite in codice dai suoi fogli: la vite aerea, le porte di una chiusa, una vite di Archimede, un laminatoio, un tornio per forare, un volano, un cuscinetto a sfere, una mitragliera a tre file di canne e la camera oscura nella sua nicchia buia. Ognuna si può mettere in moto e guardare da vicino, con il foglio da cui viene. Due di questi tipi, le porte di chiusa e la vite di Archimede, erano in uso già prima di lui."
    ],
    "plates": [
     {
@@ -247,7 +247,7 @@
      },
      "title": "Una pagina del suo quaderno, da vicino",
      "kind": "Riproduzione",
-     "what": "la vista da vicino del tavolo di lettura, sulla pagina con la vite aerea, dal facsimile a stampa del {count:volume_year}. Puoi sfogliare così ogni pagina del libro.",
+     "what": "la vista da vicino del tavolo di lettura, sulla pagina con la vite aerea, dal facsimile a stampa del {count:volume_year}. Così si sfoglia ogni pagina del libro.",
      "src": "Manoscritto B, foglio 83 verso, conservato nella Bibliothèque de l’Institut de France, Parigi, Ms 2173. Mostrato nel facsimile di Charles Ravaisson Mollien, Les manuscrits de Léonard de Vinci, volume II, Parigi 1883. Di pubblico dominio.",
      "alt": "Una schermata del tavolo di lettura dell’ala: la pagina del facsimile a stampa vista da vicino, un foglio color seppia con il disegno della vite aerea e righe di scrittura a specchio, chiaro sul tavolo scuro."
     }
@@ -290,7 +290,7 @@
    "h": "La casa",
    "note": "Il Clos Lucé, la sua ultima casa",
    "p": [
-    "La sua ultima casa, il Clos Lucé ad Amboise, è ricostruita in codice da piante e fotografie. Entri in una sola stanza, la sala grande: sul tavolo due strumenti tratti dai suoi fogli, vicino al muro il leone meccanico. La cappella, la finestra dello studio e la camera nord le vedi da fuori."
+    "La sua ultima casa, il Clos Lucé ad Amboise, è ricostruita in codice da piante e fotografie. Si entra in una sola stanza, la sala grande: sul tavolo due strumenti tratti dai suoi fogli, vicino al muro il leone meccanico. La cappella, la finestra dello studio e la camera nord si vedono da fuori."
    ],
    "plates": [
     {
@@ -353,7 +353,7 @@
   ]
  },
  "holds": {
-  "lead": "Ecco che cosa contiene l’ala, nell’ordine del percorso: ogni quadro, ogni macchina, ogni pagina e ogni foglio a cui puoi avvicinarti.",
+  "lead": "Ecco che cosa contiene l’ala, nell’ordine del percorso: ogni quadro, ogni macchina, ogni pagina e ogni foglio a cui ci si può avvicinare.",
   "groups": [
    {
     "id": "paintings",
@@ -437,11 +437,11 @@
        "script": "machine.js",
        "tag_a": "Linee",
        "tag_b": "Costruita",
-       "hint": "Trascina la linea per confrontare, la macchina per farla girare.",
-       "slider_label": "Mostra più le linee o più la macchina costruita",
+       "hint": "Trascinare la linea per confrontare, la macchina per farla girare.",
+       "slider_label": "Mostrare più le linee o più la macchina costruita",
        "canvas_label": "La vite aerea in 3D. I tasti freccia sinistra e destra la fanno girare.",
        "pause": "Pausa",
-       "play": "Falla girare"
+       "play": "Farla girare"
       }
      },
      "title": "{museum:fly_chapter}",
@@ -486,7 +486,7 @@
     "h": "I quaderni",
     "note": "Un tavolo e pagine da sfogliare",
     "p": [
-     "Sul tavolo di lettura c’è un’edizione a stampa del {count:volume_year} con due suoi quaderni. Puoi sfogliare tutte le sue {count:volume_pages} pagine, e {count:volume_sides} mostrano le facciate dei quaderni stessi, nella sua scrittura a specchio, da destra a sinistra.",
+     "Sul tavolo di lettura c’è un’edizione a stampa del {count:volume_year} con due suoi quaderni. Si possono sfogliare tutte le sue {count:volume_pages} pagine, e {count:volume_sides} mostrano le facciate dei quaderni stessi, nella sua scrittura a specchio, da destra a sinistra.",
      "{count:topics} temi raccolgono {count:topic_pages} pagine dei suoi quaderni. Su uno scaffale ci sono altri {word:shelf_books} libri dei suoi appunti da sfogliare, {count:shelf_sides} facciate in tutto."
     ],
     "plates": [
@@ -645,7 +645,7 @@
      },
      {
       "k": "La finestra dello studio",
-      "v": "Visibile da fuori. L’ala mette la visita del {shows:day} dietro questa finestra. È una nostra ipotesi: il diario non nomina stanze. Sotto puoi aprire un suo foglio: un diluvio.",
+      "v": "Visibile da fuori. L’ala mette la visita del {shows:day} dietro questa finestra. È una nostra ipotesi: il diario non nomina stanze. Sotto si apre un suo foglio: un diluvio.",
       "stop": "study"
      },
      {
@@ -730,7 +730,7 @@
   "dir": "Il cortile della tomba",
   "note": "L’ultima tappa",
   "h": "L’ala finisce sotto le stelle",
-  "p": "All’ultima tappa, il cortile della tomba, si fa buio e guardi in alto. Le stelle sono come erano sopra il Clos Lucé alle {word:hour} di sera del {shows:day}. Le abbiamo calcolate stella per stella da un catalogo stellare, per il giorno indicato dal diario e per l’ora che abbiamo scelto noi. Il tramonto mostra una comune sera di ottobre, non quella sera, e la stella cadente è un’aggiunta del museo.",
+  "p": "All’ultima tappa, il cortile della tomba, si fa buio e lo sguardo va in alto. Le stelle sono come erano sopra il Clos Lucé alle {word:hour} di sera del {shows:day}. Le abbiamo calcolate stella per stella da un catalogo stellare, per il giorno indicato dal diario e per l’ora che abbiamo scelto noi. Il tramonto mostra una comune sera di ottobre, non quella sera, e la stella cadente è un’aggiunta del museo.",
   "plate": {
    "pic": {
     "stem": "grave-court",

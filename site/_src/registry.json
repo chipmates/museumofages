@@ -1,5 +1,5 @@
 {
-  "_note": "THE REGISTRY: every collection and every wing of the site, read by every page. One key per wing (the museum app's own slug), in the order the wings opened: the last open one is the newest and hangs largest. Keys that start with an underscore are not wings. state: open, making or planned. An open wing needs every key below, its two data files in wings/ and its pictures: the build stops otherwise. name, page, door, about, never_say and claim_phrase are the six keys the topic pages' build reads (pages/build.py, WINGS_FILE). note: the wing's one colour, written here because a wing is data: the build checks its lightness and chroma against the palette's bounds. wall: deep, wall or lifted. pictures: hero is the first picture of the wing's own page, card its plate on the wall of wings, share its link preview. landing is optional: another first picture for the landing's place when this wing is the newest, with its words under landing.piece in the wing's data. Without it the landing hangs hero. A first screen takes only a frame of the museum's own build in which no reproduction can be seen. counts: only for a wing without a facts file (wings/<wing>.facts.json), which otherwise holds every number. out: optional, the wing's one way to another site of the organisation ({lang} is the page's language, or English where the other site does not speak it: speaks). Its line of words is out.line in the wing's data, and both stand on the page about the museum. when: the year the wing shows, a number, negative before the year one: the menu lists the wings in the order of time. count: optional, the name of the wing's page in the museum's own count (the build writes it into ../functions/_count/lists.js); without it the wing's key. topics: the wing's topic pages (pages/<name>.<lang>.json), each with its slug, name and line per language; langs, optional, the languages it is written in (always English; a language without it links the English page), else every built language; count, optional, its name in the count, which then never changes with its address; from, optional, the group of the wing's page whose works the page shows and under whose list the wing's page links it.",
+  "_note": "THE REGISTRY: every collection and every wing of the site, read by every page. One key per wing (the museum app's own slug), in the order the wings opened: the last open one is the newest and hangs largest. Keys that start with an underscore are not wings. state: open, making, planned or shelf (a shelf of answer pages that never opens: its entry's own note says what it is). An open wing needs every key below, its two data files in wings/ and its pictures: the build stops otherwise. name, page, door, about, never_say and claim_phrase are the six keys the topic pages' build reads (pages/build.py, WINGS_FILE). note: the wing's one colour, written here because a wing is data: the build checks its lightness and chroma against the palette's bounds. wall: deep, wall or lifted. pictures: hero is the first picture of the wing's own page, card its plate on the wall of wings, share its link preview. landing is optional: another first picture for the landing's place when this wing is the newest, with its words under landing.piece in the wing's data. Without it the landing hangs hero. A first screen takes only a frame of the museum's own build in which no reproduction can be seen. counts: only for a wing without a facts file (wings/<wing>.facts.json), which otherwise holds every number. out: optional, the wing's one way to another site of the organisation ({lang} is the page's language, or English where the other site does not speak it: speaks). Its line of words is out.line in the wing's data, and both stand on the page about the museum. when: the year the wing shows, a number, negative before the year one: the menu lists the wings in the order of time. count: optional, the name of the wing's page in the museum's own count (the build writes it into ../functions/_count/lists.js); without it the wing's key. topics: the wing's topic pages (pages/<name>.<lang>.json), each with its slug, name and line per language; langs, optional, the languages it is written in (always English; a language without it links the English page), else every built language; count, optional, its name in the count, which then never changes with its address; from, optional, the group of the wing's page whose works the page shows and under whose list the wing's page links it.",
   "_collections": [
     {
       "slug": "lives",
@@ -134,7 +134,7 @@
       },
       "offer": {
         "en": "1517. Leonardo’s last house, rebuilt. You can walk in.",
-        "de": "1517. Leonardos letztes Haus, nachgebaut. Du kannst hineingehen."
+        "de": "1517. Leonardos letztes Haus, nachgebaut. Die Tür steht offen."
       },
       "sky": {
         "en": "We computed this sky.",
@@ -453,6 +453,22 @@
         "langs": ["en", "de"],
         "count": "life",
         "from": "life"
+      },
+      {
+        "slug": {
+          "en": "bridge",
+          "de": "bruecke"
+        },
+        "name": {
+          "en": "What is Leonardo da Vinci's bridge",
+          "de": "Was ist die Brücke von Leonardo da Vinci"
+        },
+        "line": {
+          "en": "Two Leonardo designs: a bridge of poles that holds without nails or rope, explained step by step, and an arch for the Golden Horn in Istanbul, to scale.",
+          "de": "Zwei Entwürfe Leonardos: die Leonardo-Brücke aus Stangen, die ohne Nagel und Seil hält, Schritt für Schritt erklärt, und sein Bogen über das Goldene Horn."
+        },
+        "langs": ["en", "de"],
+        "count": "bridge"
       }
     ],
     "out": {
@@ -2185,5 +2201,350 @@
       ]
     ],
     "claim_phrase": "biggest ever|largest ever|größte[rns]? aller zeiten"
+  },
+  "questions": {
+    "_note": "A shelf (state shelf): answer pages under a name of their own, for no wing. It never opens: it stands on no wall, in no film, no menu, no landing and no wing's strip (it has no link), and nothing counts it as a wing, open or in the making. Like a wing in the making it has pages only (pages_only), in its own languages (langs), and its topics are its answer pages. Its own page lists every answer page of the site, of every entry (pages/build.py, every). legend: the two marks under each answer page's picture, in the locked note's own words, and the sentence that ties them to the four grades on the page about the museum, with its link's words. what: its one line and quiet link on the page about the museum, in its languages only.",
+    "state": "shelf",
+    "pages_only": true,
+    "langs": [
+      "en",
+      "de"
+    ],
+    "count": "questions",
+    "name": {
+      "en": "Questions",
+      "de": "Fragen"
+    },
+    "page": {
+      "en": "questions",
+      "de": "de/fragen"
+    },
+    "about": {
+      "@type": "Thing",
+      "name": "History"
+    },
+    "legend": {
+      "known": {
+        "en": "Known",
+        "de": "Belegt"
+      },
+      "guessed": {
+        "en": "Guessed",
+        "de": "Vermutet"
+      },
+      "grades": {
+        "en": "Known matches the grade Documented, and Guessed covers Reconstructed and Conjectural.",
+        "de": "Belegt entspricht dem Grad Dokumentiert. Vermutet umfasst hier auch den Grad Rekonstruiert."
+      },
+      "grades_link": {
+        "en": "The four grades",
+        "de": "Die vier Grade"
+      }
+    },
+    "what": {
+      "line": {
+        "en": "Some pages answer one question each, with the numbers and the sources.",
+        "de": "Einige Seiten beantworten je eine Frage, mit den Zahlen und den Quellen."
+      },
+      "link": {
+        "en": "Questions and answers",
+        "de": "Fragen und Antworten"
+      }
+    },
+    "never_say": [
+      [
+        "\\bbeing built\\b|\\bin the making\\b|\\bwill open\\b|\\bcoming soon\\b|\\bsoon\\b(?! after)|\\bwird (?:gerade |noch )?gebaut\\b|\\bim entstehen\\b|\\beröffnet bald\\b|\\bdemnächst\\b|\\bbald\\b(?! darauf)|\\bin kürze\\b|\\bopens? (?:in|on|this|next)\\b|\\böffnet (?:im|am|in|diese|nächste)",
+        "a shelf page answers its question and announces nothing"
+      ],
+      [
+        "\\bthis museum shows\\b|\\bunser museum zeigt\\b|\\bour walk\\b|\\brundgang\\b|\\bthe stop\\b|\\bdie station\\b|\\bwill show\\b|\\bzeigen wird\\b|\\bwird zeigen\\b",
+        "what the museum shows stands only in the museum block, from the registry"
+      ],
+      [
+        "(?<!\\{wing\\} )(?<!\\{)\\bwings?\\b|\\bflügel(?:n|s)?\\b(?! \\{wing\\})",
+        "a shelf names no wing: its museum block and its way out name the open one by {wing}"
+      ],
+      [
+        "\\b(?:\\d+|two|three|four|five|six|seven|eight|nine|ten|zwei|drei|vier|fünf|sechs|sieben|acht|neun|zehn) (?:new |more |further |other |neue |weitere |andere )?(?:wings|museums|places|flügel|museen|orte)\\b",
+        "a shelf page counts no wings, museums or places"
+      ],
+      [
+        "\\bfree (?:entry|to visit)\\b|\\beintritt (?:ist )?frei\\b|\\bkostenlos\\b|\\bgratis\\b",
+        "a shelf page says nothing of entry: its museum block links the open wing"
+      ],
+      [
+        "enter the (?:museum|wing)|walk in\\b|ins museum|den flügel betreten|\\bbetritt\\b|geh(?:e|st)? hinein",
+        "a shelf page has no way in: its museum block links the open wing"
+      ],
+      [
+        "\\b3[ -]?d\\b|\\bdreidimensional",
+        "a shelf promises no 3D: it is a page of answers"
+      ]
+    ],
+    "claim_phrase": "",
+    "topics": [
+      {
+        "slug": {
+          "en": "where-was-constantinople",
+          "de": "konstantinopel-heute"
+        },
+        "name": {
+          "en": "Where was Constantinople?",
+          "de": "Konstantinopel heute: Wo lag die Stadt?"
+        },
+        "line": {
+          "en": "Constantinople is today's Istanbul. Its walls drawn on today's streets, what still stands, how big it was and how many lived there, known and guessed.",
+          "de": "Konstantinopel ist das heutige Istanbul. Die Karte zeigt die Mauern auf den Straßen von heute: was noch steht, was verloren ist, wie viele dort lebten."
+        },
+        "count": "where_was_constantinople",
+        "about": {
+          "@type": "Place",
+          "name": {
+            "en": "Constantinople",
+            "de": "Konstantinopel"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 41.0085,
+            "longitude": 28.98
+          }
+        }
+      },
+      {
+        "slug": {
+          "en": "was-atlantis-real",
+          "de": "gab-es-atlantis"
+        },
+        "name": {
+          "en": "Was Atlantis real?",
+          "de": "Gab es Atlantis wirklich?"
+        },
+        "line": {
+          "en": "Plato is the only source for Atlantis: what his dialogues say, his ring city drawn to his own numbers, and why Santorini and the Richat rings do not fit.",
+          "de": "Die einzige Quelle für Atlantis ist Platon: was Timaios und Kritias erzählen, die Ringstadt nach seinen Zahlen gezeichnet, und was die Geologie dazu sagt."
+        },
+        "count": "was_atlantis_real",
+        "about": {
+          "@type": "CreativeWork",
+          "name": {
+            "en": "Critias",
+            "de": "Kritias"
+          },
+          "author": {
+            "@type": "Person",
+            "name": {
+              "en": "Plato",
+              "de": "Platon"
+            }
+          }
+        }
+      },
+      {
+        "slug": {
+          "en": "how-many-died-in-pompeii",
+          "de": "pompeji-tote"
+        },
+        "name": {
+          "en": "How many people died in Pompeii, and did anyone survive?",
+          "de": "Wie viele Menschen starben in Pompeji, und wer überlebte?"
+        },
+        "line": {
+          "en": "About 2,000 died inside Pompeii's walls, the park estimates, and most people had left. The counts drawn to one scale, and the survivors traced by name.",
+          "de": "Rund 2.000 Tote innerhalb der Mauern, schätzt der Archäologische Park, die meisten Einwohner waren fort. Die Zahlen im selben Maßstab gezeichnet."
+        },
+        "count": "how_many_died_in_pompeii",
+        "about": {
+          "@type": "Event",
+          "name": {
+            "en": "Eruption of Vesuvius, AD 79",
+            "de": "Ausbruch des Vesuvs, 79 n. Chr."
+          }
+        }
+      },
+      {
+        "slug": {
+          "en": "nefertiti-bust",
+          "de": "nofretete-berlin"
+        },
+        "name": {
+          "en": "Nefertiti's bust: where was it found, and why is it in Berlin?",
+          "de": "Wo wurde die Nofretete gefunden, und warum steht sie in Berlin?"
+        },
+        "line": {
+          "en": "Found in 1912 in a sculptor's house at Amarna, sent to Berlin in the 1913 division of finds: the find spot drawn from the dig's plans, both sides' words.",
+          "de": "1912 in einer Bildhauerwerkstatt in Amarna gefunden, 1913 nach Berlin gekommen: der Fundort nach den Plänen der Grabung gezeichnet, beide Seiten mit Datum."
+        },
+        "count": "nefertiti_bust",
+        "about": {
+          "@type": "VisualArtwork",
+          "name": {
+            "en": "Bust of Nefertiti",
+            "de": "Büste der Nofretete"
+          }
+        }
+      },
+      {
+        "slug": {
+          "en": "where-is-babylon-today",
+          "de": "babylon-heute"
+        },
+        "name": {
+          "en": "Where is Babylon today?",
+          "de": "Wo liegt Babylon heute?"
+        },
+        "line": {
+          "en": "Babylon's ruins lie in Iraq, beside Hillah. The excavated city drawn on today's ground, which walls are modern rebuilds, and where its finds went.",
+          "de": "Babylons Ruinen liegen im Irak, bei Hilla. Die ausgegrabene Stadt auf einer Karte von heute, die modernen Wiederaufbauten und wo die Funde sind."
+        },
+        "count": "where_is_babylon_today",
+        "about": {
+          "@type": "Place",
+          "name": "Babylon",
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 32.54,
+            "longitude": 44.42
+          }
+        }
+      },
+      {
+        "slug": {
+          "en": "what-are-chinampas",
+          "de": "was-sind-chinampas"
+        },
+        "name": {
+          "en": "What are chinampas?",
+          "de": "Was sind Chinampas?"
+        },
+        "line": {
+          "en": "Fields built up from the lake bed and held by stakes and willows, never afloat. One drawn to scale beside a person, with what is known and what is guessed.",
+          "de": "Felder, vom Seegrund aus aufgeschichtet, gehalten von Pfählen und Weiden. Eines im Querschnitt neben einem Menschen, Belegtes und Vermutetes getrennt."
+        },
+        "count": "what_are_chinampas",
+        "about": {
+          "@type": "Thing",
+          "name": "Chinampa"
+        }
+      },
+      {
+        "slug": {
+          "en": "plague-of-justinian",
+          "de": "justinianische-pest"
+        },
+        "name": {
+          "en": "The Plague of Justinian: how many died?",
+          "de": "Die Justinianische Pest: Wie viele starben?"
+        },
+        "line": {
+          "en": "No one knows how many the Plague of Justinian killed. Eyewitness figures and modern estimates side by side, each with its source, and why they differ.",
+          "de": "Wie viele die Justinianische Pest tötete, weiß niemand. Augenzeugen und heutige Schätzungen nebeneinander, mit Quelle, und warum sie auseinandergehen."
+        },
+        "count": "plague_of_justinian",
+        "about": {
+          "@type": "Event",
+          "name": {
+            "en": "Plague of Justinian",
+            "de": "Justinianische Pest"
+          }
+        }
+      },
+      {
+        "slug": {
+          "en": "amarna-letters",
+          "de": "amarna-briefe"
+        },
+        "name": {
+          "en": "What are the Amarna letters?",
+          "de": "Was sind die Amarna-Briefe?"
+        },
+        "line": {
+          "en": "382 clay tablets in cuneiform, first found at Amarna in 1887: who wrote to Egypt's kings, where the letters came from on a map, and where they are today.",
+          "de": "382 Tontafeln in Keilschrift, ab 1887 in Amarna gefunden: wer an Ägyptens Könige schrieb, woher die Briefe kamen (mit Karte) und wo sie heute liegen."
+        },
+        "count": "amarna_letters",
+        "about": {
+          "@type": "CreativeWork",
+          "name": {
+            "en": "Amarna letters",
+            "de": "Amarna-Briefe"
+          }
+        }
+      },
+      {
+        "slug": {
+          "en": "where-was-atlantis",
+          "de": "wo-lag-atlantis"
+        },
+        "name": {
+          "en": "Where was Atlantis?",
+          "de": "Wo lag Atlantis?"
+        },
+        "line": {
+          "en": "Plato put Atlantis outside the Pillars of Heracles. Places proposed since, from the Eye of the Sahara to Santorini, mapped with who proposed each and when.",
+          "de": "Platon verortet Atlantis außerhalb der Säulen des Herakles. Orte, die seither vorgeschlagen wurden, vom Auge der Sahara bis Santorin, auf einer Karte."
+        },
+        "count": "where_was_atlantis",
+        "about": {
+          "@type": "CreativeWork",
+          "name": {
+            "en": "Critias",
+            "de": "Kritias"
+          },
+          "author": {
+            "@type": "Person",
+            "name": {
+              "en": "Plato",
+              "de": "Platon"
+            }
+          }
+        }
+      },
+      {
+        "slug": {
+          "en": "pompeii-casts",
+          "de": "gipsabguesse-von-pompeji"
+        },
+        "name": {
+          "en": "Are the Pompeii bodies real?",
+          "de": "Sind die Toten von Pompeji versteinert?"
+        },
+        "line": {
+          "en": "The people were real, the figures are plaster. How a cast was made, drawn step by step, how many there are, and what DNA from five of them showed in 2024.",
+          "de": "Versteinert wurde niemand: Die Figuren sind Gipsabgüsse echter Menschen. Wie ein Abguss entsteht, Schritt für Schritt gezeichnet, und was die DNA zeigte."
+        },
+        "count": "pompeii_casts",
+        "about": {
+          "@type": "Thing",
+          "name": {
+            "en": "Plaster casts of Pompeii",
+            "de": "Gipsabgüsse von Pompeji"
+          }
+        }
+      },
+      {
+        "slug": {
+          "en": "where-was-tenochtitlan",
+          "de": "wo-lag-tenochtitlan"
+        },
+        "name": {
+          "en": "Where was Tenochtitlan, and how big was it?",
+          "de": "Wo lag Tenochtitlan?"
+        },
+        "line": {
+          "en": "Under Mexico City's historic centre, in western Lake Texcoco. Most estimates of its people run from 75,000 to 400,000, side by side with who gives each.",
+          "de": "Unter der Altstadt von Mexiko-Stadt, im Westen des Texcoco-Sees. Die meisten Schätzungen nennen 75.000 bis 400.000 Einwohner, hier jede mit ihrer Quelle."
+        },
+        "count": "where_was_tenochtitlan",
+        "about": {
+          "@type": "Place",
+          "name": "Tenochtitlan",
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 19.4349,
+            "longitude": -99.1318
+          }
+        }
+      }
+    ]
   }
 }

@@ -41,7 +41,7 @@
   "og_image_credit": "Reproducción: captura del C2RMF, vía Wikimedia Commons"
  },
  "labels": {
-  "crumbs": "Estás aquí",
+  "crumbs": "Ruta de navegación",
   "crumb_home": "Museo",
   "crumb_here": "Mona Lisa",
   "toc": "En esta página",
@@ -56,7 +56,9 @@
   "door": {
    "text": "Visitarla en el ala",
    "note": "Entrada libre, sin cuenta.",
-   "leads": "Esta puerta te lleva al ala de Leonardo, a la parada «Una mujer llamada Lisa»."
+   "leads": "Esta puerta lleva al ala de Leonardo, a la parada «Una mujer llamada Lisa».",
+   "still": "card",
+   "still_room": "house"
   }
  },
  "blocks": [
@@ -230,8 +232,8 @@
      "known": "Ni siquiera su propio colaborador creyó que eso probara nada, y los historiadores del arte se mostraron escépticos. La nota de 1503 nombra a la retratada: Lisa."
     },
     {
-     "name": "Sus ojos te siguen",
-     "claim": "Dicen que sus ojos te siguen por la sala.",
+     "name": "Sus ojos siguen al espectador",
+     "claim": "Dicen que sus ojos siguen al espectador por la sala.",
      "known": "Ese efecto existe en los retratos que miran de frente, pero no en ella. En un estudio de 2019 de la Universidad de Bielefeld, quienes la observaban veían su mirada desviada, en promedio, unos 15 grados a la derecha de ellos, demasiado para sentirse mirados."
     },
     {
@@ -359,7 +361,7 @@
      "href": "https://www.heraldnet.com/2007/10/21/nation-world-briefly-mona-lisa-once-had-eyebrows-and-eyelashes/"
     }
    ],
-   "contact": "Si una fecha, un nombre o una frase están mal, escríbenos y lo corregiremos.",
+   "contact": "Si una fecha, un nombre o una frase están mal, basta con escribirnos y lo corregiremos.",
    "contact_link": "Ir al aviso legal",
    "what_link": "Qué es este museo"
   },
@@ -368,7 +370,7 @@
    "id": "enter",
    "nav": "",
    "h": "Visitarla en el ala",
-   "p": "Esta puerta te lleva al ala de Leonardo, directamente a la parada de la Mona Lisa en la sala de los cuadros, la segunda del recorrido. Allí cuelga su reproducción, entre los demás cuadros de Leonardo.",
+   "p": "Esta puerta lleva al ala de Leonardo, directamente a la parada de la Mona Lisa en la sala de los cuadros, la segunda del recorrido. Allí cuelga su reproducción, entre los demás cuadros de Leonardo.",
    "door": {
     "text": "Entrar en el museo",
     "note": "Entrada libre, sin cuenta."

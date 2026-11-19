@@ -136,7 +136,7 @@
   "og_image_alt": "Nuestro Brachiosaurus de lado, al tamaño del esqueleto de Chicago, 24,0 m a lo largo de la columna, con el cuello largo levantado en una curva suave y lo alto de la cabeza a 11,5 m, con el ángulo del cuello elegido por nosotros. Las patas delanteras son más largas que las traseras, la cola no toca el suelo, y una persona gris de 1,70 m podría pasar por debajo de su vientre."
  },
  "labels": {
-  "crumbs": "Estás aquí",
+  "crumbs": "Ruta de navegación",
   "crumb_home": "Museo",
   "crumb_here": "Brachiosaurus",
   "toc": "En esta página",
@@ -620,7 +620,7 @@
      "href": "https://museumofages.org/es/animales/dinosaurio-mas-grande/"
     }
    ],
-   "contact": "Si una cifra o un museo está mal, escríbenos y lo corregiremos.",
+   "contact": "Si una cifra o un museo está mal, basta con escribirnos y lo corregiremos.",
    "contact_link": "Ir al aviso legal",
    "what_link": "Qué es este museo"
   },

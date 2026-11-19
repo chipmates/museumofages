@@ -1,0 +1,527 @@
+{
+ "_note": "AN ANSWER PAGE of the questions shelf, from its words and its picture made for it.",
+ "page": {
+  "id": "questions-nefertiti-bust",
+  "wing": "questions",
+  "topic": "nefertiti_bust",
+  "published": "2026-11-19",
+  "checked": "2026-11-17",
+  "og_image": {
+   "file": "questions-nefertiti-bust-og-{lang}-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "lead": {
+   "stem": "questions-nefertiti-bust-lead-{lang}",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 560px, (min-width: 960px) 44vw, calc(100vw - 40px)",
+   "swatches": {
+    "known": "#cb8561",
+    "guessed": "#cb8561"
+   },
+   "narrow": {
+    "stem": "questions-nefertiti-bust-lead-phone-{lang}",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 560
+   }
+  }
+ },
+ "meta": {
+  "title": "Nefertiti bust: where found, why in Berlin | Museum of Ages",
+  "description": "Found in 1912 in a sculptor's house at Amarna, sent to Berlin in the 1913 division of finds: the find spot drawn from the dig's plans, both sides' words.",
+  "og_title": "Nefertiti's bust: where was it found, and why is it in Berlin?",
+  "og_image_alt": "The question over the drawing made for this page, in three parts: a map of Egypt with Amarna, the plot of house P 47.2, and room 19, where the bust was found."
+ },
+ "labels": {
+  "crumbs": "Breadcrumb",
+  "crumb_home": "Museum",
+  "toc": "On this page",
+  "tag_made": "Made for this page",
+  "no_figure": "no figure",
+  "crumb_here": "Nefertiti's bust"
+ },
+ "top": {
+  "h1": "Nefertiti's bust: where was it found, and why is it in Berlin?",
+  "answer": [
+   "A German dig led by Ludwig Borchardt found it on 6 December 1912 in a sculptor's house at Amarna, Egypt, as ",
+   {
+    "text": "his report of 1923",
+    "href": "https://archive.org/details/gri_33125009524253"
+   },
+   " records. The bust is in Berlin because the 1913 ",
+   {
+    "text": "division of finds",
+    "href": "https://www.preussischer-kulturbesitz.de/en/newsroom/press/press-releases/detail-page/article/2024/03/27/first-exhibition-of-the-bust-of-nefertiti-100-years-ago.html"
+   },
+   " gave it to the German side, and ",
+   {
+    "text": "Egyptian officials",
+    "href": "https://en.wikipedia.org/wiki/Nefertiti_Bust"
+   },
+   " have asked for it back since 1924."
+  ],
+  "strength": "The find and the division: documented. Whether Egypt's inspector was fully informed at the division: disputed.",
+  "slot": {
+   "pic": "lead",
+   "tag": "tag_made",
+   "what": "Where the bust was found: Amarna in Egypt, the sculptor's house P 47.2, and its room 19, after Ludwig Borchardt's plans of 1923.",
+   "alt": "A drawing in three parts. A map of Egypt marks Amarna on the east bank of the Nile, about 270 kilometres south of Cairo as the crow flies. A plan of the sculptor's plot at Amarna picks out house P 47.2 and its room 19. The room, 2.0 by 5.5 metres, is drawn large, with the spot where the bust lay, 0.20 metres from the east wall and 0.35 metres from the north wall, and a dashed shelf on the wall facing the door, where the excavator thought it had stood.",
+   "legend": "picture",
+   "src": [
+    "Map data: ",
+    {
+     "text": "OpenStreetMap",
+     "href": "https://www.openstreetmap.org/copyright"
+    },
+    ", under the ",
+    {
+     "text": "ODbL",
+     "href": "https://opendatacommons.org/licenses/odbl/"
+    },
+    "."
+   ]
+  },
+  "next": {
+   "page": "questions",
+   "text": "More questions, answered with what is known and what is guessed"
+  }
+ },
+ "faq": [
+  {
+   "q": "Why is the division of 1913 disputed?",
+   "a": "Because the two sides tell it differently: the Stiftung Preußischer Kulturbesitz, which runs the Berlin museums, says the division was open and correct, while Egyptian archaeologists such as Zahi Hawass and Monica Hanna say the bust's worth was hidden from Egypt's side."
+  },
+  {
+   "q": "Has Egypt asked for the bust back?",
+   "a": "Egyptian officials have, more than once, but whether the Egyptian state ever made an official request is itself disputed."
+  },
+  {
+   "q": "How do we know?",
+   "a": "From the excavator's own report, from the papers of the division, and from what each side has said, with its date."
+  }
+ ],
+ "blocks": [
+  {
+   "type": "text",
+   "id": "who-found-the-bust",
+   "nav": "Who found the bust, and where exactly?",
+   "h": "Who found the bust, and where exactly?",
+   "paras": [
+    [
+     "The German Oriental Society's dig at Amarna, led by Ludwig Borchardt and paid for by the Berlin merchant James Simon, found it in house P 47.2, in a narrow room of 2 by 5.5 metres where a sculptor kept his models. Borchardt's ",
+     {
+      "text": "report of 1923",
+      "href": "https://archive.org/details/gri_33125009524253"
+     },
+     " tells how. Called to the house soon after the midday break on 6 December 1912, he let his first foreman, Mohammed Ahmed es-Senussi, dig there alone while he directed him from close by. About knee-high in the rubble a painted neck came to light. \"Lebensgroße bunte Büste der Königin\", life-size painted bust of the queen, was called out and written down, and the work went on by hand. The bust was almost whole: the ears were chipped, and the left eye had no inlay. After midnight Borchardt wrote in his diary: \"Beschreiben nützt nichts, ansehen\", describing is no use, look."
+    ],
+    [
+     "An inscribed piece of ivory from a pit in the courtyard names the sculptor Thutmose, so the house is taken to be his workshop. Borchardt called that very likely, though not proven. ",
+     {
+      "text": "Amarna",
+      "href": "https://en.wikipedia.org/wiki/Amarna"
+     },
+     ", on the east bank of the Nile about 270 kilometres south of Cairo as the crow flies, was the city King Akhenaten built in the 14th century BC, and ",
+     {
+      "text": "Nefertiti",
+      "href": "https://en.wikipedia.org/wiki/Nefertiti"
+     },
+     " was his chief wife."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "why-is-the-division",
+   "nav": "Why is the division of 1913 disputed?",
+   "h": "Why is the division of 1913 disputed?",
+   "paras": [
+    "Because the two sides tell it differently: the Stiftung Preußischer Kulturbesitz, which runs the Berlin museums, says the division was open and correct, while Egyptian archaeologists such as Zahi Hawass and Monica Hanna say the bust's worth was hidden from Egypt's side.",
+    [
+     "Under the rules of the time, a dig's finds were split between Egypt and the excavators. Borchardt made up the two halves, and Gustave Lefebvre, sent by Egypt's Antiquities Service, chose one on 20 January 1913. The half with a painted house altar showing the royal family went to Cairo, the half with the bust to James Simon, who gave it to the Berlin museums in 1920. Why Lefebvre chose as he did is not known, the ",
+     {
+      "text": "German Wikipedia article",
+      "href": "https://de.wikipedia.org/wiki/B%C3%BCste_der_Nofretete"
+     },
+     " notes."
+    ],
+    {
+     "points": [
+      [
+       "The Stiftung Preußischer Kulturbesitz, 2023:",
+       [
+        "the split was then half and half, photographs of the bust were at hand and the boxes stood open, so \"there can therefore be no question of deception\", ",
+        {
+         "text": "its statement",
+         "href": "https://www.preussischer-kulturbesitz.de/en/news-detail-page/article/2023/01/13/zur-fundgeschichte-nofretete-und-pergamonaltar.html"
+        },
+        " says. In March 2010 the director of Berlin's Egyptian Museum, Friederike Seyfried, said after checking all the papers that the division followed the rules of its time, ",
+        {
+         "text": "German Wikipedia",
+         "href": "https://de.wikipedia.org/wiki/B%C3%BCste_der_Nofretete"
+        },
+        " records. Only in 1914, the same article adds, did Egypt's new head of antiquities, Pierre Lacau, reserve unique pieces for Egypt."
+       ]
+      ],
+      [
+       "Al-Monitor, reporting from Cairo, 2020:",
+       [
+        "the rules of the time stated that \"exceptional antiquities discovered by foreign excavation teams would be handed over to Egypt\", ",
+        {
+         "text": "it wrote",
+         "href": "https://www.al-monitor.com/originals/2020/10/egypt-germany-nefertiti-bust-claim-stolen-antiquities.html"
+        },
+        "."
+       ]
+      ],
+      [
+       "The Egyptologist Monica Hanna, 2024:",
+       [
+        "Borchardt deceived Egyptian authorities by not describing the bust accurately, she holds, as ",
+        {
+         "text": "Egyptian Streets reported",
+         "href": "https://egyptianstreets.com/2024/09/09/egyptian-archaeologist-zahi-hawass-campaigns-for-the-return-of-nefertitis-bust/"
+        },
+        "."
+       ]
+      ],
+      [
+       "A letter of August 1924:",
+       [
+        "Bruno Güterbock of the German Oriental Society, who was at the division, ",
+        {
+         "text": "wrote in confidence",
+         "href": "https://de.wikipedia.org/wiki/B%C3%BCste_der_Nofretete"
+        },
+        " that Borchardt had managed \"die Büste für uns zu retten\", to save the bust for us."
+       ]
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "has-egypt-asked-for",
+   "nav": "Has Egypt asked for the bust back?",
+   "h": "Has Egypt asked for the bust back?",
+   "paras": [
+    "Egyptian officials have, more than once, but whether the Egyptian state ever made an official request is itself disputed.",
+    {
+     "points": [
+      [
+       "1924:",
+       [
+        "after the bust was first shown, Pierre Lacau ",
+        {
+         "text": "asked for it back",
+         "href": "https://de.wikipedia.org/wiki/B%C3%BCste_der_Nofretete"
+        },
+        ", and Egypt's government joined him. He did not question the division, but gave moral grounds. In 1930 the Prussian ministry turned down an exchange for two other statues."
+       ]
+      ],
+      [
+       "January 2011:",
+       [
+        "Zahi Hawass, secretary general of Egypt's Supreme Council of Antiquities, asked for the bust's return in a letter to the foundation's president, backed, he said, by Egypt's prime minister and culture minister, as ",
+        {
+         "text": "German Wikipedia",
+         "href": "https://de.wikipedia.org/wiki/B%C3%BCste_der_Nofretete"
+        },
+        " records. The letter was not signed by the prime minister, and no official request from the Egyptian state existed, ",
+        {
+         "text": "the foundation stated",
+         "href": "https://www.preussischer-kulturbesitz.de/news-detail/artikel/2011/01/24/zur-bueste-der-nofretete.html"
+        },
+        "."
+       ]
+      ],
+      [
+       "2020:",
+       [
+        "\"The Egyptian government is trying to reclaim the bust\", ",
+        {
+         "text": "Al-Monitor reported",
+         "href": "https://www.al-monitor.com/originals/2020/10/egypt-germany-nefertiti-bust-claim-stolen-antiquities.html"
+        },
+        " from Cairo."
+       ]
+      ],
+      [
+       "March 2024:",
+       [
+        "\"the Egyptian government has not demanded the return of the bust\", ",
+        {
+         "text": "said Hermann Parzinger",
+         "href": "https://www.preussischer-kulturbesitz.de/en/newsroom/press/press-releases/detail-page/article/2024/03/27/first-exhibition-of-the-bust-of-nefertiti-100-years-ago.html"
+        },
+        ", the foundation's president."
+       ]
+      ],
+      [
+       "September 2024:",
+       [
+        "Hawass, by then a former minister, ",
+        {
+         "text": "started a petition",
+         "href": "https://egyptianstreets.com/2024/09/09/egyptian-archaeologist-zahi-hawass-campaigns-for-the-return-of-nefertitis-bust/"
+        },
+        " for its return, citing \"many ignored calls for meaningful dialogue\"."
+       ]
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "where-is-the-bust",
+   "nav": "Where is the bust today?",
+   "h": "Where is the bust today?",
+   "paras": [
+    [
+     "In the Neues Museum on Berlin's Museum Island, the only object in the north dome room, ",
+     {
+      "text": "the foundation said in 2016",
+      "href": "https://www.preussischer-kulturbesitz.de/en/news-detail-page/article/2016/03/09/the-nefertiti-hack-is-it-a-hoax.html"
+     },
+     ". In 2016 photographs were not allowed in that room, to protect the bust from light, and a copy that blind visitors may touch stood opposite it."
+    ],
+    [
+     "Simon first kept it in his villa. It was first shown in the Neues Museum on 1 April 1924. In the Second World War it was moved for safety, in the end to a salt mine at Merkers in Thuringia, where US troops found it in 1945. It came back to West Berlin in 1956 and has stood in the Neues Museum again since the building reopened in October 2009, the ",
+     {
+      "text": "English Wikipedia article",
+      "href": "https://en.wikipedia.org/wiki/Nefertiti_Bust"
+     },
+     " records."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "know",
+   "nav": "How do we know?",
+   "h": "How do we know?",
+   "paras": [
+    "From the excavator's own report, from the papers of the division, and from what each side has said, with its date.",
+    [
+     "Borchardt's report of 1923 tells the find in his own words, drawing on his diary, with plans of the house and the room and the measured spot where the bust lay. It also prints Friedrich Rathgen's tests of the paints. The papers of the find and the division are held in Berlin, and Friederike Seyfried published a detailed record of them in 2010, ",
+     {
+      "text": "the foundation notes",
+      "href": "https://www.preussischer-kulturbesitz.de/en/newsroom/press/press-releases/detail-page/article/2024/03/27/first-exhibition-of-the-bust-of-nefertiti-100-years-ago.html"
+     },
+     "."
+    ],
+    "What stays open is what Egypt's inspector knew when he chose, why he chose as he did, and whether the left eye ever had an inlay."
+   ]
+  },
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "The numbers",
+   "h": "The numbers",
+   "unit": "Sources are named as in the list below.",
+   "cols": [
+    "Figure",
+    "Value",
+    "Basis",
+    "Known or guessed",
+    "Source"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Found",
+      "6 December 1912",
+      "the excavator's report",
+      "Known",
+      "Borchardt, 1923"
+     ]
+    },
+    {
+     "cells": [
+      "Room 19",
+      "2.0 by 5.5 metres",
+      "his plan and text",
+      "Known",
+      "Borchardt, 1923"
+     ]
+    },
+    {
+     "cells": [
+      "Find spot",
+      "0.20 m from the east wall, 0.35 m from the north wall",
+      "his report",
+      "Known",
+      "Borchardt, 1923"
+     ]
+    },
+    {
+     "cells": [
+      "Division of finds",
+      "20 January 1913",
+      "the division document, as Borchardt cites it",
+      "Known",
+      "Borchardt, 1923"
+     ]
+    },
+    {
+     "cells": [
+      "Given to the Berlin museums",
+      "1920",
+      "James Simon's gift",
+      "Known",
+      "Stiftung Preußischer Kulturbesitz, 2024"
+     ]
+    },
+    {
+     "cells": [
+      "First shown",
+      "1 April 1924, Neues Museum",
+      "",
+      "Known",
+      "Stiftung Preußischer Kulturbesitz, 2024"
+     ]
+    },
+    {
+     "cells": [
+      "Height",
+      "about 48 to 50 cm",
+      "Borchardt gives 48 cm, later figures 50 cm",
+      "Known (both are measurements)",
+      "Borchardt, 1923, and Büste der Nofretete"
+     ]
+    },
+    {
+     "cells": [
+      "Made",
+      "about 1345 to 1340 BC",
+      "no inscription, dated from where it was found",
+      "Guessed",
+      "Nefertiti Bust and Büste der Nofretete"
+     ]
+    },
+    {
+     "cells": [
+      "In the Neues Museum again",
+      "since October 2009",
+      "",
+      "Known",
+      "Stiftung Preußischer Kulturbesitz, 2024, and Nefertiti Bust"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "myths",
+   "nav": "Things often read",
+   "h": "Things often read",
+   "subs": [
+    {
+     "h": "\"It was found in a tomb.\"",
+     "paras": [
+      "In a sculptor's house, in the room where he kept his models."
+     ]
+    },
+    {
+     "h": "\"Someone knocked out her left eye.\"",
+     "paras": [
+      "The left eye had no inlay when the bust was found, and none turned up in the sifted rubble. Borchardt was sure it never had one: the socket shows no trace of glue and was never hollowed out for an inlay. Some scholars think it was lost or destroyed, and other portraits of her show both eyes."
+     ]
+    },
+    {
+     "h": "\"It is made of plaster.\"",
+     "paras": [
+      "Its core is limestone, with painted layers of plaster on top, and the scan of 2006 found a carved face beneath them."
+     ]
+    },
+    {
+     "h": "\"The bust is a modern fake.\"",
+     "paras": [
+      "Tests of its paints and CT scans match ancient work. In 2009 both Berlin's Egyptian Museum and Zahi Hawass rejected the claim."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "The facts on this page come from these pages, read on 17 November 2026. Each side's words are quoted from its own statement, with its date. German quotes are given with our English after them.",
+   "read": [
+    {
+     "text": "Ludwig Borchardt, Porträts der Königin Nofret-ete aus den Grabungen 1912/13 in Tell el-Amarna, Leipzig, 1923 (in German, the Getty Research Institute's copy, Internet Archive)",
+     "href": "https://archive.org/details/gri_33125009524253"
+    },
+    {
+     "text": "Stiftung Preußischer Kulturbesitz, \"First exhibition of the bust of Nefertiti 100 years ago\", 27 March 2024",
+     "href": "https://www.preussischer-kulturbesitz.de/en/newsroom/press/press-releases/detail-page/article/2024/03/27/first-exhibition-of-the-bust-of-nefertiti-100-years-ago.html"
+    },
+    {
+     "text": "Stiftung Preußischer Kulturbesitz, \"The History of the Finds: Nefertiti and the Pergamon Altar\", 13 January 2023",
+     "href": "https://www.preussischer-kulturbesitz.de/en/news-detail-page/article/2023/01/13/zur-fundgeschichte-nofretete-und-pergamonaltar.html"
+    },
+    {
+     "text": "Stiftung Preußischer Kulturbesitz, \"The 'Nefertiti Hack'\", 9 March 2016",
+     "href": "https://www.preussischer-kulturbesitz.de/en/news-detail-page/article/2016/03/09/the-nefertiti-hack-is-it-a-hoax.html"
+    },
+    {
+     "text": "Stiftung Preußischer Kulturbesitz, \"Zur Büste der Nofretete\", 24 January 2011 (in German)",
+     "href": "https://www.preussischer-kulturbesitz.de/news-detail/artikel/2011/01/24/zur-bueste-der-nofretete.html"
+    },
+    {
+     "text": "Ibrahim Ayyad, Al-Monitor, \"Egypt renews demands to retrieve Nefertiti bust from Germany\", 1 October 2020",
+     "href": "https://www.al-monitor.com/originals/2020/10/egypt-germany-nefertiti-bust-claim-stolen-antiquities.html"
+    },
+    {
+     "text": "Egyptian Streets, \"Germany Must Return Nefertiti's Bust to Egypt: Zahi Hawass Launches Campaign\", 9 September 2024",
+     "href": "https://egyptianstreets.com/2024/09/09/egyptian-archaeologist-zahi-hawass-campaigns-for-the-return-of-nefertitis-bust/"
+    },
+    {
+     "text": "Wikipedia, Nefertiti Bust",
+     "href": "https://en.wikipedia.org/wiki/Nefertiti_Bust"
+    },
+    {
+     "text": "Wikipedia, Büste der Nofretete (in German)",
+     "href": "https://de.wikipedia.org/wiki/B%C3%BCste_der_Nofretete"
+    },
+    {
+     "text": "Wikipedia, Nefertiti",
+     "href": "https://en.wikipedia.org/wiki/Nefertiti"
+    },
+    {
+     "text": "Wikipedia, Amarna",
+     "href": "https://en.wikipedia.org/wiki/Amarna"
+    },
+    {
+     "text": "Wikipedia, Thutmose (sculptor)",
+     "href": "https://en.wikipedia.org/wiki/Thutmose_(sculptor)",
+     "only": "en"
+    }
+   ],
+   "contact": "If a date, a figure or a sentence is wrong, a message is enough, and we will correct it.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "museum",
+   "id": "museum",
+   "nav": "In the museum",
+   "h": "In the museum",
+   "text": "Museum of Ages is a digital museum. Its {wing} wing shows {place} on {day}.",
+   "link": "To the {wing} wing"
+  }
+ ]
+}

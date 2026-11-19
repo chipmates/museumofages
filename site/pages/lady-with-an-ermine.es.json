@@ -31,7 +31,7 @@
   "og_image_alt": "Una reproducción de La dama del armiño. La joven lleva un vestido rojo, con un paño azul sobre un hombro y un collar de cuentas oscuras, y gira la cabeza hacia la derecha. Sostiene en brazos un armiño blanco, con la mano sobre su lomo. El fondo es negro, con una antigua inscripción en la esquina superior izquierda."
  },
  "labels": {
-  "crumbs": "Estás aquí",
+  "crumbs": "Ruta de navegación",
   "crumb_home": "Museo",
   "crumb_here": "La dama del armiño",
   "toc": "En esta página",
@@ -68,7 +68,7 @@
   "door": {
    "text": "Ver La dama del armiño en el ala",
    "note": "Entrada libre, sin cuenta.",
-   "leads": "Esta puerta te lleva a la sala de los cuadros del ala, donde la reproducción del retrato cuelga entre los demás cuadros de Leonardo."
+   "leads": "Esta puerta lleva a la sala de los cuadros del ala, donde la reproducción del retrato cuelga entre los demás cuadros de Leonardo."
   }
  },
  "blocks": [
@@ -431,7 +431,7 @@
      "href": "https://about.netflix.com/en/news/berlin-and-the-lady-with-an-ermine-arrives-to-netflix-on-may-15"
     }
    ],
-   "contact": "Si una fecha, un nombre o una frase están mal, escríbenos y lo corregiremos.",
+   "contact": "Si una fecha, un nombre o una frase están mal, basta con escribirnos y lo corregiremos.",
    "contact_link": "Ir al aviso legal",
    "what_link": "Qué es este museo"
   },

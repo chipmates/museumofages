@@ -1,0 +1,493 @@
+{
+ "_note": "AN ANSWER PAGE of the questions shelf, from its words and its picture made for it.",
+ "page": {
+  "id": "questions-pompeii-casts",
+  "wing": "questions",
+  "topic": "pompeii_casts",
+  "published": "2026-11-19",
+  "checked": "2026-11-18",
+  "og_image": {
+   "file": "questions-pompeii-casts-og-{lang}-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "lead": {
+   "stem": "questions-pompeii-casts-lead-{lang}",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 560px, (min-width: 960px) 44vw, calc(100vw - 40px)",
+   "swatches": {
+    "known": "#c8cddd",
+    "guessed": "#c8cddd"
+   },
+   "narrow": {
+    "stem": "questions-pompeii-casts-lead-phone-{lang}",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 560
+   }
+  },
+  "photo": {
+   "stem": "questions-pompeii-casts-photo",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 600px) 560px, calc(100vw - 40px)"
+  }
+ },
+ "meta": {
+  "title": "Are the Pompeii bodies real? Plaster casts | Museum of Ages",
+  "description": "The people were real, the figures are plaster. How a cast was made, drawn step by step, how many there are, and what DNA from five of them showed in 2024.",
+  "og_title": "Are the Pompeii bodies real?",
+  "og_image_alt": "The question over the top of the drawing made for this page: how a cast is made, in four steps, each a cut through the ground with a plain dashed outline lying in the ash."
+ },
+ "labels": {
+  "crumbs": "Breadcrumb",
+  "crumb_home": "Museum",
+  "toc": "On this page",
+  "tag_made": "Made for this page",
+  "tag_photo": "Photograph",
+  "no_figure": "no figure",
+  "crumb_here": "Are the Pompeii bodies real?"
+ },
+ "top": {
+  "h1": "Are the Pompeii bodies real?",
+  "answer": [
+   "The people were real, the figures are plaster: from 1863, excavators ",
+   {
+    "text": "poured plaster into the hollows",
+    "href": "https://pompeiisites.org/pompei-map/approfondimenti/i-calchi/"
+   },
+   " their bodies had left in the hardened ash, and many casts still hold some of their bones. Nobody turned to stone, and ",
+   {
+    "text": "about 104",
+    "href": "https://www.cambridge.org/core/journals/papers-of-the-british-school-at-rome/article/abs/inside-the-casts-of-the-pompeian-victims-results-from-the-first-season-of-the-pompeii-cast-project-in-2015/1F0C97208BF820BFAAF58C5BC3018A68"
+   },
+   " of the ",
+   {
+    "text": "more than 1,000 dead found",
+    "href": "https://pompeiisites.org/en/pompeii-map/analysis/the-casts/"
+   },
+   " were cast."
+  ],
+  "strength": "How a cast is made, and since when: the park's records. Bones inside: seen in scans, not in every cast. Sex and family ties: DNA from five of them, one study.",
+  "slot": {
+   "pic": "lead",
+   "tag": "tag_made",
+   "what": "How a cast is made: the body left a hollow in the hardened ash, and plaster poured into it keeps its shape and often some of its bones.",
+   "alt": "A drawing in four steps of how a Pompeii cast is made. One: a person, drawn as a plain outline, lies in the ash above a layer of pumice and small stones up to about 3 metres deep. Two: the ash has hardened and the body has decayed, leaving a hollow with a few bones in it. Three: plaster mixed with water is poured into the hollow until it is full, and a note says bones were often taken out first and some early casts were braced with metal rods. Four: the ash is dug away, and the plaster cast keeps the shape of the hollow, with bones inside and the imprint of cloth on its surface.",
+   "legend": "picture"
+  },
+  "next": {
+   "page": "how-many-died-in-pompeii",
+   "label": "Next question:",
+   "text": "How many people died in Pompeii, and did anyone survive?"
+  }
+ },
+ "faq": [
+  {
+   "q": "How do we know?",
+   "a": "From the excavators' records of the casts, photographs taken since 1863, the X-rays and CT scans of 2015, and the DNA in the bone inside the casts."
+  }
+ ],
+ "blocks": [
+  {
+   "type": "text",
+   "id": "how-were-the-pompeii",
+   "nav": "How were the Pompeii plaster casts made?",
+   "h": "How were the Pompeii plaster casts made?",
+   "paras": [
+    [
+     "Excavators poured a mix of plaster and water into a hollow in the hardened ash until it was full, let it set and then dug the ash away, ",
+     {
+      "text": "the park explains",
+      "href": "https://pompeiisites.org/pompei-map/approfondimenti/i-calchi/"
+     },
+     ". Like a mould, the ash had kept the size, shape and position of whatever lay in it, and the plaster took on that shape."
+    ],
+    [
+     "The hollows are there because the bodies decayed inside the ash, as wooden doors and furniture did. Only some of the dead left one. Of those who lay in the pumice that fell first, only bones were found. The ash of the hot surges that came later hardened into a very firm layer around those who lay in it and kept their form, ",
+     {
+      "text": "the park writes",
+      "href": "https://pompeiisites.org/pompei-map/approfondimenti/i-calchi/"
+     },
+     ". How exactly they died is argued: the studies are set out under ",
+     {
+      "text": "When and how did they die?",
+      "page": "how-many-died-in-pompeii",
+      "at": "when-and-how-did"
+     },
+     " on the page about how many died."
+    ],
+    [
+     "A cast can hold what did not decay, such as bones or metal objects the person wore or carried, and its surface can show the weave of the clothes, ",
+     {
+      "text": "the park notes",
+      "href": "https://pompeiisites.org/pompei-map/approfondimenti/i-calchi/"
+     },
+     ". The method is still used, in plaster: ",
+     {
+      "text": "the park's paper of 2024",
+      "href": "https://pompeiisites.org/wp-content/uploads/17_E-Journal-Civita-Giuliana.pdf"
+     },
+     " lists recent casts from the villa of Civita Giuliana, just outside the town, among them a horse and two people."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "who-made-the-first",
+   "nav": "Who made the first casts, and when?",
+   "h": "Who made the first casts, and when?",
+   "paras": [
+    [
+     "Giuseppe Fiorelli, who led the excavations, had the first casts of people made between 2 and 5 February 1863, ",
+     {
+      "text": "the park records",
+      "href": "https://pompeiisites.org/pompei-map/approfondimenti/i-calchi/"
+     },
+     ". In a lane then named the Vicolo degli Scheletri, four people were found, and plaster was poured into the hollows they had left. Wooden doors and furniture ",
+     {
+      "text": "had been cast this way before",
+      "href": "https://pompeiisites.org/wp-content/uploads/17_E-Journal-Civita-Giuliana.pdf"
+     },
+     "."
+    ],
+    [
+     "The writer Luigi Settembrini, writing to Fiorelli about the casts, as ",
+     {
+      "text": "the park quotes him",
+      "href": "https://pompeiisites.org/pompei-map/approfondimenti/i-calchi/"
+     },
+     ", put it plainly: \"not art, not imitation: these are their bones\" (our translation). Yet the scans of 2015 found that bones had often been taken out before casting, ",
+     {
+      "text": "the Pompeii Cast Project reports",
+      "href": "https://www.cambridge.org/core/journals/papers-of-the-british-school-at-rome/article/abs/inside-the-casts-of-the-pompeian-victims-results-from-the-first-season-of-the-pompeii-cast-project-in-2015/1F0C97208BF820BFAAF58C5BC3018A68"
+     },
+     ", and that some early casts hold almost no bone and are braced with metal rods instead, ",
+     {
+      "text": "the University of Sydney reported",
+      "href": "https://www.sydney.edu.au/news-opinion/news/2016/08/18/skeletal-analysis-reveals-pompeii-myths-are-getting-long-in-the-.html"
+     },
+     ". Of the 26 casts scanned, none held a complete skeleton, ",
+     {
+      "text": "the DNA study of 2024",
+      "href": "https://doi.org/10.1016/j.cub.2024.10.007"
+     },
+     " notes."
+    ]
+   ],
+   "pic": {
+    "pic": "photo",
+    "tag": "tag_photo",
+    "what": "One of the oldest photographs of a cast: a cast from one of the four people found in a Pompeii lane in February 1863, photographed by Sommer & Behles in about 1863. The print came to a Frankfurt museum in 1864.",
+    "alt": "A 19th-century photograph of a plaster cast of a person lying on a low table in front of a wall.",
+    "src": [
+     "Giorgio Sommer and Edmondo Behles (Sommer & Behles), about 1863. Städel Museum, Frankfurt am Main. ",
+     {
+      "text": "Public domain",
+      "href": "https://sammlung.staedelmuseum.de/en/work/pompeii-cast-of-a-human-victim"
+     },
+     "."
+    ],
+    "shape": "whole"
+   }
+  },
+  {
+   "type": "text",
+   "id": "how-many-casts-are",
+   "nav": "How many casts are there?",
+   "h": "How many casts are there?",
+   "paras": [
+    [
+     "About 104 people have been cast since 1863, by the count of the ",
+     {
+      "text": "Pompeii Cast Project",
+      "href": "https://www.cambridge.org/core/journals/papers-of-the-british-school-at-rome/article/abs/inside-the-casts-of-the-pompeian-victims-results-from-the-first-season-of-the-pompeii-cast-project-in-2015/1F0C97208BF820BFAAF58C5BC3018A68"
+     },
+     " published in 2021, out of the remains of more than 1,000 people found at Pompeii. The park itself speaks of ",
+     {
+      "text": "\"a little over a hundred\"",
+      "href": "https://pompeiisites.org/en/pompeii-map/analysis/the-casts/"
+     },
+     " casts."
+    ],
+    [
+     "Not every hollow could be cast: in 1914 nine people were found in the garden of the House of the Cryptoporticus and four could be cast, ",
+     {
+      "text": "the park's list",
+      "href": "https://pompeiisites.org/pompei-map/approfondimenti/i-calchi/"
+     },
+     " records. Bombs in 1943 ",
+     {
+      "text": "destroyed or damaged many casts",
+      "href": "https://pompeiisites.org/en/pompeii-map/analysis/the-casts/"
+     },
+     " on show. From August 2015, 86 casts, nearly all the park holds, were restored together, ",
+     {
+      "text": "the Ministry of Culture announced",
+      "href": "https://cultura.gov.it/comunicato/pompei-interventi-con-tac-sui-calchi-indagini-tomografiche-per-studiare-le-vittime-dell-eruzione-di-pompei-la-scienza-medica-al-servizio-dell-archeologia"
+     },
+     "."
+    ],
+    [
+     "For exhibitions elsewhere the park lends copies, printed from laser scans or made earlier in plaster or resin, while a new display of the originals is planned at Pompeii, ",
+     {
+      "text": "it writes",
+      "href": "https://pompeiisites.org/pompei-map/approfondimenti/i-calchi/"
+     },
+     ", calling them \"persone prima che testimonianze\": people before they are evidence."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "what-did-dna-show",
+   "nav": "What did DNA show about the people in the casts?",
+   "h": "What did DNA show about the people in the casts?",
+   "paras": [
+    [
+     "That some old stories about them were wrong. In 2024 a team that included the park's archaeologists ",
+     {
+      "text": "took bone mixed with plaster",
+      "href": "https://doi.org/10.1016/j.cub.2024.10.007"
+     },
+     " from 14 of the 86 casts restored from 2015, to read its DNA. Five people gave genome-wide DNA. All five were genetically male, and none was found to be related to another, up to the third degree. So the adult with the gold bracelet in the House of the Golden Bracelet, long read as \"the mother\", was genetically male and not related to the child found with him, and of the two people in the House of the Cryptoporticus long read as \"two sisters\" or \"mother and daughter\", at least one was male. It is one study of five people, and for a second adult of the Golden Bracelet group (cast 50 in the park's numbering) only the mother's line could be read, and his sex could not be read from nuclear DNA."
+    ],
+    "The study shows \"how unreliable narratives based on limited evidence can be\", its authors write, and they think \"it is possible\" that restorers changed the casts' poses to tell stories. Rather than new stories that \"might also misrepresent these people's lived experiences\", the results call for reflection, they write."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "know",
+   "nav": "How do we know?",
+   "h": "How do we know?",
+   "paras": [
+    "From the excavators' records of the casts, photographs taken since 1863, the X-rays and CT scans of 2015, and the DNA in the bone inside the casts.",
+    [
+     "The park's own page lists many of the casts by date and place, among them the four of February 1863 and the 15 at the Nola Gate in the 1970s (",
+     {
+      "text": "I Calchi",
+      "href": "https://pompeiisites.org/pompei-map/approfondimenti/i-calchi/"
+     },
+     "). A print by the photographers Sommer & Behles, inscribed with the find date of 5 February 1863, came to the Städel Museum in Frankfurt in 1864, ",
+     {
+      "text": "its record",
+      "href": "https://sammlung.staedelmuseum.de/en/work/pompeii-cast-of-a-human-victim"
+     },
+     " shows."
+    ],
+    [
+     "Reading the scans was not easy, ",
+     {
+      "text": "the Ministry noted",
+      "href": "https://cultura.gov.it/comunicato/pompei-interventi-con-tac-sui-calchi-indagini-tomografiche-per-studiare-le-vittime-dell-eruzione-di-pompei-la-scienza-medica-al-servizio-dell-archeologia"
+     },
+     " as the work began: the plaster is close in density to bone almost 2,000 years old. Still, they changed one old reading: the cast called \"the pregnant woman\" in 1863 had a swelling that was likely bunched-up clothing, the ",
+     {
+      "text": "DNA study's authors",
+      "href": "https://doi.org/10.1016/j.cub.2024.10.007"
+     },
+     " write of the scans."
+    ],
+    [
+     "Old casts still hold new finds. In 2016 restorers working on a cast from the Garden of the Fugitives found a small box, perhaps of wood, cork or leather, about 12.5 centimetres long, holding a small stone palette and small bronze tools, and with it a cloth bag of three bronze and four silver coins. ",
+     {
+      "text": "The park published them in 2026",
+      "href": "https://pompeiisites.org/wp-content/uploads/Un-medico-nellOrto-dei-Fuggiaschi-a-Pompei.-Esami-radiografici-e-ricostruzione-archeologica.pdf"
+     },
+     ", and its archaeologists think the box may have been a doctor's kit, since such palettes are often found in doctors' kits around Vesuvius."
+    ]
+   ]
+  },
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "The numbers",
+   "h": "The numbers",
+   "unit": "Sources are named as in the list below.",
+   "cols": [
+    "Figure",
+    "Value",
+    "Basis",
+    "Known or guessed",
+    "Source"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Remains found at Pompeii",
+      "more than 1,000 people",
+      "excavation records",
+      "Known",
+      "Park, The Casts"
+     ]
+    },
+    {
+     "cells": [
+      "People cast since 1863",
+      "about 104, \"a little over a hundred\" in the park's words",
+      "the cast project's count, repeated in 2024",
+      "Known",
+      "Lazer 2021, Pilli 2024, Park"
+     ]
+    },
+    {
+     "cells": [
+      "Casts restored together from August 2015",
+      "86, nearly all",
+      "the restoration",
+      "Known",
+      "Ministry of Culture"
+     ]
+    },
+    {
+     "cells": [
+      "Casts CT-scanned or X-rayed in 2015",
+      "26, none with a complete skeleton",
+      "the scans",
+      "Known",
+      "Lazer 2021, Pilli 2024"
+     ]
+    },
+    {
+     "cells": [
+      "Casts sampled for DNA",
+      "14",
+      "bone mixed with plaster",
+      "Known",
+      "Pilli 2024"
+     ]
+    },
+    {
+     "cells": [
+      "People with genome-wide DNA",
+      "5, all genetically male",
+      "one study",
+      "Known",
+      "Pilli 2024"
+     ]
+    },
+    {
+     "cells": [
+      "First casts of people",
+      "2 to 5 February 1863, four people",
+      "the excavation record",
+      "Known",
+      "Park, I Calchi"
+     ]
+    },
+    {
+     "cells": [
+      "Pumice and small stones",
+      "up to about 3 metres deep",
+      "the park's figure",
+      "Known",
+      "Park, I Calchi"
+     ]
+    },
+    {
+     "cells": [
+      "The box found in a cast in 2016",
+      "a doctor's kit",
+      "the archaeologists' proposal",
+      "Guessed",
+      "Park, 2026"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "myths",
+   "nav": "Things often read",
+   "h": "Things often read",
+   "subs": [
+    {
+     "h": "\"Lava covered them.\"",
+     "paras": [
+      "What buried Pompeii was pumice and small stones, then ash from the hot surges. The casts formed in the ash."
+     ]
+    },
+    {
+     "h": "\"Each cast shows a person just as they were found.\"",
+     "paras": [
+      "Restorers handled, braced and moved the casts. Of the 14 people cast in the Garden of the Fugitives in 1961, one was taken elsewhere at once and can no longer be told apart with certainty from casts of unknown origin, the park writes."
+     ]
+    },
+    {
+     "h": "\"Resin is used now instead of plaster.\"",
+     "paras": [
+      "The park records one resin cast, made at Oplontis in 1984, so that the bones inside can be seen and the jewellery found. Plaster is still used."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "The facts on this page come from these pages, read on 17 and 18 November 2026. Quotes from Italian are in our own translation.",
+   "read": [
+    {
+     "text": "Archaeological Park of Pompeii, \"The Casts\"",
+     "href": "https://pompeiisites.org/en/pompeii-map/analysis/the-casts/"
+    },
+    {
+     "text": "Archaeological Park of Pompeii, \"I Calchi\" (in Italian)",
+     "href": "https://pompeiisites.org/pompei-map/approfondimenti/i-calchi/"
+    },
+    {
+     "text": "Elena Pilli, Stefania Vai, Victoria Carley Moses and others, \"Ancient DNA challenges prevailing interpretations of the Pompeii plaster casts\", Current Biology 34, 2024",
+     "href": "https://doi.org/10.1016/j.cub.2024.10.007"
+    },
+    {
+     "text": "Estelle Lazer and others, \"Inside the casts of the Pompeian victims: results from the first season of the Pompeii Cast Project in 2015\", Papers of the British School at Rome 89, 2021 (abstract)",
+     "href": "https://www.cambridge.org/core/journals/papers-of-the-british-school-at-rome/article/abs/inside-the-casts-of-the-pompeian-victims-results-from-the-first-season-of-the-pompeii-cast-project-in-2015/1F0C97208BF820BFAAF58C5BC3018A68"
+    },
+    {
+     "text": "University of Sydney, \"Skeletal analysis reveals Pompeii myths are getting long in the tooth\", 18 August 2016",
+     "href": "https://www.sydney.edu.au/news-opinion/news/2016/08/18/skeletal-analysis-reveals-pompeii-myths-are-getting-long-in-the-.html"
+    },
+    {
+     "text": "Italian Ministry of Culture, \"Pompei: interventi con TAC sui calchi\", 29 September 2015 (in Italian)",
+     "href": "https://cultura.gov.it/comunicato/pompei-interventi-con-tac-sui-calchi-indagini-tomografiche-per-studiare-le-vittime-dell-eruzione-di-pompei-la-scienza-medica-al-servizio-dell-archeologia"
+    },
+    {
+     "text": "Archaeological Park of Pompeii, E-Journal 2026.04, Zuchtriegel, Russo, Amoretti, Empireo, Cirillo, \"Un medico nell'Orto dei Fuggiaschi a Pompei. Esami radiografici e ricostruzione archeologica\", 15 May 2026 (in Italian)",
+     "href": "https://pompeiisites.org/wp-content/uploads/Un-medico-nellOrto-dei-Fuggiaschi-a-Pompei.-Esami-radiografici-e-ricostruzione-archeologica.pdf"
+    },
+    {
+     "text": "Archaeological Park of Pompeii, E-Journal 17, Zuchtriegel, Fragliasso, Giletti and others, \"Un progetto di 'archeologia giudiziaria': nuove scoperte nella villa suburbana di Civita Giuliana\", 3 July 2024 (in Italian)",
+     "href": "https://pompeiisites.org/wp-content/uploads/17_E-Journal-Civita-Giuliana.pdf"
+    },
+    {
+     "text": "Städel Museum, Frankfurt am Main, Sommer & Behles, \"Pompeii: Cast of a Human Victim\", about 1863, St.F.989",
+     "href": "https://sammlung.staedelmuseum.de/en/work/pompeii-cast-of-a-human-victim"
+    }
+   ],
+   "contact": "If a date, a figure or a sentence is wrong, a message is enough, and we will correct it.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "museum",
+   "id": "museum",
+   "nav": "In the museum",
+   "h": "In the museum",
+   "text": "Museum of Ages is a digital museum. Its {wing} wing shows {place} on {day}.",
+   "link": "To the {wing} wing"
+  }
+ ]
+}

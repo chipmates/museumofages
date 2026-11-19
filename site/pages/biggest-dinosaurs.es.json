@@ -203,7 +203,7 @@
   "og_image_alt": "Nuestros siete dinosaurios en fila, vistos de lado, a la misma escala. El más largo, nuestro Argentinosaurus, mide unos 30,6 m. Dos cuellos largos se alzan muy por encima de los demás, y una persona gris de 1,70 m parece diminuta a su lado."
  },
  "labels": {
-  "crumbs": "Estás aquí",
+  "crumbs": "Ruta de navegación",
   "crumb_home": "Museo",
   "crumb_here": "Dinosaurios más grandes",
   "toc": "En esta página",
@@ -794,7 +794,7 @@
      "href": "https://www.fisheries.noaa.gov/species/blue-whale"
     }
    ],
-   "contact": "Si una cifra o una institución está mal, escríbenos y lo corregiremos.",
+   "contact": "Si una cifra o una institución está mal, basta con escribirnos y lo corregiremos.",
    "contact_link": "Ir al aviso legal",
    "what_link": "Qué es este museo"
   },

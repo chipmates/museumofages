@@ -111,7 +111,7 @@
   "og_image_alt": "Unser Wollhaarmammut, der Beresowka-Bulle, von der Seite im dunkelbraunen Fell, mit hoch gewölbtem Kopf, abfallendem Rücken, zwei gebogenen Stoßzähnen und einer Marke an der Schulter bei 271 cm, seiner rekonstruierten Schulterhöhe. Der graue Mensch daneben, 1,70 m groß, steht niedriger als die Spitzen der Stoßzähne."
  },
  "labels": {
-  "crumbs": "Du bist hier",
+  "crumbs": "Seitenpfad",
   "crumb_home": "Museum",
   "crumb_here": "Wollhaarmammut",
   "toc": "Auf dieser Seite",
@@ -356,8 +356,8 @@
   {
    "type": "notes",
    "id": "numbers-read",
-   "nav": "Zahlen, die du vielleicht gelesen hast",
-   "h": "Zahlen, die du vielleicht gelesen hast",
+   "nav": "Zahlen, die oft genannt werden",
+   "h": "Zahlen, die oft genannt werden",
    "intro": "Zu jeder Zahl: woher sie kommt und was sie bedeutet.",
    "rows": [
     {
@@ -405,8 +405,8 @@
   {
    "type": "notes",
    "id": "pictures-seen",
-   "nav": "Bilder, die du vielleicht gesehen hast",
-   "h": "Bilder, die du vielleicht gesehen hast",
+   "nav": "Bilder, die oft gezeigt werden",
+   "h": "Bilder, die oft gezeigt werden",
    "intro": "Zu jedem Bild: woher es kommt und was wir heute wissen.",
    "rows": [
     {
@@ -458,7 +458,7 @@
    "nav": "Im Museum",
    "h": "Im Museum",
    "paras": [
-    "Museum of Ages ist ein digitales Museum, gemacht von einer gemeinnützigen Organisation. Der Eintritt ist frei, ein Konto brauchst du nicht. Im Flügel der Tiere wird dieses Tier unter den anderen stehen, von den Riesen der Vorzeit bis zu den letzten ihrer Art. Wie ein fertiger Flügel aussieht, zeigt der Flügel von Leonardo da Vinci."
+    "Museum of Ages ist ein digitales Museum, gemacht von einer gemeinnützigen Organisation. Der Eintritt ist frei, ein Konto ist nicht nötig. Im Flügel der Tiere wird dieses Tier unter den anderen stehen, von den Riesen der Vorzeit bis zu den letzten ihrer Art. Wie ein fertiger Flügel aussieht, zeigt der Flügel von Leonardo da Vinci."
    ],
    "links": [
     {
@@ -551,7 +551,7 @@
      "href": "https://www.helsinki.fi/en/luomus/news/last-mammoths-died-remote-island"
     }
    ],
-   "contact": "Ist eine Zahl oder ein Museum falsch angegeben, schreib uns, und wir korrigieren es.",
+   "contact": "Ist eine Zahl oder ein Museum falsch angegeben, genügt eine Nachricht, und wir korrigieren es.",
    "contact_link": "Zum Impressum",
    "what_link": "Was dieses Museum ist"
   },

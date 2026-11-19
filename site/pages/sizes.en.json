@@ -6,7 +6,7 @@
     "topic": "sizes",
     "published": "2026-10-12",
     "checked": "2026-10-13",
-    "changed": "2026-10-18",
+    "changed": "2026-11-17",
     "og_image": {
       "file": "vinci-sizes-og-{lang}-1200x630.png",
       "width": 1200,
@@ -87,8 +87,8 @@
   },
   "top": {
     "h1": "How big is the Mona Lisa?",
-    "answer": "The Mona Lisa is 79.4 by 53.4 centimetres, 31 by 21 inches. Beside a person of 1.7 metres it is less than half as tall, and a little over half a metre wide. The Last Supper is 8.8 metres wide: sixteen Mona Lisas would fit across it side by side.",
-    "answer_more": "Many books and websites give 77 by 53 centimetres, or 30 by 21 inches. That is an older official figure. The Louvre's record now gives 79.4 by 53.4 centimetres, the size of the wooden panel as measured for a scientific study published in 2006. With its frame it measures 1.01 metres by 77 centimetres, the Louvre says.",
+    "answer": "The Mona Lisa is 79.4 by 53.4 centimetres, 31 by 21 inches, without its frame. That is the size of the wooden panel in the Louvre's record, and many books still give an older official figure, 77 by 53 centimetres. Beside a person of 1.7 metres it is less than half as tall.",
+    "answer_more": "Leonardo chose a large panel so that he could paint her at life size, the Louvre says. With its frame the painting measures 1.01 metres by 77 centimetres. The chart further down sets it to one scale beside every other work of the wing's picture room and the Last Supper.",
     "order": "All sizes are height by width.",
     "figure": {
       "work": "mona-lisa",
@@ -96,6 +96,7 @@
       "what": "beside a person 1.7 metres tall",
       "alt": "The Mona Lisa, 79.4 by 53.4 centimetres, beside a person 1.7 metres tall, both on one floor line and drawn to one scale: the painting is less than half as tall as the person."
     },
+    "door_first": true,
     "door": {
       "text": "See the Mona Lisa in the wing",
       "note": "Free entry, no account.",
@@ -116,6 +117,38 @@
       "still_caption": "All 24 works and the Last Supper at one scale, beside a person 1.7 metres tall.",
       "licence": "The chart is the museum's own work, CC BY-SA 4.0.",
       "still_link": "The chart as a picture, 1600 pixels wide"
+    },
+    {
+      "type": "text",
+      "id": "questions",
+      "nav": "Questions about its size",
+      "h": "Questions about its size",
+      "subs": [
+        {
+          "h": "How big is the Mona Lisa with and without its frame?",
+          "paras": [
+            "Without its frame the Mona Lisa is 79.4 by 53.4 centimetres, the size of the thin poplar panel Leonardo painted on. With its frame it measures 1.01 metres by 77 centimetres. The Louvre's record gives both."
+          ]
+        },
+        {
+          "h": "Why do many books say 77 by 53 centimetres?",
+          "paras": [
+            "It is an older official figure, 30 by 21 inches, still found in many books and on many websites. The Louvre's record now gives 79.4 by 53.4 centimetres, the size of the panel as measured for a scientific study published in 2006. Neither figure includes the frame."
+          ]
+        },
+        {
+          "h": "How big is the Mona Lisa compared with a person?",
+          "paras": [
+            "At 79.4 centimetres, about 2 feet 7 inches, it is less than half as tall as a person of 1.7 metres. The drawing at the top of this page stands the two side by side to one scale. A sheet of A1 paper, the size of eight A4 sheets, is a little larger than the panel, at 84.1 by 59.4 centimetres."
+          ]
+        },
+        {
+          "h": "Is the Mona Lisa a small painting?",
+          "paras": [
+            "Among the works in the wing's picture room it sits a little above the middle: of the other 23, fourteen are shorter than it and nine are taller. The shortest is a predella panel 16.2 centimetres tall, the tallest the Adoration of the Magi at 2.4 metres. The Last Supper, a wall painting in Milan, is 8.8 metres wide: sixteen Mona Lisas would fit across it side by side. The chart above draws them all to one scale."
+          ]
+        }
+      ]
     },
     {
       "type": "text",
@@ -357,7 +390,7 @@
       "id": "enter",
       "nav": "",
       "h": "See the pictures in the wing",
-      "p": "The door opens the Leonardo wing at the picture room, where the walk begins. The Mona Lisa hangs there among 25 pictures, and you can step up to each one.",
+      "p": "The door opens the Leonardo wing at the picture room, where the walk begins. The Mona Lisa hangs there among 25 pictures, and each can be seen from close up.",
       "door": {
         "text": "Enter the museum",
         "note": "Free entry, no account."

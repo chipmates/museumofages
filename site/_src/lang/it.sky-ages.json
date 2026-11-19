@@ -47,9 +47,9 @@
   "gap": "Che cosa ci vedessero, non si sa.",
   "outside": "Fuori, queste sette stelle.",
   "drift": "Due di queste si sono spostate di circa due gradi.",
-  "door": "Puoi entrare.",
+  "door": "La porta è aperta.",
   "end": "Le stelle sono rimaste. I luoghi sotto di loro sono cambiati.",
-  "offer": "{year}. {place}, nella nostra ricostruzione. Puoi entrare.",
+  "offer": "{year}. {place}, nella nostra ricostruzione. La porta è aperta.",
   "wing": "{place}, nella nostra ricostruzione.",
   "wingLow": "{place}, {year}.",
   "ad": "circa {n}",
@@ -60,6 +60,6 @@
   "next": "Più avanti sulla linea del tempo",
   "prev": "Più indietro sulla linea del tempo",
   "caption": "Il film del museo",
-  "more": "Guarda il film intero"
+  "more": "Guardare il film intero"
  }
 }

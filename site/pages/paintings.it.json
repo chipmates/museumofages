@@ -230,7 +230,7 @@
   "og_image_alt": "Le 24 opere dell’ala di Leonardo per periodo, ognuna con un segno che dice quanto è sicura la sua attribuzione: 14 documentate, 4 controverse, 4 con riserva, 1 della sua bottega, 1 copia, e l’Ultima Cena su una parete tutta sua. Un grafico fatto per questa pagina."
  },
  "labels": {
-  "crumbs": "Sei qui",
+  "crumbs": "Percorso di navigazione",
   "crumb_home": "Museo",
   "toc": "In questa pagina",
   "tag_chart": "Fatto per questa pagina",
@@ -292,7 +292,7 @@
    }
   },
   "door": {
-   "text": "Vedi i dipinti nell’ala",
+   "text": "Vedere i dipinti nell’ala",
    "note": "Ingresso libero, senza account.",
    "leads": "La porta apre l’ala di Leonardo nella sala dei quadri, dove sono appese le 24 opere."
   }
@@ -313,7 +313,7 @@
    "nav": "Le opere",
    "h": "Le opere, per periodo",
    "intro": "Le opere sono raggruppate secondo i periodi dell’ala, in base all’anno in cui ciascuna è stata iniziata, con due eccezioni. Il Salvator Mundi, datato dal 1499 al 1510 circa, sta con gli anni dal 1506 al 1513, dove cadono le proposte più tarde per la sua data, e la copia della Battaglia di Anghiari sta con la parete che copia. Nessuna opera di questa pagina è stata iniziata a Roma o dopo il 1519.",
-   "go": "Vedi {work} nell’ala",
+   "go": "Vedere {work} nell’ala",
    "periods": [
     {
      "id": "florence-1452",
@@ -1185,18 +1185,18 @@
     }
    ],
    "notes": [],
-   "contact": "Se una data, un’attribuzione o una frase di questa pagina è sbagliata, scrivici e la correggiamo.",
-   "contact_link": "Vai alle note legali (in inglese)",
+   "contact": "Se una data, un’attribuzione o una frase di questa pagina è sbagliata, basta scriverci e la correggiamo.",
+   "contact_link": "Note legali (in inglese)",
    "what_link": "Che cos’è questo museo"
   },
   {
    "type": "close",
    "id": "enter",
    "nav": "",
-   "h": "Vedi i dipinti nell’ala",
+   "h": "I dipinti nell’ala",
    "p": "Questa porta conduce alla sala dei quadri dell’ala di Leonardo, dove le 24 opere sono appese come riproduzioni vicine alle loro misure reali. Da lì il percorso prosegue verso la sala delle macchine, il tavolo di lettura e la sua ultima casa.",
    "door": {
-    "text": "Entra nel museo",
+    "text": "Ingresso al museo",
     "note": "Ingresso libero, senza account."
    }
   }

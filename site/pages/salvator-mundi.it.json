@@ -40,7 +40,7 @@
   "og_image_alt": "Una riproduzione del Salvator Mundi dopo il restauro: Cristo a mezza figura, visto di fronte, con lunghi capelli ricci e una veste blu attraversata da due bande ricamate. Alza due dita della mano destra per benedire e nella sinistra tiene una sfera trasparente, su uno sfondo nero."
  },
  "labels": {
-  "crumbs": "Sei qui",
+  "crumbs": "Percorso di navigazione",
   "crumb_home": "Museo",
   "crumb_here": "Salvator Mundi",
   "toc": "In questa pagina",
@@ -52,9 +52,9 @@
   "jump": true,
   "side": true,
   "door": {
-   "text": "Vedi il Salvator Mundi nell’ala",
+   "text": "Vedere il Salvator Mundi nell’ala",
    "note": "Ingresso libero, senza account.",
-   "leads": "Questa porta ti conduce nella sala dei quadri della nostra ala di Leonardo, dove ne è appesa una riproduzione con la didascalia «controverso»."
+   "leads": "Questa porta conduce nella sala dei quadri della nostra ala di Leonardo, dove ne è appesa una riproduzione con la didascalia «controverso»."
   }
  },
  "blocks": [
@@ -279,7 +279,7 @@
       },
       {
        "term": "Pietro C. Marani, 2012 e 2013",
-       "text": "Da una composizione di Leonardo, e molto probabilmente dipinto da lui. In seguito ha cambiato idea (vedi sotto)."
+       "text": "Da una composizione di Leonardo, e molto probabilmente dipinto da lui. In seguito ha cambiato idea (si veda sotto)."
       },
       {
        "term": "Robert Simon, 2021",
@@ -518,18 +518,18 @@
      "href": "https://commons.wikimedia.org/wiki/File:Leonardo_da_Vinci,_Salvator_Mundi_before_restoration_(black_and_white),_Cook_Collection.jpg"
     }
    ],
-   "contact": "Se una data, un nome o una frase è sbagliata, scrivici e la correggiamo.",
-   "contact_link": "Vai alle note legali (in inglese)",
+   "contact": "Se una data, un nome o una frase è sbagliata, basta scriverci e la correggiamo.",
+   "contact_link": "Note legali (in inglese)",
    "what_link": "Che cos’è questo museo"
   },
   {
    "type": "close",
    "id": "enter",
    "nav": "",
-   "h": "Vedi il Salvator Mundi nell’ala",
-   "p": "Da qui entri direttamente nella sala dei quadri della nostra ala di Leonardo. Lì una riproduzione del Salvator Mundi è appesa tra le altre opere, con la sua didascalia: «controverso».",
+   "h": "Il Salvator Mundi nell’ala",
+   "p": "Da qui si entra direttamente nella sala dei quadri della nostra ala di Leonardo. Lì una riproduzione del Salvator Mundi è appesa tra le altre opere, con la sua didascalia: «controverso».",
    "door": {
-    "text": "Entra nel museo",
+    "text": "Ingresso al museo",
     "note": "Ingresso libero, senza account."
    }
   }

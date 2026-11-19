@@ -158,7 +158,7 @@
   "og_image_alt": "El Spinosaurus adulto más grande de lado, algo menos de 14 m según un modelo, con una vela alta y una cola alta. Delante, nuestro ejemplar joven de unos 10 m como una forma gris plana, y una persona gris de 1,70 m que le llega al joven a la cadera."
  },
  "labels": {
-  "crumbs": "Estás aquí",
+  "crumbs": "Ruta de navegación",
   "crumb_home": "Museo",
   "crumb_here": "Spinosaurus",
   "toc": "En esta página",
@@ -513,7 +513,7 @@
     },
     {
      "term": "Una vela perfecta: un semicírculo liso o una curva con un hundimiento",
-     "text": "Las películas muestran una, pero nadie conoce su contorno. El esqueleto de Marruecos no tiene ninguna espina completa de la espalda, y las espinas de Stromer se perdieron en 1944, así que cada curva que ves es una elección."
+     "text": "Las películas muestran una, pero nadie conoce su contorno. El esqueleto de Marruecos no tiene ninguna espina completa de la espalda, y las espinas de Stromer se perdieron en 1944, así que cada curva que se ve es una elección."
     },
     {
      "term": "Pies con membranas entre los dedos, como los de un pato",
@@ -663,7 +663,7 @@
      "href": "https://www.fieldmuseum.org/blog/sue-t-rex"
     }
    ],
-   "contact": "Si una cifra o un museo está mal, escríbenos y lo corregiremos.",
+   "contact": "Si una cifra o un museo está mal, basta con escribirnos y lo corregiremos.",
    "contact_link": "Ir al aviso legal",
    "what_link": "Qué es este museo"
   },

@@ -99,6 +99,8 @@ APP_SHELL = REPO / "museum" / "index.html"
 IMAGE_JOBS = SRC / "tools" / "make_images.py"
 # The topic pages' build (read only: it has its own checks) and the privacy page's words.
 PAGES_BUILD = ROOT / "pages" / "build.py"
+# The topic pages' pictures: a plate whose record says "sitemap": false is shown, never listed in the image sitemap.
+PAGES_PICTURES = ROOT / "pages" / "pictures.json"
 PRIVACY_WORDS = SRC
 # The museum's own texts are copies of a wing's words. The file names the files they must stand in word for word,
 # by their paths from the repository's root.
@@ -113,7 +115,7 @@ SOURCE_TO = "https://github.com/chipmates/museumofages"
 COUNT_SCRIPT = "count.js"
 COUNT_LISTS = ROOT / "functions" / "_count" / "lists.js"
 COUNT_KINDS = {"home": "home", "what": "statement", "privacy": "privacy", "imprint": "imprint"}
-DOOR_PLACES = ("top", "item", "end")
+DOOR_PLACES = ("top", "item", "end", "still")
 # IndexNow: the key a search engine fetches from the site's root to trust our pings (public by design).
 INDEXNOW_KEY = "f8c88732c7bce7f2bf169a1877ed44e2"
 # RFC 9116: where to report a flaw. Expires must stay under a year ahead, so the date is renewed by hand each autumn.
@@ -141,7 +143,8 @@ MAIL_SHAPE = r"[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}
 WHAT_DIR = {c: e["slugs"]["what"] for c, e in L.entries.items()}
 IMPRINT_DIR = {c: e["slugs"]["imprint"] for c, e in L.entries.items() if e["slugs"]["imprint"]}
 PRIVACY_DIR = {c: e["slugs"]["privacy"] for c, e in L.entries.items()}
-STATES = ("open", "making", "planned")
+# shelf: answer pages under a name of their own, for no wing. It never opens and no list counts it as a wing.
+STATES = ("open", "making", "planned", "shelf")
 # The palette's rule for a wing: the depth of its wall, and one note inside these bounds.
 WALLS = {"deep": "var(--ground-wall)", "wall": None, "lifted": "color-mix(in srgb,var(--ground-lit) 84%,var(--ink))"}
 NOTE_L, NOTE_C = (0.46, 0.62), (0.075, 0.126)
@@ -777,6 +780,8 @@ def check_registry(site):
         where = f"registry: the wing {slug!r}"
         if e.get("state") not in STATES:
             problems.append(f"{where} has the state {e.get('state')!r}, not one of {STATES}")
+        if e.get("state") == "shelf" and not e.get("pages_only"):
+            problems.append(f"{where} is a shelf, which stands in pages only (pages_only)")
         if "langs" in e and (not isinstance(e["langs"], list) or "en" not in e["langs"] or set(e["langs"]) - set(L.order)):
             problems.append(f"{where}: its langs {e['langs']!r} is not a list of the table's languages with English")
         if e.get("pages_only"):
@@ -855,8 +860,8 @@ def check_pages_only(site, slug, e, pages):
     languages, a free folder for each, and no key of an open wing's first screen. It stands on no wall and in no film,
     so it names no collection. Its pages are built by the topic pages' build."""
     where, problems = f"registry: the wing {slug!r}", []
-    if e.get("state") != "making":
-        problems.append(f"{where} has pages only and is {e.get('state')!r}: only a wing in the making stands without its own first screen")
+    if e.get("state") not in ("making", "shelf"):
+        problems.append(f"{where} has pages only and is {e.get('state')!r}: only a wing in the making or a shelf stands without its own first screen")
     own = languages.wing_langs(e, LANGS)
     for key in ("door", "pictures", "collection"):
         if key in e:
@@ -887,6 +892,8 @@ def check_pages_only(site, slug, e, pages):
             problems.append(f"{where}: its link lacks its name or line in {lang}")
             continue
         problems += lint(site, f"{where}'s link", words, "link.", wing=slug, lang=lang) + lint(site, f"{where}'s link", words, "link.", lang=lang)
+    if e.get("state") == "shelf":
+        problems += check_shelf(site, slug, e, own)
     for t in e["topics"]:
         if set(t.get("langs") or own) - set(own):
             problems.append(f"{where}: a topic page names a language its wing is not written in")
@@ -1783,6 +1790,7 @@ def build(out, registry, wing_dirs, mark=None, topics=True, quiet=False, more_pi
                 d = site.data[site.newest][lang]
                 name = esc(newest["name"][lang])
                 w["html.today"] = c.today
+                w["html.shelf"] = shelf_line(c)
                 # the holders stand in full on a wing's own page: here one sentence and the way to each list
                 w["html.originals"] = R.originals_links(c)
                 w["html.other"] = R.other_sites(c)
@@ -2042,9 +2050,68 @@ def build_topics(out, site):
     return found
 
 
+# The schema.org types of a place one can find on a map: on a shelf, an about of these types gives its coordinates.
+PLACE_TYPES = {"Place", "AdministrativeArea", "City", "Country", "State", "LandmarksOrHistoricalBuildings", "TouristAttraction",
+               "Landform", "BodyOfWater", "Continent", "Mountain", "Volcano", "CivicStructure", "Residence", "Accommodation"}
+
+
+def check_shelf(site, slug, e, own):
+    """A shelf: never on the landing (no link). Its legend under each answer page's picture: the two marks in the
+    locked note's own words, and the sentence that ties them to the first three of the four grades, by their locked
+    words, with its link's words. Its line on the page about the museum (what), where it has one, in its languages."""
+    where, problems = f"registry: the shelf {slug!r}", []
+    if "link" in e:
+        problems.append(f"{where} names a link: a shelf stands on no landing and in no wing's strip")
+    legend = e.get("legend") or {}
+    for lang in own:
+        locked = site.locked(lang)
+        words = {k: (legend.get(k) or {}).get(lang) for k in ("known", "guessed", "grades", "grades_link")}
+        if not all(words.values()):
+            problems.append(f"{where}: its legend lacks known, guessed, grades or grades_link in {lang}")
+            continue
+        note = lower(locked.get("tagline_note", ""), lang)
+        for k in ("known", "guessed"):
+            if lower(words[k], lang)[:6] not in note:
+                problems.append(f"{where}: its legend's {k} {words[k]!r} is not a word of the locked note in {lang}")
+        for grade in (locked.get("grades") or [])[:3]:
+            if grade not in words["grades"]:
+                problems.append(f"{where}: its legend's sentence does not name the grade {grade!r} in {lang}")
+        problems += lint(site, f"{where}'s legend", words, "legend.", wing=slug, lang=lang) + lint(site, f"{where}'s legend", words, "legend.", lang=lang)
+    # a subject no one can find on a map is no Place: what a shelf's page is about is typed a Place only with its
+    # coordinates (about.geo latitude and longitude), else a Thing or a CreativeWork
+    for t in [{"count": "its about", "about": e.get("about")}] + list(e.get("topics") or []):
+        about = t.get("about") or {}
+        kinds = about.get("@type") if isinstance(about.get("@type"), list) else [about.get("@type")]
+        geo = about.get("geo") if isinstance(about.get("geo"), dict) else {}
+        if PLACE_TYPES & set(kinds) and not {"latitude", "longitude"} <= set(geo):
+            problems.append(f"{where}: {t.get('count')} is typed {'/'.join(map(str, kinds))} without its coordinates (geo): "
+                            "a subject no one can find on a map is a Thing or a CreativeWork")
+    what = e.get("what")
+    for lang in own if what is not None else ():
+        words = {k: (what.get(k) or {}).get(lang) for k in ("line", "link")}
+        if not all(words.values()):
+            problems.append(f"{where}: its line on the page about the museum lacks its line or its link in {lang}")
+            continue
+        problems += lint(site, f"{where}'s line", words, "what.", wing=slug, lang=lang) + lint(site, f"{where}'s line", words, "what.", lang=lang)
+    return problems
+
+
 def paged(site):
-    """The wings in the making with pages of their own (pages_only): the topic pages' build makes their pages."""
-    return [s for s, e in site.wings.items() if e.get("pages_only") and e.get("state") == "making"]
+    """The wings in the making and the shelves with pages of their own (pages_only): the topic pages' build makes them."""
+    return [s for s, e in site.wings.items() if e.get("pages_only") and e.get("state") in ("making", "shelf")]
+
+
+def shelf_line(c):
+    """On the page about the museum: each shelf's one line and quiet link to its own page, in the languages it is
+    written in, and nothing in the others."""
+    out = ""
+    for s, e in c.site.wings.items():
+        what = e.get("what") or {}
+        if e.get("state") != "shelf" or c.lang not in (what.get("link") or {}) or c.lang not in languages.wing_langs(e, LANGS):
+            continue
+        out += (f'\n        <p>{esc(what["line"][c.lang])}</p>\n        <p><a class="more" href="{c.to(e["page"][c.lang].strip("/") + "/")}">'
+                f'<span>{esc(what["link"][c.lang])}</span>{ARROW}</a></p>')
+    return out
 
 
 def unasked_pages(site):
@@ -2236,13 +2303,22 @@ def checked_day(text):
     return next((n["dateModified"] for n in page_graph(text) if n.get("@type") == "Article" and n.get("dateModified")), None)
 
 
-def page_pictures(text, page_url):
+def unlisted_plates(path=None):
+    """The names of the topic pages' plates kept out of the image sitemap (their record's "sitemap": false)."""
+    path = path or PAGES_PICTURES
+    if not path.is_file():
+        return frozenset()
+    return frozenset(p["name"] for p in json.loads(path.read_text(encoding="utf-8")).get("plates", []) if p.get("sitemap") is False)
+
+
+def page_pictures(text, page_url, unlisted=frozenset()):
     """Every picture a built page shows (img) and every one its structured data describes (an ImageObject's contentUrl),
     as addresses on the site, once each in the order met. A picture a page may show may be listed: the list adds no
-    picture the page does not already serve."""
+    picture the page does not already serve. A plate named in unlisted is left out in each of its sizes (name-<width>)."""
     found = [urllib.parse.urljoin(page_url, html.unescape(src)) for src in re.findall(r'<img\b[^>]*?\bsrc="([^"]+)"', text)]
     found += [i.get("contentUrl") or i.get("url") or "" for i in image_objects(page_graph(text))]
-    return [u for u in dict.fromkeys(found) if u.startswith(f"{ORIGIN}/")]
+    plate = lambda u: re.sub(r"-\d+\.\w+$", "", u.rsplit("/", 1)[-1])
+    return [u for u in dict.fromkeys(found) if u.startswith(f"{ORIGIN}/") and plate(u) not in unlisted]
 
 
 def write_sitemap(out, site, listed):
@@ -2251,6 +2327,7 @@ def write_sitemap(out, site, listed):
     urls = sorted({url(p) for _, _, p in listed})
     # a topic page's last change that counts is the day its facts were checked: the day its dated line shows
     lastmod, pictures = {}, {}
+    unlisted = unlisted_plates()
     for kind, _, p in listed:
         text = Path(p).read_text(encoding="utf-8")
         day = checked_day(text) if kind == "topic" else None
@@ -2258,7 +2335,7 @@ def write_sitemap(out, site, listed):
             lastmod[url(p)] = f"<lastmod>{day}</lastmod>"
         # Google reads one image:loc per picture, a thousand at most per address
         pictures[url(p)] = "".join(f"<image:image><image:loc>{html.escape(u, quote=False)}</image:loc></image:image>"
-                                   for u in page_pictures(text, url(p))[:1000])
+                                   for u in page_pictures(text, url(p), unlisted)[:1000])
     # From three listed languages on, each address names its twins, as the pages' heads do. With two, the heads alone.
     twins = {}
     if len(LISTED) > 2:

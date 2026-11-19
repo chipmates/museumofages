@@ -9,11 +9,15 @@ The wings come from the site's registry: each test works on a copy of it, as the
 points this build at its registry at run time.
 """
 import importlib.util
+import hashlib
 import html
 import json
 import os
+import posixpath
 import re
 import shutil
+import subprocess
+import sys
 import unittest
 import urllib.parse
 from html.parser import HTMLParser
@@ -83,8 +87,9 @@ class Case(unittest.TestCase):
         return next(self.data(lang, p) for p in self.pages if self.data("en", p)["page"]["id"] == label), lang
 
     def making(self, data):
-        """Whether a page's wing is still being built: its pages show a link out where a door would stand."""
-        return self.wings()[data["page"]["wing"]].get("state") == "making"
+        """Whether a page stands without an open wing of its own (a wing in the making, or a shelf): its pages show a
+        link out, or a way on, where a door would stand."""
+        return self.wings()[data["page"]["wing"]].get("state") in ("making", "shelf")
 
     def save(self, lang, data, page=None):
         (self.dir / f"{page or self.page}.{lang}.json").write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
@@ -197,7 +202,8 @@ class Case(unittest.TestCase):
         wings = json.loads(REGISTRY.read_text(encoding="utf-8"))
         names = set()
         for key, wing in wings.items():
-            if key.startswith("_"):
+            # a shelf is no wing: its name is a plain word (questions) that these files use for what they are
+            if key.startswith("_") or wing.get("state") == "shelf":
                 continue
             names.add(key)
             names |= {part.lower() for name in wing["name"].values() for part in name.split() if len(part) > 3}
@@ -566,8 +572,10 @@ class Case(unittest.TestCase):
             # a list of pages joins its names wherever it stands: the hub and both neighbours
             items = [m.group(1) for (pid, code), (other, text) in by_id.items() if code == lang
                      for m in re.finditer(r'<h[23] class="sc-item__h"><a href="[^"]*t-rex/">(.*?)</a>', text)]
-            # the hub and the eight pages that name it
-            self.assertEqual(len(items), 9)
+            # the hub and the eight pages that name it, and each shelf's list of every answer page
+            lists = sum(1 for (_, code), (d, _) in by_id.items() if code == lang
+                        and any(b.get("every") for b in d["blocks"] if b["type"] == "pages"))
+            self.assertEqual(len(items), 9 + lists)
             for item in items:
                 self.assertIn('<span class="nh">T.\u00a0rex</span>', item)
         # a page without the flag keeps the nowrap span in its own sentences
@@ -1657,6 +1665,9 @@ class Case(unittest.TestCase):
             data, lang = self.page_of(path)
             text = path.read_text(encoding="utf-8")
             figs = [b["scale"] for b in data["blocks"] if isinstance(b.get("scale", {}).get("key"), list)]
+            if not figs and self.making(data) and data["top"].get("slot") and self.wings()[data["page"]["wing"]]["state"] == "shelf":
+                # a shelf's answer page: its legend's two swatches (Shelf tests them)
+                continue
             if not figs:
                 self.assertNotIn(".sc-swatch", text)
                 continue
@@ -2050,7 +2061,7 @@ class Case(unittest.TestCase):
         """The structured data's third crumb is the crumb the page shows, not its heading."""
         self.scale_page()
         out, written = self.build()
-        seen = 0
+        seen = distinct = 0
         for path in written:
             data, lang = self.page_of(path)
             if not self.making(data) or data["page"].get("hub"):
@@ -2063,9 +2074,13 @@ class Case(unittest.TestCase):
             # the page keeps a short name whole with a no-break space; the data names it plainly
             shown = html.unescape(re.sub(r"<[^>]+>", "", shown)).replace("\u00a0", " ").replace("\u00ad", "")
             self.assertEqual(crumbs[2]["name"], shown, path)
-            self.assertNotEqual(crumbs[2]["name"], data["top"]["h1"], path)
+            # a crumb may read as its heading does (a short question): only a crumb of other words tells the two apart
+            if shown != data["top"]["h1"]:
+                self.assertNotEqual(crumbs[2]["name"], data["top"]["h1"], path)
+                distinct += 1
             seen += 1
         self.assertGreater(seen, 0)
+        self.assertGreater(distinct, 0)
         shutil.rmtree(out)
 
     def test_a_door_on_a_page_of_a_wing_in_the_making_stops_the_build(self):
@@ -2181,7 +2196,8 @@ class Case(unittest.TestCase):
                 with self.subTest(page=data["page"]["id"], lang=lang):
                     sure = block["cols"][-1] in ("How sure", "Wie sicher")
                     figures = len(block["cols"]) - 1 - sure
-                    self.assertIn(f'<table class="sc-table sc-table--v{figures}" role="table">', own)
+                    # a table whose last column is no how-sure line keeps that column's heading (sc-table--plain)
+                    self.assertIn(f'<table class="sc-table sc-table--v{figures}{"" if sure else " sc-table--plain"}" role="table">', own)
                     table = re.search(r'<table class="sc-table.*?</table>', own, flags=re.S).group(0)
                     rows = re.findall(r"<tr role=\"row\"(?: class=\"sc-our\")?><th scope=\"row\" role=\"rowheader\">.*?</tr>", table, flags=re.S)
                     self.assertEqual(len(rows), len(block["rows"]))
@@ -2395,7 +2411,7 @@ class Case(unittest.TestCase):
 
     def plate_page(self):
         """The first page whose share picture shows its marked work itself (page.og_image.plate) at the person's scale."""
-        return next((p for p in self.pages if self.data("en", p)["page"]["og_image"].get("plate") and "figure" in self.data("en", p)["top"]), None)
+        return next((p for p in self.pages if self.data("en", p)["page"].get("og_image", {}).get("plate") and "figure" in self.data("en", p)["top"]), None)
 
     def test_a_sizes_share_picture_shows_its_marked_work(self):
         page = self.plate_page()
@@ -2773,7 +2789,7 @@ class Case(unittest.TestCase):
             self.assertRegex(text, r'<a class="door" href="%s#s=%s"[^>]*data-door="top"' % (re.escape(door), mark["stop"]))
             # every way into the walk names its place among the count's doors
             for a in re.findall(r'<a\b[^>]*href="/w/[^"]*"[^>]*>', text):
-                self.assertRegex(a, r'data-door="(top|item|end)"')
+                self.assertRegex(a, r'data-door="(top|item|end|still)"')
 
     def test_the_lady_with_an_ermine_shows_the_size_her_holders_catalogue_gives(self):
         """The sizes page promises each work's size as its holder gives it. The National Museum in Kraków's catalogue
@@ -3029,10 +3045,14 @@ class Case(unittest.TestCase):
             text = path.read_text(encoding="utf-8")
             own = self.own_part(text)
             top = re.search(r'<header class="sp-top\b.*?</header>', own, flags=re.S).group(0)
-            # the first part: the answer, the door, then the list of the page's parts, and no picture
-            self.assertNotIn("<img", top)
+            # the first part: the answer, the door, the wing's still where the page names one (top.door.still), then
+            # the list of the page's parts, and no other picture
+            self.assertNotIn("<img", re.sub(r'<figure class="plate sp-still".*?</figure>', "", top, flags=re.S))
             self.assertLess(top.index('class="sp-answer"'), top.index('data-door="top"'))
             self.assertLess(top.index('data-door="top"'), top.index('class="sp-toc sp-toc--top"'))
+            if self.data("en", page)["top"]["door"].get("still"):
+                self.assertLess(top.index('data-door="top"'), top.index('data-door="still"'))
+                self.assertLess(top.index('data-door="still"'), top.index('class="sp-toc sp-toc--top"'))
             listed = re.findall(r'<li><a href="#([\w-]+)">', top)
             self.assertEqual(listed, [b["id"] for b in data["blocks"] if b.get("nav")])
             # its text has no column beside it, one list only, or the same list beside it on a desktop (top.side)
@@ -3151,8 +3171,10 @@ class Case(unittest.TestCase):
         # one list on a desktop's first screen: the first part's own list stands down there
         self.assertRegex(own, r'<header class="sp-top[^"]* sp-top--side sp-top--list">')
         self.assertRegex(text, desktop + r"\.sp-top--side>\.sp-toc--top\{display:none\}")
-        # no plate beside the answer, so the list stands there from the top, the answer in the parts' column
-        self.assertNotIn("<img", re.search(r'<header class="sp-top\b.*?</header>', own, flags=re.S).group(0))
+        # no plate beside the answer, so the list stands there from the top, the answer in the parts' column (the wing's
+        # still beside the door is no plate of a work)
+        top = re.search(r'<header class="sp-top\b.*?</header>', own, flags=re.S).group(0)
+        self.assertNotIn("<img", re.sub(r'<figure class="plate sp-still".*?</figure>', "", top, flags=re.S))
         self.assertRegex(text, desktop + r"\.wrap:has\(>\.sp-top--list\)\{display:grid;")
         self.assertRegex(text, desktop + r"\.wrap:has\(>\.sp-top--list\)>\.sp-grid\{display:contents\}")
         for lang in ("en", "de"):
@@ -3397,6 +3419,8 @@ class Case(unittest.TestCase):
             num = lambda v: f"{v:g}".replace(".", "," if lang == "de" else ".")
             self.assertIn(f'{num(wall["h_m"])} × {num(wall["w_m"])} m</text>', top)
             self.assertNotIn("<img", top)
+            # a phone reads the answer and the way in first, the drawing after them (a desktop sets it beside them)
+            self.assertLess(top.index('data-door="top"'), top.index('<figure class="plate sp-frame sz-frame"'))
             # the person's floor line stops before the wall: where the wall's lower edge sits above a floor is not drawn
             wall_x = float(re.search(r'<rect class="sz-m" x="([\d.]+)"', top).group(1))
             floors = re.findall(r'<path class="sz-floor" d="M([\d.]+) [\d.]+H([\d.]+)"', top)
@@ -3691,6 +3715,24 @@ class Case(unittest.TestCase):
         lined = f'<main><figure class="plate">{pic(second)}<figcaption><span class="label__src">Public domain work.</span></figcaption></figure></main>'
         self.assertEqual(module.check_tier(lined), [])
 
+    def test_a_plate_with_a_holder_links_the_holders_record_and_not_where_its_file_came_from(self):
+        record = json.loads((self.dir / "pictures.json").read_text(encoding="utf-8"))
+        plate = {"name": "sample-photo", "work": "sample-photo", "record": "sample/sample-photo", "file": "sample/sample-photo.jpg",
+                 "sha256": "0" * 64, "tier": "TIER1", "source": "https://files.example.org/wiki/File:Sample.jpg",
+                 "holder": "https://collection.example.org/work/sample", "licence_url": None, "it108": False,
+                 "shape": "whole", "widths": [640]}
+        record["plates"] += [plate, dict(plate, name="sample-photo-2", holder=None)]
+        (self.dir / "pictures.json").write_text(json.dumps(record, ensure_ascii=False), encoding="utf-8")
+        module = self.builder()
+        line = lambda href: ["A maker, about 1863. A museum. ", {"text": "Public domain", "href": href}, "."]
+        self.assertEqual(module.plate_problems(line(plate["holder"]), ["sample-photo"], "en"), [])
+        self.assertRegex(" ".join(module.plate_problems(line(plate["source"]), ["sample-photo"], "en")),
+                         r"does not link the plate's holder https://collection\.example\.org/work/sample")
+        # without a holder the line links where the file came from, as before
+        self.assertEqual(module.plate_problems(line(plate["source"]), ["sample-photo-2"], "en"), [])
+        self.assertRegex(" ".join(module.plate_problems(line(plate["holder"]), ["sample-photo-2"], "en")),
+                         r"does not link the plate's source")
+
     def test_each_plate_agrees_with_the_museums_store_where_it_is_at_hand(self):
         store = os.environ.get("MOA_ASSET_STORE")
         if not store or not Path(store).is_dir():
@@ -3889,11 +3931,13 @@ class Case(unittest.TestCase):
             want = [(data["top"]["h1"], data["top"]["answer"])] + [(b["h"], b["answer"]) for b in data["blocks"] if b["type"] == "question"]
             nb = lambda s: s.replace("\u00a0", " ")
             self.assertEqual([(nb(q["name"]), nb(q["acceptedAnswer"]["text"])) for q in faq], [(nb(q), nb(a)) for q, a in want])
-        # a page of questions without a plate keeps its first part free of pictures and its sheet free of the work's rules
+        # a page of questions without a plate keeps its first part free of pictures but the wing's still beside its door,
+        # and its sheet free of the work's rules
         other = self.ask_page()
         if other:
             text = self.built_of(written, other, "en").read_text(encoding="utf-8")
-            self.assertNotIn("<img", re.search(r'<header class="sp-top\b.*?</header>', text, flags=re.S).group(0))
+            top = re.search(r'<header class="sp-top\b.*?</header>', text, flags=re.S).group(0)
+            self.assertNotIn("<img", re.sub(r'<figure class="plate sp-still".*?</figure>', "", top, flags=re.S))
             self.assertNotIn(".lf-lines--story{", text)
 
     def test_a_line_of_a_works_story_with_a_mark_the_site_has_no_bead_for_stops_the_build(self):
@@ -4107,6 +4151,7 @@ class LastYears(unittest.TestCase):
     }
     PAGE_ONLY_YEARS = {
         "1490": "the house's own date for the purchase by Charles VIII",
+        "1568": "Vasari's second edition of the Lives (the wing dates the story to its 1550 telling since 12 Nov)",
         "1518": "the château's feasts, the Louvre on Salaì and on the three pictures, the will's own date by the old "
                 "reckoning",
         "1854": "the house's owners since then", "1862": "the state's listing of the house",
@@ -4784,6 +4829,91 @@ class SiteWide(unittest.TestCase):
             if article:
                 yield path, text, article
 
+    def test_a_shelf_is_linked_once_from_the_page_about_the_museum_and_counted_as_no_wing(self):
+        """A shelf's list of answer pages is no wing: the page about the museum links it once in each of the shelf's
+        languages, and no other page outside the shelf does (no landing, no wing, no menu); the sitemap names it with its
+        languages' alternates and no other; no script, list or header of the site names it."""
+        registry = json.loads((HERE.parent / "_src" / "registry.json").read_text(encoding="utf-8"))
+        languages = json.loads((HERE.parent / "_src" / "languages.json").read_text(encoding="utf-8"))["languages"]
+        shelves = {k: e for k, e in registry.items() if isinstance(e, dict) and e.get("state") == "shelf"}
+        self.assertTrue(shelves, "no shelf in the registry")
+        about = {lang["code"]: f'/{lang["folder"]}{lang["slugs"]["what"]}/' for lang in languages}
+        for key, shelf in shelves.items():
+            own = {code: f"/{path}/" for code, path in shelf["page"].items()}
+            self.assertEqual(set(own), set(shelf["langs"]))
+            linked = {}
+            for path, text in self.pages.items():
+                rel = "/" + path.relative_to(SITE_BUILT).parent.as_posix() + "/"
+                rel = "/" if rel == "/./" else rel
+                if any(rel.startswith(o) for o in own.values()):
+                    continue
+                for href in re.findall(r'<a\b[^>]*\bhref="([^"]+)"', text):
+                    if "://" in href or href.startswith(("#", "mailto:")):
+                        continue
+                    target = posixpath.normpath(posixpath.join(rel, href.split("#")[0])) + "/"
+                    if target in own.values():
+                        linked.setdefault(rel, []).append(target)
+            self.assertEqual(linked, {about[c]: [own[c]] for c in shelf["langs"]}, key)
+            loc = re.search(r"<url><loc>https://museumofages\.org%s</loc>(.*?)</url>" % re.escape(own["en"]), self.sitemap)
+            self.assertTrue(loc, key)
+            self.assertEqual(re.findall(r'hreflang="([\w-]+)"', loc.group(1)), [*shelf["langs"], "x-default"])
+            for f in SITE_BUILT.rglob("*"):
+                if f.is_file() and (f.suffix in (".js", ".json", ".txt") or f.name in ("_redirects", "_headers")):
+                    words = f.read_text(encoding="utf-8", errors="replace")
+                    for o in own.values():
+                        self.assertNotIn(o, words, f)
+
+    def test_the_wings_still_stands_beside_the_mona_lisa_door_on_a_desktop_and_the_doors_come_first_on_a_phone(self):
+        # the Mona Lisa page, in every language it is built in: the wing's card picture beside the first door, a link to
+        # that door's own address counted as the still's place, in the alt the wing's card gives it, shown from 960 px
+        # only; the Last Supper and sizes pages set the door before their frame, so a phone reads the way in first; no
+        # other answer page shows the still
+        registry = json.loads((HERE.parent / "_src" / "registry.json").read_text(encoding="utf-8"))
+        card = registry["vinci"]["pictures"]["card"]
+        found, langs = set(), set()
+        for path, text in self.pages.items():
+            page = re.search(r'<main id="main" class="sp" data-page="(vinci-(?:mona-lisa|supper|sizes|paintings))"', text)
+            if not page:
+                continue
+            found.add(page.group(1))
+            lang = re.search(r'<html lang="([\w-]+)"', text).group(1)
+            top = re.search(r'<header class="sp-top\b.*?</header>', text, flags=re.S).group(0)
+            door = re.search(r'<a class="door" href="([^"]+)"[^>]*data-door="top"', top)
+            still = re.findall(r'<a class="sp-still__a" href="([^"]+)"[^>]*data-door="still">(.*?)</a>', top, flags=re.S)
+            self.assertIsNotNone(door, path)
+            if page.group(1) != "vinci-mona-lisa":
+                self.assertEqual(still, [], path)
+                self.assertNotIn("v-house", top, path)
+                if page.group(1) in ("vinci-supper", "vinci-sizes"):
+                    self.assertLess(top.index('data-door="top"'), top.index('<figure class="plate sp-frame'), path)
+                continue
+            self.assertEqual(len(still), 1, path)
+            self.assertEqual(still[0][0], door.group(1), path)
+            self.assertLess(top.index('data-door="top"'), top.index('data-door="still"'), path)
+            words = json.loads((HERE.parent / "_src" / "wings" / f"vinci.{lang}.json").read_text(encoding="utf-8"))
+            self.assertRegex(still[0][1], r'img/%s-\d+\.webp" width="\d+" height="\d+" alt="%s"' % (
+                re.escape(card["stem"]), re.escape(html.escape(words["card"]["alt"]))), path)
+            self.assertIn('loading="lazy"', still[0][1], path)
+            # the label names the place by the wing's own line for its house room, never the card's line (on a page
+            # about her it read as her house); the kind and the source line stay the card's
+            room = next(r for r in words["rooms"] if r["id"] == "house")
+            self.assertEqual(room["note"], {"en": "Clos Lucé, his last home", "de": "Clos Lucé, sein letztes Zuhause",
+                                            "es": "Clos Lucé, su última casa"}[lang], path)
+            label = re.search(r'<figcaption class="label sp-still__label">(.*?)</figcaption>', top, flags=re.S).group(1).strip()
+            what = re.search(r'<span class="label__what"><span class="tag">(.*?)<span class="vh">:</span></span> (.*?)</span>'
+                             r'<span class="label__src">(.*?)</span>$', label, flags=re.S)
+            self.assertIsNotNone(what, path)
+            self.assertEqual(html.unescape(re.sub(r"<[^>]+>", "", what.group(2))), room["note"], path)
+            self.assertEqual(html.unescape(re.sub(r"<[^>]+>", "", what.group(1))), words["card"]["kind"], path)
+            self.assertEqual(html.unescape(re.sub(r"<[^>]+>", "", what.group(3))), words["card"]["src"], path)
+            self.assertNotIn(html.escape(words["card"]["what"]), top, path)
+            langs.add(lang)
+            # hidden below 960 px (a hidden lazy picture is never fetched), shown in the desktop's column beside the door
+            self.assertIn(".sp-side{display:none}", text, path)
+            self.assertRegex(text, r"@media \(min-width:960px\)\{[^@]*>\.sp-side\{display:block;", path)
+        self.assertEqual(found, {"vinci-mona-lisa", "vinci-supper", "vinci-sizes", "vinci-paintings"})
+        self.assertEqual(langs, {"en", "de", "es"})
+
     def test_the_dated_line_shows_the_day_the_structured_data_gives(self):
         found = 0
         for path, text, article in self.articles():
@@ -4890,17 +5020,29 @@ class SiteWide(unittest.TestCase):
                 self.assertTrue(image.startswith("https://museumofages.org/"), image)
                 self.assertTrue((SITE_BUILT / image[len("https://museumofages.org/"):]).is_file(), image)
         self.assertGreaterEqual(sum(len(v) for v in listed.values()), 300)
-        # every picture a listed page shows, and every one its structured data describes, stands under its address
+        # a plate whose record says "sitemap": false is shown and never listed, in any of its sizes
+        unlisted = {p["name"] for p in json.loads((HERE / "pictures.json").read_text(encoding="utf-8"))["plates"]
+                    if p.get("sitemap") is False}
+        plate = lambda u: re.sub(r"-\d+\.\w+$", "", u.rsplit("/", 1)[-1])
+        for images in listed.values():
+            self.assertFalse({plate(u) for u in images} & unlisted, images)
+        kept_out = set()
+        # every other picture a listed page shows, and every one its structured data describes, stands under its address
         for path, text in self.pages.items():
             address = self.address(path)
             if address not in listed:
                 continue
             shown = {html.unescape(src) for src in re.findall(r'<img\b[^>]*?\bsrc="([^"]+)"', text)}
             for src in shown:
+                if plate(src) in unlisted:
+                    kept_out.add(plate(src))
+                    continue
                 self.assertIn(urllib.parse.urljoin(address, src), listed[address], path)
             for node in _graph(text):
-                if node.get("@type") == "ImageObject" and node.get("contentUrl"):
+                if node.get("@type") == "ImageObject" and node.get("contentUrl") and plate(node["contentUrl"]) not in unlisted:
                     self.assertIn(node["contentUrl"], listed[address], path)
+        # each plate so marked is one a listed page shows: the mark is no leftover
+        self.assertEqual(kept_out, unlisted)
 
     def primary(self, text):
         """The page's own picture as its structured data names it: the ImageObject both the page and its Article point at."""
@@ -4937,13 +5079,13 @@ class SiteWide(unittest.TestCase):
     def test_the_neighbours_stand_under_one_heading_and_the_list_of_pages_is_the_page(self):
         found = {"topic": 0, "hub": 0}
         for path, text in self.pages.items():
-            listed = re.search(r'<section class="sp-sec sc-pages( sc-pages--next)?" id="[\w-]+">(.*?)</section>', text, flags=re.S)
+            listed = re.search(r'<section class="sp-sec sc-pages( sc-pages--next| sc-pages--plain)?" id="[\w-]+">(.*?)</section>', text, flags=re.S)
             if not listed:
                 continue
             levels = re.findall(r"<h([1-6])\b", listed.group(2))
             items = re.findall(r'<li class="sc-item">\s*<h([1-6]) class="sc-item__h">', listed.group(2))
             self.assertTrue(items, path)
-            if listed.group(1):
+            if listed.group(1) == " sc-pages--next":
                 # a topic page: one h2 for the list, then each neighbour an h3
                 self.assertEqual(levels, ["2"] + ["3"] * len(items), path)
                 self.assertRegex(listed.group(2), r"^\s*<h2>(?:(?!</h2>).)+</h2>\s*<ul class=\"sc-list\">", path)
@@ -5035,6 +5177,10 @@ class SiteWide(unittest.TestCase):
             if not label:
                 continue
             lang = re.search(r'<html lang="([\w-]+)"', text).group(1).lower()
+            if 'property="og:image"' not in text:
+                # a page in words only (a shelf's list of pages): no share card, and no picture of its own named
+                self.assertFalse(any("primaryImageOfPage" in n for n in _graph(text)), path)
+                continue
             frame = self.primary(text)
             share = re.search(r'<meta property="og:image" content="([^"]+)"', text).group(1)
             self.assertIn("-og", share, path)
@@ -5234,6 +5380,532 @@ class LongNames(unittest.TestCase):
         # the structured data keeps the page's words as written
         for graph in re.findall(r'<script type="application/ld\+json">(.*?)</script>', grave, flags=re.S):
             self.assertNotIn("2 May", graph)
+
+
+FIXTURE = HERE / "testdata" / "question_fixture.py"
+
+
+def _fixture():
+    spec = importlib.util.spec_from_file_location("question_fixture", FIXTURE)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+class Shelf(Case):
+    """The questions shelf: answer pages under a name of their own, for no wing, never counted as one. Each test adds
+    the made-up answer page of testdata/ to its own copy of the pages, the registry and pictures.json; nothing of it is
+    ever published."""
+
+    def setUp(self):
+        super().setUp()
+        # the test's own folder of pictures: the real ones linked one by one, the fixture's drawn beside them
+        pics = self.dir / "pics"
+        if pics.is_symlink():
+            pics.unlink()
+        (pics / "img").mkdir(parents=True, exist_ok=True)
+        if (HERE / "pics" / "img").is_dir():
+            for f in (HERE / "pics" / "img").iterdir():
+                os.symlink(f, pics / "img" / f.name)
+        self.fx = _fixture()
+        self.fx.install(self.dir, self.registry, self.dir / "pictures.json", pics / "img")
+        self.pages = sorted(p.name[:-len(".en.json")] for p in self.dir.glob("*.en.json"))
+        self.answer = self.fx.NAME
+
+    def built(self, out, lang, page=None):
+        d = self.data(lang, page or self.answer)
+        wing = self.wings()["questions"]
+        topic = next((t for t in wing["topics"] if t.get("count") == d["page"].get("topic")), None)
+        path = wing["page"][lang] + (f'/{topic["slug"][lang]}' if topic else "")
+        return (out / path / "index.html").read_text(encoding="utf-8")
+
+    def test_an_answer_page_shows_its_first_screen_in_order(self):
+        out, _ = self.build()
+        legend = self.wings()["questions"]["legend"]
+        for lang in ("en", "de"):
+            text = self.built(out, lang)
+            top = re.search(r'<header class="sp-top[^"]*">(.*?)</header>', text, flags=re.S).group(1)
+            # the way on before the picture in the markup, as a phone shows them: no style reorders the first part, so
+            # the keyboard's focus meets the way on before the picture's links
+            marks = [top.index(m) for m in ("<h1", 'class="sp-answer"', 'class="sc-strength"', 'data-next="page"', 'data-slot="frame"')]
+            self.assertEqual(marks, sorted(marks), lang)
+            self.assertNotRegex(text, r"\.sc-(?:top|next|fig)[^{}]*\{[^}]*\border\s*:", lang)
+            self.assertNotIn('data-out="wing"', top)
+            self.assertNotIn("sc-out", top)
+            figure = re.search(r'<figure class="plate sc-fig sc-fig--first" data-slot="frame">.*?</figure>', top, flags=re.S).group(0)
+            # the two marks only, in the shelf's words, each with the colour the picture prints
+            items = re.findall(r'<li class="sc-keys__i"><span class="sc-swatch sc-swatch--plan-(\w+)"[^>]*></span><span>(.*?)</span></li>', figure)
+            self.assertEqual(items, [("known", legend["known"][lang]), ("guessed", legend["guessed"][lang])])
+            self.assertIn(".sc-swatch--plan-known{background:#d9c38c}", text)
+            # the sentence that ties them to the four grades, and its link to them on the page about the museum
+            mapping = re.search(r'<span class="label__src sc-legend__map">(.*?) <a href="([^"]+)">(.*?)</a></span>', figure)
+            self.assertEqual(self.words(mapping.group(1)).strip(), legend["grades"][lang])
+            self.assertTrue(mapping.group(2).endswith("/#sure"), mapping.group(2))
+            what = SITE_BUILT / mapping.group(2).replace("../", "").split("#")[0] / "index.html"
+            self.assertIn('id="sure"', what.read_text(encoding="utf-8"), what)
+            # the map's credit in the picture's own line, with its licence: never in the foot
+            src = re.search(r'<span class="label__src">(.*?)</span>\n', figure, flags=re.S).group(1)
+            self.assertIn('href="https://www.openstreetmap.org/copyright"', src)
+            self.assertIn('href="https://opendatacommons.org/licenses/odbl/"', src)
+            foot = re.search(r'<footer class="foot".*?</footer>', text, flags=re.S).group(0)
+            self.assertNotIn("openstreetmap.org/copyright", foot)
+            # the way on leads to the shelf's list, and no word waits for its filling
+            self.assertRegex(top, r'<a class="more" href="(?:\.\./)+(?:questions|de/fragen)/" data-next="page">')
+            self.assertNotRegex(self.own_part(text), r"\{(?:wing|place|day)\}")
+            self.assertNotRegex(text, r'class="door\b|href="/w/')
+
+    def test_the_museum_block_names_the_open_wing_from_the_registry(self):
+        out, _ = self.build()
+        vinci = self.wings()["vinci"]
+        for lang in ("en", "de"):
+            own = self.own_part(self.built(out, lang))
+            sections = re.findall(r'<section class="([^"]+)" id="([\w-]+)"', own)
+            self.assertEqual(sections[-1], ("sp-sec sp-prose sc-museum", "museum"))
+            museum = own[own.index('id="museum"'):]
+            shown = re.sub(r"\s+", " ", self.words(museum).replace("\u00a0", " "))
+            for value in (vinci["name"][lang], vinci["shows"]["place"][lang], vinci["shows"]["day"][lang]):
+                self.assertIn(value, shown, lang)
+            self.assertRegex(museum, r'<a class="more" href="(?:\.\./)+%s/" data-out="wing">' % re.escape(vinci["page"][lang]))
+        # one change in the registry keeps every page true
+        wings = self.wings()
+        wings["vinci"]["shows"] = {"place": {"en": "Teststead", "de": "Probehof"}, "day": {"en": "2 March 1500", "de": "2. März 1500"}}
+        self.registry.write_text(json.dumps(wings, ensure_ascii=False), encoding="utf-8")
+        shutil.rmtree(self.dir / "out")
+        out, _ = self.build()
+        for lang, place, day in (("en", "Teststead", "2 March 1500"), ("de", "Probehof", "2. März 1500")):
+            for page in (self.answer, "questions"):
+                shown = re.sub(r"\s+", " ", self.words(self.own_part(self.built(out, lang, page))).replace("\u00a0", " "))
+                self.assertIn(place, shown)
+                self.assertIn(day, shown)
+
+    def test_the_museum_block_is_never_fixed_words_and_closes_the_page(self):
+        data = self.data("en", self.answer)
+        museum = data["blocks"][-1]
+        museum["text"] = "Museum of Ages is a digital museum. Its {wing} wing shows Clos Lucé in Amboise on 10 October 1517."
+        self.save("en", data, self.answer)
+        stopped = self.fails(r"museum: the museum block's text names the open wing, its place and its day by \{wing\}, \{place\}, "
+                             r"\{day\} \(missing \{place\}, \{day\}\)")
+        self.assertIn("museum: the museum block names 'Clos Lucé in Amboise' in its own words", stopped)
+        data = self.data("en", self.answer)
+        data["blocks"] = [data["blocks"][-1]] + data["blocks"][:-1]
+        data["blocks"][0]["text"] = "Museum of Ages is a digital museum. Its {wing} wing shows {place} on {day}."
+        self.save("en", data, self.answer)
+        de = self.data("de", self.answer)
+        de["blocks"] = [de["blocks"][-1]] + de["blocks"][:-1]
+        self.save("de", de, self.answer)
+        self.fails(r"museum: the museum block stands once, as the page's last section")
+
+    def test_an_answer_page_lacks_nothing_of_its_first_screen(self):
+        cases = [
+            ("strength", lambda d: d["top"].pop("strength"), r"top\.strength says in one line how sure the answer is"),
+            ("next", lambda d: d["top"].pop("next"), r"leads on to its next question \(top\.next\)"),
+            ("out", lambda d: d["top"].update(out={"text": "Words.", "link": "Away"}), r"top\.next is a link to a page of its own wing"),
+            ("slot", lambda d: d["top"].pop("slot"), r"leads with a picture made for it \(top\.slot\.pic\)"),
+            ("swatches", lambda d: d["pics"]["plan"].update(swatches={"known": "#d9c38c"}), r"swatches gives the two colours"),
+            ("museum", lambda d: d["blocks"].pop(), r"closes with its museum block"),
+        ]
+        for name, change, words in cases:
+            with self.subTest(name):
+                for lang in ("en", "de"):
+                    shutil.copyfile(HERE / "testdata" / f"{self.answer}.{lang}.json", self.dir / f"{self.answer}.{lang}.json")
+                    data = self.data(lang, self.answer)
+                    change(data)
+                    self.save(lang, data, self.answer)
+                self.fails(words)
+
+    def test_a_shelf_page_keeps_to_its_answer(self):
+        """A shelf page's own words refuse what its never_say lists, in both its languages."""
+        refused = {
+            "en": ["The model ship is being built.", "This museum shows paintings.", "A moth has wings.",
+                   "The Leonardo wing shows it too.", "We rebuilt it in 3D.", "The kettle will be ready soon.",
+                   "The film will show the moth.", "Free entry, no account."],
+            "de": ["Das Modellschiff wird gebaut.", "Unser Museum zeigt Gemälde.", "Die Motte hat Flügel.",
+                   "Die Station misst das Wetter.", "In 3D nachgebaut.", "Der Eintritt ist frei.", "Der Tee ist bald fertig."],
+        }
+        for lang, lines in refused.items():
+            for line in lines:
+                with self.subTest(lang=lang, line=line):
+                    data = self.data(lang, self.answer)
+                    data["blocks"][1]["paras"] = [line]
+                    self.refused(lang, data, self.answer, r"blocks\.1\.paras\.0 matches")
+        # "soon after" and "bald darauf" tell of the past, and pass
+        for lang, line in (("en", "Soon after, the moth flew off."), ("de", "Bald darauf flog die Motte fort.")):
+            data = self.data(lang, self.answer)
+            data["blocks"][1]["paras"] = [line]
+            self.save(lang, data, self.answer)
+        self.build()
+
+    def test_the_shelf_lists_every_answer_page_of_every_entry(self):
+        out, _ = self.build()
+        wings = self.wings()
+        for lang in ("en", "de"):
+            expected = []
+            for key, wing in ((k, w) for k, w in wings.items() if not k.startswith("_")):
+                for topic in wing.get("topics", []):
+                    page = next((p for p in self.pages if self.data("en", p)["page"].get("wing") == key
+                                 and self.data("en", p)["page"].get("topic") == (topic.get("count") or topic["slug"]["en"].replace("-", "_"))), None)
+                    if page and (self.dir / f"{page}.{lang}.json").is_file():
+                        expected.append(f'{wing["page"][lang]}/{topic["slug"][lang]}/')
+            text = self.built(out, lang, "questions")
+            own = self.own_part(text)
+            listed = re.search(r'<section class="sp-sec sc-pages sc-pages--plain" id="pages">(.*?)</section>', own, flags=re.S).group(1)
+            hrefs = re.findall(r'<h2 class="sc-item__h"><a href="([^"]+)">', listed)
+            base = "/" + wings["questions"]["page"][lang] + "/"
+            found = [urllib.parse.urljoin(base, h).lstrip("/") for h in hrefs]
+            self.assertEqual(found, expected, lang)
+            self.assertIn(f'{wings["questions"]["page"][lang]}/{self.fx.TOPIC["slug"][lang]}/', found)
+            self.assertTrue(any(f.startswith(wings["animals"]["page"][lang]) for f in found))
+            self.assertTrue(any(f.startswith(wings["vinci"]["page"][lang]) for f in found))
+            # one list, no heading over a group of it, and no promise of the museum's own
+            self.assertEqual(re.findall(r"<h([1-6])\b", listed), ["2"] * len(hrefs))
+            self.assertNotRegex(own, r"\b3D\b|sc-brand")
+            graph = _graph(text)
+            page = next(n for n in graph if n.get("@type") == "CollectionPage")
+            items = next(n for n in graph if n.get("@type") == "ItemList")
+            self.assertEqual(page["mainEntity"], {"@id": items["@id"]})
+            self.assertEqual([x["url"] for x in items["itemListElement"]], [f"https://museumofages.org/{f}" for f in found])
+
+    def test_a_picture_that_draws_its_own_legend_keeps_only_the_grades_link(self):
+        """A picture that draws its two marks and the grades' sentence itself (slot.legend 'picture'): the first screen
+        prints no second legend, only the link to the four grades, and keeps the marks and the sentence in words for a
+        screen reader, hidden from the eye; any other value stops the build by name."""
+        self.both(self.answer, lambda d, lang: d["top"]["slot"].update(legend="picture"))
+        out, _ = self.build()
+        legend = self.wings()["questions"]["legend"]
+        for lang in ("en", "de"):
+            figure = re.search(r'<figure class="plate sc-fig sc-fig--first" data-slot="frame">.*?</figure>',
+                               self.built(out, lang), flags=re.S).group(0)
+            self.assertNotIn("sc-keys__i", figure)
+            self.assertNotIn("sc-swatch", figure)
+            link = re.findall(r'<span class="label__src sc-legend__map"><span class="vh">(.*?) </span><a href="([^"]+)">(.*?)</a></span>', figure)
+            self.assertEqual(len(link), 1, lang)
+            self.assertTrue(link[0][1].endswith("/#sure"), link[0][1])
+            self.assertEqual(self.words(link[0][2]).strip(), self.words(legend["grades_link"][lang]).strip())
+            # the marks and the sentence in the page's language, each in hidden words only
+            self.assertEqual(self.words(link[0][0]).strip(), legend["grades"][lang])
+            marks = re.findall(r'<ul class="vh">((?:<li>[^<]*</li>)+)</ul>', figure)
+            self.assertEqual(marks, ["".join(f"<li>{legend[k][lang]}</li>" for k in ("known", "guessed"))], lang)
+            shown = re.sub(r'<(ul|span) class="vh">.*?</\1>', "", figure, flags=re.S)
+            self.assertNotIn(legend["grades"][lang], self.words(shown))
+            self.assertNotIn(legend["guessed"][lang], self.words(shown))
+        shutil.rmtree(self.dir / "out")
+        self.both(self.answer, lambda d, lang: d["top"]["slot"].update(legend="both"))
+        self.fails(r"top\.slot\.legend says 'picture' where the picture draws its two marks")
+
+    def test_a_narrow_screen_s_cut_is_named_by_its_language_too(self):
+        """A picture drawn once per language ({lang} in its stem) names its narrow screens' version by the language
+        as well: each language's page serves its own cut below the given width."""
+        self.both(self.answer, lambda d, lang: d["pics"]["plan"].update(
+            narrow={"stem": "questions-fixture-plan-{lang}", "widths": [640, 1080], "below": 560}))
+        out, _ = self.build()
+        for lang in ("en", "de"):
+            text = self.built(out, lang)
+            narrow = re.findall(r'<source media="\(max-width: 559px\)" type="image/(?:avif|webp)" srcset="([^"]+)"', text)
+            self.assertEqual(len(narrow), 2, lang)
+            for srcset in narrow:
+                self.assertNotIn("{lang}", srcset)
+                self.assertIn(f"questions-fixture-plan-{lang}-640.", srcset)
+
+    def test_a_narrow_screen_s_cut_has_its_own_record(self):
+        """Every phone is served the picture's version for narrow screens, so each language's narrow cut has its
+        record in pictures.json as the picture's own cuts do: one without it stops the build by name."""
+        pictures, img = self.dir / "pictures.json", self.dir / "pics" / "img"
+        known = json.loads(pictures.read_text(encoding="utf-8"))
+        for lang in ("en", "de"):
+            stem = f"questions-fixture-plan-phone-{lang}"
+            known["plates"].append(dict(self.fx.record(lang), name=stem, widths=[350, 700],
+                                        record=f"questions/page-figure/{stem}__700x1000", file=f"questions/pages/{stem}__700x1000.png"))
+            for w in (350, 700):
+                cut = self.fx.plain_webp(w, w * 10 // 7, (0x1d, 0x1b, 0x19))
+                for ext in ("webp", "avif"):
+                    (img / f"{stem}-{w}.{ext}").write_bytes(cut)
+        pictures.write_text(json.dumps(known), encoding="utf-8")
+        self.both(self.answer, lambda d, lang: d["pics"]["plan"].update(
+            narrow={"stem": "questions-fixture-plan-phone-{lang}", "widths": [350, 700], "below": 560}))
+        out, _ = self.build()
+        for lang in ("en", "de"):
+            self.assertIn(f"questions-fixture-plan-phone-{lang}-700.webp 700w", self.built(out, lang))
+        shutil.rmtree(self.dir / "out")
+        known["plates"] = [p for p in known["plates"] if p["name"] != "questions-fixture-plan-phone-de"]
+        pictures.write_text(json.dumps(known), encoding="utf-8")
+        self.fails(r"top\.slot\.pic 'plan': questions-fixture-plan-phone-de has no record in pictures\.json")
+
+    def test_a_page_names_its_subject_in_its_own_language(self):
+        """A topic's subject named per language in the registry ({"en": ..., "de": ...}, at any depth): each page's
+        structured data names it in the page's own language."""
+        wings = self.wings()
+        topic = next(t for t in wings["questions"]["topics"] if t.get("count") == self.fx.TOPIC["count"])
+        topic["about"] = {"@type": "CreativeWork", "name": {"en": "Sample wall", "de": "Probemauer"},
+                          "author": {"@type": "Person", "name": {"en": "Sample builder", "de": "Probebauer"}}}
+        self.registry.write_text(json.dumps(wings, ensure_ascii=False), encoding="utf-8")
+        out, _ = self.build()
+        for lang, name, author in (("en", "Sample wall", "Sample builder"), ("de", "Probemauer", "Probebauer")):
+            article = next(n for n in _graph(self.built(out, lang)) if n.get("@type") == "Article")
+            self.assertEqual(article["about"], {"@type": "CreativeWork", "name": name,
+                                                "author": {"@type": "Person", "name": author}}, lang)
+
+    def test_an_answer_with_links_counts_only_the_words_it_shows(self):
+        """An answer given in parts (words and links) is measured by what a reader sees: a link's address never
+        counts toward the cap, its words do."""
+        def linked(d, lang):
+            d["top"]["answer"] = ["The sample wall is ", {"text": "120 m long", "href": "https://example.org/" + "a" * 400},
+                                  " and about 6 m high."]
+        self.both(self.answer, linked)
+        self.build()
+        shutil.rmtree(self.dir / "out")
+
+        def too_long(d, lang):
+            d["top"]["answer"] = ["The sample wall is ", {"text": "long " * 70, "href": "https://example.org/"}, "."]
+        self.both(self.answer, too_long)
+        self.fails(r"question-fixture\.en: top\.answer has \d+ characters: a shelf's answer stays within 280 in en")
+
+    def test_a_shelf_picture_comes_from_the_shelf_s_own_folder(self):
+        known = json.loads((self.dir / "pictures.json").read_text(encoding="utf-8"))
+        for plate in known["plates"]:
+            if plate["name"].startswith("questions-fixture-plan-"):
+                plate["file"] = "wing-test/pages/" + plate["file"].split("/")[-1]
+        (self.dir / "pictures.json").write_text(json.dumps(known), encoding="utf-8")
+        self.fails(r"its file 'wing-test/pages/questions-fixture-plan-en__1600x1000\.png' is not in the shelf's own folder")
+
+
+    def both(self, page, change):
+        """Changes a page's data in both languages and saves it."""
+        for lang in ("en", "de"):
+            data = self.data(lang, page)
+            change(data, lang)
+            self.save(lang, data, page)
+
+    def test_an_open_wing_page_keeps_its_first_picture_and_its_share_card(self):
+        """Words only and no share card stand only on a page without an open wing: an open wing's page that loses its
+        first picture or its share picture stops the build by name."""
+        keep = {lang: self.data(lang, "inventions") for lang in ("en", "de")}
+        self.assertIn("frame", keep["en"]["top"])
+        for key, words in (("frame", r"inventions\.en: top\.frame: a page of an open wing shows its first picture"),
+                           ("og_image", r"inventions\.en: page\.og_image: a page of an open wing has its share picture")):
+            with self.subTest(key=key):
+                self.both("inventions", lambda d, lang: (d["top"] if key == "frame" else d["page"]).pop(key))
+                self.fails(words)
+                for lang, data in keep.items():
+                    self.save(lang, data, "inventions")
+        self.build()
+
+    def test_each_rule_of_an_answer_page_stops_the_build_by_name(self):
+        """One break of each rule an answer page or the shelf's list keeps, and the build's stop that names it."""
+        pictures = self.dir / "pictures.json"
+        keep = {p: {lang: self.data(lang, p) for lang in ("en", "de")} for p in (self.answer, "questions")}
+        known = pictures.read_text(encoding="utf-8")
+
+        def museum_twice(d, lang):
+            d["blocks"].append(dict(d["blocks"][-1], id="museum-again"))
+
+        def next_elsewhere(d, lang):
+            d["top"]["next"]["page"] = "inventions"
+
+        def items_and_every(d, lang):
+            d["blocks"][0]["items"] = [{"page": "inventions"}]
+
+        def faq_other(d, lang):
+            d["faq"][0]["a"] = "Words the section does not start with."
+
+        def long_answer(d, lang):
+            d["top"]["answer"] = " ".join(["The sample wall is long."] * 20)
+
+        def no_card(d, lang):
+            d["page"].pop("og_image")
+
+        def licence_line(text):
+            data = json.loads(text)
+            for plate in data["plates"]:
+                if plate["name"].startswith("questions-fixture-plan-"):
+                    plate["licence_line"] = "CC BY 4.0"
+            return json.dumps(data)
+
+        def no_record(text):
+            data = json.loads(text)
+            data["plates"] = [p for p in data["plates"] if not p["name"].startswith("questions-fixture-plan-")]
+            return json.dumps(data)
+
+        cases = [
+            ("two museum blocks", self.answer, museum_twice, None, r"question-fixture\.en: a page has one museum block"),
+            ("next to another entry", self.answer, next_elsewhere, None, r"top\.next names 'inventions', which is no page of this wing"),
+            ("items and every", "questions", items_and_every, None, r"pages: a list of pages names its items, or every answer page"),
+            ("faq not the section's start", self.answer, faq_other, None, r"faq 'How do we know\?' is not a heading of the page answered word for word"),
+            ("answer too long", self.answer, long_answer, None, r"question-fixture\.en: top\.answer has \d+ characters: a shelf's answer stays within 280 in en"),
+            ("published without a share card", self.answer, no_card, None, r"page\.og_image: a published answer page has its share picture"),
+            ("licence line not its licence", None, None, licence_line, r"its licence_line 'CC BY 4\.0' is not the licence it links"),
+            ("picture without a record", None, None, no_record, r"top\.slot\.pic 'plan': questions-fixture-plan-de, questions-fixture-plan-en has no record in pictures\.json"),
+        ]
+        for name, page, change, change_pictures, words in cases:
+            with self.subTest(name=name):
+                if change:
+                    self.both(page, change)
+                if change_pictures:
+                    pictures.write_text(change_pictures(known), encoding="utf-8")
+                self.fails(words)
+                for p, langs in keep.items():
+                    for lang, data in langs.items():
+                        self.save(lang, data, p)
+                pictures.write_text(known, encoding="utf-8")
+        self.build()
+
+    def test_the_test_page_never_enters_the_site_itself(self):
+        """The made-up page goes into a test's own folder only: install() refuses the site's own pages, registry and
+        pictures, and the pages build refuses a test page (page.fixture) in a build of the site's own pages."""
+        real = HERE.resolve()
+        for target in ((real, self.registry, self.dir / "pictures.json", self.dir / "pics" / "img"),
+                       (self.dir, real.parent / "_src" / "registry.json", self.dir / "pictures.json", self.dir / "pics" / "img"),
+                       (self.dir, self.registry, real / "pictures.json", self.dir / "pics" / "img")):
+            with self.subTest(target=[str(t) for t in target]):
+                with self.assertRaises(SystemExit) as caught:
+                    self.fx.install(*target)
+                self.assertIn("never into the site's own tree", str(caught.exception))
+        module = self.builder()
+        own = Path(module.HERE).parent / "dist"
+        self.assertFalse(own.exists())
+        try:
+            with self.assertRaises(SystemExit) as caught:
+                module.build_pages(own, site_src=SITE_SRC, site_built=SITE_BUILT, quiet=True)
+            self.assertIn("question-fixture: a test page (page.fixture) is never built into the site", str(caught.exception))
+            self.assertFalse(own.exists(), "a refused build wrote files")
+        finally:
+            shutil.rmtree(own, ignore_errors=True)
+
+    def test_a_store_share_card_is_cut_only_from_its_record_as_it_stands(self):
+        """make_pictures cuts a share card from the store only when its record agrees: the record is there, its path and
+        hash are the line's, it is of the first tier, nothing replaced it, and the file agrees with its hash."""
+        spec = importlib.util.spec_from_file_location("pictures_share", HERE / "make_pictures.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        store = self.dir / "store"
+        (store / "questions" / "pages").mkdir(parents=True)
+        body = b"a card"
+        (store / "questions" / "pages" / "card.png").write_bytes(body)
+        digest = hashlib.sha256(body).hexdigest()
+        line = {"name": "questions-card", "record": "questions/page-share/card", "file": "questions/pages/card.png", "sha256": digest}
+        record = {"id": "questions/page-share/card", "path": "pages/card.png", "sha256": digest, "tier": "TIER1"}
+        self.assertEqual(module.share_problems(line, [record], store), [])
+        for name, records, change, words in (
+                ("no record", [], {}, r"the store has no record questions/page-share/card"),
+                ("another path", [dict(record, path="pages/other.png")], {}, r"its path or hash is not the one in the store's record"),
+                ("second tier", [dict(record, tier="TIER2")], {}, r"a share card takes the first tier only"),
+                ("replaced", [record, {"id": "questions/page-share/newer", "supersedes": [record["id"]]}], {},
+                 r"questions/page-share/newer replaces questions/page-share/card"),
+                ("file changed", [dict(record, sha256="0" * 64)], {"sha256": "0" * 64}, r"does not agree with its hash")):
+            with self.subTest(name=name):
+                found = module.share_problems(dict(line, **change), records, store)
+                self.assertRegex("\n".join(found), words)
+
+
+# The site build's registry check on a list of registries, in a process of its own (its modules are not the pages'):
+# prints each registry's problems by its name.
+CHECK_REGISTRIES = """
+import json, sys
+sys.path.insert(0, sys.argv[1])
+import build as B
+out = {}
+for name, registry in json.loads(open(sys.argv[2], encoding="utf-8").read()).items():
+    site = B.Site(registry, [B.SRC / "wings"], [B.IMG])
+    out[name] = site.problems or B.check_registry(site)
+print(json.dumps(out))
+"""
+
+
+# The site build's image sitemap rule on a sample page, in a process of its own: the plates kept out and what is listed.
+CHECK_UNLISTED = """
+import json, sys
+from pathlib import Path
+sys.path.insert(0, sys.argv[1])
+import build as B
+folder = Path(sys.argv[2])
+unlisted = B.unlisted_plates(folder / "pictures.json")
+page = (folder / "page.html").read_text(encoding="utf-8")
+at = B.ORIGIN + "/questions/sample/"
+print(json.dumps({"unlisted": sorted(unlisted), "listed": B.page_pictures(page, at, unlisted), "all": B.page_pictures(page, at)}))
+"""
+
+
+class UnlistedPlates(unittest.TestCase):
+    """A plate whose record says "sitemap": false: its page shows it, and the image sitemap lists none of its sizes."""
+
+    def test_a_plate_marked_off_the_sitemap_is_left_out_in_each_size(self):
+        folder = WORK / "unlisted-plates"
+        shutil.rmtree(folder, ignore_errors=True)
+        folder.mkdir(parents=True)
+        plates = [{"name": "sample-photo", "sitemap": False}, {"name": "sample-lead-en"}, {"name": "sample-chart", "sitemap": True}]
+        (folder / "pictures.json").write_text(json.dumps({"plates": plates}), encoding="utf-8")
+        img = lambda name, width: f'<img src="../../static/img/{name}-{width}.webp" alt="">'
+        shown = [("sample-lead-en", 1600), ("sample-photo", 1600), ("sample-photo", 640), ("sample-photo-detail", 640)]
+        (folder / "page.html").write_text("<main>" + "".join(img(n, w) for n, w in shown) + "</main>", encoding="utf-8")
+        run = subprocess.run([sys.executable, "-E", "-s", "-c", CHECK_UNLISTED, str(SITE_SRC), str(folder)],
+                             capture_output=True, text=True)
+        shutil.rmtree(folder, ignore_errors=True)
+        self.assertEqual(run.returncode, 0, run.stderr[-2000:])
+        found = json.loads(run.stdout.strip().splitlines()[-1])
+        base = "https://museumofages.org/static/img/"
+        self.assertEqual(found["unlisted"], ["sample-photo"])
+        # a name that only begins like a marked one is another plate, and stays listed
+        self.assertEqual(found["listed"], [base + "sample-lead-en-1600.webp", base + "sample-photo-detail-640.webp"])
+        self.assertEqual(len(found["all"]), 4)
+
+
+class ShelfRegistry(unittest.TestCase):
+    """The site build's rules for a shelf's registry entry, each broken once: pages only, no link, the legend in the
+    locked note's words and the grades' names, an about typed a Place only with its coordinates, and the line on the
+    page about the museum held to the shelf's never_say."""
+
+    def test_each_rule_of_the_shelfs_entry_stops_the_site_build_by_name(self):
+        registry = json.loads(REGISTRY.read_text(encoding="utf-8"))
+        shelf = next(k for k, e in registry.items() if isinstance(e, dict) and e.get("state") == "shelf")
+
+        def broken(change):
+            copy = json.loads(json.dumps(registry))
+            change(copy[shelf])
+            return copy
+
+        def place(e, geo=False):
+            e["about"] = dict({"@type": "Place", "name": "Sample ground"}, **({"geo": {"latitude": 1.5, "longitude": 2.5}} if geo else {}))
+        topic = {"slug": {"en": "sample-ground", "de": "probegelaende"}, "name": {"en": "Sample ground?", "de": "Probegelände?"},
+                 "line": {"en": "A made-up ground.", "de": "Ein erfundenes Gelände."}, "count": "sample_ground",
+                 "about": {"@type": "City", "name": "Sample town"}}
+        cases = {
+            "as it stands": (registry, None),
+            "no pages_only": (broken(lambda e: e.pop("pages_only")), rf"the wing '{shelf}' is a shelf, which stands in pages only"),
+            "a link": (broken(lambda e: e.update(link={"name": e["name"], "line": e["name"]})), rf"the shelf '{shelf}' names a link"),
+            "a legend word of its own": (broken(lambda e: e["legend"]["known"].update(en="Sure")),
+                                         r"its legend's known 'Sure' is not a word of the locked note in en"),
+            "a grade left out": (broken(lambda e: e["legend"]["grades"].update(de="Belegt entspricht dem Grad Dokumentiert.")),
+                                 r"its legend's sentence does not name the grade 'Rekonstruiert' in de"),
+            "a Place without coordinates": (broken(place), r"its about is typed Place without its coordinates \(geo\)"),
+            "a Place with coordinates": (broken(lambda e: place(e, geo=True)), None),
+            "a topic typed a City": (broken(lambda e: e["topics"].append(topic)), r"sample_ground is typed City without its coordinates"),
+            "a subject named per language": (broken(lambda e: e["topics"].append(dict(topic, about={
+                "@type": "CreativeWork", "name": {"en": "Sample", "de": "Probe"},
+                "author": {"@type": "Person", "name": {"en": "Sample builder", "de": "Probebauer"}}}))), None),
+            "a line that announces": (broken(lambda e: e["what"]["line"].update(en="More pages are being built.")),
+                                      r"'s line.*being built"),
+        }
+        folder = WORK / "registry-checks"
+        shutil.rmtree(folder, ignore_errors=True)
+        folder.mkdir(parents=True)
+        (folder / "registries.json").write_text(json.dumps({k: v for k, (v, _) in cases.items()}), encoding="utf-8")
+        run = subprocess.run([sys.executable, "-E", "-s", "-c", CHECK_REGISTRIES, str(SITE_SRC), str(folder / "registries.json")],
+                             capture_output=True, text=True)
+        shutil.rmtree(folder, ignore_errors=True)
+        self.assertEqual(run.returncode, 0, run.stderr[-2000:])
+        found = json.loads(run.stdout.strip().splitlines()[-1])
+        for name, (_, words) in cases.items():
+            with self.subTest(name=name):
+                about = "\n".join(x for x in found[name] if shelf in x)
+                if words is None:
+                    # no problem at all, the merge of the registry's languages included
+                    self.assertEqual(found[name], [])
+                else:
+                    self.assertRegex(about, words)
+
+# The shelf runs its own tests only: those it would inherit from Case run once there, on the pages as they stand.
+for _name in [n for n in vars(Case) if n.startswith("test")]:
+    if _name not in vars(Shelf):
+        setattr(Shelf, _name, None)
 
 
 # The animal pages' rules for search stand in their own file and run in this step too.

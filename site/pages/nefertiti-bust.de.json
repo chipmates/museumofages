@@ -1,0 +1,522 @@
+{
+ "_note": "AN ANSWER PAGE of the questions shelf, from its words and its picture made for it.",
+ "page": {
+  "id": "questions-nefertiti-bust",
+  "wing": "questions",
+  "topic": "nefertiti_bust",
+  "published": "2026-11-19",
+  "checked": "2026-11-17",
+  "og_image": {
+   "file": "questions-nefertiti-bust-og-{lang}-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "lead": {
+   "stem": "questions-nefertiti-bust-lead-{lang}",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 560px, (min-width: 960px) 44vw, calc(100vw - 40px)",
+   "swatches": {
+    "known": "#cb8561",
+    "guessed": "#cb8561"
+   },
+   "narrow": {
+    "stem": "questions-nefertiti-bust-lead-phone-{lang}",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 560
+   }
+  }
+ },
+ "meta": {
+  "title": "Büste der Nofretete: Fund, Weg nach Berlin | Museum of Ages",
+  "description": "1912 in einer Bildhauerwerkstatt in Amarna gefunden, 1913 nach Berlin gekommen: der Fundort nach den Plänen der Grabung gezeichnet, beide Seiten mit Datum.",
+  "og_title": "Wo wurde die Nofretete gefunden, und warum steht sie in Berlin?",
+  "og_image_alt": "Die Frage über der Zeichnung zu dieser Seite, in drei Teilen: eine Karte Ägyptens mit Amarna, das Grundstück des Hauses P 47.2 und Raum 19, in dem die Büste gefunden wurde."
+ },
+ "labels": {
+  "crumbs": "Seitenpfad",
+  "crumb_home": "Museum",
+  "toc": "Auf dieser Seite",
+  "tag_made": "Für diese Seite gemacht",
+  "no_figure": "keine Zahl",
+  "crumb_here": "Nofretete in Berlin"
+ },
+ "top": {
+  "h1": "Wo wurde die Nofretete gefunden, und warum steht sie in Berlin?",
+  "answer": [
+   "Eine deutsche Grabung unter Ludwig Borchardt fand die Büste am 6. Dezember 1912 im Haus eines Bildhauers in Amarna in Ägypten, so hält es ",
+   {
+    "text": "sein Bericht von 1923",
+    "href": "https://archive.org/details/gri_33125009524253"
+   },
+   " fest. In Berlin steht sie, weil die ",
+   {
+    "text": "Fundteilung",
+    "href": "https://www.preussischer-kulturbesitz.de/standorte/bauvorhaben/masterplan-museumsinsel/pergamonmuseum/alle-news-pergamonmuseum/news-detail-pergamonmuseum/artikel/2024/03/27/erstausstellung-der-bueste-der-nofretete-vor-100-jahren.html"
+   },
+   " von 1913 sie der deutschen Seite zusprach, und seit 1924 haben ",
+   {
+    "text": "ägyptische Amtsträger",
+    "href": "https://de.wikipedia.org/wiki/B%C3%BCste_der_Nofretete"
+   },
+   " sie mehrfach zurückgefordert."
+  ],
+  "strength": "Fund und Fundteilung: belegt. Ob der ägyptische Inspektor bei der Teilung voll im Bilde war: umstritten.",
+  "slot": {
+   "pic": "lead",
+   "tag": "tag_made",
+   "what": "Wo die Büste gefunden wurde: Amarna in Ägypten, das Haus P 47.2 des Bildhauers und sein Raum 19, nach den Plänen von Ludwig Borchardt, 1923.",
+   "alt": "Eine Zeichnung in drei Teilen. Eine Karte Ägyptens zeigt Amarna am Ostufer des Nils, etwa 270 Kilometer Luftlinie südlich von Kairo. Ein Plan des Grundstücks des Bildhauers in Amarna hebt das Haus P 47.2 und seinen Raum 19 hervor. Der Raum, 2,0 mal 5,5 Meter, ist groß gezeichnet, mit der Stelle, an der die Büste lag, 0,20 Meter von der Ostwand und 0,35 Meter von der Nordwand, und einem gestrichelten Wandbrett an der Wand gegenüber der Tür, auf dem sie nach Ansicht des Ausgräbers gestanden hatte.",
+   "legend": "picture",
+   "src": [
+    "Kartendaten: ",
+    {
+     "text": "OpenStreetMap",
+     "href": "https://www.openstreetmap.org/copyright"
+    },
+    ", unter der ",
+    {
+     "text": "ODbL",
+     "href": "https://opendatacommons.org/licenses/odbl/"
+    },
+    "."
+   ]
+  },
+  "next": {
+   "page": "questions",
+   "text": "Weitere Fragen, beantwortet mit dem, was belegt ist und was wir vermuten"
+  }
+ },
+ "faq": [
+  {
+   "q": "Warum ist die Fundteilung von 1913 umstritten?",
+   "a": "Weil beide Seiten sie verschieden erzählen: Die Stiftung Preußischer Kulturbesitz, zu der die Berliner Museen gehören, nennt die Teilung offen und korrekt, während ägyptische Archäologen wie Zahi Hawass und Monica Hanna sagen, der Wert der Büste sei der ägyptischen Seite verborgen worden."
+  },
+  {
+   "q": "Hat Ägypten die Büste zurückgefordert?",
+   "a": "Ägyptische Amtsträger haben es mehrfach getan, doch ob der ägyptische Staat je offiziell ihre Rückgabe verlangt hat, ist selbst umstritten."
+  },
+  {
+   "q": "Woher wissen wir das?",
+   "a": "Aus dem eigenen Bericht des Ausgräbers, aus den Papieren der Teilung und aus dem, was jede Seite gesagt hat, mit Datum."
+  }
+ ],
+ "blocks": [
+  {
+   "type": "text",
+   "id": "who-found-the-bust",
+   "nav": "Wer fand die Büste, und wo genau?",
+   "h": "Wer fand die Büste, und wo genau?",
+   "paras": [
+    [
+     "Die Grabung der Deutschen Orient-Gesellschaft unter Ludwig Borchardt, bezahlt vom Berliner Kaufmann James Simon, fand sie im Haus P 47.2 in Amarna, in einer schmalen Kammer von 2 mal 5,5 Metern, in der ein Bildhauer seine Modelle aufbewahrte. Wie es geschah, erzählt Borchardts ",
+     {
+      "text": "Bericht von 1923",
+      "href": "https://archive.org/details/gri_33125009524253"
+     },
+     ". Am 6. Dezember 1912 kurz nach der Mittagspause zu dem Haus gerufen, ließ er seinen ersten Vorarbeiter, Mohammed Ahmed es-Senussi, dort allein graben und wies ihn aus nächster Nähe an. Etwa in Kniehöhe kam im Schutt ein bemalter Nacken zum Vorschein. „Lebensgroße bunte Büste der Königin“ wurde angesagt und niedergeschrieben, dann ging es mit den Händen weiter. Die Büste war fast vollständig, nur die Ohren waren bestoßen, und im linken Auge fehlte die Einlage. Nach Mitternacht schrieb Borchardt in sein Tagebuch: „Beschreiben nützt nichts, ansehen“."
+    ],
+    [
+     "Ein beschriftetes Stück Elfenbein aus einer Grube im Hof nennt den Bildhauer Thutmosis, darum gilt das Haus als seine Werkstatt. Borchardt nannte das sehr wahrscheinlich, aber nicht bewiesen. ",
+     {
+      "text": "Amarna",
+      "href": "https://en.wikipedia.org/wiki/Amarna"
+     },
+     ", am Ostufer des Nils etwa 270 Kilometer Luftlinie südlich von Kairo, war die Stadt, die König Echnaton im 14. Jahrhundert v. Chr. erbauen ließ, und ",
+     {
+      "text": "Nofretete",
+      "href": "https://de.wikipedia.org/wiki/Nofretete"
+     },
+     " war seine Hauptgemahlin."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "why-is-the-division",
+   "nav": "Warum ist die Fundteilung von 1913 umstritten?",
+   "h": "Warum ist die Fundteilung von 1913 umstritten?",
+   "paras": [
+    "Weil beide Seiten sie verschieden erzählen: Die Stiftung Preußischer Kulturbesitz, zu der die Berliner Museen gehören, nennt die Teilung offen und korrekt, während ägyptische Archäologen wie Zahi Hawass und Monica Hanna sagen, der Wert der Büste sei der ägyptischen Seite verborgen worden.",
+    [
+     "Nach den Regeln jener Zeit wurden die Funde einer Grabung zwischen Ägypten und den Ausgräbern geteilt. Borchardt stellte die beiden Hälften zusammen, und Gustave Lefebvre, entsandt vom ägyptischen Antikendienst, wählte am 20. Januar 1913 eine davon. Die Hälfte mit einem bemalten Hausaltar, der die Königsfamilie zeigt, ging nach Kairo, die Hälfte mit der Büste an James Simon, der sie 1920 den Berliner Museen schenkte. Warum Lefebvre so wählte, ist unbekannt, hält der ",
+     {
+      "text": "Wikipedia-Artikel zur Büste",
+      "href": "https://de.wikipedia.org/wiki/B%C3%BCste_der_Nofretete"
+     },
+     " fest."
+    ],
+    {
+     "points": [
+      [
+       "Die Stiftung Preußischer Kulturbesitz, 2011:",
+       [
+        "Vereinbart gewesen sei eine Teilung in gleichwertige Anteile, Fotos der Büste hätten vorgelegen, die Kisten seien geöffnet gewesen. „Von einer Täuschung bei der Teilung kann keine Rede sein“, heißt es in ",
+        {
+         "text": "ihrer Erklärung",
+         "href": "https://www.preussischer-kulturbesitz.de/news-detail/artikel/2011/01/24/zur-bueste-der-nofretete.html"
+        },
+        ". Im März 2010 hatte die Direktorin des Ägyptischen Museums Berlin, Friederike Seyfried, nach Prüfung aller Unterlagen erklärt, die Teilung sei nach den damaligen Bestimmungen erfolgt, hält der ",
+        {
+         "text": "Wikipedia-Artikel",
+         "href": "https://de.wikipedia.org/wiki/B%C3%BCste_der_Nofretete"
+        },
+        " fest. Erst 1914, so derselbe Artikel, führte Ägyptens neuer Antikenchef Pierre Lacau die Regel ein, dass einzigartige Stücke an Ägypten gehen."
+       ]
+      ],
+      [
+       "Al-Monitor, aus Kairo, 2020:",
+       [
+        "Nach den Regeln jener Zeit hätten „exceptional antiquities discovered by foreign excavation teams“, außergewöhnliche Funde ausländischer Grabungen, an Ägypten gehen sollen, ",
+        {
+         "text": "schrieb das Nachrichtenportal",
+         "href": "https://www.al-monitor.com/originals/2020/10/egypt-germany-nefertiti-bust-claim-stolen-antiquities.html"
+        },
+        "."
+       ]
+      ],
+      [
+       "Die Ägyptologin Monica Hanna, 2024:",
+       [
+        "Borchardt habe die ägyptischen Behörden getäuscht, indem er die Büste nicht genau beschrieb, berichtete ",
+        {
+         "text": "Egyptian Streets",
+         "href": "https://egyptianstreets.com/2024/09/09/egyptian-archaeologist-zahi-hawass-campaigns-for-the-return-of-nefertitis-bust/"
+        },
+        "."
+       ]
+      ],
+      [
+       "Ein Brief vom August 1924:",
+       [
+        "Bruno Güterbock, Schriftführer der Deutschen Orient-Gesellschaft, der bei der Teilung dabei war, ",
+        {
+         "text": "schrieb streng vertraulich",
+         "href": "https://de.wikipedia.org/wiki/B%C3%BCste_der_Nofretete"
+        },
+        ", Borchardt sei es gelungen, „die Büste für uns zu retten“."
+       ]
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "has-egypt-asked-for",
+   "nav": "Hat Ägypten die Büste zurückgefordert?",
+   "h": "Hat Ägypten die Büste zurückgefordert?",
+   "paras": [
+    "Ägyptische Amtsträger haben es mehrfach getan, doch ob der ägyptische Staat je offiziell ihre Rückgabe verlangt hat, ist selbst umstritten.",
+    {
+     "points": [
+      [
+       "1924:",
+       [
+        "Nach der ersten Ausstellung forderte Pierre Lacau ",
+        {
+         "text": "die Büste",
+         "href": "https://de.wikipedia.org/wiki/B%C3%BCste_der_Nofretete"
+        },
+        " zurück, und die ägyptische Regierung schloss sich an. Die Teilung zweifelte er nicht an, er nannte „moralische“ Gründe. 1930 lehnte das preußische Ministerium einen Tausch gegen zwei andere Statuen ab."
+       ]
+      ],
+      [
+       "Januar 2011:",
+       [
+        "Zahi Hawass, Generalsekretär des Obersten Rates für Altertümer, bat den Präsidenten der Stiftung in einem Brief um die Rückgabe, nach seinen Worten mit der Unterstützung des Ministerpräsidenten und des Kulturministers, wie der ",
+        {
+         "text": "Wikipedia-Artikel",
+         "href": "https://de.wikipedia.org/wiki/B%C3%BCste_der_Nofretete"
+        },
+        " festhält. Die Stiftung ",
+        {
+         "text": "erklärte",
+         "href": "https://www.preussischer-kulturbesitz.de/news-detail/artikel/2011/01/24/zur-bueste-der-nofretete.html"
+        },
+        ": „Das Schreiben ist nicht vom Ministerpräsidenten unterzeichnet. Ein offizielles Rückgabeersuchen von Seiten des ägyptischen Staates liegt nicht vor.“"
+       ]
+      ],
+      [
+       "2020:",
+       [
+        "„The Egyptian government is trying to reclaim the bust“, die ägyptische Regierung versuche, die Büste zurückzubekommen, ",
+        {
+         "text": "berichtete Al-Monitor",
+         "href": "https://www.al-monitor.com/originals/2020/10/egypt-germany-nefertiti-bust-claim-stolen-antiquities.html"
+        },
+        " aus Kairo."
+       ]
+      ],
+      [
+       "März 2024:",
+       [
+        "„Entgegen regelmäßiger anderslautender Berichte gibt es keine Rückgabeforderung der ägyptischen Regierung für die Büste der Nofretete“, ",
+        {
+         "text": "sagte Hermann Parzinger",
+         "href": "https://www.preussischer-kulturbesitz.de/standorte/bauvorhaben/masterplan-museumsinsel/pergamonmuseum/alle-news-pergamonmuseum/news-detail-pergamonmuseum/artikel/2024/03/27/erstausstellung-der-bueste-der-nofretete-vor-100-jahren.html"
+        },
+        ", der Präsident der Stiftung."
+       ]
+      ],
+      [
+       "September 2024:",
+       [
+        "Hawass, inzwischen früherer Minister, ",
+        {
+         "text": "startete eine Petition",
+         "href": "https://egyptianstreets.com/2024/09/09/egyptian-archaeologist-zahi-hawass-campaigns-for-the-return-of-nefertitis-bust/"
+        },
+        " für die Rückgabe und verwies auf „many ignored calls for meaningful dialogue“, viele übergangene Aufrufe zu einem echten Dialog."
+       ]
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "where-is-the-bust",
+   "nav": "Wo steht die Nofretete heute?",
+   "h": "Wo steht die Nofretete heute?",
+   "paras": [
+    [
+     "Im Neuen Museum auf der Berliner Museumsinsel, als einziges Werk im Nordkuppelsaal, so ",
+     {
+      "text": "die Stiftung 2016",
+      "href": "https://www.preussischer-kulturbesitz.de/en/news-detail-page/article/2016/03/09/the-nefertiti-hack-is-it-a-hoax.html"
+     },
+     ". 2016 war das Fotografieren dort nicht erlaubt, um die lichtempfindliche Büste zu schonen, und gegenüber stand eine Nachbildung, die blinde Besucher ertasten konnten."
+    ],
+    [
+     "Simon stellte sie zunächst in seiner Villa auf. Erstmals öffentlich gezeigt wurde sie am 1. April 1924 im Neuen Museum. Im Zweiten Weltkrieg wurde sie in Sicherheit gebracht, zuletzt in ein Salzbergwerk bei Merkers in Thüringen, wo US-Truppen sie 1945 fanden. 1956 kam sie zurück nach West-Berlin, und seit der Wiedereröffnung des Gebäudes im Oktober 2009 steht sie wieder im Neuen Museum, hält der ",
+     {
+      "text": "Wikipedia-Artikel",
+      "href": "https://de.wikipedia.org/wiki/B%C3%BCste_der_Nofretete"
+     },
+     " fest."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "know",
+   "nav": "Woher wissen wir das?",
+   "h": "Woher wissen wir das?",
+   "paras": [
+    "Aus dem eigenen Bericht des Ausgräbers, aus den Papieren der Teilung und aus dem, was jede Seite gesagt hat, mit Datum.",
+    [
+     "Borchardts Bericht von 1923 erzählt den Fund in seinen Worten, gestützt auf sein Tagebuch, mit Plänen von Haus und Raum und der vermessenen Stelle, an der die Büste lag. Er druckt auch die Untersuchung der Farben durch Friedrich Rathgen ab. Die Unterlagen zu Fund und Teilung liegen in Berlin, und Friederike Seyfried hat sie 2010 in einer ausführlichen Dokumentation veröffentlicht, ",
+     {
+      "text": "vermerkt die Stiftung",
+      "href": "https://www.preussischer-kulturbesitz.de/standorte/bauvorhaben/masterplan-museumsinsel/pergamonmuseum/alle-news-pergamonmuseum/news-detail-pergamonmuseum/artikel/2024/03/27/erstausstellung-der-bueste-der-nofretete-vor-100-jahren.html"
+     },
+     "."
+    ],
+    "Offen bleibt, was der ägyptische Inspektor wusste, als er wählte, warum er so wählte und ob das linke Auge je eine Einlage hatte."
+   ]
+  },
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Die Zahlen",
+   "h": "Die Zahlen",
+   "unit": "Die Quellen heißen wie in der Liste unten.",
+   "cols": [
+    "Zahl",
+    "Wert",
+    "Grundlage",
+    "Belegt oder vermutet",
+    "Quelle"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Gefunden",
+      "6. Dezember 1912",
+      "Bericht des Ausgräbers",
+      "belegt",
+      "Borchardt, 1923"
+     ]
+    },
+    {
+     "cells": [
+      "Raum 19",
+      "2,0 mal 5,5 Meter",
+      "sein Plan und Text",
+      "belegt",
+      "Borchardt, 1923"
+     ]
+    },
+    {
+     "cells": [
+      "Fundstelle",
+      "0,20 m von der Ostwand, 0,35 m von der Nordwand",
+      "sein Bericht",
+      "belegt",
+      "Borchardt, 1923"
+     ]
+    },
+    {
+     "cells": [
+      "Fundteilung",
+      "20. Januar 1913",
+      "die Teilungsurkunde, wie Borchardt sie nennt",
+      "belegt",
+      "Borchardt, 1923"
+     ]
+    },
+    {
+     "cells": [
+      "Den Berliner Museen geschenkt",
+      "1920",
+      "Schenkung von James Simon",
+      "belegt",
+      "Stiftung Preußischer Kulturbesitz, 2024"
+     ]
+    },
+    {
+     "cells": [
+      "Erstmals gezeigt",
+      "1. April 1924, Neues Museum",
+      "",
+      "belegt",
+      "Stiftung Preußischer Kulturbesitz, 2024"
+     ]
+    },
+    {
+     "cells": [
+      "Höhe",
+      "etwa 48 bis 50 cm",
+      "Borchardt nennt 48 cm, spätere Angaben 50 cm",
+      "belegt (beides Messungen)",
+      "Borchardt, 1923, und Büste der Nofretete"
+     ]
+    },
+    {
+     "cells": [
+      "Entstanden",
+      "um 1345 bis 1340 v. Chr.",
+      "keine Inschrift, datiert nach dem Fundort",
+      "vermutet",
+      "Nefertiti Bust und Büste der Nofretete"
+     ]
+    },
+    {
+     "cells": [
+      "Wieder im Neuen Museum",
+      "seit Oktober 2009",
+      "",
+      "belegt",
+      "Stiftung Preußischer Kulturbesitz, 2024, und Büste der Nofretete"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "myths",
+   "nav": "Was man oft liest",
+   "h": "Was man oft liest",
+   "subs": [
+    {
+     "h": "„Die Büste wurde in einem Grab gefunden.“",
+     "paras": [
+      "Im Haus eines Bildhauers, in der Kammer, in der er seine Modelle aufbewahrte."
+     ]
+    },
+    {
+     "h": "„Jemand hat ihr das linke Auge ausgeschlagen.“",
+     "paras": [
+      "Im linken Auge fehlte die Einlage schon beim Fund, und im gesiebten Schutt fand sie sich nicht. Borchardt war sicher, dass es nie eine gab: In der Augenhöhle ist keine Spur eines Bindemittels, und sie wurde nie für eine Einlage ausgetieft. Manche Forscher meinen, sie sei verloren gegangen oder zerstört worden, und andere Bildnisse der Königin zeigen beide Augen."
+     ]
+    },
+    {
+     "h": "„Sie ist aus Gips.“",
+     "paras": [
+      "Ihr Kern ist Kalkstein, darüber liegen bemalte Schichten aus Stuck, und der Scan von 2006 fand darunter ein gemeißeltes Gesicht."
+     ]
+    },
+    {
+     "h": "„Die Büste ist eine moderne Fälschung.“",
+     "paras": [
+      "Untersuchungen der Farben und CT-Scans passen zu antiker Arbeit. 2009 wiesen sowohl das Ägyptische Museum Berlin als auch Zahi Hawass die Behauptung zurück."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Quellen",
+   "h": "Quellen",
+   "intro": "Die Angaben dieser Seite stammen aus diesen Seiten, gelesen am 17. November 2026. Jede Seite wird mit ihren eigenen Worten und dem Datum zitiert. Englische Zitate stehen im Original, mit unserer deutschen Fassung dahinter.",
+   "read": [
+    {
+     "text": "Ludwig Borchardt, Porträts der Königin Nofret-ete aus den Grabungen 1912/13 in Tell el-Amarna, Leipzig 1923 (Exemplar des Getty Research Institute, Internet Archive)",
+     "href": "https://archive.org/details/gri_33125009524253"
+    },
+    {
+     "text": "Stiftung Preußischer Kulturbesitz, „Erstausstellung der Büste der Nofretete vor 100 Jahren“, 27. März 2024",
+     "href": "https://www.preussischer-kulturbesitz.de/standorte/bauvorhaben/masterplan-museumsinsel/pergamonmuseum/alle-news-pergamonmuseum/news-detail-pergamonmuseum/artikel/2024/03/27/erstausstellung-der-bueste-der-nofretete-vor-100-jahren.html"
+    },
+    {
+     "text": "Stiftung Preußischer Kulturbesitz, „Zur Büste der Nofretete“, 24. Januar 2011",
+     "href": "https://www.preussischer-kulturbesitz.de/news-detail/artikel/2011/01/24/zur-bueste-der-nofretete.html"
+    },
+    {
+     "text": "Stiftung Preußischer Kulturbesitz, „The History of the Finds: Nefertiti and the Pergamon Altar“, 13. Januar 2023 (englisch)",
+     "href": "https://www.preussischer-kulturbesitz.de/en/news-detail-page/article/2023/01/13/zur-fundgeschichte-nofretete-und-pergamonaltar.html"
+    },
+    {
+     "text": "Stiftung Preußischer Kulturbesitz, „The 'Nefertiti Hack'“, 9. März 2016 (englisch)",
+     "href": "https://www.preussischer-kulturbesitz.de/en/news-detail-page/article/2016/03/09/the-nefertiti-hack-is-it-a-hoax.html"
+    },
+    {
+     "text": "Ibrahim Ayyad, Al-Monitor, „Egypt renews demands to retrieve Nefertiti bust from Germany“, 1. Oktober 2020 (englisch)",
+     "href": "https://www.al-monitor.com/originals/2020/10/egypt-germany-nefertiti-bust-claim-stolen-antiquities.html"
+    },
+    {
+     "text": "Egyptian Streets, „Germany Must Return Nefertiti's Bust to Egypt: Zahi Hawass Launches Campaign“, 9. September 2024 (englisch)",
+     "href": "https://egyptianstreets.com/2024/09/09/egyptian-archaeologist-zahi-hawass-campaigns-for-the-return-of-nefertitis-bust/"
+    },
+    {
+     "text": "Wikipedia, Büste der Nofretete",
+     "href": "https://de.wikipedia.org/wiki/B%C3%BCste_der_Nofretete"
+    },
+    {
+     "text": "Wikipedia, Nofretete",
+     "href": "https://de.wikipedia.org/wiki/Nofretete"
+    },
+    {
+     "text": "Wikipedia, Nefertiti Bust (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Nefertiti_Bust"
+    },
+    {
+     "text": "Wikipedia, Amarna (englisch)",
+     "href": "https://en.wikipedia.org/wiki/Amarna"
+    }
+   ],
+   "contact": "Ist ein Datum, eine Zahl oder ein Satz falsch, genügt eine Nachricht, und wir korrigieren es.",
+   "contact_link": "Zum Impressum",
+   "what_link": "Was dieses Museum ist"
+  },
+  {
+   "type": "museum",
+   "id": "museum",
+   "nav": "Im Museum",
+   "h": "Im Museum",
+   "text": "Museum of Ages ist ein digitales Museum. Der Flügel {wing} zeigt {place} am {day}.",
+   "link": "Zum Flügel {wing}"
+  }
+ ]
+}

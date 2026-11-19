@@ -1,0 +1,555 @@
+{
+ "_note": "AN ANSWER PAGE of the questions shelf, from its words and its picture made for it.",
+ "page": {
+  "id": "questions-where-was-atlantis",
+  "wing": "questions",
+  "topic": "where_was_atlantis",
+  "published": "2026-11-19",
+  "checked": "2026-11-18",
+  "og_image": {
+   "file": "questions-where-was-atlantis-og-{lang}-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "lead": {
+   "stem": "questions-where-was-atlantis-lead-{lang}",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 560px, (min-width: 960px) 44vw, calc(100vw - 40px)",
+   "swatches": {
+    "known": "#cb8561",
+    "guessed": "#cb8561"
+   },
+   "narrow": {
+    "stem": "questions-where-was-atlantis-lead-phone-{lang}",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 560
+   }
+  }
+ },
+ "meta": {
+  "title": "Where was Atlantis? The theories on a map | Museum of Ages",
+  "description": "Plato put Atlantis outside the Pillars of Heracles. Places proposed since, from the Eye of the Sahara to Santorini, mapped with who proposed each and when.",
+  "og_title": "Where was Atlantis?",
+  "og_image_alt": "The question over part of the map made for this page: the North Atlantic and the Mediterranean today, with the places proposed for Atlantis ringed and numbered."
+ },
+ "labels": {
+  "crumbs": "Breadcrumb",
+  "crumb_home": "Museum",
+  "toc": "On this page",
+  "tag_made": "Made for this page",
+  "no_figure": "no figure",
+  "crumb_here": "Where was Atlantis?"
+ },
+ "top": {
+  "h1": "Where was Atlantis?",
+  "answer": [
+   {
+    "text": "Plato puts Atlantis in the Atlantic Ocean",
+    "href": "https://archive.org/details/Jowett-3rded-ebox-set"
+   },
+   ": an island larger than Libya and Asia together, outside the Pillars of Heracles at ",
+   {
+    "text": "today's Strait of Gibraltar",
+    "href": "https://bmcr.brynmawr.edu/2009/2009.09.64"
+   },
+   ". ",
+   {
+    "text": "No trace of it has been found",
+    "href": "https://en.wikipedia.org/wiki/Atlantis"
+   },
+   " there or anywhere else, and most scholars read the island as ",
+   {
+    "text": "Plato's own invention",
+    "href": "https://bmcr.brynmawr.edu/2009/2009.09.64"
+   },
+   "."
+  ],
+  "strength": "Where Plato puts it: known, it is in his text. A real place behind it: none found. Each place proposed since: guessed.",
+  "slot": {
+   "pic": "lead",
+   "tag": "tag_made",
+   "what": "Where people have looked for Atlantis, on today's map. Plato gives only a direction, in his own words: an island outside the Pillars of Heracles, in the Atlantic. Each ring is a claim, with who made it and when. None has been proven.",
+   "alt": "A map of the North Atlantic and the Mediterranean today, north at the top. A box in the ocean west of the Strait of Gibraltar quotes Plato: outside the pillars of Heracles, an island in front of the straits, larger than Libya and Asia put together. Dashed rings mark places proposed for Atlantis, each with who proposed it and when: the Doñana marshes in southern Spain (Schulten 1922, Kühne 2004), the Spartel Bank in the Strait (Díaz-Montexano 2000, Collina-Girard 2001), the Richat Structure in Mauritania (a video of 2018), Thera, now Santorini (Figuier 1872), the Azores (Donnelly 1882), the Bimini Road in the Bahamas (Marx and Rebikoff 1969) and Heligoland (Spanuth 1953). An arrow at the bottom points to Antarctica (Barbiero 1974, Flem-Ath 1995). None of these claims is proven.",
+   "legend": "picture",
+   "src": [
+    "Coasts: ",
+    {
+     "text": "Natural Earth",
+     "href": "https://www.naturalearthdata.com/about/terms-of-use/"
+    },
+    ", public domain."
+   ]
+  },
+  "next": {
+   "page": "was-atlantis-real",
+   "label": "Next question:",
+   "text": "Was Atlantis real?"
+  }
+ },
+ "faq": [
+  {
+   "q": "How do we know?",
+   "a": "From Plato's text, the only source, and from what geology and archaeology have found at each place proposed."
+  }
+ ],
+ "blocks": [
+  {
+   "type": "text",
+   "id": "where-did-plato-say",
+   "nav": "Where did Plato say Atlantis was?",
+   "h": "Where did Plato say Atlantis was?",
+   "paras": [
+    [
+     "In the Atlantic Ocean, on an island outside the Pillars of Heracles. In the Timaeus an Egyptian priest tells Solon of an island \"larger than Libya and Asia put together\", \"situated in front of the straits\" that the Greeks called the Pillars of Heracles, while the sea inside them is \"only a harbour\" (Timaeus 24e to 25a). Every quote here is from ",
+     {
+      "text": "Benjamin Jowett's translation of 1892",
+      "href": "https://archive.org/details/Jowett-3rded-ebox-set"
+     },
+     "."
+    ],
+    [
+     "The end of the island \"towards the pillars of Heracles\" faced \"the region of Gades\", today's Cádiz (Critias 114b). Its city stood near the sea, in a plain Plato gives as 3,000 by 2,000 stadia, roughly 550 by 370 kilometres, facing south (Critias 118a to b). On the reading of the classicist ",
+     {
+      "text": "Heinz-Günther Nesselrath",
+      "href": "https://bmcr.brynmawr.edu/2009/2009.09.64"
+     },
+     ", that puts the capital at least several hundred kilometres from the Strait. In the story the island then sank, so the text gives a direction and a size, never a spot on today's map."
+    ],
+    [
+     "The Pillars were the headlands of the Strait of Gibraltar: the Rock of Gibraltar, and on the African side Jebel Musa or Monte Hacho, ",
+     {
+      "text": "which one is disputed",
+      "href": "https://en.wikipedia.org/wiki/Pillars_of_Hercules"
+     },
+     ". The classical Greek writers known to us seem to have put them there, the geologist Jacques Collina-Girard argues and Nesselrath agrees."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "is-the-richat-structure",
+   "nav": "Is the Richat Structure Atlantis?",
+   "h": "Is the Richat Structure Atlantis?",
+   "paras": [
+    [
+     "No. The Richat Structure in Mauritania, also called the Eye of the Sahara or the Eye of Africa, is a natural dome of rock about 40 kilometres across, pushed up by molten rock that cooled about 100 million years ago, as the ",
+     {
+      "text": "International Union of Geological Sciences",
+      "href": "https://iugs-geoheritage.org/publications-dl/IUGS-FIRST-100-SITES-WEB-BOOK.pdf"
+     },
+     " describes it. Wind and water wore it down into rings, ",
+     {
+      "text": "ESA",
+      "href": "https://www.esa.int/articles/about-us/directorates/earth-observation-programmes/earth-from-space-eye-of-africa"
+     },
+     " explains."
+    ],
+    [
+     "The Atlantis claim spread in 2018 through a YouTube video that news media widely reported, the ",
+     {
+      "text": "Richat article",
+      "href": "https://en.wikipedia.org/wiki/Richat_Structure"
+     },
+     " records. The rings recall the \"alternate zones of sea and land\" of Plato's city (Critias 113d), but not his numbers: his rings come to about 27 stadia, some 5 kilometres, and with the wall he sets 50 stadia beyond them to about 127 stadia, some 23 kilometres, by our sum (Critias 115e to 117e), against the Richat's 40. His city lay by the sea, and the Richat lies about 500 kilometres from the coast, ",
+     {
+      "text": "NASA's photo record",
+      "href": "https://commons.wikimedia.org/wiki/File:Richat_Structure_ISS030-E-12516.jpg"
+     },
+     " notes. No trace of a city or a canal has been found there, the ",
+     {
+      "text": "Richat article",
+      "href": "https://en.wikipedia.org/wiki/Richat_Structure"
+     },
+     " records."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "was-atlantis-on-santorini",
+   "nav": "Was Atlantis on Santorini?",
+   "h": "Was Atlantis on Santorini?",
+   "paras": [
+    [
+     "Most scholars say no. An eruption about 1600 BC, whose date is debated, destroyed the town of Akrotiri on Thera, today's Santorini, but ",
+     {
+      "text": "current scholarship does not support",
+      "href": "https://en.wikipedia.org/wiki/Minoan_eruption"
+     },
+     " the link with Atlantis."
+    ],
+    [
+     "The first known to make the link was Louis Figuier, in 1872, the ",
+     {
+      "text": "German overview of the theories",
+      "href": "https://de.wikipedia.org/wiki/Lokalisierungshypothesen_zu_Atlantis"
+     },
+     " records, and Spyridon Marinatos, who dug Akrotiri from 1967, became its leading voice. Some geologists still make the link: the eruption may have helped end Minoan civilisation, \"leaving its imprint on Greek mythology\", the ",
+     {
+      "text": "IUGS book",
+      "href": "https://iugs-geoheritage.org/publications-dl/IUGS-FIRST-100-SITES-WEB-BOOK.pdf"
+     },
+     " says, and it names Atlantis."
+    ],
+    [
+     "But Thera lies inside the Mediterranean, not outside the Pillars, and the eruption came about 1,000 years before Solon, not 9,000. Even Collina-Girard, who places Atlantis by Gibraltar, finds that neither the place nor the date fits, ",
+     {
+      "text": "Nesselrath",
+      "href": "https://bmcr.brynmawr.edu/2009/2009.09.64"
+     },
+     " reports."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "what-other-places-have",
+   "nav": "What other places have been proposed for Atlantis?",
+   "h": "What other places have been proposed for Atlantis?",
+   "paras": [
+    [
+     "Dozens, most of them in or near the Mediterranean, and none has been shown to be Plato's island, ",
+     {
+      "text": "the Atlantis article",
+      "href": "https://en.wikipedia.org/wiki/Atlantis"
+     },
+     " sums up."
+    ],
+    {
+     "points": [
+      [
+       "Southern Spain, near Cádiz.",
+       [
+        "Adolf Schulten placed Atlantis there in 1922. In 2004 Rainer Kühne, prompted by Werner Wickboldt, described ",
+        {
+         "text": "two rectangles",
+         "href": "https://antiquity.ac.uk/projgall/kuhne300/"
+        },
+        " on satellite images of the Doñana marshes. Whether they are natural is not known, ",
+        {
+         "text": "the overview",
+         "href": "https://en.wikipedia.org/wiki/Location_hypotheses_of_Atlantis"
+        },
+        " reports, adding that geologists found the area was a gulf of the sea, with no island big enough for a village, until the Middle Ages."
+       ]
+      ],
+      [
+       "The Spartel Bank, in the Strait.",
+       [
+        "In 2001 Collina-Girard proposed an island there that the sea drowned at the end of the last Ice Age, close to Plato's date. At its largest it measured only about 14 by 5 kilometres, ",
+        {
+         "text": "Kühne",
+         "href": "https://antiquity.ac.uk/projgall/kuhne300/"
+        },
+        " notes. Its top now lies 52 to 56 metres down, so it forms none of the shallows Plato describes, and Collina-Girard \"has not found Plato's Atlantis\", ",
+        {
+         "text": "Nesselrath",
+         "href": "https://bmcr.brynmawr.edu/2009/2009.09.64"
+        },
+        " concludes."
+       ]
+      ],
+      [
+       "The Azores.",
+       [
+        "Ignatius Donnelly took them in 1882 for the mountain tops of Atlantis. They are \"volcanic islands and are not the remnants of a more or less large continental mass\", Charles Schuchert concluded in 1917, ",
+        {
+         "text": "the overview",
+         "href": "https://en.wikipedia.org/wiki/Location_hypotheses_of_Atlantis"
+        },
+        " quotes him, and some of them have risen, not sunk."
+       ]
+      ],
+      [
+       "The Bimini Road, Bahamas.",
+       [
+        "Divers found this line of stone blocks in 1968, and Robert Marx and Dimitri Rebikoff headlined it \"Atlantis at Last?\" in 1969. Geologists and archaeologists agree it is natural beachrock, its shells about 3,500 radiocarbon years old, the ",
+        {
+         "text": "Bimini Road article",
+         "href": "https://en.wikipedia.org/wiki/Bimini_Road"
+        },
+        " reports."
+       ]
+      ],
+      [
+       "Antarctica.",
+       [
+        "Flavio Barbiero in 1974 and Rand and Rose Flem-Ath in 1995 placed Atlantis there, as a land that a sudden shift of the Earth's crust moved to the pole, where ice buried it. But its ice began to form about 34 million years ago, ",
+        {
+         "text": "Heidelberg University",
+         "href": "https://www.uni-heidelberg.de/en/newsroom/new-insights-into-the-formation-of-the-antarctic-ice-sheet"
+        },
+        " reports."
+       ]
+      ],
+      [
+       "Heligoland.",
+       [
+        "Jürgen Spanuth in 1953 put Atlantis beside the island and had it destroyed in the Bronze Age, around 1200 BC, the overviews in ",
+        {
+         "text": "English",
+         "href": "https://en.wikipedia.org/wiki/Location_hypotheses_of_Atlantis"
+        },
+        " and ",
+        {
+         "text": "German",
+         "href": "https://de.wikipedia.org/wiki/Lokalisierungshypothesen_zu_Atlantis"
+        },
+        " record, thousands of years after Plato's date."
+       ]
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "know",
+   "nav": "How do we know?",
+   "h": "How do we know?",
+   "paras": [
+    "From Plato's text, the only source, and from what geology and archaeology have found at each place proposed.",
+    "The text sets three tests. The place is outside the Pillars, in the Atlantic. The date is 9,000 years before Solon, about 9600 BC by our count. The size is an island larger than Libya and Asia together. Measured against them, Santorini misses the place and the date, the Spartel Bank and the Richat Structure the size, and the Azores and Antarctica fail on their own geology."
+   ]
+  },
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "The numbers",
+   "h": "The numbers",
+   "unit": "Plato's numbers are given as his: Known here means that his text gives them. A kilometre figure for Plato is ours, from the length of a stade.",
+   "cols": [
+    "Figure",
+    "Value",
+    "Basis",
+    "Known or guessed",
+    "Source"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Plato's island",
+      "larger than Libya and Asia together",
+      "Timaeus 24e to 25a",
+      "Known (in his text)",
+      "Plato"
+     ]
+    },
+    {
+     "cells": [
+      "His plain",
+      "3,000 by 2,000 stadia",
+      "Critias 118a",
+      "Known (in his text)",
+      "Plato"
+     ]
+    },
+    {
+     "cells": [
+      "The plain",
+      "roughly 550 by 370 km",
+      "a stade of about 185 m, named stades 157 to 209 m",
+      "Guessed",
+      "Wikipedia, Stadia (length)"
+     ]
+    },
+    {
+     "cells": [
+      "His city with its outer wall",
+      "about 127 stadia, some 23 km",
+      "rings of 27 stadia, the wall 50 beyond, Critias 115e to 117e",
+      "Guessed",
+      "ours"
+     ]
+    },
+    {
+     "cells": [
+      "The war",
+      "9,000 years before Solon, about 9600 BC",
+      "Timaeus 23e, Critias 108e, the year BC ours",
+      "Known (the 9,000), Guessed (the year)",
+      "Plato"
+     ]
+    },
+    {
+     "cells": [
+      "Richat Structure",
+      "about 40 km across, NASA 45 to almost 50",
+      "where the edge is drawn",
+      "Known",
+      "IUGS, NASA"
+     ]
+    },
+    {
+     "cells": [
+      "Richat's cooled molten rock",
+      "about 100 million years old",
+      "dated, 94 to 104 million in one study",
+      "Known",
+      "Wikipedia, Richat Structure"
+     ]
+    },
+    {
+     "cells": [
+      "Santorini's caldera",
+      "8 by 11 km",
+      "measured today",
+      "Known",
+      "IUGS"
+     ]
+    },
+    {
+     "cells": [
+      "Spartel island in the Ice Age",
+      "about 14 by 5 km",
+      "a reconstructed coast",
+      "Guessed",
+      "Kühne 2004"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "myths",
+   "nav": "Things often read",
+   "h": "Things often read",
+   "subs": [
+    {
+     "h": "\"Plato put Atlantis in the Mediterranean.\"",
+     "paras": [
+      "He put it outside the Pillars of Heracles, in the Atlantic. The Mediterranean is his \"harbour\"."
+     ]
+    },
+    {
+     "h": "\"Plato says Atlantis sank in 9600 BC.\"",
+     "paras": [
+      "His 9,000 years before Solon date the war with Athens. The island sank \"some time afterwards\", at a time Plato does not give, Nesselrath points out."
+     ]
+    },
+    {
+     "h": "\"The Richat Structure is an impact crater.\"",
+     "paras": [
+      "It was first taken for one, but field studies in the 1960s found no sign of an impact. It is a dome worn down by erosion."
+     ]
+    },
+    {
+     "h": "\"Satellite images show Atlantis in Spain.\"",
+     "paras": [
+      "They show two rectangles in the Doñana marshes, reported in 2004. Whether they are natural is not known."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "The facts on this page come from these sources, read on 17 and 18 November 2026. Plato's words are quoted from Jowett's translation of 1892, which is in the public domain.",
+   "read": [
+    {
+     "text": "Plato, Timaeus and Critias, translated by Benjamin Jowett, The Dialogues of Plato, 3rd edition, volume 3, Oxford, 1892 (Internet Archive)",
+     "href": "https://archive.org/details/Jowett-3rded-ebox-set"
+    },
+    {
+     "text": "Plato's Greek text with the Stephanus numbers: Platonis Opera, edited by John Burnet, volume IV, Oxford, Clarendon Press (Internet Archive)",
+     "href": "https://archive.org/details/platonisopera04platuoft"
+    },
+    {
+     "text": "Bryn Mawr Classical Review 2009.09.64, Heinz-Günther Nesselrath on Jacques Collina-Girard, L'Atlantide retrouvée? (2009)",
+     "href": "https://bmcr.brynmawr.edu/2009/2009.09.64"
+    },
+    {
+     "text": "Rainer W. Kühne, \"A location for 'Atlantis'?\", Antiquity, volume 78, number 300, 2004, Project Gallery",
+     "href": "https://antiquity.ac.uk/projgall/kuhne300/"
+    },
+    {
+     "text": "IUGS International Commission on Geoheritage, The First 100 IUGS Geological Heritage Sites, 2022 (the Richat Structure, the Santorini caldera, Capelinhos)",
+     "href": "https://iugs-geoheritage.org/publications-dl/IUGS-FIRST-100-SITES-WEB-BOOK.pdf"
+    },
+    {
+     "text": "ESA, \"Earth from Space: Eye of Africa\", 2010",
+     "href": "https://www.esa.int/articles/about-us/directorates/earth-observation-programmes/earth-from-space-eye-of-africa"
+    },
+    {
+     "text": "NASA Earth Observatory, \"Richat Structure, Mauritania\", 2002",
+     "href": "https://science.nasa.gov/earth/earth-observatory/richat-structure-mauritania-2561/"
+    },
+    {
+     "text": "NASA, astronaut photograph ISS030-E-12516 and its description, on Wikimedia Commons",
+     "href": "https://commons.wikimedia.org/wiki/File:Richat_Structure_ISS030-E-12516.jpg"
+    },
+    {
+     "text": "Heidelberg University, \"New Insights Into the Formation of the Antarctic Ice Sheet\", 2024",
+     "href": "https://www.uni-heidelberg.de/en/newsroom/new-insights-into-the-formation-of-the-antarctic-ice-sheet"
+    },
+    {
+     "text": "Wikipedia, Hypothetical locations of Atlantis",
+     "href": "https://en.wikipedia.org/wiki/Location_hypotheses_of_Atlantis"
+    },
+    {
+     "text": "Wikipedia, Lokalisierungshypothesen zu Atlantis (in German)",
+     "href": "https://de.wikipedia.org/wiki/Lokalisierungshypothesen_zu_Atlantis"
+    },
+    {
+     "text": "Wikipedia, Atlantis",
+     "href": "https://en.wikipedia.org/wiki/Atlantis"
+    },
+    {
+     "text": "Wikipedia, Pillars of Hercules",
+     "href": "https://en.wikipedia.org/wiki/Pillars_of_Hercules"
+    },
+    {
+     "text": "Wikipedia, Richat Structure",
+     "href": "https://en.wikipedia.org/wiki/Richat_Structure"
+    },
+    {
+     "text": "Wikipedia, Minoan eruption",
+     "href": "https://en.wikipedia.org/wiki/Minoan_eruption"
+    },
+    {
+     "text": "Wikipedia, Spartel",
+     "href": "https://en.wikipedia.org/wiki/Spartel"
+    },
+    {
+     "text": "Wikipedia, Bimini Road",
+     "href": "https://en.wikipedia.org/wiki/Bimini_Road"
+    },
+    {
+     "text": "Wikipedia, Stadia (length)",
+     "href": "https://en.wikipedia.org/wiki/Stadia_(length)"
+    },
+    {
+     "text": "Wikipedia, Heligoland (the map's point for the island)",
+     "href": "https://en.wikipedia.org/wiki/Heligoland"
+    },
+    {
+     "text": "Natural Earth, terms of use (the map's coasts)",
+     "href": "https://www.naturalearthdata.com/about/terms-of-use/"
+    }
+   ],
+   "contact": "If a date, a figure or a sentence is wrong, a message is enough, and we will correct it.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "museum",
+   "id": "museum",
+   "nav": "In the museum",
+   "h": "In the museum",
+   "text": "Museum of Ages is a digital museum. Its {wing} wing shows {place} on {day}.",
+   "link": "To the {wing} wing"
+  }
+ ]
+}

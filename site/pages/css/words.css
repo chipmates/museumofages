@@ -1,0 +1,5 @@
+/* A table of numbers whose last column is no "How sure" line keeps that column's heading. Set only on a page that
+   has one. */
+@media (min-width:960px){
+  .sc-table--plain thead th:last-child:not(:nth-child(2)){position:static;width:auto;height:auto;overflow:visible;clip-path:none}
+}

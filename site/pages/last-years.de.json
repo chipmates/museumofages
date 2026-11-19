@@ -64,7 +64,7 @@
     "og_image_alt": "Backsteinmauern mit steinernen Ecken fassen einen schmalen Hof in tief stehender Sonne ein, und eine kurze Treppe steigt zur Tür des Hauses hinauf, daneben ein kleiner Turm. Ein Standbild aus dem Film des Flügels, der das Haus in Code nachgebaut hat."
   },
   "labels": {
-    "crumbs": "Du bist hier",
+    "crumbs": "Seitenpfad",
     "crumb_home": "Museum",
     "crumb_here": "Tod und Grab",
     "toc": "Auf dieser Seite",
@@ -145,7 +145,7 @@
       "h": "Woran er in Frankreich arbeitete",
       "paras": [
         "Er hörte nicht auf zu arbeiten. Seine Notizen zeigen ihn in Romorantin, südlich von Orléans, wo er für den König einen Palast entwarf, mit Kanälen bis zur Loire. Gebaut wurde er nie, Franz I. baute stattdessen Chambord. Er richtete Feste für den Hof aus: Das Schloss schreibt ihm bei der Organisation der Feiern in Amboise im Frühjahr 1518 eine zentrale Rolle zu, sagt aber selbst, dass die Archive dazu ungenau sind.",
-        "Er zeichnete weiter. Die Sintflut-Zeichnungen in Windsor werden auf etwa 1517 bis 1518 datiert, und eine davon kannst du im Flügel öffnen, unter dem Fenster des Studierzimmers. Und an der heiligen Anna arbeitete er noch: Die letzten Pinselstriche auf ihrem Kleid kamen bei der Restaurierung von 2010 bis 2012 ans Licht, berichtet der Louvre."
+        "Er zeichnete weiter. Die Sintflut-Zeichnungen in Windsor werden auf etwa 1517 bis 1518 datiert, und eine davon lässt sich im Flügel öffnen, unter dem Fenster des Studierzimmers. Und an der heiligen Anna arbeitete er noch: Die letzten Pinselstriche auf ihrem Kleid kamen bei der Restaurierung von 2010 bis 2012 ans Licht, berichtet der Louvre."
       ]
     },
     {
@@ -389,7 +389,7 @@
         }
       ],
       "notes": [],
-      "contact": "Ist ein Datum, ein Name oder ein Satz hier falsch, schreib uns, und wir korrigieren es.",
+      "contact": "Ist ein Datum, ein Name oder ein Satz hier falsch, genügt eine Nachricht, und wir korrigieren es.",
       "contact_link": "Zum Impressum",
       "what_link": "Was dieses Museum ist"
     },

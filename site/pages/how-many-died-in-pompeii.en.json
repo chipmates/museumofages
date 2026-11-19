@@ -1,0 +1,527 @@
+{
+ "_note": "AN ANSWER PAGE of the questions shelf, from its words and its picture made for it.",
+ "page": {
+  "id": "questions-how-many-died-in-pompeii",
+  "wing": "questions",
+  "topic": "how_many_died_in_pompeii",
+  "published": "2026-11-19",
+  "checked": "2026-11-17",
+  "og_image": {
+   "file": "questions-how-many-died-in-pompeii-og-{lang}-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "lead": {
+   "stem": "questions-how-many-died-in-pompeii-lead-{lang}",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 560px, (min-width: 960px) 44vw, calc(100vw - 40px)",
+   "swatches": {
+    "known": "#c8cddd",
+    "guessed": "#c8cddd"
+   },
+   "narrow": {
+    "stem": "questions-how-many-died-in-pompeii-lead-phone-{lang}",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 560
+   }
+  }
+ },
+ "meta": {
+  "title": "How many died in Pompeii? Counts, charted | Museum of Ages",
+  "description": "About 2,000 died inside Pompeii's walls, the park estimates, and most people had left. The counts drawn to one scale, and the survivors traced by name.",
+  "og_title": "How many people died in Pompeii, and did anyone survive?",
+  "og_image_alt": "The question over the chart made for this page: the people of Pompeii, perhaps 11,000 to 20,000, beside about 2,000 dead inside the walls and the 1,044 counted by 2003, to one scale."
+ },
+ "labels": {
+  "crumbs": "Breadcrumb",
+  "crumb_home": "Museum",
+  "toc": "On this page",
+  "tag_made": "Made for this page",
+  "no_figure": "no figure",
+  "crumb_here": "How many died in Pompeii?"
+ },
+ "top": {
+  "h1": "How many people died in Pompeii, and did anyone survive?",
+  "answer": [
+   "About 2,000 people died inside Pompeii's walls, ",
+   {
+    "text": "the archaeological park estimates",
+    "href": "https://pompeiisites.org/wp-content/uploads/E-Journal_4_2026-Il-rinvenimento-di-due-vittime-delleruzione-fuori-porta-Stabia-a-Pompei-prime-analisi-antropologiche-e-archeologiche.pdf"
+   },
+   ", and the remains of more than 1,000 have been found. The town had perhaps ",
+   {
+    "text": "11,000",
+    "href": "https://en.wikipedia.org/wiki/Pompeii"
+   },
+   " to ",
+   {
+    "text": "20,000",
+    "href": "https://pompeiisites.org/wp-content/uploads/E-Journal_4_2026-Il-rinvenimento-di-due-vittime-delleruzione-fuori-porta-Stabia-a-Pompei-prime-analisi-antropologiche-e-archeologiche.pdf"
+   },
+   " people, so most had left, and ",
+   {
+    "text": "Steven Tuck",
+    "href": "https://www.livescience.com/archaeology/romans/people-made-it-out-of-the-cities-alive-tracing-the-survivors-of-pompeii-and-herculaneum-2-000-years-after-vesuvius-erupted"
+   },
+   " has traced at least 172 survivors by name."
+  ],
+  "strength": "Remains found: counted by the excavators. The dead inside the walls and the townspeople: estimates. The dead outside the town: not known.",
+  "slot": {
+   "pic": "lead",
+   "tag": "tag_made",
+   "what": "The people of Pompeii and the dead found inside the town, to one scale. How many died on the roads and shores outside is not known.",
+   "alt": "A bar chart to one scale. Pompeii's people, perhaps 11,000 to 20,000, drawn dashed as an estimate. The dead inside the walls, about 2,000 by the archaeological park's estimate, also dashed. The remains of 1,044 people counted at Pompeii by 2003, drawn solid: 394 in the pumice fall and 650 in the hot surges. The rest of the town left, or died outside it, and was never counted. Below, at the same scale, the remains of about 300 people counted on the shore of Herculaneum, the smaller town nearby, by 2018.",
+   "legend": "picture"
+  },
+  "next": {
+   "page": "pompeii-casts",
+   "label": "Next question:",
+   "text": "Are the Pompeii bodies real?"
+  }
+ },
+ "faq": [
+  {
+   "q": "How do we know?",
+   "a": "From one witness across the bay, from the digs and the bones, and from names cut in stone."
+  }
+ ],
+ "blocks": [
+  {
+   "type": "text",
+   "id": "did-anyone-survive-pompeii",
+   "nav": "Did anyone survive Pompeii?",
+   "h": "Did anyone survive Pompeii?",
+   "paras": [
+    [
+     "Yes, many did, perhaps most of the town. Scholars now broadly agree that much, \"perhaps even a majority\", of the people of Pompeii and Herculaneum probably survived, Steven Tuck writes in ",
+     {
+      "text": "Escape from Pompeii",
+      "href": "https://www.livescience.com/archaeology/romans/people-made-it-out-of-the-cities-alive-tracing-the-survivors-of-pompeii-and-herculaneum-2-000-years-after-vesuvius-erupted"
+     },
+     ", his book of 2025. ",
+     {
+      "text": "Pumice fell",
+      "href": "https://pompeiisites.org/wp-content/uploads/E-Journal_4_2026-Il-rinvenimento-di-due-vittime-delleruzione-fuori-porta-Stabia-a-Pompei-prime-analisi-antropologiche-e-archeologiche.pdf"
+     },
+     " on the town from the early afternoon of the first day into the early hours of the next, so there were hours in which to leave."
+    ],
+    [
+     "Tuck has traced at least 172 survivors by name, \"probably representing about 3,000 household members\". He looked for family names known at Pompeii and Herculaneum that turn up after the eruption on ",
+     {
+      "text": "inscriptions in other towns",
+      "href": "https://miamioh.edu/news/top-stories/2019/08/steven-tuck.html"
+     },
+     ". Most settled on the coast from Naples to Cumae, others at Capua, Nola or as far as Ostia."
+    ],
+    [
+     "Some came back. ",
+     {
+      "text": "The park reported in 2025",
+      "href": "https://pompeiisites.org/wp-content/uploads/07_E-Journal-La-rioccupazione-nellInsula-meridionalis-di-Pompei-dopo-il-79-d.C.-Riflessioni-a-margine-dellinconscio-archeologico.pdf"
+     },
+     " that people lived in the ruins again after the eruption, in two phases, the last in the 4th and 5th centuries. For anyone with nowhere else to go, its archaeologists write, it was better than nothing."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-many-bodies-have",
+   "nav": "How many bodies have been found in Pompeii?",
+   "h": "How many bodies have been found in Pompeii?",
+   "paras": [
+    [
+     "The remains of more than 1,000 people, ",
+     {
+      "text": "the park says",
+      "href": "https://pompeiisites.org/en/pompeii-map/analysis/the-casts/"
+     },
+     ", and new finds still come. A count published in 1998 gave about 1,150, the ",
+     {
+      "text": "Wikipedia article on Pompeii",
+      "href": "https://en.wikipedia.org/wiki/Pompeii"
+     },
+     " reports. Only about 44 of the town's 66 hectares have been dug, the park's ",
+     {
+      "text": "press kit",
+      "href": "https://pompeiisites.org/en/archaeological-park-of-pompeii/press-kit/"
+     },
+     " says, so a third of Pompeii has never been searched. In April 2026 ",
+     {
+      "text": "the park reported",
+      "href": "https://pompeiisites.org/wp-content/uploads/E-Journal_4_2026-Il-rinvenimento-di-due-vittime-delleruzione-fuori-porta-Stabia-a-Pompei-prime-analisi-antropologiche-e-archeologiche.pdf"
+     },
+     " two men found outside the Porta Stabia, trying to reach the beach: the older one, who carried a large terracotta mortar to shield his head, died in the pumice fall, the younger some hours later in the ash."
+    ],
+    [
+     "At Herculaneum, the smaller town nearby, about 300 people had taken refuge in twelve vaults on the shore and died there when the first hot surge came, ",
+     {
+      "text": "a 2018 study",
+      "href": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0203210"
+     },
+     " records. Little ash fell there by day, yet most of its people left, the ",
+     {
+      "text": "Herculaneum article",
+      "href": "https://en.wikipedia.org/wiki/Herculaneum"
+     },
+     " says. At Oplontis, near Pompeii, 54 people died in one vaulted storeroom of a large villa, ",
+     {
+      "text": "the park writes",
+      "href": "https://pompeiisites.org/en/oplontis-en-2/villa-b-or-of-lucius-crassius-tertius/"
+     },
+     ", and ",
+     {
+      "text": "victims lie in villas",
+      "href": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011127"
+     },
+     " as far as Stabiae, at least 15 kilometres from the vent. The eruption's whole toll is not known: many may have died outside the town, trying to reach the coast, ",
+     {
+      "text": "the park's paper of 2026 says",
+      "href": "https://pompeiisites.org/wp-content/uploads/E-Journal_4_2026-Il-rinvenimento-di-due-vittime-delleruzione-fuori-porta-Stabia-a-Pompei-prime-analisi-antropologiche-e-archeologiche.pdf"
+     },
+     "."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "when-and-how-did",
+   "nav": "When and how did they die?",
+   "h": "When and how did they die?",
+   "paras": [
+    [
+     "Over about a day, in two phases. By 2003, 1,044 dead had been counted at Pompeii, besides ",
+     {
+      "text": "scattered bones",
+      "href": "https://en.wikipedia.org/wiki/Eruption_of_Mount_Vesuvius_in_79_AD"
+     },
+     " of about 100 more. Of them, 394 lay in the pumice that fell through the first afternoon and night, nine in ten of them inside buildings, probably where roofs and floors gave way. The other 650 lay in the deposits of the hot surges that reached the town the next morning, as ",
+     {
+      "text": "a 2010 study",
+      "href": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011127"
+     },
+     " sets out."
+    ],
+    [
+     "How exactly they died is argued. The 2010 study found that heat, at least 250 °C even 10 kilometres from the vent, was the main cause of death, against the older view that people choked on the ash. ",
+     {
+      "text": "The park writes",
+      "href": "https://pompeiisites.org/en/pompeii-map/analysis/the-casts/"
+     },
+     " that anyone still in the city \"died at once of thermal shock\". At Herculaneum, ",
+     {
+      "text": "a 2020 study",
+      "href": "https://www.cambridge.org/core/journals/antiquity/article/reevaluation-of-manner-of-death-at-roman-herculaneum-following-the-ad-79-eruption-of-vesuvius/FD54E5B954D8E86B9B59001C0B0CC0BB"
+     },
+     " found that soft tissue and the stone vaults had shielded the bones from part of the heat, and it calls the exact manner of death there still unclear."
+    ],
+    [
+     "Even the day is open. Pliny's letter gives 24 August in all its oldest manuscripts, some finds point to the autumn, and ",
+     {
+      "text": "a 2024 study by the park",
+      "href": "https://pompeiisites.org/wp-content/uploads/27_E-Journal_La-data-della-distruzione-di-Pompei_2.pdf"
+     },
+     " declines to name a winner."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-many-people-lived",
+   "nav": "How many people lived in Pompeii?",
+   "h": "How many people lived in Pompeii?",
+   "paras": [
+    [
+     "Perhaps 11,000 to 20,000. No count of the people survives, so every figure is worked back from what the town left behind, and scholars differ. A count from the households gives about 11,000, the ",
+     {
+      "text": "Wikipedia article",
+      "href": "https://en.wikipedia.org/wiki/Pompeii"
+     },
+     " reports, while ",
+     {
+      "text": "the park's paper of 2026",
+      "href": "https://pompeiisites.org/wp-content/uploads/E-Journal_4_2026-Il-rinvenimento-di-due-vittime-delleruzione-fuori-porta-Stabia-a-Pompei-prime-analisi-antropologiche-e-archeologiche.pdf"
+     },
+     " gives at least 20,000. Herculaneum was smaller, with perhaps ",
+     {
+      "text": "4,000",
+      "href": "https://de.wikipedia.org/wiki/Herculaneum"
+     },
+     " to ",
+     {
+      "text": "5,000",
+      "href": "https://en.wikipedia.org/wiki/Herculaneum"
+     },
+     " people."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "know",
+   "nav": "How do we know?",
+   "h": "How do we know?",
+   "paras": [
+    "From one witness across the bay, from the digs and the bones, and from names cut in stone.",
+    [
+     "No one in Pompeii left an account. The nearest is Pliny the Younger's: he watched the eruption from Misenum, across the bay, and described it some 25 years later, by the usual dating, in ",
+     {
+      "text": "two letters",
+      "href": "https://www.thelatinlibrary.com/pliny.ep6.html"
+     },
+     " to the historian Tacitus. His uncle, Pliny the Elder, took the fleet out to help people on the shore and died at Stabiae (letter 6.16). In letter 6.20 Pliny tells of the crowd fleeing with him in the dark: women wailing, small children crying, men shouting, people calling for parents, children and wives and knowing them by their voices."
+    ],
+    [
+     {
+      "text": "Digs have gone on",
+      "href": "https://pompeiisites.org/en/archaeological-park-of-pompeii/press-kit/"
+     },
+     " since the 18th century, and the layer each person lay in shows when they died. At Herculaneum, the skeletons on the shore have been studied since the 1980s, the 2018 study notes: men, women and children of the town. Names on inscriptions trace the survivors. And some of the dead left no heirs at all: the emperor Titus gave their property to rebuild the stricken towns, Suetonius writes (Titus 8.4, quoted in ",
+     {
+      "text": "the park's paper of 2025",
+      "href": "https://pompeiisites.org/wp-content/uploads/07_E-Journal-La-rioccupazione-nellInsula-meridionalis-di-Pompei-dopo-il-79-d.C.-Riflessioni-a-margine-dellinconscio-archeologico.pdf"
+     },
+     ")."
+    ],
+    "What stays open is how many lived in the town, how many died on the roads and shores, and on which day. The chart above draws the estimates dashed and leaves the uncounted dead without a number."
+   ]
+  },
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "The numbers",
+   "h": "The numbers",
+   "unit": "Sources are named as in the list below.",
+   "cols": [
+    "Figure",
+    "Value",
+    "Basis",
+    "Known or guessed",
+    "Source"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Remains found in Pompeii",
+      "more than 1,000",
+      "excavation records",
+      "Known",
+      "Archaeological Park of Pompeii"
+     ]
+    },
+    {
+     "cells": [
+      "Counted at Pompeii by 2003",
+      "1,044 by layer, 394 in the pumice fall and 650 in the hot surges, besides scattered bones of about 100 more",
+      "excavation counts",
+      "Known",
+      "PLOS ONE 2010, and Wikipedia, Eruption of Mount Vesuvius"
+     ]
+    },
+    {
+     "cells": [
+      "Dead inside the walls, unexcavated parts included",
+      "about 2,000",
+      "the park's estimate",
+      "Guessed",
+      "Park, 2026"
+     ]
+    },
+    {
+     "cells": [
+      "People in Pompeii",
+      "perhaps 11,000 to 20,000",
+      "about 11,000 from household counts, at least 20,000 in the park's paper",
+      "Guessed",
+      "Park, 2026, and Wikipedia, Pompeii"
+     ]
+    },
+    {
+     "cells": [
+      "Town area",
+      "about 66 hectares, about 44 of them dug",
+      "measured",
+      "Known",
+      "Park, press kit"
+     ]
+    },
+    {
+     "cells": [
+      "Herculaneum's shore",
+      "about 300 people in twelve vaults",
+      "excavation records, other counts run from about 250 to 340",
+      "Known",
+      "PLOS ONE 2018"
+     ]
+    },
+    {
+     "cells": [
+      "People in Herculaneum",
+      "perhaps 4,000 to 5,000",
+      "estimates differ",
+      "Guessed",
+      "Wikipedia, Herculaneum (English and German)"
+     ]
+    },
+    {
+     "cells": [
+      "Oplontis",
+      "54 people in one vaulted storeroom",
+      "excavation records",
+      "Known",
+      "Park, Villa B"
+     ]
+    },
+    {
+     "cells": [
+      "Survivors traced by name",
+      "at least 172, about 3,000 with their households",
+      "family names on inscriptions, read by one scholar",
+      "Guessed",
+      "Tuck, 2025"
+     ]
+    },
+    {
+     "cells": [
+      "Dead in the whole region",
+      "",
+      "no one counted",
+      "not known",
+      "Park, 2026"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "myths",
+   "nav": "Things often read",
+   "h": "Things often read",
+   "subs": [
+    {
+     "h": "\"The people were turned to stone.\"",
+     "paras": [
+      "Nothing turned to stone: the bodies decayed inside the hardened ash and left hollows, and from 1863 plaster was poured into some of them to make casts."
+     ]
+    },
+    {
+     "h": "\"Nobody survived.\"",
+     "paras": [
+      "Most of the town had left before the end, and at least 172 survivors are known by name."
+     ]
+    },
+    {
+     "h": "\"Everyone died in an instant.\"",
+     "paras": [
+      "The dying went on for about a day: first under the pumice and the falling roofs, then in the surges of the next morning."
+     ]
+    },
+    {
+     "h": "\"Only the rich got away.\"",
+     "paras": [
+      "The survivors Tuck traced were rich and poor, men, women and children, \"a cross section of the population\"."
+     ]
+    },
+    {
+     "h": "\"It happened on 24 October.\"",
+     "paras": [
+      "That date goes back to a book of 1929 that used the manuscripts wrongly, the park's study of 2024 says. Pliny's letter gives 24 August, some finds point to the autumn, and the day is still argued."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "The facts on this page come from these pages, read on 17 November 2026. Pliny is quoted in our own words from the Latin.",
+   "read": [
+    {
+     "text": "Archaeological Park of Pompeii, E-Journal 4/2026, Amoretti, Bonetto, Buondonno, Scarpati, Sparice, Zuchtriegel, \"Il rinvenimento di due vittime dell'eruzione fuori porta Stabia a Pompei\", 24 April 2026 (in Italian)",
+     "href": "https://pompeiisites.org/wp-content/uploads/E-Journal_4_2026-Il-rinvenimento-di-due-vittime-delleruzione-fuori-porta-Stabia-a-Pompei-prime-analisi-antropologiche-e-archeologiche.pdf"
+    },
+    {
+     "text": "Archaeological Park of Pompeii, \"The Casts\"",
+     "href": "https://pompeiisites.org/en/pompeii-map/analysis/the-casts/"
+    },
+    {
+     "text": "Archaeological Park of Pompeii, press kit",
+     "href": "https://pompeiisites.org/en/archaeological-park-of-pompeii/press-kit/"
+    },
+    {
+     "text": "Archaeological Park of Pompeii, Villa B or of Lucius Crassius Tertius",
+     "href": "https://pompeiisites.org/en/oplontis-en-2/villa-b-or-of-lucius-crassius-tertius/"
+    },
+    {
+     "text": "Archaeological Park of Pompeii, E-Journal 27, Zuchtriegel, Comegna, Conte, Russo, \"La data della distruzione di Pompei: premesse per un dibattito aperto\", 12 December 2024 (in Italian)",
+     "href": "https://pompeiisites.org/wp-content/uploads/27_E-Journal_La-data-della-distruzione-di-Pompei_2.pdf"
+    },
+    {
+     "text": "Archaeological Park of Pompeii, E-Journal 7, Zuchtriegel and others, \"La rioccupazione nell'Insula meridionalis di Pompei dopo il 79 d.C.\", 6 August 2025 (in Italian)",
+     "href": "https://pompeiisites.org/wp-content/uploads/07_E-Journal-La-rioccupazione-nellInsula-meridionalis-di-Pompei-dopo-il-79-d.C.-Riflessioni-a-margine-dellinconscio-archeologico.pdf"
+    },
+    {
+     "text": "Mastrolorenzo, Petrone, Pappalardo, Guarino, \"Lethal Thermal Impact at Periphery of Pyroclastic Surges: Evidences at Pompeii\", PLOS ONE, 2010",
+     "href": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011127"
+    },
+    {
+     "text": "Petrone and others, \"A hypothesis of sudden body fluid vaporization in the 79 AD victims of Vesuvius\", PLOS ONE, 2018",
+     "href": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0203210"
+    },
+    {
+     "text": "Martyn and others, \"A re-evaluation of manner of death at Roman Herculaneum following the AD 79 eruption of Vesuvius\", Antiquity, 2020 (abstract)",
+     "href": "https://www.cambridge.org/core/journals/antiquity/article/reevaluation-of-manner-of-death-at-roman-herculaneum-following-the-ad-79-eruption-of-vesuvius/FD54E5B954D8E86B9B59001C0B0CC0BB"
+    },
+    {
+     "text": "Steven L. Tuck, Escape from Pompeii, Oxford University Press, 2025, an excerpt in Live Science, 20 October 2025",
+     "href": "https://www.livescience.com/archaeology/romans/people-made-it-out-of-the-cities-alive-tracing-the-survivors-of-pompeii-and-herculaneum-2-000-years-after-vesuvius-erupted"
+    },
+    {
+     "text": "Miami University, on Steven Tuck's study of the survivors, August 2019",
+     "href": "https://miamioh.edu/news/top-stories/2019/08/steven-tuck.html"
+    },
+    {
+     "text": "Pliny the Younger, Letters, book 6, with letters 16 and 20, in Latin (The Latin Library)",
+     "href": "https://www.thelatinlibrary.com/pliny.ep6.html"
+    },
+    {
+     "text": "Wikipedia, Pompeii",
+     "href": "https://en.wikipedia.org/wiki/Pompeii"
+    },
+    {
+     "text": "Wikipedia, Eruption of Mount Vesuvius in 79 AD",
+     "href": "https://en.wikipedia.org/wiki/Eruption_of_Mount_Vesuvius_in_79_AD"
+    },
+    {
+     "text": "Wikipedia, Herculaneum",
+     "href": "https://en.wikipedia.org/wiki/Herculaneum"
+    },
+    {
+     "text": "Wikipedia, Herculaneum (in German)",
+     "href": "https://de.wikipedia.org/wiki/Herculaneum"
+    }
+   ],
+   "contact": "If a date, a figure or a sentence is wrong, a message is enough, and we will correct it.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "museum",
+   "id": "museum",
+   "nav": "In the museum",
+   "h": "In the museum",
+   "text": "Museum of Ages is a digital museum. Its {wing} wing shows {place} on {day}.",
+   "link": "To the {wing} wing"
+  }
+ ]
+}

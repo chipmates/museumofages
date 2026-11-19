@@ -1,0 +1,412 @@
+{
+ "_note": "AN ANSWER PAGE of the questions shelf, from its words and its picture made for it.",
+ "page": {
+  "id": "questions-where-is-babylon-today",
+  "wing": "questions",
+  "topic": "where_is_babylon_today",
+  "published": "2026-11-19",
+  "checked": "2026-11-18",
+  "og_image": {
+   "file": "questions-where-is-babylon-today-og-{lang}-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "lead": {
+   "stem": "questions-where-is-babylon-today-lead-{lang}",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 560px, (min-width: 960px) 44vw, calc(100vw - 40px)",
+   "swatches": {
+    "known": "#cb8561",
+    "guessed": "#cb8561"
+   },
+   "narrow": {
+    "stem": "questions-where-is-babylon-today-lead-phone-{lang}",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 560
+   }
+  }
+ },
+ "meta": {
+  "title": "Where is Babylon today? Its ruins on a map | Museum of Ages",
+  "description": "Babylon's ruins lie in Iraq, beside Hillah. The excavated city drawn on today's ground, which walls are modern rebuilds, and where its finds went.",
+  "og_title": "Where is Babylon today?",
+  "og_image_alt": "The question over the map made for this page: the excavated city of Babylon on today's ground, and its centre at a larger scale, its buildings numbered."
+ },
+ "labels": {
+  "crumbs": "Breadcrumb",
+  "crumb_home": "Museum",
+  "toc": "On this page",
+  "tag_made": "Made for this page",
+  "no_figure": "no figure",
+  "crumb_here": "Babylon today"
+ },
+ "top": {
+  "h1": "Where is Babylon today?",
+  "answer": [
+   "Babylon's ruins lie in Iraq, on the Euphrates at the northern edge of the city of Hillah, south of Baghdad. Where the city lay is not in doubt: ",
+   {
+    "text": "excavators uncovered",
+    "href": "https://www.zaphon.de/Babylon/en"
+   },
+   " its gates, palaces and temples from 1899 on, and since 2019 the ruins have been a UNESCO World Heritage site."
+  ],
+  "strength": "Where the ruins lie: known, the site was dug from 1899 on. Most of the old city: never dug, so its plan there is guessed.",
+  "slot": {
+   "pic": "lead",
+   "tag": "tag_made",
+   "what": "The ruins of Babylon on the ground of today. Inside its walls the city covered some 9.5 square kilometres, and most of it was never dug.",
+   "alt": "Map of Babylon's ruins on today's ground at the northern edge of Hillah, north at the top: the walled city, at most 4.8 kilometres from north to south, cut by the dashed old course of the Euphrates. On the east side the walls and buildings in the dug areas are drawn solid: the Ishtar Gate, the South and North Palaces, the tower's square base about 90 metres a side, and the temple Esagila under its mound. The outer wall to the east, about 7.5 kilometres long, was dug only in short stretches and is dashed elsewhere. The west city's walls, never dug, are dashed. Today's Euphrates runs through the western part of the old city. A second panel shows the excavated centre larger. Its buildings carry numbers, and the key below the map names them.",
+   "legend": "picture",
+   "src": [
+    "Base plan: ",
+    {
+     "text": "Olof Pedersén, Babylon Maps",
+     "href": "https://doi.org/10.5281/zenodo.13380012"
+    },
+    ", ",
+    {
+     "text": "CC BY 4.0",
+     "href": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    ". Map data: ",
+    {
+     "text": "OpenStreetMap",
+     "href": "https://www.openstreetmap.org/copyright"
+    },
+    ", under the ",
+    {
+     "text": "ODbL",
+     "href": "https://opendatacommons.org/licenses/odbl/"
+    },
+    "."
+   ]
+  },
+  "next": {
+   "page": "questions",
+   "text": "More questions, answered with what is known and what is guessed"
+  }
+ },
+ "faq": [
+  {
+   "q": "What is left of Babylon today?",
+   "a": "Mounds, dug ruins, walls rebuilt in modern times, and a few ancient pieces still standing where they were built."
+  },
+  {
+   "q": "Which walls at Babylon are modern?",
+   "a": "Many of the walls standing there now were rebuilt from the late 1970s on, on top of the dug remains."
+  },
+  {
+   "q": "How do we know?",
+   "a": "From the digs, and from the plans drawn of them."
+  }
+ ],
+ "blocks": [
+  {
+   "type": "text",
+   "id": "where-was-babylon-located",
+   "nav": "Where was Babylon located?",
+   "h": "Where was Babylon located?",
+   "paras": [
+    [
+     "In the same place as its ruins, on the Euphrates in today's Iraq. Olof Pedersén, who studied the site for many years, places the ruins on the northern outskirts of Hillah, the capital of Babil province, and gives the centre of the old city as about 32.54° N, 44.42° E, in his ",
+     {
+      "text": "book of 2021",
+      "href": "https://www.zaphon.de/Babylon/en"
+     },
+     "."
+    ],
+    "The city's walls came to enclose some 9.5 square kilometres, at most 4.8 kilometres from north to south and 4.5 from west to east, he writes. A branch of the Euphrates ran through it from north to south, with the bigger part of the city on its east bank. That old riverbed now lies under a road, and today's river runs through the western part of the old city.",
+    [
+     "Babylon also lives on in the city beside it. For centuries brick miners dug out much of its baked-brick walls, down to the foundations, for building work in Hillah and elsewhere, Pedersén writes, and Robert Koldewey, who led the German dig, ",
+     {
+      "text": "saw glazed bricks",
+      "href": "https://archive.org/details/ischtar-tor-in-babylon-nach-den-ausgrabungen-durch-die-deutsche-orient-gesellschaft"
+     },
+     " here and there in the house walls of Hillah, blue ones above all."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "what-is-left-of",
+   "nav": "What is left of Babylon today?",
+   "h": "What is left of Babylon today?",
+   "paras": [
+    "Mounds, dug ruins, walls rebuilt in modern times, and a few ancient pieces still standing where they were built.",
+    [
+     "The highest mounds carry Arabic names: Babil in the north, Amran, the Kasr and Merkes. The Kasr holds the palaces, and the temple of Marduk, Esagila, lies under the Amran mound, about 21 metres below its top. Koldewey's team dug part of it and traced the rest through shafts and tunnels, as he ",
+     {
+      "text": "reported in 1914",
+      "href": "https://www.gutenberg.org/cache/epub/71398/pg71398.txt"
+     },
+     "."
+    ],
+    [
+     "The lower part of the Ishtar Gate still stands in place: walls of unglazed brick with bulls and dragons in relief, though parts were patched with new bricks, the ",
+     {
+      "text": "World Monuments Fund",
+      "href": "https://www.wmf.org/projects/ishtar-gate-of-babylon"
+     },
+     " says. At the edge of the North Palace stands a basalt lion over a fallen man, 1.95 metres high, on a base of about 1930. Where and when it was carved is not settled, Pedersén writes."
+    ],
+    "Of the temple tower Etemenanki, the building Pedersén names as the Tower of Babel, a square hollow is left. Brick robbers dug out its skin of baked brick far below the ground, and its core of sun-dried mud brick, about 60 by 60 metres, sits in a cut that is often full of water, he writes. Of the Hanging Gardens there is nothing to point to, since nobody knows where they stood."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "which-walls-at-babylon",
+   "nav": "Which walls at Babylon are modern?",
+   "h": "Which walls at Babylon are modern?",
+   "paras": [
+    "Many of the walls standing there now were rebuilt from the late 1970s on, on top of the dug remains. Olof Pedersén lists what Iraqi teams dug and rebuilt in those years: stretches of the processional street, the South Palace, the temple of Ishtar of Akkad, the Marduk Gate, the theatre, a number of houses and the temple of Nabû. The rebuilds do not always follow the old building. The Marduk Gate went up again in baked brick, where the old gate was sun-dried mud brick, and at the street's south end, side stones laid in the 1980s run the wrong way, he writes. The temple of Ninmah was rebuilt even earlier, in 1961 and 1962. The gate at the end of the road into the site is a modern copy at half size, built in 1958 and 1959. What Iraqi teams dug up and recorded is evidence of the old city. The walls raised on top of it are not."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "where-are-babylons-finds",
+   "nav": "Where are Babylon's finds now?",
+   "h": "Where are Babylon's finds now?",
+   "paras": [
+    [
+     "Many are in museums abroad, the Ishtar Gate's among them. Brick robbers pulled down the gate's upper walls long before the dig. The German excavators sent almost 800 crates of broken pieces to Berlin, a ",
+     {
+      "text": "2019 newsletter",
+      "href": "https://isaw.nyu.edu/publications/newsletters/025/ishtar"
+     },
+     " from New York University notes, and there the glazed pieces were put back together. In 1930 Berlin rebuilt the smaller front gate, partly from original pieces and mostly from new bricks made in the 1920s. Gate and pieces belong to the Vorderasiatisches Museum, Berlin's museum of the ancient Near East, in the Pergamonmuseum. Its main rooms stay closed until about 2037, ",
+     {
+      "text": "says the foundation that runs it",
+      "href": "https://www.preussischer-kulturbesitz.de/en/news-detail/article/2024/05/24/pergamonmuseum-on-schedule-clearance-of-the-south-wing-to-be-completed-in-autumn.html"
+     },
+     "."
+    ],
+    [
+     "A glazed lion panel found at Babylon, owned by Berlin, has been on loan to the Louvre in Paris since 1938, ",
+     {
+      "text": "its record says",
+      "href": "https://collections.louvre.fr/ark:/53355/cl010145844"
+     },
+     ". The Metropolitan Museum of Art in New York holds two glazed lion panels from Babylon, acquired in 1931, which ",
+     {
+      "text": "it dates",
+      "href": "https://www.metmuseum.org/art/collection/search/322585"
+     },
+     " to about 604 to 562 BC."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "know",
+   "nav": "How do we know?",
+   "h": "How do we know?",
+   "paras": [
+    "From the digs, and from the plans drawn of them.",
+    [
+     "The German Oriental Society dug Babylon under Robert Koldewey from 1899 to 1917, almost 18 years of work through every season, with careful records and maps, Pedersén writes. The team uncovered the Ishtar Gate from February to November 1902, as ",
+     {
+      "text": "Koldewey reports",
+      "href": "https://archive.org/details/ischtar-tor-in-babylon-nach-den-ausgrabungen-durch-die-deutsche-orient-gesellschaft"
+     },
+     ". Pedersén dates the dig at the tower's base to 1913. Iraqi teams dug from 1938 on, with a long series of digs in the late 1970s and the 1980s, and Italian teams dug in the south of the inner city from 1987 to 1989."
+    ],
+    [
+     "Pedersén's maps of 2021 gather all these digs on one plan, which also draws on satellite pictures and cuneiform texts, the sheet itself says. The ",
+     {
+      "text": "record that publishes them",
+      "href": "https://doi.org/10.5281/zenodo.13380012"
+     },
+     " adds that walls found only in part have been completed, without marking where, so a solid line on the map above can hold a short completed stretch."
+    ],
+    "What stays guessed is most of the city. All digs so far lie in the western half of the east city, with only small ones in its eastern half and none at all in the west city, and \"no proper survey has ever been done of this enormous archaeological site\", Pedersén writes."
+   ]
+  },
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "The numbers",
+   "h": "The numbers",
+   "unit": "Sources are named as in the list below.",
+   "cols": [
+    "Figure",
+    "Value",
+    "Basis",
+    "Known or guessed",
+    "Source"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Ruins on the northern outskirts of Hillah",
+      "centre about 32.54° N, 44.42° E",
+      "Pedersén's figures for the site",
+      "Known",
+      "Pedersén 2021, p. 12"
+     ]
+    },
+    {
+     "cells": [
+      "World Heritage site",
+      "since 2019",
+      "accepted by UNESCO in 2019",
+      "Known",
+      "Pedersén 2021, p. 10"
+     ]
+    },
+    {
+     "cells": [
+      "Digs in the west city",
+      "none",
+      "his account of all digs",
+      "Known",
+      "Pedersén 2021, p. 196"
+     ]
+    },
+    {
+     "cells": [
+      "The walled city",
+      "some 9.5 km², at most 4.8 km north to south",
+      "walls traced on the surface, partly completed",
+      "Guessed",
+      "Pedersén 2021, p. 12"
+     ]
+    },
+    {
+     "cells": [
+      "Outer east wall",
+      "about 7.5 km",
+      "traced as a ridge, some 800 m of it partly dug",
+      "Guessed",
+      "Pedersén 2021, pp. 59 to 60"
+     ]
+    },
+    {
+     "cells": [
+      "The tower's base",
+      "about 90 m a side",
+      "Koldewey 90 m, Pedersén 91.5 m, dug in 1913",
+      "Known",
+      "Koldewey 1914, Pedersén 2021, p. 153"
+     ]
+    },
+    {
+     "cells": [
+      "Berlin's front gate",
+      "rebuilt 1930, about 80 percent new bricks of the 1920s",
+      "the rebuild as it stands",
+      "Known",
+      "PLOS ONE 2024, Pedersén 2021, p. 82"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "myths",
+   "nav": "Things often read",
+   "h": "Things often read",
+   "subs": [
+    {
+     "h": "\"The walls in photos of Babylon are ancient.\"",
+     "paras": [
+      "Many of those walls were rebuilt in the late 1970s and the 1980s, on top of the dug remains and not always in the old material, Pedersén writes. What is ancient there is mostly what the dig left in place: the gate's lower walls, the tower's core, the plans in the ground."
+     ]
+    },
+    {
+     "h": "\"The gate at the entrance is the Ishtar Gate.\"",
+     "paras": [
+      "That gate is a modern copy at half size, built in 1958 and 1959. The real gate's lower walls stand further in, and its rebuilt front gate is in Berlin."
+     ]
+    },
+    {
+     "h": "\"The whole Ishtar Gate stands in Berlin.\"",
+     "paras": [
+      "Berlin rebuilt only the gate's smaller front part, mostly in new bricks made in the 1920s, Pedersén writes."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "The facts on this page come from these pages and books, read between 4 and 18 November 2026.",
+   "read": [
+    {
+     "text": "Olof Pedersén, Babylon. The Great City, Zaphon, Münster, 2021, pages 7, 10 to 16, 20, 22 to 23, 51, 55, 59 to 60, 82 to 86, 89, 125, 127 to 129, 153 to 155, 174, 196 and 217, to download from the publisher",
+     "href": "https://www.zaphon.de/Babylon/en"
+    },
+    {
+     "text": "Olof Pedersén (Uppsala University), Babylon Maps, Zenodo, CC BY 4.0 (the map's base)",
+     "href": "https://doi.org/10.5281/zenodo.13380012"
+    },
+    {
+     "text": "Robert Koldewey, The Excavations at Babylon, translated by Agnes S. Johns, 1914, chapters XXX and XXXV (Project Gutenberg)",
+     "href": "https://www.gutenberg.org/cache/epub/71398/pg71398.txt"
+    },
+    {
+     "text": "Robert Koldewey, Das Ischtar-Tor in Babylon, Leipzig, 1918, pages 1 and 52, in German (Internet Archive)",
+     "href": "https://archive.org/details/ischtar-tor-in-babylon-nach-den-ausgrabungen-durch-die-deutsche-orient-gesellschaft"
+    },
+    {
+     "text": "Institute for the Study of the Ancient World, New York University, Newsletter 25, 2019, on the Ishtar Gate",
+     "href": "https://isaw.nyu.edu/publications/newsletters/025/ishtar"
+    },
+    {
+     "text": "Di Chiara, Tauxe, Gries, Helwing, Howland and Ben-Yosef, \"An archaeomagnetic study of the Ishtar Gate, Babylon\", PLOS ONE 19(1), e0293014, 2024",
+     "href": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0293014"
+    },
+    {
+     "text": "World Monuments Fund, Ishtar Gate of Babylon, read 11 November 2026",
+     "href": "https://www.wmf.org/projects/ishtar-gate-of-babylon"
+    },
+    {
+     "text": "Stiftung Preußischer Kulturbesitz, the foundation that runs Berlin's state museums, news of 24 May 2024 on the Pergamonmuseum's building work",
+     "href": "https://www.preussischer-kulturbesitz.de/en/news-detail/article/2024/05/24/pergamonmuseum-on-schedule-clearance-of-the-south-wing-to-be-completed-in-autumn.html"
+    },
+    {
+     "text": "The Louvre, Paris, the record of AO 21118, a lion panel",
+     "href": "https://collections.louvre.fr/ark:/53355/cl010145844"
+    },
+    {
+     "text": "The Metropolitan Museum of Art, the record of 31.13.1, Panel with striding lion",
+     "href": "https://www.metmuseum.org/art/collection/search/322585"
+    },
+    {
+     "text": "The Metropolitan Museum of Art, the record of 31.13.2, Panel with striding lion",
+     "href": "https://www.metmuseum.org/art/collection/search/322586"
+    },
+    {
+     "text": "Wikimedia Commons, Marjon Verburg's photograph of the tower's site",
+     "href": "https://commons.wikimedia.org/wiki/File:Remains_of_the_foundations_of_the_Etemnanki_Zigurat.jpg"
+    },
+    {
+     "text": "OpenStreetMap, copyright and licence of the map data",
+     "href": "https://www.openstreetmap.org/copyright"
+    }
+   ],
+   "contact": "If a date, a place or a sentence is wrong, a message is enough, and we will correct it.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "museum",
+   "id": "museum",
+   "nav": "In the museum",
+   "h": "In the museum",
+   "text": "Museum of Ages is a digital museum. Its {wing} wing shows {place} on {day}.",
+   "link": "To the {wing} wing"
+  }
+ ]
+}

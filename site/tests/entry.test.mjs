@@ -218,20 +218,33 @@ const HUB = ['/a/g/animals/', `/a/g/animals/?gclid=${GCLID}`, '/a/g/de/tiere/', 
   '/a/g/Animals/', '/a/g/%61nimals/', '/a/g/de//tiere/', '/a/g/animals/index.html', '/a/g/de/TIERE/',
   '/a/g/es/animales/', '/a/g/pt-br/animais/', '/a/g/PT-BR/animais/', '/a/g/es/animales/index.html',
   // a path that only begins like a topic page's stays under the wing's own and is not asked
-  '/a/g/animals/megalodonx/', '/a/g/animals/megalodon/x/', '/a/g/de/tiere/megalodon-x/']
+  '/a/g/animals/megalodonx/', '/a/g/animals/megalodon/x/', '/a/g/de/tiere/megalodon-x/',
+  // the questions shelf's own page, a list of answer pages, is never asked either
+  '/a/g/questions/', '/a/g/de/fragen/', `/a/g/questions/?gclid=${GCLID}`, '/a/g/Questions/', '/a/g/de/fragen/index.html']
 const TOPICS = Object.values(ASKED_MAKING).flat()
 const spellings = (page) => [`/a/g${page}`, `/a/g${page}?gclid=${GCLID}`, `/a/g${page.slice(0, -1)}`, `/a/g${page}index.html`,
   `/a/g${page.toUpperCase()}`, `/a/g/${page}`, `/a/g${page.replace(/a/, '%61')}`]
 
-test('the count\'s lists name the ten animal pages in all four of their languages as the topic pages that ask', () => {
-  assert.deepEqual([...UNASKED].sort(), ['/animals/', '/de/tiere/', '/es/animales/', '/pt-br/animais/'])
-  assert.deepEqual(Object.keys(ASKED_MAKING), ['megalodon', 'biggest_dinosaurs', 't_rex', 'spinosaurus', 'woolly_mammoth', 'brachiosaurus', 'triceratops', 'ankylosaurus', 'stegosaurus', 'blue_whale'])
-  for (const pages of Object.values(ASKED_MAKING)) {
+const ANIMALS = ['megalodon', 'biggest_dinosaurs', 't_rex', 'spinosaurus', 'woolly_mammoth', 'brachiosaurus', 'triceratops', 'ankylosaurus', 'stegosaurus', 'blue_whale']
+// the questions shelf's answer pages, in English and German, follow the animals' in the registry's order
+const ANSWERS = Object.keys(ASKED_MAKING).slice(ANIMALS.length)
+
+test('the count\'s lists name the ten animal pages in all four of their languages, and each answer page in both of its own, as the topic pages that ask', () => {
+  assert.deepEqual([...UNASKED].sort(), ['/animals/', '/de/fragen/', '/de/tiere/', '/es/animales/', '/pt-br/animais/', '/questions/'])
+  assert.deepEqual(Object.keys(ASKED_MAKING).slice(0, ANIMALS.length), ANIMALS)
+  for (const kind of ANIMALS) {
+    const pages = ASKED_MAKING[kind]
     assert.equal(pages.length, 4)
     assert.match(pages[0], /^\/animals\/[a-z-]+\/$/)
     assert.match(pages[1], /^\/de\/tiere\/[a-z-]+\/$/)
     assert.match(pages[2], /^\/es\/animales\/[a-z-]+\/$/)
     assert.match(pages[3], /^\/pt-br\/animais\/[a-z-]+\/$/)
+  }
+  for (const kind of ANSWERS) {
+    const pages = ASKED_MAKING[kind]
+    assert.equal(pages.length, 2, kind)
+    assert.match(pages[0], /^\/questions\/[a-z-]+\/$/)
+    assert.match(pages[1], /^\/de\/fragen\/[a-z-]+\/$/)
   }
 })
 
@@ -252,7 +265,7 @@ test('the edge never asks on the own page of a wing in the making, by any spelli
 })
 
 test('the edge asks on every topic page of a wing in the making, by any spelling of its address, never with GPC', () => {
-  assert.equal(TOPICS.length, 40)
+  assert.equal(TOPICS.length, ANIMALS.length * 4 + ANSWERS.length * 2)
   for (const page of TOPICS) {
     assert.equal(askedMaking(page), true, page)
     for (const path of spellings(page)) {

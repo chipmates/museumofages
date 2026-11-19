@@ -176,7 +176,7 @@
   "og_image_alt": "Nuestro Triceratops de lado, 6,9 m del pico a la cola y 2,5 m de alto sobre la cadera: una gola ancha detrás de la cabeza, dos cuernos largos sobre los ojos, uno corto sobre la nariz, cuatro patas. A su lado, una persona gris de 1,70 m que le llega a unos dos tercios de la altura del lomo."
  },
  "labels": {
-  "crumbs": "Estás aquí",
+  "crumbs": "Ruta de navegación",
   "crumb_home": "Museo",
   "crumb_here": "Triceratops",
   "toc": "En esta página",
@@ -661,7 +661,7 @@
      "href": "https://museumofages.org/es/animales/t-rex/"
     }
    ],
-   "contact": "Si una cifra o un museo está mal, escríbenos y lo corregiremos.",
+   "contact": "Si una cifra o un museo está mal, basta con escribirnos y lo corregiremos.",
    "contact_link": "Ir al aviso legal",
    "what_link": "Qué es este museo"
   },

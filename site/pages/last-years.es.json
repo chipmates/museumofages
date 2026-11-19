@@ -64,7 +64,7 @@
   "og_image_alt": "Muros de ladrillo con esquinas de piedra cierran un patio estrecho, con el sol bajo, y una escalera corta sube a la puerta de la casa, junto a una pequeña torre. Una imagen de la película del ala, con la casa reconstruida en código."
  },
  "labels": {
-  "crumbs": "Estás aquí",
+  "crumbs": "Ruta de navegación",
   "crumb_home": "Museo",
   "crumb_here": "Muerte y tumba",
   "toc": "En esta página",
@@ -145,7 +145,7 @@
    "h": "En qué trabajó en Francia",
    "paras": [
     "No dejó de trabajar. Sus notas lo sitúan en Romorantin, al sur de Orleans, donde diseñó un palacio para el rey, con canales para unirlo al Loira. Nunca llegó a construirse, y en cambio Francisco I levantó Chambord. Leonardo organizó fiestas para la corte: el castillo le atribuye un papel central en la organización de las celebraciones de Amboise en la primavera de 1518, aunque reconoce que sus archivos sobre ellas son imprecisos.",
-    "Siguió dibujando. Los dibujos del diluvio que se conservan en Windsor se fechan entre 1517 y 1518, aproximadamente, y uno de ellos lo puedes abrir en el ala, bajo la ventana del estudio. Y seguía trabajando en la Santa Ana: la restauración de 2010 a 2012 sacó a la luz sus últimas pinceladas en el vestido de la santa, según el Louvre."
+    "Siguió dibujando. Los dibujos del diluvio que se conservan en Windsor se fechan entre 1517 y 1518, aproximadamente, y uno de ellos se puede abrir en el ala, bajo la ventana del estudio. Y seguía trabajando en la Santa Ana: la restauración de 2010 a 2012 sacó a la luz sus últimas pinceladas en el vestido de la santa, según el Louvre."
    ]
   },
   {
@@ -389,7 +389,7 @@
     }
    ],
    "notes": [],
-   "contact": "Si una fecha, un nombre o una frase están mal, escríbenos y lo corregiremos.",
+   "contact": "Si una fecha, un nombre o una frase están mal, basta con escribirnos y lo corregiremos.",
    "contact_link": "Ir al aviso legal",
    "what_link": "Qué es este museo"
   },

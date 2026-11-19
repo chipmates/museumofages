@@ -41,7 +41,7 @@
     "og_image_credit": "Reproduktion: Aufnahme des C2RMF, über Wikimedia Commons"
   },
   "labels": {
-    "crumbs": "Du bist hier",
+    "crumbs": "Seitenpfad",
     "crumb_home": "Museum",
     "crumb_here": "Die Mona Lisa",
     "toc": "Auf dieser Seite",
@@ -56,7 +56,9 @@
     "door": {
       "text": "Besuch sie im Flügel",
       "note": "Eintritt frei, kein Konto.",
-      "leads": "Diese Tür führt dich in den Leonardo-Flügel, zu ihrer Station „Eine Frau namens Lisa“."
+      "leads": "Diese Tür führt in den Leonardo-Flügel, zu ihrer Station „Eine Frau namens Lisa“.",
+      "still": "card",
+      "still_room": "house"
     }
   },
   "blocks": [
@@ -230,8 +232,8 @@
           "known": "Nicht einmal ihr eigener Mitarbeiter sah darin einen Beweis, auch Kunsthistoriker blieben skeptisch. Die Notiz von 1503 nennt die Dargestellte: Lisa."
         },
         {
-          "name": "Ihre Augen folgen dir",
-          "claim": "Ihre Augen folgen dir durch den Raum, heißt es.",
+          "name": "Ihre Augen folgen dem Betrachter",
+          "claim": "Ihre Augen folgen dem Betrachter durch den Raum, heißt es.",
           "known": "Diesen Effekt gibt es bei Bildnissen, die geradeaus blicken, aber nicht bei ihr. In einer Studie der Universität Bielefeld von 2019 lag ihr Blick für die Betrachter im Schnitt rund 15 Grad rechts neben ihnen, zu weit, um sich angeschaut zu fühlen."
         },
         {
@@ -364,7 +366,7 @@
           "href": "https://www.heraldnet.com/2007/10/21/nation-world-briefly-mona-lisa-once-had-eyebrows-and-eyelashes/"
         }
       ],
-      "contact": "Ist ein Datum, ein Name oder ein Satz falsch, schreib uns, und wir korrigieren es.",
+      "contact": "Ist ein Datum, ein Name oder ein Satz falsch, genügt eine Nachricht, und wir korrigieren es.",
       "contact_link": "Zum Impressum",
       "what_link": "Was dieses Museum ist"
     },
@@ -373,7 +375,7 @@
       "id": "enter",
       "nav": "",
       "h": "Besuch sie im Flügel",
-      "p": "Diese Tür führt dich in den Leonardo-Flügel, direkt zu ihrer Station im Bildersaal, der zweiten des Rundgangs. Dort hängt ihre Reproduktion zwischen seinen anderen Bildern.",
+      "p": "Diese Tür führt in den Leonardo-Flügel, direkt zu ihrer Station im Bildersaal, der zweiten des Rundgangs. Dort hängt ihre Reproduktion zwischen seinen anderen Bildern.",
       "door": {
         "text": "Ins Museum",
         "note": "Eintritt frei, kein Konto."

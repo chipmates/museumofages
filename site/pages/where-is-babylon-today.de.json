@@ -1,0 +1,412 @@
+{
+ "_note": "AN ANSWER PAGE of the questions shelf, from its words and its picture made for it.",
+ "page": {
+  "id": "questions-where-is-babylon-today",
+  "wing": "questions",
+  "topic": "where_is_babylon_today",
+  "published": "2026-11-19",
+  "checked": "2026-11-18",
+  "og_image": {
+   "file": "questions-where-is-babylon-today-og-{lang}-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "lead": {
+   "stem": "questions-where-is-babylon-today-lead-{lang}",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 560px, (min-width: 960px) 44vw, calc(100vw - 40px)",
+   "swatches": {
+    "known": "#cb8561",
+    "guessed": "#cb8561"
+   },
+   "narrow": {
+    "stem": "questions-where-is-babylon-today-lead-phone-{lang}",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 560
+   }
+  }
+ },
+ "meta": {
+  "title": "Wo liegt Babylon heute? Karte der Ruinen | Museum of Ages",
+  "description": "Babylons Ruinen liegen im Irak, bei Hilla. Die ausgegrabene Stadt auf einer Karte von heute, die modernen Wiederaufbauten und wo die Funde sind.",
+  "og_title": "Wo liegt Babylon heute?",
+  "og_image_alt": "Die Frage über der Karte zu dieser Seite: die ausgegrabene Stadt Babylon auf dem heutigen Gelände und ihre Mitte in größerem Maßstab, die Bauten nummeriert."
+ },
+ "labels": {
+  "crumbs": "Seitenpfad",
+  "crumb_home": "Museum",
+  "toc": "Auf dieser Seite",
+  "tag_made": "Für diese Seite gemacht",
+  "no_figure": "keine Zahl",
+  "crumb_here": "Babylon heute"
+ },
+ "top": {
+  "h1": "Wo liegt Babylon heute?",
+  "answer": [
+   "Babylons Ruinen liegen im Irak am Euphrat, am Nordrand der Stadt Hilla, südlich von Bagdad. Wo die Stadt lag, steht fest: Ab 1899 ",
+   {
+    "text": "legten Ausgräber",
+    "href": "https://www.zaphon.de/Babylon"
+   },
+   " ihre Tore, Paläste und Tempel frei, und seit 2019 stehen die Ruinen auf der Welterbeliste der UNESCO."
+  ],
+  "strength": "Wo die Ruinen liegen: belegt, ab 1899 wurde dort gegraben. Der größte Teil der alten Stadt: nie ausgegraben, dort ist ihr Grundriss nur vermutet.",
+  "slot": {
+   "pic": "lead",
+   "tag": "tag_made",
+   "what": "Die Ruinen von Babylon auf dem Gelände von heute. Innerhalb ihrer Mauern umfasste die Stadt etwa 9,5 Quadratkilometer, und der größte Teil davon wurde nie ausgegraben.",
+   "alt": "Karte der Ruinen Babylons auf dem heutigen Gelände am Nordrand von Hilla, Norden oben: die ummauerte Stadt, höchstens 4,8 Kilometer von Nord nach Süd, durchschnitten vom gestrichelten alten Lauf des Euphrats. Am Ostufer sind die Mauern und Bauten in den ausgegrabenen Flächen durchgezogen gezeichnet: das Ischtar-Tor, Süd- und Nordburg, der quadratische Sockel des Turms von etwa 90 Metern Seitenlänge und der Tempel Esagila unter seinem Hügel. Die äußere Mauer im Osten, etwa 7,5 Kilometer lang, wurde nur auf kurzen Stücken ausgegraben und ist sonst gestrichelt. Die Mauern der Weststadt, nie ausgegraben, sind gestrichelt. Der heutige Euphrat fließt durch den Westteil der alten Stadt. Ein zweites Feld zeigt die ausgegrabene Mitte größer. Ihre Bauten tragen Nummern, die Liste unter der Karte nennt sie.",
+   "legend": "picture",
+   "src": [
+    "Grundplan: ",
+    {
+     "text": "Olof Pedersén, Babylon Maps",
+     "href": "https://doi.org/10.5281/zenodo.13380012"
+    },
+    ", ",
+    {
+     "text": "CC BY 4.0",
+     "href": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    ". Kartendaten: ",
+    {
+     "text": "OpenStreetMap",
+     "href": "https://www.openstreetmap.org/copyright"
+    },
+    ", unter der ",
+    {
+     "text": "ODbL",
+     "href": "https://opendatacommons.org/licenses/odbl/"
+    },
+    "."
+   ]
+  },
+  "next": {
+   "page": "questions",
+   "text": "Weitere Fragen, beantwortet mit dem, was belegt ist und was wir vermuten"
+  }
+ },
+ "faq": [
+  {
+   "q": "Was ist von Babylon heute übrig?",
+   "a": "Schutthügel, ausgegrabene Ruinen, in moderner Zeit wieder aufgebaute Mauern und ein paar alte Stücke, die noch dort stehen, wo sie gebaut wurden."
+  },
+  {
+   "q": "Welche Mauern in Babylon sind modern?",
+   "a": "Viele Mauern, die dort heute stehen, wurden ab den späten 1970er-Jahren auf den ausgegrabenen Resten wieder aufgebaut."
+  },
+  {
+   "q": "Woher wissen wir das?",
+   "a": "Aus den Grabungen und aus den Plänen, die nach ihnen gezeichnet wurden."
+  }
+ ],
+ "blocks": [
+  {
+   "type": "text",
+   "id": "where-was-babylon-located",
+   "nav": "Wo lag Babylon?",
+   "h": "Wo lag Babylon?",
+   "paras": [
+    [
+     "Am selben Ort wie seine Ruinen, am Euphrat im heutigen Irak. Olof Pedersén, der den Ort viele Jahre lang erforscht hat, beschreibt die Lage in seinem ",
+     {
+      "text": "Buch von 2021",
+      "href": "https://www.zaphon.de/Babylon"
+     },
+     " so: am nördlichen Stadtrand von Hilla, der Hauptstadt der Provinz Babil, die Mitte der alten Stadt bei etwa 32,54 Grad Nord und 44,42 Grad Ost."
+    ],
+    "Die Mauern der Stadt umschlossen am Ende etwa 9,5 Quadratkilometer, höchstens 4,8 Kilometer von Nord nach Süd und 4,5 von West nach Ost, schreibt er. Ein Arm des Euphrats teilte sie in einen größeren Ost- und einen kleineren Westteil. Wo das alte Flussbett lag, verläuft heute eine Straße, und der heutige Fluss fließt durch den Westteil der alten Stadt.",
+    [
+     "Babylon steckt auch in der Stadt nebenan. Über Jahrhunderte brachen Ziegelräuber einen großen Teil seiner Mauern aus gebrannten Ziegeln bis auf die Fundamente ab, für Bauten in Hilla und anderswo, schreibt Pedersén, und Robert Koldewey, der Leiter der deutschen Grabung, ",
+     {
+      "text": "sah in Hauswänden von Hilla",
+      "href": "https://archive.org/details/ischtar-tor-in-babylon-nach-den-ausgrabungen-durch-die-deutsche-orient-gesellschaft"
+     },
+     " hier und da glasierte Ziegel, besonders blaue."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "what-is-left-of",
+   "nav": "Was ist von Babylon heute übrig?",
+   "h": "Was ist von Babylon heute übrig?",
+   "paras": [
+    "Schutthügel, ausgegrabene Ruinen, in moderner Zeit wieder aufgebaute Mauern und ein paar alte Stücke, die noch dort stehen, wo sie gebaut wurden.",
+    [
+     "Die höchsten Hügel tragen arabische Namen: Babil im Norden, Amran, der Kasr und Merkes. Im Kasr liegen die Paläste. Esagila, der Tempel des Stadtgottes Marduk, liegt unter dem Hügel Amran, etwa 21 Meter unter seiner Kuppe. Koldeweys Team grub einen Teil davon aus und verfolgte den Rest über Schächte und Stollen, wie er ",
+     {
+      "text": "berichtete",
+      "href": "https://www.gutenberg.org/cache/epub/71398/pg71398.txt"
+     },
+     "."
+    ],
+    [
+     "Der untere Teil des Ischtar-Tors steht noch an seinem Platz: Mauern aus unglasierten Ziegeln mit Stieren und Drachen im Relief, auch wenn Teile davon mit neuen Ziegeln ausgebessert wurden, schreibt der ",
+     {
+      "text": "World Monuments Fund",
+      "href": "https://www.wmf.org/projects/ishtar-gate-of-babylon"
+     },
+     ". Am Rand der Nordburg steht ein Löwe aus Basalt über einem gestürzten Mann, 1,95 Meter hoch, auf einem Sockel von etwa 1930. Woher er stammt und wann er entstand, ist offen, schreibt Pedersén."
+    ],
+    "Vom Tempelturm Etemenanki, den Pedersén als den Turm zu Babel bezeichnet, ist eine quadratische Senke übrig. Seinen Mantel aus gebrannten Ziegeln haben Ziegelräuber bis tief unter den Boden herausgebrochen, und sein Kern aus luftgetrockneten Lehmziegeln, etwa 60 mal 60 Meter, steckt in einem Graben, in dem oft Wasser steht, schreibt er. Von den Hängenden Gärten gibt es nichts, worauf man zeigen könnte, denn wo sie lagen, weiß niemand."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "which-walls-at-babylon",
+   "nav": "Welche Mauern in Babylon sind modern?",
+   "h": "Welche Mauern in Babylon sind modern?",
+   "paras": [
+    "Viele Mauern, die dort heute stehen, wurden ab den späten 1970er-Jahren auf den ausgegrabenen Resten wieder aufgebaut. Olof Pedersén zählt auf, was irakische Teams in diesen Jahren ausgegraben und wieder aufgebaut haben: Abschnitte der Prozessionsstraße, die Südburg, den Tempel der Ischtar von Akkad, das Marduk-Tor, das Theater, eine Reihe von Wohnhäusern und den Tempel des Nabû. Die Nachbauten folgen dem alten Bau nicht immer. Das Marduk-Tor etwa wurde aus gebrannten Ziegeln wieder aufgebaut, das alte Tor bestand aus luftgetrockneten Lehmziegeln, und am Südende der Straße verlaufen Randsteine aus den 1980er-Jahren in die falsche Richtung, schreibt er. Der Tempel der Ninmach wurde sogar schon 1961 und 1962 wieder aufgebaut. Das Tor am Ende der Zufahrt ist eine moderne Kopie in halber Größe, gebaut 1958 und 1959. Was irakische Archäologen ausgegraben und aufgezeichnet haben, ist ein Beleg für die alte Stadt, die Mauern darauf sind es nicht."
+   ]
+  },
+  {
+   "type": "text",
+   "id": "where-are-babylons-finds",
+   "nav": "Wo sind Babylons Funde heute?",
+   "h": "Wo sind Babylons Funde heute?",
+   "paras": [
+    [
+     "Viele sind in Museen im Ausland, darunter die des Ischtar-Tors. Ziegelräuber hatten die oberen Mauern des Tors lange vor der Grabung abgetragen. Die deutschen Ausgräber schickten fast 800 Kisten mit Bruchstücken nach Berlin, schrieb 2019 ein ",
+     {
+      "text": "Newsletter",
+      "href": "https://isaw.nyu.edu/publications/newsletters/025/ishtar"
+     },
+     " der New York University, und dort wurden die glasierten Stücke wieder zusammengesetzt. 1930 baute Berlin das kleinere Vortor wieder auf, zum Teil aus originalen Stücken, zum größeren Teil aus neuen Ziegeln der 1920er-Jahre. Tor und Stücke gehören dem Vorderasiatischen Museum im Pergamonmuseum. Seine Hauptsäle bleiben bis etwa 2037 geschlossen, teilt die ",
+     {
+      "text": "Stiftung Preußischer Kulturbesitz",
+      "href": "https://www.preussischer-kulturbesitz.de/news-detail/artikel/2024/05/24/pergamonmuseum-im-zeitplan-beraeumung-des-suedfluegels-wird-im-herbst-abgeschlossen.html"
+     },
+     " mit."
+    ],
+    [
+     "Ein glasiertes Löwenrelief, in Babylon gefunden und im Eigentum des Berliner Museums, ist seit 1938 eine Leihgabe an den Louvre in Paris, ",
+     {
+      "text": "laut dem Eintrag des Louvre",
+      "href": "https://collections.louvre.fr/ark:/53355/cl010145844"
+     },
+     ". Das Metropolitan Museum of Art in New York besitzt zwei glasierte Löwenreliefs aus Babylon, erworben 1931, die es ",
+     {
+      "text": "auf etwa 604 bis 562 v. Chr. datiert",
+      "href": "https://www.metmuseum.org/art/collection/search/322585"
+     },
+     "."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "know",
+   "nav": "Woher wissen wir das?",
+   "h": "Woher wissen wir das?",
+   "paras": [
+    "Aus den Grabungen und aus den Plänen, die nach ihnen gezeichnet wurden.",
+    [
+     "Die Deutsche Orient-Gesellschaft grub unter der Leitung von Robert Koldewey von 1899 bis 1917 in Babylon, fast 18 Jahre lang ohne Unterbrechung, das ganze Jahr hindurch, mit sorgfältigen Aufzeichnungen und Plänen, schreibt Pedersén. Das Ischtar-Tor legte das Team von Februar bis November 1902 frei, ",
+     {
+      "text": "berichtet Koldewey",
+      "href": "https://archive.org/details/ischtar-tor-in-babylon-nach-den-ausgrabungen-durch-die-deutsche-orient-gesellschaft"
+     },
+     ". Den Sockel des Turms grub man nach Pedersén 1913 aus. Irakische Teams gruben ab 1938, mit einer langen Reihe von Grabungen in den späten 1970er- und den 1980er-Jahren, italienische Teams von 1987 bis 1989 im Süden der inneren Stadt."
+    ],
+    [
+     "Pedersén hat 2021 alle diese Grabungen in seinen Karten zusammengeführt. Sein Plan stützt sich auch auf Satellitenbilder und Keilschrifttexte, so steht es auf dem Blatt selbst. Im ",
+     {
+      "text": "Datensatz",
+      "href": "https://doi.org/10.5281/zenodo.13380012"
+     },
+     ", in dem die Karten erschienen sind, steht außerdem, dass nur zum Teil gefundene Mauern ergänzt wurden, und die Karten zeigen nicht, wo. Eine durchgezogene Linie auf der Karte oben kann deshalb ein kurzes ergänztes Stück enthalten."
+    ],
+    "Vermutet bleibt der größte Teil der Stadt. Alle Grabungen lagen bisher in der Westhälfte der Oststadt, in ihrer Osthälfte gab es nur kleine und in der Weststadt keine, und eine richtige Geländeaufnahme dieses riesigen Ruinenfelds sei nie gemacht worden, schreibt Pedersén."
+   ]
+  },
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "Die Zahlen",
+   "h": "Die Zahlen",
+   "unit": "Die Quellen heißen wie in der Liste unten.",
+   "cols": [
+    "Zahl",
+    "Wert",
+    "Grundlage",
+    "Belegt oder vermutet",
+    "Quelle"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Ruinen am nördlichen Stadtrand von Hilla",
+      "Mitte bei etwa 32,54° N, 44,42° O",
+      "Pedersén zur Lage des Orts",
+      "belegt",
+      "Pedersén 2021, S. 12"
+     ]
+    },
+    {
+     "cells": [
+      "Welterbe",
+      "seit 2019",
+      "2019 von der UNESCO aufgenommen",
+      "belegt",
+      "Pedersén 2021, S. 10"
+     ]
+    },
+    {
+     "cells": [
+      "Grabungen in der Weststadt",
+      "keine",
+      "sein Überblick über alle Grabungen",
+      "belegt",
+      "Pedersén 2021, S. 196"
+     ]
+    },
+    {
+     "cells": [
+      "Die ummauerte Stadt",
+      "etwa 9,5 km², höchstens 4,8 km von Nord nach Süd",
+      "im Gelände nachgewiesene Mauern, zum Teil ergänzt",
+      "vermutet",
+      "Pedersén 2021, S. 12"
+     ]
+    },
+    {
+     "cells": [
+      "Äußere Ostmauer",
+      "etwa 7,5 km",
+      "als Rücken im Gelände nachgewiesen, rund 800 m davon zum Teil ausgegraben",
+      "vermutet",
+      "Pedersén 2021, S. 59 bis 60"
+     ]
+    },
+    {
+     "cells": [
+      "Sockel des Turms",
+      "etwa 90 m je Seite",
+      "Koldewey 90 m, Pedersén 91,5 m, ausgegraben 1913",
+      "belegt",
+      "Koldewey 1914, Pedersén 2021, S. 153"
+     ]
+    },
+    {
+     "cells": [
+      "Berliner Vortor",
+      "1930 wieder aufgebaut, etwa 80 Prozent neue Ziegel der 1920er-Jahre",
+      "der Wiederaufbau, wie er steht",
+      "belegt",
+      "PLOS ONE 2024, Pedersén 2021, S. 82"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "myths",
+   "nav": "Was man oft liest",
+   "h": "Was man oft liest",
+   "subs": [
+    {
+     "h": "„Die Mauern auf Fotos von Babylon sind alt.“",
+     "paras": [
+      "Viele dieser Mauern wurden in den späten 1970er- und den 1980er-Jahren auf den ausgegrabenen Resten wieder aufgebaut, und nicht immer im alten Material, schreibt Pedersén. Alt ist dort vor allem, was die Grabung an Ort und Stelle ließ: die unteren Mauern des Tors, der Kern des Turms, die Grundrisse im Boden."
+     ]
+    },
+    {
+     "h": "„Das Tor am Eingang ist das Ischtar-Tor.“",
+     "paras": [
+      "Dieses Tor ist eine moderne Kopie in halber Größe, gebaut 1958 und 1959. Die unteren Mauern des echten Tors stehen weiter innen, und sein wieder aufgebautes Vortor steht in Berlin."
+     ]
+    },
+    {
+     "h": "„In Berlin steht das ganze Ischtar-Tor.“",
+     "paras": [
+      "Berlin hat nur das kleinere Vortor wieder aufgebaut, größtenteils aus neuen Ziegeln der 1920er-Jahre, schreibt Pedersén."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Quellen",
+   "h": "Quellen",
+   "intro": "Die Angaben dieser Seite stammen aus diesen Seiten und Büchern, gelesen zwischen dem 4. und dem 18. November 2026.",
+   "read": [
+    {
+     "text": "Olof Pedersén, Babylon. The Great City, Zaphon, Münster 2021, Seiten 7, 10 bis 16, 20, 22 bis 23, 51, 55, 59 bis 60, 82 bis 86, 89, 125, 127 bis 129, 153 bis 155, 174, 196 und 217, englisch, beim Verlag herunterzuladen",
+     "href": "https://www.zaphon.de/Babylon"
+    },
+    {
+     "text": "Olof Pedersén (Universität Uppsala), Babylon Maps, Zenodo, CC BY 4.0 (der Grundplan der Karte)",
+     "href": "https://doi.org/10.5281/zenodo.13380012"
+    },
+    {
+     "text": "Robert Koldewey, The Excavations at Babylon, englische Übersetzung von Agnes S. Johns, 1914, Kapitel XXX und XXXV (Project Gutenberg)",
+     "href": "https://www.gutenberg.org/cache/epub/71398/pg71398.txt"
+    },
+    {
+     "text": "Robert Koldewey, Das Ischtar-Tor in Babylon, Leipzig 1918, Seiten 1 und 52 (Internet Archive)",
+     "href": "https://archive.org/details/ischtar-tor-in-babylon-nach-den-ausgrabungen-durch-die-deutsche-orient-gesellschaft"
+    },
+    {
+     "text": "Institute for the Study of the Ancient World, New York University, Newsletter 25, 2019, zum Ischtar-Tor (englisch)",
+     "href": "https://isaw.nyu.edu/publications/newsletters/025/ishtar"
+    },
+    {
+     "text": "Di Chiara, Tauxe, Gries, Helwing, Howland und Ben-Yosef, „An archaeomagnetic study of the Ishtar Gate, Babylon“, PLOS ONE 19(1), e0293014, 2024 (englisch)",
+     "href": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0293014"
+    },
+    {
+     "text": "World Monuments Fund, Ishtar Gate of Babylon, englisch, gelesen am 11. November 2026",
+     "href": "https://www.wmf.org/projects/ishtar-gate-of-babylon"
+    },
+    {
+     "text": "Stiftung Preußischer Kulturbesitz, Träger der Staatlichen Museen zu Berlin, Meldung vom 24. Mai 2024 zu den Bauarbeiten am Pergamonmuseum",
+     "href": "https://www.preussischer-kulturbesitz.de/news-detail/artikel/2024/05/24/pergamonmuseum-im-zeitplan-beraeumung-des-suedfluegels-wird-im-herbst-abgeschlossen.html"
+    },
+    {
+     "text": "Louvre, Paris, der Eintrag zu AO 21118, ein Löwenrelief",
+     "href": "https://collections.louvre.fr/ark:/53355/cl010145844"
+    },
+    {
+     "text": "The Metropolitan Museum of Art, der Eintrag zu 31.13.1, Panel with striding lion",
+     "href": "https://www.metmuseum.org/art/collection/search/322585"
+    },
+    {
+     "text": "The Metropolitan Museum of Art, der Eintrag zu 31.13.2, Panel with striding lion",
+     "href": "https://www.metmuseum.org/art/collection/search/322586"
+    },
+    {
+     "text": "Wikimedia Commons, Marjon Verburgs Foto vom Ort des Turms",
+     "href": "https://commons.wikimedia.org/wiki/File:Remains_of_the_foundations_of_the_Etemnanki_Zigurat.jpg"
+    },
+    {
+     "text": "OpenStreetMap, Urheberrecht und Lizenz der Kartendaten",
+     "href": "https://www.openstreetmap.org/copyright"
+    }
+   ],
+   "contact": "Ist ein Datum, ein Ort oder ein Satz falsch, genügt eine Nachricht, und wir korrigieren es.",
+   "contact_link": "Zum Impressum",
+   "what_link": "Was dieses Museum ist"
+  },
+  {
+   "type": "museum",
+   "id": "museum",
+   "nav": "Im Museum",
+   "h": "Im Museum",
+   "text": "Museum of Ages ist ein digitales Museum. Der Flügel {wing} zeigt {place} am {day}.",
+   "link": "Zum Flügel {wing}"
+  }
+ ]
+}

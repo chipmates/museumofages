@@ -1,0 +1,534 @@
+{
+ "_note": "AN ANSWER PAGE of the questions shelf, from its words and its picture made for it.",
+ "page": {
+  "id": "questions-where-was-tenochtitlan",
+  "wing": "questions",
+  "topic": "where_was_tenochtitlan",
+  "published": "2026-11-19",
+  "checked": "2026-11-18",
+  "og_image": {
+   "file": "questions-where-was-tenochtitlan-og-{lang}-1200x630.jpg",
+   "width": 1200,
+   "height": 630
+  }
+ },
+ "pics": {
+  "lead": {
+   "stem": "questions-where-was-tenochtitlan-lead-{lang}",
+   "widths": [
+    640,
+    1080,
+    1600
+   ],
+   "sizes": "(min-width: 1280px) 560px, (min-width: 960px) 44vw, calc(100vw - 40px)",
+   "swatches": {
+    "known": "#cb8561",
+    "guessed": "#cb8561"
+   },
+   "narrow": {
+    "stem": "questions-where-was-tenochtitlan-lead-phone-{lang}",
+    "widths": [
+     350,
+     700,
+     1050
+    ],
+    "below": 560
+   }
+  }
+ },
+ "meta": {
+  "title": "Where was Tenochtitlan, and how big was it? | Museum of Ages",
+  "description": "Under Mexico City's historic centre, in western Lake Texcoco. Most estimates of its people run from 75,000 to 400,000, side by side with who gives each.",
+  "og_title": "Where was Tenochtitlan, and how big was it?",
+  "og_image_alt": "The question over the top of the chart made for this page: the estimates of Tenochtitlan's area, each a dashed bar with who gives it and when."
+ },
+ "labels": {
+  "crumbs": "Breadcrumb",
+  "crumb_home": "Museum",
+  "toc": "On this page",
+  "tag_made": "Made for this page",
+  "no_figure": "no figure",
+  "crumb_here": "Where was Tenochtitlan?"
+ },
+ "top": {
+  "h1": "Where was Tenochtitlan, and how big was it?",
+  "answer": [
+   "Tenochtitlan stood on islands and built-up land in western Lake Texcoco, under Mexico City's historic centre, where its ",
+   {
+    "text": "Templo Mayor",
+    "href": "https://www.inah.gob.mx/images/boletines/2023/84/Boletin%2084.pdf"
+   },
+   " is dug out. It covered about 9 to 14 km², and most ",
+   {
+    "text": "estimates",
+    "href": "https://dialnet.unirioja.es/descarga/articulo/8205553.pdf"
+   },
+   " put its people, with Tlatelolco, at 75,000 to 400,000, many near 150,000 to 200,000."
+  ],
+  "strength": "Where it lay: known from digs, letters and maps. Its area: estimated, about 9 to 14 km². Its people: guessed, as no count survives.",
+  "slot": {
+   "pic": "lead",
+   "tag": "tag_made",
+   "what": "How big Tenochtitlan was, by who gives which figure, and where it lay, by finds under today's Mexico City. The dots are digs and sites on today's streets. No line joins them, because the old shore and the city's edge are not known closely enough to draw.",
+   "alt": "A chart and a map in two panels. The chart sets the estimates for Tenochtitlan with Tlatelolco side by side, every bar dashed as a guess. Its people run from 60,000 (Lombardo) and 75,000 to 95,000 (Jiménez Martínez) to 360,000 (Borah and Cook) and 560,000 to 700,000 (Soustelle), with Smith at 212,500, and two claims of the 16th century, 60,000 and more than a million, are marked as claims. The map marks digs and sites on today's streets of central Mexico City: the Templo Mayor, the site of Axayácatl's palace, the south-west edge in colonia Tránsito, an old floor in La Lagunilla, and Tlatelolco's landing place and north edge.",
+   "legend": "picture",
+   "src": [
+    "Map data: ",
+    {
+     "text": "OpenStreetMap",
+     "href": "https://www.openstreetmap.org/copyright"
+    },
+    ", under the ",
+    {
+     "text": "ODbL",
+     "href": "https://opendatacommons.org/licenses/odbl/"
+    },
+    "."
+   ]
+  },
+  "next": {
+   "page": "what-are-chinampas",
+   "label": "Next question:",
+   "text": "What are chinampas?"
+  }
+ },
+ "faq": [
+  {
+   "q": "How do we know?",
+   "a": "From digs under the modern city, 16th-century letters and chronicles, and modern estimates of area and density."
+  }
+ ],
+ "blocks": [
+  {
+   "type": "text",
+   "id": "where-is-tenochtitlan-today",
+   "nav": "Where is Tenochtitlan today?",
+   "h": "Where is Tenochtitlan today?",
+   "paras": [
+    [
+     "Under the historic centre of Mexico City, which grew on and over it. The Mexica, often called the Aztecs, settled about 1325 on an islet in western Lake Texcoco, ",
+     {
+      "text": "Bertina Olmedo Vera writes",
+      "href": "https://arqueologiamexicana.mx/mexico-antiguo/tenochtitlan"
+     },
+     ". By their own history, their god Huitzilopochtli showed them the place by a sign, an eagle standing on a nopal cactus, and there they founded México-Tenochtitlan. In 2025 ",
+     {
+      "text": "INAH",
+      "href": "https://www.inah.gob.mx/images/boletines/2025/316/Boletin%20316.pdf"
+     },
+     " announced a memorial marking 700 years of México-Tenochtitlan. Tlatelolco, its sister city, became a fifth quarter after its conquest in 1473, ",
+     {
+      "text": "a UNAM page notes",
+      "href": "https://e1.portalacademico.cch.unam.mx/alumno/historiademexico1/unidad2/culturamexica/mexicotenochtitlan"
+     },
+     ". The city grew on chinampas, fields built up from the lake bed (see ",
+     {
+      "text": "What are chinampas?",
+      "page": "what-are-chinampas"
+     },
+     ")."
+    ],
+    [
+     "INAH's Templo Mayor project has dug between calles Argentina and Guatemala since workers found the carved stone of the goddess Coyolxauhqui in 1978 (",
+     {
+      "text": "INAH",
+      "href": "https://www.inah.gob.mx/images/boletines/2023/84/Boletin%2084.pdf"
+     },
+     "). Calle de Tacuba runs on the old western causeway, and the Nacional Monte de Piedad stands where Axayácatl's palace stood (",
+     {
+      "text": "Carlos Javier González González",
+      "href": "https://arqueologiamexicana.mx/mexico-antiguo/los-espanoles-huyeron-por-la-calzada-de-tacuba"
+     },
+     ")."
+    ],
+    [
+     "Hernán Cortés entered the city on 8 November 1519, after meeting Motecuhzoma Xocoyotzin, Moctezuma II, and at the end of June 1520 the Mexica drove his men out (",
+     {
+      "text": "Carmen Martínez Martínez",
+      "href": "https://www.noticonquista.unam.mx/sites/default/files/2020-10/martinez-segunda-carta-de-relacion-final.pdf"
+     },
+     "). In 1521 his men laid siege with \"un gran apoyo de Tlaxcala y Texcoco\", great support from Tlaxcala and Texcoco. The siege ended on 13 August 1521, when the canoe carrying Cuauhtémoc, the tlatoani (ruler), was taken (",
+     {
+      "text": "INAH",
+      "href": "https://www.inah.gob.mx/images/boletines/2022/392/Boletin%20392.pdf"
+     },
+     "). After the conquest the Indigenous people left the city and died in great numbers, falling from 200,000 to perhaps 50,000, by the estimate of ",
+     {
+      "text": "Raúl Barrera Rodríguez",
+      "href": "https://arqueologiamexicana.mx/mexico-antiguo/exploran-chinampas-y-canales-de-un-barrio-de-la-antigua-mexico-tenochtitlan"
+     },
+     "."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "how-big-was-tenochtitlan",
+   "nav": "How big was Tenochtitlan, and how many people lived there?",
+   "h": "How big was Tenochtitlan, and how many people lived there?",
+   "paras": [
+    [
+     "About 9 to 14 square kilometres, with 75,000 to 400,000 people, Tlatelolco included, by most modern estimates. No count survives, and Cortés gave no figure, ",
+     {
+      "text": "Eloy Jiménez Martínez notes in his review",
+      "href": "https://dialnet.unirioja.es/descarga/articulo/8205553.pdf"
+     },
+     ". Cortés wrote \"Es tan grande la ciudad como Sevilla y Córdoba\", as large as Seville and Córdoba, and whether he meant either or both is open (",
+     {
+      "text": "MacNutt's English of 1908",
+      "href": "https://archive.org/details/lettersofcorts01cortuoft"
+     },
+     " has \"or\")."
+    ],
+    "Later writers counted houses or householders (vecinos), not people. The so-called Anonymous Conqueror, whose account survives in an Italian version and who called himself a companion of Cortés, gives 60,000 inhabitants (\"habitantes\"), perhaps householders, and one historian doubted he was there. How many people stood behind one householder is not known: 4.5 by tradition, anywhere from 3 to 7, and a Mexica house often held an extended family.",
+    [
+     "As gathered by Jiménez Martínez, modern estimates run from Sonia Lombardo's 60,000 (1973) to Charles Gibson's 250,000 to 400,000 (1964) and Jacques Soustelle's 560,000 to 700,000 (1955). Michael E. Smith (2005) gives 212,500 people on 1,365 hectares (",
+     {
+      "text": "Ossa, Smith and Lobo",
+      "href": "https://www.colorado.edu/socialreactors/sites/default/files/attached-files/ossaetal-17-mesoplazas.pdf"
+     },
+     "), Jiménez Martínez 75,000 to 95,000 on at most 9.44 km²."
+    ],
+    [
+     "He tables Seville (about 1500) at 65,000, Córdoba (about 1509) at 27,806, Paris (about 1500) at 150,000, Venice (about 1558) at 158,000, Constantinople (about 1550) at 500,000, Cuzco (about 1533) at 125,000 and Tzintzuntzan (about 1519) at 30,000. ",
+     {
+      "text": "Smith",
+      "href": "https://revistas.ucm.es/index.php/REAA/en/article/download/61981/4564456548397"
+     },
+     " and Nicolás Sánchez-Albornoz, as Jiménez Martínez quotes him, call Tenochtitlan the largest city in the Americas, though on Jiménez Martínez's estimate Cuzco, as he tables it, would be larger."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "what-happened-to-lake",
+   "nav": "What happened to Lake Texcoco?",
+   "h": "What happened to Lake Texcoco?",
+   "paras": [
+    [
+     "It was drained, step by step, to keep the city from flooding. Before the conquest, five lakes filled the basin and joined into one in the rainy season (",
+     {
+      "text": "Olmedo Vera",
+      "href": "https://arqueologiamexicana.mx/mexico-antiguo/tenochtitlan"
+     },
+     "). Chalco and Xochimilco were fresh, the other three salty, and together they covered about 600 km² by ",
+     {
+      "text": "Arturo Montero's estimate",
+      "href": "https://www.inah.gob.mx/images/boletines/2022/392/Boletin%20392.pdf"
+     },
+     "."
+    ],
+    [
+     "The first great drainage canal, the Desagüe, was dug from 1607 by some 40,000 workers but could not drain Lake Texcoco (",
+     {
+      "text": "R. Douglas Cope",
+      "href": "https://www.encyclopedia.com/humanities/encyclopedias-almanacs-transcripts-and-maps/desague"
+     },
+     "). The Gran Canal opened in 1900 (",
+     {
+      "text": "UNAM Internacional",
+      "href": "https://revista.unaminternacional.unam.mx/en/nota/12/cuando-los-rios-se-volvieron-drenaje-saneamiento-desague-y-la-creacion-de-la-ciudad-moderna"
+     },
+     "), and the deep drainage, the Drenaje Profundo, was begun in 1967 (",
+     {
+      "text": "Loreta Castro Reguera Mancera",
+      "href": "https://new.revistacienciasunam.com/images/stories/Articles/125/pdf/125A02.pdf"
+     },
+     ")."
+    ],
+    [
+     "Today the old lake bed compacts as groundwater is pumped out, and some parts of the city sank about 35 centimetres a year in the 1990s and 2000s (",
+     {
+      "text": "NASA",
+      "href": "https://www.nasa.gov/missions/nisar/us-indian-space-mission-maps-extreme-subsidence-in-mexico-city/"
+     },
+     "). Lake Nabor Carrillo is an artificial lake built over part of the old bed (",
+     {
+      "text": "NASA",
+      "href": "https://science.nasa.gov/photojournal/us-indian-spacecraft-captures-mexico-city-subsidence/"
+     },
+     "), and 14,030 hectares at Lake Texcoco have been protected since 2022 (",
+     {
+      "text": "Mexico's water commission",
+      "href": "https://www.gob.mx/conagua/prensa/avances-e-impacto-del-parque-ecologico-lago-de-texcoco?idiom=es-MX"
+     },
+     ")."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "what-does-the-map",
+   "nav": "What does the map of 1524 show?",
+   "h": "What does the map of 1524 show?",
+   "paras": [
+    [
+     "Tenochtitlan, in a woodcut printed by Friedrich Peypus in Nuremberg in March 1524, in the Latin edition of Cortés's second letter, with the coast of the Gulf of Mexico in the same woodcut (",
+     {
+      "text": "Carmen Martínez Martínez",
+      "href": "https://www.noticonquista.unam.mx/sites/default/files/2020-10/martinez-segunda-carta-de-relacion-final.pdf"
+     },
+     "). It was \"the first picture Europeans had\" of the city, ",
+     {
+      "text": "Barbara Mundy writes",
+      "href": "https://research.library.fordham.edu/art_hist_facultypubs/6/"
+     },
+     ". Its source is not known, and she argues that an Indigenous map lay behind it. Once printed, she adds, it was certainly documentary and also came to support the claim that the conquest was just. Nothing on this page is measured from it."
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "id": "know",
+   "nav": "How do we know?",
+   "h": "How do we know?",
+   "paras": [
+    "From digs under the modern city, 16th-century letters and chronicles, and modern estimates of area and density.",
+    [
+     "INAH's rescue digs show how far the city reached. At Ateponazco in 2015 they found its south-west edge, toward today's Calzada Chabacano. In La Lagunilla in 2022, on the old border with Tlatelolco, they found a Late Postclassic floor (1350 to 1519) only 1.20 metres down (",
+     {
+      "text": "INAH",
+      "href": "https://www.inah.gob.mx/images/boletines/2022/398/Boletin%20398.pdf"
+     },
+     "). And a dig at Eje 2 Norte Manuel González in 2023 and 2024 led INAH to place Tlatelolco's north edge about 300 metres further on, at Calzada San Simón (",
+     {
+      "text": "INAH",
+      "href": "https://www.inah.gob.mx/images/boletines/2024/170/Boletin%20170.pdf"
+     },
+     ")."
+    ]
+   ]
+  },
+  {
+   "type": "numbers",
+   "id": "numbers",
+   "nav": "The numbers",
+   "h": "The numbers",
+   "unit": "Sources are named as in the list below. Every population figure is taken, as Jiménez Martínez takes them, for Tenochtitlan with Tlatelolco.",
+   "cols": [
+    "Figure",
+    "Value",
+    "Basis",
+    "Known or guessed",
+    "Source"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Area",
+      "at most 9.44 km² (Jiménez Martínez, 2022), 12 (Calnek, 2003), 12 to 13 (Sanders, 2003), 12 to 15 (Smith and Hodge, 1994), 13.6 (Rojas), 13.65 (Smith, 2005), about 25 (León-Portilla, 2005, his square as we reckon it)",
+      "estimates",
+      "Guessed",
+      "as gathered by Jiménez Martínez (2022), and Ossa, Smith and Lobo (2017) for Smith"
+     ]
+    },
+    {
+     "cells": [
+      "Sacred precinct",
+      "500 m a side, so about 25 ha (Olmedo Vera), or about 16 ha (Jiménez Martínez)",
+      "descriptions",
+      "Guessed",
+      "both"
+     ]
+    },
+    {
+     "cells": [
+      "People",
+      "60,000 (Lombardo, 1973), 72,000 (León-Portilla, 1980) and later probably over 200,000 (León-Portilla, 2005), 75,000 to 95,000 (Jiménez Martínez, 2022), 125,000 to 140,000 (Sanders, 2003), 150,000 to 180,000 (Calnek, 2003), 150,000 to 250,000 (Smith and Hodge, 1994), 212,500 (Smith, 2005)",
+      "estimates",
+      "Guessed",
+      "as gathered by Jiménez Martínez (2022), and Ossa, Smith and Lobo (2017) for Smith"
+     ]
+    },
+    {
+     "cells": [
+      "People",
+      "360,000 (Borah and Cook, 1963), 560,000 to 700,000 (Soustelle, 1955)",
+      "old counts of households times a household size",
+      "Guessed",
+      "as gathered by Jiménez Martínez (2022)"
+     ]
+    },
+    {
+     "cells": [
+      "People",
+      "250,000 to 400,000 (Gibson, 1964)",
+      "colonial counts of 1562 times 3 to 5",
+      "Guessed",
+      "as gathered by Jiménez Martínez (2022)"
+     ]
+    },
+    {
+     "cells": [
+      "People",
+      "possibly 300,000 (Rojas, 1986)",
+      "the city's area and earlier figures",
+      "Guessed",
+      "as gathered by Jiménez Martínez (2022)"
+     ]
+    },
+    {
+     "cells": [
+      "Claims",
+      "60,000 \"habitantes\", perhaps householders (the Anonymous Conqueror), over a million people in more than 50,000 houses (Las Casas)",
+      "16th-century claims",
+      "Guessed",
+      "as gathered by Jiménez Martínez"
+     ]
+    },
+    {
+     "cells": [
+      "The lakes about 1519",
+      "about 600 km² (Montero), about 1,000 (Popper), 2,000 (UNAM CCH)",
+      "estimates",
+      "Guessed",
+      "INAH on Montero, Popper, and UNAM"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "text",
+   "id": "myths",
+   "nav": "Things often read",
+   "h": "Things often read",
+   "subs": [
+    {
+     "h": "\"Tenochtitlan was the largest city in the world.\"",
+     "paras": [
+      "It was the largest in the Americas, by Smith and Sánchez-Albornoz. On most estimates, 75,000 to 400,000, it was smaller than Constantinople, which Jiménez Martínez tables at 500,000 about 1550."
+     ]
+    },
+    {
+     "h": "\"Tenochtitlan was a floating city.\"",
+     "paras": [
+      "It stood on islets and on land built up from the shallow lake bed as chinampas."
+     ]
+    },
+    {
+     "h": "\"The Spaniards drained the lake right after the conquest.\"",
+     "paras": [
+      "The lakes began to shrink soon after 1521, Arturo Montero says, and he dates their drying out from 1750. The great canals came from 1607 to 1900."
+     ]
+    },
+    {
+     "h": "\"The lake is gone.\"",
+     "paras": [
+      "Small waters remain, under 10 km² together by Montero's count, and 14,030 hectares are protected."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "id": "sources",
+   "nav": "Sources",
+   "h": "Sources",
+   "intro": "The facts on this page come from these pages, read on 18 November 2026. Quotes in Spanish are given with our English after them.",
+   "read": [
+    {
+     "text": "INAH (Instituto Nacional de Antropología e Historia, Mexico's national institute of anthropology and history), Boletín 84, 20 February 2023, on the 45 years since the Coyolxauhqui stone came to light (PDF, in Spanish)",
+     "href": "https://www.inah.gob.mx/images/boletines/2023/84/Boletin%2084.pdf"
+    },
+    {
+     "text": "Bertina Olmedo Vera, \"Tenochtitlan\", Arqueología Mexicana 107, 2011, an excerpt (in Spanish)",
+     "href": "https://arqueologiamexicana.mx/mexico-antiguo/tenochtitlan"
+    },
+    {
+     "text": "INAH, Boletín 316, 30 June 2025, on the memorial for 700 years of México-Tenochtitlan (PDF, in Spanish)",
+     "href": "https://www.inah.gob.mx/images/boletines/2025/316/Boletin%20316.pdf"
+    },
+    {
+     "text": "UNAM (Universidad Nacional Autónoma de México), CCH Portal Académico, \"México-Tenochtitlan\" (in Spanish)",
+     "href": "https://e1.portalacademico.cch.unam.mx/alumno/historiademexico1/unidad2/culturamexica/mexicotenochtitlan"
+    },
+    {
+     "text": "Carlos Javier González González, \"La llamada Noche Triste\", Arqueología Mexicana 163, July to August 2020, an excerpt (in Spanish)",
+     "href": "https://arqueologiamexicana.mx/mexico-antiguo/los-espanoles-huyeron-por-la-calzada-de-tacuba"
+    },
+    {
+     "text": "Arqueología Mexicana, special edition 115, \"CDMX. Guía de Viajeros\", part 1, June 2024, \"Calle José María Pino Suárez\" (in Spanish)",
+     "href": "https://arqueologiamexicana.mx/mexico-antiguo/calle-jose-maria-pino-suarez"
+    },
+    {
+     "text": "Carmen Martínez Martínez, \"La Segunda relación de Hernán Cortés\", Noticonquista, UNAM (PDF, in Spanish)",
+     "href": "https://www.noticonquista.unam.mx/sites/default/files/2020-10/martinez-segunda-carta-de-relacion-final.pdf"
+    },
+    {
+     "text": "INAH, Boletín 392, 12 August 2022, on Arturo Montero's book El Lago de Texcoco y México-Tenochtitlan (PDF, in Spanish)",
+     "href": "https://www.inah.gob.mx/images/boletines/2022/392/Boletin%20392.pdf"
+    },
+    {
+     "text": "INAH, \"Exploran chinampas y canales de un barrio de la antigua México-Tenochtitlan\", on the rescue dig of 2015 at Ateponazco led by Raúl Barrera Rodríguez, reprinted by Arqueología Mexicana (in Spanish)",
+     "href": "https://arqueologiamexicana.mx/mexico-antiguo/exploran-chinampas-y-canales-de-un-barrio-de-la-antigua-mexico-tenochtitlan"
+    },
+    {
+     "text": "Eloy Jiménez Martínez, \"En torno a la población de México-Tenochtitlan en 1519\", Anuario de Historia Regional y de las Fronteras 27.1, 2022, pages 125 to 152 (PDF, in Spanish)",
+     "href": "https://dialnet.unirioja.es/descarga/articulo/8205553.pdf"
+    },
+    {
+     "text": "Letters of Cortés, translated by Francis Augustus MacNutt, volume 1, New York, 1908, page 256 (Internet Archive)",
+     "href": "https://archive.org/details/lettersofcorts01cortuoft"
+    },
+    {
+     "text": "Alanna Ossa, Michael E. Smith and José Lobo, \"The Size of Plazas in Mesoamerican Cities and Towns\", Latin American Antiquity 28 (4), 2017, table 1 (PDF)",
+     "href": "https://www.colorado.edu/socialreactors/sites/default/files/attached-files/ossaetal-17-mesoplazas.pdf"
+    },
+    {
+     "text": "Michael E. Smith, \"From Teotihuacan to Tenochtitlan\", Revista Española de Antropología Americana 47, 2017, pages 242 to 243 (PDF)",
+     "href": "https://revistas.ucm.es/index.php/REAA/en/article/download/61981/4564456548397"
+    },
+    {
+     "text": "Virginia Popper, \"Investigating Chinampa Farming\", Backdirt, newsletter of the Institute of Archaeology, UCLA, Fall/Winter 2000, pages 1 and 4 to 5 (no public copy linked)"
+    },
+    {
+     "text": "R. Douglas Cope, \"Desagüe\", Encyclopedia of Latin American History and Culture, on Encyclopedia.com",
+     "href": "https://www.encyclopedia.com/humanities/encyclopedias-almanacs-transcripts-and-maps/desague"
+    },
+    {
+     "text": "Natalia Verónica Soto Coloballes, \"When Rivers Became Drainage\", UNAM Internacional 12, 12 May 2026",
+     "href": "https://revista.unaminternacional.unam.mx/en/nota/12/cuando-los-rios-se-volvieron-drenaje-saneamiento-desague-y-la-creacion-de-la-ciudad-moderna"
+    },
+    {
+     "text": "Loreta Castro Reguera Mancera, \"El espacio público como un sistema hídrico\", Ciencias (UNAM) 125, 2017 (PDF, in Spanish)",
+     "href": "https://new.revistacienciasunam.com/images/stories/Articles/125/pdf/125A02.pdf"
+    },
+    {
+     "text": "NASA, \"US-Indian Space Mission Maps Extreme Subsidence in Mexico City\", 29 April 2026",
+     "href": "https://www.nasa.gov/missions/nisar/us-indian-space-mission-maps-extreme-subsidence-in-mexico-city/"
+    },
+    {
+     "text": "NASA Photojournal, PIA26709",
+     "href": "https://science.nasa.gov/photojournal/us-indian-spacecraft-captures-mexico-city-subsidence/"
+    },
+    {
+     "text": "CONAGUA (Comisión Nacional del Agua, Mexico's water commission), communiqué 0442-24, 26 June 2024 (in Spanish)",
+     "href": "https://www.gob.mx/conagua/prensa/avances-e-impacto-del-parque-ecologico-lago-de-texcoco?idiom=es-MX"
+    },
+    {
+     "text": "Barbara E. Mundy, \"Mapping the Aztec Capital: The 1524 Nuremberg map of Tenochtitlan, Its Sources and Meanings\", Imago Mundi 50, 1998, pages 1 to 22, its record and abstract at Fordham University",
+     "href": "https://research.library.fordham.edu/art_hist_facultypubs/6/"
+    },
+    {
+     "text": "INAH, Boletín 398, 16 August 2022, on the floor found in La Lagunilla (PDF, in Spanish)",
+     "href": "https://www.inah.gob.mx/images/boletines/2022/398/Boletin%20398.pdf"
+    },
+    {
+     "text": "INAH, Boletín 170, 25 March 2024, on the canals and landing place of Tlatelolco (PDF, in Spanish)",
+     "href": "https://www.inah.gob.mx/images/boletines/2024/170/Boletin%20170.pdf"
+    }
+   ],
+   "contact": "If a date, a figure or a sentence is wrong, a message is enough, and we will correct it.",
+   "contact_link": "To the legal notice",
+   "what_link": "What this museum is"
+  },
+  {
+   "type": "museum",
+   "id": "museum",
+   "nav": "In the museum",
+   "h": "In the museum",
+   "text": "Museum of Ages is a digital museum. Its {wing} wing shows {place} on {day}.",
+   "link": "To the {wing} wing"
+  }
+ ]
+}

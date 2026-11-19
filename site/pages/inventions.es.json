@@ -182,7 +182,7 @@
   "og_image_alt": "Cuatro máquinas de madera en la sala de las máquinas, con el sol bajo de la tarde: compuertas de esclusa, el tornillo aéreo con su vela en espiral, un tornillo de Arquímedes y un laminador. Reconstrucciones con código a partir de hojas de Leonardo da Vinci."
  },
  "labels": {
-  "crumbs": "Estás aquí",
+  "crumbs": "Ruta de navegación",
   "crumb_home": "Museo",
   "crumb_here": "Inventos",
   "toc": "En esta página",
@@ -210,7 +210,7 @@
   "door": {
    "text": "Entrar en el museo",
    "note": "Entrada libre, sin cuenta.",
-   "leads": "La puerta lleva al comienzo del ala de Leonardo. El plano del ala te lleva a la sala de las máquinas."
+   "leads": "La puerta lleva al comienzo del ala de Leonardo. El plano del ala lleva a la sala de las máquinas."
   }
  },
  "blocks": [
@@ -219,7 +219,7 @@
    "id": "where",
    "nav": "Dónde están",
    "h": "Dónde están las máquinas en el museo",
-   "intro": "Museum of Ages es un museo digital. Su primera ala es la de Leonardo da Vinci, y sus máquinas están en tres lugares. El plano del ala muestra cada máquina bajo el lugar donde está. Pulsa allí un nombre y se abre la vista de cerca de esa máquina.",
+   "intro": "Museum of Ages es un museo digital. Su primera ala es la de Leonardo da Vinci, y sus máquinas están en tres lugares. El plano del ala muestra cada máquina bajo el lugar donde está. Al pulsar allí un nombre, se abre la vista de cerca de esa máquina.",
    "rows": [
     {
      "term": "La sala de las máquinas",
@@ -253,7 +253,7 @@
     },
     {
      "term": "La mesa de lectura",
-     "text": "Aquí hojeas más de 200 páginas de sus cuadernos, ordenadas en diecisiete temas, entre ellos el vuelo y las máquinas. Cada página nombra su cuaderno y su folio, y puedes leerla con su letra, en un espejo y como texto. La mesa, cuando nadie la usa, tiene abierto un facsímil del Manuscrito B, impreso en 1883. La hoja del tornillo aéreo, el folio 83 verso, está en ese facsímil.",
+     "text": "Aquí hojeas más de 200 páginas de sus cuadernos, ordenadas en diecisiete temas, entre ellos el vuelo y las máquinas. Cada página nombra su cuaderno y su folio, y se puede leer con su letra, en un espejo y como texto. La mesa, cuando nadie la usa, tiene abierto un facsímil del Manuscrito B, impreso en 1883. La hoja del tornillo aéreo, el folio 83 verso, está en ese facsímil.",
      "pic": {
       "pic": "table",
       "tag": "tag_reproduction",
@@ -559,7 +559,7 @@
      "id": "proportional-compass",
      "name": "El compás de reducción",
      "place": "La casa, sobre la mesa",
-     "does": "Dos patas con punta que se cruzan en un pivote. Traslada una distancia en la proporción que eliges. Así se agranda o se reduce un dibujo.",
+     "does": "Dos patas con punta que se cruzan en un pivote. Traslada una distancia en la proporción que se elija. Así se agranda o se reduce un dibujo.",
      "rows": [
       {
        "k": "row_sheet",
@@ -785,7 +785,7 @@
     "El museo nombra estas instituciones porque conservan los originales. Es independiente de todas ellas.",
     "Las imágenes de esta página son de la película del propio museo: salas y máquinas construidas con código. El libro de la mesa de lectura es un facsímil impreso del Manuscrito B, de 1883, de dominio público por su antigüedad."
    ],
-   "editions_h": "Dónde puedes leer las hojas por tu cuenta",
+   "editions_h": "Dónde leer las hojas por cuenta propia",
    "editions": [
     {
      "name": "Veneranda Biblioteca Ambrosiana",
@@ -840,7 +840,7 @@
      ]
     }
    ],
-   "contact": "Si una fecha, un folio o un lugar de conservación están mal, escríbenos y lo corregiremos.",
+   "contact": "Si una fecha, un folio o un lugar de conservación están mal, basta con escribirnos y lo corregiremos.",
    "contact_link": "Ir al aviso legal",
    "what_link": "Qué es este museo"
   },
@@ -848,7 +848,7 @@
    "type": "close",
    "id": "enter",
    "nav": "",
-   "h": "Mira las máquinas en el museo",
+   "h": "Ver las máquinas en el museo",
    "p": "La puerta abre el ala de Leonardo por el principio. Primero viene la sala de los cuadros, y la sala de las máquinas, más adelante en el recorrido.",
    "door": {
     "text": "Entrar en el museo",

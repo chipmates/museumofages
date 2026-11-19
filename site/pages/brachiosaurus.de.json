@@ -141,7 +141,7 @@
   "og_image_alt": "Unser Brachiosaurus von der Seite, in der Größe des Skeletts aus Chicago, 24,0 m entlang der Wirbelsäule, den langen Hals in sanftem Bogen erhoben, die Kopfhöhe 11,5 m, den Halswinkel haben wir gewählt. Die Vorderbeine sind länger als die Hinterbeine, der Schwanz ist frei über dem Boden, und ein grauer Mensch von 1,70 m könnte unter seinem Bauch hindurchgehen."
  },
  "labels": {
-  "crumbs": "Du bist hier",
+  "crumbs": "Seitenpfad",
   "crumb_home": "Museum",
   "crumb_here": "Brachiosaurus",
   "toc": "Auf dieser Seite",
@@ -430,8 +430,8 @@
   {
    "type": "notes",
    "id": "numbers-read",
-   "nav": "Zahlen, die du vielleicht gelesen hast",
-   "h": "Zahlen, die du vielleicht gelesen hast",
+   "nav": "Zahlen, die oft genannt werden",
+   "h": "Zahlen, die oft genannt werden",
    "intro": "Zu jeder Zahl: woher sie kommt und was sie bedeutet.",
    "rows": [
     {
@@ -467,8 +467,8 @@
   {
    "type": "notes",
    "id": "pictures-seen",
-   "nav": "Bilder, die du vielleicht gesehen hast",
-   "h": "Bilder, die du vielleicht gesehen hast",
+   "nav": "Bilder, die oft gezeigt werden",
+   "h": "Bilder, die oft gezeigt werden",
    "intro": "Zu jedem Bild: woher es kommt und was wir heute wissen.",
    "rows": [
     {
@@ -511,7 +511,7 @@
    "nav": "Im Museum",
    "h": "Im Museum",
    "paras": [
-    "Museum of Ages ist ein digitales Museum, gemacht von einer gemeinnützigen Organisation. Der Eintritt ist frei, ein Konto brauchst du nicht. Im Flügel der Tiere wird dieses Tier unter den anderen stehen, von den Riesen der Vorzeit bis zu den letzten ihrer Art. Wie ein fertiger Flügel aussieht, zeigt der Flügel von Leonardo da Vinci."
+    "Museum of Ages ist ein digitales Museum, gemacht von einer gemeinnützigen Organisation. Der Eintritt ist frei, ein Konto ist nicht nötig. Im Flügel der Tiere wird dieses Tier unter den anderen stehen, von den Riesen der Vorzeit bis zu den letzten ihrer Art. Wie ein fertiger Flügel aussieht, zeigt der Flügel von Leonardo da Vinci."
    ],
    "links": [
     {
@@ -625,7 +625,7 @@
      "href": "https://museumofages.org/de/tiere/groesste-dinosaurier/"
     }
    ],
-   "contact": "Ist eine Zahl oder ein Museum falsch angegeben, schreib uns, und wir korrigieren es.",
+   "contact": "Ist eine Zahl oder ein Museum falsch angegeben, genügt eine Nachricht, und wir korrigieren es.",
    "contact_link": "Zum Impressum",
    "what_link": "Was dieses Museum ist"
   },

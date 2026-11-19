@@ -5,7 +5,7 @@ stills of a page's chart (8-bit palette PNG).
     python3 pages/make_pictures.py [name ...]      all pictures, or only the named ones (a chart's still by its file)
     python3 pages/make_pictures.py --list          the names
     python3 pages/make_pictures.py --charts        only the charts' stills, made anew where their drawing changed
-    python3 pages/make_pictures.py --plates        only the plates, from the museum's asset store (MOA_ASSET_STORE)
+    python3 pages/make_pictures.py --plates        only the plates and the share pictures the store holds (MOA_ASSET_STORE)
 
 What is cut, and from which frame, stands in pictures.json: this file names no picture and no wing. A chart's stills
 are drawn by the pages' build (build.py, still_jobs) from the same facts and words as the page's own chart; this file
@@ -21,7 +21,8 @@ A plate (pictures.json, plates) is cut from the file the wing hangs, found in th
 names it; it is read, never written): only when the store's record of it still names that file, hash, tier, source,
 licence and Italian line, and no other record supersedes it or was chosen over it. A plate the pages show only through
 the film's still of its wall (still) is checked the same way and not cut. A plate's crop cuts the store's file to
-the painting first.
+the painting first. A share line that names a record (record, file, sha256) is a card made in the store: it is cut
+from the store's file under the same check as a plate, and only from a record of the first tier.
 """
 import hashlib
 import importlib.util
@@ -64,18 +65,65 @@ def plate_problems(plate, records, store):
     return problems
 
 
-def plates(jobs, only):
+def share_problems(share, records, store):
+    """What keeps a share line that names a store record from being cut: the record differs from the line or was
+    replaced, the file differs from its hash, or the record is not of the first tier (no second-tier picture ever
+    leaves on a share card). Returns the problems."""
+    rec = next((r for r in records if r.get("id") == share["record"]), None)
+    if rec is None:
+        return [f"{share['name']}: the store has no record {share['record']}"]
+    problems = []
+    if rec.get("path") != share["file"].partition("/")[2] or rec.get("sha256") != share["sha256"]:
+        problems.append(f"{share['name']}: its path or hash is not the one in the store's record")
+    if rec.get("tier") != "TIER1":
+        problems.append(f"{share['name']}: the store's record is of tier {rec.get('tier')!r}, and a share card takes the first tier only")
+    for other in records:
+        if share["record"] in (other.get("supersedes") or []) or share["record"] in (other.get("chosen_over") or []):
+            problems.append(f"{share['name']}: {other['id']} replaces {share['record']} in the store")
+    path = Path(store) / share["file"]
+    if not path.is_file():
+        problems.append(f"{share['name']}: {path} is missing")
+    elif hashlib.sha256(path.read_bytes()).hexdigest() != share["sha256"]:
+        problems.append(f"{share['name']}: {path} does not agree with its hash")
+    return problems
+
+
+def asset_store():
     store = os.environ.get("MOA_ASSET_STORE")
     if not store or not Path(store).is_dir():
         raise SystemExit("make_pictures: set MOA_ASSET_STORE to the museum's asset store (it is not part of the repository)")
+    return store
+
+
+def manifest(store, file, manifests):
+    wing = file.split("/", 1)[0]
+    if wing not in manifests:
+        manifests[wing] = json.loads((Path(store) / wing / "manifest.json").read_text(encoding="utf-8"))
+    return manifests[wing]
+
+
+def store_shares(jobs, only):
+    """The share lines that name a store record, cut from the store's file as the stills' shares are cut."""
+    jobs = [j for j in jobs if j.get("record") and not (only and j["name"] not in only)]
+    if not jobs:
+        return
+    store, manifests, problems = asset_store(), {}, []
+    for job in jobs:
+        found = share_problems(job, manifest(store, job["file"], manifests), store)
+        problems += found
+        if not found:
+            share(job, Path(store) / job["file"])
+    if problems:
+        raise SystemExit("\n".join(problems))
+
+
+def plates(jobs, only):
+    store = asset_store()
     manifests, problems = {}, []
     for plate in jobs:
         if only and plate["name"] not in only:
             continue
-        wing = plate["file"].split("/", 1)[0]
-        if wing not in manifests:
-            manifests[wing] = json.loads((Path(store) / wing / "manifest.json").read_text(encoding="utf-8"))
-        found = plate_problems(plate, manifests[wing], store)
+        found = plate_problems(plate, manifest(store, plate["file"], manifests), store)
         problems += found
         if found:
             continue
@@ -157,8 +205,10 @@ def main():
         print("\n".join(job["file"] for job in pages_build().still_jobs()))
         return
     only = [a for a in sys.argv[1:] if not a.startswith("-")]
-    if "--plates" in sys.argv or (only and all(a in {p["name"] for p in jobs.get("plates", [])} for a in only)):
+    from_store = {p["name"] for p in jobs.get("plates", [])} | {s["name"] for s in jobs["share"] if s.get("record")}
+    if "--plates" in sys.argv or (only and all(a in from_store for a in only)):
         plates(jobs.get("plates", []), only)
+        store_shares(jobs["share"], only)
         return
     if "--charts" in sys.argv or (only and all(a.endswith(".png") for a in only)):
         charts([a for a in only if a.endswith(".png")])
@@ -183,13 +233,22 @@ def main():
                     run(base + extra + [str(out)])
                     made(out)
     for job in jobs["share"]:
-        out = OUT / f"{job['name']}.jpg"
-        if (only and job["name"] not in only) or out.exists():
+        if (only and job["name"] not in only) or job.get("record"):
             continue
-        run(["magick", str(source / job["file"]), "-crop", job["crop"], "+repage", "-filter", "Lanczos",
-             "-resize", "1200x630!", *credit_args(job.get("credit")), "-strip", "-interlace", "JPEG", "-quality", "82", str(out)])
-        made(out)
+        share(job, source / job["file"])
+    store_shares(jobs["share"], only)
     charts(only)
+
+
+def share(job, path):
+    """One share picture, 1200 by 630 as JPEG, with its credit where it owes one. A file that exists is kept."""
+    out = OUT / f"{job['name']}.jpg"
+    if out.exists():
+        return
+    OUT.mkdir(parents=True, exist_ok=True)
+    run(["magick", str(path), "-crop", job["crop"], "+repage", "-filter", "Lanczos",
+         "-resize", "1200x630!", *credit_args(job.get("credit")), "-strip", "-interlace", "JPEG", "-quality", "82", str(out)])
+    made(out)
 
 
 def credit_args(text):

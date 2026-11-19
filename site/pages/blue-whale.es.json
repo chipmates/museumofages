@@ -152,7 +152,7 @@
   "og_image_alt": "Nuestra ballena azul de lado, de 22,86 m de largo: un cuerpo esbelto, gris azulado, con manchas claras, una cabeza plana, una aleta pectoral larga de borde claro y una pequeña aleta dorsal muy atrás. A su lado, una persona gris de 1,70 m que llega a poco más de media altura de la ballena."
  },
  "labels": {
-  "crumbs": "Estás aquí",
+  "crumbs": "Ruta de navegación",
   "crumb_home": "Museo",
   "crumb_here": "Ballena azul",
   "toc": "En esta página",
@@ -680,7 +680,7 @@
      "href": "https://museumofages.org/es/animales/dinosaurio-mas-grande/"
     }
    ],
-   "contact": "Si una cifra o una institución está mal, escríbenos y lo corregiremos.",
+   "contact": "Si una cifra o una institución está mal, basta con escribirnos y lo corregiremos.",
    "contact_link": "Ir al aviso legal",
    "what_link": "Qué es este museo"
   },

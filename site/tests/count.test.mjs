@@ -184,11 +184,16 @@ test('every language, hold, kind of work, page kind and door on its list writes;
   for (const door of ['bottom', 'dock']) await none({ ...GOOD.door_press, door })
 })
 
+test('a press on the still beside a page\'s first door writes a row of its own; a near miss writes nothing', async () => {
+  assert.deepEqual((await one({ ...GOOD.door_press, door: 'still' })).slice(0, 4), ['door_press', 'home', 'still', 'en'])
+  for (const door of ['Still', 'stills', 'picture']) await none({ ...GOOD.door_press, door })
+})
+
 test('the lists the build writes hold the sheet\'s pages and languages', () => {
   for (const kind of ['home', 'leonardo', 'inventions', 'paintings', 'sizes', 'supper', 'mona-lisa', 'salvator-mundi', 'lady-with-an-ermine', 'last-years', 'life', 'statement', 'privacy', 'imprint',
-    'animals', 'megalodon']) assert.ok(PAGE_KINDS.includes(kind), kind)
-  // the pages of the wing in the making, which the edge never asks the ads' question
-  assert.deepEqual([...UNASKED].sort(), ['/animals/', '/de/tiere/', '/es/animales/', '/pt-br/animais/'])
+    'animals', 'megalodon', 'questions']) assert.ok(PAGE_KINDS.includes(kind), kind)
+  // the own pages of the wing in the making and of the questions shelf, which the edge never asks the ads' question
+  assert.deepEqual([...UNASKED].sort(), ['/animals/', '/de/fragen/', '/de/tiere/', '/es/animales/', '/pt-br/animais/', '/questions/'])
   assert.deepEqual([...LANGUAGES].sort(), ['bg', 'de', 'en', 'es', 'fr', 'it', 'pt-BR'])
   assert.deepEqual(WING_STOPS, { vinci: 17 })
 })

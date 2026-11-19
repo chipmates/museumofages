@@ -7,7 +7,7 @@
     "share_alt": "Die Luftschraube in der Maschinenhalle: ein Holzmast mit einem spiralförmigen Leinensegel im Licht der tief stehenden Nachmittagssonne, der Schatten an der Wand. Eine Rekonstruktion nach einem Blatt von Leonardo da Vinci, in Code gebaut."
   },
   "first": {
-    "lede": "Ein Rundgang mit {count:stops} Stationen und rund {count:works} Werken, die du dir aus der Nähe ansehen kannst: {count:pictures} Bilder annähernd in Originalgröße, {count:machines} Maschinen, {count:sheets} anatomische Blätter und seine Notizbücher.",
+    "lede": "Ein Rundgang mit {count:stops} Stationen und rund {count:works} Werken, die sich aus der Nähe ansehen lassen: {count:pictures} Bilder annähernd in Originalgröße, {count:machines} Maschinen, {count:sheets} anatomische Blätter und seine Notizbücher.",
     "piece": {
       "title": "Ein Gang durch den Flügel",
       "kind": "Aus dem Film",
@@ -133,7 +133,7 @@
   },
   "intro": {
     "p": "Der Flügel zeigt {shows:place} am {shows:day}: sein letztes Haus an einem Tag seines Lebens. Der Tag ist dokumentiert: Antonio de Beatis schrieb ihn in sein Tagebuch. Er war Sekretär des Kardinals Luigi d'Aragona, der an diesem Tag zu Besuch kam. Die Stunde haben wir gewählt. Neben dem Haus stehen die eigenen Räume des Museums. Sie zeigen seine Bilder, Maschinen, Notizbücher und anatomischen Blätter.",
-    "film": "Du gehst von Station zu Station durch einen Film, berechnet mit der eigenen Software des Museums. An den meisten Stationen kannst du an die Werke herantreten.",
+    "film": "Der Rundgang führt von Station zu Station durch einen Film, berechnet mit der eigenen Software des Museums. An den meisten Stationen geht es nah an die Werke heran.",
     "stills": "Die Bilder der Räume auf dieser Seite sind Standbilder aus diesem Film."
   },
   "rooms": [
@@ -178,7 +178,7 @@
           },
           "title": "Die Dame mit dem Hermelin, aus der Nähe",
           "kind": "Reproduktion",
-          "what": "das Bild, wie der Flügel es zeigt, wenn du herantrittst. Der Balken links unten zeigt zehn Zentimeter auf dem Bild. Die Schrift oben links ist eine spätere Inschrift auf der Tafel selbst.",
+          "what": "das Bild, wie der Flügel es aus der Nähe zeigt. Der Balken links unten zeigt zehn Zentimeter auf dem Bild. Die Schrift oben links ist eine spätere Inschrift auf der Tafel selbst.",
           "src": "Bewahrt vom Muzeum Narodowe w Krakowie, Czartoryski-Museum, Krakau. Gemeinfreies Werk. Reproduktion aus Wikimedia Commons.",
           "alt": "Eine Bildschirmaufnahme aus dem Flügel: die Dame mit dem Hermelin auf schwarzem Grund, eine junge Frau in rotem und blauem Kleid mit einem weißen Hermelin im Arm. Links unten im Bild ein Balken für zehn Zentimeter."
         }
@@ -247,7 +247,7 @@
           },
           "title": "Eine Seite seines Notizbuchs, nah",
           "kind": "Reproduktion",
-          "what": "die Nahansicht des Lesetischs: die Seite mit der Luftschraube, aus dem gedruckten Faksimile von {count:volume_year}. So blätterst du jede Seite des Buchs um.",
+          "what": "die Nahansicht des Lesetischs: die Seite mit der Luftschraube, aus dem gedruckten Faksimile von {count:volume_year}. So lässt sich jede Seite des Buchs umblättern.",
           "src": "Pariser Manuskript B, Blatt 83 verso, bewahrt von der Bibliothèque de l'Institut de France, Paris, Ms 2173. Gezeigt im Faksimile von Charles Ravaisson-Mollien, Les manuscrits de Léonard de Vinci, Bd. II, Paris 1883. Gemeinfrei.",
           "alt": "Eine Bildschirmaufnahme vom Lesetisch des Flügels: die Seite des gedruckten Faksimiles in der Nahansicht, ein Blatt in Sepia mit der Zeichnung der Luftschraube und Zeilen in Spiegelschrift, hell auf dem dunklen Tisch."
         }
@@ -290,7 +290,7 @@
       "h": "Das Haus",
       "note": "Clos Lucé, sein letztes Zuhause",
       "p": [
-        "Sein letztes Haus, Clos Lucé in Amboise, ist in Code nachgebaut, nach Plänen und Fotografien. Du betrittst nur einen Raum, den Großen Saal: auf dem Tisch zwei Instrumente nach seinen Blättern, an der Wand der mechanische Löwe. Die Kapelle, das Fenster des Studierzimmers und das Nordzimmer siehst du von außen."
+        "Sein letztes Haus, Clos Lucé in Amboise, ist in Code nachgebaut, nach Plänen und Fotografien. Betreten lässt sich nur ein Raum, der Große Saal: auf dem Tisch zwei Instrumente nach seinen Blättern, an der Wand der mechanische Löwe. Die Kapelle, das Fenster des Studierzimmers und das Nordzimmer sind von außen zu sehen."
       ],
       "plates": [
         {
@@ -353,7 +353,7 @@
     ]
   },
   "holds": {
-    "lead": "Hier steht, was der Flügel zeigt, in der Reihenfolge des Rundgangs: jedes Bild, jede Maschine, jede Seite und jedes Blatt, an das du herantreten kannst.",
+    "lead": "Hier steht, was der Flügel zeigt, in der Reihenfolge des Rundgangs: jedes Bild, jede Maschine, jede Seite und jedes Blatt, das sich aus der Nähe ansehen lässt.",
     "groups": [
       {
         "id": "paintings",
@@ -437,7 +437,7 @@
               "script": "machine.js",
               "tag_a": "Linien",
               "tag_b": "Gebaut",
-              "hint": "Zieh die Linie zum Vergleich, die Maschine zum Drehen.",
+              "hint": "Zum Vergleich die Linie ziehen, zum Drehen die Maschine.",
               "slider_label": "Mehr von den Linien oder mehr von der gebauten Maschine zeigen",
               "canvas_label": "Die Luftschraube in 3D. Die Pfeiltasten links und rechts drehen sie.",
               "pause": "Anhalten",
@@ -486,7 +486,7 @@
         "h": "Die Notizbücher",
         "note": "Ein Tisch, Seiten zum Blättern",
         "p": [
-          "Auf dem Lesetisch liegt eine gedruckte Ausgabe von {count:volume_year} mit zwei seiner Notizbücher. Du kannst alle {count:volume_pages} Seiten umblättern, und {count:volume_sides} davon zeigen die Seiten der Notizbücher selbst, in seiner Spiegelschrift von rechts nach links.",
+          "Auf dem Lesetisch liegt eine gedruckte Ausgabe von {count:volume_year} mit zwei seiner Notizbücher. Alle {count:volume_pages} Seiten lassen sich umblättern, und {count:volume_sides} davon zeigen die Seiten der Notizbücher selbst, in seiner Spiegelschrift von rechts nach links.",
           "{count:topics} Themen versammeln {count:topic_pages} Seiten aus seinen Notizbüchern. In einem Regal stehen {word:shelf_books} weitere Bücher mit seinen Notizen zum Blättern, zusammen {count:shelf_sides} Seiten."
         ],
         "plates": [
@@ -645,7 +645,7 @@
           },
           {
             "k": "Das Fenster des Studierzimmers",
-            "v": "Von außen zu sehen. Der Flügel legt den Besuch vom {shows:day} hinter dieses Fenster. Vermutet: Das Tagebuch nennt keinen Raum. Darunter öffnest du eines seiner Blätter, eine Sintflut.",
+            "v": "Von außen zu sehen. Der Flügel legt den Besuch vom {shows:day} hinter dieses Fenster. Vermutet: Das Tagebuch nennt keinen Raum. Darunter öffnet sich eines seiner Blätter, eine Sintflut.",
             "stop": "study"
           },
           {
@@ -730,7 +730,7 @@
     "dir": "Der Grabhof",
     "note": "Die letzte Station",
     "h": "Der Flügel endet unter den Sternen",
-    "p": "An der letzten Station, dem Grabhof, wird es dunkel, und du schaust hinauf. Die Sterne stehen so, wie sie am Abend des {shows:day} um {word:hour} Uhr über Clos Lucé standen. Stern für Stern sind sie aus einem Sternkatalog berechnet, für den Tag aus dem Tagebuch und die Stunde, die wir gewählt haben. Der Sonnenuntergang zeigt einen gewöhnlichen Oktoberabend, nicht diesen einen, und die Sternschnuppe ist vom Museum.",
+    "p": "An der letzten Station, dem Grabhof, wird es dunkel, und der Blick geht nach oben. Die Sterne stehen so, wie sie am Abend des {shows:day} um {word:hour} Uhr über Clos Lucé standen. Stern für Stern sind sie aus einem Sternkatalog berechnet, für den Tag aus dem Tagebuch und die Stunde, die wir gewählt haben. Der Sonnenuntergang zeigt einen gewöhnlichen Oktoberabend, nicht diesen einen, und die Sternschnuppe ist vom Museum.",
     "plate": {
       "pic": {
         "stem": "grave-court",

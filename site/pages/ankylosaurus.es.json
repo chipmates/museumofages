@@ -169,7 +169,7 @@
   "og_image_alt": "Nuestro Ankylosaurus de lado, 6,4 m del pico a la maza, con lo alto del lomo a 1,7 m sobre la cadera: un cuerpo bajo y ancho, cubierto de filas de placas de hueso, una cabeza ancha y baja, cuatro patas cortas y una cola recta que termina en una maza plana. A su lado, una persona gris de 1,70 m, tan alta como lo alto del lomo."
  },
  "labels": {
-  "crumbs": "Estás aquí",
+  "crumbs": "Ruta de navegación",
   "crumb_home": "Museo",
   "crumb_here": "Ankylosaurus",
   "toc": "En esta página",
@@ -653,7 +653,7 @@
      "href": "https://museumofages.org/es/animales/t-rex/"
     }
    ],
-   "contact": "Si una cifra o un museo está mal, escríbenos y lo corregiremos.",
+   "contact": "Si una cifra o un museo está mal, basta con escribirnos y lo corregiremos.",
    "contact_link": "Ir al aviso legal",
    "what_link": "Qué es este museo"
   },

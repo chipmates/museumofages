@@ -7,7 +7,7 @@
   "share_alt": "El tornillo aéreo en la sala de las máquinas: un mástil de madera con una vela de lino en espiral, al sol bajo de la tarde, con su sombra en el muro. Una reconstrucción a partir de una hoja de Leonardo da Vinci, hecha en código."
  },
  "first": {
-  "lede": "Un recorrido de {count:stops} paradas junto a unas {count:works} obras que puedes ver de cerca: {count:pictures} imágenes casi a su tamaño real, {count:machines} máquinas, {count:sheets} hojas de anatomía y sus cuadernos.",
+  "lede": "Un recorrido de {count:stops} paradas junto a unas {count:works} obras que se pueden ver de cerca: {count:pictures} imágenes casi a su tamaño real, {count:machines} máquinas, {count:sheets} hojas de anatomía y sus cuadernos.",
   "piece": {
    "title": "Un recorrido por el ala",
    "kind": "De la película",
@@ -133,8 +133,8 @@
  },
  "intro": {
   "p": "El ala muestra {shows:place} el {shows:day}: su última casa, en un día de su vida. Ese día está documentado: Antonio de Beatis lo anotó en su diario. Era secretario del cardenal Luis de Aragón, que vino de visita ese día. La hora la elegimos nosotros. Junto a la casa están las salas propias del museo para sus cuadros, sus máquinas, sus cuadernos y sus hojas de anatomía.",
-  "film": "Vas de parada en parada a través de una película, hecha con un programa del propio museo. En la mayoría de las paradas puedes acercarte a las obras.",
-  "stills": "Las imágenes de las salas que ves en esta página salen de esa película."
+  "film": "El recorrido va de parada en parada a través de una película, hecha con un programa del propio museo. En la mayoría de las paradas es posible acercarse a las obras.",
+  "stills": "Las imágenes de las salas que se ven en esta página salen de esa película."
  },
  "rooms": [
   {
@@ -178,7 +178,7 @@
      },
      "title": "La dama del armiño, de cerca",
      "kind": "Reproducción",
-     "what": "el cuadro como lo muestra el ala cuando te acercas. Abajo a la izquierda, una barra marca diez centímetros del cuadro. Arriba a la izquierda, una inscripción posterior en la propia tabla.",
+     "what": "el cuadro como lo muestra el ala de cerca. Abajo a la izquierda, una barra marca diez centímetros del cuadro. Arriba a la izquierda, una inscripción posterior en la propia tabla.",
      "src": "Conservado por el Muzeum Narodowe w Krakowie, Muzeum Książąt Czartoryskich, Cracovia. Obra de dominio público. Reproducción de Wikimedia Commons.",
      "alt": "Una captura de pantalla del ala: La dama del armiño sobre fondo negro, una mujer joven con un vestido rojo y azul que sostiene un armiño blanco. Abajo a la izquierda del cuadro, una barra que marca diez centímetros."
     }
@@ -290,7 +290,7 @@
    "h": "La casa",
    "note": "Clos Lucé, su última casa",
    "p": [
-    "Su última casa, Clos Lucé en Amboise, está reconstruida en código a partir de planos y fotografías. Solo entras en una sala, la sala grande: en su mesa hay dos instrumentos hechos a partir de sus hojas, y junto a la pared, el león mecánico. La capilla, la ventana del estudio y la habitación norte las ves desde fuera."
+    "Su última casa, Clos Lucé en Amboise, está reconstruida en código a partir de planos y fotografías. Solo se entra en una sala, la sala grande: en su mesa hay dos instrumentos hechos a partir de sus hojas, y junto a la pared, el león mecánico. La capilla, la ventana del estudio y la habitación norte se ven desde fuera."
    ],
    "plates": [
     {
@@ -353,7 +353,7 @@
   ]
  },
  "holds": {
-  "lead": "Aquí está lo que muestra el ala, en el orden del recorrido: cada cuadro, máquina, página y hoja a la que puedes acercarte.",
+  "lead": "Aquí está lo que muestra el ala, en el orden del recorrido: cada cuadro, máquina, página y hoja a la que es posible acercarse.",
   "groups": [
    {
     "id": "paintings",
@@ -437,7 +437,7 @@
        "script": "machine.js",
        "tag_a": "Líneas",
        "tag_b": "Construido",
-       "hint": "Arrastra la línea para comparar, y la máquina para girarla.",
+       "hint": "Arrastrar la línea para comparar, y la máquina para girarla.",
        "slider_label": "Mostrar más líneas o más de la máquina construida",
        "canvas_label": "El tornillo aéreo en 3D. Las flechas izquierda y derecha del teclado lo giran.",
        "pause": "Pausar",
@@ -486,7 +486,7 @@
     "h": "Los cuadernos",
     "note": "Una mesa y páginas para pasar",
     "p": [
-     "En la mesa de lectura hay una edición impresa de {count:volume_year} con dos de sus cuadernos. Puedes pasar todas sus {count:volume_pages} páginas, y {count:volume_sides} de ellas muestran las caras de los propios cuadernos, con su escritura en espejo, de derecha a izquierda.",
+     "En la mesa de lectura hay una edición impresa de {count:volume_year} con dos de sus cuadernos. Se pueden pasar todas sus {count:volume_pages} páginas, y {count:volume_sides} de ellas muestran las caras de los propios cuadernos, con su escritura en espejo, de derecha a izquierda.",
      "{count:topics} temas reúnen {count:topic_pages} páginas de sus cuadernos. Un estante guarda {word:shelf_books} libros más de sus notas para hojear, {count:shelf_sides} caras en total."
     ],
     "plates": [
@@ -730,7 +730,7 @@
   "dir": "El patio de la tumba",
   "note": "La última parada",
   "h": "El ala termina bajo las estrellas",
-  "p": "En la última parada, el patio de la tumba, oscurece y miras hacia arriba. Las estrellas están como estaban sobre Clos Lucé a las {word:hour} de la noche del {shows:day}. Las calculamos una a una con un catálogo de estrellas, para el día que da el diario y la hora que elegimos. La puesta de sol muestra una tarde cualquiera de octubre, no aquella, y la estrella fugaz la puso el museo.",
+  "p": "En la última parada, el patio de la tumba, oscurece y la mirada va hacia arriba. Las estrellas están como estaban sobre Clos Lucé a las {word:hour} de la noche del {shows:day}. Las calculamos una a una con un catálogo de estrellas, para el día que da el diario y la hora que elegimos. La puesta de sol muestra una tarde cualquiera de octubre, no aquella, y la estrella fugaz la puso el museo.",
   "plate": {
    "pic": {
     "stem": "grave-court",
